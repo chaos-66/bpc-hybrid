@@ -1,0 +1,418 @@
+{
+  "schema_version": "s3_semantic_grounding_metrics@1.0.0",
+  "run_id": "s3_semantic_grounding_v1",
+  "scope": "development_only_synthetic_controlled_panel",
+  "variant_evaluation": {
+    "support": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.4706,
+        "recall": 0.8,
+        "f1": 0.5926
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.75,
+        "recall": 0.3,
+        "f1": 0.4286
+      }
+    },
+    "macro_f1_four_types": 0.5886,
+    "micro_f1": 0.6301,
+    "exact_type_accuracy": 0.575,
+    "unobservable": 7,
+    "unobservable_by_reason": {
+      "condition_surface_ambiguous_or_incomplete": 1,
+      "unsupported_abstract_constraint_kind": 2,
+      "action_grounding_unresolved": 2,
+      "no_handler_and_action_grounding_ambiguous": 1,
+      "dedicated_handler_candidate_exists_but_semantics_ambiguous": 1
+    }
+  },
+  "per_type_check_evaluation": {
+    "support": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.36,
+        "recall": 0.9,
+        "f1": 0.5143
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.6,
+        "recall": 0.3,
+        "f1": 0.4
+      }
+    },
+    "macro_f1_four_types": 0.5619,
+    "note": "each type is evaluated as an independent binary structural check on the variant side; no final single-label priority is applied here"
+  },
+  "target_field_diagnostic": {
+    "per_type": {
+      "prohibited_action_present": {
+        "variant_support": 10,
+        "variant_detected": 10,
+        "variant_not_detected": 0,
+        "variant_unknown": 0,
+        "control_target_violation": 0,
+        "control_target_unknown": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "variant_support": 10,
+        "variant_detected": 9,
+        "variant_not_detected": 1,
+        "variant_unknown": 1,
+        "control_target_violation": 1,
+        "control_target_unknown": 0,
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9
+      },
+      "constraint_violated": {
+        "variant_support": 10,
+        "variant_detected": 2,
+        "variant_not_detected": 8,
+        "variant_unknown": 8,
+        "control_target_violation": 0,
+        "control_target_unknown": 8,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "variant_support": 10,
+        "variant_detected": 3,
+        "variant_not_detected": 7,
+        "variant_unknown": 7,
+        "control_target_violation": 0,
+        "control_target_unknown": 1,
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615
+      }
+    },
+    "macro_f1_four_types": 0.6737,
+    "control_target_false_positive_rate": 0.025,
+    "note": "target-field-only diagnostic; controls are not globally compliant for the other three rule fields, so this is reported separately from the unified paired controls"
+  },
+  "paired_evaluation": {
+    "schema_version": "s3_semantic_grounding_paired_evaluator@1.0.0",
+    "total_objects": 80,
+    "control_objects": 40,
+    "variant_objects": 40,
+    "five_class_accuracy": 0.35,
+    "variant_exact_type_accuracy": 0.575,
+    "control_false_positive_rate": 0.55,
+    "paired_accuracy": 0.125,
+    "per_class": {
+      "none": {
+        "support": 40,
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222
+      },
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 0.7692,
+        "recall": 1.0,
+        "f1": 0.8696
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.2581,
+        "recall": 0.8,
+        "f1": 0.3902
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 0.6667,
+        "recall": 0.2,
+        "f1": 0.3077
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.375,
+        "recall": 0.3,
+        "f1": 0.3333
+      }
+    },
+    "macro_f1_four_violation_types": 0.4752,
+    "macro_f1_five_classes": 0.4246,
+    "unobservable": {
+      "total": 20,
+      "variant": 7,
+      "control": 13,
+      "by_reason": {
+        "control_abstention": 13,
+        "condition_surface_ambiguous_or_incomplete": 1,
+        "unsupported_abstract_constraint_kind": 2,
+        "action_grounding_unresolved": 2,
+        "no_handler_and_action_grounding_ambiguous": 1,
+        "dedicated_handler_candidate_exists_but_semantics_ambiguous": 1
+      }
+    },
+    "denominator_policy": "all 80 objects stay in every denominator; None is an abstention and counts as an error, never as a violation or as explicit compliance"
+  },
+  "identifiability_audit": {
+    "audit_kind": "variant_input_identifiability",
+    "collision_group_count": 7,
+    "variant_count_in_collisions": 28,
+    "collision_groups": [
+      {
+        "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_required_condition_02",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "expected_violation": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_02",
+            "expected_violation": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_03",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_06",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_08",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_08",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+        "variants": [
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_10",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_03",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_09",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_required_condition_09",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_07",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_07",
+            "expected_violation": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_10",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      }
+    ],
+    "implication": "single-label unified accuracy is bounded below 1 by input collisions; per-type binary checks and explicit abstention are the valid reporting views"
+  },
+  "fallback": {
+    "real_api_calls": 0,
+    "status": "IMPLEMENTED_NOT_REAL_RUN",
+    "eligible_objects": 26,
+    "triggered_objects": 0,
+    "resolved_objects": 0,
+    "failed_objects": 0,
+    "note": "The fallback schema/validator/mock plumbing is implemented and tested offline. No real API authorization was present for this revision, so no fallback call was made and no LLM-improved metric is reported."
+  },
+  "baseline_comparison": {
+    "baseline": {
+      "source": "outputs/reports/s3_formula_repair_v2.json",
+      "arm": "reference/winter",
+      "variant_evaluation": {
+        "per_type": {
+          "prohibited_action_present": {
+            "support": 10,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "precision": 0.2857,
+            "recall": 0.2,
+            "f1": 0.2353
+          },
+          "constraint_violated": {
+            "support": 10,
+            "precision": 0.6,
+            "recall": 0.3,
+            "f1": 0.4
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "precision": 0.6667,
+            "recall": 0.2,
+            "f1": 0.3077
+          }
+        },
+        "macro_f1_four_types": 0.4738,
+        "micro_f1": 0.5152,
+        "exact_type_accuracy": 0.425,
+        "unobservable": 18,
+        "unobservable_by_reason": {
+          "no_condition_candidates": 4,
+          "action_mapping_below_gamma": 13,
+          "no_exception_candidates": 1
+        }
+      },
+      "paired_evaluation": {
+        "five_class_accuracy": 0.3625,
+        "control_false_positive_rate": 0.5,
+        "paired_accuracy": 0.225,
+        "macro_f1_four_violation_types": 0.3764,
+        "macro_f1_five_classes": 0.39,
+        "unobservable": {
+          "total": 26,
+          "variant": 18,
+          "control": 8,
+          "by_reason": {
+            "no_condition_candidates": 4,
+            "action_mapping_below_gamma": 21,
+            "empty_rule_exception": 8,
+            "rule_modality_not_prohibition": 8,
+            "empty_rule_constraint": 1,
+            "empty_rule_condition": 1,
+            "no_exception_candidates": 1
+          }
+        }
+      }
+    },
+    "delta_variant_macro_f1_four_types": 0.1148,
+    "delta_variant_exact_type_accuracy": 0.15,
+    "delta_paired_macro_f1_five_classes": 0.0346,
+    "delta_control_false_positive_rate": 0.05,
+    "delta_paired_accuracy": -0.1
+  }
+}

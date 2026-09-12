@@ -100,6 +100,25 @@
 - 文档/排版按内容和文件检查验收；代码按两级 AGENTS.md 与 AI_CHANGE_PROTOCOL 做快速检查和具名相关测试。
   提交、推送、交稿本身不触发完整代码测试。本次计划更新使用 scoped commit 作为记录。
 
+## 2026-09-12 修订 3.6.56：Stage 3 四类扩展的 deterministic-first semantic grounding 与 fail-closed LLM fallback 实现（S3-SEMANTIC-GROUNDING-V1，零 API）
+
+**范围**：development-only 受控面板 40 variant + 40 control；仅新增 revision `s3_semantic_grounding_v1`，不覆盖 `s3_formula_repair_v2`、33 条人工 Gold、frozen GDPR-7 membership、原三类结果或已有 panel/synthetic 数据。
+
+**实现**：
+- `src/bpc_hybrid/s3_semantic_grounding_v1.py`：Top-K action grounding（semantic similarity + label normalization + content-token coverage + lane/pool ownership + margin，状态 `resolved/ambiguous/unresolved`）；condition/constraint/exception 改为有限、action-anchored 的局部 BPMN 子图检查；区分 observable absence 与 unobservable，任何 ambiguous/unresolved 默认 abstain；显式 numeric time-limit contradiction 逻辑保留并单测覆盖；抽象约束（without undue delay / without hindrance / clear language 等）不伪造确定性判断。
+- `scripts/run_s3_semantic_grounding_v1.py`：新 revision runner，写 `outputs/development/s3_semantic_grounding_v1/`、`outputs/evidence/s3_semantic_grounding_v1/`、`outputs/reports/s3_semantic_grounding_v1.{json,md}`；输入/config/code/sample count/evaluator version 全部 hash 绑定；运行前验证 C36 original-three 与 Sun scorer 冻结哈希。
+- `configs/stage3_semantic_grounding_v1.json`、`tests/test_s3_semantic_grounding_v1.py`（9 项：原三类回归绑定、Gold-blind、no-metadata-leakage view、condition/exception/constraint 行为、LLM strict JSON fail-closed、deterministic replay）。
+- LLM fallback：strict JSON schema + evidence-ID validator + fail-closed unknown；mock/offline plumbing 已测试，**未调用真实 API**，状态 `IMPLEMENTED_NOT_REAL_RUN`。
+
+**当前 development 结果**（reference/winter backend；详细表见 report）：
+- unified variant: 4-type Macro-F1 **0.5886**、exact **0.5750**、unobservable **7**；C36 baseline 0.4738 / 0.4250 / 18。
+- per-type binary checks: Macro-F1 **0.5619**；target-field diagnostic Macro-F1 **0.6737**，control target FP rate **0.025**。
+- paired 80 objects: 5-class Macro-F1 **0.4246**、control any-type FP rate **0.5500**、paired accuracy **0.1250**；该 paired 数字的下限受 variant BPMN collision 约束，必须与 identifiability audit 同读。
+- **identifiability audit**: 7 collision groups / 28 variants are byte-identical across expected types; single-label unified accuracy is therefore structurally bounded and is not the primary per-type evidence.
+- 未运行真实 LLM, fallback metrics 只记录 eligible object count 26, 不填假 resolved/failed 数。
+
+**State**: verified development result / not formal Oracle; real API remains blocked pending explicit user authorization.
+
 ## 2026-09-11 修订 3.6.53：四类扩展的定位接线修复与证据范围臂（S3-EXTENDED-EVIDENCE-SCOPE，零 API）
 
 本批只做用户指定的两个新臂（W/H），各跑一次固定面板；旧 A/B/C、Winter 等按哈希只读复用，未重跑。

@@ -1,0 +1,542 @@
+{
+  "schema_version": "s3_semantic_grounding_report@1.0.0",
+  "revision": "s3_semantic_grounding_v1",
+  "scope": "development_only",
+  "generated_utc": "2026-09-12T14:29:26.280129+00:00",
+  "status": "VERIFIED_DEVELOPMENT_RESULT",
+  "baseline_comparison": {
+    "baseline": {
+      "source": "outputs/reports/s3_formula_repair_v2.json",
+      "arm": "reference/winter",
+      "variant_evaluation": {
+        "per_type": {
+          "prohibited_action_present": {
+            "support": 10,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "required_condition_not_enforced": {
+            "support": 10,
+            "precision": 0.2857,
+            "recall": 0.2,
+            "f1": 0.2353
+          },
+          "constraint_violated": {
+            "support": 10,
+            "precision": 0.6,
+            "recall": 0.3,
+            "f1": 0.4
+          },
+          "exception_not_handled": {
+            "support": 10,
+            "precision": 0.6667,
+            "recall": 0.2,
+            "f1": 0.3077
+          }
+        },
+        "macro_f1_four_types": 0.4738,
+        "micro_f1": 0.5152,
+        "exact_type_accuracy": 0.425,
+        "unobservable": 18,
+        "unobservable_by_reason": {
+          "no_condition_candidates": 4,
+          "action_mapping_below_gamma": 13,
+          "no_exception_candidates": 1
+        }
+      },
+      "paired_evaluation": {
+        "five_class_accuracy": 0.3625,
+        "control_false_positive_rate": 0.5,
+        "paired_accuracy": 0.225,
+        "macro_f1_four_violation_types": 0.3764,
+        "macro_f1_five_classes": 0.39,
+        "unobservable": {
+          "total": 26,
+          "variant": 18,
+          "control": 8,
+          "by_reason": {
+            "no_condition_candidates": 4,
+            "action_mapping_below_gamma": 21,
+            "empty_rule_exception": 8,
+            "rule_modality_not_prohibition": 8,
+            "empty_rule_constraint": 1,
+            "empty_rule_condition": 1,
+            "no_exception_candidates": 1
+          }
+        }
+      }
+    },
+    "delta_variant_macro_f1_four_types": 0.1148,
+    "delta_variant_exact_type_accuracy": 0.15,
+    "delta_paired_macro_f1_five_classes": 0.0346,
+    "delta_control_false_positive_rate": 0.05,
+    "delta_paired_accuracy": -0.1
+  },
+  "variant_evaluation": {
+    "support": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.4706,
+        "recall": 0.8,
+        "f1": 0.5926
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.75,
+        "recall": 0.3,
+        "f1": 0.4286
+      }
+    },
+    "macro_f1_four_types": 0.5886,
+    "micro_f1": 0.6301,
+    "exact_type_accuracy": 0.575,
+    "unobservable": 7,
+    "unobservable_by_reason": {
+      "condition_surface_ambiguous_or_incomplete": 1,
+      "unsupported_abstract_constraint_kind": 2,
+      "action_grounding_unresolved": 2,
+      "no_handler_and_action_grounding_ambiguous": 1,
+      "dedicated_handler_candidate_exists_but_semantics_ambiguous": 1
+    }
+  },
+  "per_type_check_evaluation": {
+    "support": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.36,
+        "recall": 0.9,
+        "f1": 0.5143
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.6,
+        "recall": 0.3,
+        "f1": 0.4
+      }
+    },
+    "macro_f1_four_types": 0.5619,
+    "note": "each type is evaluated as an independent binary structural check on the variant side; no final single-label priority is applied here"
+  },
+  "target_field_diagnostic": {
+    "per_type": {
+      "prohibited_action_present": {
+        "variant_support": 10,
+        "variant_detected": 10,
+        "variant_not_detected": 0,
+        "variant_unknown": 0,
+        "control_target_violation": 0,
+        "control_target_unknown": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "variant_support": 10,
+        "variant_detected": 9,
+        "variant_not_detected": 1,
+        "variant_unknown": 1,
+        "control_target_violation": 1,
+        "control_target_unknown": 0,
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9
+      },
+      "constraint_violated": {
+        "variant_support": 10,
+        "variant_detected": 2,
+        "variant_not_detected": 8,
+        "variant_unknown": 8,
+        "control_target_violation": 0,
+        "control_target_unknown": 8,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "variant_support": 10,
+        "variant_detected": 3,
+        "variant_not_detected": 7,
+        "variant_unknown": 7,
+        "control_target_violation": 0,
+        "control_target_unknown": 1,
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615
+      }
+    },
+    "macro_f1_four_types": 0.6737,
+    "control_target_false_positive_rate": 0.025,
+    "note": "target-field-only diagnostic; controls are not globally compliant for the other three rule fields, so this is reported separately from the unified paired controls"
+  },
+  "paired_evaluation": {
+    "schema_version": "s3_semantic_grounding_paired_evaluator@1.0.0",
+    "total_objects": 80,
+    "control_objects": 40,
+    "variant_objects": 40,
+    "five_class_accuracy": 0.35,
+    "variant_exact_type_accuracy": 0.575,
+    "control_false_positive_rate": 0.55,
+    "paired_accuracy": 0.125,
+    "per_class": {
+      "none": {
+        "support": 40,
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222
+      },
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 0.7692,
+        "recall": 1.0,
+        "f1": 0.8696
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.2581,
+        "recall": 0.8,
+        "f1": 0.3902
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 0.6667,
+        "recall": 0.2,
+        "f1": 0.3077
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.375,
+        "recall": 0.3,
+        "f1": 0.3333
+      }
+    },
+    "macro_f1_four_violation_types": 0.4752,
+    "macro_f1_five_classes": 0.4246,
+    "unobservable": {
+      "total": 20,
+      "variant": 7,
+      "control": 13,
+      "by_reason": {
+        "control_abstention": 13,
+        "condition_surface_ambiguous_or_incomplete": 1,
+        "unsupported_abstract_constraint_kind": 2,
+        "action_grounding_unresolved": 2,
+        "no_handler_and_action_grounding_ambiguous": 1,
+        "dedicated_handler_candidate_exists_but_semantics_ambiguous": 1
+      }
+    },
+    "denominator_policy": "all 80 objects stay in every denominator; None is an abstention and counts as an error, never as a violation or as explicit compliance"
+  },
+  "identifiability_audit": {
+    "audit_kind": "variant_input_identifiability",
+    "collision_group_count": 7,
+    "variant_count_in_collisions": 28,
+    "collision_groups": [
+      {
+        "variant_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_required_condition_02",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_required_condition_03",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "expected_violation": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_02",
+            "expected_violation": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_03",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_06",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_08",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_08",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+        "variants": [
+          {
+            "item_id": "syn_v2_constraint_violated_10",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_10",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_03",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_09",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_06",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      },
+      {
+        "variant_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+        "variants": [
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_required_condition_09",
+            "expected_violation": "required_condition_not_enforced"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_07",
+            "expected_violation": "constraint_violated"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_07",
+            "expected_violation": "exception_not_handled"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_10",
+            "expected_violation": "exception_not_handled"
+          }
+        ]
+      }
+    ],
+    "implication": "single-label unified accuracy is bounded below 1 by input collisions; per-type binary checks and explicit abstention are the valid reporting views"
+  },
+  "fallback": {
+    "real_api_calls": 0,
+    "status": "IMPLEMENTED_NOT_REAL_RUN",
+    "eligible_objects": 26,
+    "triggered_objects": 0,
+    "resolved_objects": 0,
+    "failed_objects": 0,
+    "note": "The fallback schema/validator/mock plumbing is implemented and tested offline. No real API authorization was present for this revision, so no fallback call was made and no LLM-improved metric is reported."
+  },
+  "manifest": {
+    "schema_version": "s3_semantic_grounding_manifest@1.0.0",
+    "run_id": "s3_semantic_grounding_v1",
+    "revision": "s3_semantic_grounding_v1",
+    "scope": "development_only",
+    "generated_utc": "2026-09-12T14:29:26.280129+00:00",
+    "git": {
+      "commit": "unknown",
+      "dirty": null,
+      "dirty_paths": []
+    },
+    "evaluator_version": "s3_semantic_grounding_evaluator@1.0.0",
+    "sample_count": {
+      "variants": 40,
+      "controls": 40,
+      "objects": 80
+    },
+    "inputs": {
+      "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+      "data/development/human_review/stage3_gold_inference_v1.json": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+      "configs/stage1_structural_s11_s14.json": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48",
+      "configs/winter_stage3_development_v1.json": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+      "outputs/evidence/s3_formula_repair_v2/manifest.json": "561a51300380be56e4c03e16b20ce899eda3418fbe300815a4726bfa0ec0a77d",
+      "outputs/reports/s3_formula_repair_v2.json": "f46c4bd49a6e0ad0163af176d6c53b46d5b4d2b33f81a32a99abf49fa49ab35c"
+    },
+    "implementation_hashes": {
+      "scripts/run_s3_semantic_grounding_v1.py": "8ae5c173c1ce66206b522d74d58f936f34fa2318417d9aa62a7dff68a17026af",
+      "src/bpc_hybrid/s3_semantic_grounding_v1.py": "450ca61aea58221d5371d91eac230674ceaedff7be3cc4e44dbef4ae536e01b8",
+      "configs/stage3_semantic_grounding_v1.json": "0478ce8bc56587d0f29d3a35e6d1013b1b0e714cc6c1e89fbd16d261c410803d",
+      "tests/test_s3_semantic_grounding_v1.py": "b3b337ab9fb49041501172307b379ab8a660c1b36900b8e44e56fb61c6145aa4"
+    },
+    "config_sha256": "0478ce8bc56587d0f29d3a35e6d1013b1b0e714cc6c1e89fbd16d261c410803d",
+    "panel_sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+    "thresholds": {
+      "gamma_ext": 0.5,
+      "action_similarity_gamma": 0.4,
+      "action_top_k_similarity": 5,
+      "action_top_k_lexical": 5
+    },
+    "frozen_original_three_regression": {
+      "historical_manifest": "outputs/evidence/s3_formula_repair_v2/manifest.json",
+      "original_three_artifacts": {
+        "outputs/evidence/s3_formula_repair_v2/original_three/reference/evaluation.json": {
+          "expected_sha256": "e881da6cb62e17570baa54935aef1792bc39efb73d7e9d3c44d557e7ac20a940",
+          "actual_sha256": "e881da6cb62e17570baa54935aef1792bc39efb73d7e9d3c44d557e7ac20a940",
+          "match": true
+        },
+        "outputs/evidence/s3_formula_repair_v2/original_three/reference/predictions.jsonl": {
+          "expected_sha256": "ca6c75acff2b45b9371865af6efad4fc81ff1fc24dd7de228ef448c96090b040",
+          "actual_sha256": "ca6c75acff2b45b9371865af6efad4fc81ff1fc24dd7de228ef448c96090b040",
+          "match": true
+        },
+        "outputs/evidence/s3_formula_repair_v2/original_three/reference/rule_records.json": {
+          "expected_sha256": "5062e1a235f942dace1d495f5648a2251681bfb546c7b7d63139e94798144739",
+          "actual_sha256": "5062e1a235f942dace1d495f5648a2251681bfb546c7b7d63139e94798144739",
+          "match": true
+        },
+        "outputs/evidence/s3_formula_repair_v2/original_three/rules_only/evaluation.json": {
+          "expected_sha256": "8ce1970371cda1125293064e5356572a3b7a483b63ac9cf75fc6c0537ec68c9e",
+          "actual_sha256": "8ce1970371cda1125293064e5356572a3b7a483b63ac9cf75fc6c0537ec68c9e",
+          "match": true
+        },
+        "outputs/evidence/s3_formula_repair_v2/original_three/rules_only/predictions.jsonl": {
+          "expected_sha256": "eab93a5fb826ce2724f6f41cdf0f15af10c8ec3625c8128893d3d4621ee90488",
+          "actual_sha256": "eab93a5fb826ce2724f6f41cdf0f15af10c8ec3625c8128893d3d4621ee90488",
+          "match": true
+        },
+        "outputs/evidence/s3_formula_repair_v2/original_three/rules_only/rule_records.json": {
+          "expected_sha256": "9726eab57270da7a2df7706ff6fb23390ec22654f3e1e6735f04f749589020f2",
+          "actual_sha256": "9726eab57270da7a2df7706ff6fb23390ec22654f3e1e6735f04f749589020f2",
+          "match": true
+        }
+      },
+      "original_three_all_match": true,
+      "sun_scorer": {
+        "path": "src/bpc_hybrid/sun_stage3/sun_scorer.py",
+        "historical_hash_mode": "canonical_lf_utf8_text",
+        "expected_sha256": "a045b28631e47fdb912d5db5f922e01d894c9ba5c34dea6d8a1c26a03e34820f",
+        "actual_sha256": "a045b28631e47fdb912d5db5f922e01d894c9ba5c34dea6d8a1c26a03e34820f",
+        "raw_sha256": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+        "canonical_lf_sha256": "a045b28631e47fdb912d5db5f922e01d894c9ba5c34dea6d8a1c26a03e34820f",
+        "match": true
+      }
+    },
+    "llm_fallback": {
+      "status": "IMPLEMENTED_NOT_REAL_RUN",
+      "real_api_calls": 0,
+      "network_calls": 0,
+      "provider": "none",
+      "schema_version": "s3_semantic_grounding_llm_response@1.0.0",
+      "strict_json_validator": true,
+      "fail_closed": true
+    },
+    "safety": {
+      "human_gold_read": false,
+      "human_gold_modified": false,
+      "panel_modified": false,
+      "original_three_modified": false,
+      "existing_s3_formula_repair_v2_overwritten": false,
+      "real_api_calls": 0,
+      "network_calls": 0,
+      "development_only_not_formal_oracle": true,
+      "prediction_metadata_blind": true
+    },
+    "metrics_file": "outputs/development/s3_semantic_grounding_v1/metrics.json",
+    "predictions_file": "outputs/development/s3_semantic_grounding_v1/predictions.jsonl",
+    "evidence_metrics_file": "outputs/evidence/s3_semantic_grounding_v1/metrics.json",
+    "evidence_predictions_file": "outputs/evidence/s3_semantic_grounding_v1/predictions.jsonl",
+    "artifact_hashes_file": "outputs/evidence/s3_semantic_grounding_v1/artifact_hashes.json"
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "panel_modified": false,
+    "original_three_modified": false,
+    "existing_s3_formula_repair_v2_overwritten": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "development_only_not_formal_oracle": true,
+    "prediction_metadata_blind": true
+  },
+  "claim_boundary": "Development-only synthetic controlled-panel result. Not the formal Oracle, not human Gold, and not a claim about Winter/Sun native capability for the four new types. The LLM fallback was not real-run. The panel has byte-identical variant inputs across expected types, so the unified single-label metric is bounded by input non-identifiability; the per-type binary-check evaluation is the valid type-level view."
+}

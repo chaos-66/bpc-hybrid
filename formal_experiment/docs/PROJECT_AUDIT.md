@@ -9,6 +9,42 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## 0. Latest revision: s3_semantic_grounding_v1 (2026-09-12, zero API)
+
+**Status**: VERIFIED_PROJECT_FACT (development-only synthetic controlled panel). The real API is not authorized; the strict LLM semantic-grounding fallback is **IMPLEMENTED / NOT REAL-RUN** (0 calls, 0 network).
+
+**What changed (new implementation only; no frozen evidence overwritten)**:
+- New deterministic-first module `src/bpc_hybrid/s3_semantic_grounding_v1.py`: multi-signal top-K action grounding (`resolved/ambiguous/unresolved`), action-anchored local BPMN surfaces for condition/constraint/exception, explicit `observable absence` vs `unobservable`, and programmatic final decisions.
+- New runner `scripts/run_s3_semantic_grounding_v1.py`, config `configs/stage3_semantic_grounding_v1.json`, focused tests `tests/test_s3_semantic_grounding_v1.py`.
+- New revision artifacts only: `outputs/development/s3_semantic_grounding_v1/`, `outputs/evidence/s3_semantic_grounding_v1/`, `outputs/reports/s3_semantic_grounding_v1.{json,md}`.
+- Frozen original-three evidence and `src/bpc_hybrid/sun_stage3/sun_scorer.py` are hash-verified against the C36 manifest; the historical `s3_formula_repair_v2` artifacts are byte-unchanged.
+
+**Deterministic result (reference/winter similarity backend, 40 variants + 40 controls)**:
+- Unified variant evaluation: 4-type Macro-F1 **0.5886**, exact type accuracy **0.5750**, unobservable **7**.
+- Per-type binary structural checks over all 40 variants: Macro-F1 **0.5619** (prohibited 1.0000 / condition 0.5143 / constraint 0.3333 / exception 0.4000).
+- Target-field diagnostic (only the expected mutated field is scored on each pair): Macro-F1 **0.6737**, control target false-positive rate **0.025**.
+- Paired 80-object view: 5-class Macro-F1 **0.4246**, 5-class accuracy **0.3500**, control any-type FP rate **0.5500**, paired accuracy **0.1250**, unobservable **20**.
+- Baseline comparison against C36 `reference/winter`: unified variant Macro-F1 0.4738 -> 0.5886 (+0.1148), exact 0.4250 -> 0.5750 (+0.1500); paired 5-class Macro-F1 0.3900 -> 0.4246 (+0.0346); paired accuracy 0.2250 -> 0.1250 (-0.1000, documented trade-off).
+
+**Root-cause treatment**:
+- Action grounding no longer uses a single top-1 hard threshold only: top semantic candidates, top lexical-coverage candidates, exact normalized labels, actor/ownership context and top1-top2 margins are recorded; ambiguous/unresolved action grounding no longer becomes a violation.
+- Condition/constraint/exception checks consume finite action-anchored subgraphs. `not_enforced`/`not_handled`/missing-numeric-bound are emitted only for closed local surfaces; a non-matching conditionExpression or a dedicated but semantically ambiguous handler blocks a negative verdict.
+- The explicit numeric time-limit contradiction path is retained and was tested on 72h vs 48h/96h. Unsupported abstract constraints (`without undue delay`, `without hindrance`, clear-language/form/usage restrictions) stay ambiguous/unknown; no `1 - similarity` logical verdict is reported for them.
+
+**Scientific limitation (must be reported with the metrics)**:
+- The frozen panel has **7 byte-identical variant-input collision groups containing 28 variants** because different target controls added different mechanisms on top of the same source BPMN. A single-side deterministic method must make identical predictions inside a collision group, so the unified single-label accuracy has a structural ceiling below 1. The per-type binary-check and target-field diagnostics are the valid type-level views; the paired unified number is retained only for comparability with C36.
+- Exception recall remains limited by action grounding (`apply`, `referred to`, weak lexical overlap) and by the unresolved `where technically feasible` branch cases; no per-sample rules were added.
+- The condition control-target diagnostic contains one known panel artifact: for `syn_v2_required_condition_02` the conditionExpression is attached to the first process flow rather than a locally resolvable action target.
+
+**Reproduce**:
+```powershell
+python formal_experiment/scripts/run_s3_semantic_grounding_v1.py --overwrite
+python -m pytest -q -p no:cacheprovider formal_experiment/tests/test_s3_semantic_grounding_v1.py
+python formal_experiment/scripts/audit_project.py
+```
+
+**Next gate**: real LLM fallback requires explicit user authorization and a locked call budget. Until then the fallback is only implementation + mock/offline tests; no LLM performance claim is made.
+
 ## 1. 当前结论
 
 ### 当前派工：CSCWD 收尾（2026-09-12）

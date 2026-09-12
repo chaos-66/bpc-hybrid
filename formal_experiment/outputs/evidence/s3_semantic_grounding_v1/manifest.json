@@ -1,0 +1,110 @@
+{
+  "schema_version": "s3_semantic_grounding_manifest@1.0.0",
+  "run_id": "s3_semantic_grounding_v1",
+  "revision": "s3_semantic_grounding_v1",
+  "scope": "development_only",
+  "generated_utc": "2026-09-12T14:29:26.280129+00:00",
+  "git": {
+    "commit": "unknown",
+    "dirty": null,
+    "dirty_paths": []
+  },
+  "evaluator_version": "s3_semantic_grounding_evaluator@1.0.0",
+  "sample_count": {
+    "variants": 40,
+    "controls": 40,
+    "objects": 80
+  },
+  "inputs": {
+    "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+    "data/development/human_review/stage3_gold_inference_v1.json": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+    "configs/stage1_structural_s11_s14.json": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48",
+    "configs/winter_stage3_development_v1.json": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+    "outputs/evidence/s3_formula_repair_v2/manifest.json": "561a51300380be56e4c03e16b20ce899eda3418fbe300815a4726bfa0ec0a77d",
+    "outputs/reports/s3_formula_repair_v2.json": "f46c4bd49a6e0ad0163af176d6c53b46d5b4d2b33f81a32a99abf49fa49ab35c"
+  },
+  "implementation_hashes": {
+    "scripts/run_s3_semantic_grounding_v1.py": "8ae5c173c1ce66206b522d74d58f936f34fa2318417d9aa62a7dff68a17026af",
+    "src/bpc_hybrid/s3_semantic_grounding_v1.py": "450ca61aea58221d5371d91eac230674ceaedff7be3cc4e44dbef4ae536e01b8",
+    "configs/stage3_semantic_grounding_v1.json": "0478ce8bc56587d0f29d3a35e6d1013b1b0e714cc6c1e89fbd16d261c410803d",
+    "tests/test_s3_semantic_grounding_v1.py": "b3b337ab9fb49041501172307b379ab8a660c1b36900b8e44e56fb61c6145aa4"
+  },
+  "config_sha256": "0478ce8bc56587d0f29d3a35e6d1013b1b0e714cc6c1e89fbd16d261c410803d",
+  "panel_sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+  "thresholds": {
+    "gamma_ext": 0.5,
+    "action_similarity_gamma": 0.4,
+    "action_top_k_similarity": 5,
+    "action_top_k_lexical": 5
+  },
+  "frozen_original_three_regression": {
+    "historical_manifest": "outputs/evidence/s3_formula_repair_v2/manifest.json",
+    "original_three_artifacts": {
+      "outputs/evidence/s3_formula_repair_v2/original_three/reference/evaluation.json": {
+        "expected_sha256": "e881da6cb62e17570baa54935aef1792bc39efb73d7e9d3c44d557e7ac20a940",
+        "actual_sha256": "e881da6cb62e17570baa54935aef1792bc39efb73d7e9d3c44d557e7ac20a940",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/reference/predictions.jsonl": {
+        "expected_sha256": "ca6c75acff2b45b9371865af6efad4fc81ff1fc24dd7de228ef448c96090b040",
+        "actual_sha256": "ca6c75acff2b45b9371865af6efad4fc81ff1fc24dd7de228ef448c96090b040",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/reference/rule_records.json": {
+        "expected_sha256": "5062e1a235f942dace1d495f5648a2251681bfb546c7b7d63139e94798144739",
+        "actual_sha256": "5062e1a235f942dace1d495f5648a2251681bfb546c7b7d63139e94798144739",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/rules_only/evaluation.json": {
+        "expected_sha256": "8ce1970371cda1125293064e5356572a3b7a483b63ac9cf75fc6c0537ec68c9e",
+        "actual_sha256": "8ce1970371cda1125293064e5356572a3b7a483b63ac9cf75fc6c0537ec68c9e",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/rules_only/predictions.jsonl": {
+        "expected_sha256": "eab93a5fb826ce2724f6f41cdf0f15af10c8ec3625c8128893d3d4621ee90488",
+        "actual_sha256": "eab93a5fb826ce2724f6f41cdf0f15af10c8ec3625c8128893d3d4621ee90488",
+        "match": true
+      },
+      "outputs/evidence/s3_formula_repair_v2/original_three/rules_only/rule_records.json": {
+        "expected_sha256": "9726eab57270da7a2df7706ff6fb23390ec22654f3e1e6735f04f749589020f2",
+        "actual_sha256": "9726eab57270da7a2df7706ff6fb23390ec22654f3e1e6735f04f749589020f2",
+        "match": true
+      }
+    },
+    "original_three_all_match": true,
+    "sun_scorer": {
+      "path": "src/bpc_hybrid/sun_stage3/sun_scorer.py",
+      "historical_hash_mode": "canonical_lf_utf8_text",
+      "expected_sha256": "a045b28631e47fdb912d5db5f922e01d894c9ba5c34dea6d8a1c26a03e34820f",
+      "actual_sha256": "a045b28631e47fdb912d5db5f922e01d894c9ba5c34dea6d8a1c26a03e34820f",
+      "raw_sha256": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+      "canonical_lf_sha256": "a045b28631e47fdb912d5db5f922e01d894c9ba5c34dea6d8a1c26a03e34820f",
+      "match": true
+    }
+  },
+  "llm_fallback": {
+    "status": "IMPLEMENTED_NOT_REAL_RUN",
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "provider": "none",
+    "schema_version": "s3_semantic_grounding_llm_response@1.0.0",
+    "strict_json_validator": true,
+    "fail_closed": true
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "panel_modified": false,
+    "original_three_modified": false,
+    "existing_s3_formula_repair_v2_overwritten": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "development_only_not_formal_oracle": true,
+    "prediction_metadata_blind": true
+  },
+  "metrics_file": "outputs/development/s3_semantic_grounding_v1/metrics.json",
+  "predictions_file": "outputs/development/s3_semantic_grounding_v1/predictions.jsonl",
+  "evidence_metrics_file": "outputs/evidence/s3_semantic_grounding_v1/metrics.json",
+  "evidence_predictions_file": "outputs/evidence/s3_semantic_grounding_v1/predictions.jsonl",
+  "artifact_hashes_file": "outputs/evidence/s3_semantic_grounding_v1/artifact_hashes.json"
+}

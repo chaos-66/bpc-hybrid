@@ -1,0 +1,106 @@
+{
+  "schema_version": "stage3_semantic_grounding@1.0.0",
+  "revision": "s3_semantic_grounding_v1",
+  "scope": "development_only",
+  "task_id": "S3-SEMANTIC-GROUNDING-V1",
+  "claim": "Deterministic-first Stage 3 semantic grounding repair for the four development-only extended violation types, plus a strict, fail-closed LLM semantic-grounding fallback implementation that is NOT real-run without explicit API authorization. This revision does not modify the frozen three-type results, the 33-item human Gold, the 40-variant controlled panel, or the s3_formula_repair_v2 evidence.",
+  "thresholds": {
+    "gamma_ext": 0.5,
+    "action_similarity_gamma": 0.4,
+    "action_top_k_similarity": 5,
+    "action_top_k_lexical": 5,
+    "lexical_strong_coverage": 0.5,
+    "lexical_supported_coverage": 0.3,
+    "lexical_supported_similarity": 0.3,
+    "resolved_similarity_margin": 0.15,
+    "max_local_nodes": 500,
+    "downstream_depth": 8,
+    "upstream_depth": 6,
+    "llm_confidence_threshold": 0.8
+  },
+  "action_grounding": {
+    "inputs": ["rule action text", "process activity labels", "lane/pool ownership names"],
+    "ranked_signals": ["semantic similarity", "content-token coverage", "normalized exact match", "actor context"],
+    "statuses": ["resolved", "ambiguous", "unresolved"],
+    "forbidden_inputs": [
+      "expected_violation",
+      "mutation_type",
+      "mutation_config",
+      "target_activity_id",
+      "synthetic file path label",
+      "human Gold",
+      "item id special case"
+    ],
+    "fallback_policy": "ambiguous or unresolved action grounding may trigger the LLM semantic-grounding fallback only when deterministic structural evidence is not decisive; unresolved never becomes a violation by default."
+  },
+  "checks": {
+    "required_condition_not_enforced": {
+      "rule_fields": ["condition", "action"],
+      "direct_evidence": ["incoming sequenceFlow conditionExpression", "matching predecessor gateway condition expression"],
+      "weak_context": ["sequence-flow labels", "gateway labels", "predecessor control nodes"],
+      "negative_evidence": "not_enforced only when the action-anchored upstream surface is fully enumerated, no conditionExpression exists, no matching condition text exists, and the action grounding candidate set has structural consensus. A non-matching conditionExpression makes the result ambiguous, not violating.",
+      "score_meaning": "enforced / not_enforced / ambiguous / not_applicable; no 1-similarity logical verdict is fabricated."
+    },
+    "constraint_violated": {
+      "rule_fields": ["constraint", "action"],
+      "supported_kind": "time_limit only",
+      "direct_evidence": ["explicit numeric time limits in bound timers, boundary timers, directly associated annotations, nested timers of a locally reached subProcess"],
+      "decision": "explicit numeric upper bound contradicted by a strictly larger bound => violated; an equal-or-tighter bound => satisfied; no numeric bound in a fully enumerated action-bound surface => not_enforced; unsupported abstract constraints (without undue delay, without hindrance, clear language, purpose/usage restrictions) => ambiguous / LLM fallback or unknown, never a deterministic similarity verdict.",
+      "unchanged": "the explicit numeric contradiction logic is retained and must not be shortcut by text similarity."
+    },
+    "exception_not_handled": {
+      "rule_fields": ["exception", "action"],
+      "direct_evidence": ["boundary event attached to a locally reachable activity", "error/escalation definition reachable through such a boundary event", "alternate branch whose target label semantically matches the rule exception"],
+      "negative_evidence": "not_handled only when the action-grounded downstream surface is fully enumerated, no structurally relevant handler exists, and no non-matching handler candidate blocks the conclusion; handler semantics that cannot be matched deterministically stay ambiguous.",
+      "scope_limit": "ordinary alternate branches are not treated as exception handlers unless their target label matches the rule exception or an exception cue."
+    },
+    "prohibited_action_present": {
+      "rule_fields": ["modality", "action"],
+      "decision": "prohibition modality plus an explicit exact/normalized or strongly overlapping activity presence; not a raw global text-similarity threshold."
+    }
+  },
+  "llm_fallback": {
+    "enabled": false,
+    "real_api_calls": 0,
+    "status": "IMPLEMENTED_NOT_REAL_RUN",
+    "provider": "none",
+    "schema_version": "s3_semantic_grounding_llm_response@1.0.0",
+    "trigger_only_on": ["ambiguous", "unresolved"],
+    "max_candidate_activities": 5,
+    "max_local_context_nodes": 60,
+    "confidence_threshold": 0.8,
+    "strict_json": true,
+    "fail_closed": true,
+    "forbidden_inputs": ["complete raw regulation text", "complete BPMN XML", "expected_violation", "mutation_config", "target_activity_id", "human Gold"],
+    "evidence_id_validation": "every evidence id must exist in the compact input local context; hallucinated or missing ids reject the response and produce unknown",
+    "final_decision_owner": "program"
+  },
+  "evaluation": {
+    "panel": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+    "objects": 80,
+    "variants": 40,
+    "controls": 40,
+    "primary": "development-only paired five-class evaluation with abstention retained and no sample dropped",
+    "baseline": "outputs/reports/s3_formula_repair_v2.json reference/winter",
+    "must_report": [
+      "per-type precision/recall/F1",
+      "variant 4-type macro-F1",
+      "paired 5-class macro-F1",
+      "variant exact accuracy",
+      "control false-positive rate",
+      "paired accuracy",
+      "unobservable total and by reason",
+      "LLM fallback trigger/resolved/failed counts"
+    ]
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "frozen_original_three_modified": false,
+    "panel_modified": false,
+    "existing_s3_formula_repair_v2_overwritten": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "development_only_not_formal_oracle": true
+  }
+}
