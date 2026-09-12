@@ -1,262 +1,207 @@
-# 案例分析：SIM 卡入网流程（开发性案例，非正式 Gold）
+# 案例分析：SIM 卡入网流程（派生案例，开发性案例研究，非正式 Gold）
 
-> 本节数字取自 `outputs/development/sim_case_c1/run_v1/capsule.json`（`capsule.claim_scope =
-> development_case_study_not_formal_gold`）与逐条核对表 `outputs/reports/sim_case_c1_checklist.md`；不新增运行、
-> 不新增 API 调用、不把开发参考判断当正式 Gold。
+> 本节全部数字取自当前运行胶囊 `formal_experiment/outputs/development/sim_case_c1/run_v1/capsule.json`（run `sim_case_c1_run_v1`；`capsule.claim_scope = development_case_study_not_formal_gold`），每个数字后括注来源字段；渲染报告 `formal_experiment/outputs/reports/sim_case_c1_results.md` 仅作一致性参照。本轮不新增运行、不新增 API/LLM 调用、不修改任何输入，缺失项一律写“未做/缺失”。
 
 ## 1. 案例与数据来源
 
-流程对象是 **Barrientos 的 Sun 派生 SIM 场景**，即**派生案例（derived case）**，不是 Sun 论文 §5.4 的原始图示，
-也不是作者仓库中的可执行模型：本轮只读使用 `references/barrientos_2026/artifact_input/process_models/`
-`SIM_card_scenario/SIM_card_scenario.bpmn`（sha256 `338c8144…`、67048 字节，`capsule.plan.inputs.bpmn`），不复制原文或原图。
-规则集按任务书 v5 固定为 **5 条 v2 非空规则**：r8/v2、r9/v2、r10/v2、r11/v2、r13/v2（`capsule.plan.main_denominator`）；
-**r12 作为“需求删除 + 外部 over-compliance”背景单列**，不进该分母（`capsule.plan.background_items`）；空文本条目
-**r9/v1 与 r12/v2 不进入抽取与检测**（任务书 §10、核对表 §2）。全部输入只读使用，规则文本以长度与哈希绑定
-（r8 92、r9 124、r10 136、r11 126、r13 88，`capsule.rules.<id>.rule_text_length`）。分组与政策在打分前写入计划：
-`capsule.plan.written_before_scoring`、`capsule.plan.declared_policy.declared_before_scoring` 均为 `true`。
+流程对象是 **Barrientos 的 Sun 派生 SIM 场景**，即**派生案例（derived case）**：它不是 Sun 论文 §5.4 的原始图示，也不是作者仓库中的可执行模型；本轮只读使用其 BPMN 文件（sha256 `338c8144…`、67048 字节，`capsule.plan.inputs.bpmn.sha256` / `.bytes`）。规则输入为需求文件（sha256 `e13d9a2a…`、1707 字节，`capsule.plan.inputs.requirements.sha256` / `.bytes`）；外部答案键 `step_3_baseline.json`（sha256 `96b3c1e8…`，`capsule.plan.inputs.step_3_baseline.sha256`）只读且只用于比较；开发参考判断存 `data/development/sim_case_c1/case_items_v2.json`（sha256 `a5324734…`、12037 字节，`capsule.plan.inputs.curated_reference_judgments`），方法输出单独成胶囊，二者分开存放。
+
+主实验规则集固定为 **5 条 v2 非空规则**：r8/v2、r9/v2、r10/v2、r11/v2、r13/v2（`capsule.plan.main_denominator`，5 项）；**r12 只作“需求删除 + 外部 over-compliance”背景单列**，不进该分母（`capsule.plan.background_items`，1 项）；空文本条目 **r9/v1 与 r12/v2 不进入抽取与检测**（任务书 §10 已决事项，胶囊侧体现为上述 5 项分母与 1 项背景）。规则文本以长度与哈希绑定：r8 92、r9 124、r10 136、r11 126、r13 88 字符（`capsule.rules.<id>.rule_text_length`）；全部输入只读，不复制原文或原图。
+
+分组、阈值、角色绑定与顺序推导政策均在打分前写入计划（`capsule.plan.written_before_scoring = true`、`capsule.plan.declared_policy.declared_before_scoring = true`）；输入隔离由三个布尔记录：参考判断在预测之后才读取、外部偏差标签不在检测输入中、`step_3_baseline` 只读用于比较（`capsule.plan.prediction_isolation.reference_judgments_read_after_predictions` / `.external_deviations_not_in_detection_input` / `.step_3_baseline_read_only_for_comparison`，均为 `true`）。
 
 ## 2. 方法与三组设置
 
-### 2.1 公共 Stage 1 记录与声明的扁平化适配
+### 2.1 公共 Stage 1 记录与声明的协作图扁平化适配
 
-三组共用同一份 Stage 1 公共记录（`capsule.stage1_public_record`）：`activities = 12`、`gateways = 6`、
-`events = 8`、`flows = 26`，泳道 3 个（`Customer` / `Phone company` / `Another phone company`）；扁平化 XML 哈希
-`bbfaf4d5…`、过程记录哈希 `33bccf7b…`。**必须声明的事实与后果**：冻结解析器只支持单流程，因此本案例做了
-**声明的协作图扁平化适配**——原流程是三个 participant 的协作图，而冻结的 Stage 1 解析器要求单个 process，故进入
-检测的是扁平化后的单流程记录。后果两点且均可观察：①修复件的模型证据里泳道被压成单一泳道
-`SIM card scenario (flattened)`（`capsule.repairs[*].model_evidence.lanes`，5 个修复件全部如此），原图的三泳道参与者
-边界在适配后不再作为泳道保留；②参与者的角色归属因此依赖声明的场景角色绑定（§2.3），角色类结论只在绑定政策成立
-时可读。
+三组共用同一份 Stage 1 公共记录（`capsule.plan.stage1_public_record`）：activities 12、gateways 6、events 8、flows 26，泳道 3 个（`Phone company` / `Another phone company` / `Customer`）；扁平化 XML 哈希 `29a31cfc…`、过程记录哈希 `324091aa…`（`capsule.plan.stage1_public_record.flattened_xml_sha256` / `.process_record_sha256`）。
 
-### 2.2 三组定义与阈值
+**必须随文声明的适配事实**：冻结的 Stage 1 解析器只接受单个 process，而原流程是多 participant 的协作图，因此进入检测的是**声明的协作图扁平化**结果——参与者边界以**命名泳道**保留（3 个泳道名即三个 participant 名，`capsule.plan.stage1_public_record.lanes`），而 **collaboration 下的 message flow 未建模**（任务书 §11 第 8 行；胶囊内**没有消息流计数字段，未做/缺失**）。该适配的后果是：跨参与者的角色归属只能依赖声明的角色绑定（§2.3），角色类结论仅在绑定成立时可读。
 
-| 组 | Stage 2（规则记录来源） | 原三类检测 | 四类扩展检测 | 来源字段 |
+### 2.2 三组设置
+
+| 组 | Stage 2（规则记录来源） | 三类检测 | 四类扩展检测 | 来源字段 |
 |---|---|---|---|---|
-| **A** | 非 LLM 确定性适配器：由 v2 规则文本按声明政策构造规则记录 | 冻结 Sun 式三类检测 | ✗ | `capsule.plan.groups.A` |
-| **B** | 换成既有真实 LLM 抽取（该臂 repeat-01） | **与 A 完全相同的三类检测** | ✗ | `capsule.plan.groups.B` |
-| **C** | **与 B 同一份 Stage 2** | **与 B 相同的三类结果** | ✓ 四类 | `capsule.plan.groups.C` |
+| **A** | 项目锁定非 LLM 基线 B0 v10a：入口 `bpc_hybrid.estg150_b0_development_v10.run_b0_batch_v10`、`PROFILE_V10A`（CoreNLP + Tregex + BERT-TextCNN） | 冻结 Sun 式 `sun_stage3.sun_scorer.SunScorer`（Def5-7） | `not run` | `capsule.plan.components.A.stage2` / `.A.stage3` |
+| **B** | 既有真实 LLM 预测 `outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-01`，经 `bpc_hybrid.gdpr_s2_s3_projection.project_external_sentence` 投影 | 与 A **同一代码与阈值** | `not run` | `capsule.plan.components.B.stage2` / `.B.stage3` |
+| **C** | 与 B 完全相同（同一行对象，`identical to B (same row objects)`） | 三类行逐行复用 B（`identical rows reused from B`） | `RepairedExtendedScorerV2`（v3 = EvidenceChecksV3 γ 0.8、标签回退 0.4、γ_ext 0.5）+ `aggregate_with_comparison_gate` | `capsule.plan.components.C.stage2` / `.C.stage3` |
 
-隔离性由胶囊记录：参考判断在预测之后才读取、外部偏差标签不在检测输入中、step_3 基线只读用于比较
-（`capsule.prediction_isolation` 三个布尔字段均为 `true`）；实现哈希 `capsule.implementation_hashes`
-（core `61ddf99e…`、transforms `82f98dfd…`、runner `e0e24432…`）。阈值：τ = 0.8、γ = 0.8、θ = 0.8、
-γ_ext = 0.5（`capsule.plan.thresholds.tau` / `.gamma` / `.theta` / `.gamma_ext`），来源为
-`configs/sun_stage3_development_v1.json` + 冻结的扩展 γ（`capsule.plan.thresholds.source`）。
+**必须披露的语言边界**：A 组的 Stage 2 是英文句子经由**德语合同分类器槽**（`English sentences through the German-contract classifier slot`，`capsule.plan.components.A.stage2.language_boundary`）；A 组 5 条规则的 `stage2_meta.source` 均为 `sun_rule_only_b0_v10a`（`capsule.rules.<id>.sides.A.stage2_meta.source`），其基线胶囊为 `outputs/development/sim_case_c1/stage2_baseline_v1/capsule.json`（sha256 `cd13e08a…`、17358 字节，`capsule.plan.inputs.stage2_baseline_capsule`）；B 组预测输入文件 sha256 `6fab1108…`、63932 字节（`capsule.plan.inputs.predictions_repeat01`），本轮只用**预先固定的 repeat-01**，不择优、不把重复当独立样本。A 组规则记录由**公共适配政策**构造，其中按声明的角色绑定把场景角色写回记录（例如 r11 的 `sides.A.sentence.actor_bound_from = "Data Controller"` 被绑定为 `Phone company`，`capsule.rules.r11.sides.A.sentence`）。
 
-### 2.3 两个声明政策
+相似度后端为 `bpc_hybrid.winter_stage3.winter_similarity.WinterSimilarity`（`nlp = en_core_web_sm`），行为是 `Doc.similarity over context-sensitive tensors`（spaCy W007：模型不带静态词向量）——**它不是字符串相似度，也不是静态向量相似度**（`capsule.plan.components.similarity_backend`）。实现哈希：core `6f9679c0…`、transforms `a7e34eb0…`、runner `abd16969…`（`capsule.plan.implementation_hashes`）。
 
-**角色绑定政策**（打分前声明、三组统一）：`Data Controller → Phone company`、`Data Subject → Customer`
-（`capsule.plan.declared_policy.role_binding`）；并禁止按结果新增角色绑定、动作同义词或规则 ID 特判
-（`capsule.plan.declared_policy.forbidden`，2 条）。**顺序关系推导政策** `temporal_marker_from_condition_v1`：
-抽出的 condition 以 before/after 时间标记开头时，在主动作与条件内动作之间生成一条顺序关系，由同一政策对 A/B/C
-统一施加，不读取外部答案或偏离标签（`capsule.plan.declared_policy.order_relation_derivation`，
-`applies_to_groups = [A, B, C]`）。该政策实际产出为空：全部行的规则侧顺序关系合计 **0** 条（核对表 §4），这直接
-导致顺序类检查一律无法判断。
+### 2.3 阈值、角色绑定与顺序推导政策
+
+- **阈值**：τ = 0.8、γ = 0.8、θ = 0.8、γ_ext = 0.5、标签回退 γ = 0.4（`capsule.plan.thresholds.tau` / `.gamma` / `.theta` / `.gamma_ext` / `.label_fallback_gamma`），来源 `configs/sun_stage3_development_v1.json + REPAIR-V2 arm C configuration`（`capsule.plan.thresholds.source`）。
+- **角色绑定**（打分前声明、三组统一）：`Data Controller → Phone company`、`Data Subject → Customer`（`capsule.plan.declared_policy.role_binding`，2 对）；同时声明 2 条禁止项：不得按结果新增角色绑定、动作同义词或规则 ID 特判，不得用外部偏差标签或参考判断回填规则记录（`capsule.plan.declared_policy.forbidden`）。
+- **顺序推导政策** `temporal_marker_from_condition_v2`，`comma_handling = comma_optional_v2`（`capsule.plan.declared_policy.order_relation_derivation.name` / `.comma_handling`）：当抽出的 condition 以 before/after 时间标记开头时，在主动作与条件内动作之间生成一条顺序关系（`Before X, Y` → (Y, X)；`After X, Y` → (X, Y)），端点取逗号前的条件片段，**没有逗号时取整个条件片段**（两种写法语义相同）；非时间标记条件（if / when 等）不生成顺序关系。该政策对 A/B/C 三组统一施加（`…order_relation_derivation.applies_to_groups`，3 项），不读取任何外部答案或偏离标签；其 v1 要求条件片段含逗号，而本案例的抽取结果没有逗号，导致 r9/r11 在三组都报 `no_mapped_rule_order_endpoints`，v2 改为逗号可选（`…order_relation_derivation.fix_note_zh`）。
 
 ## 3. 结果
 
-### 3.1 逐条状态表（规则 × 检测项 × 状态）
+### 3.1 逐条状态表（规则 × 检查 × 组）
 
-状态取 `violation` / `satisfied` / `undetermined`（`capsule.rows[*].status`）；四类检查仅 C 组启用，
-“—”表示该组未做；`U(<code>)` 表示 `undetermined`，括注为 `capsule.rows[*].reason` 的机器值（表下给含义）。
+表中状态来源字段为 `capsule.rows[*].status`（35 行），括号内为 `capsule.rows[*].score`；`U(...)` 表示 `undetermined`，括号内为 `capsule.rows[*].reason` 的机器值；`n/a(...)` 表示 `not_applicable`；`—` 表示该组未做该检查（A/B 组 `four_types = not run`，`capsule.plan.components.A.stage3.four_types` / `.B.stage3.four_types`）。列名与检查名对应：`prohibited` = `prohibited_action_present`、`condition` = `required_condition_not_enforced`、`constraint` = `constraint_violated`、`exception` = `exception_not_handled`。
 
-| 规则 | 检测项 | A | B | C |
-|---|---|---|---|---|
-| r8 | missing_action | violation | violation | violation |
-| r8 | incorrect_actor | U(action_mapping_below_gamma) | U(empty_rule_actor_denominator) | U(empty_rule_actor_denominator) |
-| r8 | out_of_order | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) |
-| r8 | prohibited_action_present | — | — | U(rule_modality_not_prohibition) |
-| r8 | required_condition_not_enforced | — | — | U(action_mapping_below_gamma) |
-| r8 | constraint_violated | — | — | U(action_mapping_below_gamma) |
-| r8 | exception_not_handled | — | — | U(empty_rule_exception) |
-| r9 | missing_action | violation | violation | violation |
-| r9 | incorrect_actor | U(empty_rule_actor_denominator) | U(action_mapping_below_gamma) | U(action_mapping_below_gamma) |
-| r9 | out_of_order | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) |
-| r9 | prohibited_action_present | — | — | U(rule_modality_not_prohibition) |
-| r9 | required_condition_not_enforced | — | — | U(action_mapping_below_gamma) |
-| r9 | constraint_violated | — | — | U(empty_rule_constraint) |
-| r9 | exception_not_handled | — | — | U(empty_rule_exception) |
-| r10 | missing_action | satisfied | satisfied | satisfied |
-| r10 | incorrect_actor | violation | violation | violation |
-| r10 | out_of_order | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) |
-| r10 | prohibited_action_present | — | — | U(rule_modality_not_prohibition) |
-| r10 | required_condition_not_enforced | — | — | violation |
-| r10 | constraint_violated | — | — | violation |
-| r10 | exception_not_handled | — | — | U(empty_rule_exception) |
-| r11 | missing_action | violation | violation | violation |
-| r11 | incorrect_actor | U(action_mapping_below_gamma) | U(action_mapping_below_gamma) | U(action_mapping_below_gamma) |
-| r11 | out_of_order | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) |
-| r11 | prohibited_action_present | — | — | U(rule_modality_not_prohibition) |
-| r11 | required_condition_not_enforced | — | — | U(action_mapping_below_gamma) |
-| r11 | constraint_violated | — | — | U(empty_rule_constraint) |
-| r11 | exception_not_handled | — | — | U(empty_rule_exception) |
-| r13 | missing_action | violation | satisfied | satisfied |
-| r13 | incorrect_actor | U(action_mapping_below_gamma) | violation | violation |
-| r13 | out_of_order | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) | U(no_mapped_rule_order_endpoints) |
-| r13 | prohibited_action_present | — | — | violation |
-| r13 | required_condition_not_enforced | — | — | U(empty_rule_condition) |
-| r13 | constraint_violated | — | — | U(empty_rule_constraint) |
-| r13 | exception_not_handled | — | — | U(empty_rule_exception) |
+| 规则 | 组 | missing_action | incorrect_actor | out_of_order | prohibited | condition | constraint | exception |
+|---|---|---|---|---|---|---|---|---|
+| r8/v2 | A | violation (1.0) | U(empty_rule_actor_denominator) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r8/v2 | B | violation (1.0) | U(empty_rule_actor_denominator) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r8/v2 | C | violation (1.0) | U(empty_rule_actor_denominator) | U(no_mapped_rule_order_endpoints) | U(rule_modality_not_prohibition) | violation (1.0) | violation (0.674966) | U(empty_rule_exception) |
+| r9/v2 | A | n/a(empty_rule_action) | U(empty_rule_actor_denominator) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r9/v2 | B | violation (1.0) | U(action_mapping_below_gamma) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r9/v2 | C | violation (1.0) | U(action_mapping_below_gamma) | U(no_mapped_rule_order_endpoints) | U(rule_modality_not_prohibition) | U(label_argmax_below_action_gamma) | U(empty_rule_constraint) | U(empty_rule_exception) |
+| r10/v2 | A | violation (1.0) | U(action_mapping_below_gamma) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r10/v2 | B | satisfied (0.0) | violation (1.0) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r10/v2 | C | satisfied (0.0) | violation (1.0) | U(no_mapped_rule_order_endpoints) | U(rule_modality_not_prohibition) | violation (0.92683) | violation (0.623876) | U(empty_rule_exception) |
+| r11/v2 | A | violation (1.0) | U(action_mapping_below_gamma) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r11/v2 | B | violation (1.0) | U(action_mapping_below_gamma) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r11/v2 | C | violation (1.0) | U(action_mapping_below_gamma) | U(no_mapped_rule_order_endpoints) | U(rule_modality_not_prohibition) | U(v3_localization_undetermined) | U(empty_rule_constraint) | U(empty_rule_exception) |
+| r13/v2 | A | n/a(empty_rule_action) | U(empty_rule_actor_denominator) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r13/v2 | B | satisfied (0.0) | violation (1.0) | U(no_mapped_rule_order_endpoints) | — | — | — | — |
+| r13/v2 | C | satisfied (0.0) | violation (1.0) | U(no_mapped_rule_order_endpoints) | violation (0.628643) | U(empty_rule_condition) | U(empty_rule_constraint) | U(empty_rule_exception) |
 
-原因码含义（均为 `capsule.rows[*].reason`）：`no_mapped_rule_order_endpoints` = 规则侧顺序关系缺端点（15 行同因）；
-`action_mapping_below_gamma` = 动作映射低于 γ；`empty_rule_actor_denominator` = 规则侧执行者字段为空；
-`empty_rule_condition` / `empty_rule_constraint` / `empty_rule_exception` = 规则侧对应字段为空；
-`rule_modality_not_prohibition` = 情态不是 prohibition。C 组三类行另带 `inherited_from = "B"` 与
-`reuses_group_b = ["stage2", "three_type_rows"]`，即三类结果逐字节复用 B（5 条规则全部如此）。
+C 组的三类行与 B 组完全一致并带 `inherited_from = "B"`，四类行带 `added_by = "four_extended_types"`（`capsule.rows[*].inherited_from` / `.added_by`）。四类候选面在 5 条规则上固定：条件候选 4 条、约束候选 29 条、例外候选 6 条（`capsule.rules.<id>.sides.C.surfaces.condition_candidates` / `.constraint_candidates` / `.exception_candidates`）。
 
-### 3.2 计数表与 C 组构成
+### 3.2 哪些是 violation、哪些是 undetermined、哪些是 not_applicable
 
-| 组 | 检查数 | violation | undetermined | satisfied | 来源字段 |
-|---|---|---|---|---|---|
-| A | 15 | 5 | 9 | 1 | `capsule.summary.A` |
-| B | 15 | 5 | 8 | 2 | `capsule.summary.B` |
-| C | 35 | 8 | 25 | 2 | `capsule.summary.C` |
+**violation（有证据）**：A 组 3 条（`capsule.summary.A.status_counts.violation`）——r8 `missing_action`（1.0）、r10 `missing_action`（1.0）、r11 `missing_action`（1.0）；B 组 5 条（`capsule.summary.B.status_counts.violation`）——r8 `missing_action`（1.0）、r9 `missing_action`（1.0）、r10 `incorrect_actor`（1.0）、r11 `missing_action`（1.0）、r13 `incorrect_actor`（1.0）；C 组 10 条（`capsule.summary.C.status_counts.violation`）= 继承 B 的 5 条 + 四类新增 5 条：r8 `required_condition_not_enforced`（1.0）与 `constraint_violated`（0.674966）、r10 `required_condition_not_enforced`（0.92683）与 `constraint_violated`（0.623876）、r13 `prohibited_action_present`（0.628643）（`capsule.rows[*]`）。
 
-**C 组构成必须写明**：C 含 **15 条继承自 B 的三类检查**（5 条规则 × 3 类）与 **20 条新增四类检查**
-（5 条规则 × 4 类：`prohibited_action_present`、`required_condition_not_enforced`、`constraint_violated`、
-`exception_not_handled`），15 + 20 = 35 与 `capsule.summary.C.checks` 一致；新增行均带 `added_by =
-"four_extended_types"`。四类候选面固定：条件 4 条、约束 29 条、例外 6 条（`capsule.rules.<id>.sides.C.surfaces.*`）。
+**satisfied**：B 组 2 条、C 组 2 条（`capsule.summary.B.status_counts.satisfied` / `.C.status_counts.satisfied`）——r10 `missing_action` 与 r13 `missing_action`，分数均为 0.0（`capsule.rows[*]`）。
 
-### 3.3 数值明细（供核对）
+**not_applicable（A 组 2 条，`capsule.summary.A.status_counts.not_applicable`）**：r9 `missing_action` 与 r13 `missing_action`，机器原因均为 `empty_rule_action`（`capsule.rows[*].reason`）。其含义是 **A 组规则记录没有动作字段**：B0 v10a 对 r9、r13 的原始抽取动作为 0 条（`capsule.rules.r9.chain.groups.A.field_flow.actions.raw_count`、`capsule.rules.r13.chain.groups.A.field_flow.actions.raw_count` 均为 0，`verdict = not_extracted`），因此该检查没有规则侧单位——这是“规则侧无对象”，不等于“模型合规”，也不等于“问题不存在”。
 
-- **r8**：`missing_action` A/B/C 均 score 1.0、denominator 1、最佳模型动作相似度 0.7524；C 组
-  `required_condition_not_enforced` / `constraint_violated` / `exception_not_handled` 候选数 4 / 29 / 6，score 为 null。
-- **r9 / r10 / r11**：四类中未判定的行（r9 与 r11 的 `required_condition_not_enforced`、`constraint_violated` 与
-  `exception_not_handled`，r10 的 `exception_not_handled`）score 均为 null；r9 与 r11 的条件/约束候选数为 4 与 29，
-  例外候选数为 6；`missing_action` 方面 r9 为 1.0（0.4219）、r11 为 1.0（A 侧 0.6042、B/C 侧 0.7401）。
-- **r10**：`missing_action` A/B/C 均 score 0.0、denominator 1、相似度 0.8582；`incorrect_actor` A 组 score 1.0、
-  denominator 1、最小参与者相似度 0.3898，B/C 组 score 1.0、最小参与者相似度 0.3334；C 组
-  `required_condition_not_enforced` score 0.92683（best_candidate `Requested`、max_sim 0.07317）、
-  `constraint_violated` score 0.623876（best_candidate `Receive SIM card`、max_sim 0.376124）。
-- **r13**：`missing_action` A 组 score 1.0、相似度 0.5844，B/C 组 score 0.0、相似度 0.8524；`incorrect_actor`
-  B/C 组 score 1.0、denominator 1、最小参与者相似度 0.3442；C 组 `prohibited_action_present` score 0.628643
-  （best_candidate `Ask portability third company`、max_sim 0.628643）。四类映射活动：r8 → `Send SIM card`（0.804544）、
-  r11 → `Ask for consent`（0.725865）、r9 与 r13 均 → `Ask portability third company`（0.388024 / 0.628643）；以上取
-  `capsule.rows[*]` 与 `capsule.rules.<id>.sides.<group>`，未列出的四类 undetermined 行 score 均为 null。
+**undetermined（A 组 10、B 组 8、C 组 23 条，`capsule.summary.<组>.status_counts.undetermined`）** 的机器原因分布如下（逐行取自 `capsule.rows[*].reason`）：
 
-### 3.4 实际检出、无法判断，以及与开发参考判断的一致性
-
-- **实际检出（三类）**：r9 的 `missing_action`（A/B/C 均 violation，1.0）、r10 的 `incorrect_actor`（A/B/C 均
-  violation，1.0）、r10 的 `missing_action`（三组均 satisfied，0.0）、r13 的 `missing_action`（B/C satisfied，0.0）。
-- **实际检出（四类，仅 C）**：r13 的 `prohibited_action_present`（violation，0.628643）、r10 的
-  `required_condition_not_enforced`（violation，0.92683）、r10 的 `constraint_violated`（violation，0.623876）；
-  其余 17 条四类检查全部 undetermined。
-- **与开发参考判断的一致性**：参考判断为“问题存在”的 5 条规则中，r9、r10、r13 在 C 组
-  `found_corresponding_problem = true`；r8 与 r11 为 `false` 且 `all_lenses_undetermined = true`、
-  `miss_kind = "undetermined"`（`capsule.comparison[*].consistency`），其三类型视角在 A 与 B 均为 `covered_lenses = []`。
-  **“无法判断”没有被当作合规**：不可判行保留在分母与计数中并与判定结果同时呈现（A 9、B 8、C 25 条，§3.2）。
-
-## 4. 阶段差异
-
-### 4.1 A → B：规则记录的变化字段与归因
-
-A→B 的每处变化都归因为**抽取（extraction）**，5 条规则的 `attribution` 全为 `extraction`
-（`capsule.stage_attribution.a_to_b.<id>`）。
-
-| 规则 | A→B 变化字段 | 变化要点 | 归因 |
+| 机器原因 | A | B | C |
 |---|---|---|---|
-| r8 / r10 | actors、actor_action_pairs、constraint | r8 的 actors 变为 `[]`、constraint 变为 `more than 30 days`；r10 的 actor 由 `the customer` 变为 `the phone company` | extraction |
-| r9 | modality、actors、actor_action_pairs | modality 变为 `obligation`；actors 由 `[]` 变为 `["it"]`（代词） | extraction |
-| r11 / r13 | modality、actions、actor_action_pairs | r11 的 actions 变为 `ask the Data Subject for consent`；r13 的 modality 变为 `prohibition`、actions 改为 `receive new SIM cards` | extraction |
+| `no_mapped_rule_order_endpoints` | 5 | 5 | 5 |
+| `empty_rule_actor_denominator` | 3 | 1 | 1 |
+| `action_mapping_below_gamma` | 2 | 2 | 2 |
+| `rule_modality_not_prohibition` | 0 | 0 | 4 |
+| `empty_rule_exception` | 0 | 0 | 5 |
+| `empty_rule_constraint` | 0 | 0 | 3 |
+| `label_argmax_below_action_gamma` | 0 | 0 | 1 |
+| `v3_localization_undetermined` | 0 | 0 | 1 |
+| `empty_rule_condition` | 0 | 0 | 1 |
 
-可见后果：r9 的 `incorrect_actor` 由 `empty_rule_actor_denominator` 变为 `action_mapping_below_gamma`（actor 抽成
-代词 `it`）；r13 的 `missing_action` 由 violation 变为 satisfied（0.5844 → 0.8524）；r13 的 `incorrect_actor` 由
-undetermined 变为 violation（0.3442）。计数上 undetermined 由 9 降到 8、satisfied 由 1 升到 2
-（`capsule.summary.A.status_counts` / `capsule.summary.B.status_counts`）。
+不可判断的行**没有被当作合规**：它们保留在分母与计数中并与判定结果同时呈现（`capsule.summary.<组>.checks` 与 `capsule.summary.<组>.status_counts`）。
 
-### 4.2 B → C：只是新增检测能力
+### 3.3 计数表、C 组构成与门控输出
 
-B→C 不改变 Stage 2，也不改变三类结果：C 组三类行全部 `inherited_from = "B"` 且逐字节复用
-（`capsule.stage_attribution.b_to_c`）。因此 B→C 的全部计数差（检查数 15 → 35、violation 5 → 8、undetermined
-8 → 25）都来自新增的 20 条四类检查（3 条 violation：r10 两条、r13 一条；17 条 undetermined）。
+| 组 | 检查数 | violation | satisfied | undetermined | not_applicable | 来源字段 |
+|---|---|---|---|---|---|---|
+| A | 15 | 3 | 0 | 10 | 2 | `capsule.summary.A` |
+| B | 15 | 5 | 2 | 8 | 0 | `capsule.summary.B` |
+| C | 35 | 10 | 2 | 23 | 0 | `capsule.summary.C` |
 
-## 5. 修复对照
+**C 组构成必须写明**：C 含 **15 条继承自 B 的三类检查**（5 条规则 × 3 类）与 **20 条新增四类检查**（5 条规则 × 4 类），15 + 20 = 35 与 `capsule.summary.C.checks` 一致。四类扩展的映射活动为：r8 → `New client acquired`（0.446202）、r9 → `Ask portability third company`（0.388024）、r10 → `Send SIM card`（0.804544）、r11 → `Ask for consent`（0.725865）、r13 → `Ask portability third company`（0.628643）（`capsule.rules.<id>.sides.C.mapped_activity.name` / `.similarity`）。C 组门控输出（`capsule.rules.<id>.sides.C.gate`）如下：
 
-5 个最小修复件在运行前固定（`data/development/sim_case_c1/repair_specs_v1.json`，`status = fixed_before_run`），原始
-BPMN 永不修改，修复后的 XML 只在 gitignored 本地目录生成；下表“修复前”取 B 组、“修复后”取 C 组
-（`capsule.repairs[*].group_B` / `.group_C`），行内 `U(...)` 为 undetermined 及其 `after_reason`。
-
-| 修复件 | 最小操作 | 修复前（B） | 修复后（C） | 是否消除 |
+| 规则 | `predicted` | 证据比较次数 | 禁止比较执行 | `all_unobservable` |
 |---|---|---|---|---|
-| r8_timeout_termination | 在 `Send SIM card` 上挂 30 天边界计时器并连到终止事件 | 该检查 B 组未做（before 为 null） | U(action_mapping_below_gamma) | 否 |
-| r9_add_verification | 在 `Sign contract` 之前插入核验个人信息正确性的活动 | violation (1.0) | violation (1.0) | 否 |
-| r10_activation_owner | 把 `Activate SIM card` 的泳道归属由 `Customer` 改为 `Phone company` | violation (1.0) | violation (1.0) | 否 |
-| r11_consent_before_retrieval | 把 `Ask for consent` 移到取数之前并恢复 `Store Data` 的后继 | U(score 0.0) | U(score 0.0) | 否 |
-| r13_threshold_50 | 把该连线标签由 `Debt < 100` 改为 `Debt <= 50` | 该检查 B 组未做（before 为 null） | U(empty_rule_condition) | 否（5 条 `problem_removed` 均为 `false`） |
+| r8/v2 | `required_condition_not_enforced` | 2 | false | false |
+| r9/v2 | null | 0 | false | true |
+| r10/v2 | `required_condition_not_enforced` | 2 | false | false |
+| r11/v2 | null | 0 | false | true |
+| r13/v2 | `prohibited_action_present` | 0 | true | false |
 
-对**未消除**的条目，原因可具体定位：
+即：r8、r10 的判定**执行过 2 次证据比较**；r9、r11 无任何可观测类型（`all_unobservable = true`，比较次数 0）；r13 只做了禁止类比较（`prohibition_comparison_performed = true`）。门控统一声明 `explicit_compliance_requires_an_evidence_comparison = true`，即“明确合规必须有一次证据比较”。
 
-- **r8**：修复件确实改了模型结构（事件 8 → 10、流程 26 → 27，`capsule.repairs[0].model_evidence`），但检测侧依旧
-  `action_mapping_below_gamma`——**结构面已补、检测面仍不可读**；该检查在 B 组的修复前为 null（未做），故只有 C 组可
-  比较。**r9**：修复件新增 1 个活动（12 → 13、流程 26 → 27，`capsule.repairs[1].model_evidence`），但 B/C 侧最佳模型
-  动作仍是 `Ask portability third company`（0.4219），低于 γ，仍为 violation。**r10**：泳道归属被移动后最小参与者
-  相似度由 0.3898 变为 0.3334（`capsule.rules.r10.sides.A` 对比 B 侧 `incorrect_actor.details`），**数值有变化但结论
-  仍为 violation**。
-- **r11**：修复件调整了顺序（`rewire_flow` + `add_sequence_flow` + `remove_sequence_flow`），结论仍是
-  `no_mapped_rule_order_endpoints`——**规则侧该政策未产出任何顺序关系**，顺序检查缺规则侧端点，与模型侧如何改无关。
-  **r13** 标签改为 `Debt <= 50` 后仍报 `empty_rule_condition`，即**规则侧条件字段无条件**，标签修改在这条路径上无法
-  体现。**r8 与 r11 的 C 组部分四类检查**也停在 `action_mapping_below_gamma`：冻结 Def6 的 min-over-{actors ∪
-  business objects} 口径加上没有词向量后端，动作映射无法越过 γ；r13 的 `required_condition_not_enforced`、r9/r11 的
-  `constraint_violated` 则因规则侧对应字段为空而无从比较。
+## 4. 信息去向（没抽出来，还是抽出来后在适配里丢了）
 
-## 6. 未解决限制
+下表逐字段给出 A/B 两组的去向判定（`capsule.rules.<id>.chain.groups.<A|B>.field_flow.<字段>.verdict`），括号内为该字段的 `raw_count`（原始抽取条数）。判定含义：`carried` = 抽到且进入适配记录；`not_extracted` = 原始抽取里就没有；`derived_by_declared_policy` = 原始无该字段、由已声明的顺序推导政策生成（不是回填答案）；`lost_in_adaptation` = 抽到但适配后丢失。C 组的 `chain.groups.C.field_flow` 为空对象（`capsule.rules.<id>.chain.groups.C.field_flow`），因为它逐行复用 B。
 
-1. **无有效正常对照时误报未被充分检验。** 对照只做到“5 个最小修复件的修复前后比较”（`capsule.repairs`），而
-   5 条 `problem_removed` 全为 `false`、两条修复件的“修复前”为 null；因此**没有任何一条能当作“问题已消除”的
-   正常对照**，本节**不得声称零误报**，误报检查覆盖止于：C 组 3 条四类 violation（r10 两条、r13 一条）与全部
-   satisfied 结论（r10 的 `missing_action` 三组、r13 的 B/C 两条）。外部 `step_3_baseline` 则是**需求变更语境**的
-   答案键，不是静态合规检查的天然答案键（核对表 §2、任务书 §3.5），本案例只把它当作来源冲突与阅读辅助。
-2. **r13 的 50 / 100 / 500 三方冲突**：需求 v2 阈值 50、模型标签 `Debt < 100`、外部修复建议 `Debt < 500`（不采用）；
-   `50 < debt < 100`（例 75）是模型未落实 v2 限制的差异区间；模型没有可执行 `conditionExpression`，条件只以连线标签
-   存在（核对表 §2 `numeric_boundary_policy_r13`、§3 “conditionExpression **0**”）。**r11 的外部标注与模型事实不符**：
-   外部把该条记为活动缺失，而同意活动在流程中已存在，问题性质是前置位置/顺序（核对表 §5 r11 行“冲突”列、任务书
-   §3.5 第 2 条）；本节只陈述冲突，不据此改动流程。**Sun 正文与 Figure 10 的 R2/R4 冲突且正式版未取得**：本地两种
-   读法在 R2 与 R4 之间互换分类，正式版本轮核对失败（付费墙/机构认证），两种读法都只作为文献原始声明，均不作可靠
-   Gold（核对表 §7）。
-3. **相似度后端无词向量**：规则—模型动作匹配只有字符串相似度，没有词向量后端；这解释了多处
-   `action_mapping_below_gamma`，属能力限制而非结论（核对表 §6 的 `consent_before_retrieval_order` 为 partial，
-   理由是 LLM 抽取 0 条 order_relations）。**扁平化适配的影响**：进入检测的是扁平化单流程记录，三泳道参与者边界被压成
-   单一泳道（`capsule.repairs[*].model_evidence.lanes`），结构计数在修复前后一致（12 活动 / 6 网关 / 26 流程），但
-   角色归属结论依赖声明的角色绑定而非泳道名，只在绑定政策成立时可读。
+| 规则 | 组 | actions | actors | condition | constraint | exception | order_relations |
+|---|---|---|---|---|---|---|---|
+| r8/v2 | A | carried(1) | not_extracted(0) | carried(1) | carried(1) | not_extracted(0) | not_extracted(0) |
+| r8/v2 | B | carried(1) | not_extracted(0) | carried(1) | carried(1) | not_extracted(0) | not_extracted(0) |
+| r9/v2 | A | not_extracted(0) | not_extracted(0) | not_extracted(0) | carried(1) | not_extracted(0) | not_extracted(0) |
+| r9/v2 | B | carried(1) | carried(1) | carried(1) | not_extracted(0) | not_extracted(0) | derived_by_declared_policy(0) |
+| r10/v2 | A | carried(2) | carried(1) | carried(2) | not_extracted(0) | not_extracted(0) | not_extracted(0) |
+| r10/v2 | B | carried(1) | carried(1) | carried(1) | carried(1) | not_extracted(0) | not_extracted(0) |
+| r11/v2 | A | carried(1) | carried(1) | not_extracted(0) | carried(1) | not_extracted(0) | not_extracted(0) |
+| r11/v2 | B | carried(1) | carried(1) | carried(1) | not_extracted(0) | not_extracted(0) | derived_by_declared_policy(0) |
+| r13/v2 | A | not_extracted(0) | not_extracted(0) | not_extracted(0) | carried(1) | not_extracted(0) | not_extracted(0) |
+| r13/v2 | B | carried(1) | carried(1) | not_extracted(0) | not_extracted(0) | not_extracted(0) | not_extracted(0) |
 
-## 7. 可引用表述与不可声称
+三条必须点明的后果：
 
-### 7.1 可直接引用的表述（每条附证据指向）
+1. **B0 基线对 r9 与 r13 未抽出任何动作**（`capsule.rules.r9.chain.groups.A.field_flow.actions` 与 `capsule.rules.r13.chain.groups.A.field_flow.actions`：`raw_count = 0`、`verdict = not_extracted`）。这直接对应 A 组两条 `not_applicable / empty_rule_action`（§3.2），也解释了为什么 A 组在这两条规则上无法给出动作类结论。
+2. **LLM 臂的原始输出没有任何顺序关系**：B 组 5 条规则的 `order_relations.raw_count` 全为 0，其中 r9 与 r11 的顺序关系由已声明政策补出（`verdict = derived_by_declared_policy`，`capsule.rules.r9.chain.groups.B.field_flow.order_relations.verdict`、`capsule.rules.r11.chain.groups.B.field_flow.order_relations.verdict`），另外 3 条为 `not_extracted`。因此 r9/r11 的顺序断言来自**政策**而不是抽取结果；即便如此，三组的 `out_of_order` 仍全部报 `no_mapped_rule_order_endpoints`（§3.1），说明瓶颈在端点映射而不在该政策是否产出关系。
+3. **本案例没有任何字段被判为 `lost_in_adaptation`**：A/B 两组全部 60 个字段判定只出现 `carried`、`not_extracted`、`derived_by_declared_policy` 三种（`capsule.rules.<id>.chain.groups.<组>.field_flow`）。A 与 B 的字段值差异（§5）来自两次**抽取**结果不同，不是适配丢失；可对照的细节是 r10 的 A 组 actions `raw_count = 2` 而 B 组为 1（`capsule.rules.r10.chain.groups.A.field_flow.actions.raw_count` 与 `…groups.B…`），以及 r9/r11 的 condition 与 constraint 在两组之间互换（A 有 constraint 无 condition，B 有 condition 无 constraint）。
 
-1. “在该 SIM 派生案例上，A、B、C 三组分别产生 15、15、35 条（规则 × 检查）记录，A 组为 violation 5 条、undetermined
-   9 条、satisfied 1 条。” —— `capsule.summary.A.checks`、`capsule.summary.A.status_counts`。
-2. “把 Stage 2 由非 LLM 确定性适配换成真实 LLM 抽取后，规则记录的变化集中在 modality、actors、
-   actor_action_pairs、actions、constraint，5 条规则的归因全部为抽取（extraction）。”
-   —— `capsule.stage_attribution.a_to_b.<id>.changed_fields` 与 `.attribution`。
-3. “C 组没有改动 Stage 2 与三类检测，只新增四类检查：15 条三类行逐字节继承自 B，另加 20 条四类行。”
-   —— `capsule.stage_attribution.b_to_c`、`capsule.rows[*].inherited_from`、`capsule.rows[*].added_by`。
-4. “顺序类检查在本案例无法判定：全部行的规则侧顺序关系合计 0 条，检测报 `no_mapped_rule_order_endpoints`。”
-   以及“四类扩展只新增 3 条有证据的 violation（r10 的 `required_condition_not_enforced` 与 `constraint_violated`、
-   r13 的 `prohibited_action_present`），其余 17 条四类检查为 undetermined。” —— 前者见 核对表 §4、
-   `capsule.rows[*].reason`（15 行同因）；后者见 `capsule.rows` 中 `added_by = "four_extended_types"` 的行、
-   `capsule.summary.C.status_counts`。
+## 5. 阶段差异
 
-### 7.2 不可声称清单
+### 5.1 A → B：变化字段与归因
 
-1. **不是作者原始实验的复现**：流程对象是 Sun 派生案例（`capsule.claim_scope`）。**不是正式 Gold**：参考判断是
-   开发参考判断（核对表 §5 表下注、§8），本节不作性能结论。**不是独立测试**：1 个流程、5 条规则、1 个案例，且无
-   正常对照（§6.1）。**不是企业验证**：修复件是程序构造的开发对照（`repair_specs_v1.json` 的 `note_zh`）。
-2. **不得写“七类总 F1”或任何跨类合成指标**：本节只给逐条状态与计数（任务书 §6、§10 指标口径）。
-3. **不得把 5 轮重复当独立样本**：SIM 真实预测是 10 条独立输入 × 5 轮重复 = 50 行，且 5 轮抽取结果完全一致
-   （核对表 §4）；本节只用预先固定的 repeat-01 作为 B/C 组来源（核对表 §2 政策、`capsule.plan.groups.B`）。
+A→B 的每处变化都归因为**抽取（extraction）**，5 条规则的 `attribution` 全为 `extraction`（`capsule.stage_attribution.a_to_b.<id>.attribution`）。
 
-## 8. 补充案例：Sun Figure 10 重建模型（只写范围与缺项）
+| 规则 | A→B 变化字段 | 变化要点的读法 | 归因 |
+|---|---|---|---|
+| r8/v2 | actions、constraint | actions 由被动不定式（`be terminated`）变为被动分词（`terminated`）；constraint 由含 `for any reason` 的长片段收缩为纯时限片段 | extraction |
+| r9/v2 | modality、actions、actors、actor_action_pairs、condition、constraint、order_relations | modality 由 definition 变 obligation；actions/actors 由空变为核验动作与**代词**执行者；条件类片段由 constraint 槽移入 condition 槽 | extraction |
+| r10/v2 | actions、actor_action_pairs、constraint | actions 由带角色的长片段收缩为纯动作片段；constraint 由空变为目的性片段 | extraction |
+| r11/v2 | condition、constraint、order_relations | 时间标记条件由 constraint 槽移入 condition 槽；order_relations 由空变为 1 条 | extraction |
+| r13/v2 | modality、actions、actors、actor_action_pairs、constraint | modality 由 definition 变 prohibition；actions/actors 由空变为禁止动作与其主体片段；constraint 由非空变空（数值门槛转入 actor 片段） | extraction |
 
-**范围**：对象是**重建模型（reconstructed model）**——按 Sun 等（2024）Figure 10 与论文叙述重建的
-`data/development/sim_case_c1/sun_figure10_reconstruction.bpmn`。该重建件**已存在**，并**已通过解析与 schema 校验**：
-解析输出 activities 11 / gateways 4 / events 5，`validate_process_record` 返回 `valid=True`（`schema_valid=True`、
-`cross_field_valid=True`、`errors=[]`）；文件 sha256 `773c4691…`、26673 字节，另含顺序流 20 条、消息流 14 条、数据关联
-4 条、participant 3 个、lane 3 个、collaboration 1 个，`cycle_detected = False`（`…reconstruction_provenance.md` §10）。
-它**不是**作者原始文件，**不得**称为 “Sun original” 或 “exact Sun”；Figure 10 上的四个 violation 标注框不进入模型，
-因为它们是论文的检查结果而非流程内容（同文件 §1、§8、§11）。
+字段级细节见 `capsule.stage_attribution.a_to_b.<id>.detail`。可见后果：r9 的 `incorrect_actor` 由 `empty_rule_actor_denominator` 变为 `action_mapping_below_gamma`（执行者抽成代词）；r13 的 `missing_action` 由 `not_applicable` 变为 `satisfied`（0.0）、`incorrect_actor` 由 `empty_rule_actor_denominator` 变为 `violation`（1.0）；r10 的 `missing_action` 由 violation 变为 satisfied。计数上 undetermined 由 10 降到 8、satisfied 由 0 升到 2（`capsule.summary.A.status_counts` 对比 `capsule.summary.B.status_counts`）。
 
-**缺项（如实列出）**：①**LLM 组缺失及原因——未做**：论文 Table 13 的规则文本与仓库中既有预测输入的规则文本不一致，
-在完成一致性核验前**不得复用**这些预测作为该补充案例的 Stage 2。②**因此本补充案例只完成非 LLM 基线部分**；LLM 组、
-四类扩展、A/B/C 三组对照与修复对照在本补充案例上均**未做**。③**本轮未运行，缺项如实列出**：本节没有该补充案例的
-任何 A/B/C 运行证据或计数，故不给出任何状态计数、相似度或一致性结论，一律记为**未做/缺失**，待规则文本一致性核验
-与非 LLM 基线实际运行后再补。④**须随文披露的歧义**：论文正文（p.23）与 Figure 10 标注（p.24）在 R2 与 R4 的分类上
-互换，两套读法都不作为可靠 Gold（同文件 §9、核对表 §7）。
+### 5.2 B → C：只新增四类检查，三类行逐字复用
+
+B→C 不改变 Stage 2，也不改变三类结果：胶囊原文为 `group C adds exactly the four extended checks on the SAME rule side as B; three-type rows are reused byte-identically (reuses_group_b)`（`capsule.stage_attribution.b_to_c`），5 条规则的 `sides.C.reuses_group_b` 均为 `["stage2", "three_type_rows"]`（`capsule.rules.<id>.sides.C.reuses_group_b`）。因此 B→C 的全部计数差（检查数 15 → 35、violation 5 → 10、undetermined 8 → 23，`capsule.summary.B` 对比 `capsule.summary.C`）都来自新增的 20 条四类检查（5 条 violation、15 条 undetermined），与三类检测的代码、阈值和规则侧记录无关。
+
+## 6. 修复对照
+
+5 个最小修复件在运行前固定（`data/development/sim_case_c1/repair_specs_v1.json`，`status = fixed_before_run`），原始 BPMN 永不修改。修复**是否正确表达**由独立结构核验判定（`fix_expressed`），与检测器是否识别无关；下表“修复前/后”取 C 组（`capsule.repairs[*].group_C.before_status` / `.before_score` 与 `.after_status` / `.after_score` / `.after_reason`），`problem_removed` 取 `capsule.repairs[*].group_C.problem_removed`。
+
+| 修复件 | 规则 | 视角 | 最小操作 | 独立结构核验 | C 组修复前 | C 组修复后 | `problem_removed` |
+|---|---|---|---|---|---|---|---|
+| `r8_timeout_termination` | r8 | `constraint_violated` | 在 `Send SIM card` 上挂 30 天边界计时器（`P30D`）并新增终止结束事件与连线 | `fix_expressed = true`（`boundary_event` / `timer_definition` / `has_termination_path` 均 true） | violation (0.674966) | violation (0.663005) | false |
+| `r9_add_verification` | r9 | `missing_action` | 在 `Sign contract` 之前插入核验任务并改接前驱流 | `fix_expressed = true`（`activity_present` / `reachable_from_request_personal_data` / `reaches_sign_contract` 均 true） | violation (1.0) | violation (1.0) | false |
+| `r10_activation_owner` | r10 | `incorrect_actor` | 把 `Activate SIM card` 由 `Customer` 泳道移入 `Phone company` 泳道 | `fix_expressed = true`（`lane = Phone company = expected_lane`） | violation (1.0) | violation (1.0) | false |
+| `r11_consent_before_retrieval` | r11 | `out_of_order` | 把 `Ask for consent` 移到取数之前并恢复 `Store Data` 的后继路径 | `fix_expressed = true`（`consent_reaches_retrieval = true`、`retrieval_reaches_consent = false`） | U(0.0) | U(0.0, `no_mapped_rule_order_endpoints`) | false |
+| `r13_threshold_50` | r13 | `required_condition_not_enforced` | 把路由连线标签 `Debt < 100` 改为 `Debt <= 50` | `fix_expressed = true`（`new_label_present = true`、`old_label_present = false`） | U(null) | U(null, `empty_rule_condition`) | false |
+
+结构计数上，修复确实改变了模型：r8 的事件由 8 增至 10、流程由 26 增至 27；r9 的活动由 12 增至 13、流程增至 27；其余三条保持 12 活动 / 6 网关 / 8 事件 / 26 流程（`capsule.repairs[*].model_evidence.activities` / `.events` / `.flows`，对照 `capsule.plan.stage1_public_record`）。
+
+**r8 修复件的范围限制（原文含义照录）**：`independent_verification.scope = task_scoped_timeout`、`scope_matches_rule_semantics = false`——计时器挂在**单个任务**（`Send SIM card`）上，它表达的是“发卡任务超时即中断”，而规则要求的是“**整个流程**耗时超过 30 天则终止流程”；在扁平化单流程模型里，进程级超时需要重构控制流（如事件子流程或事件网关包住全流程），已超出“最小修复”的范围，因此本修复件只**部分**表达该要求，检测结果按此前提解读（`capsule.repairs[0].independent_verification.scope_note_zh`）。
+
+**结论**：5 个修复件的 `fix_expressed` **全为 `true`**（`capsule.repairs[*].independent_verification.fix_expressed`），即修复**确实表达了**对应修复意图；而同一批修复件的 `problem_removed` **全为 `false`**、C 组状态在修复前后完全不变（`capsule.repairs[*].group_C`），即**检测器一个都没有识别出来**。两件事必须并列陈述：前者由独立结构核验判定，后者只是方法表现在本案例下的观察结果。另需注明：r8 与 r13 的两条检查在 B 组本来就没做，其 `capsule.repairs[*].group_B.before_status` 为 null，只有 C 组可比较。
+
+## 7. 未解决限制
+
+1. **规则—模型映射受 γ 与相似度后端限制。** 阈值 γ = 0.8（`capsule.plan.thresholds.gamma`），而后端是**无静态词向量的 tensor 相似度**（`capsule.plan.components.similarity_backend.behaviour`，spaCy W007），因此低于 γ 的数值不构成语义不同义的证据。被该限制直接命中的行（`capsule.rules.<id>.sides.<组>.checks.<检查>.details[0].similarity` / `.best_candidate` / `.max_sim`）：r8 `missing_action` 最佳模型动作 `Ask portability`（0.5308）与 `Sign contract`（0.7524）、r9 `missing_action` `Ask portability third company`（0.4219）、r10 A 组 `missing_action` `Activate SIM card`（0.691）与 B/C 组同项（0.8582）、r11 `missing_action` `Ask for consent`（0.7401）、r13 B/C `missing_action` `Receive SIM card`（0.8524），以及 r8 C 组 `constraint_violated` 的 `max_sim = 0.325034`、r10 C 组 `required_condition_not_enforced` 的 `max_sim = 0.07317` 与 `constraint_violated` 的 `max_sim = 0.376124`。
+2. **没有独立的人工合规对照，误报只能启发式筛查。** 胶囊内**没有**独立人工合规对照字段（**未做/缺失**），也没有误报筛查标签（**未做/缺失**）；`capsule.plan.prediction_isolation` 的 3 个布尔只说明输入隔离，不构成合规对照。渲染报告 §6 记录的启发式筛查不在本胶囊字段内，故本节**不得声称零误报**，也不得把“未被筛查标出”当作“已证实合规”。
+3. **r13 的 50 / 100 冲突区间。** 规则侧 50 € 门槛在 A 组记录中以 constraint 形式出现（`capsule.rules.r13.sides.A.rule.constraint`），在 B/C 组记录中该字段为空、数值门槛落在 actor 片段（`capsule.rules.r13.sides.B.rule.actors`）；模型侧条件只以连线标签 `Debt < 100` 存在（`capsule.rules.r13.sides.C.surfaces.condition_candidates`）。因此 `50 < debt < 100`（例 75）落在“规则要求排除、模型门槛放行”的差异区间；外部 mitigation 的第三个数值（任务书记为 `Debt < 500`）**在胶囊内未记录**（胶囊只以 `capsule.comparison[4].reference_sources` 的 `…mitigation_not_adopted` 标记其未被采用）→ 该数值**未做/缺失**，本节不采用、不引用。
+4. **r11 的外部标签与模型事实不一致。** 胶囊记录外部把该条记为活动缺失（`capsule.comparison[3].reference_sources` 含 `external_step3_change_context:missing_activity_label_disagreed`），而参考判断本身写明同意活动**已存在**、问题是前置位置/顺序（`capsule.comparison[3].semantic_issue_zh`）；模型侧也确实映射到 `Ask for consent`（0.725865，`capsule.rules.r11.sides.C.mapped_activity`）。方法侧的顺序检查仍报 `no_mapped_rule_order_endpoints`（`capsule.rows`），故本节只陈述冲突，不据此改动流程。
+5. **Sun 正文与 Figure 10 的 R2–R4 冲突，且正式版不可取得。** 主胶囊没有该字段（**未做/缺失**）；补充胶囊 `sim_case_c1_supplement_v1` 记录两种读法在 R2 与 R4 上互换（`SupplementCapsule.plan.paper_readings.text` / `.figure` / `.conflict_zh`），并说明正式版本轮未取得。两种读法都只作文献原始声明，均不作可靠 Gold。
+6. **扁平化适配丢失消息流。** 任务书 §11 第 8 行记：扁平化只保留 process 子元素，消息流位于 collaboration 下、未建模；参与者边界以命名泳道保留。胶囊侧可观察的是 3 个泳道名与结构计数（`capsule.plan.stage1_public_record.lanes`、`.activities` / `.gateways` / `.events` / `.flows`），而**消息流条数在胶囊内未记录（未做/缺失）**。角色归属类结论因此依赖声明的角色绑定（`capsule.plan.declared_policy.role_binding`），只在绑定政策成立时可读。
+
+## 8. 可引用表述与不可声称清单
+
+### 8.1 可直接引用的表述（每条附胶囊字段）
+
+1. “在该 SIM 派生案例上，A、B、C 三组各产生 15、15、35 条（规则 × 检查）记录；A 组为 violation 3、undetermined 10、not_applicable 2，B 组为 violation 5、satisfied 2、undetermined 8，C 组为 violation 10、satisfied 2、undetermined 23。”—— `capsule.summary.A` / `capsule.summary.B` / `capsule.summary.C`。
+2. “把 Stage 2 由项目锁定非 LLM 基线换成既有真实 LLM 抽取后，规则记录的变化全部归因于**抽取**：5 条规则的 `attribution` 均为 `extraction`，变化字段为 r8 [actions, constraint]、r9 [actions, actor_action_pairs, actors, condition, constraint, modality, order_relations]、r10 [actions, actor_action_pairs, constraint]、r11 [condition, constraint, order_relations]、r13 [actions, actor_action_pairs, actors, constraint, modality]。”—— `capsule.stage_attribution.a_to_b.<id>.changed_fields` 与 `.attribution`。
+3. “C 组没有改动 Stage 2 与三类检测，只新增四类检查：三类行逐字复用 B（`reuses_group_b = ["stage2", "three_type_rows"]`、`inherited_from = "B"`），另加 20 条四类行（`added_by = "four_extended_types"`）。”—— `capsule.stage_attribution.b_to_c`、`capsule.rules.<id>.sides.C.reuses_group_b`、`capsule.rows[*]`。
+4. “5 个最小修复件的独立结构核验 `fix_expressed` 全为 `true`，说明修复确实表达了修复意图；同一批修复件的 `problem_removed` 全为 `false`，C 组状态在修复前后完全不变。”—— `capsule.repairs[*].independent_verification.fix_expressed`、`capsule.repairs[*].group_C`。
+5. “顺序断言在本案例不可判定：规则侧顺序关系在三组都缺端点，5 条规则 × 3 组的 `out_of_order` 全部报 `no_mapped_rule_order_endpoints`；LLM 臂原始输出中 `order_relations` 的 `raw_count` 全为 0，r9/r11 的关系由已声明政策补出。”—— `capsule.rows[*].reason`、`capsule.rules.<id>.chain.groups.B.field_flow.order_relations`。
+
+### 8.2 不可声称清单
+
+1. **不是作者原始实验的复现**：流程对象是 Sun 派生案例，`capsule.claim_scope = development_case_study_not_formal_gold`。
+2. **不是正式 Gold**：参考判断是开发参考判断，与检测器能力解耦，只存于 `case_items_v2.json`（`capsule.plan.inputs.curated_reference_judgments`），本节不作性能结论。
+3. **不是独立测试**：1 个流程、5 条规则、1 个案例，且胶囊内没有独立人工合规对照（**未做/缺失**）。
+4. **不是企业验证**：修复件是程序构造的最小开发对照（`repair_specs_v1.json` 的 `note_zh` 与 `status = fixed_before_run`），不是真实企业流程。
+5. **不得给出“七类总 F1”或任何跨类合成指标**：本节只给逐条状态与计数（`capsule.rows`、`capsule.summary`）。
+6. **5 轮重复不是独立样本**：B/C 组只使用预先固定的 repeat-01（`capsule.plan.components.B.stage2.source`、`capsule.plan.inputs.predictions_repeat01`），不择优、不合并 5 轮。
+7. **“检测器没识别”不等于“流程没修复”**：5 条 `fix_expressed` 为 `true` 而 `problem_removed` 为 `false`（`capsule.repairs[*]`），两件事必须并列陈述。
+
+## 9. 补充案例：Sun Figure 10 重建模型（只写范围与缺项）
+
+**范围**：对象是**重建模型（reconstructed model）**，按 Sun 等（2024）Figure 10 重建，存于 `data/development/sim_case_c1/sun_figure10_reconstruction.bpmn`（sha256 `773c4691…`、26673 字节，`SupplementCapsule.plan.inputs.reconstruction`）；`claim_scope = development_supplement_reconstructed_model_not_authors_model`（`SupplementCapsule.claim_scope`）。该重建件**已存在并已被解析**：activities 11、gateways 4、events 5、flows 20、泳道 3 个、`unreachable = 3`（`SupplementCapsule.model_evidence`）。它不是作者原文件，**不得**称为 “Sun original” 或 “exact Sun”。
+
+**缺项（如实列出）**：
+
+1. **真实 LLM 组缺失**（`SupplementCapsule.plan.groups_missing.B`；C 组随 B 一并缺失，`…groups_missing.C`）：原因是论文 Table 13 的规则文本与已绑定预测的规则串**不一致**——4 条映射的 `reusable` **全为 `false`**（`SupplementCapsule.plan.prediction_reuse_audit[*].reusable`；`exact_text_match` 4 条均为 `false`，`normalised_text_match` 3 条 `true`、1 条 `false`），而 span 偏移绑定在原始字符串上，故在一致性核验完成前不得复用（`…prediction_reuse_audit[*].reason`）。
+2. **本轮该补充案例只运行了 A 组**（`SupplementCapsule.plan.groups_run.A`，1 组）；B/C 对照、四类扩展与修复对照**未做/缺失**。按“只写范围与缺项”的要求，本节不复述该补充运行的任何计数，也不把它并入主案例的表格。
+3. **本轮未授权重跑**：本节没有新的运行证据，规则文本一致性核验与 LLM 组补跑均**未做/缺失**，待授权后另起批次。
