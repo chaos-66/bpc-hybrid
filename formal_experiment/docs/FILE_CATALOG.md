@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-11
-**收录文件**：1818 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-12
+**收录文件**：1855 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -464,6 +464,12 @@
 | `data/development/predictions/exploratory_spacy.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/predictions/sun_llm_fallback.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/predictions/sun_rule_only.jsonl` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/sim_case_c1/case_items_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/sim_case_c1/case_items_v2.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/sim_case_c1/repair_specs_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/sim_case_c1/sun_figure10_reconstruction.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/sim_case_c1/sun_figure10_reconstruction_provenance.md` | 开发/溯源 | 说明、规范或研究文档 |
+| `data/development/sim_case_c1/sun_table13_rules_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_synth/syn_incorrect_actor_03/gdpr_2_consent_to_use_the_data.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
@@ -697,6 +703,7 @@
 | `docs/research/S28D_R6C1_REMAINING_PILOT_RESULTS.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
 | `docs/research/S28D_R6C1_REMAINING_PILOT_RESULTS.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/S3_REAL_CASE_E2E_TASK_SPEC_2026-09-11.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_BASELINE_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 研究证据 | 说明、规范或研究文档 |
@@ -838,10 +845,18 @@
 | `outputs/development/s3_action_matching_v3/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_action_matching_v3/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_action_matching_v3/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_acceptance_recompute_v1/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_acceptance_recompute_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_acceptance_recompute_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_baseline_04_v1/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_baseline_04_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_baseline_04_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_baseline_04_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_evidence_scope_v1/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_evidence_scope_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_evidence_scope_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_evidence_scope_v1/plan.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_extended_evidence_scope_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_prediction_accounting_v1/final_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_prediction_accounting_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_extended_prediction_accounting_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1192,6 +1207,13 @@
 | `outputs/reports/s3_oracle_gold_rules_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_oracle_gold_rules_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_oracle_gold_rules_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sim_case_c1_checklist.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sim_case_c1_checklist.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sim_case_c1_result_figure.svg` | 活动 | 历史可视化或报告 |
+| `outputs/reports/sim_case_c1_results.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sim_case_c1_results.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sim_case_c1_supplement.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sim_case_c1_supplement.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage1_formal_evaluation_v2.capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage1_formal_evaluation_v2.export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage1_formal_evaluation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1230,6 +1252,7 @@
 | `paper/MENTOR_REPORT_CONTENT_2026-09.md` | 活动 | 说明、规范或研究文档 |
 | `paper/presentations/bpc_hybrid_Stage3_completed.pptx` | 活动 | 项目文件 |
 | `paper/README.md` | 活动 | 所在目录的入口说明 |
+| `paper/SIM_CASE_SECTION_v1.md` | 活动 | 说明、规范或研究文档 |
 | `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |
 
 ## `prompts`
@@ -1376,6 +1399,7 @@
 | `scripts/build_s3_extended_gap_comparison_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_extended_gap_evidence_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sim_case_checklist_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_adjudication_asset.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
@@ -1423,10 +1447,12 @@
 | `scripts/publish_s2_11_formal_gold_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/publish_snapshot_formal_arm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/rebuild_d1_prompt.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/recompute_s3_extended_acceptance_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/reconcile_s3_extended_results_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/record_change.py` | 活动 | 追加经过验证的变更/运行/里程碑事件 |
 | `scripts/reevaluate_s3_extended_unified_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/render_sim_case_c1_figure_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/repair_s3_real_rule_diagnostics_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/restore_layer_e_adjudication_from_56d2b03.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/review_s2_11_candidates.py` | 活动 | Python 实现、脚本或测试 |
@@ -1459,6 +1485,7 @@
 | `scripts/run_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_evidence_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_baseline_04_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_extended_evidence_scope_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_repair_v2_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_v3_gamma04_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_v3_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1469,6 +1496,9 @@
 | `scripts/run_s3_paired_mechanism_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_real_rule_diagnostic_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sim_case_c1_supplement_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sim_case_c1_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sim_case_stage2_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_formal_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage1_p2_inference.py` | 活动 | Python 实现、脚本或测试 |
@@ -1627,6 +1657,7 @@
 | `src/bpc_hybrid/s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_evidence_checks_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_arm_report.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_extended_evidence_scope_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_prediction_accounting_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_unified.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_v3_adapter.py` | 活动 | Python 实现、脚本或测试 |
@@ -1634,6 +1665,8 @@
 | `src/bpc_hybrid/s3_extended_v3_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sim_case_c1.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sim_case_c1_transforms.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/splitter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/stage1_evaluation.py` | 活动 | Python 实现、脚本或测试 |
@@ -1879,6 +1912,8 @@
 | `tests/test_s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_evidence_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_extended_acceptance_recompute_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_extended_evidence_scope_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_gap_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_prediction_accounting_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_repair_v2_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1895,6 +1930,8 @@
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_shared_comparison_correction.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sim_case_c1_run_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sim_case_checklist_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_smoke.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_splitter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_adjudication_batch2.py` | 活动 | Python 实现、脚本或测试 |

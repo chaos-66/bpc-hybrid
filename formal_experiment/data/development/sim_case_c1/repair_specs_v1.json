@@ -14,9 +14,11 @@
       "rule_id": "r8",
       "lens": "constraint_violated",
       "declared_issue_zh": "模型没有任何超时终止机制",
-      "operation_zh": "在 Send SIM card 上挂 30 天可中断边界计时器，并连到“Process terminated”结束事件",
-      "expected_effect_zh": "模型出现超时终止表面（任务级）；进程级超时语义见 scope_limitation_zh",
-      "scope_limitation_zh": "该修复是任务级（发卡任务）超时，不等于规则要求的“整个流程超过 30 天则终止”；进程级超时需要重构控制流（事件子流程/事件网关），超出最小修复范围。修复正确性由独立结构核验单独判定，检测结果按此前提解读。"
+      "operation_zh": "增加进程级事件子流程：流程实例启动后 P30D 计时，超时中断并触发终止整个流程实例。",
+      "expected_effect_zh": "模型具有流程级 30 天超时→终止语义；旧任务级 Send SIM card 计时器保留为部分/无效对照。",
+      "scope_limitation_zh": "冻结 Stage 1 将事件子流程视为 opaque activity，计时器、终止定义及流程级作用域不能进入结构化 Process Record；该修复不计入有效修复分母，检测结果按表示限制解释。",
+      "effective_control_policy_zh": "有效分母要求 repair_semantics_valid 且 semantics_entered_detection_chain；本件因 Stage 1 表示限制排除。",
+      "legacy_partial_control_zh": "旧 r8_timeout_termination 任务级边界计时器实现已移入 repair_variant_r8_task_scoped_legacy，并作为 legacy_partial_control 保留。"
     },
     {
       "repair_id": "r9_add_verification",

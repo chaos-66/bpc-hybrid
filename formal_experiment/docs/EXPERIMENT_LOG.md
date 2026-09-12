@@ -4591,3 +4591,21 @@
 - 仍存在 blocker：无
 - 备注：Development case study only: not formal Gold, not the authors' original experiment, not an enterprise validation. Five prediction repeats were identical; repeat-01 is the pre-declared primary.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-12T05:16:59.219026+00:00 - SIM case P1-P4 correction: extraction-vs-not-applicable, multi-value trace, alarm-reference separation, valid/rejected repair controls, rerun and unified deliverables
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=sim_case_c1_run_v1；阶段=stage3；方法=A=non-LLM B0 v10a + frozen Sun three types; B=real-LLM repeat-01 + same three types; C=B + REPAIR-V2 four types；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_sim_case_c1_v1.py --overwrite`
+- manifest：outputs/development/sim_case_c1/run_v1/manifest.json
+- 结果摘要：A 15 checks 3 violation/0 satisfied/12 undetermined/0 not_applicable (machine 3/0/10/2); B 15 checks 5/2/8/0; C 35 checks 10/2/23/0; reference correspondence A 0 found/3 alarm-unverified/2 no alarm, B/C 2/3/0; effective repair denominator 3 (r9,r10,r11); r8 and r13 excluded with reasons
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：31 passed, 2 warnings in 9.33s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`a6ca441e766a809357a7e47f884bf8f89942d5af`；相关未提交路径：21 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：Zero LLM/API. Sources/Gold/BPMN/requirements/predictions unchanged. B/C three-type rows identical. r8 process-level event-subprocess repair structurally valid but excluded from effective denominator because frozen Stage1 is opaque to timer/terminate internals; legacy task-scoped control preserved. r13 repair excluded because rule condition is empty (extraction gap). r11 out_of_order still undetermined at gamma=0.8. JSON/MD/SVG/paper all derive from the same capsule.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

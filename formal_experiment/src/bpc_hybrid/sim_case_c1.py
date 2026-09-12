@@ -56,6 +56,19 @@ ADAPTATION_POLICY = {
     "declared_before_scoring": True,
     "role_binding": {"Data Controller": "Phone company", "Data Subject": "Customer"},
     "primary_sentence": "longest_sentence_text_v1",
+    "span_projection": {
+        "name": "first_valid_span_per_field_v1_with_diagnostics",
+        "action_actor_pairing": "explicit_prediction_actor_action_map_only_v1",
+        "action_obligation_policy": (
+            "只有预测显式 actor_action_map 中的 action 进入 rule.actions；未配对动作候选保留在"
+            "selection_metadata/unconsumed_candidates 中，但不自动视为独立义务。"
+        ),
+        "single_value_scorers": ["condition", "constraint", "exception"],
+        "note_zh": (
+            "投影保留所有有效候选文本用于追踪；检测器若只消费单项，则在 chain 中记录"
+            "projected→adapted→consumed 的数量变化和选择政策，不标成全部保留。"
+        ),
+    },
     "order_relation_derivation": {
         "name": "temporal_marker_from_condition_v2",
         "rule_zh": (
@@ -237,29 +250,119 @@ def derive_order_relations(sentence: dict[str, Any]) -> list[tuple[str, str]]:
     return []
 
 
+def _dedup_texts(values) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for value in values or []:
+        text = (value or "").strip()
+        if text and text not in seen:
+            seen.add(text)
+            result.append(text)
+    return result
+
+
+def _projected_candidates(sentence: dict[str, Any], field: str) -> list[str]:
+    diagnostics = sentence.get("diagnostics") or {}
+    return _dedup_texts((diagnostics.get("span_field_texts") or {}).get(field) or [])
+
+
+def _explicit_actor_action_pairs(sentence: dict[str, Any]) -> tuple[list[dict[str, str]], list[dict[str, Any]]]:
+    """Return only links explicitly predicted by Stage 2.
+
+    The case wrapper must not turn a co-occurring actor and action into a pair.
+    Invalid links (for example a null actor id) are preserved as diagnostics
+    and never repaired by role heuristics.
+    """
+    diagnostics = sentence.get("diagnostics") or {}
+    valid: list[dict[str, str]] = []
+    invalid: list[dict[str, Any]] = []
+    for entry in diagnostics.get("actor_action_map") or []:
+        actor = (entry.get("actor_text") or "").strip()
+        action = (entry.get("action_text") or "").strip()
+        if entry.get("valid") and actor and action:
+            valid.append({"actor": actor, "action": action})
+        else:
+            invalid.append({
+                "actor_id": entry.get("actor_id") or entry.get("raw_actor_id"),
+                "action_id": entry.get("action_id") or entry.get("raw_action_id"),
+                "reason": entry.get("reason") or "invalid_actor_action_link",
+                "actor_text": actor or None,
+                "action_text": action or None,
+            })
+    return valid, invalid
+
+
 def build_rule_record(sentence: dict[str, Any]) -> dict[str, Any]:
-    action = (sentence.get("action") or "").strip()
-    actor = (sentence.get("actor") or "").strip()
-    actions = [action] if action else []
-    actors = [actor] if actor else []
-    pairs = [{"actor": actor, "action": action}] if actor and action else []
+    diagnostic_fields = {
+        field: _projected_candidates(sentence, field)
+        for field in ("actor", "action", "condition", "constraint", "exception")
+    }
+    explicit_pairs, invalid_pairs = _explicit_actor_action_pairs(sentence)
+
+    if explicit_pairs:
+        actions = _dedup_texts([pair["action"] for pair in explicit_pairs])
+        actors = _dedup_texts([pair["actor"] for pair in explicit_pairs])
+        actor_action_pairs: list[dict[str, str]] = list(explicit_pairs)
+        action_policy = "explicit_actor_action_map_v1"
+        actor_policy = "explicit_actor_action_map_v1"
+    else:
+        # No explicit map was supplied (or its actor was null).  Keep the
+        # single projected action for the action-existence check, but do not
+        # manufacture an actor-action pair.  The frozen Def6 then abstains with
+        # missing_rule_actor_action_map instead of inventing ownership.
+        projected_action = (sentence.get("action") or "").strip()
+        projected_actor = (sentence.get("actor") or "").strip()
+        actions = [projected_action] if projected_action else []
+        actors = [projected_actor] if projected_actor else []
+        actor_action_pairs = []
+        action_policy = "projected_single_action_no_explicit_map_v1"
+        actor_policy = "projected_single_actor_no_explicit_map_v1"
+
+    condition = (sentence.get("condition") or "").strip() or None
+    constraint = (sentence.get("constraint") or "").strip() or None
+    exception = (sentence.get("exception") or "").strip() or None
+    order_relations = derive_order_relations(sentence)
+    consumed_by_diagnostic_field = {
+        "actor": actors,
+        "action": actions,
+        "condition": [condition] if condition else [],
+        "constraint": [constraint] if constraint else [],
+        "exception": [exception] if exception else [],
+    }
+    unconsumed = {
+        field: [text for text in diagnostic_fields.get(field, [])
+                if text not in consumed_by_diagnostic_field.get(field, [])]
+        for field in diagnostic_fields
+    }
+    metadata = {
+        "candidate_fields": diagnostic_fields,
+        "field_selection_policy": {
+            "actions": action_policy,
+            "actors": actor_policy,
+            "condition": "first_valid_span_v1_single_value_extended_scorer",
+            "constraint": "first_valid_span_v1_single_value_extended_scorer",
+            "exception": "first_valid_span_v1_single_value_extended_scorer",
+            "order_relations": ADAPTATION_POLICY["order_relation_derivation"]["name"],
+        },
+        "unconsumed_candidates": unconsumed,
+        "invalid_actor_action_links": invalid_pairs,
+        "explicit_actor_action_pair_count": len(explicit_pairs),
+        "actor_action_pair_source": "prediction_actor_action_map" if explicit_pairs else "none_no_fabrication",
+    }
     return {
         "rule_id": sentence.get("rule_id"),
         "modality": sentence.get("modality"),
         "actions": actions,
         "actors": actors,
-        "actor_action_pairs": pairs,
-        "order_relations": derive_order_relations(sentence),
-        "condition": (sentence.get("condition") or "").strip() or None,
-        "constraint": (sentence.get("constraint") or "").strip() or None,
-        "exception": (sentence.get("exception") or "").strip() or None,
+        "actor_action_pairs": actor_action_pairs,
+        "order_relations": order_relations,
+        "condition": condition,
+        "constraint": constraint,
+        "exception": exception,
         "sentence_text": sentence.get("sentence_text"),
+        "selection_metadata": metadata,
     }
 
-
-# ---------------------------------------------------------------------------
-# Stage 3 (three original types for A/B; four extended types for C)
-# ---------------------------------------------------------------------------
 
 def _status_from_score(score: float | None, denominator: int) -> str:
     if denominator == 0:
@@ -269,32 +372,106 @@ def _status_from_score(score: float | None, denominator: int) -> str:
     return STATUS_VIOLATION if score > 0 else STATUS_SATISFIED
 
 
+def _owner_evidence(model: Any, activity_ids: list[str]) -> list[dict[str, Any]]:
+    owners_by_id = getattr(model, "action_actor_names", {}) or {}
+    result = []
+    for activity_id in activity_ids or []:
+        owners = list(owners_by_id.get(activity_id, []) or [])
+        result.append({"activity_id": activity_id, "owners": owners})
+    return result
+
+
 def run_three_types(scorer, rule: dict[str, Any], model: Any) -> dict[str, Any]:
     ma = scorer.missing_action(rule["actions"], model)
     ia = scorer.incorrect_actor(rule["actions"], rule["actors"], model, rule.get("actor_action_pairs"))
     oo = scorer.out_of_order(rule["order_relations"], rule["actions"], model)
 
+    ma_machine_status = _status_from_score(ma["score"], ma["denominator"])
+    if ma["denominator"] == 0:
+        ma_status = STATUS_UNDETERMINED
+        ma_source = "extraction"
+        ma_eval_reason = "empty_rule_action_rule_element_not_extracted"
+    else:
+        ma_status = ma_machine_status
+        ma_source = "detector"
+        ma_eval_reason = None
+
+    ia_observable = bool(ia.get("observable"))
+    if ia_observable:
+        ia_machine_status = _status_from_score(ia.get("score"), ia.get("denominator") or 0)
+        ia_status = ia_machine_status
+        ia_source = "detector"
+        ia_eval_reason = None
+    else:
+        ia_machine_status = STATUS_UNDETERMINED
+        ia_status = STATUS_UNDETERMINED
+        ia_source = "detector_abstention"
+        ia_eval_reason = ia.get("reason") or "detector_unobservable"
+
+    if oo["denominator"] == 0:
+        oo_machine_status = STATUS_UNDETERMINED
+        oo_status = STATUS_UNDETERMINED
+        oo_source = "extraction_or_mapping"
+        oo_eval_reason = "no_mapped_rule_order_endpoints"
+    else:
+        oo_machine_status = _status_from_score(oo["score"], oo["denominator"])
+        oo_status = oo_machine_status
+        oo_source = "detector"
+        oo_eval_reason = None
+
+    matched_ids = list(ia.get("matched_process_action_ids") or [])
+    primary_action = (rule.get("actions") or [None])[0]
+    primary_action_match = None
+    primary_action_owner_evidence = []
+    if primary_action:
+        best_name, best_score = scorer._best_action_match(primary_action, model)
+        primary_action_match = {"rule_action": primary_action, "best_model_action": best_name,
+                                "similarity": round(best_score, 6) if best_score is not None else None}
+        best_id = next((act["id"] for act in model.actions
+                        if act.get("name") == best_name), None)
+        if best_id:
+            primary_action_owner_evidence = _owner_evidence(model, [best_id])
     rows = {
         "missing_action": {
-            "status": _status_from_score(ma["score"], ma["denominator"]),
+            "status": ma_status,
+            "machine_status": ma_machine_status,
+            "evaluation_status": ma_status,
+            "status_source": ma_source,
+            "evaluation_reason": ma_eval_reason,
+            "machine_reason": "empty_rule_action" if ma["denominator"] == 0 else None,
+            "observable": ma["denominator"] > 0,
             "score": ma["score"], "denominator": ma["denominator"],
             "details": ma["details"],
             "reason": None if ma["denominator"] else "empty_rule_action",
         },
         "incorrect_actor": {
-            "status": (STATUS_UNDETERMINED if not ia.get("observable")
-                       else _status_from_score(ia["score"], ia.get("denominator") or 0)),
+            "status": ia_status,
+            "machine_status": ia_machine_status,
+            "evaluation_status": ia_status,
+            "status_source": ia_source,
+            "evaluation_reason": ia_eval_reason,
+            "machine_reason": ia.get("reason"),
+            "observable": ia_observable,
             "score": ia.get("score"), "denominator": ia.get("denominator"),
-            "observable": ia.get("observable"), "reason": ia.get("reason"),
             "details": ia.get("details", []),
             "process_actor_candidates": ia.get("process_actor_candidates", []),
+            "matched_process_action_ids": matched_ids,
+            "matched_action_owner_evidence": _owner_evidence(model, matched_ids),
+            "primary_action_match": primary_action_match,
+            "primary_action_owner_evidence": primary_action_owner_evidence,
+            "actor_scope_policy": ia.get("actor_scope_policy"),
         },
         "out_of_order": {
-            "status": (STATUS_UNDETERMINED if oo["denominator"] == 0
-                       else _status_from_score(oo["score"], oo["denominator"])),
+            "status": oo_status,
+            "machine_status": oo_machine_status,
+            "evaluation_status": oo_status,
+            "status_source": oo_source,
+            "evaluation_reason": oo_eval_reason,
+            "machine_reason": None if oo["denominator"] else "no_mapped_rule_order_endpoints",
+            "observable": oo["denominator"] > 0,
             "score": oo["score"], "denominator": oo["denominator"],
-            "reason": None if oo["denominator"] else "no_mapped_rule_order_endpoints",
             "details": oo["details"],
+            "reason": None if oo["denominator"] else "no_mapped_rule_order_endpoints",
         },
     }
     return rows
@@ -327,7 +504,14 @@ def run_extended_types(scorer, sentence: dict[str, Any], model: Any, record: dic
         else:
             status, reason = STATUS_SATISFIED, result.get("reason")
         rows[name] = {
-            "status": status, "score": result.get("score"), "reason": reason,
+            "status": status,
+            "machine_status": status,
+            "evaluation_status": status,
+            "status_source": "detector" if result.get("observable") else "detector_abstention",
+            "evaluation_reason": None if result.get("observable") else reason,
+            "score": result.get("score"), "reason": reason,
+            "observable": bool(result.get("observable")),
+            "abstention_kind": result.get("abstention_kind"),
             "candidate_count": {"required_condition_not_enforced": len(cond),
                                 "constraint_violated": len(cons),
                                 "exception_not_handled": len(exc)}.get(name),
@@ -336,6 +520,14 @@ def run_extended_types(scorer, sentence: dict[str, Any], model: Any, record: dic
             "gamma_ext": scorer.gamma_ext,
             "comparison_performed": bool(result.get("comparison_performed")),
             "exact_contradiction": result.get("exact_contradiction"),
+            "matched_activity_id": result.get("matched_activity_id"),
+            "action_max_sim": result.get("action_max_sim"),
+            "action_resolution": result.get("action_resolution"),
+            "resolved_by": result.get("resolved_by"),
+            "resolved_activity_label": result.get("resolved_activity_label"),
+            "unresolved_reason": result.get("unresolved_reason"),
+            "raw_winner_label": result.get("raw_winner_label"),
+            "raw_winner_similarity": result.get("raw_winner_similarity"),
         }
     return rows, {"condition_candidates": list(map(str, cond)),
                   "constraint_candidates": list(map(str, cons)),

@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -20,7 +21,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts")]
 
 from bpc_hybrid import sim_case_c1 as core  # noqa: E402
-from bpc_hybrid.sim_case_c1_transforms import flatten_collaboration, repair_variant  # noqa: E402
+from bpc_hybrid.sim_case_c1_transforms import (  # noqa: E402
+    flatten_collaboration, repair_variant, repair_variant_r8_task_scoped_legacy,
+)
 
 RUN_DIR = ROOT / "outputs" / "development" / "sim_case_c1" / "run_v1"
 LOCAL_MODELS = ROOT / "outputs" / "development" / "sim_case_c1" / "models"
@@ -162,17 +165,49 @@ def _rule_side(rule_id: str, rule_text: str, group: str, context: dict) -> dict:
             "stage2_meta": {k: v for k, v in outcome.items() if k not in ("sentence",)}}
 
 
-def _compare_records(rule_a: dict, rule_b: dict) -> dict:
+def _compare_records(rule_a: dict, rule_b: dict, chain: dict | None = None) -> dict:
     fields = ["modality", "actions", "actors", "actor_action_pairs", "order_relations",
               "condition", "constraint", "exception"]
     diff = {f: {"A": rule_a.get(f), "B": rule_b.get(f)}
             for f in fields if rule_a.get(f) != rule_b.get(f)}
-    return {"changed_fields": sorted(diff), "detail": diff,
-            "attribution": "extraction" if diff else "none"}
+    adaptation_loss = []
+    if chain:
+        for group in ("A", "B"):
+            flows = ((chain.get("groups") or {}).get(group) or {}).get("field_flow") or {}
+            for field, flow in flows.items():
+                verdict = flow.get("verdict")
+                if verdict in ("partially_carried_by_declared_policy", "lost_in_adaptation"):
+                    adaptation_loss.append({
+                        "group": group,
+                        "field": field,
+                        "verdict": verdict,
+                        "raw_count": flow.get("raw_count"),
+                        "projected_count": flow.get("projected_candidate_count"),
+                        "adapted_count": flow.get("adapted_record_count"),
+                    })
+    has_diff = bool(diff)
+    if has_diff and adaptation_loss:
+        attribution = "extraction_with_adaptation_loss"
+    elif adaptation_loss:
+        attribution = "adaptation_loss_without_a_to_b_value_change"
+    elif has_diff:
+        attribution = "extraction"
+    else:
+        attribution = "none"
+    return {
+        "changed_fields": sorted(diff),
+        "detail": diff,
+        "difference_attribution": "extraction" if has_diff else "none",
+        "attribution": attribution,
+        "adaptation_loss": adaptation_loss,
+        "note_zh": (
+            "changed_fields 的 A→B 直接差异来自两次抽取；adaptation_loss 另行记录"
+            "每个组内原始抽取→投影→规则记录的截断/丢失，不能笼统说差异全部来自抽取。"
+        ),
+    }
 
 
 def _sanitise_attribution(attribution: dict) -> dict:
-    """Keep field names and short fragments only (long rule-side text stays local)."""
     clean = {}
     for rule_id, block in attribution.items():
         if not block:
@@ -181,9 +216,14 @@ def _sanitise_attribution(attribution: dict) -> dict:
         detail = {}
         for field, values in (block.get("detail") or {}).items():
             detail[field] = {side: _fragment(value) for side, value in values.items()}
-        clean[rule_id] = {"changed_fields": block.get("changed_fields", []),
-                          "attribution": block.get("attribution"),
-                          "detail_fragments": detail}
+        clean[rule_id] = {
+            "changed_fields": block.get("changed_fields", []),
+            "difference_attribution": block.get("difference_attribution"),
+            "attribution": block.get("attribution"),
+            "adaptation_loss": block.get("adaptation_loss", []),
+            "detail_fragments": detail,
+            "note_zh": block.get("note_zh"),
+        }
     return clean
 
 
@@ -191,6 +231,25 @@ def _fragment(value) -> str:
     text = json.dumps(value, ensure_ascii=False) if not isinstance(value, str) else value
     text = " ".join(text.split())
     return f"{text[:30]}…(sha256 {_sha(text)[:12]})" if len(text) > 30 else text
+
+
+def _redact_for_report(value):
+    """Keep short labels/scores, fragment long rule-side text.
+
+    The local capsule retains the complete evidence.  Committable reports must
+    not contain restricted requirement text, so long strings are replaced by a
+    30-character fragment plus a hash.  This changes presentation only, never
+    the detector output or the capsule evidence.
+    """
+    if isinstance(value, dict):
+        return {key: _redact_for_report(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_redact_for_report(item) for item in value]
+    if isinstance(value, tuple):
+        return [_redact_for_report(item) for item in value]
+    if isinstance(value, str) and len(value) > 30:
+        return _fragment(value)
+    return value
 
 
 def _id_of(model, name: str) -> str | None:
@@ -205,42 +264,135 @@ def _lane_of_record(record: dict, node_id: str) -> str | None:
 
 
 def verify_repair(repair_id: str, repaired: dict, model) -> dict:
-    """Independent structural verification of the repaired model.
+    """Independent structural verification of a repaired model.
 
-    Answers "does the repaired model actually express the intended fix?" WITHOUT
-    asking the detector.  The detector's answer is recorded separately, so
-    "the program did not notice the repair" can never be confused with
-    "the model was not repaired".
+    This function does not ask the detector.  For r8 it distinguishes the
+    valid process-level event-subprocess timeout from the rejected
+    task-scoped precursor and records whether the frozen Stage-1
+    representation can carry the relevant semantics into detection.
     """
     import xml.etree.ElementTree as ET
 
     root = ET.fromstring(repaired["flattened_xml"])
     tag = lambda e: e.tag.split("}")[1]  # noqa: E731
+    process = next((e for e in root if tag(e) == "process"), None)
     evidence: dict = {}
-    if repair_id == "r8_timeout_termination":
-        boundary = next((e for e in root.iter() if tag(e) == "boundaryEvent"), None)
-        timer = next((e for e in root.iter() if tag(e) == "timerEventDefinition"), None)
-        attached = boundary.get("attachedToRef") if boundary is not None else None
-        attached_name = next((a["name"] for a in model.actions if a["id"] == attached), attached)
-        evidence = {
-            "boundary_event": boundary is not None, "timer_definition": timer is not None,
-            "attached_to": attached_name, "interrupting": boundary.get("cancelActivity") if boundary is not None else None,
-            "has_termination_path": any(
-                f.get("sourceRef") == (boundary.get("id") if boundary is not None else None)
-                and f.get("targetRef") and any(
-                    e.get("id") == f.get("targetRef") and tag(e) == "endEvent" for e in root.iter())
-                for f in root.iter() if tag(f) == "sequenceFlow"),
-        }
-        evidence["fix_expressed"] = all([evidence["boundary_event"], evidence["timer_definition"],
-                                         bool(attached), evidence["has_termination_path"]])
-        evidence["scope"] = "task_scoped_timeout"
-        evidence["scope_matches_rule_semantics"] = False
-        evidence["scope_note_zh"] = (
-            "计时器挂在单个任务（Send SIM card）上：它表达的是“发卡任务超时即中断”，"
-            "而规则 R1/r8 要求的是“整个流程耗时超过 30 天则终止流程”。"
-            "在扁平化的单流程模型里，进程级超时需要重构控制流（例如用事件子流程或事件网关包住全流程），"
-            "那已超出“最小修复”的范围，因此本修复件只部分表达该要求，检测结果按此前提解读。")
-    elif repair_id == "r9_add_verification":
+
+    if repair_id in ("r8_timeout_termination", "r8_timeout_termination_task_scoped_legacy"):
+        if process is None:
+            return {"fix_expressed": False, "reason": "process_element_missing"}
+        if repair_id == "r8_timeout_termination":
+            sub = next((e for e in process if tag(e) == "subProcess"
+                        and (e.get("triggeredByEvent") or "").lower() == "true"), None)
+            start_event = next((e for e in (list(sub) if sub is not None else []) if tag(e) == "startEvent"), None)
+            timer_def = next((e for e in (list(start_event) if start_event is not None else []) if tag(e) == "timerEventDefinition"), None)
+            duration = next((e for e in (list(timer_def) if timer_def is not None else []) if tag(e) == "timeDuration"), None)
+            end_event = next((e for e in (list(sub) if sub is not None else []) if tag(e) == "endEvent"), None)
+            terminate_def = next((e for e in (list(end_event) if end_event is not None else []) if tag(e) == "terminateEventDefinition"), None)
+            duration_text = (duration.text or "").strip() if duration is not None else None
+            inner_flows = [e for e in (list(sub) if sub is not None else []) if tag(e) == "sequenceFlow"]
+            timer_to_end = any(
+                f.get("sourceRef") == (start_event.get("id") if start_event is not None else None)
+                and f.get("targetRef") == (end_event.get("id") if end_event is not None else None)
+                for f in inner_flows
+            )
+            stage1_activity_ids = {a["id"] for a in repaired["record"].get("activities", [])}
+            stage1_event_ids = {e["id"] for e in repaired["record"].get("events", [])}
+            timer_surface_visible = False
+            try:
+                from bpc_hybrid.stage3_extended_violations import constraint_candidates
+                surface = [str(item) for item in constraint_candidates(repaired["record"], root, None)]
+                timer_surface_visible = any("P30D" in item or "30" in item or "day" in item.lower()
+                                            for item in surface)
+                surface_fragment = [item for item in surface if "P30D" in item or "30" in item][:5]
+            except Exception as exc:  # verification must not fail because a diagnostic import changed
+                surface_fragment = []
+                timer_surface_visible = bool(duration_text)
+                evidence["constraint_surface_error"] = type(exc).__name__
+            mechanism_valid = all([
+                sub is not None,
+                start_event is not None,
+                timer_def is not None,
+                bool(duration_text),
+                end_event is not None,
+                terminate_def is not None,
+                timer_to_end,
+                (start_event.get("isInterrupting") if start_event is not None else None) != "false",
+            ])
+            evidence = {
+                "repair_id": repair_id,
+                "mechanism": "process_level_event_subprocess_timer_terminate",
+                "event_subprocess": sub is not None,
+                "event_subprocess_is_process_child": sub in list(process),
+                "timer_start_event": start_event is not None,
+                "timer_definition": timer_def is not None,
+                "timer_duration": duration_text,
+                "timer_starts_with_process_scope": bool(sub is not None and timer_def is not None),
+                "interrupting": (start_event.get("isInterrupting") if start_event is not None else None),
+                "terminate_end_event": end_event is not None,
+                "terminate_definition": terminate_def is not None,
+                "timer_to_terminate_flow": timer_to_end,
+                "scope": "process_instance",
+                "scope_matches_rule_semantics": mechanism_valid,
+                "no_task_attachment": not any(
+                    tag(e) == "boundaryEvent" and e.get("attachedToRef") for e in process
+                ),
+                "stage1_record_representation": {
+                    "subprocess_activity_present": (sub.get("id") if sub is not None else None) in stage1_activity_ids,
+                    "timer_start_event_in_record": (start_event.get("id") if start_event is not None else None) in stage1_event_ids,
+                    "terminate_end_event_in_record": (end_event.get("id") if end_event is not None else None) in stage1_event_ids,
+                    "stage1_subprocess_handling": "opaque_activity_no_internal_flattening",
+                },
+                "detector_surface": {
+                    "timer_text_visible_in_constraint_candidates": timer_surface_visible,
+                    "surface_fragment": surface_fragment,
+                    "scope_and_termination_link_visible_as_structured_fields": False,
+                },
+                "semantics_entered_detection_surface": timer_surface_visible,
+                "semantics_entered_detection_chain": False,
+                "excluded_from_effective_repair_denominator": True,
+                "exclusion_reason_zh": (
+                    "过程级事件子流程在冻结 Stage 1 中是 opaque activity；计时器/终止定义及"
+                    "其流程级作用域没有进入结构化 Process Record，因此不能把修复后检测结果"
+                    "解释为方法能力。"
+                ),
+                "fix_expressed": mechanism_valid,
+                "repair_semantics_valid": mechanism_valid,
+            }
+        else:
+            anchor = next((e for e in process.iter()
+                           if tag(e) == "task" and (e.get("name") or "") == "Send SIM card"), None)
+            boundary = next((e for e in process if tag(e) == "boundaryEvent"
+                             and e.get("attachedToRef") == (anchor.get("id") if anchor is not None else None)), None)
+            timer = next((e for e in (list(boundary) if boundary is not None else []) if tag(e) == "timerEventDefinition"), None)
+            target_id = boundary.get("id") if boundary is not None else None
+            termination = any(
+                f.get("sourceRef") == target_id and f.get("targetRef") and any(
+                    e.get("id") == f.get("targetRef") and tag(e) == "endEvent" for e in process
+                )
+                for f in process if tag(f) == "sequenceFlow"
+            )
+            evidence = {
+                "repair_id": repair_id,
+                "mechanism": "task_scoped_boundary_timer_legacy",
+                "attached_to": "Send SIM card" if anchor is not None else None,
+                "boundary_event": boundary is not None,
+                "timer_definition": timer is not None,
+                "has_termination_path": termination,
+                "scope": "task_scoped_timeout",
+                "scope_matches_rule_semantics": False,
+                "fix_expressed": False,
+                "repair_semantics_valid": False,
+                "semantics_entered_detection_chain": True,
+                "excluded_from_effective_repair_denominator": True,
+                "exclusion_reason_zh": (
+                    "旧修复件只在 Send SIM card 任务上挂计时器，不能表达整个入网流程超过 30 天即终止；"
+                    "保留为部分/无效对照。"
+                ),
+            }
+        return evidence
+
+    if repair_id == "r9_add_verification":
         target = _id_of(model, "Verify correctness of customer personal data")
         before = _id_of(model, "Request personal data")
         after = _id_of(model, "Sign contract")
@@ -265,69 +417,488 @@ def verify_repair(repair_id: str, repaired: dict, model) -> dict:
         evidence["fix_expressed"] = evidence["consent_reaches_retrieval"] and not evidence["retrieval_reaches_consent"]
     elif repair_id == "r13_threshold_50":
         labels = [f.get("name") for f in root.iter() if tag(f) == "sequenceFlow" and f.get("name")]
-        evidence = {"labels": labels, "old_label_present": "Debt < 100" in labels,
-                    "new_label_present": "Debt <= 50" in labels}
+        evidence = {
+            "labels": labels,
+            "old_label_present": "Debt < 100" in labels,
+            "new_label_present": "Debt <= 50" in labels,
+            "semantic_note_zh": "Debt <= 50 排除超过 50 的客户，且不单独证明其他入网条件满足。",
+        }
         evidence["fix_expressed"] = evidence["new_label_present"] and not evidence["old_label_present"]
     else:
-        evidence = {"fix_expressed": False, "reason": "unknown repair"}
+        return {"fix_expressed": False, "repair_semantics_valid": False, "reason": "unknown repair"}
+
+    evidence.setdefault("scope", "rule_element_scope")
+    evidence.setdefault("scope_matches_rule_semantics", True)
+    evidence["repair_semantics_valid"] = bool(evidence.get("fix_expressed"))
+    evidence["semantics_entered_detection_chain"] = True
+    evidence["excluded_from_effective_repair_denominator"] = False
     return evidence
 
 
-def _raw_field_presence(row: dict) -> dict:
-    clause = (row.get("record") or {}).get("clauses") or [{}]
-    c0 = clause[0] if clause else {}
-    counts = {f: len(c0.get(f) or []) for f in ("actions", "actors", "conditions",
-                                                "constraints", "exceptions", "order_relations")}
-    return {"counts": counts, "any": {f: bool(v) for f, v in counts.items()}}
+FIELD_TRACE_FIELDS = ("actions", "actors", "conditions", "constraints",
+                     "exceptions", "order_relations")
+FIELD_SINGULAR = {"actions": "action", "actors": "actor", "conditions": "condition",
+                  "constraints": "constraint", "exceptions": "exception",
+                  "order_relations": "order_relations"}
+RULE_CONSUMER = {"actions": "action", "actors": "actor", "conditions": "condition",
+                 "constraints": "constraint", "exceptions": "exception",
+                 "order_relations": "order_relations"}
+
+
+def _clauses(row: dict | None) -> list[dict]:
+    return list(((row or {}).get("record") or {}).get("clauses") or [])
+
+
+def _raw_field_spans(clause: dict, field: str) -> list:
+    entry = clause.get(field)
+    if isinstance(entry, dict) and isinstance(entry.get("spans"), list):
+        return list(entry["spans"])
+    if isinstance(entry, list):
+        return list(entry)
+    singular = FIELD_SINGULAR[field]
+    value = clause.get(singular)
+    return list(value) if isinstance(value, list) else []
+
+
+def _span_text_local(span) -> str | None:
+    if isinstance(span, dict):
+        text = span.get("text")
+        if isinstance(text, str) and text.strip():
+            return text.strip()
+    if isinstance(span, str) and span.strip():
+        return span.strip()
+    return None
+
+
+def _raw_field_inventory(row: dict | None) -> dict:
+    clauses = _clauses(row)
+    counts = {field: 0 for field in FIELD_TRACE_FIELDS}
+    texts = {field: [] for field in FIELD_TRACE_FIELDS}
+    invalid = {field: 0 for field in FIELD_TRACE_FIELDS}
+    for clause in clauses:
+        for field in FIELD_TRACE_FIELDS:
+            for span in _raw_field_spans(clause, field):
+                counts[field] += 1
+                text = _span_text_local(span)
+                if text:
+                    texts[field].append(text)
+                else:
+                    invalid[field] += 1
+    actor_action_map = []
+    for clause in clauses:
+        for entry in clause.get("actor_action_map") or []:
+            if isinstance(entry, dict):
+                actor_action_map.append({
+                    "actor_id": entry.get("actor_id"),
+                    "action_id": entry.get("action_id"),
+                })
+            else:
+                actor_action_map.append({"raw": repr(entry)})
+    return {
+        "clause_count": len(clauses),
+        "raw_counts": counts,
+        "valid_span_counts": {field: len(texts[field]) for field in FIELD_TRACE_FIELDS},
+        "invalid_span_counts": invalid,
+        "texts": texts,
+        "actor_action_map": actor_action_map,
+        "actor_action_map_count": len(actor_action_map),
+    }
+
+
+def _projected_field_inventory(sentence: dict | None) -> dict:
+    diagnostics = (sentence or {}).get("diagnostics") or {}
+    field_texts = diagnostics.get("span_field_texts") or {}
+    return {
+        "field_texts": {field: list(field_texts.get(RULE_CONSUMER[field]) or []) for field in FIELD_TRACE_FIELDS},
+        "counts": {field: len(field_texts.get(RULE_CONSUMER[field]) or []) for field in FIELD_TRACE_FIELDS},
+        "actor_action_map": list(diagnostics.get("actor_action_map") or []),
+        "projection_value_policy": diagnostics.get("projection_value_policy"),
+    }
+
+
+def _rule_field_inventory(rule: dict | None) -> dict:
+    rule = rule or {}
+    return {
+        "actions": list(rule.get("actions") or []),
+        "actors": list(rule.get("actors") or []),
+        "conditions": [rule["condition"]] if rule.get("condition") else [],
+        "constraints": [rule["constraint"]] if rule.get("constraint") else [],
+        "exceptions": [rule["exception"]] if rule.get("exception") else [],
+        "order_relations": list(rule.get("order_relations") or []),
+        "actor_action_pairs": list(rule.get("actor_action_pairs") or []),
+        "selection_metadata": dict(rule.get("selection_metadata") or {}),
+    }
+
+
+def _field_verdict(field: str, raw_count: int, projected_count: int,
+                   adapted_count: int) -> str:
+    if field == "order_relations":
+        if raw_count == 0 and adapted_count > 0:
+            return "derived_by_declared_policy"
+        if raw_count == 0 and projected_count == 0 and adapted_count == 0:
+            return "not_extracted"
+    if raw_count == 0 and projected_count == 0 and adapted_count == 0:
+        return "not_extracted"
+    if raw_count > 0 and projected_count == 0:
+        return "lost_in_adaptation"
+    if projected_count > adapted_count or raw_count > adapted_count:
+        return "partially_carried_by_declared_policy"
+    if adapted_count > 0:
+        return "full_carry"
+    return "not_extracted"
+
+
+def _pair_verdict(raw_count: int, projected_valid: int, projected_invalid: int,
+                  adapted_count: int) -> str:
+    if raw_count == 0 and projected_valid == 0 and adapted_count == 0:
+        return "not_extracted"
+    if raw_count > 0 and projected_valid == 0 and projected_invalid > 0 and adapted_count == 0:
+        return "invalid_in_raw_no_valid_pair"
+    if raw_count > 0 and projected_valid == 0 and adapted_count == 0:
+        return "lost_in_adaptation"
+    if projected_valid > adapted_count or raw_count > adapted_count:
+        return "partially_carried_by_declared_policy"
+    if adapted_count > 0:
+        return "full_carry"
+    return "not_extracted"
+
+
+def _consumption_status(field: str, group: str, projected_count: int,
+                        adapted_count: int, consumed_count: int) -> str:
+    consumer_expected = field in ("actions", "actors", "order_relations") or group == "C"
+    if not consumer_expected:
+        return "not_used_by_group_pipeline"
+    if adapted_count == 0:
+        return "no_value_to_consume"
+    if projected_count > consumed_count:
+        return "partially_consumed_relative_to_projected"
+    if consumed_count >= adapted_count:
+        return "fully_consumed"
+    if consumed_count > 0:
+        return "partially_consumed"
+    return "not_consumed"
 
 
 def build_chain(rule_id: str, rule_text: str, sides: dict, raw_by_group: dict) -> dict:
-    """Rule text -> raw extraction -> adapted record -> process binding -> evidence.
+    """Rule text -> raw extraction -> projection -> adapted rule record -> detector input.
 
-    The last column answers the P2 question directly: was a rule element never
-    extracted, or was it extracted and then lost during adaptation?
+    Counts and verdicts are kept separately.  A field is not ``full_carry``
+    merely because some value survived: moving from 2 raw actions to 1 adapted
+    action is explicitly ``partially_carried_by_declared_policy``.
     """
-    mapping = {"actions": "actions", "actors": "actors", "conditions": "condition",
-               "constraints": "constraint", "exceptions": "exception",
-               "order_relations": "order_relations"}
     chain = {"rule_id": rule_id, "version": "v2", "rule_text_sha256": _sha(rule_text),
              "rule_text_length": len(rule_text), "groups": {}}
-    for group, side in sides.items():
+    for group in ("A", "B", "C"):
+        side = sides.get(group) or {}
         if not side.get("ok"):
             chain["groups"][group] = {"ok": False, "error": side.get("error")}
             continue
-        rule = side["rule"]
-        raw = raw_by_group.get(group) or {}
-        presence = _raw_field_presence(raw) if raw else None
+        sentence = side.get("sentence") or {}
+        rule = side.get("rule") or {}
+        raw = _raw_field_inventory(raw_by_group.get(group))
+        projected = _projected_field_inventory(sentence)
+        adapted = _rule_field_inventory(rule)
         field_flow = {}
-        if presence:
-            for raw_field, record_field in mapping.items():
-                in_raw = presence["any"].get(raw_field, False)
-                in_record = bool(rule.get(record_field))
-                if raw_field == "order_relations" and in_record and not in_raw:
-                    verdict = "derived_by_declared_policy"
-                elif in_raw and in_record:
-                    verdict = "carried"
-                elif in_raw and not in_record:
-                    verdict = "lost_in_adaptation"
-                elif not in_raw and not in_record:
-                    verdict = "not_extracted"
-                else:
-                    verdict = "present_in_record_without_raw"
-                field_flow[raw_field] = {"raw_count": presence["counts"].get(raw_field),
-                                         "in_adapted_record": in_record, "verdict": verdict}
+        for field in FIELD_TRACE_FIELDS:
+            raw_count = int(raw["valid_span_counts"].get(field, 0))
+            projected_count = int(projected["counts"].get(field, 0))
+            adapted_values = adapted.get(field) or []
+            adapted_count = len(adapted_values)
+            consumer_expected = field in ("actions", "actors", "order_relations") or group == "C"
+            consumed_count = adapted_count if consumer_expected else 0
+            unconsumed = [text for text in projected["field_texts"].get(field, [])
+                          if text not in adapted_values]
+            field_flow[field] = {
+                "raw_count": raw_count,
+                "raw_invalid_count": int(raw["invalid_span_counts"].get(field, 0)),
+                "projected_candidate_count": projected_count,
+                "adapted_record_count": adapted_count,
+                "detector_consumed_count": consumed_count,
+                "consumer_expected": consumer_expected,
+                "consumption_status": _consumption_status(field, group, projected_count,
+                                                                            adapted_count, consumed_count),
+                "verdict": _field_verdict(field, raw_count, projected_count, adapted_count),
+                "selection_policy": (adapted.get("selection_metadata", {}).get("field_selection_policy") or {}).get(field),
+                "unconsumed_candidates": unconsumed,
+            }
+        pair_flow = {
+            "raw_count": int(raw.get("actor_action_map_count", 0)),
+            "projected_count": sum(1 for entry in projected.get("actor_action_map", []) if entry.get("valid")),
+            "projected_valid_count": sum(1 for entry in projected.get("actor_action_map", []) if entry.get("valid")),
+            "projected_invalid_count": sum(1 for entry in projected.get("actor_action_map", []) if not entry.get("valid")),
+            "adapted_count": len(adapted.get("actor_action_pairs") or []),
+            "verdict": _pair_verdict(
+                int(raw.get("actor_action_map_count", 0)),
+                sum(1 for entry in projected.get("actor_action_map", []) if entry.get("valid")),
+                sum(1 for entry in projected.get("actor_action_map", []) if not entry.get("valid")),
+                len(adapted.get("actor_action_pairs") or [])),
+            "invalid_links": [entry for entry in projected.get("actor_action_map", []) if not entry.get("valid")],
+        }
         chain["groups"][group] = {
             "ok": True,
-            "raw_extraction": presence,
+            "raw_extraction": raw,
+            "projected_record": {
+                "counts": projected["counts"],
+                "field_texts": projected["field_texts"],
+                "actor_action_map": projected["actor_action_map"],
+                "projection_value_policy": projected["projection_value_policy"],
+            },
             "adapted_record": rule,
             "field_flow": field_flow,
-            "process_binding": {"mapped_activity": side.get("mapped_activity"),
-                                "surfaces": side.get("surfaces"),
-                                "candidate_activity_id": (side.get("surfaces") or {}).get("activity_id")},
+            "actor_action_pair_flow": pair_flow,
+            "process_binding": {
+                "mapped_activity": side.get("mapped_activity"),
+                "surfaces": side.get("surfaces"),
+                "candidate_activity_id": (side.get("surfaces") or {}).get("activity_id"),
+            },
             "checks": side.get("checks"),
             "gate": side.get("gate"),
         }
     return chain
+
+
+def _stage1_process_facts(stage1: dict) -> dict:
+    record = stage1.get("record") or {}
+    xml_root = stage1.get("xml_root")
+    tag = lambda e: e.tag.split("}")[1]  # noqa: E731
+    lane_name = {lane.get("id"): lane.get("name") for lane in record.get("lanes", [])}
+    activities = []
+    for act in record.get("activities", []):
+        activities.append({
+            "id": act.get("id"),
+            "name": act.get("name"),
+            "lanes": [lane_name.get(lid, lid) for lid in act.get("lane_ids", [])],
+        })
+    flows = []
+    for flow in record.get("sequence_flows", []):
+        flows.append({
+            "id": flow.get("id"), "name": flow.get("name"),
+            "source_ref": flow.get("source_ref"), "target_ref": flow.get("target_ref"),
+            "condition_expression": flow.get("condition_expression"),
+        })
+    xml_counts = {
+        "timer_event_definitions": 0,
+        "time_durations": 0,
+        "boundary_events": 0,
+        "terminate_event_definitions": 0,
+        "event_subprocesses": 0,
+    }
+    if xml_root is not None:
+        for elem in xml_root.iter():
+            local = tag(elem)
+            if local == "timerEventDefinition":
+                xml_counts["timer_event_definitions"] += 1
+            elif local == "timeDuration":
+                xml_counts["time_durations"] += 1
+            elif local == "boundaryEvent":
+                xml_counts["boundary_events"] += 1
+            elif local == "terminateEventDefinition":
+                xml_counts["terminate_event_definitions"] += 1
+            elif local == "subProcess" and (elem.get("triggeredByEvent") or "").lower() == "true":
+                xml_counts["event_subprocesses"] += 1
+    return {
+        "activities": activities,
+        "events": [{"id": e.get("id"), "name": e.get("name"), "type": e.get("type")}
+                   for e in record.get("events", [])],
+        "gateways": [{"id": g.get("id"), "name": g.get("name"), "type": g.get("type")}
+                     for g in record.get("gateways", [])],
+        "sequence_flows": flows,
+        "flow_labels": [flow["name"] for flow in flows if flow.get("name")],
+        "xml_counts": xml_counts,
+        "condition_expressions": len([f for f in flows if f.get("condition_expression")]),
+    }
+
+
+def _check_row(rule_id: str, group: str, check: str, result: dict,
+               inherited_from: str | None = None, added_by: str | None = None) -> dict:
+    row = {
+        "rule_id": rule_id, "group": group, "check": check,
+        "status": result.get("status"),
+        "machine_status": result.get("machine_status", result.get("status")),
+        "evaluation_status": result.get("evaluation_status", result.get("status")),
+        "status_source": result.get("status_source"),
+        "evaluation_reason": result.get("evaluation_reason"),
+        "score": result.get("score"),
+        "denominator": result.get("denominator"),
+        "reason": result.get("reason"),
+        "observable": result.get("observable"),
+        "comparison_performed": result.get("comparison_performed"),
+    }
+    if inherited_from:
+        row["inherited_from"] = inherited_from
+    if added_by:
+        row["added_by"] = added_by
+    return row
+
+
+def _alarm_compact(name: str, result: dict | None) -> dict:
+    result = result or {}
+    return {
+        "check": name,
+        "status": result.get("status"),
+        "machine_status": result.get("machine_status", result.get("status")),
+        "evaluation_status": result.get("evaluation_status", result.get("status")),
+        "score": result.get("score"),
+        "reason": result.get("reason"),
+        "best_candidate": result.get("best_candidate"),
+        "max_sim": result.get("max_sim"),
+        "details": result.get("details") or [],
+        "process_actor_candidates": result.get("process_actor_candidates") or [],
+        "matched_process_action_ids": result.get("matched_process_action_ids") or [],
+        "matched_action_owner_evidence": result.get("matched_action_owner_evidence") or [],
+        "primary_action_match": result.get("primary_action_match"),
+        "primary_action_owner_evidence": result.get("primary_action_owner_evidence") or [],
+        "exact_contradiction": result.get("exact_contradiction"),
+        "action_resolution": result.get("action_resolution"),
+        "resolved_activity_label": result.get("resolved_activity_label"),
+        "unresolved_reason": result.get("unresolved_reason"),
+    }
+
+
+def _contains_any(text: str, tokens: tuple[str, ...]) -> bool:
+    lowered = (text or "").lower()
+    return any(token in lowered for token in tokens)
+
+
+def _actor_tokens(text: str) -> set[str]:
+    stop = {"the", "a", "an"}
+    return {token for token in re.findall(r"[a-z]+", (text or "").lower()) if token not in stop}
+
+
+def _owner_matches(required: str, owner: str) -> bool:
+    return bool(_actor_tokens(required) & _actor_tokens(owner))
+
+
+def _assess_alarm_correspondence(rule_id: str, group: str, side: dict,
+                                 process_facts: dict, reference_item: dict) -> dict:
+    """Separate raw machine alarms from verified reference-problem correspondence.
+
+    The function reads the already-produced detector rows and the process/rule
+    evidence.  It is called after prediction/scoring and cannot influence the
+    rule side.
+    """
+    checks = side.get("checks") or {}
+    rule = side.get("rule") or {}
+    alarms = [_alarm_compact(name, result) for name, result in checks.items()
+              if result.get("status") == core.STATUS_VIOLATION]
+    matched: list[str] = []
+    chain: list[str] = []
+    activity_by_id = {a.get("id"): a.get("name") for a in process_facts.get("activities", [])}
+    reference_summary = (reference_item.get("semantic_issue") or {}).get("summary_zh") or ""
+
+    if rule_id == "r8":
+        for alarm in alarms:
+            blob = json.dumps(alarm, ensure_ascii=False).lower()
+            has_time = bool(re.search(r"\b(?:30\s*days?|p30d|timeout|duration|time[_ ]limit|time bound)\b", blob))
+            has_termination = bool(re.search(r"\b(?:terminate|terminated|termination|stop|abort|end event)\b", blob))
+            has_process_scope = bool(re.search(r"\b(?:process|scope|instance)\b", blob))
+            if has_time and has_termination and has_process_scope:
+                matched.append(alarm["check"])
+                chain.append(
+                    f"{alarm['check']} 同时给出时间、终止和流程作用域证据；进入参考问题对应。"
+                )
+            else:
+                chain.append(
+                    f"{alarm['check']} 是机器报警（{alarm.get('machine_status')}，"
+                    f"score={alarm.get('score')}），但其证据未同时涉及 30 天时间条件、"
+                    "终止行为和流程级作用域。"
+                )
+        if not matched:
+            chain.append("因此 r8 的参考问题未被有证据地对应检出；原始报警仍保留。")
+    elif rule_id == "r9":
+        alarm = next((a for a in alarms if a["check"] == "missing_action"), None)
+        if alarm is not None and rule.get("actions"):
+            matched.append("missing_action")
+            best = (alarm.get("details") or [{}])[0]
+            chain.append(
+                "规则动作已抽取；missing_action 给出最低对应活动 "
+                f"{best.get('best_model_action')!r} similarity={best.get('similarity')}，"
+                "流程活动清单中没有语义对应的核验活动。"
+            )
+        else:
+            chain.append("没有可核对的 missing_action violation 报警；不能计为对应检出。")
+    elif rule_id == "r10":
+        alarm = next((a for a in alarms if a["check"] == "incorrect_actor"), None)
+        required_actor = (rule.get("actors") or [""])[0]
+        owners = []
+        primary_evidence = (alarm or {}).get("primary_action_owner_evidence") or []
+        evidence_source = primary_evidence or (alarm or {}).get("matched_action_owner_evidence") or []
+        for evidence in evidence_source:
+            owners.extend(evidence.get("owners") or [])
+        if alarm is not None and owners and not any(_owner_matches(required_actor, owner) for owner in owners):
+            matched.append("incorrect_actor")
+            chain.append(
+                "incorrect_actor 报警具有动作绑定证据；匹配到的流程动作 "
+                f"{[activity_by_id.get(i, i) for i in (alarm.get('matched_process_action_ids') or [])]} "
+                f"归属为 {sorted(set(owners))}，与规则要求的执行者不一致。"
+            )
+        else:
+            chain.append("incorrect_actor 缺少可核验的动作—角色归属证据，不能仅凭 violation 计为对应。")
+    elif rule_id == "r11":
+        has_oo_alarm = any(a["check"] == "out_of_order" for a in alarms)
+        missing_alarm = next((a for a in alarms if a["check"] == "missing_action"), None)
+        if has_oo_alarm:
+            matched.append("out_of_order")
+            chain.append("out_of_order 报警含有端点映射和可达性证据。")
+        else:
+            chain.append(
+                "主视角 out_of_order 没有 positive alarm；"
+                + (f"存在的 {missing_alarm['check']} 报警与参考问题（活动存在但位置错误）不同型，"
+                   "且流程事实显示 Ask for consent 活动存在。" if missing_alarm else "")
+            )
+    elif rule_id == "r13":
+        condition_alarm = next((a for a in alarms if a["check"] in
+                                ("required_condition_not_enforced", "constraint_violated")), None)
+        if condition_alarm is not None:
+            matched.append(condition_alarm["check"])
+            chain.append("条件/约束类报警含有门槛语义证据。")
+        else:
+            other = [a["check"] for a in alarms]
+            chain.append(
+                "条件/约束类没有 positive alarm；"
+                + (f"其他机器报警 {other} 不涉及 Debt>50 门槛语义。" if other else "没有任何 positive alarm。")
+            )
+    else:
+        chain.append("未知规则，未建立对应判定。")
+
+    if matched:
+        judgment = "found_with_reference_evidence"
+    elif alarms:
+        judgment = "machine_alarm_but_reference_correspondence_unverified"
+    else:
+        judgment = "no_positive_machine_alarm"
+    return {
+        "reference_issue_present": reference_item.get("dev_reference_judgment", {}).get("judgment")
+        in ("issue_present", "issue_present_with_premise"),
+        "reference_issue_summary_zh": reference_summary,
+        "machine_alarms": alarms,
+        "machine_alarm_count": len(alarms),
+        "matched_alarm_checks": sorted(set(matched)),
+        "found_corresponding_problem": bool(matched),
+        "correspondence_judgment": judgment,
+        "evidence_chain_zh": chain,
+        "evaluation_scope_note_zh": (
+            "开发案例评价：只把有动作绑定、流程事实或时间/终止语义证据的报警计为对应；"
+            "类型相同且 violation 本身不构成证据。"
+        ),
+    }
+
+
+def _repair_evidence(result: dict | None) -> dict:
+    result = result or {}
+    return {
+        "status": result.get("status"),
+        "machine_status": result.get("machine_status", result.get("status")),
+        "score": result.get("score"),
+        "reason": result.get("reason") or result.get("evaluation_reason") or result.get("machine_reason"),
+        "denominator": result.get("denominator"),
+        "details": result.get("details") or [],
+        "matched_action_owner_evidence": result.get("matched_action_owner_evidence") or [],
+        "matched_process_action_ids": result.get("matched_process_action_ids") or [],
+        "best_candidate": result.get("best_candidate"),
+        "max_sim": result.get("max_sim"),
+        "observable": result.get("observable"),
+    }
 
 
 def run(overwrite: bool, check_only: bool) -> dict:
@@ -352,14 +923,11 @@ def run(overwrite: bool, check_only: bool) -> dict:
     original = core.BPMN.read_bytes()
     stage1 = _parse_flattened(original, "sim_original", core.STAGE1_CONTRACT)
     model = core.build_model(stage1, nlp)
-    # Group C uses the project's ACCEPTED four-type repair (REPAIR-V2 arm C):
-    # v3 action localization at the frozen gamma plus the comparison gate, with
-    # no forced resolution.  The original ExtendedViolationScorer is kept only
-    # for the diagnostic comparison recorded in the capsule.
     v3 = EvidenceChecksV3(sim, thresholds["tau"], thresholds["gamma"], thresholds["theta"], nlp)
     scorers["ext"] = RepairedExtendedScorerV2(v3, sim.text_pair, LABEL_FALLBACK_GAMMA, GAMMA_EXT)
     scorers["gate"] = aggregate_with_comparison_gate
     baseline_path, baseline = _load_baseline_capsule()
+    process_facts = _stage1_process_facts(stage1)
 
     plan = {
         "schema_version": "sim_case_c1_plan@1.0.0",
@@ -402,6 +970,17 @@ def run(overwrite: bool, check_only: bool) -> dict:
                        "label_fallback_gamma": LABEL_FALLBACK_GAMMA,
                        "source": "configs/sun_stage3_development_v1.json + REPAIR-V2 arm C configuration"},
         "lens_map": LENS_MAP,
+        "evaluation_policy": {
+            "status_semantics": (
+                "empty_rule_action is an extraction failure; evaluation status is undetermined and "
+                "the raw formula status is retained separately as machine_status=not_applicable"
+            ),
+            "reference_correspondence": (
+                "type equality plus status=violation is not sufficient; only alarms with action-bound, "
+                "process-fact, temporal or termination evidence count as corresponding to the reference issue"
+            ),
+            "adaptation_trace": "raw_extraction_count -> projected_candidate_count -> adapted_record_count -> detector_consumed_count",
+        },
         "inputs": {
             "bpmn": core.artifact(core.BPMN),
             "requirements": core.artifact(core.REQUIREMENTS),
@@ -439,7 +1018,9 @@ def run(overwrite: bool, check_only: bool) -> dict:
         for group, side in sides.items():
             if not side["ok"]:
                 rows.append({"rule_id": rule_id, "group": group, "check": "*",
-                             "status": core.STATUS_UNDETERMINED, "reason": side["error"]})
+                             "status": core.STATUS_UNDETERMINED,
+                             "machine_status": core.STATUS_UNDETERMINED,
+                             "reason": side["error"]})
                 entry["sides"][group] = {"ok": False, "error": side["error"]}
                 continue
             rule_rows = _group_rows(scorers, side["sentence"], model, stage1, side["rule"])
@@ -451,14 +1032,10 @@ def run(overwrite: bool, check_only: bool) -> dict:
                 "stage2_meta": side["stage2_meta"],
             }
             for check, result in rule_rows["three_types"].items():
-                rows.append({"rule_id": rule_id, "group": group, "check": check,
-                             "status": result["status"], "score": result.get("score"),
-                             "denominator": result.get("denominator"),
-                             "reason": result.get("reason")})
-        # group C = group B rule side + extended types
+                rows.append(_check_row(rule_id, group, check, result))
         side_b = sides["B"]
         if side_b["ok"]:
-            ext = _extended_rows(scorers, side_b["sentence"], model, stage1, side_b["rule"]) 
+            ext = _extended_rows(scorers, side_b["sentence"], model, stage1, side_b["rule"])
             entry["sides"]["C"] = {
                 "ok": True,
                 "sentence": entry["sides"]["B"]["sentence"],
@@ -469,38 +1046,44 @@ def run(overwrite: bool, check_only: bool) -> dict:
                 "reuses_group_b": ["stage2", "three_type_rows"],
             }
             for check, result in entry["sides"]["B"]["checks"].items():
-                rows.append({"rule_id": rule_id, "group": "C", "check": check,
-                             "status": result["status"], "score": result.get("score"),
-                             "denominator": result.get("denominator"),
-                             "reason": result.get("reason"),
-                             "inherited_from": "B"})
+                rows.append(_check_row(rule_id, "C", check, result, inherited_from="B"))
             for check, result in ext["extended"].items():
-                rows.append({"rule_id": rule_id, "group": "C", "check": check,
-                             "status": result["status"], "score": result.get("score"),
-                             "reason": result.get("reason"),
-                             "candidate_count": result.get("candidate_count"),
-                             "best_candidate": result.get("best_candidate"),
-                             "max_sim": result.get("max_sim"),
-                             "added_by": "four_extended_types"})
+                rows.append(_check_row(rule_id, "C", check, result,
+                                       added_by="four_extended_types"))
         else:
             entry["sides"]["C"] = {"ok": False, "error": side_b.get("error")}
-        entry["a_to_b"] = (_compare_records(entry["sides"]["A"]["rule"], entry["sides"]["B"]["rule"])
-                           if entry["sides"]["A"].get("ok") and entry["sides"]["B"].get("ok") else None)
         raw_by_group = {
             "A": next((r for r in baseline.get("records", [])
                        if r.get("sample_id") == f"sim_{rule_id}_v2"), {}),
             "B": predictions["rows"].get(f"SIM_card_scenario/{rule_id}/v2", {}),
+            "C": predictions["rows"].get(f"SIM_card_scenario/{rule_id}/v2", {}),
         }
         entry["chain"] = build_chain(rule_id, rule_text,
                                      {g: entry["sides"].get(g) or {} for g in ("A", "B", "C")},
                                      raw_by_group)
+        entry["a_to_b"] = (_compare_records(entry["sides"]["A"]["rule"], entry["sides"]["B"]["rule"],
+                                            entry["chain"])
+                           if entry["sides"]["A"].get("ok") and entry["sides"]["B"].get("ok") else None)
         rule_records[rule_id] = entry
-        stage1 = stage1  # single public record consumed by all groups
 
-    # ---- predictions are on disk in memory only; now (and only now) read the
-    # development reference judgments for the comparison table -----------------
+    # Verify the required B/C three-type reuse invariant before the comparison
+    # stage reads any reference judgment.
+    for rule_id in core.MAIN_RULES:
+        sides = rule_records[rule_id]["sides"]
+        if sides.get("B", {}).get("ok") and sides.get("C", {}).get("ok"):
+            for check in ("missing_action", "incorrect_actor", "out_of_order"):
+                if sides["B"]["checks"][check] != sides["C"]["checks"][check]:
+                    raise AssertionError(f"B/C three-type reuse changed for {rule_id}/{check}")
+
+    # ---- reference judgments are read only now, after all predictions/scoring --
     reference = {item["rule_id"]: item for item in curated["items"]}
     comparison = []
+    reference_assessment_summary = {
+        group: {"reference_problems": 5, "found_with_reference_evidence": 0,
+                "machine_alarm_but_reference_correspondence_unverified": 0,
+                "no_positive_machine_alarm": 0}
+        for group in ("A", "B", "C")
+    }
     for rule_id in core.MAIN_RULES:
         item = reference[rule_id]
         lenses = LENS_MAP[rule_id]
@@ -511,24 +1094,43 @@ def run(overwrite: bool, check_only: bool) -> dict:
             lens_results = {}
             for lens in [lenses["primary"], *lenses["secondary"]]:
                 if lens in checks:
-                    lens_results[lens] = {"status": checks[lens]["status"],
-                                          "score": checks[lens].get("score"),
-                                          "reason": checks[lens].get("reason")}
-            found = any(r["status"] == core.STATUS_VIOLATION for r in lens_results.values())
-            undetermined = (not lens_results) or all(
-                r["status"] in (core.STATUS_UNDETERMINED, core.STATUS_NOT_APPLICABLE)
-                for r in lens_results.values())
+                    lens_results[lens] = {
+                        "status": checks[lens]["status"],
+                        "machine_status": checks[lens].get("machine_status", checks[lens]["status"]),
+                        "score": checks[lens].get("score"),
+                        "reason": checks[lens].get("reason"),
+                    }
+            assessment = _assess_alarm_correspondence(rule_id, group, side, process_facts, item)
+            type_status_found = any(r["status"] == core.STATUS_VIOLATION for r in lens_results.values())
             per_group[group] = {
                 "covered_lenses": sorted(lens_results),
                 "lens_results": lens_results,
-                "found_corresponding_problem": found,
-                "all_lenses_undetermined": bool(undetermined),
-                "type_name_match": found and lenses["primary"] in {
+                "type_and_status_only_match": type_status_found and lenses["primary"] in {
                     k for k, v in lens_results.items() if v["status"] == core.STATUS_VIOLATION},
+                "found_corresponding_problem": assessment["found_corresponding_problem"],
+                "correspondence_judgment": assessment["correspondence_judgment"],
+                "matched_alarm_checks": assessment["matched_alarm_checks"],
+                "machine_alarms": assessment["machine_alarms"],
+                "machine_alarm_count": assessment["machine_alarm_count"],
+                "evidence_chain_zh": assessment["evidence_chain_zh"],
+                "all_lenses_undetermined": (not lens_results) or all(
+                    r["status"] in (core.STATUS_UNDETERMINED, core.STATUS_NOT_APPLICABLE)
+                    for r in lens_results.values()),
             }
+            category = assessment["correspondence_judgment"]
+            if category in reference_assessment_summary[group]:
+                reference_assessment_summary[group][category] += 1
+        primary = per_group["C"]
         reference_present = item["dev_reference_judgment"]["judgment"] in (
             "issue_present", "issue_present_with_premise")
-        primary = per_group["C"]
+        if primary["found_corresponding_problem"]:
+            miss_kind = None
+        elif primary["correspondence_judgment"] == "machine_alarm_but_reference_correspondence_unverified":
+            miss_kind = "alarm_without_verified_reference_correspondence"
+        elif primary["all_lenses_undetermined"]:
+            miss_kind = "undetermined"
+        else:
+            miss_kind = "wrong_or_unaligned_judgment"
         comparison.append({
             "rule_id": rule_id,
             "reference_judgment": item["dev_reference_judgment"]["judgment"],
@@ -542,9 +1144,9 @@ def run(overwrite: bool, check_only: bool) -> dict:
                 "reference_issue_present": reference_present,
                 "group_C_found": primary["found_corresponding_problem"],
                 "group_C_undetermined": primary["all_lenses_undetermined"],
-                "miss_kind": (None if primary["found_corresponding_problem"]
-                              else ("undetermined" if primary["all_lenses_undetermined"]
-                                    else "wrong_judgment")),
+                "group_C_judgment": primary["correspondence_judgment"],
+                "type_and_status_only_match": primary["type_and_status_only_match"],
+                "miss_kind": miss_kind,
             },
         })
 
@@ -561,53 +1163,128 @@ def run(overwrite: bool, check_only: bool) -> dict:
                "model_evidence": repaired["evidence"],
                "independent_verification": verify_repair(spec["repair_id"], repaired, repaired_model),
                "before": None, "after": None}
-        for group in ("B", "C"):
-            side = rule_records[spec["rule_id"]]["sides"].get(group, {})
-            if not side.get("ok"):
-                continue
+        side = rule_records[spec["rule_id"]]["sides"].get("B") or {}
+        side_c_original = rule_records[spec["rule_id"]]["sides"].get("C") or side
+        rule_element_available = False
+        exclusion_reason = None
+        if side.get("ok"):
             sentence = dict(side["sentence"])
             sentence["sentence_text"] = rule_text
             rule = side["rule"]
-            if spec["lens"] in ("missing_action", "incorrect_actor", "out_of_order"):
+            lens = spec["lens"]
+            if lens in ("missing_action", "incorrect_actor", "out_of_order"):
                 after_checks = core.run_three_types(scorers["sun"], rule, repaired_model)
             else:
                 after_checks = _extended_rows(scorers, sentence, repaired_model, repaired, rule)["extended"]
-            after = after_checks.get(spec["lens"])
-            before = (side.get("checks") or {}).get(spec["lens"])
-            result = {"group": group,
-                      "before_status": (before or {}).get("status"),
-                      "before_score": (before or {}).get("score"),
-                      "after_status": (after or {}).get("status"),
-                      "after_score": (after or {}).get("score"),
-                      "after_reason": (after or {}).get("reason"),
-                      "problem_removed": ((before or {}).get("status") == core.STATUS_VIOLATION
-                                          and (after or {}).get("status") == core.STATUS_SATISFIED)}
-            if group == "C":
-                row["after"] = result
+            after = after_checks.get(lens)
+            before = (side_c_original.get("checks") or {}).get(lens)
+            before_group_b = (side.get("checks") or {}).get(lens)
+            field_for_lens = {
+                "missing_action": "actions", "incorrect_actor": "actors",
+                "out_of_order": "order_relations", "prohibited_action_present": "action",
+                "required_condition_not_enforced": "condition",
+                "constraint_violated": "constraint", "exception_not_handled": "exception",
+            }.get(lens)
+            if field_for_lens in ("action", "condition", "constraint", "exception"):
+                rule_element_available = bool(rule.get(field_for_lens))
             else:
-                row["before"] = result
-            row[f"group_{group}"] = result
+                rule_element_available = bool(rule.get(field_for_lens or ""))
+            if not rule_element_available:
+                exclusion_reason = f"empty_rule_{field_for_lens}"
+            iv = row["independent_verification"]
+            effective = (bool(iv.get("repair_semantics_valid"))
+                         and bool(iv.get("semantics_entered_detection_chain"))
+                         and rule_element_available
+                         and after is not None)
+            if not bool(iv.get("repair_semantics_valid")):
+                exclusion_reason = exclusion_reason or "repair_semantics_invalid"
+            elif not bool(iv.get("semantics_entered_detection_chain")):
+                exclusion_reason = exclusion_reason or "repair_semantics_not_carried_by_stage1"
+            row.update({
+                "rule_element_available": rule_element_available,
+                "effective_repair_control": effective,
+                "in_effective_repair_denominator": effective,
+                "effective_control_exclusion_reason": exclusion_reason,
+                "before": {"group": "C_original", **_repair_evidence(before)},
+                "after": {"group": "C_repaired", **_repair_evidence(after)},
+                "problem_removed": bool(
+                    (before or {}).get("status") == core.STATUS_VIOLATION
+                    and (after or {}).get("status") == core.STATUS_SATISFIED
+                ),
+            })
+            row["group_B"] = {"group": "B_original", **_repair_evidence(before_group_b)}
+            row["group_C"] = dict(row["after"])
+        else:
+            row.update({"rule_element_available": False,
+                        "effective_repair_control": False,
+                        "in_effective_repair_denominator": False,
+                        "effective_control_exclusion_reason": "rule_side_unavailable"})
+        if spec["repair_id"] == "r8_timeout_termination":
+            legacy_payload, legacy_detail = repair_variant_r8_task_scoped_legacy(stage1["flattened_xml"])
+            legacy = _parse_flattened(legacy_payload, "repair_r8_timeout_termination_task_scoped_legacy",
+                                      core.STAGE1_CONTRACT, already_flattened=True)
+            legacy_model = core.build_model(legacy, nlp)
+            legacy_iv = verify_repair("r8_timeout_termination_task_scoped_legacy", legacy, legacy_model)
+            legacy_after = None
+            legacy_side = rule_records[spec["rule_id"]]["sides"].get("B") or {}
+            if legacy_side.get("ok"):
+                legacy_sentence = dict(legacy_side["sentence"])
+                legacy_sentence["sentence_text"] = rule_text
+                legacy_after_checks = _extended_rows(scorers, legacy_sentence, legacy_model,
+                                                     legacy, legacy_side["rule"])["extended"]
+                legacy_after = legacy_after_checks.get(spec["lens"])
+            row["legacy_partial_control"] = {
+                "repair_id": "r8_timeout_termination_task_scoped_legacy",
+                "operations": legacy_detail["operations"],
+                "semantic_zh": legacy_detail["semantic_zh"],
+                "model_evidence": legacy["evidence"],
+                "independent_verification": legacy_iv,
+                "before": {"group": "C_original", **_repair_evidence((side_c_original.get("checks") or {}).get(spec["lens"]))},
+                "after": {"group": "C", **_repair_evidence(legacy_after)},
+                "control_status": "partial_or_invalid_scope",
+                "in_effective_repair_denominator": False,
+            }
         repairs.append(row)
+
+    repair_control_summary = {
+        "main_repairs": len(repairs),
+        "effective_repair_controls": sum(1 for r in repairs if r.get("effective_repair_control")),
+        "excluded_from_effective_denominator": sum(1 for r in repairs
+                                                   if not r.get("effective_repair_control")),
+        "excluded_reasons": {r["repair_id"]: r.get("effective_control_exclusion_reason")
+                             for r in repairs if not r.get("effective_repair_control")},
+    }
 
     summary = {}
     for group in ("A", "B", "C"):
-        counts: dict[str, int] = {}
+        status_counts: dict[str, int] = {}
+        machine_counts: dict[str, int] = {}
         for row in rows:
             if row["group"] != group:
                 continue
-            counts[row["status"]] = counts.get(row["status"], 0) + 1
-        summary[group] = {"checks": sum(1 for r in rows if r["group"] == group), "status_counts": counts}
+            status_counts[row["status"]] = status_counts.get(row["status"], 0) + 1
+            machine = row.get("machine_status")
+            if machine:
+                machine_counts[machine] = machine_counts.get(machine, 0) + 1
+        summary[group] = {
+            "checks": sum(1 for r in rows if r["group"] == group),
+            "status_counts": status_counts,
+            "machine_status_counts": machine_counts,
+        }
 
     capsule = {
         "schema_version": "sim_case_c1_run@1.0.0",
         "run_id": plan["run_id"],
         "claim_scope": plan["claim_scope"],
         "plan": plan,
+        "process_facts": process_facts,
         "rows": rows,
         "rules": rule_records,
         "comparison": comparison,
         "repairs": repairs,
         "summary": summary,
+        "reference_assessment_summary": reference_assessment_summary,
+        "repair_control_summary": repair_control_summary,
         "stage_attribution": {
             "a_to_b": {rid: rule_records[rid]["a_to_b"] for rid in core.MAIN_RULES},
             "b_to_c": "group C adds exactly the four extended checks on the SAME rule side as B; "
@@ -617,8 +1294,10 @@ def run(overwrite: bool, check_only: bool) -> dict:
 
     if check_only:
         return {"status": "CHECK_OK", "summary": summary,
+                "reference_assessment_summary": reference_assessment_summary,
+                "repair_control_summary": repair_control_summary,
                 "comparison": [{c["rule_id"]: c["consistency"]} for c in comparison],
-                "repairs": [{r["repair_id"]: (r.get("group_C") or {}).get("problem_removed")} for r in repairs]}
+                "repairs": [{r["repair_id"]: r.get("effective_repair_control")} for r in repairs]}
 
     outputs = {
         "plan": _write(RUN_DIR / "plan.json", json.dumps(plan, ensure_ascii=False, indent=1) + "\n", overwrite),
@@ -630,7 +1309,12 @@ def run(overwrite: bool, check_only: bool) -> dict:
              "claim_scope": plan["claim_scope"], "groups": plan["groups"],
              "thresholds": plan["thresholds"], "declared_policy": plan["declared_policy"],
              "stage1": plan["stage1_public_record"], "inputs": plan["inputs"],
-             "summary": summary, "comparison": comparison, "repairs": repairs,
+             "summary": summary, "reference_assessment_summary": reference_assessment_summary,
+             "repair_control_summary": repair_control_summary,
+             "process_facts_summary": {k: process_facts[k] for k in
+                                       ("xml_counts", "condition_expressions", "flow_labels")},
+             "comparison": _redact_for_report(comparison),
+             "repairs": _redact_for_report(repairs),
              "stage_attribution": {
                  "a_to_b": _sanitise_attribution(capsule["stage_attribution"]["a_to_b"]),
                  "b_to_c": capsule["stage_attribution"]["b_to_c"],
@@ -653,46 +1337,70 @@ def run(overwrite: bool, check_only: bool) -> dict:
     (LOCAL_MODELS).mkdir(parents=True, exist_ok=True)
     (LOCAL_MODELS / "sim_original_flattened.bpmn").write_bytes(stage1["flattened_xml"])
     return {"status": "BUILT", "outputs": {k: v["path"] for k, v in outputs.items()},
-            "summary": summary}
+            "summary": summary, "reference_assessment_summary": reference_assessment_summary,
+            "repair_control_summary": repair_control_summary}
+
+
+def _cell_status(result: dict | None) -> str:
+    if not result:
+        return "—"
+    status = result.get("status")
+    score = result.get("score")
+    extra = f" ({score})" if score is not None else ""
+    if result.get("status_source") == "extraction" and result.get("evaluation_reason"):
+        extra += f"; raw_machine={result.get('machine_status')}; {result.get('evaluation_reason')}"
+    return f"{status}{extra}"
+
+
+def _flow_cell(flow: dict | None) -> str:
+    if not flow:
+        return "—"
+    return (f"{flow.get('verdict')} "
+            f"[raw={flow.get('raw_count')}→proj={flow.get('projected_candidate_count')}→"
+            f"adapted={flow.get('adapted_record_count')}→consumed={flow.get('detector_consumed_count')}; "
+            f"{flow.get('consumption_status')}]")
+
+
+def _alarm_summary(alarms: list[dict]) -> str:
+    if not alarms:
+        return "无 positive alarm"
+    parts = []
+    for alarm in alarms:
+        reason = alarm.get("reason") or ""
+        best = alarm.get("best_candidate")
+        max_sim = alarm.get("max_sim")
+        extra = f" best={best!r} max_sim={max_sim}" if best is not None or max_sim is not None else ""
+        parts.append(f"{alarm['check']}={alarm.get('machine_status')}/{alarm.get('score')}{extra} {reason}")
+    return "；".join(parts)
 
 
 def render_md(capsule: dict) -> str:
-    plan = capsule["plan"]
+    plant = capsule["plan"]
     lines = [
-        "# SIM 卡入网案例：A/B/C 三组开发性检测结果（S3.9-EXT-REAL-CASE）",
+        "# SIM 卡入网案例：A/B/C 三组开发性检测结果（同一 capsule）",
         "",
-        f"- run: `{capsule['run_id']}`；口径：**{capsule['claim_scope']}**（非正式 Gold、非作者原始实验复现、非企业验证）",
-        f"- 主实验规则（5 条）：{', '.join(plan['main_denominator'])}；背景条目：{', '.join(plan['background_items'])}",
-        f"- 阈值：tau={plan['thresholds']['tau']}, gamma={plan['thresholds']['gamma']}, "
-        f"theta={plan['thresholds']['theta']}, gamma_ext={plan['thresholds']['gamma_ext']}",
-        f"- 公共 Stage 1 记录：{plan['stage1_public_record']['process_record_sha256'][:16]}…"
-        f"（扁平化 XML {plan['stage1_public_record']['flattened_xml_sha256'][:16]}…，"
-        f"lanes={plan['stage1_public_record']['lanes']}）",
-        f"- 角色绑定：{json.dumps(plan['declared_policy']['role_binding'], ensure_ascii=False)}"
-        "（打分前声明，三组共用）",
+        f"- run: `{capsule['run_id']}`；口径：**{capsule['claim_scope']}**（非正式 Gold，非作者原始实验复现，非企业验证）。",
+        f"- 主评价单位：{', '.join(plant['main_denominator'])}（5 条 v2 规则）；背景条目：{', '.join(plant['background_items'])}。",
+        f"- 阈值：tau={plant['thresholds']['tau']}, gamma={plant['thresholds']['gamma']}, "
+        f"theta={plant['thresholds']['theta']}, gamma_ext={plant['thresholds']['gamma_ext']}, "
+        f"label_fallback={plant['thresholds']['label_fallback_gamma']}。",
+        f"- 公共 Stage 1 记录：{plant['stage1_public_record']['process_record_sha256'][:16]}…；"
+        f"扁平化 XML {plant['stage1_public_record']['flattened_xml_sha256'][:16]}…；"
+        f"lanes={plant['stage1_public_record']['lanes']}。",
+        f"- 角色绑定（打分前声明）：{json.dumps(plant['declared_policy']['role_binding'], ensure_ascii=False)}。",
         "",
-        "## 1. 组件对应表（P1：这三组究竟跑了什么）",
+        "## 1. 组件对应",
         "",
-        "| 组 | Stage 2（实际入口/模型） | Stage 3 三类 | Stage 3 四类 |",
+        "| 组 | Stage 2 | Stage 3 三类 | Stage 3 四类 |",
         "|---|---|---|---|",
-        "| A | 项目锁定非 LLM 基线 `run_b0_batch_v10`（B0 v10a：CoreNLP+Tregex+BERT-TextCNN，"
-        "英文句经德语合同分类器槽 pass-through） | 冻结 Sun 式 Def5-7 | 无 |",
-        "| B | 既有真实 LLM 预测（`OURS-FULL/repeat-01`，经 `project_external_sentence` 投影） | "
-        "与 A 同一代码与阈值 | 无 |",
-        "| C | 与 B 完全相同（复用同一行对象） | 与 B 完全相同（逐行复用） | REPAIR-V2 C 臂："
-        "`RepairedExtendedScorerV2`（v3 γ=0.8 + 标签回退 0.4 + γ_ext=0.5）+ 比较门 |",
+        "| A | 项目锁定非 LLM 基线 B0 v10a (`sun_rule_only_b0_v10a`) | 冻结 Sun 式 Def5–7 | 未运行 |",
+        "| B | 已有真实 LLM 预测 `OURS-FULL/repeat-01`，经 `project_external_sentence` | 与 A 同一代码和阈值 | 未运行 |",
+        "| C | 与 B 同一 Stage 2 行和适配记录 | 逐行复用 B | REPAIR-V2 C 实现：`RepairedExtendedScorerV2` + `aggregate_with_comparison_gate` |",
         "",
-        f"- 相似度后端：`{plan['components']['similarity_backend']['class']}`，nlp="
-        f"`{plan['components']['similarity_backend']['nlp']}`；行为："
-        f"{plan['components']['similarity_backend']['behaviour']}",
-        f"- 阈值：tau={plan['thresholds']['tau']}, gamma={plan['thresholds']['gamma']}, "
-        f"theta={plan['thresholds']['theta']}, gamma_ext={plan['thresholds']['gamma_ext']}, "
-        f"label_fallback={plan['thresholds']['label_fallback_gamma']}",
-        f"- 角色绑定：{json.dumps(plan['declared_policy']['role_binding'], ensure_ascii=False)}；"
-        f"顺序推导政策：`{plan['declared_policy']['order_relation_derivation']['name']}`"
-        f"（{plan['declared_policy']['order_relation_derivation'].get('comma_handling')}）",
+        "## 2. 五条规则的逐项实际输出",
         "",
-        "## 2. 逐条结果（③ 方法实际输出）",
+        "> `status` 是修正抽取失败后的评价状态；`machine_status` 保留冻结公式在分母为 0 等情形下的原始机器状态。"
+        "A 组 r9/r13 的 `empty_rule_action` 不再写成 `not_applicable`。",
         "",
         "| 规则 | 组 | missing_action | incorrect_actor | out_of_order | prohibited | condition | constraint | exception |",
         "|---|---|---|---|---|---|---|---|---|",
@@ -701,106 +1409,153 @@ def render_md(capsule: dict) -> str:
         entry = capsule["rules"][rule_id]
         for group in ("A", "B", "C"):
             checks = (entry["sides"].get(group) or {}).get("checks") or {}
-            def cell(name):
-                c = checks.get(name)
-                if not c:
-                    return "—"
-                extra = f" ({c.get('score')})" if c.get("score") is not None else ""
-                return f"{c['status']}{extra}"
-            lines.append(f"| {rule_id}/v2 | {group} | {cell('missing_action')} | {cell('incorrect_actor')} | "
-                         f"{cell('out_of_order')} | {cell('prohibited_action_present')} | "
-                         f"{cell('required_condition_not_enforced')} | {cell('constraint_violated')} | "
-                         f"{cell('exception_not_handled')} |")
-    lines += ["", "## 3. 逐条证据与错误来源（③ 方法实际输出 + ⑤ 归因）", "",
-              "| 规则 | 组 | 映射活动（相似度） | 检测项 | 状态 | 分数 | 机器原因 | 候选面计数 |",
-              "|---|---|---|---|---|---|---|---|"]
-    for rule_id in core.MAIN_RULES:
-        entry = capsule["rules"][rule_id]
-        for group in ("A", "B", "C"):
-            side = entry["sides"].get(group) or {}
-            checks = side.get("checks") or {}
-            mapped = side.get("mapped_activity") or {}
-            map_cell = f"{mapped.get('name')} ({mapped.get('similarity')})" if mapped else "—"
-            surfaces = side.get("surfaces") or {}
-            cand = (f"cond={len(surfaces.get('condition_candidates') or [])}, "
-                    f"cons={len(surfaces.get('constraint_candidates') or [])}, "
-                    f"exc={len(surfaces.get('exception_candidates') or [])}" if surfaces else "—")
-            for name, result in checks.items():
-                lines.append(f"| {rule_id}/v2 | {group} | {map_cell} | {name} | {result['status']} | "
-                             f"{result.get('score')} | {result.get('reason') or '—'} | {cand} |")
-    lines += ["", "## 4. 信息去向（P2：没抽出来，还是抽出来后在适配里丢了）", "",
-              "| 规则 | 组 | actions | actors | condition | constraint | exception | order_relations |",
-              "|---|---|---|---|---|---|---|---|"]
-    for rule_id in core.MAIN_RULES:
-        chain = capsule["rules"][rule_id]["chain"]["groups"]
-        for group in ("A", "B"):
-            flow = (chain.get(group) or {}).get("field_flow") or {}
-            cells = [((flow.get(f) or {}).get("verdict") or "—") for f in
-                     ("actions", "actors", "conditions", "constraints", "exceptions", "order_relations")]
-            lines.append(f"| {rule_id}/v2 | {group} | " + " | ".join(cells) + " |")
-    lines += ["",
-              "判定含义：`carried`=抽取到且进入适配记录；`not_extracted`=原始抽取里就没有；"
-              "`lost_in_adaptation`=抽取到但适配后丢失；`derived_by_declared_policy`=原始无该字段、"
-              "由已声明的顺序推导政策生成（不是回填答案）。",
-              "", "## 5. 与开发参考判断的逐条对照（① ② ④ ⑤）", "",
-              "| 规则 | ① 语义问题 | ② 参考判断（来源） | 主检测视角 | C 组检出 | 未检出类型 | ⑤ A→B 变化字段 |",
-              "|---|---|---|---|---|---|---|"]
+            lines.append(
+                f"| {rule_id}/v2 | {group} | {_cell_status(checks.get('missing_action'))} | "
+                f"{_cell_status(checks.get('incorrect_actor'))} | {_cell_status(checks.get('out_of_order'))} | "
+                f"{_cell_status(checks.get('prohibited_action_present'))} | "
+                f"{_cell_status(checks.get('required_condition_not_enforced'))} | "
+                f"{_cell_status(checks.get('constraint_violated'))} | "
+                f"{_cell_status(checks.get('exception_not_handled'))} |"
+            )
+    lines += [
+        "",
+        "## 3. 机器报警与参考问题对应（评价栏与检测器输出分栏）",
+        "",
+        "> 只有同时具备动作绑定、流程事实、时间/终止语义等可核验证据的报警才计为对应检出；"
+        "类型相同且 `status=violation` 本身不算证据。",
+        "",
+        "| 规则 | 组 | 机器报警（原始输出） | 对应判断 | 有证据对应的报警 | 评价证据链 |",
+        "|---|---|---|---|---|---|",
+    ]
     for item in capsule["comparison"]:
         rid = item["rule_id"]
-        attr = capsule["stage_attribution"]["a_to_b"].get(rid) or {}
-        lines.append(
-            f"| {rid}/v2 | {item['semantic_issue_zh']} | {item['reference_judgment']}"
-            f"（{', '.join(item['reference_sources'][:2])}…） | {item['primary_lens']} | "
-            f"{'是' if item['consistency']['group_C_found'] else '否'} | "
-            f"{item['consistency']['miss_kind'] or '—'} | {', '.join(attr.get('changed_fields', [])) or '无'} |")
-    lines += ["", "## 6. 误报检查（未修改原图上的检出，启发式筛查）", "",
-              "> 没有独立的人工合规对照，因此这里只能按**证据强度**做启发式筛查："
-              "`likely_spurious` 表示判定依赖的相似度低于 0.75（本后端无词向量，"
-              "该数值不构成语义同义的证据），`incidental` 表示检出落在参考问题视角之外。"
-              "这两类**不等于已证实的误报**，也不改变上面的状态与计数。", "",
-              "| 规则 | 检测项 | 分数 | 最强候选 | 相似度 | 与参考问题关系 | 筛查标记 |",
-              "|---|---|---|---|---|---|---|"]
+        for group in ("A", "B", "C"):
+            block = item["groups"][group]
+            chain = " ".join(block.get("evidence_chain_zh") or [])
+            lines.append(
+                f"| {rid}/v2 | {group} | {_alarm_summary(block.get('machine_alarms') or [])} | "
+                f"{block.get('correspondence_judgment')} | "
+                f"{', '.join(block.get('matched_alarm_checks') or []) or '—'} | {chain} |"
+            )
+    lines += [
+        "",
+        "## 4. 信息传递与部分丢失（原始抽取→投影→规则记录→检测器消费）",
+        "",
+        "判定：`full_carry`=各层数量一致；`partially_carried_by_declared_policy`=出现多值截断；"
+        "`lost_in_adaptation`=抽取/投影有值但规则记录丢失；`not_extracted`=原始即无；"
+        "`derived_by_declared_policy`=顺序关系由事先声明的 temporal policy 派生。",
+        "",
+        "| 规则 | 组 | actions | actors | conditions | constraints | exceptions | order_relations | actor_action_pairs |",
+        "|---|---|---|---|---|---|---|---|---|",
+    ]
     for rule_id in core.MAIN_RULES:
-        entry = capsule["rules"][rule_id]
-        side = entry["sides"].get("C") or {}
-        lenses = set(LENS_MAP[rule_id]["secondary"]) | {LENS_MAP[rule_id]["primary"]}
-        for name, result in (side.get("checks") or {}).items():
-            if result.get("status") != core.STATUS_VIOLATION:
-                continue
-            if name in ("missing_action", "incorrect_actor", "out_of_order"):
-                continue  # inherited from B; listed in section 2
-            sim = result.get("max_sim")
-            weak = sim is not None and sim < 0.75
-            relation = "参考问题视角内" if name in lenses else "参考问题视角之外（附带检出）"
-            flag = "incidental" if name not in lenses else ("likely_spurious" if weak else "—")
-            lines.append(f"| {rule_id}/v2 | {name} | {result.get('score')} | {result.get('best_candidate')} | "
-                         f"{sim} | {relation} | {flag} |")
-    lines += ["", "## 7. 修复对照（程序构造的最小开发对照）", "",
-              "> 修复正确性由**独立结构核验**判定（`independent_verification.fix_expressed`），与检测器是否识别无关；"
-              "最后一列只说明方法表现。", "",
-              "| 修复 | 规则 | 视角 | 操作 | 独立核验：表达了修复 | C 组修复前 | C 组修复后 | 检测器是否识别 |",
-              "|---|---|---|---|---|---|---|---|"]
+        groups = capsule["rules"][rule_id]["chain"]["groups"]
+        for group in ("A", "B", "C"):
+            flow = (groups.get(group) or {}).get("field_flow") or {}
+            pair_flow = (groups.get(group) or {}).get("actor_action_pair_flow") or {}
+            cells = [_flow_cell(flow.get(f)) for f in
+                     ("actions", "actors", "conditions", "constraints", "exceptions", "order_relations")]
+            pair = pair_flow.get("verdict", "—")
+            lines.append(f"| {rule_id}/v2 | {group} | " + " | ".join(cells) + f" | {pair} |")
+    lines += [
+        "",
+        "### 4.1 A→B 归因",
+        "",
+        "| 规则 | A→B changed_fields | 直接差异归因 | 组内适配损失 |",
+        "|---|---|---|---|",
+    ]
+    for rid, block in capsule["stage_attribution"]["a_to_b"].items():
+        block = block or {}
+        losses = block.get("adaptation_loss") or []
+        loss_text = "; ".join(
+            f"{x['group']}/{x['field']}={x['verdict']} "
+            f"({x['raw_count']}→{x['projected_count']}→{x['adapted_count']})"
+            for x in losses
+        ) or "无"
+        lines.append(
+            f"| {rid}/v2 | {', '.join(block.get('changed_fields', [])) or '无'} | "
+            f"{block.get('difference_attribution')} | {loss_text} |"
+        )
+    lines += [
+        "",
+        "## 5. 修复对照：有效、部分/无效与可评价性",
+        "",
+        "> `effective_repair_control=true` 要求：修复语义独立成立、修复信息确实进入检测链、"
+        "对应规则元素可用、修复后检查可执行。r8 的过程级事件子流程在冻结 Stage 1 中为 opaque activity，"
+        "计时/终止作用域不能进入结构化检测链；旧任务级修复保留为部分/无效对照。",
+        "",
+        "| 修复 | 规则 | 视角 | 修复语义有效 | 进入检测链 | 有效分母 | 排除原因 | B 修复前 | C 修复后 | 问题移除 |",
+        "|---|---|---|---|---|---|---|---|---|---|",
+    ]
     for row in capsule["repairs"]:
-        after = row.get("group_C") or {}
         iv = row.get("independent_verification") or {}
-        scope = "（范围限制：任务级计时≠进程级终止）" if iv.get("scope_matches_rule_semantics") is False else ""
-        lines.append(f"| {row['repair_id']} | {row['rule_id']} | {row['lens']} | {row['semantic_zh']} | "
-                     f"{'是' if iv.get('fix_expressed') else '否'}{scope} | "
-                     f"{after.get('before_status')} | {after.get('after_status')} | "
-                     f"{'是' if after.get('problem_removed') else '否'} |")
-    lines += ["", "## 8. 计数（不做七类总 F1）", "",
-              "| 组 | 检查数 | violation | satisfied | undetermined | not_applicable |",
-              "|---|---|---|---|---|---|"]
+        before = row.get("group_B") or row.get("before") or {}
+        after = row.get("group_C") or row.get("after") or {}
+        lines.append(
+            f"| {row['repair_id']} | {row['rule_id']} | {row['lens']} | {iv.get('repair_semantics_valid')} | "
+            f"{iv.get('semantics_entered_detection_chain')} | {row.get('in_effective_repair_denominator')} | "
+            f"{row.get('effective_control_exclusion_reason') or '—'} | "
+            f"{before.get('status')} ({before.get('score')}) | "
+            f"{after.get('status')} ({after.get('score')}) | {row.get('problem_removed')} |"
+        )
+    lines += [
+        "",
+        "### 5.1 r8 旧任务级对照（保留但不进入有效分母）",
+        "",
+    ]
+    r8 = next((r for r in capsule["repairs"] if r["repair_id"] == "r8_timeout_termination"), {})
+    legacy = r8.get("legacy_partial_control") or {}
+    if legacy:
+        lines.append(
+            f"- 旧件 `{legacy['repair_id']}`：`scope_matches_rule_semantics="
+            f"{legacy['independent_verification'].get('scope_matches_rule_semantics')}`；"
+            f"有效分母={legacy.get('in_effective_repair_denominator')}；B {legacy.get('before', {}).get('status')} "
+            f"→ C {legacy.get('after', {}).get('status')}。"
+        )
+    lines += [
+        "",
+        "## 6. 计数（逐检测项，不是七类总 F1，也不混用规则数）",
+        "",
+        "| 组 | checks | violation | satisfied | undetermined | not_applicable | machine_status 计数 |",
+        "|---|---|---|---|---|---|---|",
+    ]
     for group, block in capsule["summary"].items():
         counts = block["status_counts"]
-        lines.append(f"| {group} | {block['checks']} | {counts.get('violation', 0)} | "
-                     f"{counts.get('satisfied', 0)} | {counts.get('undetermined', 0)} | "
-                     f"{counts.get('not_applicable', 0)} |")
-    lines += ["", "## 9. 边界", "",
-              "- 本结果是开发性案例分析：不是正式 Gold、不是作者原始实验复现、不是独立测试、不是企业验证。",
-              "- 单案例只给逐条结果与计数，不合成七类总 F1；5 轮预测只作稳定性证据。",
-              "- Barrientos 语料按本地只读使用，不提交其原文；修复件是程序构造的开发对照。",
-              ""]
+        machine = block.get("machine_status_counts") or {}
+        lines.append(
+            f"| {group} | {block['checks']} | {counts.get('violation', 0)} | "
+            f"{counts.get('satisfied', 0)} | {counts.get('undetermined', 0)} | "
+            f"{counts.get('not_applicable', 0)} | {json.dumps(machine, ensure_ascii=False)} |"
+        )
+    lines += [
+        "",
+        "### 6.1 参考问题对应计数",
+        "",
+        "| 组 | 参考问题数 | 有证据对应检出 | 有报警但对应未证实 | 无 positive alarm |",
+        "|---|---|---|---|---|",
+    ]
+    for group, block in capsule["reference_assessment_summary"].items():
+        lines.append(
+            f"| {group} | {block['reference_problems']} | {block['found_with_reference_evidence']} | "
+            f"{block['machine_alarm_but_reference_correspondence_unverified']} | "
+            f"{block['no_positive_machine_alarm']} |"
+        )
+    lines += [
+        "",
+        "### 6.2 有效修复对照计数",
+        "",
+        f"- 主修复件：{capsule['repair_control_summary']['main_repairs']}。",
+        f"- 有效修复对照分母：{capsule['repair_control_summary']['effective_repair_controls']}。",
+        f"- 排除：{json.dumps(capsule['repair_control_summary']['excluded_reasons'], ensure_ascii=False)}。",
+        "",
+        "## 7. 边界",
+        "",
+        "- 这是开发性单案例结果，不是正式 Gold、不是独立人工准确率、不是作者原始实验复现。",
+        "- 单案例只给逐条与逐检查计数，不合成七类总 F1。",
+        "- B 组复用已有 repeat-01 预测；重复运行只作稳定性证据，不作为新增独立样本。",
+        "- 原始 BPMN、需求、Gold、预测均未修改；参考判断只在评价阶段读取。",
+        "",
+    ]
     return "\n".join(lines) + "\n"
 
 

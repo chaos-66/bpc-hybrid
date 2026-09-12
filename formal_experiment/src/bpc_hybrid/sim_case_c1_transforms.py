@@ -181,33 +181,46 @@ def repair_variant(payload: bytes, repair_id: str) -> tuple[bytes, dict[str, Any
     detail: dict[str, Any] = {"repair_id": repair_id, "operations": []}
 
     if repair_id == "r8_timeout_termination":
-        anchor = None
-        for elem in process.iter():
-            if _tag(elem) == "task" and (elem.get("name") or "") == "Send SIM card":
-                anchor = elem
-                break
-        if anchor is None:
-            raise ValueError("anchor task not found")
-        boundary = ET.SubElement(process, _q("boundaryEvent"),
-                                 {"id": "sim_fix_timeout_boundary", "name": "30 days exceeded",
-                                  "attachedToRef": anchor.get("id"), "cancelActivity": "true"})
-        timer = ET.SubElement(boundary, _q("timerEventDefinition"))
+        # Canonical process-level timeout: a process-level event subprocess
+        # whose interrupting timer starts when the process instance starts and
+        # whose terminate end event terminates the process instance.
+        sub = ET.SubElement(process, _q("subProcess"), {
+            "id": "sim_fix_process_timeout_scope",
+            "name": "Process-wide timeout scope (30 days)",
+            "triggeredByEvent": "true",
+        })
+        start_event = ET.SubElement(sub, _q("startEvent"), {
+            "id": "sim_fix_process_timeout_start",
+            "name": "Process duration exceeds 30 days",
+            "isInterrupting": "true",
+        })
+        timer = ET.SubElement(start_event, _q("timerEventDefinition"))
         duration = ET.SubElement(timer, _q("timeDuration"))
         duration.text = "P30D"
-        end = ET.SubElement(process, _q("endEvent"), {"id": "sim_fix_timeout_end", "name": "Process terminated"})
-        flow = ET.SubElement(process, _q("sequenceFlow"),
-                             {"id": "sim_fix_timeout_flow", "sourceRef": boundary.get("id"),
-                              "targetRef": end.get("id")})
-        lane = _lane_of(root, anchor.get("id"))
-        if lane is not None:
-            ref = ET.SubElement(lane, _q("flowNodeRef"))
-            ref.text = boundary.get("id")
+        end_event = ET.SubElement(sub, _q("endEvent"), {
+            "id": "sim_fix_process_timeout_end",
+            "name": "Terminate entire process",
+        })
+        ET.SubElement(end_event, _q("terminateEventDefinition"))
+        flow = ET.SubElement(sub, _q("sequenceFlow"), {
+            "id": "sim_fix_process_timeout_flow",
+            "sourceRef": start_event.get("id"),
+            "targetRef": end_event.get("id"),
+        })
         detail["operations"] = [
-            {"op": "add_boundary_timer", "attached_to": anchor.get("id"), "duration": "P30D"},
-            {"op": "add_end_event", "id": end.get("id")},
-            {"op": "add_sequence_flow", "id": flow.get("id")},
+            {"op": "add_process_level_event_subprocess", "id": sub.get("id"),
+             "triggered_by_event": True},
+            {"op": "add_interrupting_timer_start", "id": start_event.get("id"),
+             "duration": "P30D", "scope": "process_instance"},
+            {"op": "add_terminate_end", "id": end_event.get("id"),
+             "termination_scope": "process_instance"},
+            {"op": "add_sequence_flow", "id": flow.get("id"),
+             "source": start_event.get("id"), "target": end_event.get("id")},
         ]
-        detail["semantic_zh"] = "增加 30 天超时边界计时器与终止分支"
+        detail["semantic_zh"] = (
+            "增加进程级事件子流程：30 天计时从流程实例启动时开始，超时中断并触发"
+            "终止整个流程实例。"
+        )
 
     elif repair_id == "r9_add_verification":
         anchor = None
@@ -320,4 +333,50 @@ def repair_variant(payload: bytes, repair_id: str) -> tuple[bytes, dict[str, Any
 
     detail["original_unmodified"] = True
     detail["constructed_by"] = "programmatic minimal repair (development control), not an author model"
+    return ET.tostring(root, encoding="utf-8", xml_declaration=True), detail
+
+
+def repair_variant_r8_task_scoped_legacy(payload: bytes) -> tuple[bytes, dict[str, Any]]:
+    """Preserve the rejected task-scoped r8 control as partial/invalid evidence.
+
+    This is the precursor that attached a timer only to ``Send SIM card``.  It
+    is retained for comparison, is never counted as an effective repair
+    control, and is not used by the main run as the r8 repair.
+    """
+    register_namespaces()
+    root = ET.fromstring(payload)
+    process = next(e for e in root if _tag(e) == "process")
+    detail: dict[str, Any] = {"repair_id": "r8_timeout_termination_task_scoped_legacy",
+                              "operations": []}
+    anchor = None
+    for elem in process.iter():
+        if _tag(elem) == "task" and (elem.get("name") or "") == "Send SIM card":
+            anchor = elem
+            break
+    if anchor is None:
+        raise ValueError("anchor task not found")
+    boundary = ET.SubElement(process, _q("boundaryEvent"),
+                             {"id": "sim_fix_timeout_boundary_legacy", "name": "30 days exceeded",
+                              "attachedToRef": anchor.get("id"), "cancelActivity": "true"})
+    timer = ET.SubElement(boundary, _q("timerEventDefinition"))
+    duration = ET.SubElement(timer, _q("timeDuration"))
+    duration.text = "P30D"
+    end = ET.SubElement(process, _q("endEvent"), {"id": "sim_fix_timeout_end_legacy",
+                                                   "name": "Process terminated"})
+    flow = ET.SubElement(process, _q("sequenceFlow"),
+                         {"id": "sim_fix_timeout_flow_legacy", "sourceRef": boundary.get("id"),
+                          "targetRef": end.get("id")})
+    lane = _lane_of(root, anchor.get("id"))
+    if lane is not None:
+        ref = ET.SubElement(lane, _q("flowNodeRef"))
+        ref.text = boundary.get("id")
+    detail["operations"] = [
+        {"op": "add_boundary_timer", "attached_to": anchor.get("id"), "duration": "P30D",
+         "scope": "task_scoped"},
+        {"op": "add_end_event", "id": end.get("id")},
+        {"op": "add_sequence_flow", "id": flow.get("id")},
+    ]
+    detail["semantic_zh"] = "旧版修复：仅在 Send SIM card 任务上挂 30 天边界计时器。"
+    detail["original_unmodified"] = True
+    detail["constructed_by"] = "legacy task-scoped development control (partial/invalid)"
     return ET.tostring(root, encoding="utf-8", xml_declaration=True), detail

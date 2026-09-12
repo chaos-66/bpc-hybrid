@@ -1281,16 +1281,16 @@ B0/H1/D1 的预测 Rule Records，评价误差传播。两种结果必须分表�
 | S3.10 | end-to-end 误差传播 | S2.13/S3.7 | blocked | B0/H1/D1 进入同一 Stage 3 |
 | S3.11 | Stage 3 冻结 | S3.1-S3.10 | blocked | 数据、方法、Gold、指标、manifest 完整 |
 
-### 9.6 S3.9-EXT-REAL-CASE 小步骤状态（2026-09-11 第二轮，实时状态见 PROJECT_AUDIT）
+### 9.6 S3.9-EXT-REAL-CASE 小步骤状态（2026-09-12 P1–P4 收尾，实时状态见 PROJECT_AUDIT）
 
 | 步骤 | 要解决的问题 | 具体产物 | 验收条件 | 实际状态 |
 |---|---|---|---|---|
-| **P1** | 这三组究竟跑的是不是我们要研究的方法 | 组件对应表（报告 §1 + `capsule.plan.components`）；B0 非 LLM 基线胶囊 `outputs/development/sim_case_c1/stage2_baseline_v1/` | 能说明每组实际运行什么、为什么符合研究设计、有哪些明确限制 | **完成**：A 组改跑项目锁定非 LLM 基线 B0 v10a（`run_b0_batch_v10`）；C 组改用已验收的 REPAIR-V2 C 臂（`RepairedExtendedScorerV2`+比较门）；顺序适配器改逗号可选；修复件不再二次扁平化；相似度后端描述更正 |
-| **P2** | 输入→输出链条是否可追踪 | `capsule.rules[*].chain`（规则哈希→原始抽取→适配记录→流程绑定→检查证据）与报告 §4 信息去向表 | 每个报警或无法判断都能追到它实际消费的规则信息与流程证据 | **完成**：字段级判定 carried / not_extracted / lost_in_adaptation / derived_by_declared_policy；B0 在 r9、r13 未抽出任何动作（A 组 `empty_rule_action`→not_applicable） |
-| **P3** | 三组比较能否解释两个创新点 | 报告 §2/§3/§5 与 `capsule.comparison` | 三组真实完成运行；结果来自保存的运行记录；未完成的组不填假结果 | **完成**：A 15 检查 3/10/2；B 15 检查 5/8/2；C 35 检查 10/23/2；A→B 变化逐条归因抽取，B→C 仅新增四类（三类行逐行复用） |
-| **P4** | 错误是否查明原因并形成结论 | 任务书 §11 问题处理表；`capsule.repairs[*].independent_verification` | 每个问题完成“证据→最小处理→针对验证→结论”，并回到主线 | **完成**：8 项问题全部关闭或标记为已确认的方法局限；5 个修复件独立结构核验 `fix_expressed=true`，检测器全部未识别 |
-| **P5** | 交付一个看得懂的案例 | 结果标注图、三组比较表、逐条证据表、修复对照、论文案例小节 | 图/表/论文/运行记录一致；r13 等条目口径一致 | **完成**：图与论文小节按新胶囊重生成；一致性核验通过（图汇总 A 3/10/2、B 5/8/2、C 10/23/2 与 `capsule.summary` 一致，图内 capsule sha `8d02436d…` 与文件哈希一致；论文 207 行逐数字标注 capsule 字段；r13 三处均写“参考视角未检出、另有附带检出”） |
+| **P1** | 抽取缺失、适配去向与不适用是否混淆 | `capsule.rules[*].chain`（raw→proj→adapted→consumed 计数）、`capsule.rules[*].sides[*].checks[*].machine_status`、投影 diagnostics | 空动作不写成 not_applicable；多值部分丢失不被写成全部 carried；显式 actor-action 关系不被凭空组合 | **完成**：A 组 r9/r13 empty_rule_action 的评价状态为 undetermined，machine_status=not_applicable 保留；r10 A 的 2 动作/2 条件显式记录为 partially_carried_by_declared_policy；B 组 r8 null actor 链记录为 invalid_in_raw_no_valid_pair。 |
+| **P2** | 机器报警是否等于参考问题检出；修复对照是否有效 | `capsule.comparison[*].groups[*].machine_alarms/correspondence_*`、`capsule.repairs[*].independent_verification`、process_facts | 报警与评价分栏；无证据报警不计命中；不满足作用域的修复件不进入有效分母 | **完成**：r8 condition/constraint 报警保留但对应未证实；r9 missing_action、r10 incorrect_actor 有证据对应；r11 missing_action 与顺序问题不同型；r13 actor/prohibited 与门槛问题无关。r8 改为进程级事件子流程，语义核验成立但因 Stage 1 opaque event subprocess 排除；旧任务级计时器保留为 legacy_partial_control；r13 因 empty_rule_condition 排除；有效分母为 r9/r10/r11 共 3 件。 |
+| **P3** | 只重跑受影响路径并完成原因闭环 | `outputs/development/sim_case_c1/run_v1/{plan,capsule,rows,manifest}.json/jsonl`、`outputs/reports/sim_case_c1_results.{json,md}` | A/B 同一公共 Stage 1 与同一适配政策；B/C 原三类逐项一致；计数不混用规则数和检查数 | **完成**：A 15 检查 3/0/12/0（机器状态计数 3/0/10/2）；B 15 检查 5/2/8/0；C 35 检查 10/2/23/0。参考问题对应：A 0 有证据/3 报警未证实/2 无报警，B/C 2 有证据/3 报警未证实。r11 端点映射仍低于 gamma，r13 condition 仍未抽取。 |
+| **P4** | 同一份结果的可视、论文与状态一致交付 | 报告 JSON/MD、`sim_case_c1_result_figure.svg`、`paper/SIM_CASE_SECTION_v1.md`、PROJECT_AUDIT/EXPERIMENT_LOG 更新 | 图、表、论文和最终回复逐条状态及计数一致；图实际渲染检查 | **完成**：SVG 由同一 capsule 只读渲染，Chromium 实际打开检查为 1800×4273，文本无越界/无重叠；论文小节和报告嵌入同一运行结果；r8 旧结论冲突已清除。 |
 
+本轮按用户要求只执行 P1–P4；未启动新的正式 Oracle、S3.10/S3.11、冻结或真实 LLM/API 调用。
 ## 10. 实验矩阵
 
 ### 10.1 组件实验
