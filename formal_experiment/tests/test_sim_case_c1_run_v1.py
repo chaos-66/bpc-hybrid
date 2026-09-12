@@ -26,6 +26,7 @@ from bpc_hybrid.sim_case_c1_transforms import flatten_collaboration, repair_vari
 from bpc_hybrid.sim_case_c1_transforms import repair_variant_r8_task_scoped_legacy  # noqa: E402
 
 import run_sim_case_c1_v1 as runner  # noqa: E402
+import render_sim_case_c1_figure_v1 as figure_renderer  # noqa: E402
 
 RESTRICTED_MIN_LEN = 40
 CAPSULE = ROOT / "outputs/development/sim_case_c1/run_v1/capsule.json"
@@ -45,6 +46,12 @@ def run_result() -> dict:
 @pytest.fixture(scope="module")
 def capsule() -> dict:
     return json.loads(CAPSULE.read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="module")
+def figure_text() -> str:
+    figure_renderer.main()
+    return (ROOT / "outputs/reports/sim_case_c1_result_figure.svg").read_text(encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
@@ -298,6 +305,92 @@ def test_repair_after_evidence_is_preserved_for_effective_controls(capsule):
     r11 = repairs["r11_consent_before_retrieval"]
     assert r11["after"]["status"] == core.STATUS_UNDETERMINED
     assert r11["after"]["reason"] == "no_mapped_rule_order_endpoints"
+
+
+def test_role_binding_enters_final_actors_and_explicit_pairs(capsule):
+    for group in ("A", "B"):
+        side = capsule["rules"]["r11"]["sides"][group]
+        assert side["sentence"]["actor"] == "Phone company"
+        assert side["sentence"]["actor_original"] == "the Data Controller"
+        assert side["sentence"]["actor_bound_from"] == "Data Controller"
+        assert side["rule"]["actors"] == ["Phone company"]
+        assert side["rule"]["actor_action_pairs"][0]["actor"] == "Phone company"
+        assert side["rule"]["actor_action_pairs"][0]["actor_original"] == "the Data Controller"
+        assert side["rule"]["actor_action_pairs"][0]["actor_bound_from"] == "Data Controller"
+    pair_flow = capsule["rules"]["r11"]["chain"]["groups"]["B"]["actor_action_pair_flow"]
+    changes = pair_flow["value_changes"]
+    assert any(item.get("actor_original") == "the Data Controller"
+               and item.get("actor_final") == "Phone company"
+               and item.get("bound_from") == "Data Controller" for item in changes)
+    actor_flow = capsule["rules"]["r11"]["chain"]["groups"]["B"]["field_flow"]["actors"]
+    assert actor_flow["unconsumed_candidates"] == []
+    assert any(item.get("original") == "the Data Controller"
+               and item.get("final") == "Phone company" for item in actor_flow["value_changes"])
+
+
+def test_invalid_actor_action_links_are_not_fabricated(capsule):
+    for group in ("B", "C"):
+        pair_flow = capsule["rules"]["r8"]["chain"]["groups"][group]["actor_action_pair_flow"]
+        assert pair_flow["verdict"] == "invalid_in_raw_no_valid_pair"
+        assert pair_flow["projected_invalid_count"] == 1
+        assert pair_flow["adapted_count"] == 0
+        assert pair_flow["value_changes"] == []
+        assert pair_flow["invalid_links"][0]["reason"] == "actor_id_null"
+        assert capsule["rules"]["r8"]["sides"][group]["rule"]["actor_action_pairs"] == []
+
+
+def test_reference_correspondence_has_explicit_evidence_details(capsule):
+    by_rule = {c["rule_id"]: c for c in capsule["comparison"]}
+    r9 = by_rule["r9"]["groups"]["C"]["assessment_details"]
+    assert r9["alarm_missing"] is True
+    assert "verify" not in " ".join(r9["verify_like_process_activities"]).lower()
+    assert r9["sign_contract_anchor"]["id"]
+    r10 = by_rule["r10"]["groups"]["C"]["assessment_details"]
+    assert r10["primary_action_match"]["best_model_action"] == "Activate SIM card"
+    assert any(row["owners"] == ["Customer"] and row["activity_name"] == "Activate SIM card"
+               for row in r10["primary_action_owner_rows"])
+    candidate_names = {row["activity_name"]: row["owners"] for row in r10["all_matched_candidate_rows"]}
+    assert candidate_names.get("Send SIM card") == ["Phone company"]
+    assert candidate_names.get("Activate SIM card") == ["Customer"]
+    r11 = by_rule["r11"]["groups"]["C"]["assessment_details"]
+    assert r11["missing_action_cannot_substitute_order"] is True
+    assert r11["consent_activity"] and r11["retrieval_activity"]
+    assert r11["out_of_order_status"] == core.STATUS_UNDETERMINED
+    r13 = by_rule["r13"]["groups"]["C"]["assessment_details"]
+    assert r13["field_attribution"]["actor_text_contains_50"] is True
+    assert r13["field_attribution"]["condition_empty"] is True
+    assert r13["field_attribution"]["constraint_empty"] is True
+    assert r13["field_attribution"]["model_debt_labels"] == ["Debt < 100"]
+    assert r13["threshold_alarm_evidence"] == []
+    r8 = by_rule["r8"]["groups"]["C"]["assessment_details"]
+    assert r8["process_scope_sources"] == []
+    assert r8["expected_evidence"]
+    assert all(not item["corresponds"] for item in r8["alarm_assessments"])
+
+
+def test_repair_tables_use_c_original_and_c_repaired(capsule):
+    for row in capsule["repairs"]:
+        assert row["before"]["group"] == "C_original"
+        assert row["after"]["group"] == "C_repaired"
+    report = (ROOT / "outputs/reports/sim_case_c1_results.md").read_text(encoding="utf-8")
+    paper = (ROOT / "paper/SIM_CASE_SECTION_v1.md").read_text(encoding="utf-8")
+    for text in (report, paper):
+        assert "C_original" in text and "C_repaired" in text
+        assert "B 修复前" not in text and "C 修复后" not in text
+
+
+def test_diagram_uses_actual_sequence_flow_edges(figure_text):
+    # 26 sequence flows + one dashed placeholder connector.
+    assert figure_text.count("<polyline") >= 26
+    assert "Debt &lt; 100" in figure_text
+    assert "缺失活动（模型中不存在）" in figure_text
+    assert "Ask for" in figure_text and "consent" in figure_text
+    assert "Request" in figure_text
+    assert "Activate SIM card" in figure_text
+    assert "Sign contract" in figure_text
+    assert "C_original" in figure_text and "C_repaired" in figure_text
+    assert "按泳道分组" not in figure_text
+    assert "有证据对应（执行者 Customer）" not in figure_text
 
 
 # ---------------------------------------------------------------------------

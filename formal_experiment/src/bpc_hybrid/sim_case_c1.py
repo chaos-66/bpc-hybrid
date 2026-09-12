@@ -60,8 +60,9 @@ ADAPTATION_POLICY = {
         "name": "first_valid_span_per_field_v1_with_diagnostics",
         "action_actor_pairing": "explicit_prediction_actor_action_map_only_v1",
         "action_obligation_policy": (
-            "只有预测显式 actor_action_map 中的 action 进入 rule.actions；未配对动作候选保留在"
-            "selection_metadata/unconsumed_candidates 中，但不自动视为独立义务。"
+            "有效显式 actor_action_map 存在时，仅显式配对动作进入 rule.actions；"
+            "无有效配对时，首个投影动作只保留给动作存在性检查，配对为空且不自动视为独立义务。"
+            "未消费候选保留在 selection_metadata/unconsumed_candidates 中。"
         ),
         "single_value_scorers": ["condition", "constraint", "exception"],
         "note_zh": (
@@ -200,15 +201,58 @@ def stage2_group_b(rule_id: str, rule_text: str, predictions: dict[str, Any]) ->
             "diagnostics": projected.get("diagnostics")}
 
 
-def apply_role_binding(sentence: dict[str, Any]) -> dict[str, Any]:
-    """Apply the declared scenario role binding to the actor text."""
-    bound = dict(sentence)
-    actor = (sentence.get("actor") or "")
+def bind_actor_value(actor_text: str) -> tuple[str | None, str | None]:
+    """Return (bound_value, matched_source) for the declared role binding."""
+    text = (actor_text or "").strip()
     for source, target in ADAPTATION_POLICY["role_binding"].items():
-        if source.lower() in actor.lower():
-            bound["actor"] = target
-            bound["actor_bound_from"] = source
-            break
+        if source.lower() in text.lower():
+            return target, source
+    return None, None
+
+
+def apply_role_binding(sentence: dict[str, Any]) -> dict[str, Any]:
+    """Apply the declared scenario role binding to actor values and explicit pairs.
+
+    Original actor text is preserved.  Only valid explicit actor-action links
+    receive a bound actor; null/invalid links are never repaired.
+    """
+    bound = dict(sentence)
+    diagnostics = dict(sentence.get("diagnostics") or {})
+    actor = (sentence.get("actor") or "").strip()
+    bound_actor, source = bind_actor_value(actor)
+    bound["actor_original"] = actor or None
+    bound["actor_binding"] = {
+        "policy": "declared_role_binding_v1",
+        "original": actor or None,
+        "bound": bound_actor or (actor or None),
+        "source": source,
+        "applied": bool(bound_actor),
+    }
+    if bound_actor:
+        bound["actor"] = bound_actor
+        bound["actor_bound_from"] = source
+
+    updated_map = []
+    for entry in diagnostics.get("actor_action_map") or []:
+        if not isinstance(entry, dict):
+            updated_map.append(entry)
+            continue
+        updated = dict(entry)
+        raw_actor = (entry.get("actor_text") or "").strip()
+        if raw_actor:
+            pair_actor, pair_source = bind_actor_value(raw_actor)
+            updated["actor_text_original"] = raw_actor
+            updated["actor_text_bound"] = pair_actor or raw_actor
+            updated["actor_bound_from"] = pair_source
+            updated["role_binding_applied"] = bool(pair_actor)
+        updated_map.append(updated)
+    diagnostics["actor_action_map"] = updated_map
+    diagnostics["role_binding_policy"] = dict(ADAPTATION_POLICY["role_binding"])
+    diagnostics["role_binding_note"] = (
+        "actor_text is the original prediction value; actor_text_bound is the "
+        "declared-scenario value; invalid/null links are not bound or paired."
+    )
+    bound["diagnostics"] = diagnostics
     return bound
 
 
@@ -266,28 +310,50 @@ def _projected_candidates(sentence: dict[str, Any], field: str) -> list[str]:
     return _dedup_texts((diagnostics.get("span_field_texts") or {}).get(field) or [])
 
 
-def _explicit_actor_action_pairs(sentence: dict[str, Any]) -> tuple[list[dict[str, str]], list[dict[str, Any]]]:
+def _explicit_actor_action_pairs(sentence: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """Return only links explicitly predicted by Stage 2.
 
-    The case wrapper must not turn a co-occurring actor and action into a pair.
-    Invalid links (for example a null actor id) are preserved as diagnostics
-    and never repaired by role heuristics.
+    Actor values are passed through the declared scenario role binding.  The
+    original raw actor and the matched binding source are retained on every
+    valid pair.  Null or invalid links are recorded but never repaired.
     """
     diagnostics = sentence.get("diagnostics") or {}
-    valid: list[dict[str, str]] = []
+    valid: list[dict[str, Any]] = []
     invalid: list[dict[str, Any]] = []
     for entry in diagnostics.get("actor_action_map") or []:
-        actor = (entry.get("actor_text") or "").strip()
+        if not isinstance(entry, dict):
+            invalid.append({"reason": "malformed_entry", "raw": repr(entry)})
+            continue
+        raw_actor = (entry.get("actor_text") or "").strip()
         action = (entry.get("action_text") or "").strip()
-        if entry.get("valid") and actor and action:
-            valid.append({"actor": actor, "action": action})
+        raw_bound = (entry.get("actor_text_bound") or "").strip()
+        bound_actor = raw_bound
+        bound_from = entry.get("actor_bound_from")
+        if raw_actor and not bound_actor:
+            bound_actor, bound_from = bind_actor_value(raw_actor)
+            bound_actor = bound_actor or raw_actor
+        if entry.get("valid") and raw_actor and bound_actor and action:
+            valid.append({
+                "actor": bound_actor,
+                "actor_original": raw_actor,
+                "actor_bound_from": bound_from,
+                "action": action,
+                "actor_id": entry.get("actor_id"),
+                "action_id": entry.get("action_id"),
+                "binding_applied": bool(bound_from),
+            })
         else:
             invalid.append({
                 "actor_id": entry.get("actor_id") or entry.get("raw_actor_id"),
                 "action_id": entry.get("action_id") or entry.get("raw_action_id"),
-                "reason": entry.get("reason") or "invalid_actor_action_link",
-                "actor_text": actor or None,
+                "reason": entry.get("reason") or (
+                    "actor_id_null" if not raw_actor else
+                    "invalid_or_unbound_actor_action_link"
+                ),
+                "actor_text": raw_actor or None,
+                "actor_text_bound": bound_actor or None,
                 "action_text": action or None,
+                "binding_applied": False,
             })
     return valid, invalid
 
@@ -299,31 +365,78 @@ def build_rule_record(sentence: dict[str, Any]) -> dict[str, Any]:
     }
     explicit_pairs, invalid_pairs = _explicit_actor_action_pairs(sentence)
 
+    actor_binding_trace: list[dict[str, Any]] = []
     if explicit_pairs:
         actions = _dedup_texts([pair["action"] for pair in explicit_pairs])
         actors = _dedup_texts([pair["actor"] for pair in explicit_pairs])
-        actor_action_pairs: list[dict[str, str]] = list(explicit_pairs)
+        actor_action_pairs: list[dict[str, Any]] = []
+        for pair in explicit_pairs:
+            actor_action_pairs.append({
+                "actor": pair["actor"],
+                "action": pair["action"],
+                "actor_original": pair.get("actor_original"),
+                "actor_bound_from": pair.get("actor_bound_from"),
+                "actor_id": pair.get("actor_id"),
+                "action_id": pair.get("action_id"),
+                "binding_applied": pair.get("binding_applied"),
+            })
+            actor_binding_trace.append({
+                "scope": "explicit_pair",
+                "actor_original": pair.get("actor_original"),
+                "actor_final": pair["actor"],
+                "bound_from": pair.get("actor_bound_from"),
+                "binding_applied": pair.get("binding_applied"),
+                "action": pair["action"],
+            })
         action_policy = "explicit_actor_action_map_v1"
-        actor_policy = "explicit_actor_action_map_v1"
+        actor_policy = "explicit_actor_action_map_v1_with_declared_role_binding"
+        pair_source = "prediction_actor_action_map"
+        rule_actions_policy_note = (
+            "Explicit valid actor-action pairs define actions/actors. When no valid "
+            "pair exists, the first projected action may be retained for the "
+            "action-existence check, but no actor-action pair is fabricated."
+        )
     else:
-        # No explicit map was supplied (or its actor was null).  Keep the
-        # single projected action for the action-existence check, but do not
-        # manufacture an actor-action pair.  The frozen Def6 then abstains with
-        # missing_rule_actor_action_map instead of inventing ownership.
+        # No valid explicit map. Keep the projected action for the
+        # action-existence check, and never manufacture a pair.
         projected_action = (sentence.get("action") or "").strip()
-        projected_actor = (sentence.get("actor") or "").strip()
+        projected_actor_original = (
+            (sentence.get("actor_original") or sentence.get("actor") or "").strip()
+        )
+        projected_actor_final = (sentence.get("actor") or "").strip()
         actions = [projected_action] if projected_action else []
-        actors = [projected_actor] if projected_actor else []
+        actors = [projected_actor_final] if projected_actor_final else []
         actor_action_pairs = []
         action_policy = "projected_single_action_no_explicit_map_v1"
         actor_policy = "projected_single_actor_no_explicit_map_v1"
+        pair_source = "none_no_fabrication"
+        rule_actions_policy_note = (
+            "No valid actor-action map exists; the first projected action is retained "
+            "only for action-existence checks, without a fabricated pair."
+        )
+        if projected_actor_original or projected_actor_final:
+            actor_binding_trace.append({
+                "scope": "projected_single_actor",
+                "actor_original": projected_actor_original or None,
+                "actor_final": projected_actor_final or None,
+                "bound_from": sentence.get("actor_bound_from"),
+                "binding_applied": bool(sentence.get("actor_bound_from")),
+                "action": projected_action or None,
+            })
 
     condition = (sentence.get("condition") or "").strip() or None
     constraint = (sentence.get("constraint") or "").strip() or None
     exception = (sentence.get("exception") or "").strip() or None
     order_relations = derive_order_relations(sentence)
+    actor_originals_consumed = [
+        (pair.get("actor_original") or pair.get("actor")) for pair in actor_action_pairs
+    ]
+    if not actor_action_pairs and actors:
+        actor_originals_consumed = [
+            (sentence.get("actor_original") or sentence.get("actor") or "").strip()
+        ]
     consumed_by_diagnostic_field = {
-        "actor": actors,
+        "actor": [value for value in actor_originals_consumed if value],
         "action": actions,
         "condition": [condition] if condition else [],
         "constraint": [constraint] if constraint else [],
@@ -344,10 +457,13 @@ def build_rule_record(sentence: dict[str, Any]) -> dict[str, Any]:
             "exception": "first_valid_span_v1_single_value_extended_scorer",
             "order_relations": ADAPTATION_POLICY["order_relation_derivation"]["name"],
         },
+        "rule_actions_policy_note": rule_actions_policy_note,
         "unconsumed_candidates": unconsumed,
         "invalid_actor_action_links": invalid_pairs,
         "explicit_actor_action_pair_count": len(explicit_pairs),
-        "actor_action_pair_source": "prediction_actor_action_map" if explicit_pairs else "none_no_fabrication",
+        "actor_action_pair_source": pair_source,
+        "role_binding_policy": dict(ADAPTATION_POLICY["role_binding"]),
+        "role_binding_trace": actor_binding_trace,
     }
     return {
         "rule_id": sentence.get("rule_id"),

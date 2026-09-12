@@ -26,7 +26,7 @@
   "span_projection": {
    "name": "first_valid_span_per_field_v1_with_diagnostics",
    "action_actor_pairing": "explicit_prediction_actor_action_map_only_v1",
-   "action_obligation_policy": "只有预测显式 actor_action_map 中的 action 进入 rule.actions；未配对动作候选保留在selection_metadata/unconsumed_candidates 中，但不自动视为独立义务。",
+   "action_obligation_policy": "有效显式 actor_action_map 存在时，仅显式配对动作进入 rule.actions；无有效配对时，首个投影动作只保留给动作存在性检查，配对为空且不自动视为独立义务。未消费候选保留在 selection_metadata/unconsumed_candidates 中。",
    "single_value_scorers": [
     "condition",
     "constraint",
@@ -249,9 +249,28 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "missing_action 是机器报警（violation…(sha256 0d3988ee5626)",
-      "因此 r8 的参考问题未被有证据地对应检出；原始报警仍保留。"
+      "missing_action: machine alarm …(sha256 2d84f392935b)",
+      "r8 requires time, termination,…(sha256 ce8bebbecfb9)"
      ],
+     "assessment_details": {
+      "expected_evidence": [
+       "model_side_30_day_bound",
+       "model_side_terminate_behavior",
+       "process_level_timer_or_event_s…(sha256 96ab1c4c3c9a)",
+       "terminate_end_scope"
+      ],
+      "process_scope_sources": [],
+      "alarm_assessments": [
+       {
+        "check": "missing_action",
+        "time_evidence_sources": [],
+        "termination_evidence_sources": [],
+        "process_scope_sources": [],
+        "same_alarm_model_scope_mentions": [],
+        "corresponds": false
+       }
+      ]
+     },
      "all_lenses_undetermined": true
     },
     "B": {
@@ -292,9 +311,28 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "missing_action 是机器报警（violation…(sha256 0d3988ee5626)",
-      "因此 r8 的参考问题未被有证据地对应检出；原始报警仍保留。"
+      "missing_action: machine alarm …(sha256 2d84f392935b)",
+      "r8 requires time, termination,…(sha256 ce8bebbecfb9)"
      ],
+     "assessment_details": {
+      "expected_evidence": [
+       "model_side_30_day_bound",
+       "model_side_terminate_behavior",
+       "process_level_timer_or_event_s…(sha256 96ab1c4c3c9a)",
+       "terminate_end_scope"
+      ],
+      "process_scope_sources": [],
+      "alarm_assessments": [
+       {
+        "check": "missing_action",
+        "time_evidence_sources": [],
+        "termination_evidence_sources": [],
+        "process_scope_sources": [],
+        "same_alarm_model_scope_mentions": [],
+        "corresponds": false
+       }
+      ]
+     },
      "all_lenses_undetermined": true
     },
     "C": {
@@ -394,11 +432,46 @@
      ],
      "machine_alarm_count": 3,
      "evidence_chain_zh": [
-      "missing_action 是机器报警（violation…(sha256 0d3988ee5626)",
-      "required_condition_not_enforce…(sha256 f506510da407)",
-      "constraint_violated 是机器报警（viol…(sha256 463e3d60b674)",
-      "因此 r8 的参考问题未被有证据地对应检出；原始报警仍保留。"
+      "missing_action: machine alarm …(sha256 2d84f392935b)",
+      "required_condition_not_enforce…(sha256 1f9a21b286c2)",
+      "constraint_violated: machine a…(sha256 6e16445dc63b)",
+      "r8 requires time, termination,…(sha256 ce8bebbecfb9)"
      ],
+     "assessment_details": {
+      "expected_evidence": [
+       "model_side_30_day_bound",
+       "model_side_terminate_behavior",
+       "process_level_timer_or_event_s…(sha256 96ab1c4c3c9a)",
+       "terminate_end_scope"
+      ],
+      "process_scope_sources": [],
+      "alarm_assessments": [
+       {
+        "check": "missing_action",
+        "time_evidence_sources": [],
+        "termination_evidence_sources": [],
+        "process_scope_sources": [],
+        "same_alarm_model_scope_mentions": [],
+        "corresponds": false
+       },
+       {
+        "check": "required_condition_not_enforce…(sha256 1964cf426f3b)",
+        "time_evidence_sources": [],
+        "termination_evidence_sources": [],
+        "process_scope_sources": [],
+        "same_alarm_model_scope_mentions": [],
+        "corresponds": false
+       },
+       {
+        "check": "constraint_violated",
+        "time_evidence_sources": [],
+        "termination_evidence_sources": [],
+        "process_scope_sources": [],
+        "same_alarm_model_scope_mentions": [],
+        "corresponds": false
+       }
+      ]
+     },
      "all_lenses_undetermined": false
     }
    },
@@ -443,8 +516,38 @@
      "machine_alarms": [],
      "machine_alarm_count": 0,
      "evidence_chain_zh": [
-      "没有可核对的 missing_action violatio…(sha256 41a1ef4ab184)"
+      "r9 correspondence needs an ext…(sha256 dea9a5b9bd2e)"
      ],
+     "assessment_details": {
+      "expected_activity_reference": "verify correctness of customer…(sha256 4942f7fd86ff)",
+      "extracted_actions": [],
+      "alarm_rule_action": null,
+      "alarm_best_model_action": null,
+      "alarm_similarity": null,
+      "alarm_missing": null,
+      "sign_contract_anchor": {
+       "id": "sid-6B3F7867-7939-43B6-8F6E-8B…(sha256 81b01b6d90bc)",
+       "name": "Sign contract",
+       "lanes": [
+        "Phone company"
+       ]
+      },
+      "verify_like_process_activities": [],
+      "process_activity_inventory": [
+       "Ask portability third company",
+       "Ask portability",
+       "Sign contract",
+       "Request personal data",
+       "Delete personal data",
+       "Ask for consent",
+       "Ask old number",
+       "Assign new number",
+       "Send SIM card",
+       "Activate SIM card",
+       "Request payment",
+       "Store Data"
+      ]
+     },
      "all_lenses_undetermined": true
     },
     "B": {
@@ -496,8 +599,40 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "规则动作已抽取；missing_action 给出最低对应活…(sha256 1c0246c7c10c)"
+      "Extracted verification action …(sha256 12a97619a6a3)"
      ],
+     "assessment_details": {
+      "expected_activity_reference": "verify correctness of customer…(sha256 4942f7fd86ff)",
+      "extracted_actions": [
+       "verify the correctness of thei…(sha256 08542b829432)"
+      ],
+      "alarm_rule_action": "verify the correctness of thei…(sha256 08542b829432)",
+      "alarm_best_model_action": "Ask portability third company",
+      "alarm_similarity": 0.4219,
+      "alarm_missing": true,
+      "sign_contract_anchor": {
+       "id": "sid-6B3F7867-7939-43B6-8F6E-8B…(sha256 81b01b6d90bc)",
+       "name": "Sign contract",
+       "lanes": [
+        "Phone company"
+       ]
+      },
+      "verify_like_process_activities": [],
+      "process_activity_inventory": [
+       "Ask portability third company",
+       "Ask portability",
+       "Sign contract",
+       "Request personal data",
+       "Delete personal data",
+       "Ask for consent",
+       "Ask old number",
+       "Assign new number",
+       "Send SIM card",
+       "Activate SIM card",
+       "Request payment",
+       "Store Data"
+      ]
+     },
      "all_lenses_undetermined": false
     },
     "C": {
@@ -549,8 +684,40 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "规则动作已抽取；missing_action 给出最低对应活…(sha256 1c0246c7c10c)"
+      "Extracted verification action …(sha256 12a97619a6a3)"
      ],
+     "assessment_details": {
+      "expected_activity_reference": "verify correctness of customer…(sha256 4942f7fd86ff)",
+      "extracted_actions": [
+       "verify the correctness of thei…(sha256 08542b829432)"
+      ],
+      "alarm_rule_action": "verify the correctness of thei…(sha256 08542b829432)",
+      "alarm_best_model_action": "Ask portability third company",
+      "alarm_similarity": 0.4219,
+      "alarm_missing": true,
+      "sign_contract_anchor": {
+       "id": "sid-6B3F7867-7939-43B6-8F6E-8B…(sha256 81b01b6d90bc)",
+       "name": "Sign contract",
+       "lanes": [
+        "Phone company"
+       ]
+      },
+      "verify_like_process_activities": [],
+      "process_activity_inventory": [
+       "Ask portability third company",
+       "Ask portability",
+       "Sign contract",
+       "Request personal data",
+       "Delete personal data",
+       "Ask for consent",
+       "Ask old number",
+       "Assign new number",
+       "Send SIM card",
+       "Activate SIM card",
+       "Request payment",
+       "Store Data"
+      ]
+     },
      "all_lenses_undetermined": false
     }
    },
@@ -623,8 +790,15 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "incorrect_actor 缺少可核验的动作—角色归属证…(sha256 185690e2fe0d)"
+      "r10 correspondence needs the r…(sha256 bf435e25f322)"
      ],
+     "assessment_details": {
+      "required_actor": "the phone company",
+      "primary_action_match": {},
+      "primary_action_owner_rows": [],
+      "all_matched_candidate_rows": [],
+      "detector_evidence": []
+     },
      "all_lenses_undetermined": true
     },
     "B": {
@@ -707,8 +881,49 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "incorrect_actor 报警具有动作绑定证据；匹配到…(sha256 563195982d39)"
+      "Rule action maps to Activate S…(sha256 ecd9caace28a)"
      ],
+     "assessment_details": {
+      "required_actor": "the phone company",
+      "primary_action_match": {
+       "rule_action": "activate the SIM card",
+       "best_model_action": "Activate SIM card",
+       "similarity": 0.858192
+      },
+      "primary_action_owner_rows": [
+       {
+        "activity_id": "sid-D80682C2-0CD4-4B60-93BA-E9…(sha256 194cdcfc55c1)",
+        "activity_name": "Activate SIM card",
+        "owners": [
+         "Customer"
+        ]
+       }
+      ],
+      "all_matched_candidate_rows": [
+       {
+        "activity_id": "sid-D73852AE-5932-48A8-8079-94…(sha256 e4e4934cfdee)",
+        "activity_name": "Send SIM card",
+        "owners": [
+         "Phone company"
+        ]
+       },
+       {
+        "activity_id": "sid-D80682C2-0CD4-4B60-93BA-E9…(sha256 194cdcfc55c1)",
+        "activity_name": "Activate SIM card",
+        "owners": [
+         "Customer"
+        ]
+       }
+      ],
+      "detector_evidence": [
+       {
+        "rule_actor": "the phone company",
+        "min_process_actor_similarity": 0.3334,
+        "exists_low_similarity": true,
+        "violated": true
+       }
+      ]
+     },
      "all_lenses_undetermined": false
     },
     "C": {
@@ -834,8 +1049,49 @@
      ],
      "machine_alarm_count": 3,
      "evidence_chain_zh": [
-      "incorrect_actor 报警具有动作绑定证据；匹配到…(sha256 563195982d39)"
+      "Rule action maps to Activate S…(sha256 ecd9caace28a)"
      ],
+     "assessment_details": {
+      "required_actor": "the phone company",
+      "primary_action_match": {
+       "rule_action": "activate the SIM card",
+       "best_model_action": "Activate SIM card",
+       "similarity": 0.858192
+      },
+      "primary_action_owner_rows": [
+       {
+        "activity_id": "sid-D80682C2-0CD4-4B60-93BA-E9…(sha256 194cdcfc55c1)",
+        "activity_name": "Activate SIM card",
+        "owners": [
+         "Customer"
+        ]
+       }
+      ],
+      "all_matched_candidate_rows": [
+       {
+        "activity_id": "sid-D73852AE-5932-48A8-8079-94…(sha256 e4e4934cfdee)",
+        "activity_name": "Send SIM card",
+        "owners": [
+         "Phone company"
+        ]
+       },
+       {
+        "activity_id": "sid-D80682C2-0CD4-4B60-93BA-E9…(sha256 194cdcfc55c1)",
+        "activity_name": "Activate SIM card",
+        "owners": [
+         "Customer"
+        ]
+       }
+      ],
+      "detector_evidence": [
+       {
+        "rule_actor": "the phone company",
+        "min_process_actor_similarity": 0.3334,
+        "exists_low_similarity": true,
+        "violated": true
+       }
+      ]
+     },
      "all_lenses_undetermined": false
     }
    },
@@ -910,8 +1166,28 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "主视角 out_of_order 没有 positive a…(sha256 54e33fbff556)"
+      "r11 correspondence requires a …(sha256 59f608459f16)"
      ],
+     "assessment_details": {
+      "consent_activity": {
+       "id": "sid-9D265428-62CB-477B-B15F-73…(sha256 f20fa4353ec5)",
+       "name": "Ask for consent",
+       "lanes": [
+        "Phone company"
+       ]
+      },
+      "retrieval_activity": {
+       "id": "sid-87D1789E-9525-4D33-9FF0-1F…(sha256 ffa9bbb3d795)",
+       "name": "Request personal data",
+       "lanes": [
+        "Phone company"
+       ]
+      },
+      "out_of_order_status": "undetermined",
+      "out_of_order_mapped_details": [],
+      "missing_action_alarm_present": true,
+      "missing_action_cannot_substitute_order": true
+     },
      "all_lenses_undetermined": true
     },
     "B": {
@@ -961,8 +1237,28 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "主视角 out_of_order 没有 positive a…(sha256 54e33fbff556)"
+      "r11 correspondence requires a …(sha256 59f608459f16)"
      ],
+     "assessment_details": {
+      "consent_activity": {
+       "id": "sid-9D265428-62CB-477B-B15F-73…(sha256 f20fa4353ec5)",
+       "name": "Ask for consent",
+       "lanes": [
+        "Phone company"
+       ]
+      },
+      "retrieval_activity": {
+       "id": "sid-87D1789E-9525-4D33-9FF0-1F…(sha256 ffa9bbb3d795)",
+       "name": "Request personal data",
+       "lanes": [
+        "Phone company"
+       ]
+      },
+      "out_of_order_status": "undetermined",
+      "out_of_order_mapped_details": [],
+      "missing_action_alarm_present": true,
+      "missing_action_cannot_substitute_order": true
+     },
      "all_lenses_undetermined": true
     },
     "C": {
@@ -1019,8 +1315,28 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "主视角 out_of_order 没有 positive a…(sha256 54e33fbff556)"
+      "r11 correspondence requires a …(sha256 59f608459f16)"
      ],
+     "assessment_details": {
+      "consent_activity": {
+       "id": "sid-9D265428-62CB-477B-B15F-73…(sha256 f20fa4353ec5)",
+       "name": "Ask for consent",
+       "lanes": [
+        "Phone company"
+       ]
+      },
+      "retrieval_activity": {
+       "id": "sid-87D1789E-9525-4D33-9FF0-1F…(sha256 ffa9bbb3d795)",
+       "name": "Request personal data",
+       "lanes": [
+        "Phone company"
+       ]
+      },
+      "out_of_order_status": "undetermined",
+      "out_of_order_mapped_details": [],
+      "missing_action_alarm_present": true,
+      "missing_action_cannot_substitute_order": true
+     },
      "all_lenses_undetermined": true
     }
    },
@@ -1058,8 +1374,24 @@
      "machine_alarms": [],
      "machine_alarm_count": 0,
      "evidence_chain_zh": [
-      "条件/约束类没有 positive alarm；没有任何 p…(sha256 a4e64bb7669a)"
+      "No condition/constraint alarm …(sha256 caa6aa4b6cae)"
      ],
+     "assessment_details": {
+      "condition_alarm": null,
+      "constraint_alarm": null,
+      "threshold_alarm_evidence": [],
+      "field_attribution": {
+       "actor_text_contains_50": false,
+       "condition_value": null,
+       "constraint_value": "with outstanding debt exceedin…(sha256 1d6738a9b4f1)",
+       "condition_empty": true,
+       "constraint_empty": false,
+       "model_debt_labels": [
+        "Debt < 100"
+       ],
+       "note": "The 50 EUR threshold appears i…(sha256 adab057829ab)"
+      }
+     },
      "all_lenses_undetermined": true
     },
     "B": {
@@ -1138,8 +1470,24 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "条件/约束类没有 positive alarm；其他机器报警…(sha256 63f1f59fe08c)"
+      "No condition/constraint alarm …(sha256 941c12a34b52)"
      ],
+     "assessment_details": {
+      "condition_alarm": null,
+      "constraint_alarm": null,
+      "threshold_alarm_evidence": [],
+      "field_attribution": {
+       "actor_text_contains_50": true,
+       "condition_value": null,
+       "constraint_value": null,
+       "condition_empty": true,
+       "constraint_empty": true,
+       "model_debt_labels": [
+        "Debt < 100"
+       ],
+       "note": "The 50 EUR threshold appears i…(sha256 adab057829ab)"
+      }
+     },
      "all_lenses_undetermined": true
     },
     "C": {
@@ -1254,8 +1602,24 @@
      ],
      "machine_alarm_count": 2,
      "evidence_chain_zh": [
-      "条件/约束类没有 positive alarm；其他机器报警…(sha256 c7e42097735a)"
+      "No condition/constraint alarm …(sha256 d35ab62a291b)"
      ],
+     "assessment_details": {
+      "condition_alarm": null,
+      "constraint_alarm": null,
+      "threshold_alarm_evidence": [],
+      "field_attribution": {
+       "actor_text_contains_50": true,
+       "condition_value": null,
+       "constraint_value": null,
+       "condition_empty": true,
+       "constraint_empty": true,
+       "model_debt_labels": [
+        "Debt < 100"
+       ],
+       "note": "The 50 EUR threshold appears i…(sha256 adab057829ab)"
+      }
+     },
      "all_lenses_undetermined": true
     }
    },
@@ -2118,7 +2482,7 @@
      },
      "actor_action_pairs": {
       "A": "[]",
-      "B": "[{\"actor\": \"it\", \"action\": \"ve…(sha256 75e39777086b)"
+      "B": "[{\"actor\": \"it\", \"action\": \"ve…(sha256 58663aab16f4)"
      },
      "order_relations": {
       "A": "[]",
@@ -2167,8 +2531,8 @@
       "B": "[\"activate the SIM card\"]"
      },
      "actor_action_pairs": {
-      "A": "[{\"actor\": \"the phone company\"…(sha256 e1aa9c8e47c7)",
-      "B": "[{\"actor\": \"the phone company\"…(sha256 d7325c3d678f)"
+      "A": "[{\"actor\": \"the phone company\"…(sha256 86f5782c3b92)",
+      "B": "[{\"actor\": \"the phone company\"…(sha256 284c1765c035)"
      },
      "constraint": {
       "A": "null",
@@ -2179,6 +2543,7 @@
    },
    "r11": {
     "changed_fields": [
+     "actor_action_pairs",
      "condition",
      "constraint",
      "order_relations"
@@ -2187,6 +2552,10 @@
     "attribution": "extraction",
     "adaptation_loss": [],
     "detail_fragments": {
+     "actor_action_pairs": {
+      "A": "[{\"actor\": \"Phone company\", \"a…(sha256 5bd32b240fb7)",
+      "B": "[{\"actor\": \"Phone company\", \"a…(sha256 eda3594c1ddb)"
+     },
      "order_relations": {
       "A": "[]",
       "B": "[[\"ask the Data Subject for co…(sha256 8f4a0a956525)"
@@ -2228,7 +2597,7 @@
      },
      "actor_action_pairs": {
       "A": "[]",
-      "B": "[{\"actor\": \"Customers with out…(sha256 3e747a73786b)"
+      "B": "[{\"actor\": \"Customers with out…(sha256 45417da79c19)"
      },
      "constraint": {
       "A": "with outstanding debt exceedin…(sha256 1d6738a9b4f1)",

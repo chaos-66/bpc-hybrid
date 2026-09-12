@@ -4609,3 +4609,17 @@
 - 仍存在 blocker：无
 - 备注：Zero LLM/API. Sources/Gold/BPMN/requirements/predictions unchanged. B/C three-type rows identical. r8 process-level event-subprocess repair structurally valid but excluded from effective denominator because frozen Stage1 is opaque to timer/terminate internals; legacy task-scoped control preserved. r13 repair excluded because rule condition is empty (extraction gap). r11 out_of_order still undetermined at gamma=0.8. JSON/MD/SVG/paper all derive from the same capsule.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-12T05:59:35.463448+00:00 - SIM case P1/P2/P4 gap closure: role-binding fallback in explicit pairs, evidence-linked reference correspondence, C_original/C_repaired repair sources, and BPMN-DI flow annotation
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：36 passed, 2 warnings in 9.25s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`b65d6c2f102375c3b88429a0100ac8f44ae6e41d`；相关未提交路径：16 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：No LLM/API. Reused A/B stage2 and predictions. Updated r11 explicit-pair actor binding, value-level trace, r8/r9/r10/r11/r13 evidence assessment details, repair source labels, and restored actual sequence-flow/gateway/condition-label rendering from read-only BPMNDI. r8 representation limit and r13 empty-condition exclusion retained.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

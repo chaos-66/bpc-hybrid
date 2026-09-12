@@ -13,6 +13,8 @@ from __future__ import annotations
 import html
 import json
 import re
+import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -100,6 +102,45 @@ class Svg:
             y += lh
         return y
 
+    def raw(self, markup: str) -> None:
+        self.parts.append(markup)
+
+    def polyline(self, points, stroke="#17202a", sw=1.5, dash=None,
+                 marker=True) -> None:
+        if not points:
+            return
+        pts = " ".join(f"{x:.1f},{y:.1f}" for x, y in points)
+        dash_attr = f' stroke-dasharray="{dash}"' if dash else ""
+        marker_attr = ' marker-end="url(#arrow)"' if marker else ""
+        self.parts.append(
+            f'<polyline points="{pts}" fill="none" stroke="{stroke}" '
+            f'stroke-width="{sw}"{dash_attr}{marker_attr}/>'
+        )
+        if marker and len(points) >= 2:
+            x1, y1 = points[-2]
+            x2, y2 = points[-1]
+            dx, dy = x2 - x1, y2 - y1
+            length = max((dx * dx + dy * dy) ** 0.5, 0.001)
+            ux, uy = dx / length, dy / length
+            px, py = -uy, ux
+            size = 6.0
+            bx, by = x2 - ux * size, y2 - uy * size
+            self.parts.append(
+                f'<polygon points="{x2:.1f},{y2:.1f} '
+                f'{bx + px * size * 0.55:.1f},{by + py * size * 0.55:.1f} '
+                f'{bx - px * size * 0.55:.1f},{by - py * size * 0.55:.1f}" '
+                f'fill="{stroke}" stroke="none"/>'
+            )
+
+    def polygon(self, points, fill="#ffffff", stroke="#17202a", sw=1.5,
+                dash=None) -> None:
+        pts = " ".join(f"{x:.1f},{y:.1f}" for x, y in points)
+        dash_attr = f' stroke-dasharray="{dash}"' if dash else ""
+        self.parts.append(
+            f'<polygon points="{pts}" fill="{fill}" stroke="{stroke}" '
+            f'stroke-width="{sw}"{dash_attr}/>'
+        )
+
     def save(self, path: Path, height: float) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         payload = (
@@ -107,6 +148,7 @@ class Svg:
             f'viewBox="0 0 {W} {height:.0f}" version="1.1">\n'
             f'<title>SIM 卡入网案例：A/B/C 开发性检测与参考问题对应图</title>\n'
             f'<desc>Read-only render from capsule.json. Machine alarms, evidence-checked reference correspondence, undetermined checks, and repair-control limits are shown separately.</desc>\n'
+            + '<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#17202a"/></marker></defs>'
             + "\n".join(self.parts) + "\n</svg>\n"
         )
         path.write_text(payload, encoding="utf-8", newline="\n")
@@ -125,6 +167,111 @@ def alarm_text(alarms: list[dict]) -> str:
     if not alarms:
         return "无 positive machine alarm"
     return "；".join(f"{a['check']}={a['machine_status']}/{a['score']}" for a in alarms)
+
+
+def _local_name(tag: str) -> str:
+    return tag.rsplit("}", 1)[-1] if "}" in tag else tag
+
+
+def _load_bpmn_root():
+    model = ROOT / "outputs" / "development" / "sim_case_c1" / "models" / "sim_original_flattened.bpmn"
+    if model.exists():
+        return ET.fromstring(model.read_bytes())
+    # Fallback: reconstruct the same flattened view from the read-only source.
+    sys.path[:0] = [str(ROOT / "src")]
+    from bpc_hybrid.sim_case_c1 import BPMN
+    from bpc_hybrid.sim_case_c1_transforms import flatten_collaboration
+    payload, _ = flatten_collaboration(BPMN.read_bytes())
+    return ET.fromstring(payload)
+
+
+def _diagram_geometry(root, node_info: dict) -> tuple[dict, dict, tuple]:
+    shapes = {}
+    edges = {}
+    xs = []
+    ys = []
+    for elem in root.iter():
+        name = _local_name(elem.tag)
+        if name == "BPMNShape":
+            bpmn_id = elem.get("bpmnElement")
+            bounds = None
+            for child in elem:
+                if _local_name(child.tag) == "Bounds":
+                    bounds = {
+                        "x": float(child.get("x", 0)),
+                        "y": float(child.get("y", 0)),
+                        "width": float(child.get("width", 0)),
+                        "height": float(child.get("height", 0)),
+                    }
+            if bpmn_id and bounds:
+                shapes[bpmn_id] = bounds
+        elif name == "BPMNEdge":
+            bpmn_id = elem.get("bpmnElement")
+            points = []
+            for child in elem:
+                if _local_name(child.tag) == "waypoint":
+                    points.append((float(child.get("x", 0)), float(child.get("y", 0))))
+            if bpmn_id is not None:
+                edges[bpmn_id] = points
+    for node_id in node_info:
+        bounds = shapes.get(node_id)
+        if bounds:
+            xs.extend([bounds["x"], bounds["x"] + bounds["width"]])
+            ys.extend([bounds["y"], bounds["y"] + bounds["height"]])
+    for points in edges.values():
+        for x, y in points:
+            xs.append(x)
+            ys.append(y)
+    if not xs or not ys:
+        xs, ys = [0.0, 1000.0], [0.0, 500.0]
+    return shapes, edges, (min(xs), min(ys), max(xs), max(ys))
+
+
+def _find_node_id(node_info: dict, needle: str) -> str | None:
+    lowered = (needle or "").lower()
+    for node_id, info in node_info.items():
+        if lowered in (info.get("name") or "").lower():
+            return node_id
+    return None
+
+
+def _rule_block(cap: dict, rule_id: str, group: str = "C") -> dict:
+    for item in cap.get("comparison") or []:
+        if item.get("rule_id") == rule_id:
+            return (item.get("groups") or {}).get(group) or {}
+    return {}
+
+
+def _rule_check(cap: dict, rule_id: str, lens: str, group: str = "C") -> dict:
+    return ((((cap.get("rules") or {}).get(rule_id) or {}).get("sides") or {}).get(group) or {}).get("checks", {}).get(lens) or {}
+
+
+def _point_along(points: list[tuple[float, float]], fraction: float) -> tuple[float, float]:
+    if not points:
+        return (0.0, 0.0)
+    if len(points) == 1:
+        return points[0]
+    lengths = []
+    total = 0.0
+    for (x1, y1), (x2, y2) in zip(points, points[1:]):
+        length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+        lengths.append(length)
+        total += length
+    if total <= 0:
+        return points[0]
+    target = total * fraction
+    travelled = 0.0
+    for (x1, y1), (x2, y2), length in zip(points, points[1:], lengths):
+        if travelled + length >= target:
+            ratio = (target - travelled) / max(length, 0.001)
+            return (x1 + (x2 - x1) * ratio, y1 + (y2 - y1) * ratio)
+        travelled += length
+    return points[-1]
+
+
+def _boxes_intersect(a, b, pad=2.0) -> bool:
+    return not (a[0] - pad > b[0] + b[2] or a[0] + a[2] + pad < b[0] or
+                a[1] - pad > b[1] + b[3] or a[1] + a[3] + pad < b[1])
 
 
 def main() -> int:
@@ -164,57 +311,209 @@ def main() -> int:
         svg.text(x + 12, y + 30, label, size=15, fill=COLORS[key], weight="bold")
     y += 78
 
-    # simplified process diagram, grouped by lane
+    # actual BPMN flow view from the read-only flattened model coordinates
     proc = cap.get("process_facts") or {}
-    activities = proc.get("activities") or []
-    lane_order = ["Customer", "Phone company", "Another phone company"]
-    grouped: dict[str, list[dict]] = {lane: [] for lane in lane_order}
-    for act in activities:
-        lanes = act.get("lanes") or ["未分配"]
-        grouped.setdefault(lanes[0] if lanes else "未分配", []).append(act)
-    for lane in grouped:
-        if lane not in lane_order:
-            lane_order.append(lane)
-    needed = max([len(grouped.get(lane) or []) for lane in lane_order] + [4])
-    diagram_h = 120 + needed * 58 + 90
+    node_info = {}
+    for key, kind in (("activities", "activity"), ("events", "event"), ("gateways", "gateway")):
+        for item in proc.get(key) or []:
+            node_info[item["id"]] = {
+                "kind": kind,
+                "name": item.get("name") or "",
+                "lanes": item.get("lanes") or [],
+            }
+    bpmn_root = _load_bpmn_root()
+    shapes, di_edges, bbox = _diagram_geometry(bpmn_root, node_info)
+    minx, miny, maxx, maxy = bbox
+    inner_w = W - 2 * M - 40
+    inner_h = 660
+    scale = min(inner_w / max(maxx - minx, 1), inner_h / max(maxy - miny, 1))
+    ox = M + 20
+    oy = y + 78
+
+    def tx(value: float) -> float:
+        return ox + (value - minx) * scale
+
+    def ty(value: float) -> float:
+        return oy + (value - miny) * scale
+
+    diagram_h = inner_h + 190
     svg.rect(M, y, W - 2 * M, diagram_h, rx=10, fill=COLORS["card"], stroke=COLORS["line"])
-    svg.text(M + 20, y + 34, "流程模型（按泳道分组；非完整 BPMN 布局）", size=22, weight="bold")
-    svg.text(M + 20, y + 60, "ID 保留，坐标不重绘；虚线框 = 模型中不存在的活动。", size=14, fill=COLORS["muted"])
-    col_w = (W - 2 * M - 80) / 3
-    for idx, lane in enumerate(lane_order[:3]):
-        x = M + 40 + idx * (col_w + 20)
-        svg.rect(x, y + 78, col_w, diagram_h - 108, rx=8, fill=COLORS["lane"], stroke="none")
-        svg.text(x + 12, y + 102, lane, size=17, weight="bold")
-        yy = y + 128
-        for act in grouped.get(lane, []):
-            name = act.get("name") or act.get("id") or ""
-            fill = "#ffffff"
-            stroke = COLORS["line"]
-            badge = ""
-            if name == "Activate SIM card":
-                fill, stroke = COLORS["alarm_bg"], COLORS["corresponding"]
-                badge = "r10 incorrect_actor：有证据对应（执行者 Customer）"
-            elif name == "Ask for consent":
-                fill, stroke = COLORS["missed_bg"], COLORS["missed"]
-                badge = "r11 参考问题=顺序错误；out_of_order 未检出"
-            svg.rect(x + 10, yy, col_w - 20, 38, rx=6, fill=fill, stroke=stroke, sw=2)
-            svg.text(x + 18, yy + 24, name, size=14, weight="bold")
-            if badge:
-                yy += 42
-                yy = svg.paragraph(x + 18, yy, col_w - 36, badge, size=12, lh=15,
-                                   fill=COLORS["muted"])
-            yy += 18
-        if lane == "Phone company":
-            svg.rect(x + 10, yy, col_w - 20, 38, rx=6, fill="#ffffff",
-                     stroke=COLORS["missed"], sw=2, dash="6 4")
-            svg.text(x + 18, yy + 24, "缺失活动（模型中不存在）", size=14,
-                     fill=COLORS["missed"], weight="bold")
-            svg.text(x + 18, yy + 50, "r9：缺失活动占位符（不是模型节点）",
-                     size=12, fill=COLORS["muted"])
-    notes_y = y + diagram_h - 44
-    svg.text(M + 20, notes_y, "r8：当前模型无 timerEventDefinition / boundaryEvent / terminateEventDefinition；过程级修复见下图，"
-                              "但冻结 Stage 1 的 opaque event subprocess 表示不能把计时与终止作用域完整带入结构化检测链。",
-             size=13, fill=COLORS["limit"])
+    svg.text(M + 20, y + 34, "流程模型：实际 BPMN 节点、网关、连线和条件标签（只读坐标）", size=22, weight="bold")
+    svg.text(M + 20, y + 58, "节点与连线来自 sim_original_flattened.bpmn 的 BPMNDI；颜色和标注读取本轮 capsule 结果。", size=13, fill=COLORS["muted"])
+
+    # lane/pool backgrounds from DI, without changing BPMN labels
+    for shape_id, bounds in shapes.items():
+        if shape_id in node_info:
+            continue
+        x1, y1 = tx(bounds["x"]), ty(bounds["y"])
+        w = max((bounds["width"]) * scale, 2)
+        h = max((bounds["height"]) * scale, 2)
+        if w > 60 and h > 25:
+            svg.rect(x1, y1, w, h, rx=7, fill="#f2f6f9", stroke="#dde5ea", sw=1)
+
+    annotations: dict[str, list[dict]] = {}
+    def add_annotation(node_id: str | None, lines: list[str], color: str) -> None:
+        if node_id:
+            annotations.setdefault(node_id, []).append({"lines": lines, "color": color})
+
+    r10_node = _find_node_id(node_info, "Activate SIM card")
+    r10_check = _rule_check(cap, "r10", "incorrect_actor")
+    r10_assess = _rule_block(cap, "r10")
+    if r10_node:
+        add_annotation(r10_node, [
+            "r10 incorrect_actor={} score={}".format(r10_check.get("status"), r10_check.get("score")),
+            "owner={} evidence={}".format(
+                ",".join(node_info[r10_node].get("lanes") or []) or "?",
+                r10_assess.get("correspondence_judgment")),
+        ], COLORS["corresponding"] if r10_assess.get("found_corresponding_problem") else COLORS["missed"])
+
+    r11_check = _rule_check(cap, "r11", "out_of_order")
+    r11_assess = _rule_block(cap, "r11")
+    consent_node = _find_node_id(node_info, "Ask for consent")
+    if consent_node:
+        add_annotation(consent_node, [
+            "r11 out_of_order={}".format(r11_check.get("status")),
+        ], COLORS["missed"])
+
+    # edges first (under nodes)
+    r11_node_ids = set()
+    for node_id, info in node_info.items():
+        name = (info.get("name") or "").lower()
+        if any(key in name for key in ("consent", "request personal data", "store data")):
+            r11_node_ids.add(node_id)
+    occupied_boxes = []
+    for node_id, bounds in shapes.items():
+        if node_id in node_info and node_id in shapes:
+            bx, by = tx(bounds["x"]), ty(bounds["y"])
+            bw = max(tx(bounds["x"] + bounds["width"]) - bx, 30)
+            bh = max(ty(bounds["y"] + bounds["height"]) - by, 26)
+            occupied_boxes.append((bx, by, bw, bh))
+    label_boxes = []
+    flow_by_id = {flow.get("id"): flow for flow in (proc.get("sequence_flows") or [])}
+    for flow_id, flow in flow_by_id.items():
+        points = list(di_edges.get(flow_id) or [])
+        if not points:
+            source = shapes.get(flow.get("source_ref"))
+            target = shapes.get(flow.get("target_ref"))
+            if source and target:
+                points = [
+                    (source["x"] + source["width"] / 2, source["y"] + source["height"] / 2),
+                    (target["x"] + target["width"] / 2, target["y"] + target["height"] / 2),
+                ]
+        if not points:
+            continue
+        transformed = [(tx(x), ty(y)) for x, y in points]
+        label = flow.get("name") or ""
+        color = COLORS["line"]
+        sw = 1.5
+        dash = None
+        if "debt" in label.lower():
+            color = COLORS["limit"]
+            sw = 2.8
+        elif flow.get("source_ref") in r11_node_ids or flow.get("target_ref") in r11_node_ids:
+            color = COLORS["missed"]
+            dash = "5 4"
+        svg.polyline(transformed, stroke=color, sw=sw, dash=dash)
+        if label in {"Requested", "Granted", "Not requested"}:
+            label = ""
+        if label:
+            tw = text_width(label, 11) + 8
+            chosen = None
+            for fraction in (0.5, 0.32, 0.68, 0.2, 0.8):
+                mx, my = _point_along(transformed, fraction)
+                candidate_box = (mx - tw / 2, my - 13, tw, 17)
+                if any(_boxes_intersect(candidate_box, box) for box in occupied_boxes):
+                    continue
+                if any(_boxes_intersect(candidate_box, box, pad=1.0) for box in label_boxes):
+                    continue
+                chosen = (mx, my, candidate_box)
+                break
+            if chosen is None:
+                mx, my = _point_along(transformed, 0.5)
+                chosen = (mx, my, (mx - tw / 2, my - 13, tw, 17))
+            mx, my, label_box = chosen
+            label_boxes.append(label_box)
+            svg.rect(mx - tw / 2, my - 13, tw, 17, rx=3, fill="#ffffff",
+                     stroke="#dfe6ea", sw=0.6)
+            svg.text(mx, my, label, size=11, anchor="middle", fill=color,
+                     weight="bold" if "debt" in label.lower() else "normal")
+
+    # nodes
+    for node_id, info in node_info.items():
+        bounds = shapes.get(node_id)
+        if not bounds:
+            continue
+        x1, y1 = tx(bounds["x"]), ty(bounds["y"])
+        w = max(tx(bounds["x"] + bounds["width"]) - x1, 30)
+        h = max(ty(bounds["y"] + bounds["height"]) - y1, 26)
+        anns = annotations.get(node_id) or []
+        stroke = anns[0]["color"] if anns else COLORS["line"]
+        sw = 2.4 if anns else 1.2
+        fill = {"activity": "#ffffff", "event": "#eafaf1", "gateway": "#fff4e6"}.get(info["kind"], "#ffffff")
+        if info["kind"] == "gateway":
+            cx, cy = x1 + w / 2, y1 + h / 2
+            svg.polygon([(cx, y1), (x1 + w, cy), (cx, y1 + h), (x1, cy)],
+                        fill=fill, stroke=stroke, sw=sw)
+        else:
+            svg.rect(x1, y1, w, h, rx=8 if info["kind"] == "activity" else h / 2,
+                     fill=fill, stroke=stroke, sw=sw)
+        display_name = (info.get("name") or "").strip()
+        lines = wrap_text(display_name, max(w - 8, 24), 10)[:3] if display_name else []
+        start_y = y1 + max(9, (h - len(lines) * 12) / 2 + 9)
+        for i, line in enumerate(lines):
+            svg.text(x1 + w / 2, start_y + i * 12, line, size=10,
+                     anchor="middle", fill=COLORS["ink"], weight="bold")
+        if info.get("lanes"):
+            svg.text(x1 + w / 2, y1 + h - 3, ",".join(info["lanes"])[:28],
+                     size=8, anchor="middle", fill=COLORS["muted"])
+        yy = y1 + h + 11
+        for ann in anns:
+            for line in ann["lines"]:
+                ax = min(x1, W - M - text_width(line, 9) - 6)
+                ax = max(M + 4, ax)
+                svg.text(ax, yy, line, size=9, fill=ann["color"], weight="bold")
+                yy += 11
+
+    # reserved bottom band: r8 scope note, r9 missing placeholder, r11/r13 evidence notes
+    sign_id = _find_node_id(node_info, "Sign contract")
+    sign_bounds = shapes.get(sign_id) if sign_id else None
+    band_y = y + diagram_h - 82
+    xml_counts = proc.get("xml_counts") or {}
+    r8_repair = next((row for row in (cap.get("repairs") or []) if row.get("rule_id") == "r8"), {})
+    r8_note = ("r8 process scope: timer={}, boundary={}, terminate={}, event_subprocess={}; "
+               "repair effective={}, exclusion={}").format(
+        xml_counts.get("timer_event_definitions", 0),
+        xml_counts.get("boundary_events", 0),
+        xml_counts.get("terminate_event_definitions", 0),
+        xml_counts.get("event_subprocesses", 0),
+        r8_repair.get("in_effective_repair_denominator"),
+        r8_repair.get("effective_control_exclusion_reason"))
+    r13_check = _rule_check(cap, "r13", "required_condition_not_enforced")
+    r11_note = ("r11 order evidence: out_of_order={} reason={}; consent/retrieval nodes are "
+                "connected by actual BPMN sequence flows; missing_action is not substituted.").format(
+        r11_check.get("status"), r11_check.get("reason"))
+    r13_note = ("r13 field attribution: model flow label Debt < 100; required_condition={} "
+                "reason={}; condition/constraint fields are empty.").format(
+        r13_check.get("status"), r13_check.get("reason"))
+    svg.text(M + 20, band_y, r8_note, size=10, fill=COLORS["limit"])
+    svg.text(M + 20, band_y + 16, r11_note, size=10, fill=COLORS["missed"])
+    svg.text(M + 20, band_y + 32, r13_note, size=10, fill=COLORS["limit"])
+    r9_check = _rule_check(cap, "r9", "missing_action")
+    ph_x = M + 1040
+    ph_y = band_y - 36
+    ph_w, ph_h = 260, 52
+    svg.rect(ph_x, ph_y, ph_w, ph_h, rx=8, fill="#ffffff",
+             stroke=COLORS["missed"], sw=2, dash="7 5")
+    svg.text(ph_x + 10, ph_y + 20, "缺失活动（模型中不存在）", size=12,
+             fill=COLORS["missed"], weight="bold")
+    svg.text(ph_x + 10, ph_y + 38,
+             "r9 missing_action={} reason={}".format(r9_check.get("status"), r9_check.get("reason")),
+             size=9, fill=COLORS["muted"])
+    if sign_bounds:
+        target_x = tx(sign_bounds["x"]) + sign_bounds["width"] * scale / 2
+        target_y = ty(sign_bounds["y"]) + sign_bounds["height"] * scale / 2
+        svg.polyline([(ph_x, ph_y + ph_h / 2), (target_x, target_y)],
+                     stroke=COLORS["missed"], sw=1.2, dash="4 4")
     y += diagram_h + 28
 
     # per-rule cards
@@ -249,7 +548,7 @@ def main() -> int:
                 f"{repair['repair_id']}：语义有效={iv.get('repair_semantics_valid')}，进入检测链="
                 f"{iv.get('semantics_entered_detection_chain')}，有效分母={repair.get('in_effective_repair_denominator')}，"
                 f"排除={repair.get('effective_control_exclusion_reason') or '—'}；"
-                f"B/C before={ (repair.get('before') or {}).get('status') } after="
+                f"C_original={ (repair.get('before') or {}).get('status') } -> C_repaired="
                 f"{(repair.get('after') or {}).get('status')}",
                 COLORS["limit"] if not repair.get("in_effective_repair_denominator") else COLORS["corresponding"],
             ))
@@ -315,7 +614,7 @@ def main() -> int:
     svg.text(M + 420, yy, "语义有效", size=14, weight="bold")
     svg.text(M + 540, yy, "进入检测链", size=14, weight="bold")
     svg.text(M + 700, yy, "有效分母", size=14, weight="bold")
-    svg.text(M + 840, yy, "B→C", size=14, weight="bold")
+    svg.text(M + 840, yy, "C_original->C_repaired", size=13, weight="bold")
     svg.text(M + 1090, yy, "排除/限制原因", size=14, weight="bold")
     yy += 26
     for row in repairs_list:
