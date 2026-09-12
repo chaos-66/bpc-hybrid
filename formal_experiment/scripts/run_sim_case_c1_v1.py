@@ -474,7 +474,24 @@ def render_md(capsule: dict) -> str:
                          f"{cell('out_of_order')} | {cell('prohibited_action_present')} | "
                          f"{cell('required_condition_not_enforced')} | {cell('constraint_violated')} | "
                          f"{cell('exception_not_handled')} |")
-    lines += ["", "## 3. 与开发参考判断的逐条对照（① ② ④ ⑤）", "",
+    lines += ["", "## 3. 逐条证据与错误来源（③ 方法实际输出 + ⑤ 归因）", "",
+              "| 规则 | 组 | 映射活动（相似度） | 检测项 | 状态 | 分数 | 机器原因 | 候选面计数 |",
+              "|---|---|---|---|---|---|---|---|"]
+    for rule_id in core.MAIN_RULES:
+        entry = capsule["rules"][rule_id]
+        for group in ("A", "B", "C"):
+            side = entry["sides"].get(group) or {}
+            checks = side.get("checks") or {}
+            mapped = side.get("mapped_activity") or {}
+            map_cell = f"{mapped.get('name')} ({mapped.get('similarity')})" if mapped else "—"
+            surfaces = side.get("surfaces") or {}
+            cand = (f"cond={len(surfaces.get('condition_candidates') or [])}, "
+                    f"cons={len(surfaces.get('constraint_candidates') or [])}, "
+                    f"exc={len(surfaces.get('exception_candidates') or [])}" if surfaces else "—")
+            for name, result in checks.items():
+                lines.append(f"| {rule_id}/v2 | {group} | {map_cell} | {name} | {result['status']} | "
+                             f"{result.get('score')} | {result.get('reason') or '—'} | {cand} |")
+    lines += ["", "## 4. 与开发参考判断的逐条对照（① ② ④ ⑤）", "",
               "| 规则 | ① 语义问题 | ② 参考判断（来源） | 主检测视角 | C 组检出 | 未检出类型 | ⑤ A→B 变化字段 |",
               "|---|---|---|---|---|---|---|"]
     for item in capsule["comparison"]:
@@ -485,7 +502,7 @@ def render_md(capsule: dict) -> str:
             f"（{', '.join(item['reference_sources'][:2])}…） | {item['primary_lens']} | "
             f"{'是' if item['consistency']['group_C_found'] else '否'} | "
             f"{item['consistency']['miss_kind'] or '—'} | {', '.join(attr.get('changed_fields', [])) or '无'} |")
-    lines += ["", "## 4. 修复对照（程序构造的最小开发对照）", "",
+    lines += ["", "## 5. 修复对照（程序构造的最小开发对照）", "",
               "| 修复 | 规则 | 视角 | 操作 | C 组修复前 | C 组修复后 | 问题是否消除 |",
               "|---|---|---|---|---|---|---|"]
     for row in capsule["repairs"]:
@@ -493,7 +510,7 @@ def render_md(capsule: dict) -> str:
         lines.append(f"| {row['repair_id']} | {row['rule_id']} | {row['lens']} | {row['semantic_zh']} | "
                      f"{after.get('before_status')} | {after.get('after_status')} | "
                      f"{'是' if after.get('problem_removed') else '否'} |")
-    lines += ["", "## 5. 计数（不做七类总 F1）", "",
+    lines += ["", "## 6. 计数（不做七类总 F1）", "",
               "| 组 | 检查数 | violation | satisfied | undetermined | not_applicable |",
               "|---|---|---|---|---|---|"]
     for group, block in capsule["summary"].items():
@@ -501,7 +518,7 @@ def render_md(capsule: dict) -> str:
         lines.append(f"| {group} | {block['checks']} | {counts.get('violation', 0)} | "
                      f"{counts.get('satisfied', 0)} | {counts.get('undetermined', 0)} | "
                      f"{counts.get('not_applicable', 0)} |")
-    lines += ["", "## 6. 边界", "",
+    lines += ["", "## 7. 边界", "",
               "- 本结果是开发性案例分析：不是正式 Gold、不是作者原始实验复现、不是独立测试、不是企业验证。",
               "- 单案例只给逐条结果与计数，不合成七类总 F1；5 轮预测只作稳定性证据。",
               "- Barrientos 语料按本地只读使用，不提交其原文；修复件是程序构造的开发对照。",
