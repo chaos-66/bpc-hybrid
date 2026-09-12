@@ -4623,3 +4623,17 @@
 - 仍存在 blocker：无
 - 备注：No LLM/API. Reused A/B stage2 and predictions. Updated r11 explicit-pair actor binding, value-level trace, r8/r9/r10/r11/r13 evidence assessment details, repair source labels, and restored actual sequence-flow/gateway/condition-label rendering from read-only BPMNDI. r8 representation limit and r13 empty-condition exclusion retained.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-12T06:17:11.830472+00:00 - SIM case r13 evaluation branch fix: require locatable rule threshold, model threshold, and alarm-level mapping; preserve actual alarm check name; exclude max_sim digits
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：35 passed, 2 warnings in 10.73s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`7eca834e33048f46a20711ff31a817fd626e4931`；相关未提交路径：14 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：Only the post-scoring r13 correspondence branch changed. No detector, prediction, rule record, reference judgment, threshold, formula, or similarity backend changed. Existing A/B extraction reused; offline main-case entry regenerated capsule/report/figure/paper from the same predictions. Current reference correspondence remains A=0, B/C=2.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

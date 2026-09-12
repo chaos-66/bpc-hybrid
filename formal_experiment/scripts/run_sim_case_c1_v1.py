@@ -1149,15 +1149,118 @@ def _assess_alarm_correspondence(rule_id: str, group: str, side: dict,
         actor_text = (rule.get("actors") or [""])[0]
         model_labels = [flow.get("name") for flow in (process_facts.get("sequence_flows") or [])
                         if flow.get("name")]
+
+        def _threshold_strings(value, parent_key: str = "") -> list[str]:
+            """Collect text/number evidence while excluding similarity/score keys."""
+            key_lower = (parent_key or "").lower()
+            if any(token in key_lower for token in ("sim", "score", "similarity")):
+                return []
+            if isinstance(value, dict):
+                result = []
+                for key, item in value.items():
+                    result.extend(_threshold_strings(item, str(key)))
+                return result
+            if isinstance(value, (list, tuple)):
+                result = []
+                for item in value:
+                    result.extend(_threshold_strings(item, parent_key))
+                return result
+            if isinstance(value, bool) or value is None:
+                return []
+            return [str(value).strip()] if str(value).strip() else []
+
+        # Locate the rule threshold without moving it into condition/constraint.
+        rule_threshold_pattern = re.compile(
+            r"(?:exceeding|over|more than|greater than|>)\s*(\d{1,4})"
+            r"(?:\s*(?:eur|euros?|\u20ac))?",
+            re.IGNORECASE,
+        )
+        rule_threshold = None
+        threshold_sources = [
+            ("condition", rule.get("condition")),
+            ("constraint", rule.get("constraint")),
+            ("actor", actor_text),
+            ("sentence_text", rule.get("sentence_text")),
+        ]
+        for source_name, source_value in threshold_sources:
+            match = rule_threshold_pattern.search(str(source_value or ""))
+            if match:
+                rule_threshold = {
+                    "value": int(match.group(1)),
+                    "text": match.group(0).strip(),
+                    "source_field": source_name,
+                }
+                break
+
+        # Locate model threshold labels from the actual sequence-flow labels.
+        model_thresholds = []
+        for label in model_labels:
+            lowered = label.lower()
+            if "debt" not in lowered:
+                continue
+            numeric = re.search(r"(\d{1,5})", label)
+            if not numeric:
+                continue
+            model_thresholds.append({
+                "label": label,
+                "value": int(numeric.group(1)),
+                "operator": "<=" if "<=" in label else ("<" if "<" in label else None),
+                "source": "process_facts.sequence_flows.name",
+            })
+
+        def _model_threshold_evidence(blob: str) -> list[dict]:
+            matches = []
+            lowered = blob.lower()
+            for item in model_thresholds:
+                if item["label"].lower() in lowered:
+                    matches.append(item)
+                    continue
+                if item["operator"] and re.search(
+                    r"debt\s*" + re.escape(item["operator"]) + r"\s*" + str(item["value"]),
+                    lowered,
+                ):
+                    matches.append(item)
+            return matches
+
         threshold_alarm_evidence = []
         for alarm in (condition_alarm, constraint_alarm):
             if not alarm:
                 continue
-            blob = " ".join(str(alarm.get(key) or "") for key in
-                            ("best_candidate", "reason", "max_sim")) + " " + \
-                   " ".join(str(item) for item in (alarm.get("details") or []))
-            if "debt" in blob.lower() and ("50" in blob or "100" in blob):
-                threshold_alarm_evidence.append({"check": alarm["check"], "evidence": blob})
+            evidence_values = []
+            for key in ("best_candidate", "reason", "resolved_activity_label"):
+                value = alarm.get(key)
+                if isinstance(value, str) and value.strip():
+                    evidence_values.append(value.strip())
+            evidence_values.extend(_threshold_strings(alarm.get("details") or []))
+            evidence_values.extend(_threshold_strings(alarm.get("exact_contradiction") or {}))
+            evidence_values = [value for value in evidence_values if value]
+            if not evidence_values:
+                continue
+            blob = " ".join(evidence_values)
+            rule_phrase = None
+            if rule_threshold is not None:
+                threshold_number = str(rule_threshold["value"])
+                if re.search(
+                    r"(?:exceed(?:ing)?|over|more than|greater than|>)\s*"
+                    + re.escape(threshold_number)
+                    + r"(?:\s*(?:eur|euros?|\u20ac))?",
+                    blob,
+                    re.IGNORECASE,
+                ):
+                    rule_phrase = rule_threshold
+            model_phrase = _model_threshold_evidence(blob)
+            if rule_phrase and model_phrase:
+                threshold_alarm_evidence.append({
+                    "check": alarm["check"],
+                    "rule_threshold": rule_phrase,
+                    "model_thresholds": model_phrase,
+                    "evidence_values": evidence_values,
+                    "mapping_note": (
+                        "same alarm evidence contains the rule threshold phrase and the model "
+                        "Debt label; no similarity/score field is used"
+                    ),
+                })
+
         field_attribution = {
             "actor_text_contains_50": bool(re.search(r"\b50\b", actor_text or "")),
             "condition_value": rule.get("condition"),
@@ -1165,25 +1268,35 @@ def _assess_alarm_correspondence(rule_id: str, group: str, side: dict,
             "condition_empty": not bool(rule.get("condition")),
             "constraint_empty": not bool(rule.get("constraint")),
             "model_debt_labels": [label for label in model_labels if "debt" in label.lower()],
+            "rule_threshold": rule_threshold,
+            "model_thresholds": model_thresholds,
             "note": ("The 50 EUR threshold appears in the actor field; condition/constraint "
                      "are empty in this rule record, so no comparison is fabricated."),
         }
         if threshold_alarm_evidence:
-            matched.append("required_condition_not_enforced")
-            chain.append(
-                "A condition/constraint alarm contains actual debt-threshold evidence {}; "
-                "it is treated as reference-corresponding.".format(threshold_alarm_evidence)
-            )
+            for evidence in threshold_alarm_evidence:
+                check_name = evidence["check"]
+                matched.append(check_name)
+                chain.append(
+                    "{} contains the rule threshold {} and the model threshold {} in the same "
+                    "alarm evidence; check name preserved as {}.".format(
+                        check_name, evidence["rule_threshold"], evidence["model_thresholds"],
+                        check_name)
+                )
         else:
             other = [a["check"] for a in alarms]
             chain.append(
-                "No condition/constraint alarm contains both the 50 EUR threshold and the "
-                "model Debt < 100 label. Actor threshold text is recorded as a field-attribution "
-                "gap, not copied into condition/constraint. Other alarms are {}.".format(other)
+                "No condition/constraint alarm contains the locatable 50 EUR rule threshold, the "
+                "model Debt < 100 threshold, and an alarm-level mapping between them. Single "
+                "numbers, isolated number co-occurrence, and similarity-score digits are not "
+                "accepted. Actor threshold text is recorded as a field-attribution gap, not "
+                "copied into condition/constraint. Other alarms are {}.".format(other)
             )
         details = {
             "condition_alarm": condition_alarm,
             "constraint_alarm": constraint_alarm,
+            "rule_threshold": rule_threshold,
+            "model_thresholds": model_thresholds,
             "threshold_alarm_evidence": threshold_alarm_evidence,
             "field_attribution": field_attribution,
         }

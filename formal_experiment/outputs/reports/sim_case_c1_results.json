@@ -1374,11 +1374,24 @@
      "machine_alarms": [],
      "machine_alarm_count": 0,
      "evidence_chain_zh": [
-      "No condition/constraint alarm …(sha256 caa6aa4b6cae)"
+      "No condition/constraint alarm …(sha256 04ffdefc05af)"
      ],
      "assessment_details": {
       "condition_alarm": null,
       "constraint_alarm": null,
+      "rule_threshold": {
+       "value": 50,
+       "text": "exceeding 50 €",
+       "source_field": "constraint"
+      },
+      "model_thresholds": [
+       {
+        "label": "Debt < 100",
+        "value": 100,
+        "operator": "<",
+        "source": "process_facts.sequence_flows.n…(sha256 9f5b5b5766c7)"
+       }
+      ],
       "threshold_alarm_evidence": [],
       "field_attribution": {
        "actor_text_contains_50": false,
@@ -1388,6 +1401,19 @@
        "constraint_empty": false,
        "model_debt_labels": [
         "Debt < 100"
+       ],
+       "rule_threshold": {
+        "value": 50,
+        "text": "exceeding 50 €",
+        "source_field": "constraint"
+       },
+       "model_thresholds": [
+        {
+         "label": "Debt < 100",
+         "value": 100,
+         "operator": "<",
+         "source": "process_facts.sequence_flows.n…(sha256 9f5b5b5766c7)"
+        }
        ],
        "note": "The 50 EUR threshold appears i…(sha256 adab057829ab)"
       }
@@ -1470,11 +1496,24 @@
      ],
      "machine_alarm_count": 1,
      "evidence_chain_zh": [
-      "No condition/constraint alarm …(sha256 941c12a34b52)"
+      "No condition/constraint alarm …(sha256 d7a5a715cac6)"
      ],
      "assessment_details": {
       "condition_alarm": null,
       "constraint_alarm": null,
+      "rule_threshold": {
+       "value": 50,
+       "text": "exceeding 50 €",
+       "source_field": "actor"
+      },
+      "model_thresholds": [
+       {
+        "label": "Debt < 100",
+        "value": 100,
+        "operator": "<",
+        "source": "process_facts.sequence_flows.n…(sha256 9f5b5b5766c7)"
+       }
+      ],
       "threshold_alarm_evidence": [],
       "field_attribution": {
        "actor_text_contains_50": true,
@@ -1484,6 +1523,19 @@
        "constraint_empty": true,
        "model_debt_labels": [
         "Debt < 100"
+       ],
+       "rule_threshold": {
+        "value": 50,
+        "text": "exceeding 50 €",
+        "source_field": "actor"
+       },
+       "model_thresholds": [
+        {
+         "label": "Debt < 100",
+         "value": 100,
+         "operator": "<",
+         "source": "process_facts.sequence_flows.n…(sha256 9f5b5b5766c7)"
+        }
        ],
        "note": "The 50 EUR threshold appears i…(sha256 adab057829ab)"
       }
@@ -1602,11 +1654,24 @@
      ],
      "machine_alarm_count": 2,
      "evidence_chain_zh": [
-      "No condition/constraint alarm …(sha256 d35ab62a291b)"
+      "No condition/constraint alarm …(sha256 cee27a45fb8a)"
      ],
      "assessment_details": {
       "condition_alarm": null,
       "constraint_alarm": null,
+      "rule_threshold": {
+       "value": 50,
+       "text": "exceeding 50 €",
+       "source_field": "actor"
+      },
+      "model_thresholds": [
+       {
+        "label": "Debt < 100",
+        "value": 100,
+        "operator": "<",
+        "source": "process_facts.sequence_flows.n…(sha256 9f5b5b5766c7)"
+       }
+      ],
       "threshold_alarm_evidence": [],
       "field_attribution": {
        "actor_text_contains_50": true,
@@ -1616,6 +1681,19 @@
        "constraint_empty": true,
        "model_debt_labels": [
         "Debt < 100"
+       ],
+       "rule_threshold": {
+        "value": 50,
+        "text": "exceeding 50 €",
+        "source_field": "actor"
+       },
+       "model_thresholds": [
+        {
+         "label": "Debt < 100",
+         "value": 100,
+         "operator": "<",
+         "source": "process_facts.sequence_flows.n…(sha256 9f5b5b5766c7)"
+        }
        ],
        "note": "The 50 EUR threshold appears i…(sha256 adab057829ab)"
       }

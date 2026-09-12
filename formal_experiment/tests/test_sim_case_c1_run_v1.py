@@ -32,6 +32,38 @@ RESTRICTED_MIN_LEN = 40
 CAPSULE = ROOT / "outputs/development/sim_case_c1/run_v1/capsule.json"
 
 
+def _r13_assess(alarm_check: str, result: dict, model_label: str = "Debt < 100") -> dict:
+    side = {
+        "checks": {alarm_check: result},
+        "rule": {
+            "actors": ["Customers with outstanding debt exceeding 50 EUR"],
+            "condition": None,
+            "constraint": None,
+            "sentence_text": (
+                "Customers with outstanding debt exceeding 50 EUR are not eligible "
+                "to receive new SIM cards"
+            ),
+        },
+    }
+    process_facts = {
+        "activities": [],
+        "events": [],
+        "gateways": [],
+        "sequence_flows": [{"id": "f1", "name": model_label,
+                            "source_ref": "a", "target_ref": "b",
+                            "condition_expression": None}],
+        "flow_labels": [model_label],
+        "xml_counts": {},
+        "condition_expressions": 0,
+    }
+    reference_item = {
+        "semantic_issue": {"summary_zh": "r13 threshold reference"},
+        "dev_reference_judgment": {"judgment": "issue_present_with_premise"},
+    }
+    return runner._assess_alarm_correspondence("r13", "C", side, process_facts, reference_item)
+
+
+
 @pytest.fixture(scope="module")
 def flat() -> bytes:
     payload, _ = flatten_collaboration(core.BPMN.read_bytes())
@@ -391,6 +423,78 @@ def test_diagram_uses_actual_sequence_flow_edges(figure_text):
     assert "C_original" in figure_text and "C_repaired" in figure_text
     assert "按泳道分组" not in figure_text
     assert "有证据对应（执行者 Customer）" not in figure_text
+
+
+def test_r13_one_threshold_alone_is_not_correspondence():
+    result = {
+        "status": "violation",
+        "machine_status": "violation",
+        "score": 0.9,
+        "reason": "model label only",
+        "best_candidate": "Debt < 100",
+        "details": [],
+    }
+    out = _r13_assess("required_condition_not_enforced", result)
+    assert out["found_corresponding_problem"] is False
+    assert out["assessment_details"]["threshold_alarm_evidence"] == []
+
+
+def test_r13_similarity_digits_are_not_threshold_evidence():
+    result = {
+        "status": "violation",
+        "machine_status": "violation",
+        "score": 0.50100,
+        "max_sim": 0.50100,
+        "reason": "similarity digits 50 and 100 only",
+        "best_candidate": "Requested",
+        "details": [{"similarity": 0.50100, "best_model_action": "Debt < 100"}],
+    }
+    out = _r13_assess("constraint_violated", result)
+    assert out["found_corresponding_problem"] is False
+    assert out["assessment_details"]["threshold_alarm_evidence"] == []
+
+
+def test_r13_missing_alarm_mapping_is_not_correspondence():
+    result = {
+        "status": "violation",
+        "machine_status": "violation",
+        "score": 0.8,
+        "reason": "Debt < 100 is visible but no rule threshold comparison",
+        "best_candidate": "Debt < 100",
+        "details": [],
+    }
+    out = _r13_assess("required_condition_not_enforced", result)
+    assert out["found_corresponding_problem"] is False
+    assert out["matched_alarm_checks"] == []
+
+
+def test_r13_actual_constraint_alarm_keeps_its_check_name():
+    result = {
+        "status": "violation",
+        "machine_status": "violation",
+        "score": 0.91,
+        "reason": "rule threshold exceeding 50 EUR conflicts with model Debt < 100",
+        "best_candidate": "Debt < 100",
+        "details": [],
+    }
+    out = _r13_assess("constraint_violated", result)
+    assert out["found_corresponding_problem"] is True
+    assert out["matched_alarm_checks"] == ["constraint_violated"]
+    assert out["assessment_details"]["threshold_alarm_evidence"][0]["check"] == "constraint_violated"
+
+
+def test_r13_irrelevant_check_with_both_thresholds_is_not_correspondence():
+    result = {
+        "status": "violation",
+        "machine_status": "violation",
+        "score": 1.0,
+        "reason": "exceeding 50 EUR and Debt < 100 appear in an actor alarm",
+        "best_candidate": "Debt < 100",
+        "details": [],
+    }
+    out = _r13_assess("incorrect_actor", result)
+    assert out["found_corresponding_problem"] is False
+    assert out["assessment_details"]["threshold_alarm_evidence"] == []
 
 
 # ---------------------------------------------------------------------------
