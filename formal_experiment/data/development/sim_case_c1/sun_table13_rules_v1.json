@@ -1,0 +1,40 @@
+{
+  "schema_version": "sun_table13_rules@1.0.0",
+  "source": "references/papers/extracted/sun_2024_full_text.txt lines 940-956 (Table 13), local pre-publication manuscript",
+  "provenance_note_zh": "本文件只保存 Sun et al. (2024) Table 13 的四条规则原文（短引用），用于补充案例的非 LLM 基线；不包含任何受限语料。正式版未取得。",
+  "rules": [
+    {
+      "rule_id": "R1",
+      "source": "Company regulation",
+      "text": "The process of phone company must be terminated if it takes more than 30 days for any reason.",
+      "maps_to_barrientos": "r8/v2"
+    },
+    {
+      "rule_id": "R2",
+      "source": "Company regulation",
+      "text": "After receiving the customer's personal information, it is necessary to verify the correctness of their personal information.",
+      "maps_to_barrientos": "r9/v2"
+    },
+    {
+      "rule_id": "R3",
+      "source": "Company regulation",
+      "text": "When the customer receives the sim card, the phone company must activate the sim card so that the customer can use the sim card normally.",
+      "maps_to_barrientos": "r10/v2"
+    },
+    {
+      "rule_id": "R4",
+      "source": "GDPR",
+      "text": "Before retrieving any kind of personal data from the Data Subject, the Data Controller has to ask the Data Subject for consent.",
+      "maps_to_barrientos": "r11/v2"
+    }
+  ],
+  "paper_reading_text": {
+    "statement": "R1 and R4 = missing action; R2 = out-of-order execution; R3 = incorrect actor",
+    "source": "manuscript page 23 body text (lines 957-973)"
+  },
+  "paper_reading_figure": {
+    "statement": "V1/R1 and V2/R2 = Missing Action; V3/R3 = Incorrect Actor; V4/R4 = Out-of-order Execution",
+    "source": "Figure 10 callouts (lines 998-1006)"
+  },
+  "conflict_note_zh": "两种读法在 R2 与 R4 上互换；正式版未取得，二者都只作文献原始声明，均不作可靠 Gold。"
+}

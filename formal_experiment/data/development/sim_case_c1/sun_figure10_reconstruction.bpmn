@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  BPMN 2.0 reconstruction of the case-study process model in
+  Sun et al. (2024), "Design-time business process compliance assessment based on
+  multi-granularity semantic information", Section 5.4, Figure 10 (manuscript page 24).
+
+  PROVENANCE: this file was reconstructed BY THIS PROJECT from the published figure image
+  and the paper text.  It is NOT the authors' original BPMN file and must never be
+  described as the original Sun model or as an exact copy of it.
+  The four violation callout boxes drawn on top of the figure are the paper's RESULTS and
+  are deliberately NOT part of this process model; see the provenance note next to this file.
+
+  All element ids carry the sun10_ prefix so downstream code can bind to them.
+  Pool/lane naming follows the figure ("Customer", "Phone Company", "Another Phone Company").
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="sun10_definitions"
+                  name="Sun et al. 2024 Figure 10 - project reconstruction"
+                  targetNamespace="http://bpc-hybrid.local/reconstruction/sun-figure10"
+                  exporter="bpc-hybrid manual reconstruction"
+                  exporterVersion="1.0">
+
+  <bpmn:message id="sun10_message_new_client" name="New client"/>
+  <bpmn:message id="sun10_message_send_personal_data" name="Send personal data"/>
+  <bpmn:message id="sun10_message_payment" name="Payment"/>
+
+  <bpmn:dataStore id="sun10_datastore_definition" name="Data Store" capacity="0" isUnlimited="true"/>
+
+  <bpmn:collaboration id="sun10_collaboration" name="Acquire a new customer">
+    <bpmn:participant id="sun10_participant_customer" name="Customer" processRef="sun10_process_acquire_new_customer"/>
+    <bpmn:participant id="sun10_participant_phone_company" name="Phone Company" processRef="sun10_process_acquire_new_customer"/>
+    <bpmn:participant id="sun10_participant_another_phone_company" name="Another Phone Company" processRef="sun10_process_acquire_new_customer"/>
+
+    <bpmn:messageFlow id="sun10_messageflow_new_client" name="New client" sourceRef="sun10_participant_customer" targetRef="sun10_new_client_acquired"/>
+    <bpmn:messageFlow id="sun10_messageflow_request_personal_data" name="Request" sourceRef="sun10_request_personal_data" targetRef="sun10_participant_customer"/>
+    <bpmn:messageFlow id="sun10_messageflow_send_personal_data" name="Send personal data" sourceRef="sun10_participant_customer" targetRef="sun10_personal_data_received"/>
+    <bpmn:messageFlow id="sun10_messageflow_ask_portability_request" name="" sourceRef="sun10_participant_customer" targetRef="sun10_ask_portability"/>
+    <bpmn:messageFlow id="sun10_messageflow_ask_portability_response" name="" sourceRef="sun10_ask_portability" targetRef="sun10_participant_customer"/>
+    <bpmn:messageFlow id="sun10_messageflow_assign_new_number_request" name="" sourceRef="sun10_participant_customer" targetRef="sun10_assign_new_number"/>
+    <bpmn:messageFlow id="sun10_messageflow_assign_new_number_response" name="" sourceRef="sun10_assign_new_number" targetRef="sun10_participant_customer"/>
+    <bpmn:messageFlow id="sun10_messageflow_sign_contract_request" name="" sourceRef="sun10_participant_customer" targetRef="sun10_sign_contract"/>
+    <bpmn:messageFlow id="sun10_messageflow_sign_contract_response" name="" sourceRef="sun10_sign_contract" targetRef="sun10_participant_customer"/>
+    <bpmn:messageFlow id="sun10_messageflow_request_payment" name="Request" sourceRef="sun10_request_payment" targetRef="sun10_participant_customer"/>
+    <bpmn:messageFlow id="sun10_messageflow_payment" name="Payment" sourceRef="sun10_participant_customer" targetRef="sun10_payment_received"/>
+    <bpmn:messageFlow id="sun10_messageflow_send_sim_card" name="" sourceRef="sun10_send_sim_card" targetRef="sun10_receive_sim_card"/>
+    <bpmn:messageFlow id="sun10_messageflow_ask_third_party" name="" sourceRef="sun10_ask_portability_third_party" targetRef="sun10_participant_another_phone_company"/>
+    <bpmn:messageFlow id="sun10_messageflow_third_party_response" name="" sourceRef="sun10_participant_another_phone_company" targetRef="sun10_ask_portability_third_party"/>
+  </bpmn:collaboration>
+
+  <bpmn:process id="sun10_process_acquire_new_customer" name="Acquire a new customer (SIM card)" isExecutable="false">
+    <bpmn:laneSet id="sun10_lanes">
+      <bpmn:lane id="sun10_lane_customer" name="Customer">
+        <bpmn:flowNodeRef>sun10_activate_sim_card</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_customer_end</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_receive_sim_card</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="sun10_lane_phone_company" name="Phone Company">
+        <bpmn:flowNodeRef>sun10_ask_old_number</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_ask_portability</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_ask_portability_third_party</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_assign_new_number</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_gw_parallel_payment_store</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_gw_portability_choice</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_gw_portability_join</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_gw_portability_result</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_new_client_acquired</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_not_granted_end</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_payment_received</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_personal_data_received</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_request_payment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_request_personal_data</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_send_sim_card</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_sign_contract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sun10_store_data</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="sun10_lane_another_phone_company" name="Another Phone Company"/>
+    </bpmn:laneSet>
+
+    <!-- ===== Phone Company ===== -->
+    <bpmn:startEvent id="sun10_new_client_acquired" name="New client acquired">
+      <bpmn:messageEventDefinition id="sun10_message_event_definition_new_client" messageRef="sun10_message_new_client"/>
+    </bpmn:startEvent>
+    <bpmn:task id="sun10_request_personal_data" name="Request personal data"/>
+    <bpmn:intermediateCatchEvent id="sun10_personal_data_received" name="Personal data received">
+      <bpmn:messageEventDefinition id="sun10_message_event_definition_personal_data" messageRef="sun10_message_send_personal_data"/>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="sun10_ask_portability" name="Ask portability"/>
+    <bpmn:exclusiveGateway id="sun10_gw_portability_choice" name=""/>
+    <bpmn:task id="sun10_assign_new_number" name="Assign new number"/>
+    <bpmn:exclusiveGateway id="sun10_gw_portability_join" name=""/>
+    <bpmn:task id="sun10_sign_contract" name="Sign contract"/>
+    <bpmn:parallelGateway id="sun10_gw_parallel_payment_store" name=""/>
+    <bpmn:task id="sun10_request_payment" name="Request payment"/>
+    <bpmn:intermediateCatchEvent id="sun10_payment_received" name="Payment received">
+      <bpmn:messageEventDefinition id="sun10_message_event_definition_payment" messageRef="sun10_message_payment"/>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="sun10_send_sim_card" name="Send SIM card"/>
+    <bpmn:task id="sun10_ask_old_number" name="Ask old number"/>
+    <bpmn:task id="sun10_ask_portability_third_party" name="Ask portability third party"/>
+    <bpmn:exclusiveGateway id="sun10_gw_portability_result" name=""/>
+    <bpmn:endEvent id="sun10_not_granted_end" name="">
+      <bpmn:terminateEventDefinition id="sun10_terminate_event_definition"/>
+    </bpmn:endEvent>
+    <bpmn:subProcess id="sun10_store_data" name="Store Data"/>
+
+    <!-- ===== Customer ===== -->
+    <bpmn:task id="sun10_receive_sim_card" name="Receive SIM card"/>
+    <bpmn:task id="sun10_activate_sim_card" name="Activate SIM card"/>
+    <bpmn:endEvent id="sun10_customer_end" name=""/>
+
+    <!-- ===== Sequence flows of the Phone Company pool ===== -->
+    <bpmn:sequenceFlow id="sun10_flow_01_new_client_to_request_data" sourceRef="sun10_new_client_acquired" targetRef="sun10_request_personal_data"/>
+    <bpmn:sequenceFlow id="sun10_flow_02_request_data_to_data_received" sourceRef="sun10_request_personal_data" targetRef="sun10_personal_data_received"/>
+    <bpmn:sequenceFlow id="sun10_flow_03_data_received_to_ask_portability" sourceRef="sun10_personal_data_received" targetRef="sun10_ask_portability"/>
+    <bpmn:sequenceFlow id="sun10_flow_04_ask_portability_to_portability_choice" sourceRef="sun10_ask_portability" targetRef="sun10_gw_portability_choice"/>
+    <bpmn:sequenceFlow id="sun10_flow_05_not_requested_to_assign_new_number" name="Not requested" sourceRef="sun10_gw_portability_choice" targetRef="sun10_assign_new_number"/>
+    <bpmn:sequenceFlow id="sun10_flow_06_requested_to_ask_old_number" name="Requested" sourceRef="sun10_gw_portability_choice" targetRef="sun10_ask_old_number"/>
+    <bpmn:sequenceFlow id="sun10_flow_07_ask_old_number_to_third_party" sourceRef="sun10_ask_old_number" targetRef="sun10_ask_portability_third_party"/>
+    <bpmn:sequenceFlow id="sun10_flow_08_third_party_to_portability_result" sourceRef="sun10_ask_portability_third_party" targetRef="sun10_gw_portability_result"/>
+    <bpmn:sequenceFlow id="sun10_flow_09_granted_to_portability_join" name="Granted" sourceRef="sun10_gw_portability_result" targetRef="sun10_gw_portability_join"/>
+    <bpmn:sequenceFlow id="sun10_flow_10_not_granted_to_end" name="Not granted" sourceRef="sun10_gw_portability_result" targetRef="sun10_not_granted_end"/>
+    <bpmn:sequenceFlow id="sun10_flow_11_assign_new_number_to_join" sourceRef="sun10_assign_new_number" targetRef="sun10_gw_portability_join"/>
+    <bpmn:sequenceFlow id="sun10_flow_12_join_to_sign_contract" sourceRef="sun10_gw_portability_join" targetRef="sun10_sign_contract"/>
+    <bpmn:sequenceFlow id="sun10_flow_13_sign_contract_to_parallel" sourceRef="sun10_sign_contract" targetRef="sun10_gw_parallel_payment_store"/>
+    <bpmn:sequenceFlow id="sun10_flow_14_parallel_to_request_payment" sourceRef="sun10_gw_parallel_payment_store" targetRef="sun10_request_payment"/>
+    <bpmn:sequenceFlow id="sun10_flow_15_parallel_to_store_data" sourceRef="sun10_gw_parallel_payment_store" targetRef="sun10_store_data"/>
+    <bpmn:sequenceFlow id="sun10_flow_16_request_payment_to_payment_received" sourceRef="sun10_request_payment" targetRef="sun10_payment_received"/>
+    <bpmn:sequenceFlow id="sun10_flow_17_payment_received_to_send_sim_card" sourceRef="sun10_payment_received" targetRef="sun10_send_sim_card"/>
+    <bpmn:sequenceFlow id="sun10_flow_18_store_data_to_send_sim_card" sourceRef="sun10_store_data" targetRef="sun10_send_sim_card"/>
+
+    <!-- ===== Sequence flows of the Customer pool ===== -->
+    <bpmn:sequenceFlow id="sun10_flow_19_receive_sim_card_to_activate" sourceRef="sun10_receive_sim_card" targetRef="sun10_activate_sim_card"/>
+    <bpmn:sequenceFlow id="sun10_flow_20_activate_to_customer_end" sourceRef="sun10_activate_sim_card" targetRef="sun10_customer_end"/>
+
+    <!-- ===== Data ===== -->
+    <bpmn:dataObject id="sun10_data_object_personal_data" name="Personal data"/>
+    <bpmn:dataObjectReference id="sun10_personal_data" name="Personal data" dataObjectRef="sun10_data_object_personal_data"/>
+    <bpmn:dataStoreReference id="sun10_data_store" name="Data Store" dataStoreRef="sun10_datastore_definition"/>
+
+    <bpmn:association id="sun10_assoc_data_received_to_personal_data" associationDirection="One" sourceRef="sun10_personal_data_received" targetRef="sun10_personal_data"/>
+    <bpmn:association id="sun10_assoc_personal_data_to_sign_contract" associationDirection="One" sourceRef="sun10_personal_data" targetRef="sun10_sign_contract"/>
+    <bpmn:association id="sun10_assoc_personal_data_to_store_data" associationDirection="One" sourceRef="sun10_personal_data" targetRef="sun10_store_data"/>
+    <bpmn:association id="sun10_assoc_store_data_to_data_store" associationDirection="One" sourceRef="sun10_store_data" targetRef="sun10_data_store"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="sun10_diagram">
+    <bpmndi:BPMNPlane id="sun10_plane" bpmnElement="sun10_collaboration">
+
+      <bpmndi:BPMNShape id="sun10_shape_participant_customer" bpmnElement="sun10_participant_customer" isHorizontal="true">
+        <dc:Bounds x="140" y="270" width="1548" height="88"/>
+        <bpmndi:BPMNShape id="sun10_shape_lane_customer" bpmnElement="sun10_lane_customer" isHorizontal="true">
+          <dc:Bounds x="198" y="270" width="1490" height="88"/>
+        </bpmndi:BPMNShape>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="sun10_shape_participant_phone_company" bpmnElement="sun10_participant_phone_company" isHorizontal="true">
+        <dc:Bounds x="140" y="390" width="1548" height="314"/>
+        <bpmndi:BPMNShape id="sun10_shape_lane_phone_company" bpmnElement="sun10_lane_phone_company" isHorizontal="true">
+          <dc:Bounds x="198" y="390" width="1490" height="314"/>
+        </bpmndi:BPMNShape>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="sun10_shape_participant_another_phone_company" bpmnElement="sun10_participant_another_phone_company" isHorizontal="true">
+        <dc:Bounds x="140" y="734" width="1548" height="88"/>
+        <bpmndi:BPMNShape id="sun10_shape_lane_another_phone_company" bpmnElement="sun10_lane_another_phone_company" isHorizontal="true">
+          <dc:Bounds x="198" y="734" width="1490" height="88"/>
+        </bpmndi:BPMNShape>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="sun10_shape_new_client_acquired" bpmnElement="sun10_new_client_acquired">
+        <dc:Bounds x="200" y="439" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_request_personal_data" bpmnElement="sun10_request_personal_data">
+        <dc:Bounds x="272" y="428" width="99" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_personal_data_received" bpmnElement="sun10_personal_data_received">
+        <dc:Bounds x="395" y="439" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_ask_portability" bpmnElement="sun10_ask_portability">
+        <dc:Bounds x="495" y="428" width="82" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_gw_portability_choice" bpmnElement="sun10_gw_portability_choice" isMarkerVisible="true">
+        <dc:Bounds x="602" y="437" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_assign_new_number" bpmnElement="sun10_assign_new_number">
+        <dc:Bounds x="703" y="428" width="96" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_gw_portability_join" bpmnElement="sun10_gw_portability_join" isMarkerVisible="true">
+        <dc:Bounds x="832" y="437" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_sign_contract" bpmnElement="sun10_sign_contract">
+        <dc:Bounds x="903" y="428" width="100" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_gw_parallel_payment_store" bpmnElement="sun10_gw_parallel_payment_store">
+        <dc:Bounds x="1032" y="437" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_request_payment" bpmnElement="sun10_request_payment">
+        <dc:Bounds x="1099" y="428" width="96" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_payment_received" bpmnElement="sun10_payment_received">
+        <dc:Bounds x="1225" y="439" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_send_sim_card" bpmnElement="sun10_send_sim_card">
+        <dc:Bounds x="1290" y="428" width="96" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_ask_old_number" bpmnElement="sun10_ask_old_number">
+        <dc:Bounds x="573" y="530" width="98" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_ask_portability_third_party" bpmnElement="sun10_ask_portability_third_party">
+        <dc:Bounds x="689" y="530" width="119" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_gw_portability_result" bpmnElement="sun10_gw_portability_result" isMarkerVisible="true">
+        <dc:Bounds x="832" y="538" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_not_granted_end" bpmnElement="sun10_not_granted_end">
+        <dc:Bounds x="933" y="540" width="42" height="42"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_store_data" bpmnElement="sun10_store_data">
+        <dc:Bounds x="1178" y="527" width="98" height="54"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_receive_sim_card" bpmnElement="sun10_receive_sim_card">
+        <dc:Bounds x="1290" y="287" width="96" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_activate_sim_card" bpmnElement="sun10_activate_sim_card">
+        <dc:Bounds x="1426" y="287" width="96" height="58"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_customer_end" bpmnElement="sun10_customer_end">
+        <dc:Bounds x="1562" y="298" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_personal_data" bpmnElement="sun10_personal_data">
+        <dc:Bounds x="395" y="617" width="30" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sun10_shape_data_store" bpmnElement="sun10_data_store">
+        <dc:Bounds x="1265" y="615" width="58" height="45"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="sun10_edge_flow_01" bpmnElement="sun10_flow_01_new_client_to_request_data">
+        <di:waypoint x="236" y="457"/>
+        <di:waypoint x="272" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_02" bpmnElement="sun10_flow_02_request_data_to_data_received">
+        <di:waypoint x="371" y="457"/>
+        <di:waypoint x="395" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_03" bpmnElement="sun10_flow_03_data_received_to_ask_portability">
+        <di:waypoint x="431" y="457"/>
+        <di:waypoint x="495" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_04" bpmnElement="sun10_flow_04_ask_portability_to_portability_choice">
+        <di:waypoint x="577" y="457"/>
+        <di:waypoint x="602" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_05" bpmnElement="sun10_flow_05_not_requested_to_assign_new_number">
+        <di:waypoint x="642" y="457"/>
+        <di:waypoint x="703" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_06" bpmnElement="sun10_flow_06_requested_to_ask_old_number">
+        <di:waypoint x="622" y="477"/>
+        <di:waypoint x="622" y="530"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_07" bpmnElement="sun10_flow_07_ask_old_number_to_third_party">
+        <di:waypoint x="671" y="558"/>
+        <di:waypoint x="689" y="558"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_08" bpmnElement="sun10_flow_08_third_party_to_portability_result">
+        <di:waypoint x="808" y="558"/>
+        <di:waypoint x="832" y="558"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_09" bpmnElement="sun10_flow_09_granted_to_portability_join">
+        <di:waypoint x="852" y="538"/>
+        <di:waypoint x="852" y="477"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_10" bpmnElement="sun10_flow_10_not_granted_to_end">
+        <di:waypoint x="872" y="558"/>
+        <di:waypoint x="933" y="558"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_11" bpmnElement="sun10_flow_11_assign_new_number_to_join">
+        <di:waypoint x="799" y="457"/>
+        <di:waypoint x="832" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_12" bpmnElement="sun10_flow_12_join_to_sign_contract">
+        <di:waypoint x="872" y="457"/>
+        <di:waypoint x="903" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_13" bpmnElement="sun10_flow_13_sign_contract_to_parallel">
+        <di:waypoint x="1003" y="457"/>
+        <di:waypoint x="1032" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_14" bpmnElement="sun10_flow_14_parallel_to_request_payment">
+        <di:waypoint x="1072" y="457"/>
+        <di:waypoint x="1099" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_15" bpmnElement="sun10_flow_15_parallel_to_store_data">
+        <di:waypoint x="1052" y="477"/>
+        <di:waypoint x="1052" y="554"/>
+        <di:waypoint x="1178" y="554"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_16" bpmnElement="sun10_flow_16_request_payment_to_payment_received">
+        <di:waypoint x="1195" y="457"/>
+        <di:waypoint x="1225" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_17" bpmnElement="sun10_flow_17_payment_received_to_send_sim_card">
+        <di:waypoint x="1261" y="457"/>
+        <di:waypoint x="1290" y="457"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_18" bpmnElement="sun10_flow_18_store_data_to_send_sim_card">
+        <di:waypoint x="1276" y="554"/>
+        <di:waypoint x="1338" y="554"/>
+        <di:waypoint x="1338" y="486"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_19" bpmnElement="sun10_flow_19_receive_sim_card_to_activate">
+        <di:waypoint x="1386" y="316"/>
+        <di:waypoint x="1426" y="316"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_flow_20" bpmnElement="sun10_flow_20_activate_to_customer_end">
+        <di:waypoint x="1522" y="316"/>
+        <di:waypoint x="1562" y="316"/>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_new_client" bpmnElement="sun10_messageflow_new_client">
+        <di:waypoint x="230" y="358"/>
+        <di:waypoint x="230" y="439"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_request_personal_data" bpmnElement="sun10_messageflow_request_personal_data">
+        <di:waypoint x="321" y="428"/>
+        <di:waypoint x="321" y="358"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_send_personal_data" bpmnElement="sun10_messageflow_send_personal_data">
+        <di:waypoint x="413" y="358"/>
+        <di:waypoint x="413" y="439"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_ask_portability_request" bpmnElement="sun10_messageflow_ask_portability_request">
+        <di:waypoint x="529" y="358"/>
+        <di:waypoint x="529" y="428"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_ask_portability_response" bpmnElement="sun10_messageflow_ask_portability_response">
+        <di:waypoint x="542" y="428"/>
+        <di:waypoint x="542" y="358"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_assign_new_number_request" bpmnElement="sun10_messageflow_assign_new_number_request">
+        <di:waypoint x="746" y="358"/>
+        <di:waypoint x="746" y="428"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_assign_new_number_response" bpmnElement="sun10_messageflow_assign_new_number_response">
+        <di:waypoint x="760" y="428"/>
+        <di:waypoint x="760" y="358"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_sign_contract_request" bpmnElement="sun10_messageflow_sign_contract_request">
+        <di:waypoint x="948" y="358"/>
+        <di:waypoint x="948" y="428"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_sign_contract_response" bpmnElement="sun10_messageflow_sign_contract_response">
+        <di:waypoint x="962" y="428"/>
+        <di:waypoint x="962" y="358"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_request_payment" bpmnElement="sun10_messageflow_request_payment">
+        <di:waypoint x="1147" y="428"/>
+        <di:waypoint x="1147" y="358"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_payment" bpmnElement="sun10_messageflow_payment">
+        <di:waypoint x="1243" y="358"/>
+        <di:waypoint x="1243" y="439"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_send_sim_card" bpmnElement="sun10_messageflow_send_sim_card">
+        <di:waypoint x="1338" y="428"/>
+        <di:waypoint x="1338" y="345"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_ask_third_party" bpmnElement="sun10_messageflow_ask_third_party">
+        <di:waypoint x="746" y="586"/>
+        <di:waypoint x="746" y="734"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_messageflow_third_party_response" bpmnElement="sun10_messageflow_third_party_response">
+        <di:waypoint x="758" y="734"/>
+        <di:waypoint x="758" y="586"/>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="sun10_edge_assoc_data_received_to_personal_data" bpmnElement="sun10_assoc_data_received_to_personal_data">
+        <di:waypoint x="413" y="475"/>
+        <di:waypoint x="413" y="617"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_assoc_personal_data_to_sign_contract" bpmnElement="sun10_assoc_personal_data_to_sign_contract">
+        <di:waypoint x="425" y="645"/>
+        <di:waypoint x="980" y="645"/>
+        <di:waypoint x="980" y="486"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_assoc_personal_data_to_store_data" bpmnElement="sun10_assoc_personal_data_to_store_data">
+        <di:waypoint x="425" y="655"/>
+        <di:waypoint x="1205" y="655"/>
+        <di:waypoint x="1205" y="581"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sun10_edge_assoc_store_data_to_data_store" bpmnElement="sun10_assoc_store_data_to_data_store">
+        <di:waypoint x="1245" y="581"/>
+        <di:waypoint x="1245" y="637"/>
+        <di:waypoint x="1265" y="637"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

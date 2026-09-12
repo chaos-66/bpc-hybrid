@@ -13,7 +13,7 @@
 | step_2_baseline | `references/barrientos_2026/evaluation/ground_truth/step_2_baseline.json` | `ecd3aa81cfa92c68…` |
 | step_3_baseline | `references/barrientos_2026/evaluation/ground_truth/step_3_baseline.json` | `96b3c1e8f10e0ad4…` |
 | sun_2024_local_pdf | `references/papers/Sun_2024_Design_time_BPC.pdf` | `08a26b7d4e6716eb…` |
-| curated_items | `formal_experiment/data/development/sim_case_c1/case_items_v1.json` | `bdd33299c0f4e556…` |
+| curated_items | `formal_experiment/data/development/sim_case_c1/case_items_v2.json` | `a5324734a4dbe95c…` |
 | predictions | `formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-01/canonical_predictions.jsonl` | `6fab1108b311e105…` |
 | predictions | `formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-02/canonical_predictions.jsonl` | `16685a58eea1ca91…` |
 | predictions | `formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-03/canonical_predictions.jsonl` | `6d96729de0fb1328…` |
@@ -24,22 +24,26 @@
 
 ```json
 {
- "process_version": "single BPMN file (sha256 recorded in manifest); no second model version exists locally",
- "rule_version_under_evaluation": "version 2 (post-change requirement text)",
- "evaluation_unit": "one requirement id (r8-r13)",
- "excluded_from_evaluation": [
-  {
-   "item": "r9/v1",
-   "reason": "requirement text is empty in version 1 (requirement added in v2)",
-   "rule": "must not enter extraction or detection as a normative rule"
+ "process_version": "single BPMN file (sha256 bound in the manifest); no second model version exists locally",
+ "rule_version_under_evaluation": "version 2",
+ "evaluation_unit": "one requirement id",
+ "detection_input_rule": "predictions never see the external deviations, the reference judgments, or the figure's violation callouts",
+ "role_binding_policy": {
+  "fixed_before_scoring": true,
+  "bindings": {
+   "Data Controller": "Phone company",
+   "Data Subject": "Customer"
   },
-  {
-   "item": "r12/v2",
-   "reason": "requirement text is empty in version 2 (requirement deleted)",
-   "rule": "must not enter extraction or detection as a normative rule"
-  }
- ],
- "step3_baseline_context": "external deviations are stated in a requirement-change context (v1 -> v2), not as a static compliance answer key; evidence: r12/v2 is empty yet carries an over_compliant deviation, r10 mitigation matches v2 text"
+  "boundary_zh": "该绑定是场景语义绑定，三组共用；不得按预测结果新增角色、动作同义词或规则 ID 特判"
+ },
+ "numeric_boundary_policy_r13": {
+  "natural_language_meaning": "debt > 50 EUR is prohibited from receiving a new SIM card; debt = 50 does not trigger this prohibition (it does not imply every other issuance condition is met)",
+  "flow_label_meaning": "the label 'Debt < 100' gates the portability branch; read as a routing condition it admits customers whose debt is below 100",
+  "difference_interval": "50 < debt < 100 (example debt = 75) is the explicit interval where the model does not enforce the v2 restriction",
+  "executable_condition_expression": "absent: the model has no conditionExpression; the condition exists only as a sequence-flow label",
+  "detector_semantics": "recorded separately by the run; it does not change the reference judgment",
+  "external_suggestion": "the external mitigation proposing 'Debt < 500' is kept as a source conflict and is NOT adopted"
+ }
 }
 ```
 
@@ -57,16 +61,20 @@
 - 5 轮抽取结果完全一致：**True**（重复不作独立样本）
 - 独立输入 ID：['SIM_card_scenario/r10/v1', 'SIM_card_scenario/r10/v2', 'SIM_card_scenario/r11/v1', 'SIM_card_scenario/r11/v2', 'SIM_card_scenario/r12/v1', 'SIM_card_scenario/r13/v1', 'SIM_card_scenario/r13/v2', 'SIM_card_scenario/r8/v1', 'SIM_card_scenario/r8/v2', 'SIM_card_scenario/r9/v2']
 
-## 5. 逐条核对表
+## 5. 逐条核对表（① 语义问题 / ② 开发参考判断）
 
-| 规则 | 版本 | 规则含义（我方转述） | 流程证据要点 | 外部原始标注 | 冲突 | 建议预期 | 需确认 |
+| 规则 | 在 5 条分母 | ① 语义问题 | ② 开发参考判断 | ② 来源 | 外部原始标注 | 冲突 | 候选检测视角 |
 |---|---|---|---|---|---|---|---|
-| r8 | v2 | 流程耗时超过 30 天时，必须终止流程 | 模型中完全没有计时器/边界事件，也没有任何条件表达式；不存在“超时即终止”的分支 | non_compliant / `missing_timer` / process termination | — | capability_gap_not_violation（unsupported） | Q7 |
-| r9 | v2 | 收到客户个人信息后，必须核验其正确性 | 流程中没有任何“核验正确性”的活动；外部标注的 element_label 是插入位置基准（Sign contract），不是缺失的动作本身 | non_compliant / `missing_activity` / Sign contract | element_label 指向已存在的 Sign contract；真正的缺失动作是核验正确性活动。以 element_label 直接映射到 missing_action 会把已存在的活动当作缺失动作 | violation_if_action_mappable（supported） | Q1 |
-| r10 | v2 | 客户收到 SIM 卡时，必须由电话公司激活 SIM 卡 |  | non_compliant / `wrong_role` / Activate SIM card | — | violation_if_actor_mapping_works（supported） | — |
-| r11 | v2 | 从数据主体取任何个人数据之前，必须先取得其同意 | 同意活动已存在，但位于取数与存储之后；缺的是“前置位置”，不是活动本身 | non_compliant / `missing_activity` / Request personal data | 外部标注称活动缺失，但当前模型已含同名活动且位置在取数/存数之后。必须区分“活动完全缺失 / 前置位置缺失 / 顺序错误”三种情形 | violation_order_semantics（partial） | Q2 |
-| r12 | v1_to_v2_change | 第三方拒绝携号转网时须删除个人数据（v2 已删除该需求） |  | over_compliant / `redundant_activity` / Delete personal data | 该偏差以“需求在 v2 被删除”为前提，属变化影响评价；我们的分类体系没有 over_compliant 类别，不能计入违规评分 | outside_taxonomy_report_only（not_applicable） | Q4 |
-| r13 | v2 | 欠款超过 50 EUR 的客户不得领取新 SIM 卡 | 模型侧唯一数值条件表面是该连线标签；没有 conditionExpression，网关本身无名 | non_compliant / `XOR_condition_modification` / Debt < 100 | 需求 v2 阈值=50；模型标签=100；外部修复建议=500。三处互不一致，保留原始文件不改，冲突如实记录；“exceeding 50” 是严格大于；模型标签 “Debt < 100” 是严格小于；等于阈值的情形两侧都没有覆盖，比较时必须显式说明边界处理 | capability_partial_plus_extraction_gap（partial） | Q3 |
+| r8/v2 | 是 | 当前可见模型中不存在任何超时终止机制（无计时器、无边界事件、无超时分支），规则要求的“超时即终止”义务未在模型中表达 | issue_present | user_instruction_2026_09_11_dev_policy, rule_text_v2_vs_model_structure, external_step3_change_context:mitting_timer | non_compliant / `missing_timer` / process termination | — | constraint_violated |
+| r9/v2 | 是 | 模型缺少“收到个人信息后进行正确性核验”的活动；外部标注的 element_label（Sign contract）只是插入位置参照 | issue_present | user_instruction_2026_09_11_dev_policy, rule_text_v2_vs_model_activity_inventory, external_step3_change_context:missing_activity_anchor_sign_contract | non_compliant / `missing_activity` / Sign contract | 外部 element_label 指向已存在的 Sign contract；把定位参照当作缺失动作会误判 | missing_action |
+| r10/v2 | 是 | 当前激活活动由 Customer 执行，与 v2 要求的 Phone company 执行不一致 | issue_present | user_instruction_2026_09_11_dev_policy, rule_text_v2_vs_model_lane_attribution, external_step3_change_context:wrong_role | non_compliant / `wrong_role` / Activate SIM card | — | incorrect_actor |
+| r11/v2 | 是 | 同意活动已存在，但位于取数与存数之后，违反规则要求的先后关系；问题性质是前置位置/顺序，而不是活动缺失 | issue_present | user_instruction_2026_09_11_dev_policy, rule_text_v2_vs_model_flow_order, external_step3_change_context:missing_activity_label_disagreed | non_compliant / `missing_activity` / Request personal data | 外部标注称活动缺失，实际是前置位置缺失；两种说法不能混用，且不得为符合外部标注而改动流程 | out_of_order, required_condition_not_enforced |
+| r13/v2 | 是 | 把图示连线标签作为路由条件解释时，模型门槛无法阻止欠款处于 50 到 100 欧元之间的客户继续进入后续流程 | issue_present_with_premise（前提：前提：把连线标签 'Debt < 100' 解释为该分支的路由条件（该模型没有可执行 conditionExpression，条件只以标签形式存在）） | user_instruction_2026_09_11_dev_policy, rule_text_v2_vs_flow_label_interval, external_step3_change_context:xor_condition_modification_mitigation_not_adopted | non_compliant / `XOR_condition_modification` / Debt < 100 | 需求 v2 阈值 50、模型标签 100、外部修复建议 500 三者不一致；保留原始文件，冲突如实记录 | required_condition_not_enforced, constraint_violated |
+| r12/v1_to_v2_change | 否（背景） | v2 已删除该需求，因此“删除个人数据”活动在 v2 语境下成为外部所称的 over-compliance；这不是五条静态规则意义上的违规 | background_only（前提：作为“需求删除 + 外部 over-compliance”的背景说明单列，不进入 5 条静态规则的评价分母） | user_instruction_2026_09_11_dev_policy, external_step3_change_context:redundant_activity | over_compliant / `redundant_activity` / Delete personal data | 外部偏差以“需求被删除”为前提，属变化影响评价 | — |
+
+> ③ 方法实际输出、④ 一致性、⑤ 差异阶段**不在本表中**：由 `scripts/run_sim_case_c1_v1.py` 的运行胶囊填充。
+> 本表是开发参考判断，不是正式 Gold，也不声称用户已逐条完成人工标注。
+
 
 ## 6. 能力核实（§5.6）
 
@@ -85,8 +93,8 @@
  "reading_text": "R1 and R4 = missing action; R2 = out-of-order execution; R3 = incorrect actor",
  "reading_figure": "V1/R1 and V2/R2 = Missing Action; V3/R3 = Incorrect Actor; V4/R4 = Out-of-order Execution",
  "difference": "R2 and R4 are swapped between the two readings",
- "version_of_record_status": "not_obtainable_in_this_environment (publisher authentication / paywall); therefore no claim is made about the published version",
- "handling": "keep both original readings; treat neither as reliable Gold; do not merge them into one label set"
+ "version_of_record_status": "not_obtainable_in_this_environment (publisher authentication / paywall)",
+ "handling": "keep both original readings as literature statements; treat neither as reliable Gold; obtaining the version of record is not a precondition for continuing this case"
 }
 ```
 

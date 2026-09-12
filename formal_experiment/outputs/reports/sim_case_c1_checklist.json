@@ -36,9 +36,9 @@
    "bytes": 2694008
   },
   "curated_items": {
-   "path": "formal_experiment/data/development/sim_case_c1/case_items_v1.json",
-   "sha256": "bdd33299c0f4e556ec696a4ea9b36b83595d2ae058195241bb52ffa21eb53302",
-   "bytes": 10734
+   "path": "formal_experiment/data/development/sim_case_c1/case_items_v2.json",
+   "sha256": "a5324734a4dbe95cf33d836721df0b2e7e95d1a2a8edd3abc2ea685beee9d7c2",
+   "bytes": 12037
   },
   "predictions_repeats": [
    {
@@ -69,22 +69,87 @@
   ]
  },
  "binding_policy": {
-  "process_version": "single BPMN file (sha256 recorded in manifest); no second model version exists locally",
-  "rule_version_under_evaluation": "version 2 (post-change requirement text)",
-  "evaluation_unit": "one requirement id (r8-r13)",
-  "excluded_from_evaluation": [
-   {
-    "item": "r9/v1",
-    "reason": "requirement text is empty in version 1 (requirement added in v2)",
-    "rule": "must not enter extraction or detection as a normative rule"
+  "process_version": "single BPMN file (sha256 bound in the manifest); no second model version exists locally",
+  "rule_version_under_evaluation": "version 2",
+  "evaluation_unit": "one requirement id",
+  "detection_input_rule": "predictions never see the external deviations, the reference judgments, or the figure's violation callouts",
+  "role_binding_policy": {
+   "fixed_before_scoring": true,
+   "bindings": {
+    "Data Controller": "Phone company",
+    "Data Subject": "Customer"
    },
-   {
-    "item": "r12/v2",
-    "reason": "requirement text is empty in version 2 (requirement deleted)",
-    "rule": "must not enter extraction or detection as a normative rule"
-   }
+   "boundary_zh": "该绑定是场景语义绑定，三组共用；不得按预测结果新增角色、动作同义词或规则 ID 特判"
+  },
+  "numeric_boundary_policy_r13": {
+   "natural_language_meaning": "debt > 50 EUR is prohibited from receiving a new SIM card; debt = 50 does not trigger this prohibition (it does not imply every other issuance condition is met)",
+   "flow_label_meaning": "the label 'Debt < 100' gates the portability branch; read as a routing condition it admits customers whose debt is below 100",
+   "difference_interval": "50 < debt < 100 (example debt = 75) is the explicit interval where the model does not enforce the v2 restriction",
+   "executable_condition_expression": "absent: the model has no conditionExpression; the condition exists only as a sequence-flow label",
+   "detector_semantics": "recorded separately by the run; it does not change the reference judgment",
+   "external_suggestion": "the external mitigation proposing 'Debt < 500' is kept as a source conflict and is NOT adopted"
+  }
+ },
+ "reference_judgment_policy": {
+  "record_separately": [
+   "① 流程与规则在语义上有什么问题",
+   "② 本轮采用什么来源明确的开发参考判断",
+   "③ 方法实际输出什么",
+   "④ 两者是否一致",
+   "⑤ 差异来自哪一阶段"
   ],
-  "step3_baseline_context": "external deviations are stated in a requirement-change context (v1 -> v2), not as a static compliance answer key; evidence: r12/v2 is empty yet carries an over_compliant deviation, r10 mitigation matches v2 text"
+  "forbidden_expectation_forms": [
+   "matching-succeeds-therefore-violation",
+   "role-resolution-succeeds-therefore-violation",
+   "detector-unsupported-therefore-not-a-violation",
+   "undecidable-therefore-not-a-miss"
+  ],
+  "stage_attribution_vocabulary": [
+   "extraction",
+   "adaptation",
+   "detection",
+   "process_expressiveness",
+   "rule_not_applicable",
+   "unattributed"
+  ]
+ },
+ "reference_policy_check": {
+  "checked_items": 6,
+  "capability_conditioned_fields": 0,
+  "gold_claims": 0,
+  "judgments": {
+   "r8": "issue_present",
+   "r9": "issue_present",
+   "r10": "issue_present",
+   "r11": "issue_present",
+   "r13": "issue_present_with_premise",
+   "r12": "background_only"
+  }
+ },
+ "detection_plan": {
+  "main_denominator": [
+   "r10/v2",
+   "r11/v2",
+   "r13/v2",
+   "r8/v2",
+   "r9/v2"
+  ],
+  "background_items": [
+   "r12"
+  ],
+  "excluded_from_detection": [
+   "r12/v2",
+   "r9/v1"
+  ],
+  "three_groups": {
+   "A": "non-LLM Stage 2 (project deterministic adapter) + frozen Sun-style three-type detection",
+   "B": "existing real-LLM Stage 2 predictions (repeat-01 primary) + the SAME three-type detection as A",
+   "C": "SAME Stage 2 and three-type results as B, plus the four extended types"
+  },
+  "role_binding": {
+   "Data Controller": "Phone company",
+   "Data Subject": "Customer"
+  }
  },
  "process_structure": {
   "counts": {
@@ -264,9 +329,33 @@
  },
  "coverage": {
   "curated_items": 6,
-  "missing_curated_items": [],
-  "unexpected_curated_items": [],
+  "main_denominator": [
+   "r10",
+   "r11",
+   "r13",
+   "r8",
+   "r9"
+  ],
+  "main_denominator_declared": [
+   "r10",
+   "r11",
+   "r13",
+   "r8",
+   "r9"
+  ],
+  "main_denominator_matches": true,
+  "main_denominator_size": 5,
+  "background_items": [
+   "r12"
+  ],
+  "background_declared": [
+   "r12"
+  ],
   "empty_text_entries": [
+   "r12/v2",
+   "r9/v1"
+  ],
+  "excluded_from_detection": [
    "r12/v2",
    "r9/v1"
   ],
@@ -299,36 +388,32 @@
   {
    "rule_id": "r8",
    "version": "v2",
+   "in_main_denominator": true,
    "rule_meaning_zh": "流程耗时超过 30 天时，必须终止流程",
-   "process_evidence": {
-    "timer_events": 0,
-    "boundary_events": 0,
-    "condition_expressions": 0,
-    "relevant_elements": [
-     "Send SIM card",
-     "end events (4)"
+   "semantic_issue": {
+    "summary_zh": "当前可见模型中不存在任何超时终止机制（无计时器、无边界事件、无超时分支），规则要求的“超时即终止”义务未在模型中表达",
+    "evidence": {
+     "timer_event_definitions": 0,
+     "boundary_events": 0,
+     "rule_requires": "timeout_triggered_termination"
+    }
+   },
+   "dev_reference_judgment": {
+    "judgment": "issue_present",
+    "premise_zh": null,
+    "sources": [
+     "user_instruction_2026_09_11_dev_policy",
+     "rule_text_v2_vs_model_structure",
+     "external_step3_change_context:mitting_timer"
     ],
-    "note_zh": "模型中完全没有计时器/边界事件，也没有任何条件表达式；不存在“超时即终止”的分支"
+    "is_gold": false,
+    "note_zh": "参考问题是“超时终止义务未在模型中表达”，不是“检测器能力不足所以不算违规”"
    },
-   "external_annotation": {
-    "type": "non_compliant",
-    "bpmn_element": "missing_timer",
-    "element_label": "process termination",
-    "mitigation_zh": "应增加计时器，超过 30 天时终止流程"
-   },
-   "conflicts": [],
-   "our_relevant_types": [
+   "candidate_lenses": [
     "constraint_violated"
    ],
-   "capability_probe": "condition_triggered_termination",
-   "proposed_expected": {
-    "status_proposal": "capability_gap_not_violation",
-    "rationale_zh": "规则要求的是“条件触发的流程终止分支”，而现有时限比较只能判断数值边界是否被满足，不能判断终止分支是否存在；缺少该语义时不得判为检出或漏检成功",
-    "capability": "unsupported",
-    "needs_confirmation": [
-     "Q7"
-    ]
-   },
+   "conflicts": [],
+   "background_note_zh": null,
    "external_annotation_source": {
     "deviations": [
      {
@@ -411,41 +496,37 @@
   {
    "rule_id": "r9",
    "version": "v2",
+   "in_main_denominator": true,
    "rule_meaning_zh": "收到客户个人信息后，必须核验其正确性",
-   "process_evidence": {
-    "missing_activity_expected": "verify correctness of customer personal data",
-    "insertion_anchor": "Sign contract",
-    "existing_related_activities": [
-     "Request personal data",
-     "Sign contract"
+   "semantic_issue": {
+    "summary_zh": "模型缺少“收到个人信息后进行正确性核验”的活动；外部标注的 element_label（Sign contract）只是插入位置参照",
+    "evidence": {
+     "expected_activity": "verify correctness of customer personal data",
+     "present_activities_matching": 0,
+     "insertion_anchor": "Sign contract"
+    }
+   },
+   "dev_reference_judgment": {
+    "judgment": "issue_present",
+    "premise_zh": null,
+    "sources": [
+     "user_instruction_2026_09_11_dev_policy",
+     "rule_text_v2_vs_model_activity_inventory",
+     "external_step3_change_context:missing_activity_anchor_sign_contract"
     ],
-    "note_zh": "流程中没有任何“核验正确性”的活动；外部标注的 element_label 是插入位置基准（Sign contract），不是缺失的动作本身"
+    "is_gold": false,
+    "note_zh": "缺失动作以“核验正确性”这一活动要求为单位；定位参照不参与判定"
    },
-   "external_annotation": {
-    "type": "non_compliant",
-    "bpmn_element": "missing_activity",
-    "element_label": "Sign contract",
-    "mitigation_zh": "在 “Sign contract” 之前增加一个核验客户个人信息正确性的活动"
-   },
+   "candidate_lenses": [
+    "missing_action"
+   ],
    "conflicts": [
     {
      "kind": "anchor_vs_missing_action",
-     "detail_zh": "element_label 指向已存在的 Sign contract；真正的缺失动作是核验正确性活动。以 element_label 直接映射到 missing_action 会把已存在的活动当作缺失动作"
+     "detail_zh": "外部 element_label 指向已存在的 Sign contract；把定位参照当作缺失动作会误判"
     }
    ],
-   "our_relevant_types": [
-    "missing_action",
-    "out_of_order"
-   ],
-   "capability_probe": "activity_presence",
-   "proposed_expected": {
-    "status_proposal": "violation_if_action_mappable",
-    "rationale_zh": "以“核验正确性”这一动作要求为单位检查是否存在对应活动；存在则满足，不存在则为缺失。插入位置语义只作为报告说明，不参与判定",
-    "capability": "supported",
-    "needs_confirmation": [
-     "Q1"
-    ]
-   },
+   "background_note_zh": null,
    "external_annotation_source": {
     "deviations": [
      {
@@ -515,30 +596,32 @@
   {
    "rule_id": "r10",
    "version": "v2",
+   "in_main_denominator": true,
    "rule_meaning_zh": "客户收到 SIM 卡时，必须由电话公司激活 SIM 卡",
-   "process_evidence": {
-    "activity": "Activate SIM card",
-    "lane_or_participant": "Customer",
-    "flow_note_zh": "Activate SIM card 位于 Customer 参与者泳道内，由 Receive SIM card 消息启动事件触发",
-    "rule_actor": "phone company"
+   "semantic_issue": {
+    "summary_zh": "当前激活活动由 Customer 执行，与 v2 要求的 Phone company 执行不一致",
+    "evidence": {
+     "activity": "Activate SIM card",
+     "executing_participant": "Customer",
+     "required_participant": "Phone company"
+    }
    },
-   "external_annotation": {
-    "type": "non_compliant",
-    "bpmn_element": "wrong_role",
-    "element_label": "Activate SIM card",
-    "mitigation_zh": "应由电话公司执行"
+   "dev_reference_judgment": {
+    "judgment": "issue_present",
+    "premise_zh": null,
+    "sources": [
+     "user_instruction_2026_09_11_dev_policy",
+     "rule_text_v2_vs_model_lane_attribution",
+     "external_step3_change_context:wrong_role"
+    ],
+    "is_gold": false,
+    "note_zh": "该判断只陈述模型归属与规则要求不一致；方法能否解析出归属由运行记录给出"
    },
-   "conflicts": [],
-   "our_relevant_types": [
+   "candidate_lenses": [
     "incorrect_actor"
    ],
-   "capability_probe": "cross_participant_attribution",
-   "proposed_expected": {
-    "status_proposal": "violation_if_actor_mapping_works",
-    "rationale_zh": "规则执行者=电话公司，流程执行者=Customer；若动作可映射且执行者归属可解析，应判 incorrect_actor。该结论依赖参与者/泳道解析，必须在报告中给出解析证据",
-    "capability": "supported",
-    "needs_confirmation": []
-   },
+   "conflicts": [],
+   "background_note_zh": null,
    "external_annotation_source": {
     "deviations": [
      {
@@ -624,41 +707,39 @@
   {
    "rule_id": "r11",
    "version": "v2",
+   "in_main_denominator": true,
    "rule_meaning_zh": "从数据主体取任何个人数据之前，必须先取得其同意",
-   "process_evidence": {
-    "activity_exists": "Ask for consent",
-    "observed_order": [
-     "Request personal data",
-     "Store Data",
-     "Ask for consent"
-    ],
-    "note_zh": "同意活动已存在，但位于取数与存储之后；缺的是“前置位置”，不是活动本身"
-   },
-   "external_annotation": {
-    "type": "non_compliant",
-    "bpmn_element": "missing_activity",
-    "element_label": "Request personal data",
-    "mitigation_zh": "电话公司应执行一个名为 ask for consent 的新任务"
-   },
-   "conflicts": [
-    {
-     "kind": "missing_vs_misplaced",
-     "detail_zh": "外部标注称活动缺失，但当前模型已含同名活动且位置在取数/存数之后。必须区分“活动完全缺失 / 前置位置缺失 / 顺序错误”三种情形"
+   "semantic_issue": {
+    "summary_zh": "同意活动已存在，但位于取数与存数之后，违反规则要求的先后关系；问题性质是前置位置/顺序，而不是活动缺失",
+    "evidence": {
+     "activity": "Ask for consent",
+     "observed_predecessor": "Store Data",
+     "retrieval_activity": "Request personal data",
+     "required_relation": "consent_before_retrieval"
     }
-   ],
-   "our_relevant_types": [
+   },
+   "dev_reference_judgment": {
+    "judgment": "issue_present",
+    "premise_zh": null,
+    "sources": [
+     "user_instruction_2026_09_11_dev_policy",
+     "rule_text_v2_vs_model_flow_order",
+     "external_step3_change_context:missing_activity_label_disagreed"
+    ],
+    "is_gold": false,
+    "note_zh": "本轮明确不采用外部“活动缺失”的说法：该活动存在但位置错误"
+   },
+   "candidate_lenses": [
     "out_of_order",
     "required_condition_not_enforced"
    ],
-   "capability_probe": "consent_before_retrieval_order",
-   "proposed_expected": {
-    "status_proposal": "violation_order_semantics",
-    "rationale_zh": "以“同意必须先于取数”的顺序/前置约束检查：当前顺序不满足该前置关系，应判顺序类违规；不得判为 missing_action，也不得为符合外部标注而删除或移动现有活动",
-    "capability": "partial",
-    "needs_confirmation": [
-     "Q2"
-    ]
-   },
+   "conflicts": [
+    {
+     "kind": "missing_vs_misplaced",
+     "detail_zh": "外部标注称活动缺失，实际是前置位置缺失；两种说法不能混用，且不得为符合外部标注而改动流程"
+    }
+   ],
+   "background_note_zh": null,
    "external_annotation_source": {
     "deviations": [
      {
@@ -751,138 +832,42 @@
    ]
   },
   {
-   "rule_id": "r12",
-   "version": "v1_to_v2_change",
-   "rule_meaning_zh": "第三方拒绝携号转网时须删除个人数据（v2 已删除该需求）",
-   "process_evidence": {
-    "activity": "Delete personal data",
-    "branch_zh": "位于“第三方拒绝携号转网”分支内（gateway → Delete personal data → end）"
-   },
-   "external_annotation": {
-    "type": "over_compliant",
-    "bpmn_element": "redundant_activity",
-    "element_label": "Delete personal data",
-    "mitigation_zh": "（无修复建议）"
-   },
-   "conflicts": [
-    {
-     "kind": "change_context_not_static_violation",
-     "detail_zh": "该偏差以“需求在 v2 被删除”为前提，属变化影响评价；我们的分类体系没有 over_compliant 类别，不能计入违规评分"
-    }
-   ],
-   "our_relevant_types": [],
-   "capability_probe": "not_applicable_to_taxonomy",
-   "proposed_expected": {
-    "status_proposal": "outside_taxonomy_report_only",
-    "rationale_zh": "作为“超出本分类体系”的条目单列报告，不计入违规/漏检；也不作为合规证据",
-    "capability": "not_applicable",
-    "needs_confirmation": [
-     "Q4"
-    ]
-   },
-   "external_annotation_source": {
-    "deviations": [
-     {
-      "type": "over_compliant",
-      "bpmn_element": "redundant_activity",
-      "element_label": "Delete personal data",
-      "reading_aid": "不在本分类体系（过度合规）"
-     }
-    ],
-    "mitigation_fragment": "",
-    "mitigation_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-   },
-   "change_context": [
-    {
-     "type": "delete_requirement",
-     "from": null,
-     "to": null
-    }
-   ],
-   "version_metadata": {
-    "both_versions": false,
-    "versions": {
-     "version_1": {
-      "norm_length": 3,
-      "precondition_length": 3
-     },
-     "version_2": {
-      "norm_length": 0,
-      "precondition_length": 0
-     }
-    }
-   },
-   "prediction_evidence": {
-    "SIM_card_scenario/r12/v1": {
-     "modality": "obligation",
-     "actions": 1,
-     "actors": 0,
-     "conditions": 1,
-     "constraints": 1,
-     "exceptions": 0,
-     "order_relations": 0,
-     "actor_texts": [],
-     "action_texts": [
-      "deleted"
-     ]
-    }
-   },
-   "requirement_versions": [
-    {
-     "version": "v1",
-     "empty": false,
-     "text_length": 101,
-     "text_sha256": "390f8189f8b8fd15a92a3f48425466147d387850fc25524bdd84da67cfff56ae",
-     "fragment": "If the third party denies port"
-    },
-    {
-     "version": "v2",
-     "empty": true,
-     "text_length": 0,
-     "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-     "fragment": ""
-    }
-   ]
-  },
-  {
    "rule_id": "r13",
    "version": "v2",
+   "in_main_denominator": true,
    "rule_meaning_zh": "欠款超过 50 EUR 的客户不得领取新 SIM 卡",
-   "process_evidence": {
-    "condition_surface": "4 labelled sequence flows exist (Not requested / Requested / Granted / Debt < 100); only the last is a numeric condition, the other three are state labels",
-    "model_label": "Debt < 100",
-    "condition_expressions": 0,
-    "note_zh": "模型侧唯一数值条件表面是该连线标签；没有 conditionExpression，网关本身无名"
-   },
-   "external_annotation": {
-    "type": "non_compliant",
-    "bpmn_element": "XOR_condition_modification",
-    "element_label": "Debt < 100",
-    "mitigation_zh": "应把 Debt < 100 改为 Debt < 500"
-   },
-   "conflicts": [
-    {
-     "kind": "numeric_mismatch",
-     "detail_zh": "需求 v2 阈值=50；模型标签=100；外部修复建议=500。三处互不一致，保留原始文件不改，冲突如实记录"
-    },
-    {
-     "kind": "boundary_semantics",
-     "detail_zh": "“exceeding 50” 是严格大于；模型标签 “Debt < 100” 是严格小于；等于阈值的情形两侧都没有覆盖，比较时必须显式说明边界处理"
+   "semantic_issue": {
+    "summary_zh": "把图示连线标签作为路由条件解释时，模型门槛无法阻止欠款处于 50 到 100 欧元之间的客户继续进入后续流程",
+    "evidence": {
+     "model_label": "Debt < 100",
+     "required_natural_language": "debt > 50 prohibited",
+     "difference_interval": "50 < debt < 100",
+     "example_value": 75,
+     "condition_expressions": 0
     }
-   ],
-   "our_relevant_types": [
+   },
+   "dev_reference_judgment": {
+    "judgment": "issue_present_with_premise",
+    "premise_zh": "前提：把连线标签 'Debt < 100' 解释为该分支的路由条件（该模型没有可执行 conditionExpression，条件只以标签形式存在）",
+    "sources": [
+     "user_instruction_2026_09_11_dev_policy",
+     "rule_text_v2_vs_flow_label_interval",
+     "external_step3_change_context:xor_condition_modification_mitigation_not_adopted"
+    ],
+    "is_gold": false,
+    "note_zh": "等于 50 不触发本条禁止；50 到 100 之间（例如 75）是本案例的差异区间；外部建议 Debt < 500 不采用"
+   },
+   "candidate_lenses": [
     "required_condition_not_enforced",
     "constraint_violated"
    ],
-   "capability_probe": "numeric_boundary_condition",
-   "proposed_expected": {
-    "status_proposal": "capability_partial_plus_extraction_gap",
-    "rationale_zh": "现有条件检查针对“条件未被落实（表面缺失）”而非“条件数值与规则不一致”，因此该例主要暴露能力边界；同时 LLM 抽取把阈值留在执行者描述里、条件字段为空，属抽取问题，两条都要分别记录",
-    "capability": "partial",
-    "needs_confirmation": [
-     "Q3"
-    ]
-   },
+   "conflicts": [
+    {
+     "kind": "numeric_mismatch",
+     "detail_zh": "需求 v2 阈值 50、模型标签 100、外部修复建议 500 三者不一致；保留原始文件，冲突如实记录"
+    }
+   ],
+   "background_note_zh": null,
    "external_annotation_source": {
     "deviations": [
      {
@@ -963,6 +948,101 @@
      "fragment": "Customers with outstanding deb"
     }
    ]
+  },
+  {
+   "rule_id": "r12",
+   "version": "v1_to_v2_change",
+   "in_main_denominator": false,
+   "rule_meaning_zh": "第三方拒绝携号转网时须删除个人数据（该需求在 v2 中已被删除）",
+   "semantic_issue": {
+    "summary_zh": "v2 已删除该需求，因此“删除个人数据”活动在 v2 语境下成为外部所称的 over-compliance；这不是五条静态规则意义上的违规",
+    "evidence": {
+     "activity": "Delete personal data",
+     "v2_text_empty": true,
+     "external_type": "over_compliant"
+    }
+   },
+   "dev_reference_judgment": {
+    "judgment": "background_only",
+    "premise_zh": "作为“需求删除 + 外部 over-compliance”的背景说明单列，不进入 5 条静态规则的评价分母",
+    "sources": [
+     "user_instruction_2026_09_11_dev_policy",
+     "external_step3_change_context:redundant_activity"
+    ],
+    "is_gold": false,
+    "note_zh": "我们不作静态违规评价，也不据此声称流程合规"
+   },
+   "candidate_lenses": [],
+   "conflicts": [
+    {
+     "kind": "change_context_not_static_violation",
+     "detail_zh": "外部偏差以“需求被删除”为前提，属变化影响评价"
+    }
+   ],
+   "background_note_zh": "背景条目：报告单列，不计入 5 条主规则的分母，也不作为合规证据",
+   "external_annotation_source": {
+    "deviations": [
+     {
+      "type": "over_compliant",
+      "bpmn_element": "redundant_activity",
+      "element_label": "Delete personal data",
+      "reading_aid": "不在本分类体系（过度合规）"
+     }
+    ],
+    "mitigation_fragment": "",
+    "mitigation_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   "change_context": [
+    {
+     "type": "delete_requirement",
+     "from": null,
+     "to": null
+    }
+   ],
+   "version_metadata": {
+    "both_versions": false,
+    "versions": {
+     "version_1": {
+      "norm_length": 3,
+      "precondition_length": 3
+     },
+     "version_2": {
+      "norm_length": 0,
+      "precondition_length": 0
+     }
+    }
+   },
+   "prediction_evidence": {
+    "SIM_card_scenario/r12/v1": {
+     "modality": "obligation",
+     "actions": 1,
+     "actors": 0,
+     "conditions": 1,
+     "constraints": 1,
+     "exceptions": 0,
+     "order_relations": 0,
+     "actor_texts": [],
+     "action_texts": [
+      "deleted"
+     ]
+    }
+   },
+   "requirement_versions": [
+    {
+     "version": "v1",
+     "empty": false,
+     "text_length": 101,
+     "text_sha256": "390f8189f8b8fd15a92a3f48425466147d387850fc25524bdd84da67cfff56ae",
+     "fragment": "If the third party denies port"
+    },
+    {
+     "version": "v2",
+     "empty": true,
+     "text_length": 0,
+     "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+     "fragment": ""
+    }
+   ]
   }
  ],
  "paper_conflict_record": {
@@ -970,8 +1050,8 @@
   "reading_text": "R1 and R4 = missing action; R2 = out-of-order execution; R3 = incorrect actor",
   "reading_figure": "V1/R1 and V2/R2 = Missing Action; V3/R3 = Incorrect Actor; V4/R4 = Out-of-order Execution",
   "difference": "R2 and R4 are swapped between the two readings",
-  "version_of_record_status": "not_obtainable_in_this_environment (publisher authentication / paywall); therefore no claim is made about the published version",
-  "handling": "keep both original readings; treat neither as reliable Gold; do not merge them into one label set"
+  "version_of_record_status": "not_obtainable_in_this_environment (publisher authentication / paywall)",
+  "handling": "keep both original readings as literature statements; treat neither as reliable Gold; obtaining the version of record is not a precondition for continuing this case"
  },
  "capability_probes": {
   "condition_triggered_termination": {
@@ -1068,11 +1148,5 @@
    "reason_zh": "活动归属可由参与者/泳道解析；需在运行报告给出解析证据"
   }
  },
- "open_questions": [
-  "Q7",
-  "Q1",
-  "Q2",
-  "Q4",
-  "Q3"
- ]
+ "open_questions": []
 }

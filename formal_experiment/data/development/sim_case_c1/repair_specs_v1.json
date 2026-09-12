@@ -1,0 +1,53 @@
+{
+  "schema_version": "sim_case_repair_specs@1.0.0",
+  "status": "fixed_before_run",
+  "note_zh": "最小开发对照修复件：每项只改一个已声明的问题，运行前固定，不随检测结果调整。原始 BPMN 永不修改；修复后的 XML 只在 gitignored 本地目录生成。修复件是程序构造的开发对照，不是作者原图，也不是真实企业流程。",
+  "invariants": [
+    "修复前后使用同一条规则、同一方法、同一阈值",
+    "每项最多一个最小修复版本",
+    "不因局部修复就声称整个流程合规",
+    "无法建立可靠修复对照的项目如实保留缺口"
+  ],
+  "repairs": [
+    {
+      "repair_id": "r8_timeout_termination",
+      "rule_id": "r8",
+      "lens": "constraint_violated",
+      "declared_issue_zh": "模型没有任何超时终止机制",
+      "operation_zh": "在 Send SIM card 上挂 30 天边界计时器，并连到“Process terminated”结束事件",
+      "expected_effect_zh": "模型出现超时终止表面；若方法正确，该条的“未表达”问题应消失"
+    },
+    {
+      "repair_id": "r9_add_verification",
+      "rule_id": "r9",
+      "lens": "missing_action",
+      "declared_issue_zh": "缺少“核验个人信息正确性”的活动",
+      "operation_zh": "在 Sign contract 之前插入 Verify correctness of customer personal data",
+      "expected_effect_zh": "规则动作在模型中出现；missing_action 应从违规变为满足"
+    },
+    {
+      "repair_id": "r10_activation_owner",
+      "rule_id": "r10",
+      "lens": "incorrect_actor",
+      "declared_issue_zh": "Activate SIM card 由 Customer 执行",
+      "operation_zh": "把 Activate SIM card 的泳道归属从 Customer 改为 Phone company",
+      "expected_effect_zh": "执行者归属与规则一致；incorrect_actor 应从违规变为满足（或按观测性如实记录）"
+    },
+    {
+      "repair_id": "r11_consent_before_retrieval",
+      "rule_id": "r11",
+      "lens": "out_of_order",
+      "declared_issue_zh": "同意活动位于取数、存数之后",
+      "operation_zh": "把 Ask for consent 移到 Request personal data 之前并恢复 Store Data 的后继",
+      "expected_effect_zh": "同意先于取数；顺序类检查应从违规变为满足"
+    },
+    {
+      "repair_id": "r13_threshold_50",
+      "rule_id": "r13",
+      "lens": "required_condition_not_enforced",
+      "declared_issue_zh": "路由条件标签 Debt < 100 无法表达 v2 的 50 欧元门槛",
+      "operation_zh": "把该连线标签改为 Debt <= 50",
+      "expected_effect_zh": "条件表面与 v2 语义一致；条件类差异应消失"
+    }
+  ]
+}

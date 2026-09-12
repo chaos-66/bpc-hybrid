@@ -1,0 +1,362 @@
+{
+ "schema_version": "sim_case_c1_supplement@1.0.0",
+ "run_id": "sim_case_c1_supplement_v1",
+ "claim_scope": "development_supplement_reconstructed_model_not_authors_model",
+ "model_identity": "our reconstruction from the published Figure 10 (not the authors' model)",
+ "groups_run": {
+  "A": "non-LLM deterministic adapter + Sun-style three types (+ four extended types reported as extension)"
+ },
+ "groups_missing": {
+  "B": "real-LLM Stage 2 not run",
+  "C": "depends on B"
+ },
+ "thresholds": {
+  "tau": 0.8,
+  "gamma": 0.8,
+  "theta": 0.8,
+  "gamma_ext": 0.5
+ },
+ "inputs": {
+  "reconstruction": {
+   "path": "formal_experiment/data/development/sim_case_c1/sun_figure10_reconstruction.bpmn",
+   "sha256": "773c46914e4d3a9c59737d09c536eaabdfc5b76d347fad391600d060bad3a206",
+   "bytes": 26673
+  },
+  "table13": {
+   "path": "formal_experiment/data/development/sim_case_c1/sun_table13_rules_v1.json",
+   "sha256": "2f6538aea050cd9f50cc1727d4fe4db84a61198e286b6b9fcdbad09777d612bd",
+   "bytes": 1905
+  },
+  "predictions_repeat01": {
+   "path": "formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-01/canonical_predictions.jsonl",
+   "sha256": "6fab1108b311e105bad4780eb83ca9a74668b43602479b96a738bb0290f9f0c7",
+   "bytes": 63932
+  }
+ },
+ "model_evidence": {
+  "flattened_xml_sha256": "187b55d49535f5bb5e304c44e20db1aa5e68ae778f8a94954af272519dea57e3",
+  "process_record_sha256": "2262e62c005953a0e051cf0dabc3827e024211b2beb95043d824c76dac68fe36",
+  "activities": 11,
+  "gateways": 4,
+  "events": 5,
+  "flows": 20,
+  "lanes": [
+   "Another Phone Company",
+   "Customer",
+   "Phone Company"
+  ],
+  "unreachable": 3
+ },
+ "prediction_reuse_audit": [
+  {
+   "table13_rule": "R1",
+   "mapped_prediction": "SIM_card_scenario/r8/v2",
+   "exact_text_match": false,
+   "normalised_text_match": true,
+   "reusable": false,
+   "reason": "case/punctuation differs; span offsets are bound to the original string",
+   "normalisation_used": "strip + casefold + whitespace collapse + trailing period"
+  },
+  {
+   "table13_rule": "R2",
+   "mapped_prediction": "SIM_card_scenario/r9/v2",
+   "exact_text_match": false,
+   "normalised_text_match": false,
+   "reusable": false,
+   "reason": "case/punctuation differs; span offsets are bound to the original string",
+   "normalisation_used": "strip + casefold + whitespace collapse + trailing period"
+  },
+  {
+   "table13_rule": "R3",
+   "mapped_prediction": "SIM_card_scenario/r10/v2",
+   "exact_text_match": false,
+   "normalised_text_match": true,
+   "reusable": false,
+   "reason": "case/punctuation differs; span offsets are bound to the original string",
+   "normalisation_used": "strip + casefold + whitespace collapse + trailing period"
+  },
+  {
+   "table13_rule": "R4",
+   "mapped_prediction": "SIM_card_scenario/r11/v2",
+   "exact_text_match": false,
+   "normalised_text_match": true,
+   "reusable": false,
+   "reason": "case/punctuation differs; span offsets are bound to the original string",
+   "normalisation_used": "strip + casefold + whitespace collapse + trailing period"
+  }
+ ],
+ "summary": {
+  "checks": 28,
+  "status_counts": {
+   "violation": 4,
+   "satisfied": 0,
+   "undetermined": 24,
+   "not_applicable": 0
+  }
+ },
+ "rows": [
+  {
+   "rule_id": "R1",
+   "check": "missing_action",
+   "status": "violation",
+   "score": 1.0,
+   "reason": null,
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R1",
+   "check": "incorrect_actor",
+   "status": "undetermined",
+   "score": null,
+   "reason": "action_mapping_below_gamma",
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R1",
+   "check": "out_of_order",
+   "status": "undetermined",
+   "score": 0.0,
+   "reason": "no_mapped_rule_order_endpoints",
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R1",
+   "check": "prohibited_action_present",
+   "status": "undetermined",
+   "score": null,
+   "reason": "rule_modality_not_prohibition",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R1",
+   "check": "required_condition_not_enforced",
+   "status": "undetermined",
+   "score": null,
+   "reason": "action_mapping_below_gamma",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R1",
+   "check": "constraint_violated",
+   "status": "undetermined",
+   "score": null,
+   "reason": "empty_rule_constraint",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R1",
+   "check": "exception_not_handled",
+   "status": "undetermined",
+   "score": null,
+   "reason": "empty_rule_exception",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R2",
+   "check": "missing_action",
+   "status": "violation",
+   "score": 1.0,
+   "reason": null,
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R2",
+   "check": "incorrect_actor",
+   "status": "undetermined",
+   "score": null,
+   "reason": "empty_rule_actor_denominator",
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R2",
+   "check": "out_of_order",
+   "status": "undetermined",
+   "score": 0.0,
+   "reason": "no_mapped_rule_order_endpoints",
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R2",
+   "check": "prohibited_action_present",
+   "status": "undetermined",
+   "score": null,
+   "reason": "rule_modality_not_prohibition",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R2",
+   "check": "required_condition_not_enforced",
+   "status": "undetermined",
+   "score": null,
+   "reason": "action_mapping_below_gamma",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R2",
+   "check": "constraint_violated",
+   "status": "undetermined",
+   "score": null,
+   "reason": "empty_rule_constraint",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R2",
+   "check": "exception_not_handled",
+   "status": "undetermined",
+   "score": null,
+   "reason": "empty_rule_exception",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R3",
+   "check": "missing_action",
+   "status": "violation",
+   "score": 1.0,
+   "reason": null,
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R3",
+   "check": "incorrect_actor",
+   "status": "undetermined",
+   "score": null,
+   "reason": "action_mapping_below_gamma",
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R3",
+   "check": "out_of_order",
+   "status": "undetermined",
+   "score": 0.0,
+   "reason": "no_mapped_rule_order_endpoints",
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R3",
+   "check": "prohibited_action_present",
+   "status": "undetermined",
+   "score": null,
+   "reason": "rule_modality_not_prohibition",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R3",
+   "check": "required_condition_not_enforced",
+   "status": "undetermined",
+   "score": null,
+   "reason": "action_mapping_below_gamma",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R3",
+   "check": "constraint_violated",
+   "status": "undetermined",
+   "score": null,
+   "reason": "empty_rule_constraint",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R3",
+   "check": "exception_not_handled",
+   "status": "undetermined",
+   "score": null,
+   "reason": "empty_rule_exception",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R4",
+   "check": "missing_action",
+   "status": "violation",
+   "score": 1.0,
+   "reason": null,
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R4",
+   "check": "incorrect_actor",
+   "status": "undetermined",
+   "score": null,
+   "reason": "action_mapping_below_gamma",
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R4",
+   "check": "out_of_order",
+   "status": "undetermined",
+   "score": 0.0,
+   "reason": "no_mapped_rule_order_endpoints",
+   "group": "A",
+   "family": "three_types"
+  },
+  {
+   "rule_id": "R4",
+   "check": "prohibited_action_present",
+   "status": "undetermined",
+   "score": null,
+   "reason": "rule_modality_not_prohibition",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R4",
+   "check": "required_condition_not_enforced",
+   "status": "undetermined",
+   "score": null,
+   "reason": "action_mapping_below_gamma",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R4",
+   "check": "constraint_violated",
+   "status": "undetermined",
+   "score": null,
+   "reason": "empty_rule_constraint",
+   "group": "A",
+   "family": "four_extended_extension"
+  },
+  {
+   "rule_id": "R4",
+   "check": "exception_not_handled",
+   "status": "undetermined",
+   "score": null,
+   "reason": "empty_rule_exception",
+   "group": "A",
+   "family": "four_extended_extension"
+  }
+ ],
+ "paper_readings": {
+  "text": {
+   "statement": "R1 and R4 = missing action; R2 = out-of-order execution; R3 = incorrect actor",
+   "source": "manuscript page 23 body text (lines 957-973)"
+  },
+  "figure": {
+   "statement": "V1/R1 and V2/R2 = Missing Action; V3/R3 = Incorrect Actor; V4/R4 = Out-of-order Execution",
+   "source": "Figure 10 callouts (lines 998-1006)"
+  },
+  "conflict_zh": "两种读法在 R2 与 R4 上互换；正式版未取得，二者都只作文献原始声明，均不作可靠 Gold。"
+ }
+}

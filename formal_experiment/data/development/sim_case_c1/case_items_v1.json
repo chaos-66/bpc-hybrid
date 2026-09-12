@@ -1,6 +1,7 @@
 {
   "schema_version": "sim_case_c1_curated_items@1.0.0",
-  "status": "proposed_pending_user_confirmation",
+  "status": "SUPERSEDED_BY_case_items_v2_do_not_use",
+  "superseded_note_zh": "v1 的 proposed_expected/capability 字段把参考判断与检测器能力绑在一起，已被用户 2026-09-11 指令否决；本文件仅作修订历史保留，构建器只读 case_items_v2.json。",
   "scope": "Case C (Barrientos Sun-derived SIM_card_scenario) - checklist proposals only",
   "binding_policy": {
     "process_version": "single BPMN file (sha256 recorded in manifest); no second model version exists locally",

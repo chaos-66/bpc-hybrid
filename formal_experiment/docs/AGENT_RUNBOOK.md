@@ -281,6 +281,28 @@ Oracle 与 end-to-end 必须分表；matching 与 violation classification 也�
 不得把 fixture scaffold 称完整复现，不得把 all-seven extension 写成 Sun 原4。
 ```
 
+### 真实案例端到端：S3.9-EXT-REAL-CASE（SIM 卡入网，零 API）
+
+```text
+任务：S3.9-EXT-REAL-CASE。在 formal_experiment/ 内维护与复跑 SIM 卡入网案例的开发性端到端实验。
+必读：docs/MASTER_PIPELINE.md §9.5（S3.9-EXT-REAL-CASE 行）、docs/PROJECT_AUDIT.md 当前派工、
+docs/research/S3_REAL_CASE_E2E_TASK_SPEC_2026-09-11.md（v5 及 §10 已决事项）。
+固定设计：
+- 主案例 = references/barrientos_2026 的 Sun 派生 SIM 流程 × 5 条 v2 非空规则
+  （r8/r9/r10/r11/r13）；r12 作背景单列；r9/v1 与 r12/v2 空文本不进入检测。
+- 公共 Stage 1 记录一份，三组消费；协作图需经声明的扁平化适配（泳道即参与者名）。
+- A=非 LLM 确定性抽取 + 冻结 Sun 式三类；B=既有真实 LLM 预测（repeat-01）+ 与 A 相同三类；
+  C=与 B 同一 Stage 2 与三类结果 + 四类扩展。
+- 角色绑定与顺序关系推导政策必须在打分前写入 plan 并全组统一；参考判断与检测能力解耦。
+命令：
+  python scripts/run_sim_case_c1_v1.py --check|--overwrite
+  python scripts/run_sim_case_c1_supplement_v1.py --check|--overwrite
+  python scripts/build_sim_case_checklist_v1.py --check|--overwrite
+  python -m pytest tests/test_sim_case_c1_run_v1.py tests/test_sim_case_checklist_v1.py -q
+边界：零 LLM/API；references/ 与 archive/ 只读且不复制原文进仓库；修复对照只作独立开发派生件并披露；
+      不合成七类总 F1；不把 5 轮重复当独立样本；未检出与无法判断必须如实保留。
+```
+
 ### 端到端归因：E00/E10/E01/E11
 
 ```text

@@ -1,0 +1,910 @@
+{
+ "schema_version": "sim_case_c1_run@1.0.0",
+ "run_id": "sim_case_c1_run_v1",
+ "claim_scope": "development_case_study_not_formal_gold",
+ "groups": {
+  "A": "non-LLM deterministic adapter + frozen Sun-style three-type detection",
+  "B": "real-LLM predictions (repeat-01) + SAME three-type detection as A",
+  "C": "SAME stage2 and three-type rows as B + four extended types"
+ },
+ "thresholds": {
+  "tau": 0.8,
+  "gamma": 0.8,
+  "theta": 0.8,
+  "gamma_ext": 0.5,
+  "source": "configs/sun_stage3_development_v1.json + frozen extended gamma"
+ },
+ "declared_policy": {
+  "name": "sim_case_c1_public_adaptation_v1",
+  "declared_before_scoring": true,
+  "role_binding": {
+   "Data Controller": "Phone company",
+   "Data Subject": "Customer"
+  },
+  "primary_sentence": "longest_sentence_text_v1",
+  "order_relation_derivation": {
+   "name": "temporal_marker_from_condition_v1",
+   "rule_zh": "当抽取出的 condition 以 before/after 时间标记开头时，按该标记在主动作与条件内动作之间生成一条顺序关系：'Before X, Y' -> (Y, X)；'After X, Y' -> (X, Y)。两个端点分别取条件内动词短语与主句动作，由同一 policy 对 A/B 两组统一施加；不读取任何外部答案或偏离标签",
+   "applies_to_groups": [
+    "A",
+    "B",
+    "C"
+   ]
+  },
+  "forbidden": [
+   "不得按结果新增角色绑定、动作同义词或规则 ID 特判",
+   "不得用外部偏差标签或参考判断回填规则记录"
+  ]
+ },
+ "stage1": {
+  "flattened_xml_sha256": "29a31cfc0fa520a7eb6aedec121ed586d72e5fd6a04111c71c02177004539fbd",
+  "process_record_sha256": "324091aa007882ab027ffd6884898100b84423fc0fe1f75b97b8949d0e408b0b",
+  "activities": 12,
+  "gateways": 6,
+  "events": 8,
+  "flows": 26,
+  "lanes": [
+   "Phone company",
+   "Another phone company",
+   "Customer"
+  ]
+ },
+ "inputs": {
+  "bpmn": {
+   "path": "references/barrientos_2026/artifact_input/process_models/SIM_card_scenario/SIM_card_scenario.bpmn",
+   "sha256": "338c8144cd2802f0813c0cc7d6ab230bcb4adc37bc738f4ad4c5e506da144064",
+   "bytes": 67048
+  },
+  "requirements": {
+   "path": "references/barrientos_2026/artifact_input/requirements/SIM_card_scenario/SIM_card_scenario.json",
+   "sha256": "e13d9a2a208c83ffc8f4441e6b5cdcef0253dfef79a0637ab00b6c1a999ebe75",
+   "bytes": 1707
+  },
+  "step_3_baseline": {
+   "path": "references/barrientos_2026/evaluation/ground_truth/step_3_baseline.json",
+   "sha256": "96b3c1e8f10e0ad45636d7620c41062f15bf03e96d537fb1ccb2e3450cac467d",
+   "bytes": 6507
+  },
+  "curated_reference_judgments": {
+   "path": "formal_experiment/data/development/sim_case_c1/case_items_v2.json",
+   "sha256": "a5324734a4dbe95cf33d836721df0b2e7e95d1a2a8edd3abc2ea685beee9d7c2",
+   "bytes": 12037
+  },
+  "repair_specs": {
+   "path": "formal_experiment/data/development/sim_case_c1/repair_specs_v1.json",
+   "sha256": "cfed705925dc0228a2cbb9ac5f5c9616ef835d0a1e5359beb6a8f0311b4eb674",
+   "bytes": 2661
+  },
+  "predictions_repeat01": {
+   "path": "formal_experiment/outputs/development/barrientos_ablation_suite_v2/OURS-FULL/repeat-01/canonical_predictions.jsonl",
+   "sha256": "6fab1108b311e105bad4780eb83ca9a74668b43602479b96a738bb0290f9f0c7",
+   "bytes": 63932
+  },
+  "stage1_contract": {
+   "path": "formal_experiment/configs/stage1_structural_s11_s14.json",
+   "sha256": "92329cef71c4f3517a66a24f4b0fb4b439add3470832831a6fb70fd1d59ced48",
+   "bytes": 3213
+  },
+  "sun_config": {
+   "path": "formal_experiment/configs/sun_stage3_development_v1.json",
+   "sha256": "3ef60d5bda1e5103486d5269cd3740330e911c1b912367d822c7dbab729714c4",
+   "bytes": 7627
+  }
+ },
+ "summary": {
+  "A": {
+   "checks": 15,
+   "status_counts": {
+    "violation": 5,
+    "undetermined": 9,
+    "satisfied": 1
+   }
+  },
+  "B": {
+   "checks": 15,
+   "status_counts": {
+    "violation": 5,
+    "undetermined": 8,
+    "satisfied": 2
+   }
+  },
+  "C": {
+   "checks": 35,
+   "status_counts": {
+    "violation": 8,
+    "undetermined": 25,
+    "satisfied": 2
+   }
+  }
+ },
+ "comparison": [
+  {
+   "rule_id": "r8",
+   "reference_judgment": "issue_present",
+   "reference_sources": [
+    "user_instruction_2026_09_11_dev_policy",
+    "rule_text_v2_vs_model_structure",
+    "external_step3_change_context:mitting_timer"
+   ],
+   "premise_zh": null,
+   "semantic_issue_zh": "当前可见模型中不存在任何超时终止机制（无计时器、无边界事件、无超时分支），规则要求的“超时即终止”义务未在模型中表达",
+   "primary_lens": "constraint_violated",
+   "secondary_lenses": [
+    "required_condition_not_enforced"
+   ],
+   "groups": {
+    "A": {
+     "covered_lenses": [],
+     "lens_results": {},
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
+    },
+    "B": {
+     "covered_lenses": [],
+     "lens_results": {},
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
+    },
+    "C": {
+     "covered_lenses": [
+      "constraint_violated",
+      "required_condition_not_enforced"
+     ],
+     "lens_results": {
+      "constraint_violated": {
+       "status": "undetermined",
+       "score": null,
+       "reason": "action_mapping_below_gamma"
+      },
+      "required_condition_not_enforced": {
+       "status": "undetermined",
+       "score": null,
+       "reason": "action_mapping_below_gamma"
+      }
+     },
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
+    }
+   },
+   "consistency": {
+    "reference_issue_present": true,
+    "group_C_found": false,
+    "group_C_undetermined": true,
+    "miss_kind": "undetermined"
+   }
+  },
+  {
+   "rule_id": "r9",
+   "reference_judgment": "issue_present",
+   "reference_sources": [
+    "user_instruction_2026_09_11_dev_policy",
+    "rule_text_v2_vs_model_activity_inventory",
+    "external_step3_change_context:missing_activity_anchor_sign_contract"
+   ],
+   "premise_zh": null,
+   "semantic_issue_zh": "模型缺少“收到个人信息后进行正确性核验”的活动；外部标注的 element_label（Sign contract）只是插入位置参照",
+   "primary_lens": "missing_action",
+   "secondary_lenses": [],
+   "groups": {
+    "A": {
+     "covered_lenses": [
+      "missing_action"
+     ],
+     "lens_results": {
+      "missing_action": {
+       "status": "violation",
+       "score": 1.0,
+       "reason": null
+      }
+     },
+     "found_corresponding_problem": true,
+     "all_lenses_undetermined": false,
+     "type_name_match": true
+    },
+    "B": {
+     "covered_lenses": [
+      "missing_action"
+     ],
+     "lens_results": {
+      "missing_action": {
+       "status": "violation",
+       "score": 1.0,
+       "reason": null
+      }
+     },
+     "found_corresponding_problem": true,
+     "all_lenses_undetermined": false,
+     "type_name_match": true
+    },
+    "C": {
+     "covered_lenses": [
+      "missing_action"
+     ],
+     "lens_results": {
+      "missing_action": {
+       "status": "violation",
+       "score": 1.0,
+       "reason": null
+      }
+     },
+     "found_corresponding_problem": true,
+     "all_lenses_undetermined": false,
+     "type_name_match": true
+    }
+   },
+   "consistency": {
+    "reference_issue_present": true,
+    "group_C_found": true,
+    "group_C_undetermined": false,
+    "miss_kind": null
+   }
+  },
+  {
+   "rule_id": "r10",
+   "reference_judgment": "issue_present",
+   "reference_sources": [
+    "user_instruction_2026_09_11_dev_policy",
+    "rule_text_v2_vs_model_lane_attribution",
+    "external_step3_change_context:wrong_role"
+   ],
+   "premise_zh": null,
+   "semantic_issue_zh": "当前激活活动由 Customer 执行，与 v2 要求的 Phone company 执行不一致",
+   "primary_lens": "incorrect_actor",
+   "secondary_lenses": [],
+   "groups": {
+    "A": {
+     "covered_lenses": [
+      "incorrect_actor"
+     ],
+     "lens_results": {
+      "incorrect_actor": {
+       "status": "violation",
+       "score": 1.0,
+       "reason": null
+      }
+     },
+     "found_corresponding_problem": true,
+     "all_lenses_undetermined": false,
+     "type_name_match": true
+    },
+    "B": {
+     "covered_lenses": [
+      "incorrect_actor"
+     ],
+     "lens_results": {
+      "incorrect_actor": {
+       "status": "violation",
+       "score": 1.0,
+       "reason": null
+      }
+     },
+     "found_corresponding_problem": true,
+     "all_lenses_undetermined": false,
+     "type_name_match": true
+    },
+    "C": {
+     "covered_lenses": [
+      "incorrect_actor"
+     ],
+     "lens_results": {
+      "incorrect_actor": {
+       "status": "violation",
+       "score": 1.0,
+       "reason": null
+      }
+     },
+     "found_corresponding_problem": true,
+     "all_lenses_undetermined": false,
+     "type_name_match": true
+    }
+   },
+   "consistency": {
+    "reference_issue_present": true,
+    "group_C_found": true,
+    "group_C_undetermined": false,
+    "miss_kind": null
+   }
+  },
+  {
+   "rule_id": "r11",
+   "reference_judgment": "issue_present",
+   "reference_sources": [
+    "user_instruction_2026_09_11_dev_policy",
+    "rule_text_v2_vs_model_flow_order",
+    "external_step3_change_context:missing_activity_label_disagreed"
+   ],
+   "premise_zh": null,
+   "semantic_issue_zh": "同意活动已存在，但位于取数与存数之后，违反规则要求的先后关系；问题性质是前置位置/顺序，而不是活动缺失",
+   "primary_lens": "out_of_order",
+   "secondary_lenses": [
+    "required_condition_not_enforced"
+   ],
+   "groups": {
+    "A": {
+     "covered_lenses": [
+      "out_of_order"
+     ],
+     "lens_results": {
+      "out_of_order": {
+       "status": "undetermined",
+       "score": 0.0,
+       "reason": "no_mapped_rule_order_endpoints"
+      }
+     },
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
+    },
+    "B": {
+     "covered_lenses": [
+      "out_of_order"
+     ],
+     "lens_results": {
+      "out_of_order": {
+       "status": "undetermined",
+       "score": 0.0,
+       "reason": "no_mapped_rule_order_endpoints"
+      }
+     },
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
+    },
+    "C": {
+     "covered_lenses": [
+      "out_of_order",
+      "required_condition_not_enforced"
+     ],
+     "lens_results": {
+      "out_of_order": {
+       "status": "undetermined",
+       "score": 0.0,
+       "reason": "no_mapped_rule_order_endpoints"
+      },
+      "required_condition_not_enforced": {
+       "status": "undetermined",
+       "score": null,
+       "reason": "action_mapping_below_gamma"
+      }
+     },
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
+    }
+   },
+   "consistency": {
+    "reference_issue_present": true,
+    "group_C_found": false,
+    "group_C_undetermined": true,
+    "miss_kind": "undetermined"
+   }
+  },
+  {
+   "rule_id": "r13",
+   "reference_judgment": "issue_present_with_premise",
+   "reference_sources": [
+    "user_instruction_2026_09_11_dev_policy",
+    "rule_text_v2_vs_flow_label_interval",
+    "external_step3_change_context:xor_condition_modification_mitigation_not_adopted"
+   ],
+   "premise_zh": "前提：把连线标签 'Debt < 100' 解释为该分支的路由条件（该模型没有可执行 conditionExpression，条件只以标签形式存在）",
+   "semantic_issue_zh": "把图示连线标签作为路由条件解释时，模型门槛无法阻止欠款处于 50 到 100 欧元之间的客户继续进入后续流程",
+   "primary_lens": "required_condition_not_enforced",
+   "secondary_lenses": [
+    "constraint_violated"
+   ],
+   "groups": {
+    "A": {
+     "covered_lenses": [],
+     "lens_results": {},
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
+    },
+    "B": {
+     "covered_lenses": [],
+     "lens_results": {},
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
+    },
+    "C": {
+     "covered_lenses": [
+      "constraint_violated",
+      "required_condition_not_enforced"
+     ],
+     "lens_results": {
+      "required_condition_not_enforced": {
+       "status": "undetermined",
+       "score": null,
+       "reason": "empty_rule_condition"
+      },
+      "constraint_violated": {
+       "status": "undetermined",
+       "score": null,
+       "reason": "empty_rule_constraint"
+      }
+     },
+     "found_corresponding_problem": false,
+     "all_lenses_undetermined": true,
+     "type_name_match": false
+    }
+   },
+   "consistency": {
+    "reference_issue_present": true,
+    "group_C_found": false,
+    "group_C_undetermined": true,
+    "miss_kind": "undetermined"
+   }
+  }
+ ],
+ "repairs": [
+  {
+   "repair_id": "r8_timeout_termination",
+   "rule_id": "r8",
+   "lens": "constraint_violated",
+   "operations": [
+    {
+     "op": "add_boundary_timer",
+     "attached_to": "sid-D73852AE-5932-48A8-8079-9489B97BD910",
+     "duration": "P30D"
+    },
+    {
+     "op": "add_end_event",
+     "id": "sim_fix_timeout_end"
+    },
+    {
+     "op": "add_sequence_flow",
+     "id": "sim_fix_timeout_flow"
+    }
+   ],
+   "semantic_zh": "增加 30 天超时边界计时器与终止分支",
+   "model_evidence": {
+    "flattened_xml_sha256": "79289b1d7ebc98cb9c17c7e7a9ece2a7cb5a6c9b676f02e64755bd7dba0bfd1a",
+    "process_record_sha256": "3f78ee2e7bd9836722da4bb9d66fe69fe14bac7505b969b2044cdb6f8a8dcabf",
+    "activities": 12,
+    "gateways": 6,
+    "events": 10,
+    "flows": 27,
+    "lanes": [
+     "SIM card scenario (flattened)",
+     "Phone company",
+     "Another phone company",
+     "Customer"
+    ]
+   },
+   "before": {
+    "group": "B",
+    "before_status": null,
+    "before_score": null,
+    "after_status": "undetermined",
+    "after_score": null,
+    "after_reason": "action_mapping_below_gamma",
+    "problem_removed": false
+   },
+   "after": {
+    "group": "C",
+    "before_status": "undetermined",
+    "before_score": null,
+    "after_status": "undetermined",
+    "after_score": null,
+    "after_reason": "action_mapping_below_gamma",
+    "problem_removed": false
+   },
+   "group_B": {
+    "group": "B",
+    "before_status": null,
+    "before_score": null,
+    "after_status": "undetermined",
+    "after_score": null,
+    "after_reason": "action_mapping_below_gamma",
+    "problem_removed": false
+   },
+   "group_C": {
+    "group": "C",
+    "before_status": "undetermined",
+    "before_score": null,
+    "after_status": "undetermined",
+    "after_score": null,
+    "after_reason": "action_mapping_below_gamma",
+    "problem_removed": false
+   }
+  },
+  {
+   "repair_id": "r9_add_verification",
+   "rule_id": "r9",
+   "lens": "missing_action",
+   "operations": [
+    {
+     "op": "add_task",
+     "id": "sim_fix_verify_correctness",
+     "insert_before": "sid-6B3F7867-7939-43B6-8F6E-8B8A12ECCB7C"
+    },
+    {
+     "op": "rewire_flow",
+     "flow": "sid-3A866116-0712-44D8-894E-9AC156BD68AD",
+     "new_target": "sim_fix_verify_correctness"
+    }
+   ],
+   "semantic_zh": "在 Sign contract 之前插入核验个人信息正确性的活动",
+   "model_evidence": {
+    "flattened_xml_sha256": "2188c09a8347f46ca8b70865663cf8ed733564a39de0991bfac3781046502b3f",
+    "process_record_sha256": "89fb7cef9693f20336cdce64470e12147cd225f1bdeddd4da5979323fe42e399",
+    "activities": 13,
+    "gateways": 6,
+    "events": 8,
+    "flows": 27,
+    "lanes": [
+     "Phone company",
+     "Another phone company",
+     "Customer"
+    ]
+   },
+   "before": {
+    "group": "B",
+    "before_status": "violation",
+    "before_score": 1.0,
+    "after_status": "violation",
+    "after_score": 1.0,
+    "after_reason": null,
+    "problem_removed": false
+   },
+   "after": {
+    "group": "C",
+    "before_status": "violation",
+    "before_score": 1.0,
+    "after_status": "violation",
+    "after_score": 1.0,
+    "after_reason": null,
+    "problem_removed": false
+   },
+   "group_B": {
+    "group": "B",
+    "before_status": "violation",
+    "before_score": 1.0,
+    "after_status": "violation",
+    "after_score": 1.0,
+    "after_reason": null,
+    "problem_removed": false
+   },
+   "group_C": {
+    "group": "C",
+    "before_status": "violation",
+    "before_score": 1.0,
+    "after_status": "violation",
+    "after_score": 1.0,
+    "after_reason": null,
+    "problem_removed": false
+   }
+  },
+  {
+   "repair_id": "r10_activation_owner",
+   "rule_id": "r10",
+   "lens": "incorrect_actor",
+   "operations": [
+    {
+     "op": "move_node_between_lanes",
+     "node": "sid-D80682C2-0CD4-4B60-93BA-E9C747E28950",
+     "from": "Customer",
+     "to": "Phone company"
+    }
+   ],
+   "semantic_zh": "把 Activate SIM card 的归属从 Customer 改为 Phone company",
+   "model_evidence": {
+    "flattened_xml_sha256": "992e3bf8a25c1e470a2eb710416f37816e2b7b770a94fdb8ad0176eb3dfea0e0",
+    "process_record_sha256": "45191274a7c3eb5a26b6acab1b53544a346c9485b207febdde3dd9a4ab2166fe",
+    "activities": 12,
+    "gateways": 6,
+    "events": 8,
+    "flows": 26,
+    "lanes": [
+     "Phone company",
+     "Another phone company",
+     "Customer"
+    ]
+   },
+   "before": {
+    "group": "B",
+    "before_status": "violation",
+    "before_score": 1.0,
+    "after_status": "violation",
+    "after_score": 1.0,
+    "after_reason": null,
+    "problem_removed": false
+   },
+   "after": {
+    "group": "C",
+    "before_status": "violation",
+    "before_score": 1.0,
+    "after_status": "violation",
+    "after_score": 1.0,
+    "after_reason": null,
+    "problem_removed": false
+   },
+   "group_B": {
+    "group": "B",
+    "before_status": "violation",
+    "before_score": 1.0,
+    "after_status": "violation",
+    "after_score": 1.0,
+    "after_reason": null,
+    "problem_removed": false
+   },
+   "group_C": {
+    "group": "C",
+    "before_status": "violation",
+    "before_score": 1.0,
+    "after_status": "violation",
+    "after_score": 1.0,
+    "after_reason": null,
+    "problem_removed": false
+   }
+  },
+  {
+   "repair_id": "r11_consent_before_retrieval",
+   "rule_id": "r11",
+   "lens": "out_of_order",
+   "operations": [
+    {
+     "op": "rewire_flow",
+     "flow": "sid-68DD057D-7D66-40BB-8250-839F6E9D59CC",
+     "new_target": "sid-9D265428-62CB-477B-B15F-7338FF62B44A"
+    },
+    {
+     "op": "add_sequence_flow",
+     "id": "sim_fix_consent_to_retrieval",
+     "source": "sid-9D265428-62CB-477B-B15F-7338FF62B44A",
+     "target": "sid-87D1789E-9525-4D33-9FF0-1FCCCAD20191"
+    },
+    {
+     "op": "remove_sequence_flow",
+     "flow": "sid-516FAE46-6F3D-4F30-B88E-BA21DFDC88C8",
+     "was": "sid-EC14C117-9295-4853-AEB9-A162C7F770DD -> sid-9D265428-62CB-477B-B15F-7338FF62B44A"
+    },
+    {
+     "op": "rewire_flow",
+     "flow": "sid-93CB785B-0851-4F8A-87CB-B79EFEE56691",
+     "new_source": "sid-EC14C117-9295-4853-AEB9-A162C7F770DD",
+     "unchanged_target": "sid-2583945D-844D-440F-B996-2D125D72CE7C"
+    }
+   ],
+   "semantic_zh": "把同意活动移到取数之前（同意 -> 取数），并恢复 Store Data 的原后继路径",
+   "model_evidence": {
+    "flattened_xml_sha256": "bb243de87af9625a6f2138db02f9592c239559dc73d6df7c4523d1500f3736ac",
+    "process_record_sha256": "c712182c29ef610c2ac2912f7730d7454455dc649717b53143a736fa467426e0",
+    "activities": 12,
+    "gateways": 6,
+    "events": 8,
+    "flows": 26,
+    "lanes": [
+     "Phone company",
+     "Another phone company",
+     "Customer"
+    ]
+   },
+   "before": {
+    "group": "B",
+    "before_status": "undetermined",
+    "before_score": 0.0,
+    "after_status": "undetermined",
+    "after_score": 0.0,
+    "after_reason": "no_mapped_rule_order_endpoints",
+    "problem_removed": false
+   },
+   "after": {
+    "group": "C",
+    "before_status": "undetermined",
+    "before_score": 0.0,
+    "after_status": "undetermined",
+    "after_score": 0.0,
+    "after_reason": "no_mapped_rule_order_endpoints",
+    "problem_removed": false
+   },
+   "group_B": {
+    "group": "B",
+    "before_status": "undetermined",
+    "before_score": 0.0,
+    "after_status": "undetermined",
+    "after_score": 0.0,
+    "after_reason": "no_mapped_rule_order_endpoints",
+    "problem_removed": false
+   },
+   "group_C": {
+    "group": "C",
+    "before_status": "undetermined",
+    "before_score": 0.0,
+    "after_status": "undetermined",
+    "after_score": 0.0,
+    "after_reason": "no_mapped_rule_order_endpoints",
+    "problem_removed": false
+   }
+  },
+  {
+   "repair_id": "r13_threshold_50",
+   "rule_id": "r13",
+   "lens": "required_condition_not_enforced",
+   "operations": [
+    {
+     "op": "relabel_sequence_flow",
+     "flow": "sid-E888F2BE-1037-4B0C-AE98-CFABE0C44D29",
+     "from": "Debt < 100",
+     "to": "Debt <= 50"
+    }
+   ],
+   "semantic_zh": "把路由条件标签改为 Debt <= 50，使欠款超过 50 的客户被排除",
+   "model_evidence": {
+    "flattened_xml_sha256": "37b0ef4b7b52bdb90fea7d48cfa9289907ad73bec07b9ea7158d17b82d4ac89d",
+    "process_record_sha256": "03f4ede8c930491acee41a3d78d1aefe5b9adc023a5fe2f735ef3bad4b63da98",
+    "activities": 12,
+    "gateways": 6,
+    "events": 8,
+    "flows": 26,
+    "lanes": [
+     "Phone company",
+     "Another phone company",
+     "Customer"
+    ]
+   },
+   "before": {
+    "group": "B",
+    "before_status": null,
+    "before_score": null,
+    "after_status": "undetermined",
+    "after_score": null,
+    "after_reason": "empty_rule_condition",
+    "problem_removed": false
+   },
+   "after": {
+    "group": "C",
+    "before_status": "undetermined",
+    "before_score": null,
+    "after_status": "undetermined",
+    "after_score": null,
+    "after_reason": "empty_rule_condition",
+    "problem_removed": false
+   },
+   "group_B": {
+    "group": "B",
+    "before_status": null,
+    "before_score": null,
+    "after_status": "undetermined",
+    "after_score": null,
+    "after_reason": "empty_rule_condition",
+    "problem_removed": false
+   },
+   "group_C": {
+    "group": "C",
+    "before_status": "undetermined",
+    "before_score": null,
+    "after_status": "undetermined",
+    "after_score": null,
+    "after_reason": "empty_rule_condition",
+    "problem_removed": false
+   }
+  }
+ ],
+ "stage_attribution": {
+  "a_to_b": {
+   "r8": {
+    "changed_fields": [
+     "actor_action_pairs",
+     "actors",
+     "constraint"
+    ],
+    "attribution": "extraction",
+    "detail_fragments": {
+     "actors": {
+      "A": "[\"The process of phone company…(sha256 641e290a7001)",
+      "B": "[]"
+     },
+     "actor_action_pairs": {
+      "A": "[{\"actor\": \"The process of pho…(sha256 06db15bfe0d9)",
+      "B": "[]"
+     },
+     "constraint": {
+      "A": "null",
+      "B": "more than 30 days"
+     }
+    }
+   },
+   "r9": {
+    "changed_fields": [
+     "actor_action_pairs",
+     "actors",
+     "modality"
+    ],
+    "attribution": "extraction",
+    "detail_fragments": {
+     "modality": {
+      "A": "null",
+      "B": "obligation"
+     },
+     "actors": {
+      "A": "[]",
+      "B": "[\"it\"]"
+     },
+     "actor_action_pairs": {
+      "A": "[]",
+      "B": "[{\"actor\": \"it\", \"action\": \"ve…(sha256 75e39777086b)"
+     }
+    }
+   },
+   "r10": {
+    "changed_fields": [
+     "actor_action_pairs",
+     "actors",
+     "constraint"
+    ],
+    "attribution": "extraction",
+    "detail_fragments": {
+     "actors": {
+      "A": "[\"the customer\"]",
+      "B": "[\"the phone company\"]"
+     },
+     "actor_action_pairs": {
+      "A": "[{\"actor\": \"the customer\", \"ac…(sha256 e9ace3b9e5e9)",
+      "B": "[{\"actor\": \"the phone company\"…(sha256 d7325c3d678f)"
+     },
+     "constraint": {
+      "A": "null",
+      "B": "so that the customer can use t…(sha256 6cdfd2653267)"
+     }
+    }
+   },
+   "r11": {
+    "changed_fields": [
+     "actions",
+     "actor_action_pairs",
+     "modality"
+    ],
+    "attribution": "extraction",
+    "detail_fragments": {
+     "modality": {
+      "A": "null",
+      "B": "obligation"
+     },
+     "actions": {
+      "A": "[\"ask the Data Subject\"]",
+      "B": "[\"ask the Data Subject for con…(sha256 9b3a18d86560)"
+     },
+     "actor_action_pairs": {
+      "A": "[{\"actor\": \"Phone company\", \"a…(sha256 409cf63e789e)",
+      "B": "[{\"actor\": \"Phone company\", \"a…(sha256 107f8e2d0d5d)"
+     }
+    }
+   },
+   "r13": {
+    "changed_fields": [
+     "actions",
+     "actor_action_pairs",
+     "modality"
+    ],
+    "attribution": "extraction",
+    "detail_fragments": {
+     "modality": {
+      "A": "null",
+      "B": "prohibition"
+     },
+     "actions": {
+      "A": "[\"are eligible to receive new …(sha256 2b5afe4dff70)",
+      "B": "[\"receive new SIM cards\"]"
+     },
+     "actor_action_pairs": {
+      "A": "[{\"actor\": \"Customers with out…(sha256 38ddd4f0de3a)",
+      "B": "[{\"actor\": \"Customers with out…(sha256 3e747a73786b)"
+     }
+    }
+   }
+  },
+  "b_to_c": "group C adds exactly the four extended checks on the SAME rule side as B; three-type rows are reused byte-identically (reuses_group_b)"
+ },
+ "boundaries": [
+  "development case study; not formal Gold, not the authors' original experiment, not an enterprise validation",
+  "single case: counts and per-item results only; no seven-type aggregate F1",
+  "five prediction repeats are stability evidence, not 25 independent samples",
+  "the Barrientos artifact is read in place; no restricted text is committed"
+ ]
+}

@@ -46,7 +46,7 @@ SUN_PDF = REPO / "references" / "papers" / "Sun_2024_Design_time_BPC.pdf"
 PRED_DIR = ROOT / "outputs" / "development" / "barrientos_ablation_suite_v2" / "OURS-FULL"
 PRED_REPEATS = [PRED_DIR / f"repeat-{i:02d}" / "canonical_predictions.jsonl" for i in range(1, 6)]
 
-CURATED = ROOT / "data" / "development" / "sim_case_c1" / "case_items_v1.json"
+CURATED = ROOT / "data" / "development" / "sim_case_c1" / "case_items_v2.json"
 LOCAL_DIR = ROOT / "outputs" / "development" / "sim_case_c1"
 REPORT_JSON = ROOT / "outputs" / "reports" / "sim_case_c1_checklist.json"
 REPORT_MD = ROOT / "outputs" / "reports" / "sim_case_c1_checklist.md"
@@ -59,7 +59,8 @@ RESTRICTED_MIN_LEN = 40
 # verdicts only — never full corpus text).
 COMMITTABLE_KEYS = (
     "schema_version", "case", "claim_scope", "is_gold", "performance_claim_ready",
-    "inputs", "binding_policy", "process_structure", "prediction_reuse", "coverage",
+    "inputs", "binding_policy", "reference_judgment_policy", "reference_policy_check",
+    "detection_plan", "process_structure", "prediction_reuse", "coverage",
     "taxonomy_reading_aid", "taxonomy_reading_aid_boundary", "items",
     "paper_conflict_record", "capability_probes", "open_questions",
 )
@@ -318,18 +319,69 @@ def assert_no_restricted_text(payload: str, corpus: list[str]) -> dict:
 
 
 def check_coverage(req: dict, step3: dict, curated: dict) -> dict:
-    curated_ids = [i["rule_id"] for i in curated["items"]]
-    missing = [rid for rid in SIM_IDS if rid not in curated_ids]
-    extra = [rid for rid in curated_ids if rid not in SIM_IDS]
+    items = curated["items"]
+    main = [i["rule_id"] for i in items if i.get("in_main_denominator")]
+    background = [i["rule_id"] for i in items if not i.get("in_main_denominator")]
+    declared_main = sorted(entry.split("/")[0] for entry in curated["main_denominator"])
+    declared_background = sorted(curated["background_items"])
     empty = [f"{r['rule_id']}/v{r['version']}" for r in req["rows"] if r["empty"]]
     deviations = {rid: len(step3["rows"][rid]["deviations"]) for rid in SIM_IDS}
+    excluded = sorted(entry["item"] for entry in curated["excluded_from_detection"])
     return {
-        "curated_items": len(curated_ids),
-        "missing_curated_items": missing,
-        "unexpected_curated_items": extra,
+        "curated_items": len(items),
+        "main_denominator": sorted(main),
+        "main_denominator_declared": declared_main,
+        "main_denominator_matches": sorted(main) == declared_main,
+        "main_denominator_size": len(main),
+        "background_items": sorted(background),
+        "background_declared": declared_background,
         "empty_text_entries": sorted(empty),
+        "excluded_from_detection": excluded,
         "external_deviations_per_rule": deviations,
         "external_deviations_total": sum(deviations.values()),
+    }
+
+
+def validate_reference_policy(curated: dict) -> dict:
+    """Enforce that reference judgments are detector-independent and source-labelled."""
+    problems: list[str] = []
+    forbidden_slugs = set(curated["reference_judgment_policy"]["forbidden_expectation_forms"])
+    allowed_judgments = {"issue_present", "issue_present_with_premise", "background_only"}
+
+    def walk(node, path="") -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if key in ("proposed_expected", "capability", "status_proposal"):
+                    problems.append(f"capability-conditioned field '{key}' at {path}")
+                walk(value, f"{path}/{key}")
+        elif isinstance(node, list):
+            for idx, value in enumerate(node):
+                walk(value, f"{path}[{idx}]")
+        elif isinstance(node, str) and node in forbidden_slugs:
+            problems.append(f"forbidden expectation form '{node}' at {path}")
+
+    walk(curated["items"])  # the policy block itself names the forbidden forms; scan item content only
+
+    for item in curated["items"]:
+        judgment = item.get("dev_reference_judgment") or {}
+        if judgment.get("is_gold") is not False:
+            problems.append(f"{item['rule_id']}: dev_reference_judgment.is_gold must be False")
+        if judgment.get("judgment") not in allowed_judgments:
+            problems.append(f"{item['rule_id']}: unknown judgment {judgment.get('judgment')!r}")
+        if not judgment.get("sources"):
+            problems.append(f"{item['rule_id']}: dev_reference_judgment.sources is empty")
+        if not (item.get("semantic_issue") or {}).get("summary_zh"):
+            problems.append(f"{item['rule_id']}: semantic_issue.summary_zh missing")
+        if judgment.get("judgment") == "issue_present_with_premise" and not judgment.get("premise_zh"):
+            problems.append(f"{item['rule_id']}: premise required when judgment is issue_present_with_premise")
+
+    if problems:
+        raise SystemExit("reference-policy violations: " + "; ".join(problems))
+    return {
+        "checked_items": len(curated["items"]),
+        "capability_conditioned_fields": 0,
+        "gold_claims": 0,
+        "judgments": {i["rule_id"]: i["dev_reference_judgment"]["judgment"] for i in curated["items"]},
     }
 
 
@@ -347,8 +399,9 @@ def build() -> dict:
     preds = parse_predictions(PRED_REPEATS)
 
     coverage = check_coverage(req, step3, curated)
-    if coverage["missing_curated_items"] or coverage["unexpected_curated_items"]:
-        raise SystemExit(f"coverage failure: {coverage}")
+    if not coverage["main_denominator_matches"] or coverage["main_denominator_size"] != 5:
+        raise SystemExit(f"main-denominator coverage failure: {coverage}")
+    reference_policy = validate_reference_policy(curated)
 
     req_by_key = {(r["rule_id"], r["version"]): r for r in req["rows"]}
     rows = []
@@ -396,6 +449,21 @@ def build() -> dict:
             "predictions_repeats": [rep["artifact"] for rep in preds["repeats"]],
         },
         "binding_policy": curated["binding_policy"],
+        "reference_judgment_policy": curated["reference_judgment_policy"],
+        "reference_policy_check": reference_policy,
+        "detection_plan": {
+            "main_denominator": [f"{rid}/v2" for rid in coverage["main_denominator"]],
+            "background_items": coverage["background_items"],
+            "excluded_from_detection": coverage["excluded_from_detection"],
+            "three_groups": {
+                "A": "non-LLM Stage 2 (project deterministic adapter) + frozen Sun-style three-type detection",
+                "B": "existing real-LLM Stage 2 predictions (repeat-01 primary) + the SAME three-type detection as A",
+                "C": "SAME Stage 2 and three-type results as B, plus the four extended types",
+            },
+            "role_binding": curated["binding_policy"]["role_binding_policy"]["bindings"],
+        },
+        "run_results": None,
+        "run_results_note_zh": "③④⑤（方法实际输出、一致性、差异阶段）由 scripts/run_sim_case_c1_v1.py 的运行胶囊填充；核对表本身不产生这些结论",
         "process_structure": {
             "counts": process["counts"],
             "participants": process["participants"],
@@ -422,7 +490,10 @@ def build() -> dict:
         "items": rows,
         "paper_conflict_record": curated["paper_conflict_record"],
         "capability_probes": capability_probes(process, preds),
-        "open_questions": [q for item in rows for q in item["proposed_expected"]["needs_confirmation"]],
+        "open_questions": [],
+        "unresolved_source_notes": [
+            {"rule_id": i["rule_id"], "conflicts": i["conflicts"]} for i in rows if i["conflicts"]
+        ],
     }
     return doc
 
@@ -515,10 +586,12 @@ def render_local_md(doc: dict) -> str:
             f"- 需求文本（local only）：" + " ｜ ".join(
                 f"v{r['version']}: " + (r["text"] if r["text"] else "（空）") for r in item["requirement_versions"]),
             f"- 变更语境：{item['change_context']}",
-            f"- 流程证据：{item['process_evidence']}",
+            f"- ① 语义问题：{item['semantic_issue']}",
+            f"- ② 开发参考判断：{item['dev_reference_judgment']}",
             f"- 外部原始标注：{item['external_annotation_source']}",
             f"- 冲突：{item['conflicts']}",
-            f"- 建议预期：{item['proposed_expected']}",
+            f"- 候选检测视角：{item['candidate_lenses']}",
+            f"- ③④⑤：由运行胶囊填充（本核对表不产生）",
             f"- 预测证据（repeat-01，短片段）：{item['prediction_evidence']}",
             "",
         ]
@@ -570,24 +643,28 @@ def render_report_md(doc: dict) -> str:
         f"- 5 轮抽取结果完全一致：**{reuse['repeats_identical']}**（重复不作独立样本）",
         f"- 独立输入 ID：{reuse['sample_ids']}",
         "",
-        "## 5. 逐条核对表",
+        "## 5. 逐条核对表（① 语义问题 / ② 开发参考判断）",
         "",
-        "| 规则 | 版本 | 规则含义（我方转述） | 流程证据要点 | 外部原始标注 | 冲突 | 建议预期 | 需确认 |",
+        "| 规则 | 在 5 条分母 | ① 语义问题 | ② 开发参考判断 | ② 来源 | 外部原始标注 | 冲突 | 候选检测视角 |",
         "|---|---|---|---|---|---|---|---|",
     ]
     for item in doc["items"]:
-        ev = item["process_evidence"]
-        ev_brief = ev.get("note_zh") or ev.get("model_label") or ""
+        judgment = item["dev_reference_judgment"]
         ann = item["external_annotation_source"]
         dev = ann["deviations"][0] if ann["deviations"] else {}
-        ann_brief = f"{dev.get('type')} / `{dev.get('bpmn_element')}` / {dev.get('element_label')}"
+        ann_brief = f"{dev.get('type')} / `{dev.get('bpmn_element')}` / {dev.get('element_label')}" if dev else "—"
         conflict = "；".join(c["detail_zh"] for c in item["conflicts"]) or "—"
-        q = ",".join(item["proposed_expected"]["needs_confirmation"]) or "—"
+        premise = f"（前提：{judgment['premise_zh']}）" if judgment.get("premise_zh") else ""
         lines.append(
-            f"| {item['rule_id']} | {item['version']} | {item['rule_meaning_zh']} | {ev_brief} | {ann_brief} | "
-            f"{conflict} | {item['proposed_expected']['status_proposal']}（{item['proposed_expected']['capability']}） | {q} |"
+            f"| {item['rule_id']}/{item['version']} | {'是' if item['in_main_denominator'] else '否（背景）'} | "
+            f"{item['semantic_issue']['summary_zh']} | {judgment['judgment']}{premise} | "
+            f"{', '.join(judgment['sources'])} | {ann_brief} | {conflict} | {', '.join(item['candidate_lenses']) or '—'} |"
         )
     lines += [
+        "",
+        "> ③ 方法实际输出、④ 一致性、⑤ 差异阶段**不在本表中**：由 `scripts/run_sim_case_c1_v1.py` 的运行胶囊填充。",
+        "> 本表是开发参考判断，不是正式 Gold，也不声称用户已逐条完成人工标注。",
+        "",
         "",
         "## 6. 能力核实（§5.6）",
         "",

@@ -4559,3 +4559,35 @@
 - 仍存在 blocker：无
 - 备注：New: docs/research/S3_REAL_CASE_E2E_TASK_SPEC_2026-09-11.md (v4 revision in place), data/development/sim_case_c1/case_items_v1.json (curated per-item proposals), scripts/build_sim_case_checklist_v1.py, tests/test_sim_case_checklist_v1.py (14 focused tests), outputs/reports/sim_case_c1_checklist.{json,md}, gitignored local capsule outputs/development/sim_case_c1/. Overwrite applied only to this batch's own just-created capsule after a factual correction (labelled sequence flows = 4, not 1); no Gold/prediction/evidence artifact touched. Zero LLM/API, no network, references/ read in place (BPMN sha 338c8144, requirements sha e13d9a2a, step_3 sha 96b3c1e8). Seven user-reported issues verified with evidence; 5 open questions (Q1-Q4, Q7) collected for user confirmation; taxonomy mapping demoted to a reading aid and never used for scoring.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-12T03:51:36.405243+00:00 - S3.9-EXT-REAL-CASE: SIM case A/B/C run, checklist v2, supplement baseline, transforms and tests
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：31 passed, 2 warnings in 7.61s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`e695ec4eda3c5f066469f166533c55576958527b`；相关未提交路径：31 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Revised evaluation data to case_items_v2 (five v2 rules in the main denominator, r12 background only, detector-independent reference judgments, explicit r13 boundary policy), updated the checklist builder/tests/report accordingly, added the flatten+repair transforms, the SIM case runner (A/B/C), the supplement runner (reconstructed Figure 10, non-LLM baseline only, LLM group recorded missing), and the run/checklist reports. Zero LLM/API; references read in place.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-12T03:52:13.252596+00:00 - S3.9-EXT-REAL-CASE experiment run: SIM case groups A/B/C plus five minimal repair controls (zero API)
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=sim_case_c1_run_v1；阶段=stage3；方法=A=non-LLM adapter + frozen Sun three types; B=existing real-LLM stage2 + same three types; C=B plus four extended types；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_sim_case_c1_v1.py --overwrite`
+- manifest：outputs/development/sim_case_c1/run_v1/manifest.json
+- 结果摘要：A 15 checks (5 violation/9 undetermined/1 satisfied); B 15 (5/8/2); C 35 (8/25/2, includes 15 rows inherited from B). Reference comparison: r9 and r10 found; r8/r11/r13 undetermined (action_mapping_below_gamma / no_mapped_rule_order_endpoints / empty_rule_condition). All five minimal repair controls left the problem in place. Supplement (reconstructed Figure 10, non-LLM baseline): 28 checks (4 violation/24 undetermined); real-LLM group missing because Table 13 text differs from the bound prediction strings in case/punctuation.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：15 passed, 2 warnings in 7.79s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`e695ec4eda3c5f066469f166533c55576958527b`；相关未提交路径：33 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Development case study only: not formal Gold, not the authors' original experiment, not an enterprise validation. Five prediction repeats were identical; repeat-01 is the pre-declared primary.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

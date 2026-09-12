@@ -77,16 +77,49 @@ def test_references_are_read_only_inputs_not_copies(doc):
 def test_coverage_is_complete_and_empty_text_entries_excluded(doc):
     coverage = doc["coverage"]
     assert coverage["curated_items"] == 6
-    assert coverage["missing_curated_items"] == []
-    assert coverage["unexpected_curated_items"] == []
+    assert coverage["main_denominator_size"] == 5
+    assert coverage["main_denominator"] == ["r10", "r11", "r13", "r8", "r9"]
+    assert coverage["main_denominator_matches"] is True
+    assert coverage["background_items"] == ["r12"]
     assert coverage["external_deviations_total"] == 6
     assert coverage["empty_text_entries"] == ["r12/v2", "r9/v1"]
+    assert coverage["excluded_from_detection"] == ["r12/v2", "r9/v1"]
 
-    policy = doc["binding_policy"]
-    excluded = {entry["item"] for entry in policy["excluded_from_evaluation"]}
-    assert excluded == {"r9/v1", "r12/v2"}
-    assert policy["rule_version_under_evaluation"].startswith("version 2")
-    assert policy["evaluation_unit"].startswith("one requirement id")
+    plan = doc["detection_plan"]
+    assert sorted(plan["main_denominator"]) == ["r10/v2", "r11/v2", "r13/v2", "r8/v2", "r9/v2"]
+    assert plan["background_items"] == ["r12"]
+    assert plan["role_binding"] == {"Data Controller": "Phone company", "Data Subject": "Customer"}
+    assert doc["run_results"] is None  # the checklist never fabricates (3)(4)(5)
+
+
+def test_reference_judgments_are_detector_independent(doc):
+    check = doc["reference_policy_check"]
+    assert check["capability_conditioned_fields"] == 0
+    assert check["gold_claims"] == 0
+    for item in doc["items"]:
+        judgment = item["dev_reference_judgment"]
+        assert judgment["is_gold"] is False
+        assert judgment["sources"], item["rule_id"]
+        assert item["semantic_issue"]["summary_zh"]
+        assert "proposed_expected" not in item and "capability" not in item
+    by_rule = {i["rule_id"]: i["dev_reference_judgment"]["judgment"] for i in doc["items"]}
+    assert by_rule == {"r8": "issue_present", "r9": "issue_present", "r10": "issue_present",
+                       "r11": "issue_present", "r13": "issue_present_with_premise",
+                       "r12": "background_only"}
+    r13 = [i for i in doc["items"] if i["rule_id"] == "r13"][0]
+    assert r13["dev_reference_judgment"]["premise_zh"]
+    assert "连线标签" in r13["dev_reference_judgment"]["premise_zh"]
+
+
+def test_numeric_boundary_policy_is_explicit(doc):
+    policy = doc["binding_policy"]["numeric_boundary_policy_r13"]
+    assert policy["difference_interval"].startswith("50 < debt < 100")
+    r13 = [i for i in doc["items"] if i["rule_id"] == "r13"][0]
+    assert r13["semantic_issue"]["evidence"]["example_value"] == 75
+    assert r13["semantic_issue"]["evidence"]["difference_interval"] == "50 < debt < 100"
+    assert "does not trigger" in policy["natural_language_meaning"]
+    assert "NOT adopted" in policy["external_suggestion"]
+    assert policy["executable_condition_expression"].startswith("absent")
 
 
 # ---------------------------------------------------------------------------
@@ -141,26 +174,23 @@ def test_prediction_path_never_reads_the_answer_key():
 # 5. reading aid is not a scoring key
 # ---------------------------------------------------------------------------
 
-def test_reading_aid_is_not_used_to_synthesise_expectations(doc):
-    aid_values = {v for v in doc["taxonomy_reading_aid"].values()}
+def test_reading_aid_is_only_a_documented_aid(doc):
+    assert "READING AID ONLY" in doc["taxonomy_reading_aid_boundary"]
     for item in doc["items"]:
-        expected = item["proposed_expected"]
-        assert set(expected) == {"status_proposal", "rationale_zh", "capability", "needs_confirmation"}
-        blob = json.dumps(expected, ensure_ascii=False)
-        for value in aid_values:
+        blob = json.dumps(item["dev_reference_judgment"], ensure_ascii=False) + \
+            json.dumps(item["semantic_issue"], ensure_ascii=False)
+        for value in doc["taxonomy_reading_aid"].values():
             assert value not in blob
-        assert expected["status_proposal"] not in doc["taxonomy_reading_aid"]
+        for dev in item["external_annotation_source"]["deviations"]:
+            assert dev["reading_aid"] in set(doc["taxonomy_reading_aid"].values()) | {"未映射"}
 
 
-def test_open_questions_cover_only_disputed_items(doc):
-    by_rule = {item["rule_id"]: item["proposed_expected"]["needs_confirmation"] for item in doc["items"]}
-    assert by_rule["r10"] == []
-    assert by_rule["r12"] == ["Q4"]
-    assert set(by_rule["r8"]) == {"Q7"}
-    assert set(by_rule["r9"]) == {"Q1"}
-    assert set(by_rule["r11"]) == {"Q2"}
-    assert set(by_rule["r13"]) == {"Q3"}
-    assert set(doc["open_questions"]) == {"Q1", "Q2", "Q3", "Q4", "Q7"}
+def test_open_questions_replaced_by_recorded_source_conflicts(doc):
+    assert doc["open_questions"] == []
+    noted = {entry["rule_id"] for entry in doc["unresolved_source_notes"]}
+    assert noted == {"r9", "r11", "r12", "r13"}
+    r11 = [i for i in doc["items"] if i["rule_id"] == "r11"][0]
+    assert "missing_vs_misplaced" in {c["kind"] for c in r11["conflicts"]}
 
 
 def test_paper_conflict_record_keeps_both_readings(doc):
