@@ -1,0 +1,68 @@
+{
+  "schema_version": "s3_semantic_grounding_v3_manifest@1.0.0",
+  "run_id": "s3_semantic_grounding_v3",
+  "revision": "s3_semantic_grounding_v3",
+  "scope": "development_only",
+  "generated_utc": "2026-09-13T12:12:46.068212+00:00",
+  "evaluator_version": "s3_semantic_grounding_v3_evaluator@1.0.0",
+  "deterministic_predictions_reused": {
+    "source_path": "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl",
+    "expected_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+    "actual_raw_sha256": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092",
+    "actual_canonical_lf_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+    "match": true,
+    "hash_mode": "raw_or_canonical_lf",
+    "v2_real_api_calls": 0,
+    "v2_network_calls": 0,
+    "reuse_policy": "byte-identical deterministic predictions; the scorer, panel and sentence view are not re-run or modified by v3"
+  },
+  "sample_count": {
+    "variants": 40,
+    "controls": 40,
+    "objects": 80
+  },
+  "inputs": {
+    "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+    "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092",
+    "outputs/evidence/s3_semantic_grounding_v2/artifact_hashes.json": "be25e54a80e345a6667b8d7f6437e3a3a5183170c470326018e08086886eb758",
+    "outputs/evidence/s3_semantic_grounding_v2/manifest.json": "35f2340d609845ce20ecb3d769fac0c5e4a208d87fe7afc31894eff38dddc2cd",
+    "outputs/reports/s3_semantic_grounding_v2.json": "70ca83290e7d863f9f3ce74ccb1db4ac64607fa2c8de90c2a04c58a6f67978e3",
+    "outputs/reports/s3_formula_repair_v2.json": "f46c4bd49a6e0ad0163af176d6c53b46d5b4d2b33f81a32a99abf49fa49ab35c",
+    "outputs/evidence/s3_formula_repair_v2/extended_four/reference/winter/predictions.jsonl": "18fa61ae9dda8c104f59360a91ef9979e7c793c9d3c1a339e069c3302e0780d7"
+  },
+  "implementation_hashes": {
+    "scripts/run_s3_semantic_grounding_v3.py": "d75cf33ab66d544a03a079cf8f9ba9591df4512a862370294e4139ac67fe4710",
+    "src/bpc_hybrid/s3_semantic_grounding_v3.py": "cc149d4cafdc12ae33f5ceca42e09ec0b0dd7981228e2769f106bfa2473662ad",
+    "configs/stage3_semantic_grounding_v3.json": "8907e39f386879bb256232ec91a7da1b90ce9bfead5493ff33324533dd466764",
+    "tests/test_s3_semantic_grounding_v3.py": "09d8bf00cc18333cd588959f9ed4499368b6ce9dcd7960ba6b055cf1bc5a8fbe"
+  },
+  "evaluation_protocol": {
+    "primary": "target_paired_causal_fixed_panel",
+    "secondary": [
+      "legacy_fixed_control_diagnostic"
+    ],
+    "control_scope": "all 40 frozen target-field controls for every method; the same denominator is used for each method",
+    "control_self_consistency": "diagnostic only; not an independent global-compliance label and never used to select a different evaluation subset",
+    "clean_unified_status": "NOT_REPORTED_NO_INDEPENDENT_GLOBAL_LABELS",
+    "unknown_policy": "variant unknown is FN but reported separately; control unknown is reported outside the decided TNR denominator; unknown is never a compliant prediction; pair success uses all pairs as denominator"
+  },
+  "fallback_pack": {
+    "schema_version": "s3_semantic_grounding_fallback_candidate_pack@1.0.0",
+    "item_count": 20,
+    "semantic_fields_preserved_for_all_items": true,
+    "anonymisation_ok": true,
+    "real_api_calls": 0,
+    "network_calls": 0
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "frozen_panel_modified": false,
+    "c36_modified": false,
+    "v2_outputs_overwritten": false,
+    "v1_outputs_overwritten": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "development_only_not_formal_oracle": true
+  }
+}

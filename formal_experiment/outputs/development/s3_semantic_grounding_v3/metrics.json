@@ -1,0 +1,1317 @@
+{
+  "schema_version": "s3_semantic_grounding_v3_metrics@1.0.0",
+  "run_id": "s3_semantic_grounding_v3",
+  "revision": "s3_semantic_grounding_v3",
+  "scope": "development_only_synthetic_controlled_panel",
+  "evaluator_version": "s3_semantic_grounding_v3_evaluator@1.0.0",
+  "deterministic_predictions_reused": {
+    "source_path": "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl",
+    "expected_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+    "actual_raw_sha256": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092",
+    "actual_canonical_lf_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+    "match": true,
+    "hash_mode": "raw_or_canonical_lf",
+    "v2_real_api_calls": 0,
+    "v2_network_calls": 0,
+    "reuse_policy": "byte-identical deterministic predictions; the scorer, panel and sentence view are not re-run or modified by v3"
+  },
+  "evaluation_protocol": {
+    "primary": "target_paired_causal_fixed_panel",
+    "secondary": [
+      "legacy_fixed_control_diagnostic"
+    ],
+    "control_scope": "all 40 frozen target-field controls for every method; the same denominator is used for each method",
+    "control_self_consistency": "diagnostic only; not an independent global-compliance label and never used to select a different evaluation subset",
+    "clean_unified_status": "NOT_REPORTED_NO_INDEPENDENT_GLOBAL_LABELS",
+    "unknown_policy": "variant unknown is FN but reported separately; control unknown is reported outside the decided TNR denominator; unknown is never a compliant prediction; pair success uses all pairs as denominator"
+  },
+  "target_paired": {
+    "schema_version": "s3_target_paired_evaluator@3.0.0",
+    "evaluation_kind": "target_paired_causal",
+    "primary": true,
+    "total_pairs": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "pairs": 10,
+        "variant": {
+          "TP": 10,
+          "FN_observed_negative": 0,
+          "FN_unknown": 0,
+          "FN": 0,
+          "decided": 10,
+          "unknown": 0,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 8,
+          "FP": 0,
+          "unknown": 2,
+          "decided": 8,
+          "coverage": 0.8,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "precision_denominator_tp_plus_fp": 10,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 1.0,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 8,
+        "pair_success_rate": 0.8,
+        "unknown_rate_variant": 0.0,
+        "unknown_rate_control": 0.2
+      },
+      "required_condition_not_enforced": {
+        "pairs": 10,
+        "variant": {
+          "TP": 9,
+          "FN_observed_negative": 0,
+          "FN_unknown": 1,
+          "FN": 1,
+          "decided": 9,
+          "unknown": 1,
+          "coverage": 0.9,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 9,
+          "FP": 1,
+          "unknown": 0,
+          "decided": 10,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9,
+        "precision_denominator_tp_plus_fp": 10,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.9,
+        "tnr_over_decided_controls": 0.9,
+        "control_fpr_over_decided_controls": 0.1,
+        "control_fpr_over_all_pairs": 0.1,
+        "pair_success": 8,
+        "pair_success_rate": 0.8,
+        "unknown_rate_variant": 0.1,
+        "unknown_rate_control": 0.0
+      },
+      "constraint_violated": {
+        "pairs": 10,
+        "variant": {
+          "TP": 2,
+          "FN_observed_negative": 0,
+          "FN_unknown": 8,
+          "FN": 8,
+          "decided": 2,
+          "unknown": 8,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 2,
+          "FP": 0,
+          "unknown": 8,
+          "decided": 2,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "precision_denominator_tp_plus_fp": 2,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.2,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 2,
+        "pair_success_rate": 0.2,
+        "unknown_rate_variant": 0.8,
+        "unknown_rate_control": 0.8
+      },
+      "exception_not_handled": {
+        "pairs": 10,
+        "variant": {
+          "TP": 3,
+          "FN_observed_negative": 0,
+          "FN_unknown": 7,
+          "FN": 7,
+          "decided": 3,
+          "unknown": 7,
+          "coverage": 0.3,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 9,
+          "FP": 0,
+          "unknown": 1,
+          "decided": 9,
+          "coverage": 0.9,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615,
+        "precision_denominator_tp_plus_fp": 3,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.3,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 3,
+        "pair_success_rate": 0.3,
+        "unknown_rate_variant": 0.7,
+        "unknown_rate_control": 0.1
+      }
+    },
+    "aggregate_side_outcomes_mutually_exclusive": {
+      "variant": {
+        "positive": 24,
+        "negative_observed_wrong": 0,
+        "unknown": 16,
+        "total": 40,
+        "coverage": 0.6,
+        "unknown_rate": 0.4
+      },
+      "control": {
+        "negative": 28,
+        "positive_false_alarm": 1,
+        "unknown": 11,
+        "total": 40,
+        "coverage": 0.725,
+        "unknown_rate": 0.275,
+        "false_positive_rate_over_decided_controls": 0.0345,
+        "false_positive_rate_over_all_pairs": 0.025
+      }
+    },
+    "pair_level_outcomes_mutually_exclusive": {
+      "control_unknown": 2,
+      "both_correct": 21,
+      "control_false_alarm": 1,
+      "variant_unknown": 7,
+      "both_unknown": 9
+    },
+    "macro_f1_four_types": 0.6737,
+    "control_target_false_positive_rate": 0.025,
+    "control_target_false_positive_rate_over_decided_controls": 0.0345,
+    "target_field_unknown_rate": 0.3375,
+    "variant_unknown_rate": 0.4,
+    "control_unknown_rate": 0.275,
+    "variant_coverage": 0.6,
+    "control_coverage": 0.725,
+    "pair_success_rate": 0.525,
+    "pair_success_count": 21,
+    "pair_success_denominator": 40,
+    "explicit_denominators": {
+      "variant_positive_tp_denominator": "all scored variant checks",
+      "variant_failure_fn_denominator": "all scored variant checks",
+      "recall_includes_unknown_as_fn": true,
+      "control_tnr_denominator": "decided controls (TN+FP) only",
+      "control_unknown_denominator": "all scored control checks",
+      "pair_success_denominator": "all paired variant/control checks",
+      "unknown_is_not_a_compliant_prediction": true,
+      "all_side_checks_denominator_for_overall_unknown_rate": "all four target-type checks across both sides"
+    },
+    "uses_expected_only_for_evaluation_grouping": true,
+    "does_not_mutate_predictions": true
+  },
+  "variant_binary": {
+    "per_type": {
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.36,
+        "recall": 0.9,
+        "f1": 0.5143
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.6,
+        "recall": 0.3,
+        "f1": 0.4
+      }
+    },
+    "macro_f1_four_types": 0.5619
+  },
+  "legacy_fixed_control_diagnostic": {
+    "metrics": {
+      "schema_version": "s3_unified_evaluator@2.0.0",
+      "total_objects": 80,
+      "control_objects": 40,
+      "variant_objects": 40,
+      "five_class_accuracy": 0.35,
+      "per_class": {
+        "none": {
+          "support": 40,
+          "precision": 1.0,
+          "recall": 0.125,
+          "f1": 0.2222
+        },
+        "prohibited_action_present": {
+          "support": 10,
+          "precision": 0.7692,
+          "recall": 1.0,
+          "f1": 0.8696
+        },
+        "required_condition_not_enforced": {
+          "support": 10,
+          "precision": 0.2581,
+          "recall": 0.8,
+          "f1": 0.3902
+        },
+        "constraint_violated": {
+          "support": 10,
+          "precision": 0.6667,
+          "recall": 0.2,
+          "f1": 0.3077
+        },
+        "exception_not_handled": {
+          "support": 10,
+          "precision": 0.375,
+          "recall": 0.3,
+          "f1": 0.3333
+        }
+      },
+      "macro_f1_four_violation_types": 0.4752,
+      "macro_f1_five_classes": 0.4246,
+      "abstentions": 20,
+      "denominator_policy": "None is an abstention and counts as an error for the Gold class; it is never counted as a compliant or violating prediction."
+    },
+    "control_objects": 40,
+    "not_a_pure_none_gold_benchmark": true,
+    "all_frozen_controls_kept_fixed": true,
+    "source_control_scope": "all 40 target-field controls",
+    "reason": "controls only guarantee their mutated target field, and the 20 fallback subset is not representative of all controls; retained only as continuity diagnostic, not as primary comparison"
+  },
+  "control_model_diagnostic": {
+    "diagnostic_status_counts": {
+      "model_undetermined": 13,
+      "model_internal_all_clear": 5,
+      "model_reports_other_field_positive": 22
+    },
+    "diagnostic_status_by_item": {
+      "syn_v2_prohibited_action_01": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "prohibited_action_present"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_prohibited_action_02": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "prohibited_action_present"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_prohibited_action_03": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_prohibited_action_04": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_prohibited_action_05": {
+        "status": "model_internal_all_clear",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_prohibited_action_06": {
+        "status": "model_internal_all_clear",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_prohibited_action_07": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_prohibited_action_08": {
+        "status": "model_internal_all_clear",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_prohibited_action_09": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_prohibited_action_10": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_01": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_02": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_03": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_04": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_05": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_06": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_07": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_08": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_09": {
+        "status": "model_internal_all_clear",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_required_condition_10": {
+        "status": "model_internal_all_clear",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_01": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_02": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_03": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_04": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_05": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_06": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_07": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_08": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_09": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_constraint_violated_10": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_01": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [
+          "constraint_violated"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_02": {
+        "status": "model_undetermined",
+        "all_clear_types": [
+          "constraint_violated"
+        ],
+        "violated_types": [],
+        "unknown_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_03": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_04": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "prohibited_action_present"
+        ],
+        "unknown_types": [
+          "required_condition_not_enforced"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_05": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_06": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "constraint_violated"
+        ],
+        "unknown_types": [
+          "required_condition_not_enforced"
+        ],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_07": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_08": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_09": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      },
+      "syn_v2_exception_not_handled_10": {
+        "status": "model_reports_other_field_positive",
+        "all_clear_types": [
+          "prohibited_action_present",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "violated_types": [
+          "required_condition_not_enforced"
+        ],
+        "unknown_types": [],
+        "diagnostic_only": true,
+        "independent_validation": false,
+        "not_a_global_compliance_label": true,
+        "used_to_select_evaluation_subset": false,
+        "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+      }
+    },
+    "diagnostic_only": true,
+    "independent_global_compliance_labels_available": false,
+    "used_to_select_evaluation_subset": false
+  },
+  "fallback_pack_summary": {
+    "schema_version": "s3_semantic_grounding_fallback_candidate_pack@1.0.0",
+    "revision": "s3_semantic_grounding_v3",
+    "item_count": 20,
+    "side_counts": {
+      "variant": 7,
+      "control": 13
+    },
+    "trigger_counts": {
+      "action_grounding_ambiguous": 10,
+      "condition_semantic_ambiguous": 10,
+      "unsupported_abstract_constraint": 11,
+      "action_grounding_unresolved": 5,
+      "exception_semantic_ambiguous": 3,
+      "other_documented_semantic_ambiguity": 1,
+      "exception_handler_semantic_ambiguous": 1
+    },
+    "semantic_fields_preserved_for_all_items": true,
+    "anonymisation_ok": true,
+    "contains_expected_labels": false
+  },
+  "anonymisation_audit": {
+    "schema_version": "s3_fallback_pack_integrity_audit@1.0.0",
+    "item_count": 20,
+    "forbidden_or_generated_hits": [],
+    "forbidden_or_generated_hit_count": 0,
+    "semantic_preservation_mismatch_count": 0,
+    "semantic_preservation_mismatches": [],
+    "semantic_fields_preserved_for_all_items": true,
+    "anonymisation_ok": true
+  },
+  "collision_audit": {
+    "schema_version": "s3_composite_input_identifiability@2.0.0",
+    "identity_definition": "canonical_rule_input_hash (model-visible Rule Input) + canonical_process_input_hash (model-visible Process Record/XML) + different expected labels",
+    "true_collision_group_count": 9,
+    "true_collision_item_count": 20,
+    "true_collision_groups": [
+      {
+        "group_key": [
+          "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+          "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_01",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          },
+          {
+            "item_id": "syn_v2_exception_not_handled_01",
+            "side": "variant",
+            "expected_label": "exception_not_handled",
+            "canonical_rule_input_hash": "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_01",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "8efacec82ed3067c984cdee9b914b56252421cc7de8695534b2d30bf740dd7f2",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "6b3a707ccc137ceef6d0c01225168f963130fdff52df00607a72e0941b59b9c8",
+          "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_02",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "6b3a707ccc137ceef6d0c01225168f963130fdff52df00607a72e0941b59b9c8",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_02",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "6b3a707ccc137ceef6d0c01225168f963130fdff52df00607a72e0941b59b9c8",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "afcba6d513e07cdff9d95e3bfa2854341556f3d938c669d370cbcf8fb969636c",
+          "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_04",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "afcba6d513e07cdff9d95e3bfa2854341556f3d938c669d370cbcf8fb969636c",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_04",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "afcba6d513e07cdff9d95e3bfa2854341556f3d938c669d370cbcf8fb969636c",
+            "canonical_process_input_hash": "e2dee0d480c4416194f360bc92fefa7b028d717824475aa7d245991537e67abb",
+            "bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+          "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_05",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+            "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_05",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+            "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+          "bb3e09c90b5a46624cb7784661a44c2d6a4e788e85e13fbea1039905d6f4d403"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_06",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "canonical_process_input_hash": "bb3e09c90b5a46624cb7784661a44c2d6a4e788e85e13fbea1039905d6f4d403",
+            "bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_08",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "canonical_process_input_hash": "bb3e09c90b5a46624cb7784661a44c2d6a4e788e85e13fbea1039905d6f4d403",
+            "bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+          "85d0814359285c9b5dd23c81ba48167cf2b96cad509acb7f6424162d3d5a1b10"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_07",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "canonical_process_input_hash": "85d0814359285c9b5dd23c81ba48167cf2b96cad509acb7f6424162d3d5a1b10",
+            "bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_07",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "d61bdfc6a812b3d0eaf4623d7e2b8fda88380cd5f83d764247f1668c8d20c2c6",
+            "canonical_process_input_hash": "85d0814359285c9b5dd23c81ba48167cf2b96cad509acb7f6424162d3d5a1b10",
+            "bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+          "1c3a0e886144ead8750b578db25076ca22c5a806e4249eed69b905fa77f92325"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_required_condition_08",
+            "side": "variant",
+            "expected_label": "required_condition_not_enforced",
+            "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "canonical_process_input_hash": "1c3a0e886144ead8750b578db25076ca22c5a806e4249eed69b905fa77f92325",
+            "bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0"
+          },
+          {
+            "item_id": "syn_v2_constraint_violated_09",
+            "side": "variant",
+            "expected_label": "constraint_violated",
+            "canonical_rule_input_hash": "2ec70f17bdc1187b8c3bff3e6b54bbbdd80161b42ba08ed5f53c894b94d936f1",
+            "canonical_process_input_hash": "1c3a0e886144ead8750b578db25076ca22c5a806e4249eed69b905fa77f92325",
+            "bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+          "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_exception_not_handled_04",
+            "side": "variant",
+            "expected_label": "exception_not_handled",
+            "canonical_rule_input_hash": "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+            "canonical_process_input_hash": "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17",
+            "bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_03",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+            "canonical_process_input_hash": "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17",
+            "bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_04",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "8fe40dc108a38d50bfd89531b18a7f5562597703b6aaa3f26b52d2d8ba009a86",
+            "canonical_process_input_hash": "85320eefe2bfc22b70c70e9b79349e8b587f8378256dea052f5083322df0ac17",
+            "bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92"
+          }
+        ]
+      },
+      {
+        "group_key": [
+          "0461e1c3cc604c324e4bdce799f355765fb00ef06ef4939a9c8cfbd4d8a3ab12",
+          "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5"
+        ],
+        "members": [
+          {
+            "item_id": "syn_v2_exception_not_handled_05",
+            "side": "variant",
+            "expected_label": "exception_not_handled",
+            "canonical_rule_input_hash": "0461e1c3cc604c324e4bdce799f355765fb00ef06ef4939a9c8cfbd4d8a3ab12",
+            "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+            "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+          },
+          {
+            "item_id": "syn_v2_prohibited_action_10",
+            "side": "control",
+            "expected_label": "none",
+            "canonical_rule_input_hash": "0461e1c3cc604c324e4bdce799f355765fb00ef06ef4939a9c8cfbd4d8a3ab12",
+            "canonical_process_input_hash": "d96028b99f8faa512832c6bb3df46caf49e56a8f64b58fb7f5e568b9589a01d5",
+            "bpmn_sha256": "8c5b05e3093c84336b3faa2df74cb50afd9f86bed51a10717d9ab01c6f830da0"
+          }
+        ]
+      }
+    ],
+    "old_bpmn_only_variant_collision_group_count": 7,
+    "old_bpmn_only_variant_item_count": 28,
+    "old_bpmn_only_all_side_collision_group_count": 7,
+    "old_bpmn_only_all_side_item_count": 40,
+    "old_audit_overestimate_reason": "The v1 audit grouped only by variant BPMN bytes.  The Stage 3 input also contains the Rule Input; two byte-identical BPMN files with different model-visible rule fields are distinguishable and therefore are not true input collisions.  The v1 audit also counted only the variant scope, while the corrected audit checks both variant and control side objects and requires different expected labels only after the identity grouping is fixed.",
+    "no_expected_label_in_identity": true
+  },
+  "c36_comparison_gap": {
+    "schema_version": "s3_c36_target_paired_comparison_gap@1.0.0",
+    "status": "GAP_DOCUMENTED_NOT_COMPUTED",
+    "c36_report_available": true,
+    "c36_prediction_rows": 40,
+    "c36_prediction_row_keys": [
+      "action_mapping_gamma",
+      "check_type",
+      "control_scores",
+      "expected_violation",
+      "gamma_ext",
+      "gold_visible",
+      "item_id",
+      "method_display_name",
+      "method_id",
+      "method_provenance",
+      "observability",
+      "panel",
+      "predicted_conditional_old",
+      "predicted_violation_type",
+      "prediction_all_unobservable",
+      "prediction_observable_compliant",
+      "prediction_rule",
+      "process_id",
+      "rule_id",
+      "run_id",
+      "schema_version",
+      "scores",
+      "scores_detail",
+      "source_hashes",
+      "task",
+      "threshold",
+      "unified_predicted_raw"
+    ],
+    "same_target_paired_protocol_available": false,
+    "missing_required_fields": [
+      "per-side checks[target_field].observable and .violation for both variant and control",
+      "frozen composite input identity hashes",
+      "single common fixed-control denominator under the corrected evaluator"
+    ],
+    "reason": "C36 predictions contain variant-side unified outputs and some control scores, but not the v3 per-side target-field determination/coverage structure. Recomputing or splicing C36 old metrics into the v3 table would be an incomparable combination; the gap is recorded instead.",
+    "prohibited_use": "do not cite a C36-versus-v3 target-paired delta from this file"
+  }
+}

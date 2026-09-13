@@ -1,0 +1,46 @@
+﻿{
+  "schema_version": "stage3_semantic_grounding@3.0.0",
+  "revision": "s3_semantic_grounding_v3",
+  "task_id": "S3-SEMANTIC-GROUNDING-V3",
+  "base_revision": "s3_semantic_grounding_v2",
+  "scope": "development_only",
+  "claim": "Correctness repair of the v2 evaluation protocol: semantics-preserving input anonymisation, fixed target-paired and fixed-control denominator accounting, and explicit abandonment of self-selected clean-control subsets. Deterministic predictions are reused byte-identically from v2. No real API call.",
+  "deterministic_predictions_reused": {
+    "source": "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl",
+    "policy": "byte-identical reuse after verifying the frozen v2 artifact hash; no scorer or panel change"
+  },
+  "evaluation_protocol": {
+    "primary": "target_paired_causal_fixed_panel",
+    "control_scope": "all 40 frozen target-field controls for every method (no per-method subset selection)",
+    "control_self_consistency": "diagnostic only; not an independent global-compliance label",
+    "unknown_policy": {
+      "variant_unknown": "counted as FN; also reported separately as FN_unknown",
+      "control_unknown": "reported separately; does not enter the decided TNR denominator",
+      "pair_success": "variant positive AND control negative over all pairs",
+      "overall_unknown_denominator": "all target-field side checks"
+    },
+    "clean_unified_status": "NOT_REPORTED_NO_INDEPENDENT_GLOBAL_LABELS",
+    "c36_target_paired_comparison": "GAP_DOCUMENTED_NOT_COMPUTED"
+  },
+  "llm_fallback": {
+    "runner_revision": "s3_semantic_grounding_llm_v1",
+    "status": "PACK_REBUILT_FOR_V3_PREFLIGHT_PENDING",
+    "scope": "S3-SEMANTIC-GROUNDING-V3-FALLBACK",
+    "provider": "openai_compatible",
+    "model": "deepseek-v4-pro",
+    "retry": 0,
+    "off_peak_only": true,
+    "real_api_calls": 0
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "frozen_panel_modified": false,
+    "c36_modified": false,
+    "v1_outputs_overwritten": false,
+    "v2_outputs_overwritten": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "development_only_not_formal_oracle": true
+  }
+}

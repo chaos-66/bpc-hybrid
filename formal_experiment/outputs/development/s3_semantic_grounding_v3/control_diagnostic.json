@@ -1,0 +1,741 @@
+{
+  "schema_version": "s3_fixed_control_scope@1.0.0",
+  "evaluation_subset_policy": "all frozen target-field controls are kept for every method; no method output is used to select a different test subset",
+  "control_item_ids": [
+    "syn_v2_prohibited_action_01",
+    "syn_v2_prohibited_action_02",
+    "syn_v2_prohibited_action_03",
+    "syn_v2_prohibited_action_04",
+    "syn_v2_prohibited_action_05",
+    "syn_v2_prohibited_action_06",
+    "syn_v2_prohibited_action_07",
+    "syn_v2_prohibited_action_08",
+    "syn_v2_prohibited_action_09",
+    "syn_v2_prohibited_action_10",
+    "syn_v2_required_condition_01",
+    "syn_v2_required_condition_02",
+    "syn_v2_required_condition_03",
+    "syn_v2_required_condition_04",
+    "syn_v2_required_condition_05",
+    "syn_v2_required_condition_06",
+    "syn_v2_required_condition_07",
+    "syn_v2_required_condition_08",
+    "syn_v2_required_condition_09",
+    "syn_v2_required_condition_10",
+    "syn_v2_constraint_violated_01",
+    "syn_v2_constraint_violated_02",
+    "syn_v2_constraint_violated_03",
+    "syn_v2_constraint_violated_04",
+    "syn_v2_constraint_violated_05",
+    "syn_v2_constraint_violated_06",
+    "syn_v2_constraint_violated_07",
+    "syn_v2_constraint_violated_08",
+    "syn_v2_constraint_violated_09",
+    "syn_v2_constraint_violated_10",
+    "syn_v2_exception_not_handled_01",
+    "syn_v2_exception_not_handled_02",
+    "syn_v2_exception_not_handled_03",
+    "syn_v2_exception_not_handled_04",
+    "syn_v2_exception_not_handled_05",
+    "syn_v2_exception_not_handled_06",
+    "syn_v2_exception_not_handled_07",
+    "syn_v2_exception_not_handled_08",
+    "syn_v2_exception_not_handled_09",
+    "syn_v2_exception_not_handled_10"
+  ],
+  "control_count": 40,
+  "diagnostic_status_by_item": {
+    "syn_v2_prohibited_action_01": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "required_condition_not_enforced",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "prohibited_action_present"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_prohibited_action_02": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "required_condition_not_enforced",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "prohibited_action_present"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_prohibited_action_03": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_prohibited_action_04": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_prohibited_action_05": {
+      "status": "model_internal_all_clear",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_prohibited_action_06": {
+      "status": "model_internal_all_clear",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_prohibited_action_07": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_prohibited_action_08": {
+      "status": "model_internal_all_clear",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_prohibited_action_09": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "constraint_violated"
+      ],
+      "violated_types": [
+        "exception_not_handled"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_prohibited_action_10": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_01": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "constraint_violated"
+      ],
+      "violated_types": [
+        "exception_not_handled"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_02": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_03": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_04": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_05": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_06": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_07": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_08": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_09": {
+      "status": "model_internal_all_clear",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_required_condition_10": {
+      "status": "model_internal_all_clear",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_01": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_02": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_03": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_04": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_05": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_06": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_07": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_08": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_09": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "exception_not_handled"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "required_condition_not_enforced",
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_constraint_violated_10": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_01": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [
+        "constraint_violated"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_02": {
+      "status": "model_undetermined",
+      "all_clear_types": [
+        "constraint_violated"
+      ],
+      "violated_types": [],
+      "unknown_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced",
+        "exception_not_handled"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_03": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_04": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "prohibited_action_present"
+      ],
+      "unknown_types": [
+        "required_condition_not_enforced"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_05": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "prohibited_action_present",
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_06": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "constraint_violated"
+      ],
+      "unknown_types": [
+        "required_condition_not_enforced"
+      ],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_07": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_08": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_09": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    },
+    "syn_v2_exception_not_handled_10": {
+      "status": "model_reports_other_field_positive",
+      "all_clear_types": [
+        "prohibited_action_present",
+        "constraint_violated",
+        "exception_not_handled"
+      ],
+      "violated_types": [
+        "required_condition_not_enforced"
+      ],
+      "unknown_types": [],
+      "diagnostic_only": true,
+      "independent_validation": false,
+      "not_a_global_compliance_label": true,
+      "used_to_select_evaluation_subset": false,
+      "definition": "same-checker diagnostic over the four extended checks; it is not an independent global-compliance Gold label and is never used to filter controls out of the cross-method comparison"
+    }
+  },
+  "diagnostic_status_counts": {
+    "model_undetermined": 13,
+    "model_internal_all_clear": 5,
+    "model_reports_other_field_positive": 22
+  },
+  "diagnostic_only": true,
+  "independent_global_compliance_labels_available": false,
+  "used_to_select_evaluation_subset": false
+}

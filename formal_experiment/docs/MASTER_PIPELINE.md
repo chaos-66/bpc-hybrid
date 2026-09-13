@@ -2,7 +2,7 @@
 
 **文档版本**：3.7.1
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
-**最后更新**：2026-09-12
+**最后更新**：2026-09-13
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
 **当前实施优先级**：按下方「CSCWD 按依赖推进的收尾 Pipeline」执行；满足启动条件就开始，完成一项立即推进，发现问题逐项定位、修复和验证。2026-09-30 导师初稿、2026-10-31 投稿截止是最晚目标，应尽早完成；写作持续同步，正式实验仍遵守 Stage 2 冻结到 Stage 3 的实质依赖。
 
@@ -10,6 +10,42 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-13 修订 3.6.58：Stage 3 v3 输入匿名化与评价口径修复（S3-SEMANTIC-GROUNDING-V3，零 API）
+
+**范围**：仅新增 revision `s3_semantic_grounding_v3`，byte-identical 复用 v2
+逐项确定性预测；不覆盖 v1/v2 预测、manifest、候选包或 C36。
+
+**输入修复**：
+- v2 的 `_scrub_string` 对所有字符串做整词 `control` 等子串替换，把规范文本中的
+  `controller` 改成 `anonymousler`，并改写部分自然语言证据。v3 改为字段感知匿名化：
+  只映射标识符和生成式 `syn_*` token；规则正文、活动标签、条件、约束、例外原文
+  保持 verbatim。v2 候选包保留为历史证据。
+
+**评价修复**：
+- fallback transition 使用稳定对象键 `(item_id, side)`，variant 正例与 control
+  目标字段负例分开统计由 unknown 到正确、错误、仍 unknown 的转变。
+- target-paired 口径显式报告互斥两侧计数、覆盖率与分母：variant unknown 计入
+  FN 但单独列 `FN_unknown`；control unknown 单独计数、不进入 decided TNR 分母；
+  全体 pair success 以所有 pair 为分母，未知不当作合规预测。
+- control 自洽状态只称模型诊断，没有独立全局合规标签；不报告按自身输出筛出的
+  clean-unified 性能，所有 40 个 frozen control 固定保留。
+- C36 缺少相同 target-paired 协议所需逐项字段，记录
+  `GAP_DOCUMENTED_NOT_COMPUTED`，不拼接不可比数字。
+
+**结果（沿用 v2 逐项预测）**：target-paired Macro-F1 **0.6737**，pair success
+**21/40**；variant 24 positive / 0 observed-wrong / 16 unknown，control 28 TN /
+1 FP / 11 unknown；全体 target-field unknown rate **0.3375**。v3 fallback pack
+20 项，匿名化 audit 通过，规范字段零改写，模型可见 payload 无 forbidden/
+generated 泄漏。
+
+**证据**：`outputs/reports/s3_semantic_grounding_v3.{json,md}`、
+`outputs/evidence/s3_semantic_grounding_v3/`、
+`outputs/development/s3_semantic_grounding_v3/`；
+实现与测试见 `src/bpc_hybrid/s3_semantic_grounding_v3.py`、
+`scripts/run_s3_semantic_grounding_v3.py`、`tests/test_s3_semantic_grounding_v3.py`。
+
+**状态**：第一阶段正确性 checkpoint；真实 API 仍为 0。
 
 ## CSCWD 按依赖推进的收尾 Pipeline（2026-09-12 修订）
 

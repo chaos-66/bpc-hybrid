@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-12
+**更新时间**：2026-09-13
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -8,6 +8,62 @@
 
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
+
+## 0. Latest revision: s3_semantic_grounding_v3 (2026-09-13, zero API)
+
+**Status**: VERIFIED_DEVELOPMENT_PROTOCOL_REPAIR. This checkpoint reuses the
+frozen v2 deterministic predictions byte-for-byte after artifact-hash
+verification and repairs the input pack and evaluation accounting. No real API
+call was made.
+
+**Input repair**
+- New `_scrub_string` failure identified: the v2 blanket substring replacement
+  changed `controller` to `anonymousler` in 12 rule fields and also rewrote
+  natural-language evidence. The v2 pack is historical and is not overwritten.
+- New field-aware anonymisation maps only identifiers and generated `syn_*`
+  tokens; rule/action/condition/constraint/exception text and activity labels
+  are preserved verbatim. The v3 pack reports
+  `semantic_fields_preserved_for_all_items=true`, zero forbidden/generated
+  hits in the model-visible payload, and deterministic real->anonymous maps.
+
+**Evaluation repair**
+- `fallback_transition_metrics` is keyed by `(item_id, side)` and reports
+  variant `unknown->correct/wrong/still-unknown` separately from control
+  `unknown->correct/wrong/still-unknown`; control false alarms are never
+  counted as variant successes.
+- Target-paired metrics now expose mutually exclusive side outcomes,
+  coverage, and explicit denominators. Variant unknown is an FN but is
+  reported as `FN_unknown`; control unknown is outside the decided TNR
+  denominator and is reported as its own count. Pair success uses all pairs.
+- Control self-consistency status is now a model diagnostic only. No
+  independent global-compliance labels are claimed and no clean-unified
+  metric is computed; all 40 frozen controls remain in the same fixed
+  evaluation scope for every method.
+- C36 target-paired comparison is recorded as
+  `GAP_DOCUMENTED_NOT_COMPUTED` because the C36 capsule lacks the required
+  per-side target-field observable/violation records and composite identity;
+  old C36 numbers are not spliced into the v3 table.
+
+**Deterministic accounting (identical v2 predictions)**
+- Target-paired Macro-F1 **0.6737**; pair success **21/40**.
+- Variant side: 24 positive, 0 observed-negative wrong, 16 unknown
+  (coverage 0.6000).
+- Control side: 28 negative, 1 false alarm, 11 unknown (coverage 0.7250);
+  FP rate 0.0250 over all pairs, 0.0345 over decided controls.
+- Overall target-field unknown rate **0.3375** over all side checks.
+
+**Artifacts**
+- `src/bpc_hybrid/s3_semantic_grounding_v3.py`
+- `scripts/run_s3_semantic_grounding_v3.py`
+- `configs/stage3_semantic_grounding_v3.json`
+- `tests/test_s3_semantic_grounding_v3.py`
+- `outputs/evidence/s3_semantic_grounding_v3/`
+- `outputs/development/s3_semantic_grounding_v3/`
+- `outputs/reports/s3_semantic_grounding_v3.{json,md}`
+
+**Boundary**: development-only synthetic controlled panel; LLM fallback pack
+is still not a real-run result, and this revision is not formal Oracle or
+human Gold.
 
 ## 0. Latest revision: s3_semantic_grounding_v2 (2026-09-12, zero API)
 

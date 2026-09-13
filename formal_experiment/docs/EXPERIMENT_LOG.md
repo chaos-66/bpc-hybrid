@@ -4673,3 +4673,17 @@
 - 仍存在 blocker：无
 - 备注：C36/v1/frozen panel preserved; Arm C = IMPLEMENTED_READY_FOR_AUTHORIZATION
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-13T12:10:41.709534+00:00 - S3-SEMANTIC-GROUNDING-V3: semantics-preserving input pack + explicit target-paired/fixed-control accounting (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：5 passed in 0.08s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`45513f39f7d0af666814a1f62f301986452bcf7c`；相关未提交路径：16 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Reused v2 deterministic predictions byte-identically after artifact hash verification; new v3 pack no longer rewrites controller/control-like natural language; transition metrics keyed by (item_id, side); control status is diagnostic only; C36 same-protocol gap documented. Audit integrity comes from the complete primary formal_experiment asset tree; focused tests run in the writable linked worktree.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
