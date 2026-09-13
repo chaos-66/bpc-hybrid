@@ -9,6 +9,42 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## 0. Latest checkpoint: s3_semantic_grounding_llm_execution_v2 (2026-09-13, offline fake transport)
+
+**Status**: VERIFIED_OFFLINE_EXECUTION_SEMANTICS. No real API calls.
+
+**Fixed**
+- Recovery now loads the append-only ledger, saved raw responses and
+  normalized records; resumed summaries include historical completed items as
+  well as current-round sends.
+- Terminal states distinguish `pre_send_failed`, `send_started/sent`,
+  `malformed`, `rejected`, `succeeded`, `in_doubt` and
+  `usage_unknown`. Any request whose ledger says it was sent is never
+  auto-resent, including malformed/rejected/in-doubt outcomes.
+- Ledger reads validate the `prev_hash`/`record_hash` chain. A tampered ledger
+  fails closed before any new send.
+- Every terminal item is persisted immediately (raw response, normalized
+  record and ledger state); resume does not overwrite prior raw/normalized
+  evidence.
+- Before every send the executor enforces call count, input/output-token
+  caps, USD cap and off-peak windows. Unknown earlier usage, in-doubt sends or
+  missing provider usage halt further sends under the contract.
+- Successful provider usage is saved and reused on resume. Actual
+  input/output tokens and USD cost are accumulated from stored records.
+- The runner now writes `REAL_RUN_<status>` using the executor's
+  `complete/partial/blocked/failed` classification instead of hardcoding
+  `REAL_RUN_COMPLETE`.
+
+**Offline validation**
+- `tests/test_s3_semantic_grounding_llm_execution_v2.py` uses fake transports
+  only and covers: complete + resume history, malformed/rejected no-resend,
+  generic failure `in_doubt` halting later sends, retryable pre-send failure,
+  max-call/off-peak blocking before send, actual usage persistence, and
+  tampered-ledger fail-closed behavior. 7 passed.
+- No real LLM/API or network call was made.
+
+**Boundary**: execution semantics only; no real-run metrics are claimed.
+
 ## 0. Latest revision: s3_semantic_grounding_v4 (2026-09-13, zero API)
 
 **Status**: OFFLINE_IMPLEMENTATION_EVIDENCE. This revision repairs how a

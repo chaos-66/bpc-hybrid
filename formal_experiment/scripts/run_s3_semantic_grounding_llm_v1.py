@@ -351,7 +351,10 @@ def main() -> int:
     write_json(REPORT_ROOT / "s3_semantic_grounding_v2_llm_real_execution.json", summary)
     write_json(REPORT_ROOT / "s3_semantic_grounding_v2_arm_c_real.json", arm_c)
     b_report = read_json(V2_REPORT)
-    write_arm_comparison(b_report, arm_c, "REAL_RUN_COMPLETE",
+    # The execution summary classifies complete/partial/blocked/failed from
+    # actual coverage and terminal states; never hardcode a complete run.
+    real_status = str(summary.get("run_status") or "failed")
+    write_arm_comparison(b_report, arm_c, f"REAL_RUN_{real_status.upper()}",
                          read_json(REPORT_ROOT / "s3_semantic_grounding_v2_llm_authorization_request.json"))
     print(json.dumps(summary["counts"], ensure_ascii=False, indent=2))
     return 0

@@ -400,17 +400,49 @@ def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _ledger_entry_hash(entry: Mapping[str, Any]) -> str:
+    return json_sha256({key: value for key, value in entry.items()
+                        if key != "record_hash"})
+
+
 def _read_ledger(path: Path) -> list[dict[str, Any]]:
+    """Read and validate the append-only ledger hash chain.
+
+    A malformed JSON line, a missing/extra hash, a hash mismatch, or a broken
+    ``prev_hash`` chain raises before any new request can be sent.  This is
+    intentionally fail-closed: an unreadable ledger may hide an in-doubt
+    request and must never cause a duplicate send.
+    """
     if not path.is_file():
         return []
-    entries = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    entries: list[dict[str, Any]] = []
+    previous_hash = "GENESIS"
+    for line_number, line in enumerate(
+            path.read_text(encoding="utf-8").splitlines(), start=1):
         if not line.strip():
             continue
         try:
-            entries.append(json.loads(line))
-        except json.JSONDecodeError:
-            entries.append({"state": "corrupt_ledger_line", "raw": line})
+            entry = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise LLMGroundingExecutionError(
+                f"ledger_integrity_error:line_{line_number}_invalid_json") from exc
+        if not isinstance(entry, Mapping):
+            raise LLMGroundingExecutionError(
+                f"ledger_integrity_error:line_{line_number}_not_object")
+        entry = dict(entry)
+        if entry.get("prev_hash") != previous_hash:
+            raise LLMGroundingExecutionError(
+                f"ledger_integrity_error:line_{line_number}_prev_hash_mismatch")
+        expected = entry.get("record_hash")
+        if not isinstance(expected, str) or not expected:
+            raise LLMGroundingExecutionError(
+                f"ledger_integrity_error:line_{line_number}_missing_record_hash")
+        actual = _ledger_entry_hash(entry)
+        if actual != expected:
+            raise LLMGroundingExecutionError(
+                f"ledger_integrity_error:line_{line_number}_record_hash_mismatch")
+        previous_hash = expected
+        entries.append(entry)
     return entries
 
 
@@ -420,8 +452,7 @@ def append_ledger(ledger_path: Path, record: Mapping[str, Any]) -> dict[str, Any
     payload = dict(record)
     payload["prev_hash"] = prev_hash
     payload["timestamp_utc"] = _utc_now()
-    payload["record_hash"] = json_sha256({key: value for key, value in payload.items()
-                                          if key != "record_hash"})
+    payload["record_hash"] = _ledger_entry_hash(payload)
     ledger_path.parent.mkdir(parents=True, exist_ok=True)
     with ledger_path.open("a", encoding="utf-8", newline="\n") as handle:
         handle.write(json.dumps(payload, ensure_ascii=False, sort_keys=True) + "\n")
@@ -564,13 +595,13 @@ def _normalize_llm_status(validated_response: Mapping[str, Any]) -> str:
     return "unknown"
 
 
-def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
-                     config: Mapping[str, Any], output_root: Path,
-                     mode: str, authorization: Mapping[str, Any] | None = None,
-                     transport: Any | None = None,
-                     confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD
-                     ) -> dict[str, Any]:
-    """Execute the frozen pack in mock or real mode with ledger protection.
+def _legacy_execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
+                            config: Mapping[str, Any], output_root: Path,
+                            mode: str, authorization: Mapping[str, Any] | None = None,
+                            transport: Any | None = None,
+                            confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD
+                            ) -> dict[str, Any]:
+    """Historical v1 execution body retained for provenance.
 
     ``mode='real'`` additionally requires a valid scope-matching authorization
     and environment credentials; there is no automatic retry.
@@ -721,6 +752,761 @@ def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
         "raw_response_dir": str(raw_dir),
         "retry": 0,
         "no_double_send": True,
+    }
+    (run_root / "run_summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8", newline="\n")
+    return summary
+
+
+# ---------------------------------------------------------------------------
+# v2 execution state machine: no-double-send, resumable storage, budgets
+# ---------------------------------------------------------------------------
+
+_SENT_TERMINAL_STATES = frozenset({
+    "sent", "succeeded", "malformed", "rejected", "in_doubt", "usage_unknown",
+})
+_PRE_SEND_RETRYABLE_STATES = frozenset({
+    "pre_send_failed", "blocked_pre_send", "blocked_off_peak", "blocked_budget",
+    "blocked_usage_unknown", "blocked_after_in_doubt",
+})
+
+
+def _read_jsonl_records(path: Path) -> list[dict[str, Any]]:
+    if not path.is_file():
+        return []
+    records: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for line_number, line in enumerate(
+            path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip():
+            continue
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise LLMGroundingExecutionError(
+                f"normalized_store_invalid_json:line_{line_number}") from exc
+        if not isinstance(record, Mapping) or not record.get("request_sha256"):
+            raise LLMGroundingExecutionError(
+                f"normalized_store_invalid_record:line_{line_number}")
+        request_sha = str(record["request_sha256"])
+        if request_sha in seen:
+            raise LLMGroundingExecutionError(
+                f"normalized_store_duplicate_request:line_{line_number}")
+        seen.add(request_sha)
+        records.append(dict(record))
+    return records
+
+
+def _append_jsonl(path: Path, record: Mapping[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(dict(record), ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def _append_normalized_once(path: Path, by_request: dict[str, dict[str, Any]],
+                            record: Mapping[str, Any]) -> dict[str, Any]:
+    request_sha = str(record.get("request_sha256"))
+    if request_sha in by_request:
+        return by_request[request_sha]
+    materialized = dict(record)
+    _append_jsonl(path, materialized)
+    by_request[request_sha] = materialized
+    return materialized
+
+
+def _write_raw_once(path: Path, payload: Mapping[str, Any]) -> dict[str, Any]:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.is_file():
+        existing = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(existing, Mapping) \
+                and existing.get("content") == payload.get("content"):
+            return dict(existing)
+        raise LLMGroundingExecutionError("raw_response_store_conflict")
+    path.write_text(json.dumps(dict(payload), ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8", newline="\n")
+    return dict(payload)
+
+
+def _numeric_token(value: Any) -> int | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    number = float(value)
+    if not math.isfinite(number) or number < 0:
+        return None
+    return int(number)
+
+
+def _usage_from_raw(raw: Mapping[str, Any], request: Mapping[str, Any],
+                    mode: str) -> tuple[int | None, int | None, bool, str]:
+    candidates: list[Mapping[str, Any]] = []
+    if isinstance(raw.get("usage"), Mapping):
+        candidates.append(raw["usage"])
+    decode = raw.get("decode")
+    if isinstance(decode, Mapping) and isinstance(decode.get("usage"), Mapping):
+        candidates.append(decode["usage"])
+    for usage in candidates:
+        input_tokens = _numeric_token(
+            usage.get("prompt_tokens", usage.get("input_tokens")))
+        output_tokens = _numeric_token(
+            usage.get("completion_tokens", usage.get("output_tokens")))
+        if input_tokens is not None and output_tokens is not None:
+            return input_tokens, output_tokens, True, "provider_usage"
+    if mode == "mock":
+        content = str(raw.get("content") or "")
+        return (int(request.get("input_tokens_estimate") or 0),
+                estimate_tokens(content), True, "mock_estimate")
+    return None, None, False, "missing_usage"
+
+
+def _storage_usage(record: Mapping[str, Any]) -> tuple[int | None, int | None, float | None]:
+    input_tokens = _numeric_token(record.get("input_tokens"))
+    output_tokens = _numeric_token(record.get("output_tokens"))
+    usd = record.get("usd_cost")
+    if isinstance(usd, bool) or not isinstance(usd, (int, float)):
+        usd_value = None
+    else:
+        usd_value = float(usd)
+    return input_tokens, output_tokens, usd_value
+
+
+def _off_peak_allowed(config: Mapping[str, Any],
+                      now_utc: Any) -> bool:
+    if not config.get("off_peak_only"):
+        return True
+    windows = config.get("off_peak_windows_utc")
+    hour = now_utc.hour + now_utc.minute / 60.0
+    if isinstance(windows, list) and windows:
+        for window in windows:
+            if not isinstance(window, (list, tuple)) or len(window) != 2:
+                continue
+            start, end = float(window[0]), float(window[1])
+            if start <= hour < end:
+                return True
+        return False
+    start = config.get("off_peak_start_hour_utc")
+    end = config.get("off_peak_end_hour_utc")
+    if start is None or end is None:
+        # The contract requires off-peak execution; an undeclared window is
+        # not permission to send at an unknown time.
+        return False
+    start_value, end_value = float(start), float(end)
+    if start_value <= end_value:
+        return start_value <= hour < end_value
+    return hour >= start_value or hour < end_value
+
+
+def _authorization_value(config: Mapping[str, Any],
+                         authorization: Mapping[str, Any] | None,
+                         field: str, default: Any = None) -> Any:
+    if authorization is not None and authorization.get(field) is not None:
+        return authorization.get(field)
+    return config.get(field, default)
+
+
+def _normalized_result(record: Mapping[str, Any],
+                       *, recovered: bool) -> dict[str, Any]:
+    status = str(record.get("status") or "failed")
+    if status == "succeeded":
+        result_status = "validated"
+    else:
+        result_status = "failed"
+    return {
+        "source_index": record.get("source_index"),
+        "fallback_item_id": record.get("fallback_item_id"),
+        "status": result_status,
+        "semantic_status": record.get("semantic_status"),
+        "action_status": record.get("action_status"),
+        "field_statuses": record.get("field_statuses") or {},
+        "response": record.get("response") if status == "succeeded" else None,
+        "response_sha256": record.get("response_sha256"),
+        "terminal_state": status,
+        "error": record.get("error"),
+        "recovered_from_store": recovered,
+        "request_sha256": record.get("request_sha256"),
+    }
+
+
+def _recover_request_from_raw(request: Mapping[str, Any], raw_dir: Path,
+                              mode: str, confidence_threshold: float
+                              ) -> dict[str, Any] | None:
+    raw_path = raw_dir / f"{request.get('request_sha256')}.json"
+    if not raw_path.is_file():
+        return None
+    try:
+        stored = json.loads(raw_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
+    content = str(stored.get("content") or "")
+    request_sha = str(request.get("request_sha256"))
+    response_sha = hashlib.sha256(content.encode("utf-8")).hexdigest()
+    validated = validate_semantic_grounding_response(
+        content, request, confidence_threshold)
+    semantic_status = None
+    action_status = None
+    field_statuses: dict[str, Any] = {}
+    response_value = None
+    if validated["status"] == "valid":
+        response_value = validated["response"]
+        semantic_status = _normalize_llm_status(response_value)
+        action_status = (response_value.get("action_grounding") or {}).get("status")
+        field_statuses = {
+            field: ((response_value.get(field) or {}).get("status"))
+            for field in ("condition", "constraint", "exception")
+        }
+        state = "succeeded"
+        error = None
+    else:
+        error_text = str(validated.get("error"))
+        state = "malformed" if "invalid_json" in error_text else "rejected"
+        error = error_text
+    input_tokens = _numeric_token(stored.get("input_tokens"))
+    output_tokens = _numeric_token(stored.get("output_tokens"))
+    usage_known = input_tokens is not None and output_tokens is not None
+    usd_cost = (estimate_usd_cost(input_tokens, output_tokens,
+                                  {"price_snapshot": stored.get("price_snapshot")},
+                                  off_peak=bool(stored.get("off_peak")))
+                if usage_known else None)
+    return {
+        "fallback_item_id": request.get("fallback_item_id"),
+        "source_index": request.get("source_index"),
+        "request_sha256": request_sha,
+        "response_sha256": response_sha,
+        "status": state,
+        "semantic_status": semantic_status,
+        "action_status": action_status,
+        "field_statuses": field_statuses,
+        "response": response_value,
+        "error": error,
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "usd_cost": usd_cost,
+        "usage_source": "recovered_from_raw",
+        "usage_known": usage_known,
+        "source": "recovered_from_raw",
+    }
+
+
+class PreSendTransportError(LLMGroundingExecutionError):
+    """Signal that a transport failed before any request was transmitted.
+
+    Transports can raise this when they can decide locally that no send
+    happened (for example, a fake transport configured to fail closed).  A
+    generic transport exception is treated as in-doubt instead, because the
+    request may already have reached the provider.
+    """
+
+
+def _budget_block_reason(*, config: Mapping[str, Any],
+                         authorization: Mapping[str, Any] | None,
+                         request: Mapping[str, Any], request_set: Mapping[str, Any],
+                         sent_count: int, known_input_tokens: int,
+                         known_output_tokens: int, known_usd: float,
+                         known_usage_unknown: bool) -> str | None:
+    if known_usage_unknown:
+        return "usage_unknown_previous_request"
+    max_calls = _authorization_value(config, authorization, "max_calls")
+    if max_calls is not None and sent_count + 1 > int(max_calls):
+        return "max_calls"
+    input_cap = _authorization_value(config, authorization, "max_input_tokens_cap")
+    next_input = int(request.get("input_tokens_estimate") or 0)
+    if input_cap is not None and known_input_tokens + next_input > int(input_cap):
+        return "max_input_tokens_cap"
+    max_output = int(request_set.get("max_output_tokens_per_call") or 0)
+    output_cap = _authorization_value(config, authorization, "total_output_token_cap")
+    if output_cap is not None and known_output_tokens + max_output > int(output_cap):
+        return "total_output_token_cap"
+    usd_cap = _authorization_value(config, authorization, "usd_cap")
+    if usd_cap is not None:
+        projected = known_usd + estimate_usd_cost(
+            max(next_input, 1), max(max_output, 1), config,
+            off_peak=bool(config.get("off_peak_only")))
+        if projected > float(usd_cap):
+            return "usd_cap"
+    return None
+
+
+def _classify_run_status(counts: Mapping[str, int], total: int) -> str:
+    valid = int(counts.get("succeeded", 0))
+    other_terminal = (int(counts.get("malformed", 0))
+                      + int(counts.get("rejected_by_validator", 0))
+                      + int(counts.get("in_doubt", 0)))
+    blocked = (int(counts.get("pre_send_blocked", 0))
+               + int(counts.get("pre_send_failed", 0)))
+    if total == 0:
+        return "blocked" if blocked else "complete"
+    if valid == total and other_terminal == 0 and blocked == 0:
+        return "complete"
+    send_attempts = int(counts.get("send_attempts", 0))
+    if valid > 0:
+        return "partial"
+    if send_attempts > 0 \
+            and int(counts.get("pre_send_failed", 0)) >= send_attempts:
+        return "blocked"
+    if send_attempts > 0 \
+            or int(counts.get("resumed_from_store", 0)) > 0:
+        return "failed"
+    return "blocked"
+
+
+def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
+                     config: Mapping[str, Any], output_root: Path,
+                     mode: str, authorization: Mapping[str, Any] | None = None,
+                     transport: Any | None = None,
+                     confidence_threshold: float = DEFAULT_CONFIDENCE_THRESHOLD,
+                     now_utc_fn: Any | None = None) -> dict[str, Any]:
+    """Resumable append-only executor with fail-closed budget/time gates.
+
+    Terminal states and their evidence are appended before the next request is
+    considered.  A request whose ledger state says it was sent is never sent
+    again, even if validation failed or the process stopped mid-run.
+    """
+    if mode not in {"mock", "real"}:
+        raise LLMGroundingExecutionError(f"unknown_mode:{mode}")
+    if mode == "real":
+        if authorization is None:
+            raise LLMGroundingExecutionError("real_mode_requires_authorization")
+        validation = validate_authorization(authorization, pack, request_set, config)
+        if not validation["valid"]:
+            raise LLMGroundingExecutionError(
+                "authorization_invalid:" + ",".join(validation["errors"]))
+        if transport is None:
+            transport = RealSemanticGroundingTransport(config)
+    else:
+        if transport is None:
+            transport = MockSemanticGroundingTransport()
+
+    run_root_name = str(config.get("run_root_name")
+                        or f"{LLM_RUNNER_REVISION}_{mode}_run")
+    run_root = output_root / run_root_name
+    raw_dir = run_root / "raw_responses"
+    normalized_path = run_root / "normalized_grounding.jsonl"
+    ledger_path = run_root / "execution_ledger.jsonl"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+
+    ledger_entries = _read_ledger(ledger_path)
+    states = _state_by_request(ledger_entries)
+    by_request_records = {
+        str(record["request_sha256"]): record
+        for record in _read_jsonl_records(normalized_path)
+    }
+    requests = list(request_set.get("requests", []))
+    counts = {
+        "item_count": len(requests),
+        "attempted": 0,
+        "send_attempts": 0,
+        "succeeded": 0,
+        "malformed": 0,
+        "rejected_by_validator": 0,
+        "ambiguous": 0,
+        "resolved": 0,
+        "skipped_resume_protected": 0,
+        "resumed_from_store": 0,
+        "pre_send_failed": 0,
+        "pre_send_blocked": 0,
+        "in_doubt": 0,
+        "usage_unknown": 0,
+        "failed": 0,
+    }
+    known_input_tokens = 0
+    known_output_tokens = 0
+    known_usd = 0.0
+    historical_usage_unknown = False
+    for record in by_request_records.values():
+        input_tokens, output_tokens, _ = _storage_usage(record)
+        if not (record.get("usage_known") and input_tokens is not None
+                and output_tokens is not None) \
+                and record.get("status") in _SENT_TERMINAL_STATES:
+            historical_usage_unknown = True
+    known_usage_unknown = historical_usage_unknown
+
+    sent_count = sum(
+        1 for request in requests
+        if states.get(str(request.get("request_sha256"))) in _SENT_TERMINAL_STATES
+        or str(request.get("request_sha256")) in by_request_records
+    )
+    attempted_request_shas: list[str] = []
+    resumed_sent_shas: set[str] = set()
+    results_by_request: dict[str, dict[str, Any]] = {}
+    halt_sending = False
+    now_utc = now_utc_fn or (lambda: datetime.now(timezone.utc))
+
+    def blocked_result(request: Mapping[str, Any], reason: str) -> dict[str, Any]:
+        return {
+            "source_index": request.get("source_index"),
+            "fallback_item_id": request.get("fallback_item_id"),
+            "status": "blocked",
+            "error": reason,
+            "terminal_state": reason,
+            "response": None,
+            "recovered_from_store": False,
+            "request_sha256": request.get("request_sha256"),
+        }
+
+    for request in requests:
+        request_sha = str(request.get("request_sha256"))
+        state = states.get(request_sha)
+        existing = by_request_records.get(request_sha)
+
+        if state in _SENT_TERMINAL_STATES or existing is not None:
+            if existing is None:
+                recovered = _recover_request_from_raw(
+                    request, raw_dir, mode, confidence_threshold)
+                if recovered is not None:
+                    existing = _append_normalized_once(
+                        normalized_path, by_request_records, recovered)
+            if existing is None:
+                existing = _append_normalized_once(normalized_path, by_request_records, {
+                    "fallback_item_id": request.get("fallback_item_id"),
+                    "source_index": request.get("source_index"),
+                    "request_sha256": request_sha,
+                    "response_sha256": None,
+                    "status": "in_doubt",
+                    "semantic_status": None,
+                    "action_status": None,
+                    "field_statuses": {},
+                    "response": None,
+                    "error": "sent_state_without_saved_response",
+                    "input_tokens": None,
+                    "output_tokens": None,
+                    "usd_cost": None,
+                    "usage_source": "unknown",
+                    "usage_known": False,
+                    "source": "recovered_placeholder",
+                })
+            result = _normalized_result(existing, recovered=True)
+            results_by_request[request_sha] = result
+            resumed_sent_shas.add(request_sha)
+            counts["skipped_resume_protected"] += 1
+            counts["resumed_from_store"] += 1
+            if result["terminal_state"] == "succeeded":
+                counts["succeeded"] += 1
+                if result.get("semantic_status") == "ambiguous":
+                    counts["ambiguous"] += 1
+                else:
+                    counts["resolved"] += 1
+            elif result["terminal_state"] == "malformed":
+                counts["malformed"] += 1
+                counts["failed"] += 1
+            elif result["terminal_state"] == "rejected":
+                counts["rejected_by_validator"] += 1
+                counts["failed"] += 1
+            else:
+                counts["in_doubt"] += 1
+                counts["failed"] += 1
+            input_tokens, output_tokens, usd_cost = _storage_usage(existing)
+            if existing.get("usage_known") and input_tokens is not None \
+                    and output_tokens is not None:
+                known_input_tokens += input_tokens
+                known_output_tokens += output_tokens
+                known_usd += usd_cost or 0.0
+            elif existing.get("status") in _SENT_TERMINAL_STATES:
+                known_usage_unknown = True
+                if existing.get("status") == "in_doubt":
+                    halt_sending = True
+            continue
+
+        if halt_sending:
+            reason = "blocked_after_in_doubt"
+            append_ledger(ledger_path, {
+                "state": reason, "request_sha256": request_sha,
+                "fallback_item_id": request.get("fallback_item_id"),
+            })
+            counts["pre_send_blocked"] += 1
+            results_by_request[request_sha] = blocked_result(request, reason)
+            continue
+
+        if not _off_peak_allowed(config, now_utc()):
+            reason = "blocked_off_peak"
+            append_ledger(ledger_path, {
+                "state": reason, "request_sha256": request_sha,
+                "fallback_item_id": request.get("fallback_item_id"),
+            })
+            counts["pre_send_blocked"] += 1
+            results_by_request[request_sha] = blocked_result(request, reason)
+            continue
+
+        budget_reason = _budget_block_reason(
+            config=config, authorization=authorization, request=request,
+            request_set=request_set, sent_count=sent_count,
+            known_input_tokens=known_input_tokens,
+            known_output_tokens=known_output_tokens, known_usd=known_usd,
+            known_usage_unknown=known_usage_unknown)
+        if budget_reason is not None:
+            reason = ("blocked_usage_unknown"
+                      if budget_reason == "usage_unknown_previous_request"
+                      else "blocked_budget")
+            append_ledger(ledger_path, {
+                "state": reason, "reason": budget_reason,
+                "request_sha256": request_sha,
+                "fallback_item_id": request.get("fallback_item_id"),
+            })
+            counts["pre_send_blocked"] += 1
+            result = blocked_result(request, reason)
+            result["budget_reason"] = budget_reason
+            results_by_request[request_sha] = result
+            continue
+
+        # After this append, a crash leaves an explicit sent state; the same
+        # request is never auto-resent on resume.
+        append_ledger(ledger_path, {
+            "state": "send_started",
+            "request_sha256": request_sha,
+            "fallback_item_id": request.get("fallback_item_id"),
+            "source_index": request.get("source_index"),
+            "input_tokens_estimate": request.get("input_tokens_estimate"),
+        })
+        counts["attempted"] += 1
+        counts["send_attempts"] += 1
+        sent_count += 1
+        attempted_request_shas.append(request_sha)
+        try:
+            raw = transport.complete(request)
+        except PreSendTransportError as exc:
+            append_ledger(ledger_path, {
+                "state": "pre_send_failed",
+                "request_sha256": request_sha,
+                "fallback_item_id": request.get("fallback_item_id"),
+                "error_type": type(exc).__name__,
+            })
+            counts["pre_send_failed"] += 1
+            results_by_request[request_sha] = blocked_result(request, "pre_send_failed")
+            continue
+        except Exception as exc:  # noqa: BLE001 - any transport failure is in-doubt
+            append_ledger(ledger_path, {
+                "state": "in_doubt",
+                "request_sha256": request_sha,
+                "fallback_item_id": request.get("fallback_item_id"),
+                "error_type": type(exc).__name__,
+            })
+            counts["in_doubt"] += 1
+            counts["failed"] += 1
+            known_usage_unknown = True
+            halt_sending = True
+            _append_normalized_once(normalized_path, by_request_records, {
+                "fallback_item_id": request.get("fallback_item_id"),
+                "source_index": request.get("source_index"),
+                "request_sha256": request_sha,
+                "response_sha256": None,
+                "status": "in_doubt",
+                "semantic_status": None,
+                "action_status": None,
+                "field_statuses": {},
+                "response": None,
+                "error": "in_doubt",
+                "input_tokens": None,
+                "output_tokens": None,
+                "usd_cost": None,
+                "usage_source": "unknown",
+                "usage_known": False,
+                "source": "fresh_run",
+            })
+            results_by_request[request_sha] = {
+                "source_index": request.get("source_index"),
+                "fallback_item_id": request.get("fallback_item_id"),
+                "status": "failed",
+                "error": "in_doubt",
+                "terminal_state": "in_doubt",
+                "response": None,
+                "recovered_from_store": False,
+                "request_sha256": request_sha,
+            }
+            continue
+
+        content = str(raw.get("content") or "")
+        response_sha = hashlib.sha256(content.encode("utf-8")).hexdigest()
+        input_tokens, output_tokens, usage_known, usage_source = _usage_from_raw(
+            raw, request, mode)
+        off_peak_used = bool(config.get("off_peak_only"))
+        usd_cost = (estimate_usd_cost(input_tokens, output_tokens, config,
+                                      off_peak=off_peak_used)
+                    if usage_known else None)
+        _write_raw_once(raw_dir / f"{request_sha}.json", {
+            "fallback_item_id": request.get("fallback_item_id"),
+            "request_sha256": request_sha,
+            "response_sha256": response_sha,
+            "provider": raw.get("provider"),
+            "model": raw.get("model"),
+            "finish_reason": raw.get("finish_reason"),
+            "usage": raw.get("usage"),
+            "decode_usage": ((raw.get("decode") or {}).get("usage")
+                             if isinstance(raw.get("decode"), Mapping) else None),
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "usd_cost": usd_cost,
+            "usage_source": usage_source,
+            "usage_known": usage_known,
+            "price_snapshot": _price_snapshot(config),
+            "off_peak": off_peak_used,
+            "content": content,
+        })
+        validated = validate_semantic_grounding_response(
+            content, request, confidence_threshold)
+        if validated["status"] == "failed":
+            error_text = str(validated.get("error"))
+            terminal_state = ("malformed"
+                              if ("invalid_json" in error_text
+                                  or "not_text" in error_text
+                                  or "root_not_object" in error_text)
+                              else "rejected")
+            record = {
+                "fallback_item_id": request.get("fallback_item_id"),
+                "source_index": request.get("source_index"),
+                "request_sha256": request_sha,
+                "response_sha256": response_sha,
+                "status": terminal_state,
+                "semantic_status": None,
+                "action_status": None,
+                "field_statuses": {},
+                "response": None,
+                "error": error_text,
+                "input_tokens": input_tokens,
+                "output_tokens": output_tokens,
+                "usd_cost": usd_cost,
+                "usage_source": usage_source,
+                "usage_known": usage_known,
+                "source": "fresh_run",
+            }
+            _append_normalized_once(normalized_path, by_request_records, record)
+            append_ledger(ledger_path, {
+                "state": terminal_state,
+                "request_sha256": request_sha,
+                "fallback_item_id": request.get("fallback_item_id"),
+                "error": error_text,
+                "response_sha256": response_sha,
+                "input_tokens": input_tokens,
+                "output_tokens": output_tokens,
+                "usd_cost": usd_cost,
+                "usage_known": usage_known,
+            })
+            if terminal_state == "malformed":
+                counts["malformed"] += 1
+            else:
+                counts["rejected_by_validator"] += 1
+            counts["failed"] += 1
+            results_by_request[request_sha] = {
+                "source_index": request.get("source_index"),
+                "fallback_item_id": request.get("fallback_item_id"),
+                "status": "failed",
+                "error": error_text,
+                "terminal_state": terminal_state,
+                "response": None,
+                "recovered_from_store": False,
+                "request_sha256": request_sha,
+            }
+            if usage_known:
+                known_input_tokens += int(input_tokens or 0)
+                known_output_tokens += int(output_tokens or 0)
+                known_usd += float(usd_cost or 0.0)
+            else:
+                known_usage_unknown = True
+                halt_sending = True
+                counts["usage_unknown"] += 1
+                append_ledger(ledger_path, {
+                    "state": "usage_unknown",
+                    "request_sha256": request_sha,
+                    "reason": "provider_usage_missing_after_response",
+                })
+            continue
+
+        response = validated["response"]
+        semantic_status = _normalize_llm_status(response)
+        action_status = (response.get("action_grounding") or {}).get("status")
+        field_statuses = {
+            field: ((response.get(field) or {}).get("status"))
+            for field in ("condition", "constraint", "exception")
+        }
+        record = {
+            "fallback_item_id": request.get("fallback_item_id"),
+            "source_index": request.get("source_index"),
+            "request_sha256": request_sha,
+            "response_sha256": response_sha,
+            "status": "succeeded",
+            "semantic_status": semantic_status,
+            "action_status": action_status,
+            "field_statuses": field_statuses,
+            "response": response,
+            "error": None,
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "usd_cost": usd_cost,
+            "usage_source": usage_source,
+            "usage_known": usage_known,
+            "source": "fresh_run",
+        }
+        _append_normalized_once(normalized_path, by_request_records, record)
+        append_ledger(ledger_path, {
+            "state": "succeeded",
+            "request_sha256": request_sha,
+            "fallback_item_id": request.get("fallback_item_id"),
+            "semantic_status": semantic_status,
+            "response_sha256": response_sha,
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "usd_cost": usd_cost,
+            "usage_known": usage_known,
+        })
+        counts["succeeded"] += 1
+        counts["resolved" if semantic_status == "resolved" else "ambiguous"] += 1
+        results_by_request[request_sha] = {
+            "source_index": request.get("source_index"),
+            "fallback_item_id": request.get("fallback_item_id"),
+            "status": "validated",
+            "semantic_status": semantic_status,
+            "action_status": action_status,
+            "field_statuses": field_statuses,
+            "response": response,
+            "response_sha256": response_sha,
+            "recovered_from_store": False,
+            "request_sha256": request_sha,
+        }
+        if usage_known:
+            known_input_tokens += int(input_tokens or 0)
+            known_output_tokens += int(output_tokens or 0)
+            known_usd += float(usd_cost or 0.0)
+        else:
+            known_usage_unknown = True
+            halt_sending = True
+            counts["usage_unknown"] += 1
+            append_ledger(ledger_path, {
+                "state": "usage_unknown",
+                "request_sha256": request_sha,
+                "reason": "provider_usage_missing_after_response",
+            })
+
+    ordered_results = [
+        results_by_request.get(str(request.get("request_sha256")))
+        or blocked_result(request, "not_processed")
+        for request in requests
+    ]
+    no_double_send = not (set(attempted_request_shas) & resumed_sent_shas)
+    run_status = _classify_run_status(counts, counts["item_count"])
+    total_estimate = sum(int(request.get("input_tokens_estimate") or 0)
+                         for request in requests)
+    summary = {
+        "schema_version": "s3_semantic_grounding_llm_execution@2.0.0",
+        "runner_revision": LLM_RUNNER_REVISION,
+        "base_revision": V2_REVISION,
+        "mode": mode,
+        "run_status": run_status,
+        "counts": counts,
+        "coverage": (round(counts["succeeded"] / counts["item_count"], 4)
+                     if counts["item_count"] else None),
+        "total_input_tokens_estimate": total_estimate,
+        "total_input_tokens_actual": known_input_tokens,
+        "total_output_tokens_actual": known_output_tokens,
+        "total_usd_actual": round(known_usd, 6),
+        "known_usage_complete": not known_usage_unknown,
+        "results": ordered_results,
+        "ledger_path": str(ledger_path),
+        "normalized_path": str(normalized_path),
+        "raw_response_dir": str(raw_dir),
+        "ledger_integrity": "ok",
+        "retry": 0,
+        "no_double_send": no_double_send,
+        "resume_policy": (
+            "sent states and persisted normalized records are terminal; only "
+            "pre-send failures/blocks are retried on a later invocation"),
     }
     (run_root / "run_summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n",

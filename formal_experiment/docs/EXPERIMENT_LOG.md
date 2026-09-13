@@ -4701,3 +4701,17 @@
 - 仍存在 blocker：无
 - 备注：v3 deterministic predictions reused by hash; validator-passed responses now applied field-by-field; anonymous activity ids reverse-mapped and affected local checks re-executed on the real node; positive evidence-bound claims verified against target surfaces, absence claims require closed program scope, constraint claims require programmatic time comparison; clear deterministic checks preserved; v4 pack advertises only post-truncation visible evidence ids. Audit integrity from complete primary asset tree; focused tests run in writable linked worktree.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-13T12:30:36.612155+00:00 - S3-SEMANTIC-GROUNDING-LLM-EXECUTION-V2: resumable ledger/raw/normalized state machine, no-resend terminal states, budget/off-peak fail-closed (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：16 passed in 0.20s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`5507e8a72469b7fa3c381b3ec4ff79ac9f37318c`；相关未提交路径：6 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：无
+- 备注：Recovery loads ledger, raw and normalized records and includes historical completed items; sent states are terminal and never auto-resent; ledger hash chain validated; pre-send call/token/USD/off-peak gates enforced; actual usage persisted and reused; run status classified complete/partial/blocked/failed; validated with fake transports only, no real API.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -11,6 +11,27 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
+## 2026-09-13 修订 3.6.60：Stage 3 LLM 执行、断点恢复与预算/时段 fail-closed（S3-SEMANTIC-GROUNDING-LLM-EXECUTION-V2，零 API）
+
+**范围**：修复 LLM fallback 执行器与 runner，不调用真实 API；新增离线 fake
+transport 测试。
+
+**执行/恢复**：
+- 恢复时读取 ledger、raw response 与 normalized record，并把历史完成项纳入本轮
+  summary/evaluation，不再只评价本轮发送项。
+- 明确区分发送前失败、已发送后 malformed/验证拒绝、success、in_doubt、
+  usage_unknown；`sent` 及之后状态永不因结果不合格自动重发（retry=0）。
+- ledger 校验 `prev_hash`/`record_hash` 链；篡改时发送前 fail closed。
+- 每项终态立即持久化 raw/normalized/ledger；恢复不覆盖历史证据，不重复计费。
+- 发送前落实 max calls、input/output token cap、USD cap 与低峰窗口；历史 usage
+  未知、in_doubt 或 provider usage 缺失时停止后续相关调用。成功后保存实际 usage，
+  恢复时累计 input/output tokens 与 USD。
+- runner 不再硬编码 `REAL_RUN_COMPLETE`，按 coverage 与终态输出
+  `REAL_RUN_COMPLETE/PARTIAL/BLOCKED/FAILED`。
+
+**离线验证**：`tests/test_s3_semantic_grounding_llm_execution_v2.py` 使用假 transport
+覆盖上述行为，7 passed；真实 API = 0。
+
 ## 2026-09-13 修订 3.6.59：Stage 3 v4 逐字段 LLM 应用、动作回绑与证据范围绑定（S3-SEMANTIC-GROUNDING-V4，零 API）
 
 **范围**：新增 revision `s3_semantic_grounding_v4`；byte-identical 复用 v3
