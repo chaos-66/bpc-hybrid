@@ -1,0 +1,42 @@
+{
+  "schema_version": "s3_semantic_grounding_llm_preflight@2.0.0",
+  "revision": "s3_semantic_grounding_llm_v2",
+  "base_revision": "s3_semantic_grounding_v5",
+  "status": "READY_FOR_AUTHORIZATION_DECISION",
+  "real_api_calls": 0,
+  "network_calls": 0,
+  "candidate_pack_path": "outputs/evidence/s3_semantic_grounding_v5/llm_fallback_candidate_pack_v5.json",
+  "candidate_pack_sha256": "915750b068a45f98be56b0e48c6ef0722d95e8d5bda870cbcdb1f1f4e2ae54f2",
+  "candidate_pack_item_count": 22,
+  "request_count": 22,
+  "request_set_sha256": "fdd72c0191afdb24975550d9297951385aedca91d69c3722952a6f49eb123c53",
+  "expected_input_tokens": 69032,
+  "max_input_tokens_cap": 138064,
+  "total_output_token_cap": 11264,
+  "off_peak_windows_utc": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      4.0,
+      6.0
+    ],
+    [
+      10.0,
+      24.0
+    ]
+  ],
+  "peak_estimated_usd": 0.135728,
+  "off_peak_estimated_usd": 0.067864,
+  "usd_cap_requested": 0.2,
+  "rmb_cap_requested": 1.44,
+  "matching_authorization_files": [],
+  "matching_authorization_count": 0,
+  "authorization_inventory_count": 133,
+  "non_matching_authorization_count": 131,
+  "old_v2_pack_or_request_hash_reused": false,
+  "authorization_request_path": "outputs/reports/s3_semantic_grounding_v5_llm_authorization_request.json",
+  "authorization_request_md_path": "outputs/reports/s3_semantic_grounding_v5_llm_authorization_request.md",
+  "generated_utc": "2026-09-13T12:42:53.697413+00:00"
+}

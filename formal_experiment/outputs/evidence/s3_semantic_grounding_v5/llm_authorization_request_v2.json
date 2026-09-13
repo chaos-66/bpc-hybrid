@@ -1,0 +1,66 @@
+{
+  "schema_version": "s3_semantic_grounding_llm_authorization_request@2.0.0",
+  "revision": "s3_semantic_grounding_llm_v2",
+  "base_revision": "s3_semantic_grounding_v5",
+  "scope": "S3-SEMANTIC-GROUNDING-V5-FALLBACK",
+  "provider": "openai_compatible",
+  "model": "deepseek-v4-pro",
+  "base_url_env_var": "BPC_HYBRID_DeepSeek_BASE_URL",
+  "api_key_env_var": "BPC_HYBRID_DeepSeek_API_KEY",
+  "fallback_item_count": 22,
+  "calls": 22,
+  "retry": 0,
+  "off_peak_only": true,
+  "off_peak_windows_utc": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      4.0,
+      6.0
+    ],
+    [
+      10.0,
+      24.0
+    ]
+  ],
+  "expected_input_tokens": 69032,
+  "max_input_tokens_cap": 138064,
+  "max_output_tokens_per_call": 512,
+  "total_output_token_cap": 11264,
+  "peak_estimated_usd": 0.135728,
+  "off_peak_estimated_usd": 0.067864,
+  "peak_usd_cap": 0.2,
+  "required_peak_usd_cap": 0.2,
+  "usd_cap": 0.2,
+  "rmb_cap_at_7.2": 1.44,
+  "candidate_pack_sha256": "915750b068a45f98be56b0e48c6ef0722d95e8d5bda870cbcdb1f1f4e2ae54f2",
+  "request_set_sha256": "fdd72c0191afdb24975550d9297951385aedca91d69c3722952a6f49eb123c53",
+  "canonical_request_count": 22,
+  "suggested_authorization_sentence": "我授权在 S3-SEMANTIC-GROUNDING-V5-FALLBACK 范围内使用 openai_compatible/deepseek-v4-pro 对已冻结的 22 个 fallback items 执行真实 API 调用；retry=0；仅在低峰时段运行（UTC 00:00-01:00 / 04:00-06:00 / 10:00-24:00）；输入 token 上限 138064；输出总 token 上限 11264；总费用上限 USD 0.20 / RMB 1.44；请求集 hash=fdd72c0191afdb24975550d9297951385aedca91d69c3722952a6f49eb123c53；候选 pack hash=915750b068a45f98be56b0e48c6ef0722d95e8d5bda870cbcdb1f1f4e2ae54f2。",
+  "suggested_authorization_sentence_sha256": "f6eda1b245c078d3def5e3d0b736df5a60eb75b2de97ecc4da984471abfc38da",
+  "execution_command": "cd formal_experiment && python scripts/run_s3_semantic_grounding_llm_v2.py --real --authorization outputs/reports/s3_semantic_grounding_v5_llm_authorization_event.json",
+  "matching_authorizations": [],
+  "old_v5_scope_authorizations": [
+    {
+      "path": "outputs/reports/s3_semantic_grounding_v5_llm_authorization_request.json",
+      "scope": "S3-SEMANTIC-GROUNDING-V5-FALLBACK",
+      "status": null,
+      "model": "deepseek-v4-pro",
+      "candidate_pack_sha256": "915750b068a45f98be56b0e48c6ef0722d95e8d5bda870cbcdb1f1f4e2ae54f2",
+      "request_set_sha256": "fdd72c0191afdb24975550d9297951385aedca91d69c3722952a6f49eb123c53"
+    },
+    {
+      "path": "outputs/evidence/s3_semantic_grounding_v5/llm_authorization_request_v2.json",
+      "scope": "S3-SEMANTIC-GROUNDING-V5-FALLBACK",
+      "status": null,
+      "model": "deepseek-v4-pro",
+      "candidate_pack_sha256": "915750b068a45f98be56b0e48c6ef0722d95e8d5bda870cbcdb1f1f4e2ae54f2",
+      "request_set_sha256": "fdd72c0191afdb24975550d9297951385aedca91d69c3722952a6f49eb123c53"
+    }
+  ],
+  "non_matching_authorization_count": 131,
+  "existing_v2_pack_or_request_hash_reused": false,
+  "decision": "BLOCKED_NO_MATCHING_AUTHORIZATION"
+}
