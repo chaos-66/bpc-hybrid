@@ -1,0 +1,483 @@
+{
+  "schema_version": "s3_semantic_grounding_v5_metrics@1.0.0",
+  "run_id": "s3_semantic_grounding_v5",
+  "revision": "s3_semantic_grounding_v5",
+  "scope": "development_only",
+  "read_only_reuse": {
+    "path": "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl",
+    "expected_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+    "actual_raw_sha256": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092",
+    "actual_canonical_lf_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+    "match": true
+  },
+  "real_api_calls": 0,
+  "network_calls": 0,
+  "guard_change_report": {
+    "change_count": 2,
+    "changed_by_side": {
+      "control": 2
+    },
+    "changed_by_target": {
+      "required_condition_not_enforced": 1,
+      "constraint_violated": 1
+    },
+    "removed_control_false_alarms": 2,
+    "removed_control_false_alarm_items": [
+      {
+        "item_id": "syn_v2_exception_not_handled_01",
+        "side": "control",
+        "expected_label": "none",
+        "changed_target": "required_condition_not_enforced",
+        "changed_target_field": "condition",
+        "pair_target_for_item": null,
+        "is_pair_target_change": false,
+        "before": {
+          "status": "not_enforced",
+          "observable": true,
+          "violation": true,
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface"
+        },
+        "after": {
+          "status": "unknown",
+          "observable": false,
+          "violation": null,
+          "reason": "non_action_rule_field_anchor_guard"
+        },
+        "resolved_activity_id": "syn_handler_syn_v2_exception_not_handled_01",
+        "resolved_label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "anchor_consistency": {
+          "action_anchor_valid": false,
+          "reason": "resolved_label_matches_non_action_rule_field",
+          "resolved_activity_id": "syn_handler_syn_v2_exception_not_handled_01",
+          "resolved_label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+          "action_match": false,
+          "non_action_field_matches": {
+            "condition": false,
+            "constraint": false,
+            "exception": true
+          }
+        }
+      },
+      {
+        "item_id": "syn_v2_exception_not_handled_06",
+        "side": "control",
+        "expected_label": "none",
+        "changed_target": "constraint_violated",
+        "changed_target_field": "constraint",
+        "pair_target_for_item": null,
+        "is_pair_target_change": false,
+        "before": {
+          "status": "violated",
+          "observable": true,
+          "violation": true,
+          "reason": "explicit_time_bound_absent_from_closed_action_scope"
+        },
+        "after": {
+          "status": "unknown",
+          "observable": false,
+          "violation": null,
+          "reason": "non_action_rule_field_anchor_guard"
+        },
+        "resolved_activity_id": "syn_handler_syn_v2_exception_not_handled_06",
+        "resolved_label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "anchor_consistency": {
+          "action_anchor_valid": false,
+          "reason": "resolved_label_matches_non_action_rule_field",
+          "resolved_activity_id": "syn_handler_syn_v2_exception_not_handled_06",
+          "resolved_label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+          "action_match": false,
+          "non_action_field_matches": {
+            "condition": false,
+            "constraint": false,
+            "exception": true
+          }
+        }
+      }
+    ],
+    "demoted_pair_target_positives": 0,
+    "demoted_pair_target_positive_items": [],
+    "control_clear_to_unknown": 2,
+    "target_paired_before": {
+      "macro_f1_four_types": 0.6737,
+      "pair_success_count": 21,
+      "target_field_unknown_rate": 0.3375,
+      "control_target_false_positive_rate": 0.025
+    },
+    "target_paired_after": {
+      "macro_f1_four_types": 0.6737,
+      "pair_success_count": 21,
+      "target_field_unknown_rate": 0.3375,
+      "control_target_false_positive_rate": 0.025
+    },
+    "target_paired_delta": {
+      "macro_f1_four_types": 0.0,
+      "pair_success_count": 0,
+      "target_field_unknown_rate": 0.0
+    },
+    "variant_binary_before_macro_f1": 0.5619,
+    "variant_binary_after_macro_f1": 0.5619,
+    "legacy_unified_before_macro_f1_five_classes": 0.4246,
+    "legacy_unified_after_macro_f1_five_classes": 0.4317,
+    "legacy_unified_before_control_false_positives": 26,
+    "legacy_unified_after_control_false_positives": 24,
+    "changes": [
+      {
+        "item_id": "syn_v2_exception_not_handled_01",
+        "side": "control",
+        "expected_label": "none",
+        "changed_target": "required_condition_not_enforced",
+        "changed_target_field": "condition",
+        "pair_target_for_item": null,
+        "is_pair_target_change": false,
+        "before": {
+          "status": "not_enforced",
+          "observable": true,
+          "violation": true,
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface"
+        },
+        "after": {
+          "status": "unknown",
+          "observable": false,
+          "violation": null,
+          "reason": "non_action_rule_field_anchor_guard"
+        },
+        "resolved_activity_id": "syn_handler_syn_v2_exception_not_handled_01",
+        "resolved_label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "anchor_consistency": {
+          "action_anchor_valid": false,
+          "reason": "resolved_label_matches_non_action_rule_field",
+          "resolved_activity_id": "syn_handler_syn_v2_exception_not_handled_01",
+          "resolved_label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+          "action_match": false,
+          "non_action_field_matches": {
+            "condition": false,
+            "constraint": false,
+            "exception": true
+          }
+        }
+      },
+      {
+        "item_id": "syn_v2_exception_not_handled_06",
+        "side": "control",
+        "expected_label": "none",
+        "changed_target": "constraint_violated",
+        "changed_target_field": "constraint",
+        "pair_target_for_item": null,
+        "is_pair_target_change": false,
+        "before": {
+          "status": "violated",
+          "observable": true,
+          "violation": true,
+          "reason": "explicit_time_bound_absent_from_closed_action_scope"
+        },
+        "after": {
+          "status": "unknown",
+          "observable": false,
+          "violation": null,
+          "reason": "non_action_rule_field_anchor_guard"
+        },
+        "resolved_activity_id": "syn_handler_syn_v2_exception_not_handled_06",
+        "resolved_label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "anchor_consistency": {
+          "action_anchor_valid": false,
+          "reason": "resolved_label_matches_non_action_rule_field",
+          "resolved_activity_id": "syn_handler_syn_v2_exception_not_handled_06",
+          "resolved_label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+          "action_match": false,
+          "non_action_field_matches": {
+            "condition": false,
+            "constraint": false,
+            "exception": true
+          }
+        }
+      }
+    ]
+  },
+  "target_paired_after": {
+    "schema_version": "s3_target_paired_evaluator@3.0.0",
+    "evaluation_kind": "target_paired_causal",
+    "primary": true,
+    "total_pairs": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "pairs": 10,
+        "variant": {
+          "TP": 10,
+          "FN_observed_negative": 0,
+          "FN_unknown": 0,
+          "FN": 0,
+          "decided": 10,
+          "unknown": 0,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 8,
+          "FP": 0,
+          "unknown": 2,
+          "decided": 8,
+          "coverage": 0.8,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "precision_denominator_tp_plus_fp": 10,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 1.0,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 8,
+        "pair_success_rate": 0.8,
+        "unknown_rate_variant": 0.0,
+        "unknown_rate_control": 0.2
+      },
+      "required_condition_not_enforced": {
+        "pairs": 10,
+        "variant": {
+          "TP": 9,
+          "FN_observed_negative": 0,
+          "FN_unknown": 1,
+          "FN": 1,
+          "decided": 9,
+          "unknown": 1,
+          "coverage": 0.9,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 9,
+          "FP": 1,
+          "unknown": 0,
+          "decided": 10,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9,
+        "precision_denominator_tp_plus_fp": 10,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.9,
+        "tnr_over_decided_controls": 0.9,
+        "control_fpr_over_decided_controls": 0.1,
+        "control_fpr_over_all_pairs": 0.1,
+        "pair_success": 8,
+        "pair_success_rate": 0.8,
+        "unknown_rate_variant": 0.1,
+        "unknown_rate_control": 0.0
+      },
+      "constraint_violated": {
+        "pairs": 10,
+        "variant": {
+          "TP": 2,
+          "FN_observed_negative": 0,
+          "FN_unknown": 8,
+          "FN": 8,
+          "decided": 2,
+          "unknown": 8,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 2,
+          "FP": 0,
+          "unknown": 8,
+          "decided": 2,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "precision_denominator_tp_plus_fp": 2,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.2,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 2,
+        "pair_success_rate": 0.2,
+        "unknown_rate_variant": 0.8,
+        "unknown_rate_control": 0.8
+      },
+      "exception_not_handled": {
+        "pairs": 10,
+        "variant": {
+          "TP": 3,
+          "FN_observed_negative": 0,
+          "FN_unknown": 7,
+          "FN": 7,
+          "decided": 3,
+          "unknown": 7,
+          "coverage": 0.3,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 9,
+          "FP": 0,
+          "unknown": 1,
+          "decided": 9,
+          "coverage": 0.9,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615,
+        "precision_denominator_tp_plus_fp": 3,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.3,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 3,
+        "pair_success_rate": 0.3,
+        "unknown_rate_variant": 0.7,
+        "unknown_rate_control": 0.1
+      }
+    },
+    "aggregate_side_outcomes_mutually_exclusive": {
+      "variant": {
+        "positive": 24,
+        "negative_observed_wrong": 0,
+        "unknown": 16,
+        "total": 40,
+        "coverage": 0.6,
+        "unknown_rate": 0.4
+      },
+      "control": {
+        "negative": 28,
+        "positive_false_alarm": 1,
+        "unknown": 11,
+        "total": 40,
+        "coverage": 0.725,
+        "unknown_rate": 0.275,
+        "false_positive_rate_over_decided_controls": 0.0345,
+        "false_positive_rate_over_all_pairs": 0.025
+      }
+    },
+    "pair_level_outcomes_mutually_exclusive": {
+      "control_unknown": 2,
+      "both_correct": 21,
+      "control_false_alarm": 1,
+      "variant_unknown": 7,
+      "both_unknown": 9
+    },
+    "macro_f1_four_types": 0.6737,
+    "control_target_false_positive_rate": 0.025,
+    "control_target_false_positive_rate_over_decided_controls": 0.0345,
+    "target_field_unknown_rate": 0.3375,
+    "variant_unknown_rate": 0.4,
+    "control_unknown_rate": 0.275,
+    "variant_coverage": 0.6,
+    "control_coverage": 0.725,
+    "pair_success_rate": 0.525,
+    "pair_success_count": 21,
+    "pair_success_denominator": 40,
+    "explicit_denominators": {
+      "variant_positive_tp_denominator": "all scored variant checks",
+      "variant_failure_fn_denominator": "all scored variant checks",
+      "recall_includes_unknown_as_fn": true,
+      "control_tnr_denominator": "decided controls (TN+FP) only",
+      "control_unknown_denominator": "all scored control checks",
+      "pair_success_denominator": "all paired variant/control checks",
+      "unknown_is_not_a_compliant_prediction": true,
+      "all_side_checks_denominator_for_overall_unknown_rate": "all four target-type checks across both sides"
+    },
+    "uses_expected_only_for_evaluation_grouping": true,
+    "does_not_mutate_predictions": true
+  },
+  "variant_binary_after": {
+    "per_type": {
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.36,
+        "recall": 0.9,
+        "f1": 0.5143
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.6,
+        "recall": 0.3,
+        "f1": 0.4
+      }
+    },
+    "macro_f1_four_types": 0.5619
+  },
+  "legacy_unified_after": {
+    "schema_version": "s3_unified_evaluator@2.0.0",
+    "total_objects": 80,
+    "control_objects": 40,
+    "variant_objects": 40,
+    "five_class_accuracy": 0.35,
+    "per_class": {
+      "none": {
+        "support": 40,
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222
+      },
+      "prohibited_action_present": {
+        "support": 10,
+        "precision": 0.7692,
+        "recall": 1.0,
+        "f1": 0.8696
+      },
+      "required_condition_not_enforced": {
+        "support": 10,
+        "precision": 0.2667,
+        "recall": 0.8,
+        "f1": 0.4
+      },
+      "constraint_violated": {
+        "support": 10,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333
+      },
+      "exception_not_handled": {
+        "support": 10,
+        "precision": 0.375,
+        "recall": 0.3,
+        "f1": 0.3333
+      }
+    },
+    "macro_f1_four_violation_types": 0.484,
+    "macro_f1_five_classes": 0.4317,
+    "abstentions": 22,
+    "denominator_policy": "None is an abstention and counts as an error for the Gold class; it is never counted as a compliant or violating prediction."
+  },
+  "fallback_pack_summary": {
+    "schema_version": "s3_semantic_grounding_fallback_candidate_pack@1.0.0",
+    "revision": "s3_semantic_grounding_v5",
+    "item_count": 22,
+    "side_counts": {
+      "variant": 7,
+      "control": 15
+    },
+    "trigger_counts": {
+      "action_grounding_ambiguous": 10,
+      "condition_semantic_ambiguous": 12,
+      "unsupported_abstract_constraint": 11,
+      "action_grounding_unresolved": 5,
+      "exception_semantic_ambiguous": 3,
+      "other_documented_semantic_ambiguity": 2,
+      "exception_handler_semantic_ambiguous": 1,
+      "constraint_semantic_ambiguous": 1
+    },
+    "all_evidence_ids_visible_in_payload": true,
+    "semantic_fields_preserved_for_all_items": true
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": "s3_semantic_grounding_v5_manifest@1.0.0",
+  "run_id": "s3_semantic_grounding_v5",
+  "revision": "s3_semantic_grounding_v5",
+  "scope": "development_only",
+  "generated_utc": "2026-09-13T12:42:52.906353+00:00",
+  "read_only_reuse": {
+    "path": "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl",
+    "expected_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+    "actual_raw_sha256": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092",
+    "actual_canonical_lf_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+    "match": true
+  },
+  "inputs": {
+    "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092"
+  },
+  "implementation_hashes": {
+    "scripts/run_s3_semantic_grounding_v5.py": "62e912297012b42c2754a6fe51db4810d85742b85ba804c93a17d80d9c79d6ca",
+    "src/bpc_hybrid/s3_semantic_grounding_v5.py": "dc3b931a79a9f8aa44d58b6c7c74b68d907ad8de8cf6e3770b5d0b05bfff5507",
+    "configs/stage3_semantic_grounding_v5.json": "6fecfde2a681bf08e0ed5e961229267961ea813b8954c547402134b88b54f10d",
+    "tests/test_s3_semantic_grounding_v5.py": "6528ee4b4a73f26e53f37112f9be87e4eac8c8e33d20dc25e57c398e5dc6c808",
+    "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092"
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "v2_predictions_overwritten": false,
+    "no_per_sample_threshold_tuning": true
+  }
+}

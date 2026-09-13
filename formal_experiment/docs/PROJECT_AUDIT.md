@@ -9,6 +9,85 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+﻿﻿## 0. Latest v5 LLM preflight: s3_semantic_grounding_llm_v2 (2026-09-13, zero API)
+
+**Status**: READY_FOR_AUTHORIZATION_DECISION / BLOCKED_NO_MATCHING_AUTHORIZATION.
+
+- Candidate pack: **22 items** (7 variant + 15 control), v5 pack hash
+  `915750b068a45f98be56b0e48c6ef0722d95e8d5bda870cbcdb1f1f4e2ae54f2`.
+- Request set: **22 calls**, rebuilt from the v5 pack with the final
+  prompt/executor code; request-set hash
+  `fdd72c0191afdb24975550d9297951385aedca91d69c3722952a6f49eb123c53`.
+- Expected input tokens: **69,032**; input cap **138,064**; total output-token
+  cap **11,264** (512 per call).
+- Cost: peak estimate **USD 0.1357**, off-peak estimate **USD 0.0679**, requested
+  cap **USD 0.20 / RMB 1.44**.
+- Off-peak only: UTC windows **00:00-01:00 / 04:00-06:00 / 10:00-24:00**.
+- Matching existing v5 scope+hash authorizations: **0**. Old v2 pack/request
+  hashes are explicitly not reused. Real API calls = 0.
+- Suggested authorization sentence SHA-256:
+  `f6eda1b245c078d3def5e3d0b736df5a60eb75b2de97ecc4da984471abfc38da`.
+
+**Artifacts**: `outputs/reports/s3_semantic_grounding_v5_llm_preflight.json`,
+`s3_semantic_grounding_v5_llm_authorization_request.{json,md}`,
+`outputs/evidence/s3_semantic_grounding_v5/llm_preflight_v2.json`,
+`llm_preflight_request_set_v2.json`,
+`llm_preflight_canonical_requests_v2.jsonl`, `llm_authorization_request_v2.json`,
+`scripts/build_s3_semantic_grounding_v5_llm_preflight.py`,
+`scripts/run_s3_semantic_grounding_llm_v2.py`.
+
+**Authorization boundary**: this is a request, not an authorization. A real call
+still requires the user's exact sentence and a new unconsumed authorization
+event; the old 20-item v2 hashes and any unrelated carried authorization are not
+valid for this payload.
+
+## 0. Latest checkpoint: s3_semantic_grounding_v5 (2026-09-13, zero API)
+
+**Status**: VERIFIED_DEVELOPMENT_DETECTION_REPAIR. Frozen v2 predictions are
+read-only reused after artifact-hash verification; no API call.
+
+**Concrete failure chains**
+
+1. **Constraint false positive (fixed)** — `syn_v2_exception_not_handled_06`
+   control. Rule field: `constraint="not later than 72 hours"`, action
+   `"notify the personal data breach"`. The frozen action grounder resolved to
+   the generator-inserted node whose label is the rule **exception** text
+   because the process has no action node equal to the rule action. The local
+   constraint check then saw no 72-hour bound around that non-action node and
+   emitted `constraint_violated=True`
+   (`explicit_time_bound_absent_from_closed_action_scope`). Repair: when the
+   resolved label strongly matches a non-action rule field and not the rule
+   action, condition/constraint determinations anchored to that node are
+   demoted to `unknown`. No API and no per-sample threshold change.
+2. **Exception abstention / capability boundary** —
+   `syn_v2_exception_not_handled_02` variant. The frozen process does not
+   express the rule action; action grounding is unresolved
+   (`no_activity_with_semantic_or_lexical_signal`), so handler absence cannot
+   be programmatically established. The record keeps `unknown` and an explicit
+   capability boundary instead of fabricating a violation.
+
+**Detection change / cost**
+- Changed checks: **2** (both control-side clear determinations demoted to
+  unknown).
+- Removed control false alarms: **2** (legacy clear-control diagnostic
+  26 -> 24 false-positive checks).
+- Demoted target-paired variant positives: **0**.
+- Target-paired Macro-F1: **0.6737 -> 0.6737**; pair success **21/40 -> 21/40**;
+  target-field unknown rate **0.3375 -> 0.3375**. F1 was not required to rise.
+- v5 fallback pack: 22 items (7 variant + 15 control), all advertised evidence
+  ids visible, semantics preserved.
+
+**Artifacts**
+- `src/bpc_hybrid/s3_semantic_grounding_v5.py`
+- `scripts/run_s3_semantic_grounding_v5.py`
+- `configs/stage3_semantic_grounding_v5.json`
+- `tests/test_s3_semantic_grounding_v5.py`
+- `outputs/evidence/s3_semantic_grounding_v5/`
+- `outputs/development/s3_semantic_grounding_v5/`
+- `outputs/reports/s3_semantic_grounding_v5.{json,md}`
+
+**Boundary**: development-only synthetic panel, deterministic guard, no formal
+Oracle or human Gold.
 ## 0. Latest checkpoint: s3_semantic_grounding_llm_execution_v2 (2026-09-13, offline fake transport)
 
 **Status**: VERIFIED_OFFLINE_EXECUTION_SEMANTICS. No real API calls.

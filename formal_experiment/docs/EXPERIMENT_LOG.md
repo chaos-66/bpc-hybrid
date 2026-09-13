@@ -4715,3 +4715,17 @@
 - 仍存在 blocker：无
 - 备注：Recovery loads ledger, raw and normalized records and includes historical completed items; sent states are terminal and never auto-resent; ledger hash chain validated; pre-send call/token/USD/off-peak gates enforced; actual usage persisted and reused; run status classified complete/partial/blocked/failed; validated with fake transports only, no real API.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-13T12:39:25.785693+00:00 - S3-SEMANTIC-GROUNDING-V5: action-anchor consistency guard from constraint/exception failure chains (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：4 passed in 0.08s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`4fcf790dbcc8f05c438d0cc119a152759abdfea3`；相关未提交路径：15 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Read-only reuse of hash-verified v2 predictions. Concrete constraint false-positive chain fixed by demoting condition/constraint determinations anchored to a resolved non-action rule-field label; exception missing-action chain recorded as capability boundary. Changed checks 2 control clear->unknown; removed control false alarms 2; target-paired F1 0.6737 and pair success 21/40 unchanged; no per-sample thresholds and no API.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

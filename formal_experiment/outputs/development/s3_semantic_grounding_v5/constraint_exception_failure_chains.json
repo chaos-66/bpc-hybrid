@@ -1,0 +1,282 @@
+{
+  "schema_version": "s3_semantic_grounding_failure_chains@1.0.0",
+  "revision": "s3_semantic_grounding_v5",
+  "scope": "development_only",
+  "constraint": {
+    "chain_id": "constraint_false_positive_non_action_anchor",
+    "item_id": "syn_v2_exception_not_handled_06",
+    "side": "control",
+    "rule_field": {
+      "modality": "obligation",
+      "actor": "the controller",
+      "action": "notify the personal data breach",
+      "condition": "In the case of a personal data breach",
+      "constraint": "not later than 72 hours",
+      "exception": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons"
+    },
+    "step_1_rule_field": {
+      "constraint_text": "not later than 72 hours",
+      "numeric_bound": null,
+      "action_text": "notify the personal data breach"
+    },
+    "step_2_action_candidate": {
+      "grounding_status": "resolved",
+      "resolved_activity_id": "syn_handler_syn_v2_exception_not_handled_06",
+      "resolved_label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+      "grounding_reason": "strong_candidate_signal",
+      "candidate_examples": [
+        {
+          "activity_id": "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "label": "Communicate the withdraw",
+          "similarity": 0.500959,
+          "lexical_coverage": 0.0,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "syn_handler_syn_v2_exception_not_handled_06",
+          "label": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+          "similarity": 0.403639,
+          "lexical_coverage": 0.75,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "sid-DFB327FD-78D3-4012-8BAC-82AF87341389",
+          "label": "Inform the user that the withdraw will stop all running BPs",
+          "similarity": 0.400402,
+          "lexical_coverage": 0.0,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "label": "Stop running BPs using withdrawn data",
+          "similarity": 0.387834,
+          "lexical_coverage": 0.25,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "label": "Stop using withdrawn data",
+          "similarity": 0.381185,
+          "lexical_coverage": 0.25,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "sid-A9B97678-298C-4EE7-82A3-836179299938",
+          "label": "Check if withdrawn data are relevant",
+          "similarity": 0.221706,
+          "lexical_coverage": 0.25,
+          "exact_normalized": false
+        }
+      ],
+      "process_has_semantic_rule_action": false
+    },
+    "step_3_flow_evidence": {
+      "compact_constraint_bound_evidence": [],
+      "compact_constraint_unbound_evidence": [],
+      "anchor_consistency": null
+    },
+    "step_4_before_after": {
+      "before": {
+        "status": "violated",
+        "observable": true,
+        "violation": true,
+        "reason": "explicit_time_bound_absent_from_closed_action_scope",
+        "source": null,
+        "previous_check": null,
+        "guard_reason": null,
+        "guard_non_action_field_matches": null
+      },
+      "after": {
+        "status": "unknown",
+        "observable": false,
+        "violation": null,
+        "reason": "non_action_rule_field_anchor_guard",
+        "source": "program_guard_non_action_anchor",
+        "previous_check": {
+          "action_grounding_status": "resolved",
+          "check": "constraint_violated",
+          "evidence": [],
+          "observable": true,
+          "reason": "explicit_time_bound_absent_from_closed_action_scope",
+          "rule_bound": {
+            "hours": 72,
+            "unit": "hour",
+            "value": "not later than 72 hours"
+          },
+          "score": 1.0,
+          "status": "violated",
+          "violation": true
+        },
+        "guard_reason": "resolved_label_matches_non_action_rule_field",
+        "guard_non_action_field_matches": {
+          "condition": false,
+          "constraint": false,
+          "exception": true
+        }
+      }
+    },
+    "step_5_repair": {
+      "repair_status": "FIXED_BY_PROGRAM_ANCHOR_GUARD",
+      "repair": "When the resolved activity label strongly matches a non-action rule field and not the rule action, condition/constraint determinations anchored to that node are demoted to unknown.",
+      "api_needed": false,
+      "correctness_effect": "removes a false constraint violation produced by absence of a bound around an exception-handler node; target-paired F1 is not required to increase"
+    }
+  },
+  "exception": {
+    "chain_id": "exception_abstention_missing_rule_action",
+    "item_id": "syn_v2_exception_not_handled_02",
+    "side": "variant",
+    "rule_field": {
+      "modality": "prohibition",
+      "actor": "The communication to the data subject",
+      "action": "referred to",
+      "condition": "if the controller has implemented appropriate technical and organisational protection measures",
+      "constraint": null,
+      "exception": "shall not be required if the controller has implemented appropriate technical and organisational protection measures"
+    },
+    "step_1_rule_field": {
+      "exception_text": "shall not be required if the controller has implemented appropriate technical and organisational protection measures",
+      "action_text": "referred to"
+    },
+    "step_2_action_candidate": {
+      "grounding_status": "unresolved",
+      "grounding_reason": "no_activity_with_semantic_or_lexical_signal",
+      "resolved_activity_id": null,
+      "candidate_count": 6,
+      "candidate_examples": [
+        {
+          "activity_id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "label": "Notify national authority",
+          "similarity": 0.137246,
+          "lexical_coverage": 0.0,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "label": "Retrieve breached subjects",
+          "similarity": 0.053757,
+          "lexical_coverage": 0.0,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "label": "Communication with data subject",
+          "similarity": 0.051806,
+          "lexical_coverage": 0.0,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "label": "Retrieve breached data",
+          "similarity": 0.048697,
+          "lexical_coverage": 0.0,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "label": "Handle delay",
+          "similarity": -0.024024,
+          "lexical_coverage": 0.0,
+          "exact_normalized": false
+        },
+        {
+          "activity_id": "sid-231C2935-E80E-48E9-8E30-CBF3FC58DFB3",
+          "label": "Data loss limitation",
+          "similarity": -0.196367,
+          "lexical_coverage": 0.0,
+          "exact_normalized": false
+        }
+      ],
+      "process_has_semantic_rule_action": false
+    },
+    "step_3_flow_evidence": {
+      "compact_exception_handler_candidates": [
+        {
+          "dedicated_handler_structure": false,
+          "id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "kind": "local_activity_label",
+          "text": "Notify national authority"
+        },
+        {
+          "dedicated_handler_structure": false,
+          "id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "kind": "local_activity_label",
+          "text": "Retrieve breached subjects"
+        },
+        {
+          "dedicated_handler_structure": false,
+          "id": "sid-231C2935-E80E-48E9-8E30-CBF3FC58DFB3",
+          "kind": "local_activity_label",
+          "text": "Data loss limitation"
+        },
+        {
+          "dedicated_handler_structure": false,
+          "id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "kind": "local_activity_label",
+          "text": "Handle delay"
+        },
+        {
+          "dedicated_handler_structure": false,
+          "id": "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "kind": "local_activity_label",
+          "text": "Communication with data subject"
+        },
+        {
+          "dedicated_handler_structure": false,
+          "id": "sid-CC421101-EEDB-4967-B2BC-84169BBBD404",
+          "kind": "local_activity_label",
+          "text": "Management of data breaches completed"
+        },
+        {
+          "dedicated_handler_structure": false,
+          "id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "kind": "local_activity_label",
+          "text": "Retrieve breached data"
+        },
+        {
+          "dedicated_handler_structure": false,
+          "id": "branch:sid-694CA9E1-C3D4-4CB3-8439-064C78DB114B",
+          "kind": "alternate_branch",
+          "text": "Notify national authority"
+        }
+      ],
+      "compact_constraint_bound_evidence": [
+        {
+          "id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "kind": "subProcess",
+          "relation": "action_anchored_node_time",
+          "text": "72 hours"
+        }
+      ]
+    },
+    "step_4_before_after": {
+      "before": {
+        "status": "unknown",
+        "observable": false,
+        "violation": null,
+        "reason": "action_grounding_unresolved",
+        "source": null,
+        "previous_check": null,
+        "guard_reason": null,
+        "guard_non_action_field_matches": null
+      },
+      "after": {
+        "status": "unknown",
+        "observable": false,
+        "violation": null,
+        "reason": "action_grounding_unresolved",
+        "source": null,
+        "previous_check": null,
+        "guard_reason": null,
+        "guard_non_action_field_matches": null
+      }
+    },
+    "step_5_repair": {
+      "repair_status": "CAPABILITY_BOUNDARY_UNFIXABLE_WITH_CURRENT_PROCESS",
+      "repair": "No action node in the frozen process expresses the rule action, so the rule action cannot be anchored and absence of a handler cannot be programmatically established. This is not converted into a violation.",
+      "api_needed_for_next_step": "authorized semantic fallback only",
+      "correctness_effect": "keeps abstention instead of fabricating a violation"
+    }
+  },
+  "note": "Full rule-field -> action-candidate -> flow-evidence -> reason -> repair/boundary chains. The exception chain is intentionally recorded as a capability boundary rather than fabricated into a violation."
+}

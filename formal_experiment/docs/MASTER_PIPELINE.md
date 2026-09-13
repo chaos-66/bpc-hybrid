@@ -11,6 +11,38 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
+﻿## 2026-09-13 revision 3.6.61: Stage 3 v5 action-anchor consistency repair and constraint/exception failure chains (S3-SEMANTIC-GROUNDING-V5, zero API)
+
+**Scope**: inspect the frozen v2 per-item constraint/exception failures, add revision
+`s3_semantic_grounding_v5`, and reuse v2/v3/v4 predictions/manifests read-only.
+
+**Failure chains and repair**:
+- Constraint false-positive chain: for `syn_v2_exception_not_handled_06` control, the
+  rule constraint is `not later than 72 hours` and the rule action is
+  `notify the personal data breach`. The frozen action grounder resolved to the
+  generator-inserted exception-handler node whose label equals the rule exception text.
+  The local constraint check then reported a violation because no 72-hour bound was
+  found around that non-action node.
+- v5 guard: when the resolved activity label strongly matches a non-action rule field
+  and does not match the rule action, condition/constraint determinations anchored to
+  that node are demoted to `unknown`. Exception-handler checks are not rewritten; no
+  per-sample threshold tuning and no API call.
+- Exception failure chain: for `syn_v2_exception_not_handled_02` variant, the frozen
+  process does not express the rule action, so action grounding remains unresolved and
+  handler absence cannot be programmatically established. The record stays `unknown`
+  and is recorded as a capability boundary instead of a fabricated violation.
+
+**Change and cost**: changed checks 2 (both control clear -> unknown); removed control
+false alarms 2 (legacy diagnostic control false-positive checks 26 -> 24); no
+target-paired variant positive demoted; Macro-F1 0.6737 unchanged, pair success 21/40
+unchanged, unknown rate 0.3375 unchanged. F1 increase is not an acceptance condition.
+The v5 fallback pack has 22 items (7 variant + 15 control) with evidence reachability
+and semantic preservation passing.
+
+**Evidence**: `outputs/reports/s3_semantic_grounding_v5.{json,md}`,
+`outputs/evidence/s3_semantic_grounding_v5/`,
+`tests/test_s3_semantic_grounding_v5.py`. Real API = 0.
+
 ## 2026-09-13 修订 3.6.60：Stage 3 LLM 执行、断点恢复与预算/时段 fail-closed（S3-SEMANTIC-GROUNDING-LLM-EXECUTION-V2，零 API）
 
 **范围**：修复 LLM fallback 执行器与 runner，不调用真实 API；新增离线 fake
