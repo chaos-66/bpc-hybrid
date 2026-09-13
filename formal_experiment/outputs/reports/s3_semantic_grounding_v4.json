@@ -1,0 +1,549 @@
+{
+  "schema_version": "s3_semantic_grounding_v4_report@1.0.0",
+  "revision": "s3_semantic_grounding_v4",
+  "status": "OFFLINE_IMPLEMENTATION_EVIDENCE_NOT_LLM_PERFORMANCE",
+  "metrics": {
+    "schema_version": "s3_semantic_grounding_v4_metrics@1.0.0",
+    "revision": "s3_semantic_grounding_v4",
+    "scope": "development_only",
+    "status": "OFFLINE_IMPLEMENTATION_EVIDENCE_NOT_LLM_PERFORMANCE",
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "reused_v3_predictions": {
+      "path": "outputs/evidence/s3_semantic_grounding_v3/predictions.jsonl",
+      "sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+      "match": true
+    },
+    "candidate_pack": {
+      "schema_version": "s3_semantic_grounding_fallback_candidate_pack@1.0.0",
+      "item_count": 20,
+      "side_counts": {
+        "variant": 7,
+        "control": 13
+      },
+      "trigger_counts": {
+        "action_grounding_ambiguous": 10,
+        "condition_semantic_ambiguous": 10,
+        "unsupported_abstract_constraint": 11,
+        "action_grounding_unresolved": 5,
+        "exception_semantic_ambiguous": 3,
+        "other_documented_semantic_ambiguity": 1,
+        "exception_handler_semantic_ambiguous": 1
+      },
+      "all_evidence_ids_visible_in_payload": true,
+      "semantic_fields_preserved_for_all_items": true
+    },
+    "offline_demo": {
+      "schema_version": "s3_semantic_grounding_offline_chain_demo@1.0.0",
+      "revision": "s3_semantic_grounding_v4",
+      "status": "OFFLINE_IMPLEMENTATION_EVIDENCE_NOT_LLM_PERFORMANCE",
+      "claim_boundary": "Constructed cases test the implementation chain only.  They are not a real LLM run and contain no real-model performance metric.",
+      "real_api_calls": 0,
+      "network_calls": 0,
+      "case_count": 5,
+      "passed_count": 5,
+      "cases": [
+        {
+          "case_id": "action_and_condition_progress_ambiguous_constraint_abstains",
+          "expectation": "one ambiguous field does not block the resolved field",
+          "validation": {
+            "status": "valid",
+            "response": {
+              "action_grounding": {
+                "status": "matched",
+                "activity_id": "E0001",
+                "confidence": 0.9
+              },
+              "condition": {
+                "status": "enforced",
+                "evidence_ids": [
+                  "E0002"
+                ],
+                "confidence": 0.9
+              },
+              "constraint": {
+                "status": "ambiguous",
+                "evidence_ids": [],
+                "confidence": 0.0
+              },
+              "exception": {
+                "status": "not_applicable",
+                "evidence_ids": [],
+                "confidence": 0.9
+              }
+            }
+          },
+          "before": {
+            "action_grounding_status": "unresolved",
+            "action_real_activity_id": null,
+            "checks": {
+              "prohibited_action_present": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              },
+              "required_condition_not_enforced": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "source": null
+              },
+              "constraint_violated": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "source": null
+              },
+              "exception_not_handled": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              }
+            },
+            "decision": {
+              "predicted": null,
+              "decision": "abstention",
+              "reason": "semantic_grounding_ambiguous"
+            },
+            "predicted_violation_type": null
+          },
+          "model_response": {
+            "action_grounding": {
+              "status": "matched",
+              "activity_id": "E0001",
+              "confidence": 0.9
+            },
+            "condition": {
+              "status": "enforced",
+              "evidence_ids": [
+                "E0002"
+              ],
+              "confidence": 0.9
+            },
+            "constraint": {
+              "status": "ambiguous",
+              "evidence_ids": [],
+              "confidence": 0.0
+            },
+            "exception": {
+              "status": "not_applicable",
+              "evidence_ids": [],
+              "confidence": 0.9
+            }
+          },
+          "after": {
+            "action_grounding_status": "resolved",
+            "action_real_activity_id": "A2",
+            "checks": {
+              "prohibited_action_present": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              },
+              "required_condition_not_enforced": {
+                "status": "enforced",
+                "observable": true,
+                "violation": false,
+                "source": "program_recheck_after_llm_action"
+              },
+              "constraint_violated": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "source": null
+              },
+              "exception_not_handled": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": "program_verified_llm_evidence"
+              }
+            },
+            "decision": {
+              "predicted": null,
+              "decision": "abstention",
+              "reason": "semantic_grounding_ambiguous",
+              "pending_types": [
+                "constraint_violated"
+              ]
+            },
+            "predicted_violation_type": null
+          },
+          "passed": true
+        },
+        {
+          "case_id": "action_id_reversed_and_prohibited_check_updated",
+          "expectation": "action resolution updates the consuming prohibited_action_present check",
+          "before": {
+            "action_grounding_status": "unresolved",
+            "action_real_activity_id": null,
+            "checks": {
+              "prohibited_action_present": {
+                "status": "unresolved",
+                "observable": false,
+                "violation": null,
+                "source": null
+              },
+              "required_condition_not_enforced": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "source": null
+              },
+              "constraint_violated": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              },
+              "exception_not_handled": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              }
+            },
+            "decision": {
+              "predicted": null,
+              "decision": "abstention",
+              "reason": "semantic_grounding_ambiguous"
+            },
+            "predicted_violation_type": null
+          },
+          "model_response": {
+            "action_grounding": {
+              "status": "matched",
+              "activity_id": "E0001",
+              "confidence": 0.9
+            },
+            "condition": {
+              "status": "ambiguous",
+              "evidence_ids": [],
+              "confidence": 0.0
+            },
+            "constraint": {
+              "status": "not_applicable",
+              "evidence_ids": [],
+              "confidence": 0.9
+            },
+            "exception": {
+              "status": "not_applicable",
+              "evidence_ids": [],
+              "confidence": 0.9
+            }
+          },
+          "after": {
+            "action_grounding_status": "resolved",
+            "action_real_activity_id": "A2",
+            "checks": {
+              "prohibited_action_present": {
+                "status": "present",
+                "observable": true,
+                "violation": true,
+                "source": "program_recheck_after_llm_action"
+              },
+              "required_condition_not_enforced": {
+                "status": "enforced",
+                "observable": true,
+                "violation": false,
+                "source": "program_recheck_after_llm_action"
+              },
+              "constraint_violated": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": "program_verified_llm_evidence"
+              },
+              "exception_not_handled": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": "program_verified_llm_evidence"
+              }
+            },
+            "decision": {
+              "predicted": "prohibited_action_present",
+              "decision": "violation",
+              "reason": "prohibited_action_explicitly_present",
+              "violation_type": "prohibited_action_present",
+              "priority_policy": "explicit_structural_specificity_v1"
+            },
+            "predicted_violation_type": "prohibited_action_present"
+          },
+          "passed": true
+        },
+        {
+          "case_id": "negative_claim_requires_closed_program_scope",
+          "expectation": "an absence claim without complete program scope keeps abstention",
+          "before": {
+            "action_grounding_status": "unresolved",
+            "action_real_activity_id": null,
+            "checks": {
+              "prohibited_action_present": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              },
+              "required_condition_not_enforced": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "source": null
+              },
+              "constraint_violated": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              },
+              "exception_not_handled": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              }
+            },
+            "decision": {
+              "predicted": null,
+              "decision": "abstention",
+              "reason": "semantic_grounding_ambiguous"
+            },
+            "predicted_violation_type": null
+          },
+          "model_response": {
+            "action_grounding": {
+              "status": "matched",
+              "activity_id": "E0001",
+              "confidence": 0.9
+            },
+            "condition": {
+              "status": "not_enforced",
+              "evidence_ids": [],
+              "confidence": 0.95
+            },
+            "constraint": {
+              "status": "not_applicable",
+              "evidence_ids": [],
+              "confidence": 0.9
+            },
+            "exception": {
+              "status": "not_applicable",
+              "evidence_ids": [],
+              "confidence": 0.9
+            }
+          },
+          "after": {
+            "action_grounding_status": "resolved",
+            "action_real_activity_id": "A2",
+            "checks": {
+              "prohibited_action_present": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              },
+              "required_condition_not_enforced": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "source": null
+              },
+              "constraint_violated": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": "program_verified_llm_evidence"
+              },
+              "exception_not_handled": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": "program_verified_llm_evidence"
+              }
+            },
+            "decision": {
+              "predicted": null,
+              "decision": "abstention",
+              "reason": "semantic_grounding_ambiguous",
+              "pending_types": [
+                "required_condition_not_enforced"
+              ]
+            },
+            "predicted_violation_type": null
+          },
+          "passed": true
+        },
+        {
+          "case_id": "irrelevant_or_hallucinated_evidence_rejected",
+          "expectation": "high confidence is not enough without bound evidence",
+          "before": {
+            "action_grounding_status": "unresolved",
+            "action_real_activity_id": null,
+            "checks": {
+              "prohibited_action_present": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              },
+              "required_condition_not_enforced": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "source": null
+              },
+              "constraint_violated": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              },
+              "exception_not_handled": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              }
+            },
+            "decision": {
+              "predicted": null,
+              "decision": "abstention",
+              "reason": "semantic_grounding_ambiguous"
+            },
+            "predicted_violation_type": null
+          },
+          "model_response": {
+            "action_grounding": {
+              "status": "matched",
+              "activity_id": "E0001",
+              "confidence": 0.9
+            },
+            "condition": {
+              "status": "enforced",
+              "evidence_ids": [
+                "HALLUCINATED"
+              ],
+              "confidence": 0.99
+            },
+            "constraint": {
+              "status": "not_applicable",
+              "evidence_ids": [],
+              "confidence": 0.9
+            },
+            "exception": {
+              "status": "not_applicable",
+              "evidence_ids": [],
+              "confidence": 0.9
+            }
+          },
+          "after": {
+            "action_grounding_status": "resolved",
+            "action_real_activity_id": "A2",
+            "checks": {
+              "prohibited_action_present": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": null
+              },
+              "required_condition_not_enforced": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "source": null
+              },
+              "constraint_violated": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": "program_verified_llm_evidence"
+              },
+              "exception_not_handled": {
+                "status": "not_applicable",
+                "observable": true,
+                "violation": false,
+                "source": "program_verified_llm_evidence"
+              }
+            },
+            "decision": {
+              "predicted": null,
+              "decision": "abstention",
+              "reason": "semantic_grounding_ambiguous",
+              "pending_types": [
+                "required_condition_not_enforced"
+              ]
+            },
+            "predicted_violation_type": null
+          },
+          "evidence_binding_failures": [
+            {
+              "kind": "evidence_id_not_reversible",
+              "field": "condition",
+              "unresolved_evidence_ids": [
+                "HALLUCINATED"
+              ]
+            }
+          ],
+          "passed": true
+        },
+        {
+          "case_id": "truncated_context_never_advertises_cut_off_evidence",
+          "expectation": "allowed evidence ids are derived after truncation",
+          "visible_condition_evidence_count": 20,
+          "advertised_evidence_ids": [
+            "E0002",
+            "E0003",
+            "E0004",
+            "E0005",
+            "E0006",
+            "E0007",
+            "E0008",
+            "E0009",
+            "E0010",
+            "E0011",
+            "E0012",
+            "E0013",
+            "E0014",
+            "E0015",
+            "E0016",
+            "E0017",
+            "E0018",
+            "E0019",
+            "E0020",
+            "E0021"
+          ],
+          "passed": true
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "schema_version": "s3_semantic_grounding_v4_manifest@1.0.0",
+    "revision": "s3_semantic_grounding_v4",
+    "scope": "development_only",
+    "generated_utc": "2026-09-13T12:22:55.608891+00:00",
+    "inputs": {
+      "outputs/evidence/s3_semantic_grounding_v3/predictions.jsonl": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85"
+    },
+    "implementation_hashes": {
+      "scripts/run_s3_semantic_grounding_v4.py": "de03e9d34410d7d5fc71169e7db26308a6b793884295ab05be89079a1208609e",
+      "src/bpc_hybrid/s3_semantic_grounding_v4.py": "88aa4532cfe44d4528b9521e8511b6be49d833c41a5561ec0a3b1d0ee30e70fb",
+      "src/bpc_hybrid/s3_semantic_grounding_llm_v1.py": "82c92aff94b056115ebd85097d66ec366ae463b4fb40fcb3a501cc9045ee125a",
+      "src/bpc_hybrid/s3_semantic_grounding_v2.py": "a8461fd1114051f91bd01dd47fbc6288356c43ba7bf4b716808038c07ca45fa5",
+      "configs/stage3_semantic_grounding_v4.json": "69a36edafe9f040053fc011ccf2af87feb5537d4d0d3a3e677c7c40ee1aef5c4",
+      "tests/test_s3_semantic_grounding_v4.py": "ed54707fc5895ae3fa9a69e4ab3c3e3d6bed845005e0b05d40e764a265cea868",
+      "outputs/evidence/s3_semantic_grounding_v3/predictions.jsonl": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85"
+    },
+    "safety": {
+      "human_gold_read": false,
+      "human_gold_modified": false,
+      "real_api_calls": 0,
+      "network_calls": 0,
+      "constructed_cases_not_llm_performance": true
+    }
+  }
+}

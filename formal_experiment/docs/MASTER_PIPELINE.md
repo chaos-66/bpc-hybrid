@@ -11,6 +11,36 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
+## 2026-09-13 修订 3.6.59：Stage 3 v4 逐字段 LLM 应用、动作回绑与证据范围绑定（S3-SEMANTIC-GROUNDING-V4，零 API）
+
+**范围**：新增 revision `s3_semantic_grounding_v4`；byte-identical 复用 v3
+冻结预测；v1/v2/v3 历史预测、manifest 与旧候选包均不覆盖。
+
+**修复**：
+- `_normalize_llm_status` 不再因一个字段 ambiguous 丢弃其他已确定字段；
+  `apply_llm_grounding` 委托到 v4，按字段独立处理 validator-passed 响应。
+- 匿名活动 ID 通过 pack 映射恢复为真实流程节点；动作解决后在该节点重跑受影响
+  的本地检查，包括 `prohibited_action_present`，不是只改 action status。
+- condition/exception 的正向 claim 必须有目标动作局部 surface 内、可反向映射的
+  具体 evidence；否定/缺失 claim 需程序在完整局部 scope 内确认；constraint
+  claim 需程序化数值时间比较；否则保留 unknown。
+- 明确旧判定（observable 且 violation 为布尔）不被 LLM claim 覆盖。
+- 候选上下文先截断证据列表、再从可见列表派生允许 evidence_ids；v4 pack
+  `all_evidence_ids_visible_in_payload=true`，修复 v3 pack 中截断后仍可能 advertise
+  不可见复合 ID 的同类引用问题。
+
+**离线验收**：v4 pack 20 项；5 个构造链路 case 全部通过，覆盖 resolved+
+ambiguous 字段共存、动作回绑后 prohibited 检查更新、开放 scope 的缺失 claim 仍
+abstain、幻觉/越界 evidence 拒绝、截断上下文证据可达性。状态明确为
+`OFFLINE_IMPLEMENTATION_EVIDENCE_NOT_LLM_PERFORMANCE`，不是真实 LLM 效果。
+
+**证据**：`outputs/reports/s3_semantic_grounding_v4.{json,md}`、
+`outputs/evidence/s3_semantic_grounding_v4/`、
+`outputs/development/s3_semantic_grounding_v4/`；
+`tests/test_s3_semantic_grounding_v4.py` 5 passed。
+
+**状态**：实现链路 checkpoint；真实 API = 0。
+
 ## 2026-09-13 修订 3.6.58：Stage 3 v3 输入匿名化与评价口径修复（S3-SEMANTIC-GROUNDING-V3，零 API）
 
 **范围**：仅新增 revision `s3_semantic_grounding_v3`，byte-identical 复用 v2

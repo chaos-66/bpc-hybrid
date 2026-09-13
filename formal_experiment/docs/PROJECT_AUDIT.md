@@ -9,6 +9,58 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## 0. Latest revision: s3_semantic_grounding_v4 (2026-09-13, zero API)
+
+**Status**: OFFLINE_IMPLEMENTATION_EVIDENCE. This revision repairs how a
+validator-passed LLM response is consumed. It does not claim real-model
+performance; real API calls remain 0.
+
+**What changed**
+- `_normalize_llm_status` no longer returns whole-response `ambiguous` when a
+  different field is resolved; a validated response is applied field by field.
+- `apply_llm_grounding` now delegates to the v4 field-wise applicator: an
+  anonymous activity id is reverse-mapped through the pack's deterministic
+  map, bound to the real process node, and the affected local checks
+  (`prohibited_action_present`, condition, constraint, exception) are
+  re-executed on that node.
+- Positive condition/exception claims require non-empty evidence ids that
+  exist in the target action's local surface; absence claims are accepted only
+  when the program re-check closes the scope; constraint claims require a
+  programmatic numeric time comparison. Otherwise the deterministic unknown
+  remains.
+- Clear deterministic checks are preserved and are never overwritten by an LLM
+  claim.
+- Candidate context now derives allowed evidence ids from the actually
+  visible post-truncation evidence lists. The v4 pack reports
+  `all_evidence_ids_visible_in_payload=true`. The historical v3 pack is not
+  overwritten.
+
+**Offline acceptance**
+- Frozen v3 predictions reused by hash.
+- v4 candidate pack: 20 items; all advertised evidence ids visible in the
+  model payload; all rule actor/action/condition/constraint/exception fields
+  preserved verbatim.
+- Five constructed end-to-end cases pass in
+  `outputs/evidence/s3_semantic_grounding_v4/offline_grounding_demo.json`:
+  action+condition progress while an ambiguous constraint abstains;
+  action reverse-mapping updates the prohibited check; an unclosed absence
+  claim abstains; hallucinated/out-of-surface evidence is rejected; a
+  truncated context never advertises cut-off evidence.
+- Status of these cases is explicitly
+  `OFFLINE_IMPLEMENTATION_EVIDENCE_NOT_LLM_PERFORMANCE`.
+
+**Artifacts**
+- `src/bpc_hybrid/s3_semantic_grounding_v4.py`
+- `scripts/run_s3_semantic_grounding_v4.py`
+- `configs/stage3_semantic_grounding_v4.json`
+- `tests/test_s3_semantic_grounding_v4.py`
+- `outputs/evidence/s3_semantic_grounding_v4/`
+- `outputs/development/s3_semantic_grounding_v4/`
+- `outputs/reports/s3_semantic_grounding_v4.{json,md}`
+
+**Boundary**: constructed cases prove implementation wiring only; they are not
+a real LLM run and must not be cited as an accuracy improvement.
+
 ## 0. Latest revision: s3_semantic_grounding_v3 (2026-09-13, zero API)
 
 **Status**: VERIFIED_DEVELOPMENT_PROTOCOL_REPAIR. This checkpoint reuses the

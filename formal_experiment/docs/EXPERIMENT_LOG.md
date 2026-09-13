@@ -4687,3 +4687,17 @@
 - 仍存在 blocker：无
 - 备注：Reused v2 deterministic predictions byte-identically after artifact hash verification; new v3 pack no longer rewrites controller/control-like natural language; transition metrics keyed by (item_id, side); control status is diagnostic only; C36 same-protocol gap documented. Audit integrity comes from the complete primary formal_experiment asset tree; focused tests run in the writable linked worktree.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-13T12:23:21.160694+00:00 - S3-SEMANTIC-GROUNDING-V4: field-wise LLM application, action re-binding, evidence/scope verification (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：9 passed in 0.09s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`aba6edfdfe0399602a88e1e27af7280a17048509`；相关未提交路径：15 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：v3 deterministic predictions reused by hash; validator-passed responses now applied field-by-field; anonymous activity ids reverse-mapped and affected local checks re-executed on the real node; positive evidence-bound claims verified against target surfaces, absence claims require closed program scope, constraint claims require programmatic time comparison; clear deterministic checks preserved; v4 pack advertises only post-truncation visible evidence ids. Audit integrity from complete primary asset tree; focused tests run in writable linked worktree.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

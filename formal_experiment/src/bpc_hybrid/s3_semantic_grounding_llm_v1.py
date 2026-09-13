@@ -155,6 +155,8 @@ def _strict_json_object(raw: Any) -> dict[str, Any]:
 
 
 def _exact_keys(mapping: Mapping[str, Any], expected: set[str], label: str) -> None:
+    if not isinstance(mapping, Mapping):
+        raise LLMGroundingExecutionError(f"{label}_not_object")
     actual = set(mapping.keys())
     if actual != expected:
         raise LLMGroundingExecutionError(
@@ -165,6 +167,8 @@ def _confidence(value: Any) -> float:
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise LLMGroundingExecutionError("confidence_not_numeric")
     number = float(value)
+    if not math.isfinite(number):
+        raise LLMGroundingExecutionError("confidence_not_finite")
     if number < 0.0 or number > 1.0:
         raise LLMGroundingExecutionError("confidence_out_of_range")
     return number
@@ -536,14 +540,28 @@ class RealSemanticGroundingTransport:
 
 
 def _normalize_llm_status(validated_response: Mapping[str, Any]) -> str:
-    statuses = [
-        validated_response.get("condition", {}).get("status"),
-        validated_response.get("constraint", {}).get("status"),
-        validated_response.get("exception", {}).get("status"),
+    """Return whether at least one field can make independent progress.
+
+    A single ``ambiguous`` field must never discard another field whose
+    status is already resolved.  The caller applies fields independently;
+    this summary is retained only for metrics/backward compatibility.
+    """
+    field_statuses = [
+        (validated_response.get(field) or {}).get("status")
+        for field in ("condition", "constraint", "exception")
     ]
-    if "ambiguous" in statuses:
+    action = validated_response.get("action_grounding") or {}
+    determinate = {
+        "enforced", "not_enforced", "satisfied", "violated",
+        "handled", "not_handled",
+    }
+    if action.get("status") == "matched":
+        return "resolved"
+    if any(status in determinate for status in field_statuses):
+        return "resolved"
+    if any(status == "ambiguous" for status in field_statuses):
         return "ambiguous"
-    return "resolved"
+    return "unknown"
 
 
 def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
@@ -654,6 +672,11 @@ def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
             continue
         response = validated["response"]
         normalized_status = _normalize_llm_status(response)
+        field_statuses = {
+            field: ((response.get(field) or {}).get("status"))
+            for field in ("condition", "constraint", "exception")
+        }
+        action_status = (response.get("action_grounding") or {}).get("status")
         counts["ambiguous" if normalized_status == "ambiguous" else "resolved"] += 1
         counts["succeeded"] += 1
         normalized_record = {
@@ -662,6 +685,8 @@ def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
             "request_sha256": request_sha,
             "response_sha256": response_sha,
             "semantic_status": normalized_status,
+            "action_status": action_status,
+            "field_statuses": field_statuses,
             "response": response,
         }
         downstream_lines.append(normalized_record)
@@ -674,7 +699,10 @@ def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
         })
         results.append({"source_index": request.get("source_index"),
                         "fallback_item_id": request.get("fallback_item_id"),
-                        "status": normalized_status, "response": response,
+                        "status": normalized_status,
+                        "action_status": action_status,
+                        "field_statuses": field_statuses,
+                        "response": response,
                         "response_sha256": response_sha})
     if downstream_lines:
         with normalized_path.open("a", encoding="utf-8", newline="\n") as handle:

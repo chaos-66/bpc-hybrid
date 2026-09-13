@@ -1,0 +1,29 @@
+﻿{
+  "schema_version": "stage3_semantic_grounding@4.0.0",
+  "revision": "s3_semantic_grounding_v4",
+  "task_id": "S3-SEMANTIC-GROUNDING-V4",
+  "base_revision": "s3_semantic_grounding_v3",
+  "scope": "development_only",
+  "claim": "Field-wise validated-LLM application: anonymous activity-id reverse mapping, action-anchored local check re-execution, program-bound evidence/scope verification, and abstention when the program cannot confirm the claim. Offline constructed evidence only; no real API call.",
+  "llm_application_protocol": {
+    "response_gate": "validator-passed responses are applied field-by-field",
+    "ambiguous_field": "kept unknown; does not discard another resolved field",
+    "action_grounding": "anonymous id -> real id via pack map, then program re-check on that node",
+    "condition_exception_positive_claims": "require non-empty evidence ids inside the target action surface",
+    "negative_absence_claims": "accepted only when the program re-check closes the local scope",
+    "constraint_claims": "require programmatic numeric time comparison against the rule bound",
+    "clear_deterministic_check": "preserved and never overwritten by an LLM claim",
+    "final_decision_owner": "program: decide(checks)"
+  },
+  "candidate_pack": {
+    "evidence_id_policy": "advertised ids are derived from post-truncation visible evidence lists",
+    "anonymisation_policy": "only identifiers/generated tokens are mapped; natural-language text is verbatim"
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "constructed_cases_not_llm_performance": true
+  }
+}

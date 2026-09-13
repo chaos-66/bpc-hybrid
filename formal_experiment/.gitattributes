@@ -199,3 +199,12 @@ outputs/evidence/s3_semantic_grounding_v3/*.json text eol=lf
 outputs/evidence/s3_semantic_grounding_v3/*.jsonl text eol=lf
 outputs/reports/s3_semantic_grounding_v3.json text eol=lf
 outputs/reports/s3_semantic_grounding_v3.md text eol=lf
+# S3 semantic-grounding v4: exact raw-byte implementation/result bindings.
+src/bpc_hybrid/s3_semantic_grounding_v4.py text eol=lf
+scripts/run_s3_semantic_grounding_v4.py text eol=lf
+tests/test_s3_semantic_grounding_v4.py text eol=lf
+configs/stage3_semantic_grounding_v4.json text eol=lf
+outputs/development/s3_semantic_grounding_v4/*.json text eol=lf
+outputs/evidence/s3_semantic_grounding_v4/*.json text eol=lf
+outputs/reports/s3_semantic_grounding_v4.json text eol=lf
+outputs/reports/s3_semantic_grounding_v4.md text eol=lf
