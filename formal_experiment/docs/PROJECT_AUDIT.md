@@ -9,7 +9,62 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
-## 0. 当前验收：S3-C36-TARGET-PAIRED（2026-09-14，零真实 API）
+## 0. 当前验收：S3-C36-TARGET-PAIRED v2（2026-09-14，零真实 API）
+
+**Status**: VERIFIED_DEVELOPMENT_COMPARISON_V2（development-only synthetic
+panel；冻结预测只读复用；无真实 API）。
+
+**本轮关闭的缺口**
+- v1 的 control 侧只有 `observable`/`score`，没有持久化最终布尔 `violation`。
+  v2 在同一 40 个 control 样本 / 160 个 control-side 检查上，用冻结函数
+  `control_prediction_from_scores(control_scores, gamma_ext)` 重建后，把
+  per-type `status` 与 `violation`（布尔或 unknown=null）直接写入
+  `c36_winter_target_paired_checks.jsonl` 的 80 条检查记录；不需要再生成
+  单独文件，也不从统一单标签结果反推。
+- 兼容性从审计升级为前置门禁：样本集合/唯一键、expected label、
+  process_id/rule_id、两侧 BPMN SHA-256、C36 manifest 必需输入哈希、两侧
+  prediction 文件哈希、四类字段形态、行级 `gamma_ext` 与 manifest 阈值的
+  绑定、重建依赖哈希，任一不满足即 **blocked**，不写 comparison。
+- 依赖绑定：`src/bpc_hybrid/stage3_extended_violations.py` 当前文件与 C36
+  manifest 的实现哈希在 `canonical_lf_utf8_text` 模式下匹配；冻结阈值
+  `gamma_ext=0.5`；v5 target-paired evaluator 明确登记为当前协议，不冒充
+  历史 C36 产物。
+- 基线名称改为 **Winter-style four-type extension baseline**，避免被读成
+  Winter 原论文结果。
+
+**实际验收结果**
+- Gate：**pass**；blocking issues **0**；依赖重建
+  `verified_frozen_match=true`；80 条 v2 检查记录中的 control 布尔值已持久化。
+- 同协议比较（40 对）：C36/Winter-style baseline Macro-F1 **0.6036**、pair
+  **18/40**、target unknown **0.3625**、control target FP **0.0750**；当前
+  v5 deterministic Macro-F1 **0.6737**、pair **21/40**、target unknown
+  **0.3375**、control target FP **0.0250**；delta F1 **+0.0701**、pair
+  **+3**、unknown **-0.0250**。
+- 这只说明当前冻结开发面板上的同口径差异，不是 formal Oracle，不是真实
+  API 结果，也不是直接 Winter 论文数字。
+
+**生成了什么**
+- `outputs/reports/s3_c36_target_paired_v2.{json,md}`
+- `outputs/evidence/s3_c36_target_paired_v2/audit.json`
+- `outputs/evidence/s3_c36_target_paired_v2/c36_winter_target_paired_checks.jsonl`
+  （80 条，含持久化 control 布尔/未知状态）
+- `outputs/evidence/s3_c36_target_paired_v2/comparison.json`
+- `outputs/evidence/s3_c36_target_paired_v2/manifest.json`
+- `outputs/evidence/s3_c36_target_paired_v2/artifact_hashes.json`
+- `src/bpc_hybrid/s3_c36_target_paired_v2.py`
+- `scripts/run_s3_c36_target_paired_v2.py`
+- `tests/test_s3_c36_target_paired_v2.py`（**7 passed**）
+
+**边界**
+- 未运行全量测试；只运行本任务具名测试。
+- v1 的 `s3_c36_target_paired_v1` 产物保留为历史版本，不覆盖；v2 是当前入口。
+- 真实 v5 fallback 仍无覆盖 v5 scope/hash 的授权，真实 API=0。
+
+**下一步**：C36 target-paired 验收护栏、依赖绑定与交付收尾完成；继续
+SEP-C1-A，把三阶段 I/O 与 SIM r10 成功链 / r8 失败链写入现有论文，并核对
+原始记录与主张矩阵。
+
+## 0. 历史验收：S3-C36-TARGET-PAIRED v1（2026-09-14，零真实 API；已被 v2 取代）
 
 **Status**: VERIFIED_DEVELOPMENT_COMPARISON (development-only synthetic panel;
 frozen-prediction reuse; no real API).
@@ -410,7 +465,7 @@ python formal_experiment/scripts/audit_project.py
 |---|---|---|---|
 | SEP-C0 计划修订 | 用户已明确推进原则 | verified（文档范围） | 主 Pipeline、状态和手册改为按依赖推进、尽早完成、逐项诊断修复；撤销中间日历安排。本批未执行实验，Git 备份结果在交接中报告。 |
 | S3-V5-RUNNER-INTEGRATION | DS v5 冻结结果与请求包已有 | verified（离线） | 接通 80 条预测及评价，22 对象共享 18 份响应，恢复新增发送 0，42 项相关测试通过；真实调用仍为 0。 |
-| S3-C36-TARGET-PAIRED | verified zero-API development comparison | completed; see outputs/reports/s3_c36_target_paired_v1.* |
+| S3-C36-TARGET-PAIRED | verified zero-API development comparison（v2 门禁） | 验收护栏与依赖绑定通过（blocking=0），control 布尔值持久化；见 outputs/reports/s3_c36_target_paired_v2.*；下一步 SEP-C1-A |
 | SEP-C1 写作与比较口径 | 已有方法和案例可整理 | ready | **下一最小子任务 SEP-C1-A**：先把三阶段 I/O、SIM r10 实际成功链和一条真实失败链写入现有方法章节，同时核对原始记录与主张矩阵；随后完成前人比较范围、通用题名及新消融预算准备。 |
 | SEP-C2 必要对照与已授权批次 | 对应口径、输入和运行条件已满足 | 部分待依赖 / 既有批次待启动时核验 | 新对照待 SEP-C1 相应比较范围；既有批次按自身合同推进，不等待整包 SEP-C1。已有 137 次授权继续有效，凭据/载荷/账本的最新可运行性在开始时核验，不按旧记录重复运行。 |
 | SEP-C3 prompt 组合与后处理归因 | 诊断可先做；新运行需因素与适用授权 | 诊断 ready / 新运行 blocked | 旧单删四组不等于完整八组合；待因素定义与独立预算/授权。冻结基线保留，针对已定位问题迭代后继候选，每轮独立记录假设、版本和验证。 |
@@ -441,7 +496,7 @@ python formal_experiment/scripts/audit_project.py
 
 **写作推进规则**：每个最小任务结束就把可用内容写回现有正文、必要时同步主张矩阵，
 完成 scoped Git checkpoint；简报只报完成、证据、下一步、阻塞和提交/推送结果。
-Next task: S3-C36-TARGET-PAIRED is completed. Continue S3-V5 real fallback authorization or SEP-C1-A writing; no re-inference is needed for the frozen comparison.
+Next task: S3-C36-TARGET-PAIRED v2 is completed and pushed. Continue SEP-C1-A: write the three-stage I/O and SIM r10 success / r8 failure chains into the existing paper, then update the claim-evidence matrix. Real v5 fallback still awaits scope/hash authorization.
 完成就推进下一项可执行工作；遇到影响当前结论的问题先纳入修复循环。
 不重做项目总评、不另建路线、不自动启动真实 API。
 

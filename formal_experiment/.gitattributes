@@ -243,3 +243,12 @@ outputs/evidence/s3_c36_target_paired_v1/*.json text eol=lf
 outputs/evidence/s3_c36_target_paired_v1/*.jsonl text eol=lf
 outputs/reports/s3_c36_target_paired_v1.json text eol=lf
 outputs/reports/s3_c36_target_paired_v1.md text eol=lf
+
+# S3 C36 target-paired comparison v2: exact raw-byte implementation/result bindings.
+src/bpc_hybrid/s3_c36_target_paired_v2.py -text
+scripts/run_s3_c36_target_paired_v2.py -text
+tests/test_s3_c36_target_paired_v2.py -text
+outputs/evidence/s3_c36_target_paired_v2/*.json text eol=lf
+outputs/evidence/s3_c36_target_paired_v2/*.jsonl text eol=lf
+outputs/reports/s3_c36_target_paired_v2.json text eol=lf
+outputs/reports/s3_c36_target_paired_v2.md text eol=lf

@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.3
+**文档版本**：3.7.4
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-14
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,62 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-14 revision 3.7.4: C36 target-paired acceptance gate, dependency binding and control-boolean persistence (S3-C36-TARGET-PAIRED-V2, zero API)
+
+**Scope**: successor revision `s3_c36_target_paired_v2`; the same frozen
+C36/Winter and v5 predictions are reused read-only; v1 artifacts are not
+overwritten and the historical C36/v5 files remain untouched.
+
+**Acceptance gate (new)**:
+- The comparison is produced only if every blocking condition passes: 40 unique
+  C36 rows and 40 panel variants; exactly 40 current variant + 40 current
+  control rows keyed uniquely by `(item_id, side)`; item ids, expected labels,
+  process ids, rule ids and variant/control BPMN SHA-256 values identical to the
+  panel and C36 source; both prediction files hash-bound to their producing
+  manifests; per-type field legality (`observable` boolean, observable variant
+  violation boolean, unobservable entries kept unknown, control entries with
+  score/exact_contradiction and no persisted final boolean); finite row
+  `gamma_ext` equal to the frozen manifest threshold; and required C36 manifest
+  input hashes matching.
+- Gate result: **pass**, blocking issues **0**.  A failed gate writes only
+  `blocked_audit.json` and a `BLOCKED_COMPATIBILITY_AUDIT` report with
+  `valid_comparison_generated=false`, and no comparison artifact; this blocked
+  path is covered by a focused test.
+- Dependency binding: current `src/bpc_hybrid/stage3_extended_violations.py`
+  matches the historical C36 manifest implementation hash under its declared
+  `canonical_lf_utf8_text` mode (raw hash differs; canonical-LF hash matches).
+  The target-paired evaluator
+  `s3_semantic_grounding_v3.evaluate_target_paired` is recorded as the current
+  protocol rather than a historical manifest artifact.  Frozen
+  `gamma_ext = 0.5`.
+- The 40 control samples / 160 control-side checks now persist the
+  reconstructed per-type `status` and `violation` (boolean, or null for
+  unknown) directly in the v2 80-row check artifact.  The unified single-label
+  prediction is not used to derive these booleans.
+
+**Target-paired comparison (same protocol, unchanged numbers)**:
+- Baseline (now named **Winter-style four-type extension baseline**, not a
+  direct Winter paper result): Macro-F1 **0.6036**, pair success **18/40**,
+  target unknown **0.3625**, control target FP over all pairs **0.0750**.
+- Current v5 deterministic: Macro-F1 **0.6737**, pair success **21/40**,
+  target unknown **0.3375**, control target FP **0.0250**.
+- Delta current-minus-baseline: F1 **+0.0701**, pair success **+3**, unknown
+  **-0.0250**.  Development-only synthetic panel, not formal Oracle.
+
+**Evidence**: `outputs/reports/s3_c36_target_paired_v2.{json,md}`;
+`outputs/evidence/s3_c36_target_paired_v2/{audit,comparison,manifest,artifact_hashes}.json`
+and `c36_winter_target_paired_checks.jsonl` (80 rows);
+`src/bpc_hybrid/s3_c36_target_paired_v2.py`;
+`scripts/run_s3_c36_target_paired_v2.py`;
+`tests/test_s3_c36_target_paired_v2.py` (**7 passed**).  Real API = 0; no full
+test suite was run.
+
+**Next step**: S3-C36-TARGET-PAIRED is complete and delivered.  Continue
+SEP-C1-A: write the three-stage I/O contract and the SIM r10 success / r8
+failure chains into the existing paper, then check the source records and the
+claim-evidence matrix.  Real v5 fallback remains blocked on a scope/hash-
+specific authorization.
 
 ## 2026-09-14 revision 3.7.3: C36/Winter target-paired compatibility audit and comparison (S3-C36-TARGET-PAIRED, zero API)
 

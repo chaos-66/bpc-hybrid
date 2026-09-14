@@ -1,0 +1,166 @@
+{
+  "schema_version": "s3_c36_target_paired_audit@2.0.0",
+  "revision": "s3_c36_target_paired_v2",
+  "base_revision": "s3_c36_target_paired_v1",
+  "scope": "development_only_synthetic_panel",
+  "baseline_name": "Winter-style four-type extension baseline",
+  "panel": "synthetic_controlled_error_extension_v2",
+  "gate_status": "pass",
+  "can_build_target_paired": true,
+  "blocking_issue_count": 0,
+  "blocking_issue_codes": [],
+  "blocking_issues": [],
+  "sample_sets": {
+    "c36_rows": 40,
+    "c36_unique_item_ids": 40,
+    "panel_variant_rows": 40,
+    "current_variant_rows": 40,
+    "current_control_rows": 40,
+    "c36_item_ids_equal_panel": true,
+    "missing_in_c36": [],
+    "extra_in_c36": []
+  },
+  "label_issues": [],
+  "process_issues": [],
+  "c36_variant_bpmn_hash_issues": [],
+  "c36_control_bpmn_hash_issues": [],
+  "current_rows_audit_summary": {
+    "row_count": 80,
+    "blocking_issue_count": 0
+  },
+  "manifest_input_checks": [
+    {
+      "path": "data/development/human_review/stage3_gold_inference_v1.json",
+      "manifest_key": "data/development/human_review/stage3_gold_inference_v1.json",
+      "present_in_c36_manifest": true,
+      "expected_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+      "exists": true,
+      "current_raw_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+      "current_canonical_lf_sha256": "364f4b737dfb8b3f68719e4949ef4cbfd1327f4bd2fde2ab96e8b07b9db76f2b",
+      "raw_match": true,
+      "canonical_lf_match": false,
+      "match": true
+    },
+    {
+      "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+      "manifest_key": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+      "present_in_c36_manifest": true,
+      "expected_sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+      "exists": true,
+      "current_raw_sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+      "current_canonical_lf_sha256": "f5c75144b3749bae817fd87db2cf9954d8ec3415e35a80cbf1df6ffa19839fff",
+      "raw_match": true,
+      "canonical_lf_match": false,
+      "match": true
+    }
+  ],
+  "c36_prediction_identity": {
+    "path": "outputs/evidence/s3_formula_repair_v2/extended_four/reference/winter/predictions.jsonl",
+    "manifest_key": "outputs/evidence/s3_formula_repair_v2/extended_four/reference/winter/predictions.jsonl",
+    "expected_sha256": "18fa61ae9dda8c104f59360a91ef9979e7c793c9d3c1a339e069c3302e0780d7",
+    "current_raw_sha256": "18fa61ae9dda8c104f59360a91ef9979e7c793c9d3c1a339e069c3302e0780d7",
+    "current_canonical_lf_sha256": "fb578ffa37263ae8d650292cf66219c8b83907b30d52ceba24e6a9df2cbee00a",
+    "raw_match": true,
+    "canonical_lf_match": false,
+    "match": true
+  },
+  "current_prediction_identity": {
+    "path": "outputs/evidence/s3_semantic_grounding_v5/predictions.jsonl",
+    "expected_sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+    "current_raw_sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+    "current_canonical_lf_sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+    "raw_match": true,
+    "canonical_lf_match": true,
+    "match": true
+  },
+  "dependency_bindings": {
+    "schema_version": "s3_c36_target_paired_dependencies@2.0.0",
+    "control_reconstruction": {
+      "path": "src/bpc_hybrid/stage3_extended_violations.py",
+      "function": "control_prediction_from_scores",
+      "rule": "stage3_extended_violations.control_prediction_from_scores(control_scores, gamma_ext)",
+      "c36_manifest_hash_mode": "canonical_lf_utf8_text",
+      "c36_manifest_expected_sha256": "d03acce70580c5af3b8c78999c0b0b68868137d8036a7f7163f6fde211500842",
+      "current_raw_sha256": "3e95e455886219cfc4fb92f0145bd7606209d33b62f2fbd48c460fe74587369b",
+      "current_canonical_lf_sha256": "d03acce70580c5af3b8c78999c0b0b68868137d8036a7f7163f6fde211500842",
+      "verified_frozen_match": true,
+      "verification_basis": "canonical_lf_utf8_text hash match"
+    },
+    "target_paired_evaluator": {
+      "path": "src/bpc_hybrid/s3_semantic_grounding_v3.py",
+      "function": "evaluate_target_paired",
+      "current_raw_sha256": "cc149d4cafdc12ae33f5ceca42e09ec0b0dd7981228e2769f106bfa2473662ad",
+      "current_canonical_lf_sha256": "cc149d4cafdc12ae33f5ceca42e09ec0b0dd7981228e2769f106bfa2473662ad",
+      "verified_frozen_match": null,
+      "verification_basis": "recorded current implementation; this evaluator is the current target-paired protocol and is not stored in the historical C36 manifest"
+    },
+    "blocking_issues": []
+  },
+  "threshold_binding": {
+    "frozen_manifest_gamma_ext": 0.5,
+    "row_gamma_ext_values": [
+      0.5
+    ],
+    "all_rows_match_frozen_threshold": true,
+    "blocking_issues": []
+  },
+  "field_audit": {
+    "variant_field_stats": {
+      "prohibited_action_present": {
+        "rows": 40,
+        "observable_true": 14,
+        "observable_false": 26
+      },
+      "required_condition_not_enforced": {
+        "rows": 40,
+        "observable_false": 29,
+        "observable_true": 11
+      },
+      "constraint_violated": {
+        "rows": 40,
+        "observable_false": 27,
+        "observable_true": 13
+      },
+      "exception_not_handled": {
+        "rows": 40,
+        "observable_false": 31,
+        "observable_true": 9
+      }
+    },
+    "control_field_stats": {
+      "prohibited_action_present": {
+        "rows": 40,
+        "observable_true": 14,
+        "observable_score_present": 14,
+        "observable_false": 26
+      },
+      "required_condition_not_enforced": {
+        "rows": 40,
+        "observable_false": 21,
+        "observable_true": 19,
+        "observable_score_present": 19
+      },
+      "constraint_violated": {
+        "rows": 40,
+        "observable_false": 27,
+        "observable_true": 13,
+        "observable_score_present": 13
+      },
+      "exception_not_handled": {
+        "rows": 40,
+        "observable_false": 28,
+        "observable_true": 12,
+        "observable_score_present": 12
+      }
+    },
+    "blocking_issues": []
+  },
+  "control_reconstruction_rule": "stage3_extended_violations.control_prediction_from_scores(control_scores, gamma_ext)",
+  "control_reconstruction_required": true,
+  "affected_control_samples": 40,
+  "affected_control_checks": 160,
+  "control_booleans_persisted_in_output_rows": true,
+  "unified_single_label_ignored_for_derivation": true,
+  "expected_label_used_only_for_evaluation_grouping": true,
+  "c36_report_available": true
+}

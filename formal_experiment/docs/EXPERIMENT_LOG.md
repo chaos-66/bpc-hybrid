@@ -4771,3 +4771,17 @@
 - 仍存在 blocker：无
 - 备注：Audited all 40 C36/Winter items against the current development panel: item ids, expected labels, process/rule ids and variant/control BPMN hashes match; C36 manifest raw hashes for rule inference pack and panel match; gold_visible=false. Variant side has explicit per-type observable/violation fields; control side lacks persisted boolean violation but the frozen control_prediction_from_scores rule reconstructs it from saved control_scores (40 samples / 160 control checks). No blocking field gap; unified single-label predictions were not used to reverse-engineer checks. Comparison under the current target-paired protocol: C36/Winter Macro-F1 0.6036, pair 18/40, unknown 0.3625, control target FP 0.0750; current v5 Macro-F1 0.6737, pair 21/40, unknown 0.3375, control target FP 0.0250. No Gold modification, no real API, no full test suite.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-14T06:59:04.119033+00:00 - S3-C36-TARGET-PAIRED-V2: acceptance gate, frozen dependency binding and persisted control booleans (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：7 passed in 0.34s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`fb69b8b2fed4048484233736f31b066ed8d161ce`；相关未提交路径：15 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：v2 converts compatibility into a blocking gate: sample identity/uniqueness, panel/C36 label/process/rule/BPMN hashes, required manifest input hashes, C36 and v5 prediction hashes, four-type field legality, row gamma_ext binding, and the frozen reconstruction dependency must all pass before comparison. Current stage3_extended_violations.py matches the C36 manifest hash under canonical_lf_utf8_text (raw differs); frozen gamma_ext=0.5. The 40 control samples / 160 control-side checks now persist reconstructed status and boolean/null violation directly in the v2 80-row checks artifact, closing the v1 field gap without a separate file or unified-label reverse inference. Gate result pass, blocking=0; same-protocol comparison unchanged: baseline 0.6036/18/40/0.3625/0.0750 vs v5 0.6737/21/40/0.3375/0.0250. Blocked path writes no comparison and is covered by a focused test. No Gold modified, no real API, no full suite. Integrity audit was evaluated against the canonical main workspace because this registered worktree lacks the ignored local assets required by audit_project.py; the focused tests and this event are bound to the C36 worktree git state.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
