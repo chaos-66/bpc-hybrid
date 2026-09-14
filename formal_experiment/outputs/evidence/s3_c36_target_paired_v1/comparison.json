@@ -1,0 +1,641 @@
+{
+  "schema_version": "s3_c36_target_paired_comparison@1.0.0",
+  "revision": "s3_c36_target_paired_v1",
+  "scope": "development_only_synthetic_panel",
+  "evaluation_protocol": {
+    "primary": "target_paired_causal",
+    "denominator": "all 40 frozen pairs; variant unknown is FN but reported separately; control unknown is outside the decided TNR denominator and reported separately; pair success requires variant positive and control negative",
+    "expected_labels_used_only_for_grouping": true
+  },
+  "c36_winter": {
+    "target_paired_macro_f1_four_types": 0.6036,
+    "pair_success_count": 18,
+    "pair_success_rate": 0.45,
+    "pair_success_denominator": 40,
+    "control_target_false_positive_rate_all_pairs": 0.075,
+    "control_target_false_positive_rate_decided_controls": 0.1034,
+    "target_field_unknown_rate_all_side_checks": 0.3625,
+    "per_type": {
+      "prohibited_action_present": {
+        "variant": {
+          "TP": 10,
+          "FN_observed_negative": 0,
+          "FN_unknown": 0,
+          "FN": 0,
+          "decided": 10,
+          "unknown": 0,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 7,
+          "FP": 3,
+          "unknown": 0,
+          "decided": 10,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "precision": 0.7692,
+        "recall": 1.0,
+        "f1": 0.8696,
+        "pair_success": 7,
+        "pair_success_denominator": 10
+      },
+      "required_condition_not_enforced": {
+        "variant": {
+          "TP": 2,
+          "FN_observed_negative": 0,
+          "FN_unknown": 8,
+          "FN": 8,
+          "decided": 2,
+          "unknown": 8,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 6,
+          "FP": 0,
+          "unknown": 4,
+          "decided": 6,
+          "coverage": 0.6,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "pair_success": 2,
+        "pair_success_denominator": 10
+      },
+      "constraint_violated": {
+        "variant": {
+          "TP": 6,
+          "FN_observed_negative": 0,
+          "FN_unknown": 4,
+          "FN": 4,
+          "decided": 6,
+          "unknown": 4,
+          "coverage": 0.6,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 6,
+          "FP": 0,
+          "unknown": 4,
+          "decided": 6,
+          "coverage": 0.6,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.6,
+        "f1": 0.75,
+        "pair_success": 6,
+        "pair_success_denominator": 10
+      },
+      "exception_not_handled": {
+        "variant": {
+          "TP": 3,
+          "FN_observed_negative": 1,
+          "FN_unknown": 6,
+          "FN": 7,
+          "decided": 4,
+          "unknown": 6,
+          "coverage": 0.4,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 7,
+          "FP": 0,
+          "unknown": 3,
+          "decided": 7,
+          "coverage": 0.7,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615,
+        "pair_success": 3,
+        "pair_success_denominator": 10
+      }
+    }
+  },
+  "current_v5": {
+    "target_paired_macro_f1_four_types": 0.6737,
+    "pair_success_count": 21,
+    "pair_success_rate": 0.525,
+    "pair_success_denominator": 40,
+    "control_target_false_positive_rate_all_pairs": 0.025,
+    "control_target_false_positive_rate_decided_controls": 0.0345,
+    "target_field_unknown_rate_all_side_checks": 0.3375,
+    "per_type": {
+      "prohibited_action_present": {
+        "variant": {
+          "TP": 10,
+          "FN_observed_negative": 0,
+          "FN_unknown": 0,
+          "FN": 0,
+          "decided": 10,
+          "unknown": 0,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 8,
+          "FP": 0,
+          "unknown": 2,
+          "decided": 8,
+          "coverage": 0.8,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "pair_success": 8,
+        "pair_success_denominator": 10
+      },
+      "required_condition_not_enforced": {
+        "variant": {
+          "TP": 9,
+          "FN_observed_negative": 0,
+          "FN_unknown": 1,
+          "FN": 1,
+          "decided": 9,
+          "unknown": 1,
+          "coverage": 0.9,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 9,
+          "FP": 1,
+          "unknown": 0,
+          "decided": 10,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9,
+        "pair_success": 8,
+        "pair_success_denominator": 10
+      },
+      "constraint_violated": {
+        "variant": {
+          "TP": 2,
+          "FN_observed_negative": 0,
+          "FN_unknown": 8,
+          "FN": 8,
+          "decided": 2,
+          "unknown": 8,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 2,
+          "FP": 0,
+          "unknown": 8,
+          "decided": 2,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "pair_success": 2,
+        "pair_success_denominator": 10
+      },
+      "exception_not_handled": {
+        "variant": {
+          "TP": 3,
+          "FN_observed_negative": 0,
+          "FN_unknown": 7,
+          "FN": 7,
+          "decided": 3,
+          "unknown": 7,
+          "coverage": 0.3,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 9,
+          "FP": 0,
+          "unknown": 1,
+          "decided": 9,
+          "coverage": 0.9,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615,
+        "pair_success": 3,
+        "pair_success_denominator": 10
+      }
+    }
+  },
+  "delta_current_minus_c36": {
+    "macro_f1_four_types": 0.0701,
+    "pair_success_count": 3,
+    "target_field_unknown_rate": -0.025
+  },
+  "unknown_denominators": {
+    "c36_winter": {
+      "variant_unknown_count": 18,
+      "control_unknown_count": 11,
+      "variant_unknown_rate": 0.45,
+      "control_unknown_rate": 0.275,
+      "overall_unknown_denominator": "2 * 40 side checks"
+    },
+    "current_v5": {
+      "variant_unknown_count": 16,
+      "control_unknown_count": 11,
+      "variant_unknown_rate": 0.4,
+      "control_unknown_rate": 0.275,
+      "overall_unknown_denominator": "2 * 40 side checks"
+    }
+  },
+  "c36_metrics_full": {
+    "schema_version": "s3_target_paired_evaluator@3.0.0",
+    "evaluation_kind": "target_paired_causal",
+    "primary": true,
+    "total_pairs": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "pairs": 10,
+        "variant": {
+          "TP": 10,
+          "FN_observed_negative": 0,
+          "FN_unknown": 0,
+          "FN": 0,
+          "decided": 10,
+          "unknown": 0,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 7,
+          "FP": 3,
+          "unknown": 0,
+          "decided": 10,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "precision": 0.7692,
+        "recall": 1.0,
+        "f1": 0.8696,
+        "precision_denominator_tp_plus_fp": 13,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 1.0,
+        "tnr_over_decided_controls": 0.7,
+        "control_fpr_over_decided_controls": 0.3,
+        "control_fpr_over_all_pairs": 0.3,
+        "pair_success": 7,
+        "pair_success_rate": 0.7,
+        "unknown_rate_variant": 0.0,
+        "unknown_rate_control": 0.0
+      },
+      "required_condition_not_enforced": {
+        "pairs": 10,
+        "variant": {
+          "TP": 2,
+          "FN_observed_negative": 0,
+          "FN_unknown": 8,
+          "FN": 8,
+          "decided": 2,
+          "unknown": 8,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 6,
+          "FP": 0,
+          "unknown": 4,
+          "decided": 6,
+          "coverage": 0.6,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "precision_denominator_tp_plus_fp": 2,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.2,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 2,
+        "pair_success_rate": 0.2,
+        "unknown_rate_variant": 0.8,
+        "unknown_rate_control": 0.4
+      },
+      "constraint_violated": {
+        "pairs": 10,
+        "variant": {
+          "TP": 6,
+          "FN_observed_negative": 0,
+          "FN_unknown": 4,
+          "FN": 4,
+          "decided": 6,
+          "unknown": 4,
+          "coverage": 0.6,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 6,
+          "FP": 0,
+          "unknown": 4,
+          "decided": 6,
+          "coverage": 0.6,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.6,
+        "f1": 0.75,
+        "precision_denominator_tp_plus_fp": 6,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.6,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 6,
+        "pair_success_rate": 0.6,
+        "unknown_rate_variant": 0.4,
+        "unknown_rate_control": 0.4
+      },
+      "exception_not_handled": {
+        "pairs": 10,
+        "variant": {
+          "TP": 3,
+          "FN_observed_negative": 1,
+          "FN_unknown": 6,
+          "FN": 7,
+          "decided": 4,
+          "unknown": 6,
+          "coverage": 0.4,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 7,
+          "FP": 0,
+          "unknown": 3,
+          "decided": 7,
+          "coverage": 0.7,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615,
+        "precision_denominator_tp_plus_fp": 3,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.3,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 3,
+        "pair_success_rate": 0.3,
+        "unknown_rate_variant": 0.6,
+        "unknown_rate_control": 0.3
+      }
+    },
+    "aggregate_side_outcomes_mutually_exclusive": {
+      "variant": {
+        "positive": 21,
+        "negative_observed_wrong": 1,
+        "unknown": 18,
+        "total": 40,
+        "coverage": 0.55,
+        "unknown_rate": 0.45
+      },
+      "control": {
+        "negative": 26,
+        "positive_false_alarm": 3,
+        "unknown": 11,
+        "total": 40,
+        "coverage": 0.725,
+        "unknown_rate": 0.275,
+        "false_positive_rate_over_decided_controls": 0.1034,
+        "false_positive_rate_over_all_pairs": 0.075
+      }
+    },
+    "pair_level_outcomes_mutually_exclusive": {
+      "both_correct": 18,
+      "control_false_alarm": 3,
+      "variant_unknown": 7,
+      "both_unknown": 11,
+      "variant_observed_wrong": 1
+    },
+    "macro_f1_four_types": 0.6036,
+    "control_target_false_positive_rate": 0.075,
+    "control_target_false_positive_rate_over_decided_controls": 0.1034,
+    "target_field_unknown_rate": 0.3625,
+    "variant_unknown_rate": 0.45,
+    "control_unknown_rate": 0.275,
+    "variant_coverage": 0.55,
+    "control_coverage": 0.725,
+    "pair_success_rate": 0.45,
+    "pair_success_count": 18,
+    "pair_success_denominator": 40,
+    "explicit_denominators": {
+      "variant_positive_tp_denominator": "all scored variant checks",
+      "variant_failure_fn_denominator": "all scored variant checks",
+      "recall_includes_unknown_as_fn": true,
+      "control_tnr_denominator": "decided controls (TN+FP) only",
+      "control_unknown_denominator": "all scored control checks",
+      "pair_success_denominator": "all paired variant/control checks",
+      "unknown_is_not_a_compliant_prediction": true,
+      "all_side_checks_denominator_for_overall_unknown_rate": "all four target-type checks across both sides"
+    },
+    "uses_expected_only_for_evaluation_grouping": true,
+    "does_not_mutate_predictions": true
+  },
+  "current_metrics_full": {
+    "schema_version": "s3_target_paired_evaluator@3.0.0",
+    "evaluation_kind": "target_paired_causal",
+    "primary": true,
+    "total_pairs": 40,
+    "per_type": {
+      "prohibited_action_present": {
+        "pairs": 10,
+        "variant": {
+          "TP": 10,
+          "FN_observed_negative": 0,
+          "FN_unknown": 0,
+          "FN": 0,
+          "decided": 10,
+          "unknown": 0,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 8,
+          "FP": 0,
+          "unknown": 2,
+          "decided": 8,
+          "coverage": 0.8,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "precision_denominator_tp_plus_fp": 10,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 1.0,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 8,
+        "pair_success_rate": 0.8,
+        "unknown_rate_variant": 0.0,
+        "unknown_rate_control": 0.2
+      },
+      "required_condition_not_enforced": {
+        "pairs": 10,
+        "variant": {
+          "TP": 9,
+          "FN_observed_negative": 0,
+          "FN_unknown": 1,
+          "FN": 1,
+          "decided": 9,
+          "unknown": 1,
+          "coverage": 0.9,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 9,
+          "FP": 1,
+          "unknown": 0,
+          "decided": 10,
+          "coverage": 1.0,
+          "denominator_pairs": 10
+        },
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9,
+        "precision_denominator_tp_plus_fp": 10,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.9,
+        "tnr_over_decided_controls": 0.9,
+        "control_fpr_over_decided_controls": 0.1,
+        "control_fpr_over_all_pairs": 0.1,
+        "pair_success": 8,
+        "pair_success_rate": 0.8,
+        "unknown_rate_variant": 0.1,
+        "unknown_rate_control": 0.0
+      },
+      "constraint_violated": {
+        "pairs": 10,
+        "variant": {
+          "TP": 2,
+          "FN_observed_negative": 0,
+          "FN_unknown": 8,
+          "FN": 8,
+          "decided": 2,
+          "unknown": 8,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 2,
+          "FP": 0,
+          "unknown": 8,
+          "decided": 2,
+          "coverage": 0.2,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333,
+        "precision_denominator_tp_plus_fp": 2,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.2,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 2,
+        "pair_success_rate": 0.2,
+        "unknown_rate_variant": 0.8,
+        "unknown_rate_control": 0.8
+      },
+      "exception_not_handled": {
+        "pairs": 10,
+        "variant": {
+          "TP": 3,
+          "FN_observed_negative": 0,
+          "FN_unknown": 7,
+          "FN": 7,
+          "decided": 3,
+          "unknown": 7,
+          "coverage": 0.3,
+          "denominator_pairs": 10
+        },
+        "control": {
+          "TN": 9,
+          "FP": 0,
+          "unknown": 1,
+          "decided": 9,
+          "coverage": 0.9,
+          "denominator_pairs": 10
+        },
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615,
+        "precision_denominator_tp_plus_fp": 3,
+        "recall_denominator_tp_plus_fn": 10,
+        "tpr_over_all_pairs": 0.3,
+        "tnr_over_decided_controls": 1.0,
+        "control_fpr_over_decided_controls": 0.0,
+        "control_fpr_over_all_pairs": 0.0,
+        "pair_success": 3,
+        "pair_success_rate": 0.3,
+        "unknown_rate_variant": 0.7,
+        "unknown_rate_control": 0.1
+      }
+    },
+    "aggregate_side_outcomes_mutually_exclusive": {
+      "variant": {
+        "positive": 24,
+        "negative_observed_wrong": 0,
+        "unknown": 16,
+        "total": 40,
+        "coverage": 0.6,
+        "unknown_rate": 0.4
+      },
+      "control": {
+        "negative": 28,
+        "positive_false_alarm": 1,
+        "unknown": 11,
+        "total": 40,
+        "coverage": 0.725,
+        "unknown_rate": 0.275,
+        "false_positive_rate_over_decided_controls": 0.0345,
+        "false_positive_rate_over_all_pairs": 0.025
+      }
+    },
+    "pair_level_outcomes_mutually_exclusive": {
+      "control_unknown": 2,
+      "both_correct": 21,
+      "control_false_alarm": 1,
+      "variant_unknown": 7,
+      "both_unknown": 9
+    },
+    "macro_f1_four_types": 0.6737,
+    "control_target_false_positive_rate": 0.025,
+    "control_target_false_positive_rate_over_decided_controls": 0.0345,
+    "target_field_unknown_rate": 0.3375,
+    "variant_unknown_rate": 0.4,
+    "control_unknown_rate": 0.275,
+    "variant_coverage": 0.6,
+    "control_coverage": 0.725,
+    "pair_success_rate": 0.525,
+    "pair_success_count": 21,
+    "pair_success_denominator": 40,
+    "explicit_denominators": {
+      "variant_positive_tp_denominator": "all scored variant checks",
+      "variant_failure_fn_denominator": "all scored variant checks",
+      "recall_includes_unknown_as_fn": true,
+      "control_tnr_denominator": "decided controls (TN+FP) only",
+      "control_unknown_denominator": "all scored control checks",
+      "pair_success_denominator": "all paired variant/control checks",
+      "unknown_is_not_a_compliant_prediction": true,
+      "all_side_checks_denominator_for_overall_unknown_rate": "all four target-type checks across both sides"
+    },
+    "uses_expected_only_for_evaluation_grouping": true,
+    "does_not_mutate_predictions": true
+  }
+}

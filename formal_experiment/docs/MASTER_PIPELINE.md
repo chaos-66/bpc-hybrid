@@ -1,7 +1,68 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
+**文档版本**：3.7.3
+**状态**：ACTIVE — 全项目研究与任务分解的唯一主线
+**最后更新**：2026-09-14
+**方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
+**当前实施优先级**：按下方「CSCWD 按依赖推进的收尾 Pipeline」执行；满足启动条件就开始，完成一项立即推进，发现问题逐项定位、修复和验证。2026-09-30 导师初稿、2026-10-31 投稿截止是最晚目标，应尽早完成；写作持续同步，正式实验仍遵守 Stage 2 冻结到 Stage 3 的实质依赖。
+
+> 所有 Agent 在修改实验代码、配置、数据协议或研究设计前必须完整阅读本文。
+> 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
+> `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
+> `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-14 revision 3.7.3: C36/Winter target-paired compatibility audit and comparison (S3-C36-TARGET-PAIRED, zero API)
+
+**Scope**: new revision `s3_c36_target_paired_v1`; frozen C36/Winter and v5
+predictions are reused read-only; historical C36/v5 artifacts are not
+overwritten.
+
+**Audit findings**:
+- Same 40 item ids as the current synthetic panel and v5 variant rows; no
+  missing or extra items.
+- Expected labels, process ids, rule ids and variant/control BPMN hashes match
+  the panel for all 40 pairs.  C36 manifest raw hashes for the rule inference
+  pack and panel match the current files; `gold_visible=False` on all rows.
+- Variant side: all 40 rows contain four `scores_detail` checks with boolean
+  `observable`; every observable entry has an explicit boolean `violation`;
+  unobservable entries are converted to `unknown`, never negative.
+- Control side: all 40 rows contain four `control_scores` checks with boolean
+  `observable` and a score when observable; no persisted final `violation`
+  boolean.  The frozen project function
+  `control_prediction_from_scores(control_scores, gamma_ext)` reconstructs the
+  per-type control boolean from those saved fields.  This affects 40 control
+  samples / 160 control-side checks and is recorded as a reconstruction
+  dependency, not a blocking gap.  No unified single-label prediction is used.
+- No blocking field gap; the target-paired comparison can be built under the
+  documented reconstruction rule.
+
+**Target-paired comparison**:
+- C36/Winter: Macro-F1 **0.6036**, pair success **18/40**, target-field unknown
+  **0.3625**, control target FP rate over all pairs **0.0750**.
+- Current v5: Macro-F1 **0.6737**, pair success **21/40**, target-field unknown
+  **0.3375**, control target FP rate over all pairs **0.0250**.
+- Current-minus-C36 delta: F1 **+0.0701**, pair success **+3**, unknown
+  **-0.0250**.  Per-type F1: C36 0.8696/0.3333/0.7500/0.4615 vs v5
+  1.0000/0.9000/0.3333/0.4615 (prohibited/condition/constraint/exception).
+- This is a same-protocol development comparison, not a formal Oracle result.
+
+**Evidence**: `outputs/reports/s3_c36_target_paired_v1.{json,md}`,
+`outputs/evidence/s3_c36_target_paired_v1/{audit,comparison,manifest,field_gaps}`,
+`src/bpc_hybrid/s3_c36_target_paired_v1.py`,
+`scripts/run_s3_c36_target_paired_v1.py`,
+`tests/test_s3_c36_target_paired_v1.py` (6 passed).  Real API = 0; no full test
+suite was run.
+
+**Next step**: the target-paired comparison is complete for the frozen panel.
+No re-inference is required for this comparison.  If a future reviewer requires
+independently persisted control booleans, the minimal offline task is to write
+the already-reconstructed per-type booleans from the saved `control_scores`
+using the same frozen rule; no new API or model inference is needed.
+
+# BPC-Hybrid 完整实验主 Pipeline
+
 **文档版本**：3.7.2
-**状态**：ACTIVE — 全项目研究与任务分解的唯一主线  
+**状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-14
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
 **当前实施优先级**：按下方「CSCWD 按依赖推进的收尾 Pipeline」执行；满足启动条件就开始，完成一项立即推进，发现问题逐项定位、修复和验证。2026-09-30 导师初稿、2026-10-31 投稿截止是最晚目标，应尽早完成；写作持续同步，正式实验仍遵守 Stage 2 冻结到 Stage 3 的实质依赖。
@@ -24,7 +85,7 @@
 | 相同请求与中断恢复 | 22 个对象的 18 份唯一正文只发送、计费一次；结果回绑各自对象；send_started 中断不自动重发；usage 未知不报完成 | verified（离线） |
 | 响应到评价接通 | 接受 validated 响应；逐字段复核后保留 v5 保护；预测先保存，标签后评价；恢复可重建相同预测 | verified（离线） |
 | v5 真实 fallback | 新范围授权、冻结载荷和预算、真实账本、完整预测与对比均具备 | blocked：尚无该范围授权，真实 API=0 |
-| S3-C36-TARGET-PAIRED | 逐对象核查 C36 原始结果是否覆盖相同 40 对、两侧及四类检查；仅在语义和分母兼容时重评分，否则具名列出不可恢复字段及最小补跑范围 | 下一可执行子项：先做零 API 兼容性核查 |
+| S3-C36-TARGET-PAIRED | C36/Winter 40 pairs, both sides and four checks audited; target-paired comparison generated under frozen control reconstruction | completed; see outputs/reports/s3_c36_target_paired_v1.* |
 
 验收：五个相关测试文件共 **42 passed**，快速完整性检查通过；没有全量测试。
 真实面板的离线恢复消费 22 个响应对象，新增发送 0，输出 80 条预测。

@@ -1,0 +1,1047 @@
+{
+  "schema_version": "s3_c36_target_paired_report@1.0.0",
+  "revision": "s3_c36_target_paired_v1",
+  "status": "VERIFIED_DEVELOPMENT_COMPARISON",
+  "scope": "development_only_synthetic_panel",
+  "audit": {
+    "schema_version": "s3_c36_target_paired_audit@1.0.0",
+    "revision": "s3_c36_target_paired_v1",
+    "scope": "development_only_synthetic_panel",
+    "panel": "synthetic_controlled_error_extension_v2",
+    "sample_sets": {
+      "c36_rows": 40,
+      "panel_variant_rows": 40,
+      "c36_item_ids_equal_panel": true,
+      "missing_in_c36": [],
+      "extra_in_c36": []
+    },
+    "label_issues": [],
+    "process_issues": [],
+    "c36_variant_bpmn_hash_issues": [],
+    "c36_control_bpmn_hash_issues": [],
+    "current_variant_bpmn_hash_issues": [],
+    "current_control_bpmn_hash_issues": [],
+    "gold_visible_values": [
+      "False"
+    ],
+    "manifest_input_checks": [
+      {
+        "path": "data/development/human_review/stage3_gold_inference_v1.json",
+        "c36_manifest_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+        "current_raw_sha256": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+        "current_canonical_lf_sha256": "364f4b737dfb8b3f68719e4949ef4cbfd1327f4bd2fde2ab96e8b07b9db76f2b",
+        "raw_match": true,
+        "canonical_lf_match": false
+      },
+      {
+        "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+        "c36_manifest_sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+        "current_raw_sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+        "current_canonical_lf_sha256": "f5c75144b3749bae817fd87db2cf9954d8ec3415e35a80cbf1df6ffa19839fff",
+        "raw_match": true,
+        "canonical_lf_match": false
+      }
+    ],
+    "variant_field_stats": {
+      "prohibited_action_present": {
+        "rows": 40,
+        "observable_true": 14,
+        "explicit_violation_boolean": 14,
+        "observable_false": 26
+      },
+      "required_condition_not_enforced": {
+        "rows": 40,
+        "observable_false": 29,
+        "observable_true": 11,
+        "explicit_violation_boolean": 11
+      },
+      "constraint_violated": {
+        "rows": 40,
+        "observable_false": 27,
+        "observable_true": 13,
+        "explicit_violation_boolean": 13
+      },
+      "exception_not_handled": {
+        "rows": 40,
+        "observable_false": 31,
+        "observable_true": 9,
+        "explicit_violation_boolean": 9
+      }
+    },
+    "control_field_stats": {
+      "prohibited_action_present": {
+        "rows": 40,
+        "observable_true": 14,
+        "score_present": 14,
+        "observable_false": 26,
+        "reason_present": 26
+      },
+      "required_condition_not_enforced": {
+        "rows": 40,
+        "observable_false": 21,
+        "reason_present": 21,
+        "observable_true": 19,
+        "score_present": 19
+      },
+      "constraint_violated": {
+        "rows": 40,
+        "observable_false": 27,
+        "reason_present": 27,
+        "exact_contradiction_present": 40,
+        "observable_true": 13,
+        "score_present": 13
+      },
+      "exception_not_handled": {
+        "rows": 40,
+        "observable_false": 28,
+        "reason_present": 28,
+        "observable_true": 12,
+        "score_present": 12
+      }
+    },
+    "control_reconstruction_rule": "stage3_extended_violations.control_prediction_from_scores(control_scores, gamma_ext)",
+    "control_reconstruction_required": true,
+    "affected_control_samples": 40,
+    "affected_control_checks": 160,
+    "field_gaps": [],
+    "can_build_target_paired": true,
+    "unified_single_label_ignored_for_derivation": true,
+    "expected_label_used_only_for_evaluation_grouping": true,
+    "c36_report_available": true
+  },
+  "comparison": {
+    "schema_version": "s3_c36_target_paired_comparison@1.0.0",
+    "revision": "s3_c36_target_paired_v1",
+    "scope": "development_only_synthetic_panel",
+    "evaluation_protocol": {
+      "primary": "target_paired_causal",
+      "denominator": "all 40 frozen pairs; variant unknown is FN but reported separately; control unknown is outside the decided TNR denominator and reported separately; pair success requires variant positive and control negative",
+      "expected_labels_used_only_for_grouping": true
+    },
+    "c36_winter": {
+      "target_paired_macro_f1_four_types": 0.6036,
+      "pair_success_count": 18,
+      "pair_success_rate": 0.45,
+      "pair_success_denominator": 40,
+      "control_target_false_positive_rate_all_pairs": 0.075,
+      "control_target_false_positive_rate_decided_controls": 0.1034,
+      "target_field_unknown_rate_all_side_checks": 0.3625,
+      "per_type": {
+        "prohibited_action_present": {
+          "variant": {
+            "TP": 10,
+            "FN_observed_negative": 0,
+            "FN_unknown": 0,
+            "FN": 0,
+            "decided": 10,
+            "unknown": 0,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 7,
+            "FP": 3,
+            "unknown": 0,
+            "decided": 10,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "precision": 0.7692,
+          "recall": 1.0,
+          "f1": 0.8696,
+          "pair_success": 7,
+          "pair_success_denominator": 10
+        },
+        "required_condition_not_enforced": {
+          "variant": {
+            "TP": 2,
+            "FN_observed_negative": 0,
+            "FN_unknown": 8,
+            "FN": 8,
+            "decided": 2,
+            "unknown": 8,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 6,
+            "FP": 0,
+            "unknown": 4,
+            "decided": 6,
+            "coverage": 0.6,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.3333,
+          "pair_success": 2,
+          "pair_success_denominator": 10
+        },
+        "constraint_violated": {
+          "variant": {
+            "TP": 6,
+            "FN_observed_negative": 0,
+            "FN_unknown": 4,
+            "FN": 4,
+            "decided": 6,
+            "unknown": 4,
+            "coverage": 0.6,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 6,
+            "FP": 0,
+            "unknown": 4,
+            "decided": 6,
+            "coverage": 0.6,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.6,
+          "f1": 0.75,
+          "pair_success": 6,
+          "pair_success_denominator": 10
+        },
+        "exception_not_handled": {
+          "variant": {
+            "TP": 3,
+            "FN_observed_negative": 1,
+            "FN_unknown": 6,
+            "FN": 7,
+            "decided": 4,
+            "unknown": 6,
+            "coverage": 0.4,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 7,
+            "FP": 0,
+            "unknown": 3,
+            "decided": 7,
+            "coverage": 0.7,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.3,
+          "f1": 0.4615,
+          "pair_success": 3,
+          "pair_success_denominator": 10
+        }
+      }
+    },
+    "current_v5": {
+      "target_paired_macro_f1_four_types": 0.6737,
+      "pair_success_count": 21,
+      "pair_success_rate": 0.525,
+      "pair_success_denominator": 40,
+      "control_target_false_positive_rate_all_pairs": 0.025,
+      "control_target_false_positive_rate_decided_controls": 0.0345,
+      "target_field_unknown_rate_all_side_checks": 0.3375,
+      "per_type": {
+        "prohibited_action_present": {
+          "variant": {
+            "TP": 10,
+            "FN_observed_negative": 0,
+            "FN_unknown": 0,
+            "FN": 0,
+            "decided": 10,
+            "unknown": 0,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 8,
+            "FP": 0,
+            "unknown": 2,
+            "decided": 8,
+            "coverage": 0.8,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "pair_success": 8,
+          "pair_success_denominator": 10
+        },
+        "required_condition_not_enforced": {
+          "variant": {
+            "TP": 9,
+            "FN_observed_negative": 0,
+            "FN_unknown": 1,
+            "FN": 1,
+            "decided": 9,
+            "unknown": 1,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 1,
+            "unknown": 0,
+            "decided": 10,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "precision": 0.9,
+          "recall": 0.9,
+          "f1": 0.9,
+          "pair_success": 8,
+          "pair_success_denominator": 10
+        },
+        "constraint_violated": {
+          "variant": {
+            "TP": 2,
+            "FN_observed_negative": 0,
+            "FN_unknown": 8,
+            "FN": 8,
+            "decided": 2,
+            "unknown": 8,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 2,
+            "FP": 0,
+            "unknown": 8,
+            "decided": 2,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.3333,
+          "pair_success": 2,
+          "pair_success_denominator": 10
+        },
+        "exception_not_handled": {
+          "variant": {
+            "TP": 3,
+            "FN_observed_negative": 0,
+            "FN_unknown": 7,
+            "FN": 7,
+            "decided": 3,
+            "unknown": 7,
+            "coverage": 0.3,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 0,
+            "unknown": 1,
+            "decided": 9,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.3,
+          "f1": 0.4615,
+          "pair_success": 3,
+          "pair_success_denominator": 10
+        }
+      }
+    },
+    "delta_current_minus_c36": {
+      "macro_f1_four_types": 0.0701,
+      "pair_success_count": 3,
+      "target_field_unknown_rate": -0.025
+    },
+    "unknown_denominators": {
+      "c36_winter": {
+        "variant_unknown_count": 18,
+        "control_unknown_count": 11,
+        "variant_unknown_rate": 0.45,
+        "control_unknown_rate": 0.275,
+        "overall_unknown_denominator": "2 * 40 side checks"
+      },
+      "current_v5": {
+        "variant_unknown_count": 16,
+        "control_unknown_count": 11,
+        "variant_unknown_rate": 0.4,
+        "control_unknown_rate": 0.275,
+        "overall_unknown_denominator": "2 * 40 side checks"
+      }
+    },
+    "c36_metrics_full": {
+      "schema_version": "s3_target_paired_evaluator@3.0.0",
+      "evaluation_kind": "target_paired_causal",
+      "primary": true,
+      "total_pairs": 40,
+      "per_type": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "variant": {
+            "TP": 10,
+            "FN_observed_negative": 0,
+            "FN_unknown": 0,
+            "FN": 0,
+            "decided": 10,
+            "unknown": 0,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 7,
+            "FP": 3,
+            "unknown": 0,
+            "decided": 10,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "precision": 0.7692,
+          "recall": 1.0,
+          "f1": 0.8696,
+          "precision_denominator_tp_plus_fp": 13,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 1.0,
+          "tnr_over_decided_controls": 0.7,
+          "control_fpr_over_decided_controls": 0.3,
+          "control_fpr_over_all_pairs": 0.3,
+          "pair_success": 7,
+          "pair_success_rate": 0.7,
+          "unknown_rate_variant": 0.0,
+          "unknown_rate_control": 0.0
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "variant": {
+            "TP": 2,
+            "FN_observed_negative": 0,
+            "FN_unknown": 8,
+            "FN": 8,
+            "decided": 2,
+            "unknown": 8,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 6,
+            "FP": 0,
+            "unknown": 4,
+            "decided": 6,
+            "coverage": 0.6,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.3333,
+          "precision_denominator_tp_plus_fp": 2,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.2,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 2,
+          "pair_success_rate": 0.2,
+          "unknown_rate_variant": 0.8,
+          "unknown_rate_control": 0.4
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "variant": {
+            "TP": 6,
+            "FN_observed_negative": 0,
+            "FN_unknown": 4,
+            "FN": 4,
+            "decided": 6,
+            "unknown": 4,
+            "coverage": 0.6,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 6,
+            "FP": 0,
+            "unknown": 4,
+            "decided": 6,
+            "coverage": 0.6,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.6,
+          "f1": 0.75,
+          "precision_denominator_tp_plus_fp": 6,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.6,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 6,
+          "pair_success_rate": 0.6,
+          "unknown_rate_variant": 0.4,
+          "unknown_rate_control": 0.4
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "variant": {
+            "TP": 3,
+            "FN_observed_negative": 1,
+            "FN_unknown": 6,
+            "FN": 7,
+            "decided": 4,
+            "unknown": 6,
+            "coverage": 0.4,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 7,
+            "FP": 0,
+            "unknown": 3,
+            "decided": 7,
+            "coverage": 0.7,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.3,
+          "f1": 0.4615,
+          "precision_denominator_tp_plus_fp": 3,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.3,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 3,
+          "pair_success_rate": 0.3,
+          "unknown_rate_variant": 0.6,
+          "unknown_rate_control": 0.3
+        }
+      },
+      "aggregate_side_outcomes_mutually_exclusive": {
+        "variant": {
+          "positive": 21,
+          "negative_observed_wrong": 1,
+          "unknown": 18,
+          "total": 40,
+          "coverage": 0.55,
+          "unknown_rate": 0.45
+        },
+        "control": {
+          "negative": 26,
+          "positive_false_alarm": 3,
+          "unknown": 11,
+          "total": 40,
+          "coverage": 0.725,
+          "unknown_rate": 0.275,
+          "false_positive_rate_over_decided_controls": 0.1034,
+          "false_positive_rate_over_all_pairs": 0.075
+        }
+      },
+      "pair_level_outcomes_mutually_exclusive": {
+        "both_correct": 18,
+        "control_false_alarm": 3,
+        "variant_unknown": 7,
+        "both_unknown": 11,
+        "variant_observed_wrong": 1
+      },
+      "macro_f1_four_types": 0.6036,
+      "control_target_false_positive_rate": 0.075,
+      "control_target_false_positive_rate_over_decided_controls": 0.1034,
+      "target_field_unknown_rate": 0.3625,
+      "variant_unknown_rate": 0.45,
+      "control_unknown_rate": 0.275,
+      "variant_coverage": 0.55,
+      "control_coverage": 0.725,
+      "pair_success_rate": 0.45,
+      "pair_success_count": 18,
+      "pair_success_denominator": 40,
+      "explicit_denominators": {
+        "variant_positive_tp_denominator": "all scored variant checks",
+        "variant_failure_fn_denominator": "all scored variant checks",
+        "recall_includes_unknown_as_fn": true,
+        "control_tnr_denominator": "decided controls (TN+FP) only",
+        "control_unknown_denominator": "all scored control checks",
+        "pair_success_denominator": "all paired variant/control checks",
+        "unknown_is_not_a_compliant_prediction": true,
+        "all_side_checks_denominator_for_overall_unknown_rate": "all four target-type checks across both sides"
+      },
+      "uses_expected_only_for_evaluation_grouping": true,
+      "does_not_mutate_predictions": true
+    },
+    "current_metrics_full": {
+      "schema_version": "s3_target_paired_evaluator@3.0.0",
+      "evaluation_kind": "target_paired_causal",
+      "primary": true,
+      "total_pairs": 40,
+      "per_type": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "variant": {
+            "TP": 10,
+            "FN_observed_negative": 0,
+            "FN_unknown": 0,
+            "FN": 0,
+            "decided": 10,
+            "unknown": 0,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 8,
+            "FP": 0,
+            "unknown": 2,
+            "decided": 8,
+            "coverage": 0.8,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "precision_denominator_tp_plus_fp": 10,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 1.0,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.0,
+          "unknown_rate_control": 0.2
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "variant": {
+            "TP": 9,
+            "FN_observed_negative": 0,
+            "FN_unknown": 1,
+            "FN": 1,
+            "decided": 9,
+            "unknown": 1,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 1,
+            "unknown": 0,
+            "decided": 10,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "precision": 0.9,
+          "recall": 0.9,
+          "f1": 0.9,
+          "precision_denominator_tp_plus_fp": 10,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.9,
+          "tnr_over_decided_controls": 0.9,
+          "control_fpr_over_decided_controls": 0.1,
+          "control_fpr_over_all_pairs": 0.1,
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.1,
+          "unknown_rate_control": 0.0
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "variant": {
+            "TP": 2,
+            "FN_observed_negative": 0,
+            "FN_unknown": 8,
+            "FN": 8,
+            "decided": 2,
+            "unknown": 8,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 2,
+            "FP": 0,
+            "unknown": 8,
+            "decided": 2,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.3333,
+          "precision_denominator_tp_plus_fp": 2,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.2,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 2,
+          "pair_success_rate": 0.2,
+          "unknown_rate_variant": 0.8,
+          "unknown_rate_control": 0.8
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "variant": {
+            "TP": 3,
+            "FN_observed_negative": 0,
+            "FN_unknown": 7,
+            "FN": 7,
+            "decided": 3,
+            "unknown": 7,
+            "coverage": 0.3,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 0,
+            "unknown": 1,
+            "decided": 9,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.3,
+          "f1": 0.4615,
+          "precision_denominator_tp_plus_fp": 3,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.3,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 3,
+          "pair_success_rate": 0.3,
+          "unknown_rate_variant": 0.7,
+          "unknown_rate_control": 0.1
+        }
+      },
+      "aggregate_side_outcomes_mutually_exclusive": {
+        "variant": {
+          "positive": 24,
+          "negative_observed_wrong": 0,
+          "unknown": 16,
+          "total": 40,
+          "coverage": 0.6,
+          "unknown_rate": 0.4
+        },
+        "control": {
+          "negative": 28,
+          "positive_false_alarm": 1,
+          "unknown": 11,
+          "total": 40,
+          "coverage": 0.725,
+          "unknown_rate": 0.275,
+          "false_positive_rate_over_decided_controls": 0.0345,
+          "false_positive_rate_over_all_pairs": 0.025
+        }
+      },
+      "pair_level_outcomes_mutually_exclusive": {
+        "control_unknown": 2,
+        "both_correct": 21,
+        "control_false_alarm": 1,
+        "variant_unknown": 7,
+        "both_unknown": 9
+      },
+      "macro_f1_four_types": 0.6737,
+      "control_target_false_positive_rate": 0.025,
+      "control_target_false_positive_rate_over_decided_controls": 0.0345,
+      "target_field_unknown_rate": 0.3375,
+      "variant_unknown_rate": 0.4,
+      "control_unknown_rate": 0.275,
+      "variant_coverage": 0.6,
+      "control_coverage": 0.725,
+      "pair_success_rate": 0.525,
+      "pair_success_count": 21,
+      "pair_success_denominator": 40,
+      "explicit_denominators": {
+        "variant_positive_tp_denominator": "all scored variant checks",
+        "variant_failure_fn_denominator": "all scored variant checks",
+        "recall_includes_unknown_as_fn": true,
+        "control_tnr_denominator": "decided controls (TN+FP) only",
+        "control_unknown_denominator": "all scored control checks",
+        "pair_success_denominator": "all paired variant/control checks",
+        "unknown_is_not_a_compliant_prediction": true,
+        "all_side_checks_denominator_for_overall_unknown_rate": "all four target-type checks across both sides"
+      },
+      "uses_expected_only_for_evaluation_grouping": true,
+      "does_not_mutate_predictions": true
+    }
+  },
+  "field_gaps": {
+    "schema_version": "s3_c36_target_paired_field_gaps@1.0.0",
+    "revision": "s3_c36_target_paired_v1",
+    "field_gaps": [],
+    "control_reconstruction_rule": "stage3_extended_violations.control_prediction_from_scores(control_scores, gamma_ext)",
+    "control_reconstruction_required": true,
+    "affected_control_samples": 40,
+    "affected_control_checks": 160,
+    "blocking_gap_count": 0,
+    "single_label_inference_used": false
+  },
+  "manifest": {
+    "schema_version": "s3_c36_target_paired_manifest@1.0.0",
+    "run_id": "s3_c36_target_paired_v1",
+    "revision": "s3_c36_target_paired_v1",
+    "scope": "development_only",
+    "generated_utc": "2026-09-14T04:32:24.332864+00:00",
+    "panel": {
+      "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+      "sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+      "panel_id": "synthetic_controlled_error_extension_v2",
+      "variant_count": 40
+    },
+    "inputs": {
+      "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+      "data/development/human_review/stage3_gold_inference_v1.json": "4182c1f6ba8e28665c6dd14a2573b227e0c6b65c1df0041fcd1ae7dab5cf03c4",
+      "outputs/evidence/s3_formula_repair_v2/extended_four/reference/winter/predictions.jsonl": "18fa61ae9dda8c104f59360a91ef9979e7c793c9d3c1a339e069c3302e0780d7",
+      "outputs/evidence/s3_formula_repair_v2/manifest.json": "561a51300380be56e4c03e16b20ce899eda3418fbe300815a4726bfa0ec0a77d",
+      "outputs/reports/s3_formula_repair_v2.json": "f46c4bd49a6e0ad0163af176d6c53b46d5b4d2b33f81a32a99abf49fa49ab35c",
+      "outputs/evidence/s3_semantic_grounding_v5/predictions.jsonl": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+      "outputs/evidence/s3_semantic_grounding_v5/manifest.json": "a1b07b3ef153569c5d98fd0b3115cedab71d9634624e6b058bf55d5a58a8aaa0"
+    },
+    "implementation_hashes": {
+      "scripts/run_s3_c36_target_paired_v1.py": "1a797faa2f23c666a74469b53fed9a2c117f7cc9ed27c5ac8afc0794995d006e",
+      "src/bpc_hybrid/s3_c36_target_paired_v1.py": "1a7dc2335ad3aea07e32c15b8e8c34238ae6fa2f53cf3a5aeb5872bb1cc39975",
+      "tests/test_s3_c36_target_paired_v1.py": "f2d5a61d9cad5a51d9bfa12e174e6c38e4b1442d58d669efffc77bfafbd4ce22"
+    },
+    "audit_summary": {
+      "can_build_target_paired": true,
+      "sample_sets": {
+        "c36_rows": 40,
+        "panel_variant_rows": 40,
+        "c36_item_ids_equal_panel": true,
+        "missing_in_c36": [],
+        "extra_in_c36": []
+      },
+      "field_gap_count": 0,
+      "blocking_field_gap_count": 0,
+      "control_reconstruction_required": true,
+      "control_reconstruction_rule": "stage3_extended_violations.control_prediction_from_scores(control_scores, gamma_ext)",
+      "affected_control_samples": 40,
+      "affected_control_checks": 160,
+      "unified_single_label_ignored_for_derivation": true
+    },
+    "comparison_summary": {
+      "c36_winter": {
+        "target_paired_macro_f1_four_types": 0.6036,
+        "pair_success_count": 18,
+        "pair_success_rate": 0.45,
+        "pair_success_denominator": 40,
+        "control_target_false_positive_rate_all_pairs": 0.075,
+        "control_target_false_positive_rate_decided_controls": 0.1034,
+        "target_field_unknown_rate_all_side_checks": 0.3625,
+        "per_type": {
+          "prohibited_action_present": {
+            "variant": {
+              "TP": 10,
+              "FN_observed_negative": 0,
+              "FN_unknown": 0,
+              "FN": 0,
+              "decided": 10,
+              "unknown": 0,
+              "coverage": 1.0,
+              "denominator_pairs": 10
+            },
+            "control": {
+              "TN": 7,
+              "FP": 3,
+              "unknown": 0,
+              "decided": 10,
+              "coverage": 1.0,
+              "denominator_pairs": 10
+            },
+            "precision": 0.7692,
+            "recall": 1.0,
+            "f1": 0.8696,
+            "pair_success": 7,
+            "pair_success_denominator": 10
+          },
+          "required_condition_not_enforced": {
+            "variant": {
+              "TP": 2,
+              "FN_observed_negative": 0,
+              "FN_unknown": 8,
+              "FN": 8,
+              "decided": 2,
+              "unknown": 8,
+              "coverage": 0.2,
+              "denominator_pairs": 10
+            },
+            "control": {
+              "TN": 6,
+              "FP": 0,
+              "unknown": 4,
+              "decided": 6,
+              "coverage": 0.6,
+              "denominator_pairs": 10
+            },
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.3333,
+            "pair_success": 2,
+            "pair_success_denominator": 10
+          },
+          "constraint_violated": {
+            "variant": {
+              "TP": 6,
+              "FN_observed_negative": 0,
+              "FN_unknown": 4,
+              "FN": 4,
+              "decided": 6,
+              "unknown": 4,
+              "coverage": 0.6,
+              "denominator_pairs": 10
+            },
+            "control": {
+              "TN": 6,
+              "FP": 0,
+              "unknown": 4,
+              "decided": 6,
+              "coverage": 0.6,
+              "denominator_pairs": 10
+            },
+            "precision": 1.0,
+            "recall": 0.6,
+            "f1": 0.75,
+            "pair_success": 6,
+            "pair_success_denominator": 10
+          },
+          "exception_not_handled": {
+            "variant": {
+              "TP": 3,
+              "FN_observed_negative": 1,
+              "FN_unknown": 6,
+              "FN": 7,
+              "decided": 4,
+              "unknown": 6,
+              "coverage": 0.4,
+              "denominator_pairs": 10
+            },
+            "control": {
+              "TN": 7,
+              "FP": 0,
+              "unknown": 3,
+              "decided": 7,
+              "coverage": 0.7,
+              "denominator_pairs": 10
+            },
+            "precision": 1.0,
+            "recall": 0.3,
+            "f1": 0.4615,
+            "pair_success": 3,
+            "pair_success_denominator": 10
+          }
+        }
+      },
+      "current_v5": {
+        "target_paired_macro_f1_four_types": 0.6737,
+        "pair_success_count": 21,
+        "pair_success_rate": 0.525,
+        "pair_success_denominator": 40,
+        "control_target_false_positive_rate_all_pairs": 0.025,
+        "control_target_false_positive_rate_decided_controls": 0.0345,
+        "target_field_unknown_rate_all_side_checks": 0.3375,
+        "per_type": {
+          "prohibited_action_present": {
+            "variant": {
+              "TP": 10,
+              "FN_observed_negative": 0,
+              "FN_unknown": 0,
+              "FN": 0,
+              "decided": 10,
+              "unknown": 0,
+              "coverage": 1.0,
+              "denominator_pairs": 10
+            },
+            "control": {
+              "TN": 8,
+              "FP": 0,
+              "unknown": 2,
+              "decided": 8,
+              "coverage": 0.8,
+              "denominator_pairs": 10
+            },
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "pair_success": 8,
+            "pair_success_denominator": 10
+          },
+          "required_condition_not_enforced": {
+            "variant": {
+              "TP": 9,
+              "FN_observed_negative": 0,
+              "FN_unknown": 1,
+              "FN": 1,
+              "decided": 9,
+              "unknown": 1,
+              "coverage": 0.9,
+              "denominator_pairs": 10
+            },
+            "control": {
+              "TN": 9,
+              "FP": 1,
+              "unknown": 0,
+              "decided": 10,
+              "coverage": 1.0,
+              "denominator_pairs": 10
+            },
+            "precision": 0.9,
+            "recall": 0.9,
+            "f1": 0.9,
+            "pair_success": 8,
+            "pair_success_denominator": 10
+          },
+          "constraint_violated": {
+            "variant": {
+              "TP": 2,
+              "FN_observed_negative": 0,
+              "FN_unknown": 8,
+              "FN": 8,
+              "decided": 2,
+              "unknown": 8,
+              "coverage": 0.2,
+              "denominator_pairs": 10
+            },
+            "control": {
+              "TN": 2,
+              "FP": 0,
+              "unknown": 8,
+              "decided": 2,
+              "coverage": 0.2,
+              "denominator_pairs": 10
+            },
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.3333,
+            "pair_success": 2,
+            "pair_success_denominator": 10
+          },
+          "exception_not_handled": {
+            "variant": {
+              "TP": 3,
+              "FN_observed_negative": 0,
+              "FN_unknown": 7,
+              "FN": 7,
+              "decided": 3,
+              "unknown": 7,
+              "coverage": 0.3,
+              "denominator_pairs": 10
+            },
+            "control": {
+              "TN": 9,
+              "FP": 0,
+              "unknown": 1,
+              "decided": 9,
+              "coverage": 0.9,
+              "denominator_pairs": 10
+            },
+            "precision": 1.0,
+            "recall": 0.3,
+            "f1": 0.4615,
+            "pair_success": 3,
+            "pair_success_denominator": 10
+          }
+        }
+      },
+      "delta_current_minus_c36": {
+        "macro_f1_four_types": 0.0701,
+        "pair_success_count": 3,
+        "target_field_unknown_rate": -0.025
+      }
+    },
+    "safety": {
+      "human_gold_read": false,
+      "human_gold_modified": false,
+      "real_api_calls": 0,
+      "network_calls": 0,
+      "historical_c36_outputs_overwritten": false,
+      "historical_v5_outputs_overwritten": false,
+      "development_only_not_formal_oracle": true
+    }
+  },
+  "claim_boundary": "Development-only synthetic panel. C36 control-side target checks are reconstructed from frozen control_scores by the documented project rule; no formal Oracle, human Gold, or real API run is claimed."
+}

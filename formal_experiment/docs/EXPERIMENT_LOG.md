@@ -4757,3 +4757,17 @@
 - 仍存在 blocker：无
 - 备注：本轮仅执行五个具名文件的相关离线测试，不是全量测试。验证 22 个对象对应 18 个唯一请求、逐对象恢复、零重复调用、发送中断保护、缺失 usage 不报完成、模拟/真实目录隔离、v5 锚点保护和预测先落盘后评价。初次离线尝试 attempt_001 暴露 validated 状态未被接入器消费，现已修正并增加响应消费断言；最终面板恢复验收及 manifest 将在本任务记录中引用。真实 API=0，原有 Gold、用户修改及历史 v2-v5 产物保留。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-14T04:35:04.047940+00:00 - S3-C36-TARGET-PAIRED: frozen C36/Winter compatibility audit and target-paired comparison (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：15 passed in 0.18s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`a4970258d50b424da5673f35ed7d27f0b810c31d`；相关未提交路径：14 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Audited all 40 C36/Winter items against the current development panel: item ids, expected labels, process/rule ids and variant/control BPMN hashes match; C36 manifest raw hashes for rule inference pack and panel match; gold_visible=false. Variant side has explicit per-type observable/violation fields; control side lacks persisted boolean violation but the frozen control_prediction_from_scores rule reconstructs it from saved control_scores (40 samples / 160 control checks). No blocking field gap; unified single-label predictions were not used to reverse-engineer checks. Comparison under the current target-paired protocol: C36/Winter Macro-F1 0.6036, pair 18/40, unknown 0.3625, control target FP 0.0750; current v5 Macro-F1 0.6737, pair 21/40, unknown 0.3375, control target FP 0.0250. No Gold modification, no real API, no full test suite.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

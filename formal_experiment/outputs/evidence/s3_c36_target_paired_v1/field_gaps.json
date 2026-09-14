@@ -1,0 +1,11 @@
+{
+  "schema_version": "s3_c36_target_paired_field_gaps@1.0.0",
+  "revision": "s3_c36_target_paired_v1",
+  "field_gaps": [],
+  "control_reconstruction_rule": "stage3_extended_violations.control_prediction_from_scores(control_scores, gamma_ext)",
+  "control_reconstruction_required": true,
+  "affected_control_samples": 40,
+  "affected_control_checks": 160,
+  "blocking_gap_count": 0,
+  "single_label_inference_used": false
+}

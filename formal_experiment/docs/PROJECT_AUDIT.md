@@ -9,6 +9,63 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## 0. 当前验收：S3-C36-TARGET-PAIRED（2026-09-14，零真实 API）
+
+**Status**: VERIFIED_DEVELOPMENT_COMPARISON (development-only synthetic panel;
+frozen-prediction reuse; no real API).
+
+**实际查到什么**
+- C36/Winter 保存的 40 条逐项预测与当前 synthetic panel 的 40 个 variant/control
+  对完全同集：item_id、expected label、process_id、rule_id、variant/control BPMN
+  SHA-256 全部匹配。
+- C36 manifest 中 rule inference pack 与 panel 的 raw SHA-256 与当前文件匹配；
+  全部行 `gold_visible=False`。
+- variant 侧 40×4 检查全部有显式 `observable`/`violation`；observable=true 的
+  条目全部有布尔 `violation`；observable=false 保留为 unknown。
+- control 侧 40×4 检查有 `observable`/`score`/`reason`/`exact_contradiction`，
+  但没有持久化最终布尔 `violation`。本比较使用项目冻结函数
+  `control_prediction_from_scores(control_scores, gamma_ext)` 从上述字段重建
+  per-type 布尔值；影响 40 个 control 样本 / 160 个 control-side 检查。
+  这不是从统一单标签结果反推，也不是 Gold 参与预测。
+- 无 blocking field gap；比较可在该 reconstruction dependency 下成立。
+
+**比较结果（同一 target-paired 口径，40 对）**
+| 方法 | Macro-F1 | pair success | target unknown | control target FP |
+|---|---:|---:|---:|---:|
+| C36/Winter | 0.6036 | 18/40 | 0.3625 | 0.0750 |
+| 当前 v5 deterministic | 0.6737 | 21/40 | 0.3375 | 0.0250 |
+| 当前减 C36 | +0.0701 | +3 | -0.0250 | -0.0500 |
+
+per-type F1（prohibited/condition/constraint/exception）：C36
+0.8696/0.3333/0.7500/0.4615；v5 1.0000/0.9000/0.3333/0.4615。
+这是开发面板上的同口径比较，不是 formal Oracle，也不是真实 API 结果。
+
+**生成了什么**
+- `outputs/reports/s3_c36_target_paired_v1.{json,md}`
+- `outputs/evidence/s3_c36_target_paired_v1/audit.json`
+- `outputs/evidence/s3_c36_target_paired_v1/c36_winter_target_paired_checks.jsonl`
+  （80 条 variant/control 检查行）
+- `outputs/evidence/s3_c36_target_paired_v1/comparison.json`
+- `outputs/evidence/s3_c36_target_paired_v1/field_gaps.json`
+- `outputs/evidence/s3_c36_target_paired_v1/manifest.json`
+- `src/bpc_hybrid/s3_c36_target_paired_v1.py`
+- `scripts/run_s3_c36_target_paired_v1.py`
+- `tests/test_s3_c36_target_paired_v1.py`（6 passed）
+
+**剩余缺口/边界**
+- control 侧最终布尔 `violation` 未持久化；当前比较依赖冻结决策规则重建。
+  若要求完全独立的字段级持久证据，最小补跑是：在同一 40 个 control 检查上，
+  用已保存的 `control_scores` 和同一 frozen rule 写出 per-type 布尔值/状态；
+  不需要重新推理，也不需要新 API。
+- C36 manifest 未列出 Stage 1 structural contract 输入；本比较不需要重新解析，
+  因为被比较的是已冻结的 per-check 预测字段，且 panel/BPMN/rule inference pack
+  身份已匹配。
+- 未运行全量测试；仅运行本任务具名测试。
+
+**下一步**：本 S3-C36-TARGET-PAIRED 已完成；可继续 S3-V5 真实 fallback 授权
+流程（仍在等待覆盖 v5 scope/hash 的明确授权），或按 SEP-C1 继续三阶段 I/O
+与成功/失败案例写作。
+
 ## 0. 当前验收：S3-V5-RUNNER-INTEGRATION（2026-09-14，零真实 API）
 
 **状态：VERIFIED_OFFLINE_INTEGRATION；Stage 3 整体尚未完成。**
@@ -32,7 +89,7 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
   原候选包与请求正文哈希未变，真实 API=0；旧 v2 授权不能挪用。费用沿用旧 preflight
   的静态估计，本次没有重新核验供应商价格，不应当作实时报价。
 
-**下一可执行子项：S3-C36-TARGET-PAIRED**。先核查 C36 保存字段、对象范围、两侧和四类检查
+**Next suggested action: S3-C36-TARGET-PAIRED compatibility audit is complete.**
 能否支持同口径评价；可以只读重评分才生成表，否则提交字段级缺口与最小补跑清单。
 不得从旧单标签指标反推四类检查，不为了填表改 Gold、改分母或把 unknown 算作合规。
 真实 v5 fallback 另待范围授权；等待时可继续 SEP-C1-A 的三阶段 I/O 和成功/失败案例写作。
@@ -353,7 +410,7 @@ python formal_experiment/scripts/audit_project.py
 |---|---|---|---|
 | SEP-C0 计划修订 | 用户已明确推进原则 | verified（文档范围） | 主 Pipeline、状态和手册改为按依赖推进、尽早完成、逐项诊断修复；撤销中间日历安排。本批未执行实验，Git 备份结果在交接中报告。 |
 | S3-V5-RUNNER-INTEGRATION | DS v5 冻结结果与请求包已有 | verified（离线） | 接通 80 条预测及评价，22 对象共享 18 份响应，恢复新增发送 0，42 项相关测试通过；真实调用仍为 0。 |
-| S3-C36-TARGET-PAIRED | 已有 C36 结果可只读核查 | ready，下一最小子任务 | 先核查同一 40 对及双方四类检查字段；兼容才重评分，不兼容则具名给出缺口和最小补跑范围，禁止拼接旧指标冒充公平比较。 |
+| S3-C36-TARGET-PAIRED | verified zero-API development comparison | completed; see outputs/reports/s3_c36_target_paired_v1.* |
 | SEP-C1 写作与比较口径 | 已有方法和案例可整理 | ready | **下一最小子任务 SEP-C1-A**：先把三阶段 I/O、SIM r10 实际成功链和一条真实失败链写入现有方法章节，同时核对原始记录与主张矩阵；随后完成前人比较范围、通用题名及新消融预算准备。 |
 | SEP-C2 必要对照与已授权批次 | 对应口径、输入和运行条件已满足 | 部分待依赖 / 既有批次待启动时核验 | 新对照待 SEP-C1 相应比较范围；既有批次按自身合同推进，不等待整包 SEP-C1。已有 137 次授权继续有效，凭据/载荷/账本的最新可运行性在开始时核验，不按旧记录重复运行。 |
 | SEP-C3 prompt 组合与后处理归因 | 诊断可先做；新运行需因素与适用授权 | 诊断 ready / 新运行 blocked | 旧单删四组不等于完整八组合；待因素定义与独立预算/授权。冻结基线保留，针对已定位问题迭代后继候选，每轮独立记录假设、版本和验证。 |
@@ -384,7 +441,7 @@ python formal_experiment/scripts/audit_project.py
 
 **写作推进规则**：每个最小任务结束就把可用内容写回现有正文、必要时同步主张矩阵，
 完成 scoped Git checkpoint；简报只报完成、证据、下一步、阻塞和提交/推送结果。
-下一任务从 S3-C36-TARGET-PAIRED 的零 API 兼容性核查开始；SEP-C1-A 写作无需等待真实调用授权。
+Next task: S3-C36-TARGET-PAIRED is completed. Continue S3-V5 real fallback authorization or SEP-C1-A writing; no re-inference is needed for the frozen comparison.
 完成就推进下一项可执行工作；遇到影响当前结论的问题先纳入修复循环。
 不重做项目总评、不另建路线、不自动启动真实 API。
 
