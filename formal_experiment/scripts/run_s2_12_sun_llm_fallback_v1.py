@@ -11,8 +11,9 @@ real-execution safety contract.
   capped (input/output/USD), time-gated (off-peak per call), and recorded in
   an append-only hash-chained ledger with resume support.
 * Stages F-1/F-2/F-3 partition the 27 locked fallback payloads (9/9/9).
-  Rules+LLM-Repair remains comparison-only; triggers, prompts, and repair
-  logic are NOT modified here.
+  These stages are CANCELLED by the 2026-09-14 user decision.  This entry
+  rejects the run before transport construction; the historical code below
+  remains provenance only.
 """
 
 from __future__ import annotations
@@ -42,6 +43,7 @@ from bpc_hybrid.s2_12_execution import (  # noqa: E402
     _sha,
     all_arm_payloads_called,
     arm_policy,
+    assert_method_active,
     load_and_validate_authorization,
     load_lock,
     load_report,
@@ -141,6 +143,11 @@ def _synthetic_auth_for_fake(stage_id, rows_by_arm):
 
 
 def run(args) -> dict[str, Any]:
+    # Machine-enforced cancellation gate: refuse here, before load_lock(),
+    # before constructing any transport, before sending any request and
+    # before writing any experiment output.  The historical code below is
+    # retained only as provenance and is unreachable through this entry.
+    assert_method_active(ARM)
     lock = load_lock()
     report = load_report()
     rows_by_arm = rebuild_and_verify_payloads(lock, report, args.runtime_home)

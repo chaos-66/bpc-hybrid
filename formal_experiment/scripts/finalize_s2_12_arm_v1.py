@@ -55,15 +55,16 @@ for candidate in (SRC, SCRIPTS):
         sys.path.insert(0, str(candidate))
 
 from bpc_hybrid.s2_12_execution import (  # noqa: E402
+    ACTIVE_PREFLIGHT_LOCK,
+    ACTIVE_PREFLIGHT_REPORT,
     EXPECTED_INPUT_SHA,
     INPUT,
     OUTPUT_DIRS,
-    PREFLIGHT_LOCK,
-    PREFLIGHT_REPORT,
     ExecutionLedger,
     S212ExecutionError,
     _json_bytes,
     _sha,
+    assert_method_active,
     atomic_publish_directory,
     per_call_cost,
     load_lock,
@@ -80,8 +81,6 @@ from bpc_hybrid.h1_span_canonicalizer import (  # noqa: E402
     canonicalize_patch_coordinates,
 )
 from run_s2_12_sun_rule_only_v1 import _resolve_records  # noqa: E402
-from build_s2_12_api_preflight_v1 import _rerun_b0  # noqa: E402
-from run_sun_llm_fallback import apply_patch_envelope, _rejection_codes  # noqa: E402
 
 ARM_STAGES = {
     "direct_llm": ("D-CAL", "D-REST"),
@@ -386,6 +385,9 @@ class _PlanAdapter:
 
 
 def _rejection_codes_for(reasons: Sequence[str]) -> list[str]:
+    # Lazy historical import: the active direct path never reaches fallback
+    # conversion and therefore does not import repair code merely to finalize.
+    from run_sun_llm_fallback import _rejection_codes  # noqa: WPS433
     codes = list(_rejection_codes(list(reasons)))
     return codes or (["other"] if reasons else [])
 
@@ -401,6 +403,7 @@ def fallback_event_for_plan(
     ``updated_record`` is the patched deep copy when the patch was accepted,
     otherwise None (the caller keeps its current record).
     """
+    from run_sun_llm_fallback import apply_patch_envelope  # noqa: WPS433
     adapter = _PlanAdapter(
         sample_id=str(plan["sample_id"]),
         clause_id=str(plan["clause_id"]),
@@ -523,11 +526,20 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     arm = args.arm
     if arm not in ARM_STAGES:
         raise FinalizeFail(f"unknown arm {arm!r}")
+    # The cancelled repair arm is rejected before loading the live ledger or
+    # rebuilding any payload.  Only direct_llm passes this gate.
+    assert_method_active(arm)
+    if arm != "direct_llm":
+        raise FinalizeFail(
+            f"active S2.12 finalization only supports direct_llm, got {arm!r}"
+        )
     runtime_home = Path(args.runtime_home)
 
-    lock = load_lock()
-    report = load_report()
-    rows_by_arm = rebuild_and_verify_payloads(lock, report, runtime_home)
+    lock = load_lock(scope="active")
+    report = load_report(scope="active")
+    rows_by_arm = rebuild_and_verify_payloads(
+        lock, report, runtime_home, arms=(arm,),
+    )
     arm_rows = report["arms"][arm]["calls"]
     if len(arm_rows) != len(rows_by_arm[arm]):
         raise FinalizeFail(f"arm row count drift: {len(arm_rows)}")
@@ -565,6 +577,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             raw = raw_map.get(arm_row["request_body_sha256"])
             rows.append(direct_attempt_from_raw(arm_row, raw, text_by_formal))
     else:
+        # Historical branch retained for provenance only; the entry gate
+        # above rejects sun_llm_fallback before this point.
+        from build_s2_12_api_preflight_v1 import _rerun_b0  # noqa: WPS433
         adapted, _batch = _rerun_b0(runtime_home)
         records_by_id: dict[str, dict[str, Any]] = {}
         for attempt in adapted:
@@ -636,6 +651,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "in_doubt": in_doubt,
         "failed": failed,
         "raw_dirs": [_rel(Path(d)) for d in raw_dirs],
+        "execution_scope": "active_two_method_direct_llm",
+        "cancelled_repair_arm_used": False,
         "ledger": {
             "path": _rel(Path(args.ledger)),
             "records": len(ledger.records),
@@ -699,13 +716,15 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         },
         "preflight_bindings": {
             "lock": {
-                "path": "configs/s2_12_api_arms_preflight_v1.json",
-                "sha256": _sha(PREFLIGHT_LOCK),
+                "path": "configs/s2_12_active_preflight_v2.json",
+                "sha256": _sha(ACTIVE_PREFLIGHT_LOCK),
             },
             "report": {
-                "path": "outputs/reports/s2_12_api_preflight_v1.json",
-                "sha256": _sha(PREFLIGHT_REPORT),
+                "path": "outputs/reports/s2_12_active_preflight_v2.json",
+                "sha256": _sha(ACTIVE_PREFLIGHT_REPORT),
             },
+            "execution_scope": "active_two_method_direct_llm",
+            "cancelled_repair_arm_used": False,
         },
         "gold_isolation": {
             "gold_read_by_runner": False,
@@ -713,6 +732,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "post_result_tuning_forbidden": True,
         },
         "raw_dirs": [_rel(Path(d)) for d in raw_dirs],
+        "execution_scope": "active_two_method_direct_llm",
+        "cancelled_repair_arm_used": False,
         "ledger": {
             "path": _rel(Path(args.ledger)),
             "records": len(ledger.records),

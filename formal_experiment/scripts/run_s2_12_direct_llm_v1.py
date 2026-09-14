@@ -30,6 +30,8 @@ for candidate in (SRC, SCRIPTS):
         sys.path.insert(0, str(candidate))
 
 from bpc_hybrid.s2_12_execution import (  # noqa: E402
+    ACTIVE_PREFLIGHT_LOCK,
+    ACTIVE_PREFLIGHT_REPORT,
     INPUT,
     OUTPUT_DIRS,
     PREFLIGHT_LOCK,
@@ -42,6 +44,7 @@ from bpc_hybrid.s2_12_execution import (  # noqa: E402
     _sha,
     all_arm_payloads_called,
     arm_policy,
+    assert_s2_12_execution_arm_active,
     load_and_validate_authorization,
     load_lock,
     load_report,
@@ -73,6 +76,8 @@ def _implementation_hashes() -> dict[str, str]:
                                         "src/bpc_hybrid/llm_client.py")),
         "h1_transport": _sha(module_file("bpc_hybrid.h1_transport",
                                          "src/bpc_hybrid/h1_transport.py")),
+        "run_direct_llm": _sha(module_file("run_direct_llm",
+                                           "scripts/run_direct_llm.py")),
     }
 
 
@@ -94,9 +99,14 @@ def _build_transport(args, payload_lock, lock):
 
 
 def run(args) -> dict[str, Any]:
-    lock = load_lock()
-    report = load_report()
-    rows_by_arm = rebuild_and_verify_payloads(lock, report, args.runtime_home)
+    # Cancellation gate: this direct arm is active, but the shared active
+    # scope contract is checked before any lock/transport/output work.
+    assert_s2_12_execution_arm_active(ARM)
+    lock = load_lock(scope="active")
+    report = load_report(scope="active")
+    rows_by_arm = rebuild_and_verify_payloads(
+        lock, report, args.runtime_home, arms=(ARM,),
+    )
     policy = arm_policy(ARM)
     builder = OpenAICompatibleRequestBuilder(
         _config_for_builder(lock)
@@ -131,7 +141,7 @@ def run(args) -> dict[str, Any]:
             raise S212ExecutionError("--allow-llm requires --transport real")
         auth = load_and_validate_authorization(
             args.auth_file, lock, report, ARM, _runner_hash(),
-            _implementation_hashes(),
+            _implementation_hashes(), scope="active",
         )
         # CLI stage must match the authorized stage
         if auth["stage_id"] != args.stage_id:
@@ -176,6 +186,9 @@ def run(args) -> dict[str, Any]:
         response_records=executor.response_records,
         auth=auth_for_capsule, fake=fake, arm_complete=arm_complete,
         lock=lock, report=report,
+        lock_path=ACTIVE_PREFLIGHT_LOCK,
+        report_path=ACTIVE_PREFLIGHT_REPORT,
+        scope="active_two_method_direct_llm",
     )
     return {
         "executor": executor,
@@ -204,36 +217,42 @@ def _synthetic_auth_for_fake(stage_id, rows_by_arm):
     }
     payloads = [row["request_body_sha256"] for row in rows_by_arm[ARM]]
     return {
-        "schema_version": "s2_12_api_authorization@1.1.0",
+        "schema_version": "s2_12_api_authorization@2.0.0",
+        "scope_id": "sep_c2_two_method_v1",
+        "active_methods": ["direct_llm"],
+        "cancelled_methods": ["sun_llm_fallback"],
+        "cancelled_repair_calls_reassigned": False,
         "authorization_sentence_utf8_sha256": "synthetic-fake",
         "authorization_event_file": "synthetic",
         "authorization_event_file_sha256": "synthetic",
         "model": REQUIRED_MODEL,
-        "calls": {"direct_llm": 36, "sun_llm_fallback": 27},
+        "arm": ARM,
+        "calls": {"direct_llm": 36},
         "stage_id": stage_id,
         "stage_payload_hashes": payloads,
         "stage_call_cap": len(payloads),
-        "global_input_token_cap": 63000000,
-        "global_output_token_cap": 258048,
-        "global_usd_cost_cap": 84.18,
+        "global_input_token_cap": 36000000,
+        "global_output_token_cap": 147456,
+        "global_usd_cost_cap": 42.09,
         "allowed_windows": "any_time",
         "price_snapshot": price,
-        "price_checked_at_utc": "2026-08-22T00:00:00Z",
+        "price_checked_at_utc": "2026-09-14T00:00:00Z",
         "runner_implementation_hashes": {
             "run_s2_12_direct_llm_v1": _runner_hash(),
-            "run_s2_12_sun_llm_fallback_v1": "synthetic",
+            "run_direct_llm": _implementation_hashes()["run_direct_llm"],
             "s2_12_execution": _sha(ROOT / "src/bpc_hybrid/s2_12_execution.py"),
             "llm_client": _implementation_hashes()["llm_client"],
             "h1_transport": _implementation_hashes()["h1_transport"],
         },
         "input_config_prompt_hashes": {
             "input_sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
-            "lock_sha256": _sha(PREFLIGHT_LOCK),
+            "lock_sha256": _sha(ACTIVE_PREFLIGHT_LOCK),
             "prompt_direct_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
-            "prompt_fallback_sha256": "00fe02996914e17f30962147d7a9f2c71a92d2479ba4eff343583a139bb1537b",
+            "prompt_fallback_sha256": None,
         },
+        "active_method_scope_sha256": _sha(ROOT / "configs/s2_12_active_method_scope_v1.json"),
         "prev_stage_ledger_hash": "",
-        "final_63_payload_hashes": payloads,
+        "final_direct_payload_hashes": payloads,
         "retry": 0,
         "gold_isolation": {
             "api_arms_must_not_read_gold": True,

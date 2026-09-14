@@ -421,6 +421,7 @@ def test_direct_runner_refuses_real_without_auth(tmp_path):
 
 
 def test_fallback_runner_fake_f1_end_to_end(tmp_path):
+    """The cancelled repair arm must refuse before any fake transport run."""
     out = tmp_path / "fallback"
     proc = _run_cmd([
         str(SCRIPTS / "run_s2_12_sun_llm_fallback_v1.py"),
@@ -429,15 +430,10 @@ def test_fallback_runner_fake_f1_end_to_end(tmp_path):
         "--stage-id", "F-1",
         "--output-dir", str(out),
     ])
-    assert proc.returncode == 0, proc.stdout + proc.stderr
-    manifest = json.loads(out.joinpath("manifest.json").read_text(encoding="utf-8"))
-    assert manifest["status"] == "partial"
-    assert manifest["safety"]["llm_api_calls"] == 9
-    assert manifest["safety"]["network_calls"] == 0
-    assert manifest["safety"]["cost_usd"] > 0
-    assert not out.joinpath("predictions.json").exists()
-    ledger = out.joinpath("ledger.jsonl").read_text(encoding="utf-8").splitlines()
-    assert len(ledger) == 9
+    assert proc.returncode == 2, proc.stdout + proc.stderr
+    assert "cancelled" in proc.stdout
+    assert "before constructing a transport" in proc.stdout
+    assert not out.exists()
 
 
 def test_fallback_runner_refuses_formal_dir(tmp_path):
@@ -448,7 +444,7 @@ def test_fallback_runner_refuses_formal_dir(tmp_path):
         "--output-dir", str(ROOT / "data/predictions/s2_12_sun_llm_fallback_v1"),
     ])
     assert proc.returncode == 2
-    assert "formal prediction directory" in proc.stdout
+    assert "cancelled" in proc.stdout
     assert not (
         ROOT / "data/predictions/s2_12_sun_llm_fallback_v1"
     ).exists()
@@ -463,7 +459,7 @@ def test_fallback_runner_refuses_without_auth_real(tmp_path):
         "--output-dir", str(tmp_path / "fallback-real"),
     ])
     assert proc.returncode == 2
-    assert "--auth-file" in proc.stdout
+    assert "cancelled" in proc.stdout
     assert not (tmp_path / "fallback-real").exists()
 
 

@@ -1,0 +1,184 @@
+{
+  "schema_version": "s2_12_two_method_contract@1.0.0",
+  "report_id": "s2_12_two_method_contract_v1",
+  "status": "partial_two_method_contract_pending_direct_llm",
+  "scope_id": "sep_c2_two_method_v1",
+  "active_methods": [
+    "sun_rule_only",
+    "direct_llm"
+  ],
+  "cancelled_methods": {
+    "sun_llm_fallback": {
+      "paper_label": "Rules+LLM-Repair",
+      "cancelled_stages": [
+        "F-1",
+        "F-2",
+        "F-3"
+      ],
+      "cancelled_calls": 27,
+      "must_not_run": true,
+      "must_not_be_reassigned": true,
+      "historical_provenance_retained": true
+    }
+  },
+  "input_request_bindings": {
+    "s2_12_input": {
+      "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+      "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+      "records": 36
+    },
+    "s2_12_active_preflight_lock": {
+      "path": "configs/s2_12_active_preflight_v2.json",
+      "sha256": "5c495839ef292d1c6ec083184941e5f2ebb7d8bba656ba377dd75da686388663",
+      "byte_size": 5917
+    },
+    "s2_12_active_preflight_report": {
+      "path": "outputs/reports/s2_12_active_preflight_v2.json",
+      "sha256": "cbec18d103b3c151ccd3225588f9998bbf001cb555473bded970803063aca764",
+      "byte_size": 26131
+    },
+    "s2_12_direct_prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "s2_12_direct_payload_set_sha256": "5804e2b6b24fa93b57df6f0204cf2631496736b074022fa47f361af527297437",
+    "s2_12_direct_payload_count": 36,
+    "gdpr7_input": {
+      "path": "data/input/gdpr7_stage2_input_v1.json",
+      "sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+      "byte_size": 43638
+    },
+    "gdpr7_preflight_report": {
+      "path": "outputs/reports/gdpr7_direct_llm_preflight_v1.json",
+      "sha256": "602bfdfb4adbf7f2c401689ed25e3d4226bc0fdb82a7bc65b4fbc6baf8f8c56d",
+      "byte_size": 54628
+    },
+    "gdpr7_planned_calls": 74,
+    "rules_only_evaluation": {
+      "path": "data/results/s2_12_sun_rule_only_v1/evaluation.json",
+      "sha256": "1696dbf9dcf85ef30f6056fc109c9952f0465ac21ac080314e57f7fa33799e16",
+      "byte_size": 11532
+    }
+  },
+  "output_dirs": {
+    "s2_12_stage_raw_dcal": "outputs/development/s2_12_direct_llm_raw_dcal_v1",
+    "s2_12_stage_raw_drest": "outputs/development/s2_12_direct_llm_raw_drest_v1",
+    "s2_12_stage_capsule_dcal": "outputs/development/s2_12_direct_llm_stage_dcal_v1",
+    "s2_12_stage_capsule_drest": "outputs/development/s2_12_direct_llm_stage_drest_v1",
+    "s2_12_predictions": "data/predictions/s2_12_direct_llm_v1",
+    "s2_12_results": "data/results/s2_12_direct_llm_v1",
+    "gdpr7_raw_real": "outputs/development/gdpr7_direct_llm_raw_real_v1",
+    "gdpr7_capsule_real": "outputs/development/gdpr7_direct_llm_real_v1",
+    "gdpr7_fake_rehearsal_excluded": "outputs/development/gdpr7_direct_llm_v1"
+  },
+  "call_plan": {
+    "remaining_calls": {
+      "s2_12_direct": 36,
+      "gdpr7_direct": 74,
+      "total": 110
+    },
+    "s2_12_direct_stages": {
+      "D-CAL": 1,
+      "D-REST": 35
+    },
+    "cancelled_repair_calls": 27,
+    "cancelled_repair_calls_reassigned": false,
+    "real_api_calls_made": 0,
+    "real_api_authorization_created": false,
+    "retry": 0
+  },
+  "comparison": {
+    "status": "pending_direct_llm",
+    "complete": false,
+    "active_methods": [
+      "sun_rule_only",
+      "direct_llm"
+    ],
+    "cancelled_methods": [
+      "sun_llm_fallback"
+    ],
+    "fallback_results_or_ledger_required": false,
+    "three_method_requirement_removed": true,
+    "metrics": {
+      "sun_rule_only": {
+        "span_precision": 0.8623188405797102,
+        "span_recall": 0.8027210884353742,
+        "span_f1": 0.8314533558338515,
+        "modality_accuracy": 0.6388888888888888,
+        "modality_macro_f1": 0.5354609929078014
+      },
+      "direct_llm": null,
+      "direct_minus_rules_only": null
+    },
+    "blockers": [
+      "direct_llm_evaluation_missing_or_not_complete"
+    ]
+  },
+  "freeze": {
+    "s2_12_complete": false,
+    "s2_13_complete": false,
+    "s2_13_eligible_for_freeze_check": false,
+    "cancelled_repair_arm_required": false,
+    "three_method_completeness_required_for_current_scope": false,
+    "historical_three_method_formal_capsules_retained": true,
+    "other_input_gold_freeze_conditions_unchanged": true,
+    "required_evidence_for_two_method_completion": [
+      "Rules-Only and Direct-LLM real predictions on the same frozen 36 S2.12 inputs",
+      "same-caliber evaluation against frozen S2.11 Gold and evaluator v2; the cancelled repair ledger/results are not inputs",
+      "two-method comparison record and S2.12 completion checkpoint before S2.13 freeze"
+    ],
+    "cancelled_repair_arm_not_a_completion_condition": true,
+    "blockers": [
+      "direct_llm_evaluation_missing_or_not_complete"
+    ],
+    "note": "S2.13 is not marked complete and does not wait for the cancelled repair arm; it remains blocked until Direct-LLM predictions, evaluation, and the two-method comparison exist."
+  },
+  "execution_commands": {
+    "s2_12_direct": [
+      "python formal_experiment/scripts/run_s2_12_direct_llm_v1.py --runtime-home <corenlp-home> --transport real --allow-llm --auth-file <successor-two-method-direct-authorization.json> --stage-id D-CAL --output-dir formal_experiment/outputs/development/s2_12_direct_llm_stage_dcal_v1 --raw-dir formal_experiment/outputs/development/s2_12_direct_llm_raw_dcal_v1",
+      "python formal_experiment/scripts/run_s2_12_direct_llm_v1.py --runtime-home <corenlp-home> --transport real --allow-llm --auth-file <successor-two-method-direct-authorization.json> --stage-id D-REST --resume-from-ledger formal_experiment/outputs/development/s2_12_direct_llm_stage_dcal_v1.ledger.jsonl --output-dir formal_experiment/outputs/development/s2_12_direct_llm_stage_drest_v1 --raw-dir formal_experiment/outputs/development/s2_12_direct_llm_raw_drest_v1"
+    ],
+    "s2_12_finalize": "python formal_experiment/scripts/finalize_s2_12_arm_v1.py --arm direct_llm --runtime-home <corenlp-home> --raw-dir formal_experiment/outputs/development/s2_12_direct_llm_raw_dcal_v1 --raw-dir formal_experiment/outputs/development/s2_12_direct_llm_raw_drest_v1 --ledger formal_experiment/outputs/development/s2_12_direct_llm_stage_drest_v1.ledger.jsonl --output-dir formal_experiment/data/predictions/s2_12_direct_llm_v1",
+    "s2_12_evaluate": "python formal_experiment/scripts/evaluate_s2_12_api_arm_v1.py --arm direct_llm --evaluate",
+    "gdpr7_direct": "python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v1.json --authorization-file <successor-gdpr7-direct-authorization-event.json> --raw-dir formal_experiment/outputs/development/gdpr7_direct_llm_raw_real_v1 --capsule-dir formal_experiment/outputs/development/gdpr7_direct_llm_real_v1",
+    "gdpr7_promotion": "python formal_experiment/scripts/promote_gdpr7_direct_llm_arm_v1.py --apply",
+    "contract_check": "python formal_experiment/scripts/build_s2_12_two_method_contract_v1.py --check"
+  },
+  "gdpr7_boundary": {
+    "fake_rehearsal_dir": "outputs/development/gdpr7_direct_llm_v1",
+    "fake_rows": 74,
+    "fake_network_calls": 0,
+    "fake_is_not_real_prediction_or_promotion_source": true,
+    "real_raw_dir": "outputs/development/gdpr7_direct_llm_raw_real_v1",
+    "real_capsule_dir": "outputs/development/gdpr7_direct_llm_real_v1",
+    "formal_arm_home": "data/predictions/gdpr7_direct_llm_v1"
+  },
+  "authorization_status": {
+    "api_authorized": false,
+    "existing_137_confirmation_scope_superseded": true,
+    "current_cancellation_is_not_external_send_authorization": true,
+    "new_authorization_file_created_this_round": false,
+    "automatic_external_transmission_approval_blocker_active": true,
+    "credentials": {
+      "process_environment_ready_after_temporary_nonsecret_configuration": true,
+      "api_key_present": true,
+      "credential_value_printed": false,
+      "project_env_read": false,
+      "remote_authentication_not_yet_tested": true
+    },
+    "note": "The credential precondition is documented as present from the offline re-check; it is not a send authorization and does not clear the external-transmission approval blocker."
+  },
+  "zero_api_continuation": {
+    "audit_project_required": true,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "real_results_missing": [
+      "S2.12 Direct-LLM D-CAL/D-REST real responses (36 calls; no fake substitution)",
+      "S2.12 Direct-LLM finalized prediction capsule at data/predictions/s2_12_direct_llm_v1",
+      "S2.12 Direct-LLM evaluation at data/results/s2_12_direct_llm_v1/evaluation.json",
+      "S2.12 two-method Rules-Only vs Direct-LLM comparison",
+      "GDPR-7 Direct-LLM real 74-call capsule/promotion (fake v1 74 rows excluded)",
+      "successor two-method external-send authorization and automatic approval"
+    ],
+    "released_scope": "Rules-Only and Direct-LLM; the cancelled 27 repair calls remain removed"
+  },
+  "claim_boundary": "This contract and its evidence are implementation/readiness work only. No real Direct-LLM or GDPR API result exists; S2.12 and S2.13 are not complete. The cancelled Rules+LLM-Repair arm is not a dependency and must not be restarted.",
+  "reproduce_command": "python formal_experiment/scripts/build_s2_12_two_method_contract_v1.py --check"
+}

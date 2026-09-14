@@ -4785,3 +4785,59 @@
 - 仍存在 blocker：无
 - 备注：v2 converts compatibility into a blocking gate: sample identity/uniqueness, panel/C36 label/process/rule/BPMN hashes, required manifest input hashes, C36 and v5 prediction hashes, four-type field legality, row gamma_ext binding, and the frozen reconstruction dependency must all pass before comparison. Current stage3_extended_violations.py matches the C36 manifest hash under canonical_lf_utf8_text (raw differs); frozen gamma_ext=0.5. The 40 control samples / 160 control-side checks now persist reconstructed status and boolean/null violation directly in the v2 80-row checks artifact, closing the v1 field gap without a separate file or unified-label reverse inference. Gate result pass, blocking=0; same-protocol comparison unchanged: baseline 0.6036/18/40/0.3625/0.0750 vs v5 0.6737/21/40/0.3375/0.0250. Blocked path writes no comparison and is covered by a focused test. No Gold modified, no real API, no full suite. Integrity audit was evaluated against the canonical main workspace because this registered worktree lacks the ignored local assets required by audit_project.py; the focused tests and this event are bound to the C36 worktree git state.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-14T12:48:55.719994+00:00 - SEP-C2 two-method execution/evaluation/freeze contract adaptation; cancel Rules+LLM execution
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：9 passed, 1 warning in 37.81s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`dd796c28c6cd6fa4cfd56854a36fbc56b946df7c`；相关未提交路径：39 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Machine-enforced cancellation gate; successor Direct-only preflight v2; active runner/finalize/evaluate bound to two-method scope; Direct still pending; zero API.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-14T12:51:37.778586+00:00 - SEP-C2 final two-method state re-verification after contract binding correction
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：9 passed, 1 warning in 37.47s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`dd796c28c6cd6fa4cfd56854a36fbc56b946df7c`；相关未提交路径：41 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Re-ran focused SEP-C2 tests after correcting the GDPR input binding used by the two-method contract; cancellation and Direct-only active preflight unchanged; zero API.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-14T12:54:02.539766+00:00 - SEP-C2 final verification after adding explicit two-method S2.13 completion conditions
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：9 passed, 1 warning in 37.38s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`dd796c28c6cd6fa4cfd56854a36fbc56b946df7c`；相关未提交路径：41 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Focused tests re-run after the final contract update; direct remains pending, cancellation gate intact, zero API.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-14T12:56:49.458427+00:00 - SEP-C2 final contract formatting fix and verification
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：9 passed, 1 warning in 37.72s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`dd796c28c6cd6fa4cfd56854a36fbc56b946df7c`；相关未提交路径：41 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Markdown output no longer has a trailing blank line; contract replay and cancellation tests re-run on final state; Direct remains pending; zero API.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

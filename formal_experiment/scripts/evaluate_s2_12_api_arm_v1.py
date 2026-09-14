@@ -36,6 +36,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from bpc_hybrid.s2_12_execution import assert_method_active  # noqa: E402
 from bpc_hybrid.s2_12_method_adapter import adapt_method_attempts  # noqa: E402
 from bpc_hybrid.s2_12_stratified_evaluator_v2 import evaluate_stratified  # noqa: E402
 
@@ -130,6 +131,11 @@ def _capsule_cost(arm: str) -> dict[str, Any]:
 
 
 def build_report(arm: str) -> dict[str, Any]:
+    assert_method_active(arm)
+    if arm != "direct_llm":
+        raise EvaluationFail(
+            f"active S2.12 evaluation only supports direct_llm, got {arm!r}"
+        )
     run_manifest = _verify_prediction_lock(arm)
     if _sha(GOLD) != EXPECTED_GOLD_SHA:
         raise EvaluationFail("frozen S2.11 Gold drift")
@@ -156,10 +162,15 @@ def build_report(arm: str) -> dict[str, Any]:
         "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
         "arm": arm,
         "scope_boundary": {
+            "active_methods": ["sun_rule_only", "direct_llm"],
+            "cancelled_methods": ["sun_llm_fallback"],
             "single_zero_api_arm_only": False,
-            "three_method_comparison_complete": False,
+            "two_method_comparison_pending": True,
+            "three_method_comparison_required": False,
+            "three_method_history_retained": True,
             "direct_llm_pending": False,
             "sun_llm_fallback_pending": False,
+            "cancelled_repair_arm_used": False,
             "post_result_tuning_performed": False,
             "no_method_rule_prompt_threshold_adjustment_from_gold_or_results": True,
         },

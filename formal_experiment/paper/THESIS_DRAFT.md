@@ -672,7 +672,8 @@ byte-identical）。规则绑定（variant → process → rule_id）与输入 a
 运行器 `scripts/run_s3_synthetic_panel_v1.py` 以与人工 panel 完全相同的
 `evaluate_stage3_common.py` 口径对四种非 LLM 方法评分；方法无法提供的信号
 明确写 `not applicable`/unobservable，不补 0 冒充支持。
-### 4.6 与前人方法的机制差异和不可比边界
+
+### 4.6 与前人方法的机制差异和不可比边界
 
 本文对前人的差异必须按层说明，且不得用已有 Stage 3 表替代 Stage 2 对照。
 
@@ -892,12 +893,14 @@ vs Rules-Only 0.8203 / Direct-LLM 0.7579）。**无整体胜者声明**。
 复杂语料（S2.11，36 条固定 IDs）上 Rules-Only 零 API arm（B0 v10a、CPU、0
 API/0 network、cost=$0）：overall modality accuracy / macro-F1 = 0.638889 /
 0.535461；五字段 span P/R/F1 = 0.862319 / 0.802721 / 0.831453；L1=31、L2=5、
-L3=0（无样本，不报性能）。这是**单一 zero-API arm**，不是三方法比较；
-Direct-LLM 与 Rules+LLM-Repair 两个 API arms 仍 pending explicit authorization
-（授权申请见 `docs/API_AUTHORIZATION_REQUEST.md`）。
+L3=0（无样本，不报性能）。这是**单一 zero-API arm**，不是两方法比较。Rules+LLM-Repair 已按用户
+2026-09-14 决定退出后续实验，其 F-1/F-2/F-3 共 27 次取消且不挪用；不会再有该臂的
+复杂语料评价。当前两方法合同只等待 Direct-LLM 的 36 次（D-CAL=1、D-REST=35）真实
+预测、评价和与 Rules-Only 的同口径比较；Direct 未运行前 S2.12/S2.13 明确未完成。
+合同与命令绑定见 `outputs/reports/s2_12_two_method_contract_v1.json`。
 
-[[TODO-RESULT:S2.12：API 授权后回填 Direct-LLM / Rules+LLM-Repair 复杂语料臂与
-三方法完整比较、最终冻结]]
+[[TODO-RESULT:S2.12：Direct-LLM 真实 36 次完成后，回填 Rules-Only vs Direct-LLM
+复杂语料同口径比较与 S2.12 完成记录；不得等待或重跑已取消的修复组]]
 
 ### 7.4 Stage 3 违规检测：人工裁决 panel（33 条，已冻结）与合成受控错误扩展（30+40 条，DEV）
 

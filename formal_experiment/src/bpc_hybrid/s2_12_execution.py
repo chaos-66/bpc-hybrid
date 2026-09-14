@@ -104,6 +104,18 @@ INPUT = ROOT / "data/input/s2_12_complex_corpus_formal_input_v1.json"
 PREFLIGHT_LOCK = ROOT / "configs/s2_12_api_arms_preflight_v1.json"
 PREFLIGHT_REPORT = ROOT / "outputs/reports/s2_12_api_preflight_v1.json"
 
+# Successor two-method (SEP-C2, 2026-09-14) active scope.  The v1 lock/report
+# above remain byte-exact historical provenance and MUST NOT be used as the
+# current execution scope after the user cancelled Rules+LLM-Repair.
+ACTIVE_METHOD_SCOPE = ROOT / "configs/s2_12_active_method_scope_v1.json"
+ACTIVE_PREFLIGHT_LOCK = ROOT / "configs/s2_12_active_preflight_v2.json"
+ACTIVE_PREFLIGHT_REPORT = ROOT / "outputs/reports/s2_12_active_preflight_v2.json"
+ACTIVE_METHODS = ("sun_rule_only", "direct_llm")
+CANCELLED_METHODS = ("sun_llm_fallback",)
+ACTIVE_S2_12_ARM = "direct_llm"
+ACTIVE_PREFLIGHT_LOCK_SCHEMA = "s2_12_active_preflight_lock@2.0.0"
+ACTIVE_PREFLIGHT_REPORT_SCHEMA = "s2_12_active_preflight_report@2.0.0"
+
 OUTPUT_DIRS = {
     "direct_llm": ROOT / "data/predictions/s2_12_direct_llm_v1",
     "sun_llm_fallback": ROOT / "data/predictions/s2_12_sun_llm_fallback_v1",
@@ -146,6 +158,79 @@ def _json_bytes(value: Any) -> bytes:
     return (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
 
 
+def load_active_method_scope() -> dict[str, Any]:
+    """Load the successor SEP-C2 two-method scope contract.
+
+    The contract is the machine-readable cancellation decision: only
+    ``sun_rule_only`` and ``direct_llm`` are active; ``sun_llm_fallback`` is
+    explicitly cancelled, with its 27 F-1/F-2/F-3 calls removed and not
+    reassignable.
+    """
+    try:
+        scope = json.loads(ACTIVE_METHOD_SCOPE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise S212ExecutionError(f"active method scope missing/unreadable: {exc}") from exc
+    if not isinstance(scope, dict):
+        raise S212ExecutionError("active method scope must be a JSON object")
+    if scope.get("schema_version") != "s2_12_active_method_scope@1.0.0":
+        raise S212ExecutionError("active method scope schema identity drift")
+    if list(scope.get("active_methods") or []) != list(ACTIVE_METHODS):
+        raise S212ExecutionError(
+            f"active method scope drift: {scope.get('active_methods')!r}"
+        )
+    cancelled = scope.get("cancelled_methods")
+    if not isinstance(cancelled, dict):
+        raise S212ExecutionError("active method scope cancelled_methods missing")
+    for method_id in CANCELLED_METHODS:
+        item = cancelled.get(method_id)
+        if not isinstance(item, dict) or item.get("must_not_run") is not True:
+            raise S212ExecutionError(
+                f"active method scope must cancel {method_id!r} with must_not_run=true"
+            )
+    return scope
+
+
+def assert_method_active(method_id: str) -> str:
+    """Fail closed before transport construction for cancelled methods."""
+    scope = load_active_method_scope()
+    cancelled = scope["cancelled_methods"]
+    if method_id in cancelled:
+        item = cancelled[method_id]
+        stages = ",".join(item.get("cancelled_stages") or [])
+        raise S212ExecutionError(
+            f"method {method_id!r} is cancelled by the 2026-09-14 user decision "
+            f"(stages {stages}; {item.get('cancelled_calls')} calls removed; "
+            f"calls must not be reassigned); this execution entry refuses "
+            f"before constructing a transport, sending a request, or writing output"
+        )
+    if method_id not in scope.get("active_methods", []):
+        raise S212ExecutionError(
+            f"method {method_id!r} is not in the active two-method scope "
+            f"{scope.get('active_methods')!r}"
+        )
+    return method_id
+
+
+def assert_s2_12_execution_arm_active(arm: str) -> str:
+    """Only the direct_llm arm may run through the current S2.12 chain."""
+    assert_method_active(arm)
+    if arm != ACTIVE_S2_12_ARM:
+        raise S212ExecutionError(
+            f"S2.12 active execution arm must be {ACTIVE_S2_12_ARM!r}, got {arm!r}"
+        )
+    return arm
+
+
+def _verify_active_file_bindings(bindings: Mapping[str, str],
+                                 *, label: str = "active preflight") -> None:
+    for rel, expected in bindings.items():
+        path = ROOT / Path(str(rel).replace("/", os.sep))
+        if not path.is_file() or _sha(path) != expected:
+            raise S212ExecutionError(
+                f"{label} implementation binding drift: {rel}"
+            )
+
+
 def _strip_text_fields(value: Any) -> Any:
     """Recursively drop raw-text keys from a committed prediction record."""
     if isinstance(value, dict):
@@ -184,9 +269,44 @@ def _usage_int(usage: Mapping[str, Any], key: str) -> int:
 # ---------------------------------------------------------------------------
 
 
-def load_lock() -> dict[str, Any]:
+def load_lock(scope: str = "historical") -> dict[str, Any]:
+    """Load a payload lock.
+
+    ``scope="historical"`` keeps the frozen v1 three-method lock available for
+    historical replay/tests.  ``scope="active"`` loads the successor
+    two-method lock; the cancelled fallback arm is not part of it.
+    """
+    if scope not in ("historical", "active"):
+        raise S212ExecutionError(f"unknown execution lock scope {scope!r}")
     if _sha(INPUT) != EXPECTED_INPUT_SHA:
         raise S212ExecutionError("Gold-blind input drift")
+    if scope == "active":
+        load_active_method_scope()
+        lock = json.loads(ACTIVE_PREFLIGHT_LOCK.read_text(encoding="utf-8"))
+        if lock.get("schema_version") != ACTIVE_PREFLIGHT_LOCK_SCHEMA:
+            raise S212ExecutionError("active preflight lock schema identity drift")
+        if lock.get("status") != "locked_two_method_without_api_authorization":
+            raise S212ExecutionError("active preflight lock status drift")
+        if lock.get("authorization", {}).get("real_api_calls_allowed_by_this_lock") is not False:
+            raise S212ExecutionError("active preflight lock must not authorize API calls")
+        if list(lock.get("active_methods") or []) != list(ACTIVE_METHODS):
+            raise S212ExecutionError("active preflight lock active-method scope drift")
+        arms = lock.get("arms") or {}
+        if set(arms) != {"direct_llm"}:
+            raise S212ExecutionError(
+                "active preflight lock must contain exactly the direct_llm arm"
+            )
+        if "sun_llm_fallback" in arms:
+            raise S212ExecutionError("cancelled fallback arm present in active lock")
+        direct = arms["direct_llm"]
+        if int(direct.get("max_calls", -1)) != 36:
+            raise S212ExecutionError("active direct call count is not 36")
+        if lock.get("input", {}).get("sha256") != EXPECTED_INPUT_SHA:
+            raise S212ExecutionError("active preflight lock input binding drift")
+        _verify_active_file_bindings(lock.get("implementation_bindings") or {},
+                                     label="active preflight")
+        return lock
+
     lock = json.loads(PREFLIGHT_LOCK.read_text(encoding="utf-8"))
     if lock.get("schema_version") != "s2_12_api_arms_preflight_lock@1.0.0":
         raise S212ExecutionError("preflight lock schema identity drift")
@@ -198,7 +318,31 @@ def load_lock() -> dict[str, Any]:
     return lock
 
 
-def load_report() -> dict[str, Any]:
+def load_report(scope: str = "historical") -> dict[str, Any]:
+    if scope not in ("historical", "active"):
+        raise S212ExecutionError(f"unknown execution report scope {scope!r}")
+    if scope == "active":
+        load_active_method_scope()
+        report = json.loads(ACTIVE_PREFLIGHT_REPORT.read_text(encoding="utf-8"))
+        if report.get("schema_version") != ACTIVE_PREFLIGHT_REPORT_SCHEMA:
+            raise S212ExecutionError("active preflight report schema identity drift")
+        if report.get("status") != "payloads_locked_two_method_no_api_authorization":
+            raise S212ExecutionError("active preflight report status drift")
+        if report["input"]["sha256"] != EXPECTED_INPUT_SHA:
+            raise S212ExecutionError("active preflight report input binding drift")
+        if list(report.get("active_methods") or []) != list(ACTIVE_METHODS):
+            raise S212ExecutionError("active preflight report active-method drift")
+        arms = report.get("arms") or {}
+        if set(arms) != {"direct_llm"} or "sun_llm_fallback" in arms:
+            raise S212ExecutionError(
+                "active preflight report must contain exactly the direct_llm arm"
+            )
+        if len(arms["direct_llm"].get("calls") or []) != 36:
+            raise S212ExecutionError("active preflight report direct call count != 36")
+        if report.get("authorization", {}).get("real_api_calls_authorized") is not False:
+            raise S212ExecutionError("active preflight report must not authorize API calls")
+        return report
+
     report = json.loads(PREFLIGHT_REPORT.read_text(encoding="utf-8"))
     if report.get("schema_version") != "s2_12_api_preflight_report@1.0.0":
         raise S212ExecutionError("preflight report schema identity drift")
@@ -213,15 +357,27 @@ def rebuild_and_verify_payloads(
     lock: Mapping[str, Any],
     report: Mapping[str, Any],
     runtime_home: Path,
+    *,
+    arms: Sequence[str] | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
-    """Rebuild the 63 request bodies with the exact preflight paths and
-    verify every SHA-256, ID, and byte size against the locked report.
+    """Rebuild request bodies and verify SHA/ID/byte-size against the lock.
 
-    Returns ``{"direct_llm": [...36...], "sun_llm_fallback": [...27...]}``
-    where each row carries ``call_index/sample_id/clause_id/
-    request_body_sha256/request_body_utf8_bytes/system_prompt/user_prompt``
-    and (for the fallback arm) ``plan``/``plan_record``.
+    The historical default rebuilds both v1 arms.  The current two-method
+    caller passes ``arms=("direct_llm",)`` so no fallback prompt, plan, or
+    repair code is touched.  Returns a mapping containing only the requested
+    arms.
     """
+    requested = None if arms is None else tuple(dict.fromkeys(str(a) for a in arms))
+    if requested is not None:
+        unknown = sorted(set(requested) - {"direct_llm", "sun_llm_fallback"})
+        if unknown:
+            raise S212ExecutionError(f"unknown arm(s) requested: {unknown}")
+        if "sun_llm_fallback" in requested and "sun_llm_fallback" not in (lock.get("arms") or {}):
+            raise S212ExecutionError("cancelled fallback arm requested but not present in lock")
+    elif "sun_llm_fallback" not in (lock.get("arms") or {}):
+        raise S212ExecutionError(
+            "lock has no fallback arm; pass arms=('direct_llm',) for active execution"
+        )
     _adapted, batch = _rerun_b0(runtime_home)               # diagnostic replay
     config = _config(lock)
     builder = OpenAICompatibleRequestBuilder(config)
@@ -273,6 +429,8 @@ def rebuild_and_verify_payloads(
         direct_rows.append(row)
     if len(direct_rows) != len(locked_direct):
         raise S212ExecutionError("direct call count != 36")
+    if requested is not None and "sun_llm_fallback" not in requested:
+        return {"direct_llm": direct_rows}
 
     h1_spec = lock["arms"]["sun_llm_fallback"]
     h1_prompt = load_prompt(h1_spec["prompt_name"])
@@ -677,6 +835,141 @@ def validate_authorization(
     return dict(auth)
 
 
+ACTIVE_AUTHORIZATION_SCHEMA = "s2_12_api_authorization@2.0.0"
+ACTIVE_AUTHORIZATION_REQUIRED_FIELDS = (
+    "schema_version",
+    "scope_id",
+    "active_methods",
+    "cancelled_methods",
+    "cancelled_repair_calls_reassigned",
+    "authorization_sentence_utf8_sha256",
+    "authorization_event_file",
+    "authorization_event_file_sha256",
+    "model",
+    "arm",
+    "calls",
+    "stage_id",
+    "stage_payload_hashes",
+    "stage_call_cap",
+    "global_input_token_cap",
+    "global_output_token_cap",
+    "global_usd_cost_cap",
+    "allowed_windows",
+    "price_snapshot",
+    "price_checked_at_utc",
+    "runner_implementation_hashes",
+    "input_config_prompt_hashes",
+    "active_method_scope_sha256",
+    "prev_stage_ledger_hash",
+    "final_direct_payload_hashes",
+    "retry",
+    "gold_isolation",
+)
+
+
+def validate_active_authorization(
+    auth: Mapping[str, Any],
+    lock: Mapping[str, Any],
+    report: Mapping[str, Any],
+    arm: str,
+    runner_hash: str,
+    implementation_hashes: Mapping[str, str],
+) -> dict[str, Any]:
+    """Validate the successor direct-only authorization shape.
+
+    The currently existing v1 authorizations bind the cancelled fallback arm,
+    the historical lock, and pre-successor runner hashes.  They are provenance
+    only and must be rejected by this active path before any transport call.
+    This validator does not create or imply a real authorization.
+    """
+    missing = [name for name in ACTIVE_AUTHORIZATION_REQUIRED_FIELDS if name not in auth]
+    if missing:
+        raise S212ExecutionError(f"active authorization missing fields: {missing}")
+    if auth["schema_version"] != ACTIVE_AUTHORIZATION_SCHEMA:
+        raise S212ExecutionError(
+            "active authorization schema must be "
+            f"{ACTIVE_AUTHORIZATION_SCHEMA!r}; historical v1 files are superseded"
+        )
+    if auth["scope_id"] != "sep_c2_two_method_v1":
+        raise S212ExecutionError("active authorization scope_id drift")
+    if list(auth["active_methods"]) != ["direct_llm"]:
+        raise S212ExecutionError("active authorization must cover direct_llm only")
+    if CANCELLED_METHODS[0] not in list(auth["cancelled_methods"]):
+        raise S212ExecutionError("active authorization must record the cancelled arm")
+    if auth["cancelled_repair_calls_reassigned"] is not False:
+        raise S212ExecutionError("cancelled repair calls must not be reassigned")
+    if arm != ACTIVE_S2_12_ARM or auth["arm"] != ACTIVE_S2_12_ARM:
+        raise S212ExecutionError("active execution arm must be direct_llm")
+    if auth["model"] != REQUIRED_MODEL:
+        raise S212ExecutionError(f"authorization model {auth['model']!r} != {REQUIRED_MODEL!r}")
+    if auth["retry"] != 0:
+        raise S212ExecutionError("authorization retry must be 0")
+    if int(auth["stage_call_cap"]) <= 0:
+        raise S212ExecutionError("stage call cap must be positive")
+    for key in ("global_input_token_cap", "global_output_token_cap", "global_usd_cost_cap"):
+        if auth[key] <= 0:
+            raise S212ExecutionError(f"authorization {key} must be positive")
+    if auth.get("gold_isolation", {}).get("api_arms_must_not_read_gold") is not True:
+        raise S212ExecutionError("authorization Gold isolation declaration invalid")
+    if auth["allowed_windows"] not in ("any_time", "off_peak_only"):
+        raise S212ExecutionError("authorization allowed_windows invalid")
+    _validate_price_snapshot(auth)
+    if auth["active_method_scope_sha256"] != _sha(ACTIVE_METHOD_SCOPE):
+        raise S212ExecutionError("authorization active-method-scope hash mismatch")
+
+    runner_map = auth["runner_implementation_hashes"]
+    required_keys = {
+        "run_s2_12_direct_llm_v1",
+        "run_direct_llm",
+        "s2_12_execution",
+        "llm_client",
+        "h1_transport",
+    }
+    if not required_keys.issubset(runner_map):
+        raise S212ExecutionError(
+            "active authorization runner_implementation_hashes missing keys: "
+            f"{sorted(required_keys - set(runner_map))}"
+        )
+    if runner_map["run_s2_12_direct_llm_v1"] != runner_hash:
+        raise S212ExecutionError(
+            f"active authorization runner hash mismatch: authorized "
+            f"{runner_map['run_s2_12_direct_llm_v1'][:12]} != current {runner_hash[:12]}"
+        )
+    for impl_key, current_hash in implementation_hashes.items():
+        if impl_key in runner_map and runner_map[impl_key] != current_hash:
+            raise S212ExecutionError(
+                f"active authorization implementation hash mismatch for {impl_key}"
+            )
+
+    expected_direct = {
+        row["request_body_sha256"]
+        for row in report["arms"]["direct_llm"]["calls"]
+    }
+    final = set(auth["final_direct_payload_hashes"])
+    if final != expected_direct:
+        raise S212ExecutionError(
+            "active authorization final_direct_payload_hashes != locked 36 direct bodies"
+        )
+    stage_hashes = set(auth["stage_payload_hashes"])
+    if not stage_hashes:
+        raise S212ExecutionError("active authorization stage payload hashes empty")
+    if not stage_hashes.issubset(expected_direct):
+        raise S212ExecutionError("active authorization stage payloads not in the locked direct 36")
+    if len(stage_hashes) > auth["stage_call_cap"]:
+        raise S212ExecutionError("active authorization stage call cap smaller than stage payload count")
+
+    if auth["input_config_prompt_hashes"]["input_sha256"] != EXPECTED_INPUT_SHA:
+        raise S212ExecutionError("active authorization input hash mismatch")
+    if auth["input_config_prompt_hashes"]["lock_sha256"] != _sha(ACTIVE_PREFLIGHT_LOCK):
+        raise S212ExecutionError("active authorization lock hash mismatch")
+    if auth["input_config_prompt_hashes"]["prompt_direct_sha256"] != \
+            lock["arms"]["direct_llm"]["prompt_sha256"]:
+        raise S212ExecutionError("active authorization direct prompt hash mismatch")
+    if auth["input_config_prompt_hashes"].get("prompt_fallback_sha256") not in (None, ""):
+        raise S212ExecutionError("active authorization must not bind a fallback prompt")
+    return dict(auth)
+
+
 def load_and_validate_authorization(
     auth_path: Path,
     lock: Mapping[str, Any],
@@ -684,6 +977,7 @@ def load_and_validate_authorization(
     arm: str,
     runner_hash: str,
     implementation_hashes: Mapping[str, str],
+    scope: str = "historical",
 ) -> dict[str, Any]:
     try:
         auth = json.loads(auth_path.read_text(encoding="utf-8"))
@@ -691,6 +985,11 @@ def load_and_validate_authorization(
         raise S212ExecutionError(f"invalid authorization file: {exc}") from exc
     if not isinstance(auth, dict):
         raise S212ExecutionError("authorization file must be a JSON object")
+    if scope == "active":
+        return validate_active_authorization(auth, lock, report, arm, runner_hash,
+                                             implementation_hashes)
+    if scope != "historical":
+        raise S212ExecutionError(f"unknown authorization scope {scope!r}")
     return validate_authorization(auth, lock, report, arm, runner_hash,
                                   implementation_hashes)
 
@@ -1369,6 +1668,9 @@ def publish_stage_capsule(
     lock: Mapping[str, Any] | None = None,
     report: Mapping[str, Any] | None = None,
     source_id_map: Mapping[str, str] | None = None,
+    lock_path: Path | None = None,
+    report_path: Path | None = None,
+    scope: str = "historical",
 ) -> dict[str, Any]:
     """Atomically publish the stage capsule.
 
@@ -1391,6 +1693,8 @@ def publish_stage_capsule(
         "ledger_path": str(output_dir / "ledger.jsonl"),
         "final_predictions_published": bool(arm_complete),
         "text_or_gold_payload_committed": False,
+        "execution_scope": scope,
+        "cancelled_repair_arm_used": False,
     }
     cost = {
         "schema_version": "s2_12_arm_cost@1.1.0",
@@ -1455,11 +1759,12 @@ def publish_stage_capsule(
         },
         "input_binding": {"sha256": input_sha, "records": 36},
         "preflight_bindings": {
-            "lock_sha256": _sha(PREFLIGHT_LOCK) if lock is None
-                           else (lock.get("_sha") or _sha(PREFLIGHT_LOCK)),
-            "report_sha256": _sha(PREFLIGHT_REPORT) if report is None
-                             else (report.get("_sha") or _sha(PREFLIGHT_REPORT)),
+            "lock_path": (lock_path or PREFLIGHT_LOCK).relative_to(ROOT).as_posix(),
+            "lock_sha256": _sha(lock_path or PREFLIGHT_LOCK),
+            "report_path": (report_path or PREFLIGHT_REPORT).relative_to(ROOT).as_posix(),
+            "report_sha256": _sha(report_path or PREFLIGHT_REPORT),
         },
+        "execution_scope": scope,
         "stage_contract": {
             "arm": arm,
             "stage_id": stage_id,

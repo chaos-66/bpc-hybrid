@@ -20,11 +20,24 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
   消融及其固定 Stage 3 衔接。历史混合结果只作溯源，不删除、不重评、不冒充当前方法。
 - **调用范围**：S2.12 Direct 36 + GDPR Direct 74 = 110 次计划；旧 137 次方案及
   发送确认请求已失效，27 次修复预算不挪用。本指令不构成真实调用授权，发送/费用仍为 0。
-- **下一最小任务仍属 SEP-C2**：将 S2.12 的执行、比较和 S2.13 冻结合同适配为
-  两方法，取消对修复组的完成依赖，再按适用权限继续剩余 Direct 批次。当前机器合同
-  尚未改写，不能用旧三方法完成检查宣称两方法已完成；自动审批阻塞也未解除。
-- 本批为派工与论文文字更新；未改实验代码、机器合同、Gold、历史预测/授权文件，
-  未运行实验、API 或测试。停用规则已写入 `formal_experiment/AGENTS.md`。
+- **SEP-C2 两方法执行/评价/冻结合同已适配完成（2026-09-14，零 API）**：
+  `configs/s2_12_active_method_scope_v1.json` 记录 active=Rules-Only/Direct-LLM；
+  `configs/s2_12_active_preflight_v2.json` +
+  `outputs/reports/s2_12_active_preflight_v2.json` 只锁 Direct 36 个请求体（D-CAL 1 +
+  D-REST 35），与历史 v1 direct 36 行逐字节相同；v1 三方法 lock/report 保留为历史来源。
+  `scripts/run_s2_12_sun_llm_fallback_v1.py` 在构造 transport、发送请求和写输出前拒绝，
+  F-1/F-2/F-3 27 次取消且不挪用。
+- **两方法冻结条件已具名】**：`outputs/reports/s2_12_two_method_contract_v1.json`
+  与同目录 manifest 绑定 Rules-Only 既有评价、Direct 输出目录、输入/请求哈希和
+  36+74=110 次剩余计划；Direct 未真实运行时 `comparison.complete=false`、
+  `s2_12_complete=false`、`s2_13_complete=false`，取消的修复组
+  `cancelled_repair_arm_required=false`，不得用减少方法数宣称冻结完成。
+- 真实 API=0；未创建收费授权；GDPR 默认 `gdpr7_direct_llm_v1` 的 74 条仍为
+  `fake_payload_locked` 演练、network=0，不作为真实预测/恢复/promotion 来源；
+  真实目录沿用 `gdpr7_direct_llm_raw_real_v1` / `gdpr7_direct_llm_real_v1`。
+  旧 137 次方案及发送确认仍失效；当前取消不构成外部发送授权，自动审批阻塞未解除。
+- 本批为实验代码、机器合同、具名测试与文档更新；未运行实验 API，未改 Gold 或历史
+  预测/授权文件；停用规则仍见 `formal_experiment/AGENTS.md`。
 
 ## 0. SEP-C2 取消前断点（2026-09-14，历史 137 次范围）
 

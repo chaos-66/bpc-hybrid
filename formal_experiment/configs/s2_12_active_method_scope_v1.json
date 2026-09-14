@@ -1,0 +1,75 @@
+{
+  "schema_version": "s2_12_active_method_scope@1.0.0",
+  "scope_id": "sep_c2_two_method_v1",
+  "effective_date": "2026-09-14",
+  "source_decision": {
+    "decision_date": "2026-09-14",
+    "recorded_in": [
+      "AGENTS.md",
+      "docs/MASTER_PIPELINE.md#3.7.8",
+      "docs/PROJECT_AUDIT.md",
+      "paper/THESIS_DRAFT.md"
+    ],
+    "user_instruction_en": "Rules+LLM is no longer wanted; no Rules+LLM experiment will be run."
+  },
+  "active_methods": [
+    "sun_rule_only",
+    "direct_llm"
+  ],
+  "method_set_for_future_execution": [
+    "sun_rule_only",
+    "direct_llm"
+  ],
+  "cancelled_methods": {
+    "sun_llm_fallback": {
+      "paper_label": "Rules+LLM-Repair",
+      "legacy_label": "H1",
+      "cancelled_stages": [
+        "F-1",
+        "F-2",
+        "F-3"
+      ],
+      "cancelled_calls": 27,
+      "must_not_run": true,
+      "must_not_reassign_calls": true,
+      "must_not_be_reintroduced_under_another_name": true,
+      "historical_code_predictions_manifests_results_authorizations_retained": true,
+      "historical_three_method_formal_capsules_retained_under_historical_protocol": true,
+      "reason": "user_cancelled_all_rules_plus_llm_experiments"
+    }
+  },
+  "remaining_direct_call_plan": {
+    "s2_12": {
+      "calls": 36,
+      "stages": {
+        "D-CAL": 1,
+        "D-REST": 35
+      },
+      "input": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+      "active_preflight_lock": "configs/s2_12_active_preflight_v2.json",
+      "active_preflight_report": "outputs/reports/s2_12_active_preflight_v2.json",
+      "runner": "scripts/run_s2_12_direct_llm_v1.py",
+      "finalizer": "scripts/finalize_s2_12_arm_v1.py",
+      "evaluator": "scripts/evaluate_s2_12_api_arm_v1.py",
+      "prediction_dir": "data/predictions/s2_12_direct_llm_v1",
+      "result_dir": "data/results/s2_12_direct_llm_v1"
+    },
+    "gdpr7": {
+      "calls": 74,
+      "input": "data/input/gdpr7_stage2_input_v1.json",
+      "preflight_report": "outputs/reports/gdpr7_direct_llm_preflight_v1.json",
+      "runner": "scripts/run_gdpr7_direct_llm_v1.py",
+      "raw_real_dir": "outputs/development/gdpr7_direct_llm_raw_real_v1",
+      "capsule_real_dir": "outputs/development/gdpr7_direct_llm_real_v1"
+    },
+    "total_remaining_calls": 110
+  },
+  "real_api_authorization": {
+    "required": true,
+    "created_this_round": false,
+    "existing_137_confirmation_scope_superseded": true,
+    "current_user_cancellation_is_not_external_send_authorization": true,
+    "automatic_external_transmission_approval_blocker_active": true
+  },
+  "zero_api_this_round": true
+}

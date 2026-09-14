@@ -22,6 +22,11 @@ def _text_free(value) -> bool:
         return all(k not in TEXT_KEYS and _text_free(v) for k, v in value.items())
     return all(_text_free(item) for item in value) if isinstance(value, list) else True
 def verify(arm: str) -> dict:
+    if arm != "direct_llm":
+        return {"verified": False, "checks": [{
+            "name": "active two-method scope",
+            "ok": False,
+        }]}
     p = ROOT / "data/predictions" / ARM_DIRS[arm]
     r = ROOT / "data/results" / ARM_DIRS[arm]
     checks: list[dict] = []

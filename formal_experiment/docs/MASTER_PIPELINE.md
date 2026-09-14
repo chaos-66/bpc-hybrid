@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.8
+**文档版本**：3.7.9
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-14
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -29,6 +29,37 @@ SEP-C2 下一最小工作为适配两方法执行/评价/冻结合同，保留�
 移除 S2.12/S2.13 对未执行修复组的完成依赖；不能伪造该组完成或绕过其他门禁。
 本批只修改派工与论文文字，机器合同和历史授权文件未改；在适配完成前不执行旧
 三方法串行链。原自动审批阻塞保留；真实 API=0，无测试或实验重跑。
+
+## 2026-09-14 修订 3.7.9：SEP-C2 两方法执行/评价/冻结合同适配完成（零 API）
+
+3.7.8 只完成派工与论文文字收窄；本修订完成用户要求的实际机器适配，仍为零真实调用：
+
+- **取消组机器门禁**：`configs/s2_12_active_method_scope_v1.json` 固化 active =
+  Rules-Only / Direct-LLM，`sun_llm_fallback` 的 F-1/F-2/F-3 共 27 次
+  `must_not_run=true` 且不可挪用。S2.12 fallback 入口在构造 transport、发送请求和写
+  输出前抛出取消错误；finalize/evaluate 的取消 arm 入口同样拒绝。
+- **后继预检**：`configs/s2_12_active_preflight_v2.json` +
+  `outputs/reports/s2_12_active_preflight_v2.json` 只锁 Direct 36 个请求体，逐条与历史
+  v1 direct 36 行 byte-identical（输入、prompt、采样参数、输出接口不变）。v1
+  三方法 lock/report、旧授权/回执保留为历史来源，不被覆盖或复用为当前范围。
+- **执行/终态化/评价**：Direct runner、finalize、evaluate 使用 active 预检和
+  `arms=('direct_llm',)` 重建路径，不读取 F 阶段账本、修复结果或三方法齐全条件；
+  D-CAL=1、D-REST=35 的 36 次预算保留；Direct 未真实运行时 prediction 与
+  evaluation 缺失显式保留，不从 fake 响应或其它数据集补。
+- **两方法评价/冻结**：`outputs/reports/s2_12_two_method_contract_v1.json` 及其
+  manifest 绑定 Rules-Only 既有评价、Direct 预测/评价缺口、输入与请求哈希、输出目录和
+  36+74=110 次剩余计划。当前 `comparison.complete=false`、`s2_12_complete=false`、
+  `s2_13_complete=false`，`cancelled_repair_arm_required=false`；因此缺少 Direct
+  不能靠方法数减少直接冻结成功，S2.13 只等 Direct 真实结果与同口径两方法比较。
+- **零 API 与授权边界**：真实 API/网络仍为 0；旧 137 次发送确认范围失效且不原样复用；
+  本轮取消决定不是外部发送授权。GDPR 默认 `gdpr7_direct_llm_v1` 的 74 条
+  `fake_payload_locked` 演练（network=0）不得作为真实预测、恢复账本或 promotion 来源；
+  真实目录仍为 `gdpr7_direct_llm_raw_real_v1` / `gdpr7_direct_llm_real_v1`。
+  进程环境凭据前置条件已在此前离线复核中证明存在；本轮不读取、不打印 `.env` 或凭据。
+  外部自动发送审批阻塞仍未解除。
+- **验证与边界**：新增 `tests/test_sep_c2_two_method_execution_contract_v1.py`
+  覆盖修复组不能运行、缺 Direct 不能完成、Direct active 重建不依赖修复组；同时更新
+  fallback runner fake 测试为拒绝路径。本修订交付的是合同/代码适配，**不是实验完成**。
 
 ## 2026-09-14 修订 3.7.7：SEP-C2 真实执行准备通过，首次发送被自动审批阻止（历史范围，已被 3.7.8 收窄）
 
@@ -1339,8 +1370,8 @@ condition/constraint/exception 的数量与嵌套、被动语态、隐含 actor�
 | S2.9 | 锁定 D1 prompt/few-shot/model/budget | S2.2 | **verified (2026-08-06)** | **D1 侧达成（2026-08-06，D1-R2）**：v6 prompt hash 3aa64877 固定、model/sampling/seed 策略与预算合同锁定于 `configs/models/estg150_d1_active_registry_v1.json`；Gold 不可见（few-shot 为合成 fixture、runner 不读 Gold）；S2.2 frozen（150/150 adjudicated，2026-08-06 恢复后 freeze validator 通过），依赖满足 |
 | S2.10 | 主数据组件评价 | S2.2/S2.6-S2.9 | **verified（2026-08-11，授权后 DoD）**：按用户授权 G0.4 口径，模态与六字段指标分别报告已真实完成——主报告=句子级粗粒度五 span 字段（P/R/F1）+ 单独四分类 modality label（accuracy/macro-F1/per-class）逐方法报告，细粒度五字段诊断/对照；modality evidence-span 结构性 unavailable 为授权口径明示项（不置零不纳入 aggregate）；三方法 formal capsule 全部独立 verifier 通过；正式三方法比较报告 stage2_formal_three_method_comparison_v1 已发布并自校验 | 模态与六字段指标分别报告（授权口径完成；历史六字段 aggregate 仅 development provenance） |
 | S2.11 | 复杂法律语料集冻结 | G0.5 | **verified / frozen / Gold published（2026-08-17）**：Checkpoint G 完成 proposal v3 用户确认、importer v3 原子导入与 freeze 36/36；随后正式发布 `data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json`（SHA-256 `039ae8b2…`，36/36、0 unresolved、0 blocked）。Gold 逐记录等值复制 adjudicated canonical decisions，不增加/推断/改写标签、span、actor-action map 或 order relation；provenance 明示 `deepseek_offline_proposal_v3` + `user_batch_confirmation`（reviewer=hyc、无 revisions），不得表述为独立专家从零标注。版本化 schema/publisher/manifest/export/capsule/独立 verifier 已建立，publisher fail-closed 覆盖确认事件、proposal、reviewer、freeze、source/proposal drift；重放 byte-identical。提交资产只含 source path/file/text hashes、坐标与必要标签，第三方原文继续 local-only；零 LLM/API；未创建 predictions/results/Gold Rule Records，未启动 Oracle。 | 数据资格、canonical 裁决、冻结与正式 Gold 发布全部验证；S2.11 DoD 完成。 |
-| S2.12 | 复杂度分层与误差分析 | S2.10/S2.11 | **partial；zero-API arm complete；两个 API arms pending explicit authorization（2026-08-18）**；**runner wiring READY（2026-08-22，零 API 零网络）**：36 条固定 ID 的 Gold-blind 正式输入仅提交 source locator/file/text hashes，不含 Gold label/span/decision。读取 Gold 前已锁定并运行 `sun_rule_only`（B0 v10a、CPU、0 API/0 network、cost=$0），预测锁定后才用 frozen S2.11 Gold 与 evaluator v2/G0.4 parity 口径评价：overall modality acc/macro-F1=`0.638889/0.535461`，span P/R/F1=`0.862319/0.802721/0.831453`；L1=31、L2=5、L3=0（no samples，不报性能）。这是**单一 zero-API arm**，不是三方法比较；未据 Gold/结果调整方法、规则、prompt 或 threshold。API preflight v1 在 0 次调用下重建最终 payload：direct_llm=36、sun_llm_fallback=27（总 63；配置绝对 call cap 108）、单次/总请求体≤17,493/749,805 UTF-8 bytes、本地 Legal-BERT proxy tokens 单次/总≤4,960/207,468（明确非 DeepSeek billing tokens）、output cap 4,096/call 与 258,048 total、retry=0；模型 `deepseek-v4-pro` 与 prompt/config/payload hashes 全锁定。2026-08-22 runner wiring 批次：实现 `scripts/run_s2_12_direct_llm_v1.py`（36 calls）与 `scripts/run_s2_12_sun_llm_fallback_v1.py`（27 calls、frozen plan、transport capture）、`configs/s2_12_fallback_trigger_plan_v1.json`（自锁定 preflight 触发集派生、replay byte-identical）、共享契约 `src/bpc_hybrid/s2_12_execution.py`（63 payload 逐条重建比对、授权合同、Beijing off-peak 时段、payload-locked fake transport、原子发布、文本/密钥 containment）、授权 schema `configs/schemas/s2_12_api_authorization_v1.schema.json`、独立 verifier `scripts/verify_s2_12_runner_wiring.py`、21 项 focused tests（fake transport、fail-closed；零网络）。官方价格复核：2026-08-19/20 上调（v4-pro input cache-miss 0.435→0.66/1.32、output 0.87→1.98/3.96），USD cap 重算 84.18（peak）/42.09（off-peak）并更新授权申请 v3；**RUNNER READY / API NOT AUTHORIZED / ZERO CALLS**；**2026-08-22 runner safety v2（零 API 零网络）**：per-call PayloadLock（每次真实调用前重建实际 body SHA + sample/clause/order 核验，fake/real 共用）、usage 捕获与真实成本计算（cache hit/miss 拆分，缺失时保守 cache-miss；cost_usd 不再硬编码 0）、per-call caps + off-peak（每次调用前检查，运行中进入 peak 即停）、append-only hash-chained 账本 + resume（不重复已调用 payload、篡改拒绝）、预注册 stage 合同（D-CAL 1 / D-REST 35；F-1/F-2/F-3 9/9/9；`--stage-id`/`--auth-file`/`--resume-from-ledger`，任意 `--start` 拒绝）、`.env` 禁读（`LLMConfig.from_env(load_project_env=False)`）、每 arm 独立 runner hash 绑定（fallback 不再与 direct 比较）、授权 schema v1.1.0（stage 绑定）、离线授权事件 builder（`build_s2_12_auth_event_v1.py`，无原句拒绝/dry-run/本轮不 apply）、独立 verifier `verify_s2_12_runner_safety_v2.py`（RUNNER SAFETY V2 VERIFIED / API NOT AUTHORIZED / ZERO CALLS）。API 状态保持 API BLOCKED / ZERO CALLS；真实调用仍待用户授权句 + 授权文件。 | 零 API arm 与分层评价完成；runner wiring 就绪（63/63 payload SHA 核验）；API arms 仍 pending explicit authorization；三方法比较/冻结仍待完成。 |
-| S2.13 | Stage 2 冻结 | S2.1-S2.12 | **待两方法机器合同适配与剩余 S2.12 DoD**（2026-09-14 用户取消 H1） | 当前 DoD 为 Rules-Only / Direct-LLM 的同输入评价和 S2.12 完成记录；修复组不再是依赖。先同步机器合同/验证器，不将旧三方法门禁直接当作两方法已完成，其余冻结条件保持。 |
+| S2.12 | 复杂度分层与误差分析 | S2.10/S2.11 | **partial；zero-API arm complete；两个 API arms pending explicit authorization（2026-08-18）**；**runner wiring READY（2026-08-22，零 API 零网络）**：36 条固定 ID 的 Gold-blind 正式输入仅提交 source locator/file/text hashes，不含 Gold label/span/decision。读取 Gold 前已锁定并运行 `sun_rule_only`（B0 v10a、CPU、0 API/0 network、cost=$0），预测锁定后才用 frozen S2.11 Gold 与 evaluator v2/G0.4 parity 口径评价：overall modality acc/macro-F1=`0.638889/0.535461`，span P/R/F1=`0.862319/0.802721/0.831453`；L1=31、L2=5、L3=0（no samples，不报性能）。这是**单一 zero-API arm**，不是三方法比较；未据 Gold/结果调整方法、规则、prompt 或 threshold。API preflight v1 在 0 次调用下重建最终 payload：direct_llm=36、sun_llm_fallback=27（总 63；配置绝对 call cap 108）、单次/总请求体≤17,493/749,805 UTF-8 bytes、本地 Legal-BERT proxy tokens 单次/总≤4,960/207,468（明确非 DeepSeek billing tokens）、output cap 4,096/call 与 258,048 total、retry=0；模型 `deepseek-v4-pro` 与 prompt/config/payload hashes 全锁定。2026-08-22 runner wiring 批次：实现 `scripts/run_s2_12_direct_llm_v1.py`（36 calls）与 `scripts/run_s2_12_sun_llm_fallback_v1.py`（27 calls、frozen plan、transport capture）、`configs/s2_12_fallback_trigger_plan_v1.json`（自锁定 preflight 触发集派生、replay byte-identical）、共享契约 `src/bpc_hybrid/s2_12_execution.py`（63 payload 逐条重建比对、授权合同、Beijing off-peak 时段、payload-locked fake transport、原子发布、文本/密钥 containment）、授权 schema `configs/schemas/s2_12_api_authorization_v1.schema.json`、独立 verifier `scripts/verify_s2_12_runner_wiring.py`、21 项 focused tests（fake transport、fail-closed；零网络）。官方价格复核：2026-08-19/20 上调（v4-pro input cache-miss 0.435→0.66/1.32、output 0.87→1.98/3.96），USD cap 重算 84.18（peak）/42.09（off-peak）并更新授权申请 v3；**RUNNER READY / API NOT AUTHORIZED / ZERO CALLS**；**2026-08-22 runner safety v2（零 API 零网络）**：per-call PayloadLock（每次真实调用前重建实际 body SHA + sample/clause/order 核验，fake/real 共用）、usage 捕获与真实成本计算（cache hit/miss 拆分，缺失时保守 cache-miss；cost_usd 不再硬编码 0）、per-call caps + off-peak（每次调用前检查，运行中进入 peak 即停）、append-only hash-chained 账本 + resume（不重复已调用 payload、篡改拒绝）、预注册 stage 合同（D-CAL 1 / D-REST 35；F-1/F-2/F-3 9/9/9；`--stage-id`/`--auth-file`/`--resume-from-ledger`，任意 `--start` 拒绝）、`.env` 禁读（`LLMConfig.from_env(load_project_env=False)`）、每 arm 独立 runner hash 绑定（fallback 不再与 direct 比较）、授权 schema v1.1.0（stage 绑定）、离线授权事件 builder（`build_s2_12_auth_event_v1.py`，无原句拒绝/dry-run/本轮不 apply）、独立 verifier `verify_s2_12_runner_safety_v2.py`（RUNNER SAFETY V2 VERIFIED / API NOT AUTHORIZED / ZERO CALLS）。API 状态保持 API BLOCKED / ZERO CALLS；真实调用仍待用户授权句 + 授权文件。 | 零 API arm 与分层评价完成；runner wiring 就绪（63/63 payload SHA 核验）；API arms 仍 pending explicit authorization；当前 SEP-C2 续作只保留 Direct-LLM 与 Rules-Only 两方法，Direct 真实预测/评价/两方法比较未完成前不冻结。历史三方法正式胶囊按历史协议保留。 |
+| S2.13 | Stage 2 冻结 | S2.1-S2.12 | **合同已适配；待 Direct-LLM 真实结果**（2026-09-14 用户取消 H1） | DoD 为 Rules-Only / Direct-LLM 的同输入评价、两方法合同和 S2.12 完成记录；`s2_12_two_method_contract_v1` 已把修复组从依赖中移除，但 Direct 未运行前 completion/freeze 仍为 false，其余输入/Gold/方法发布条件保持。 |
 
 Stage 2 完成时，B0/H1/D1 和选定 baseline 必须共享 test IDs、Gold、schema、
 normalization 和 evaluator，并分别报告 modality、phrase 和完整 Rule Record 指标。

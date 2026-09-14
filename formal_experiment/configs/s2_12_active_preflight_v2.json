@@ -1,0 +1,149 @@
+{
+  "schema_version": "s2_12_active_preflight_lock@2.0.0",
+  "status": "locked_two_method_without_api_authorization",
+  "locked_date": "2026-09-14",
+  "scope_id": "sep_c2_two_method_v1",
+  "active_methods": [
+    "sun_rule_only",
+    "direct_llm"
+  ],
+  "cancelled_methods": [
+    "sun_llm_fallback"
+  ],
+  "cancelled_stages": [
+    "F-1",
+    "F-2",
+    "F-3"
+  ],
+  "cancelled_calls": 27,
+  "cancelled_calls_reassigned": false,
+  "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+  "input": {
+    "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+    "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+    "records": 36,
+    "gold_blind": true,
+    "raw_text_committed": false
+  },
+  "locked_b0_predictions": {
+    "path": "data/predictions/s2_12_sun_rule_only_v1/predictions.json",
+    "sha256": "f1e88ac5167ec1d3f0644dfcbeac60ead18932f766231baf3cb8e86b4af77006",
+    "manifest_path": "data/predictions/s2_12_sun_rule_only_v1/manifest.json",
+    "manifest_sha256": "e96d76016e815736fc5b4a588187ee42b3b1c9cc702e28cc607a6da82cd0c3c2",
+    "preflight_diagnostic_replay_must_equal_locked_predictions": true
+  },
+  "provider": {
+    "kind": "openai_compatible",
+    "base_url": "https://api.deepseek.com/v1",
+    "model": "deepseek-v4-pro",
+    "model_fail_closed": true,
+    "returned_model_must_match": true
+  },
+  "common_sampling": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_output_tokens_per_call": 4096,
+    "seed": null,
+    "seed_supported": false,
+    "retry_count": 0
+  },
+  "arms": {
+    "direct_llm": {
+      "max_calls": 36,
+      "prompt_name": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "prompt_registry_path": "configs/models/estg150_d1_active_registry_v1.json",
+      "prompt_registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+      "transport_policy": {
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        },
+        "response_format": null,
+        "tools_sent": false
+      }
+    }
+  },
+  "global_caps": {
+    "max_calls": 36,
+    "max_output_tokens": 147456,
+    "retry_count": 0
+  },
+  "pricing": {
+    "planning_only": true,
+    "source_report": "outputs/reports/sep_c2_execution_preflight_v1.json",
+    "source_report_sha256": "8ea30b6945b013c9e306527c2feeb1f94884940516e0ababa35d01d644bc0bd7",
+    "official_source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "model": "deepseek-v4-pro",
+    "published_alias": "DeepSeek-V4-Pro-0813",
+    "currency": "USD",
+    "per_million_tokens": {
+      "off_peak": {
+        "input_cache_hit": 0.022,
+        "input_cache_miss": 0.66,
+        "output": 1.98
+      },
+      "peak": {
+        "input_cache_hit": 0.044,
+        "input_cache_miss": 1.32,
+        "output": 3.96
+      }
+    },
+    "actual_billing_requires_response_usage": true,
+    "recheck_official_price_before_authorized_run": true,
+    "this_is_not_a_price_guarantee": true
+  },
+  "gold_isolation": {
+    "preflight_reads_gold": false,
+    "preflight_reads_decisions": false,
+    "preflight_reads_proposals": false,
+    "api_arms_must_not_read_gold": true,
+    "evaluation_only_after_predictions_are_locked": true
+  },
+  "hard_stops": [
+    "no exact matching user API authorization",
+    "model or returned model mismatch",
+    "input, source, prompt, implementation, config, prediction, or payload drift",
+    "call, request-body byte, input-token, output-token, or USD cap would be exceeded",
+    "retry requested or retry_count is not zero",
+    "Gold, decisions, proposals, Oracle, or Gold Rule Records visible to an arm",
+    "official price cannot be revalidated immediately before an authorized run",
+    "cancelled Rules+LLM-Repair arm F-1/F-2/F-3 must not run or be reassigned"
+  ],
+  "authorization": {
+    "real_api_calls_allowed_by_this_lock": false,
+    "pending_explicit_user_decisions": [
+      "exact successor two-method API authorization sentence",
+      "total billed input-token cap",
+      "total USD cost cap"
+    ],
+    "existing_137_confirmation_scope_superseded": true,
+    "current_cancellation_is_not_external_send_authorization": true,
+    "automatic_external_transmission_approval_blocker_active": true
+  },
+  "active_method_scope_sha256": "47c13f8160b3062e115d1b9867e99acf35cf505ca86c5a5594c1542ff55354e0",
+  "implementation_bindings": {
+    "src/bpc_hybrid/s2_12_execution.py": "c2e52b78c5202a602da4a252070a4b30fd181fc4502261ffb53dba0421feb3b3",
+    "scripts/run_s2_12_direct_llm_v1.py": "2912f4e37e8c5b8420ce4ae1440b9dc260189da1eefd58cd9805a3c5015b9ef3",
+    "scripts/run_direct_llm.py": "e30aaeea010608b33891551c11ba79cfdfd1165215241741e3aee1e1d0085014",
+    "scripts/build_s2_12_api_preflight_v1.py": "7eea292a4b4c6134d7287bfdf8b8f6c429d1ebdbb6590ba5cbff44f67a1787af",
+    "src/bpc_hybrid/llm_client.py": "232284dadc2b1f867ee885db1d111360f005b29a52662619af2dffee4f128e24",
+    "src/bpc_hybrid/h1_transport.py": "f9efba42509eb85be522a45ee9ee4cf728ec1437945dfb4189bd7f4cc0d45b77",
+    "src/bpc_hybrid/prompt_loader.py": "8a2bce2f88a65e6b6a1b3e58c4dc7c52af9372e8d7b227146c87b7c5765e9572",
+    "src/bpc_hybrid/estg150_b0_development_v10.py": "540a51b9faccfbb3e4a046ad9f8cbd177f4e01fca5dc0f11bddfbad594a1b674",
+    "src/bpc_hybrid/s2_12_method_adapter.py": "03d37a4a49da2c19b93fc73a75135eb9904269522e8747a6acfdd59dcabd84c2"
+  },
+  "cancelled_arm": {
+    "method_id": "sun_llm_fallback",
+    "paper_label": "Rules+LLM-Repair",
+    "historical_provenance_only": true,
+    "must_not_run": true,
+    "must_not_be_reassigned": true
+  },
+  "report_binding": {
+    "path": "outputs/reports/s2_12_active_preflight_v2.json",
+    "rebuilt_from": "historical_v1_direct_rows_byte_identical",
+    "direct_payloads": 36,
+    "historical_v1_report_sha256": "c7d33f956464f54b9b76145a1874d9111e3e41f1a904bc3751edc8b8e3c90314"
+  }
+}
