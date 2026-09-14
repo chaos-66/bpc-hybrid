@@ -9,6 +9,31 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## 0. SEP-C2 当前断点（2026-09-14，优先于下方历史状态）
+
+**状态：执行准备已通过；D-CAL 首条真实发送被自动审批阻止，S2.12 未完成。**
+
+- 主工作区已从 `2ca65cd` 快进至远端已备份的 `952b405`；原有 20 个相关已修改/
+  未跟踪文件的 SHA-256 不变，嵌套旧 worktree 未动。
+- S2.12 原授权验证 **70/70 PASS**，快速完整性检查 **pass / errors=0**；真实账本
+  和胶囊尚不存在，无其他同批次 Python 执行进程。既有 63+74 次授权范围及 hash 不变。
+- 进程已能识别现有密钥；补齐临时 enabled/provider/model/base_url/max_tokens 等
+  非秘密配置后，离线检查 **API ENV READY**。未读 `.env`，未打印密钥；不能继续沿用
+  “只缺凭据”的旧结论。配置只在本次子进程有效，接续运行须在同一进程设置。
+- 已从 DeepSeek 官方当日价格页重新核验 V4-Pro-0813 与原定价格/闲时；请求模型、
+  prompt、样本与原授权不变。
+- D-CAL 命令在创建进程前被自动审批拒绝：需要当前任务明确确认向 DeepSeek 发送
+  锁定实验文本，文件中的历史授权未被该审批系统接受。**发送 0、费用 0、未重试。**
+  等待的是该外部发送确认；不把它记成模型失败或已消耗一次 API。
+- `outputs/development/gdpr7_direct_llm_v1` 的 74 条 completed 是
+  `fake_payload_locked` / network=0；不可当真实结果、不可用于真实续跑或 promotion。
+  实际 GDPR 输出按 §13.3 使用 `gdpr7_direct_llm_raw_real_v1` / `gdpr7_direct_llm_real_v1`。
+
+**证据/确认范围**：`outputs/reports/sep_c2_execution_preflight_v1.json`。本 checkpoint
+只保存检查结果与阻塞，不创建新 API 授权，不改 Gold、代码或历史预测；无新增测试。
+**下一项不变**：SEP-C2，接续 D-CAL → D-REST → F-1/F-2/F-3 → 同口径评价；GDPR
+批次及下游成对比较按既有合同执行。S2.13、完整八组合和 v5 fallback 状态不提升。
+
 ## 0. 交付复核与当前下一项（2026-09-14）
 
 - 已在主工作区接收 `6c22b8a`（C36 v2）和 `4fdc91f`（SEP-C1-A），并普通推送至

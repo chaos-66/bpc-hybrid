@@ -1,0 +1,70 @@
+{
+  "schema_version": "sep_c2_execution_preflight@1.0.0",
+  "task": "SEP-C2",
+  "git_head": "952b405b71f70b25c9f6d78237b92769d30c227a",
+  "checked_date": "2026-09-14",
+  "status": "blocked_automatic_approval_before_process_start",
+  "execution_attempt": {
+    "stage": "D-CAL",
+    "process_started": false,
+    "real_api_requests_sent": 0,
+    "cost_usd": 0,
+    "blocker": "automatic_approval_review_rejected_external_transmission",
+    "review_reason": "Automatic approval review did not accept authorization recorded in project files plus the current continue-running instruction as sufficient approval for sending experiment payloads to the external DeepSeek API.",
+    "no_retry_or_workaround": true,
+    "resume_point": "D-CAL first locked request; no real execution ledger created"
+  },
+  "confirmation_scope": {
+    "destination": "https://api.deepseek.com/v1/chat/completions",
+    "data": "Locked English S2.12 inputs (36 records; 36 direct and 27 fallback requests) and GDPR inputs (74 sentences; one direct request each), with the existing prompts and method-generated fallback context.",
+    "excluded": "Human Gold, .env contents, credentials in message payloads, unrelated project files",
+    "s2_12_input": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+    "gdpr_input": "data/input/gdpr7_stage2_input_v1.json",
+    "total_call_cap": 137,
+    "s2_12_usd_cap": 42.09,
+    "gdpr_usd_cap": 1.31,
+    "retry": 0,
+    "off_peak_only": true,
+    "requires_current_task_user_confirmation_for_automatic_review": true,
+    "does_not_replace_or_expand_existing_experiment_authorizations": true
+  },
+  "authorization_sentence_utf8_sha256": "27426de7a03cc8c75eae5d57ebbd11860b2ce229f7afdd55bce4fa9a08bc0dd6",
+  "batches": {
+    "s2_12": {"direct_calls": 36, "fallback_calls": 27, "total_call_cap": 63, "usd_cap": 42.09, "calibration_included": true},
+    "gdpr7": {"scope": "gdpr7_direct_llm_v1:74", "total_call_cap": 74, "usd_cap": 1.31, "independent_budget": true}
+  },
+  "price_reverification": {
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "source_zh": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "retrieval": "official live pages opened on 2026-09-14; search snippets not used as the final price evidence",
+    "model": "deepseek-v4-pro",
+    "published_alias": "DeepSeek-V4-Pro-0813",
+    "unit": "USD per million tokens",
+    "off_peak": {"input_cache_hit": 0.022, "input_cache_miss": 0.66, "output": 1.98},
+    "peak": {"input_cache_hit": 0.044, "input_cache_miss": 1.32, "output": 3.96},
+    "peak_utc": "Monday-Friday 01:00-04:00 and 06:00-10:00; all other times off-peak",
+    "matches_existing_authorized_prices": true,
+    "existing_authorization_files_unchanged": true,
+    "observed_clock_utc": "2026-09-14 11:13:51 UTC",
+    "per_call_time_gate_still_required": true
+  },
+  "checks": {
+    "audit_project": {"exit_code": 0, "integrity_pass": true, "errors": 0, "full_tests_run": false},
+    "verify_s2_12_authorization_files_v1": {"exit_code": 0, "passed": 70, "total": 70, "existing_real_ledgers": 0, "existing_real_capsules": 0},
+    "process_environment": {"offline_ready_after_temporary_nonsecret_configuration": true, "api_key_present": true, "credential_value_printed": false, "project_env_read": false, "remote_authentication_not_yet_tested": true},
+    "concurrent_matching_python_runners_found": 0,
+    "preexisting_files_sha256_preserved": 20
+  },
+  "rehearsal_exclusion": {
+    "path": "outputs/development/gdpr7_direct_llm_v1",
+    "transport": "fake_payload_locked",
+    "completed_fixture_rows": 74,
+    "network_calls": 0,
+    "excluded_from_real_predictions_and_real_resume": true,
+    "real_raw_path": "outputs/development/gdpr7_direct_llm_raw_real_v1",
+    "real_capsule_path": "outputs/development/gdpr7_direct_llm_real_v1"
+  },
+  "no_new_authorization_created": true,
+  "factorial_2400_calls_authorized_by_this_report": false,
+  "v5_fallback_authorized_by_this_report": false
+}

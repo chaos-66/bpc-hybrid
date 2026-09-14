@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-14
-**收录文件**：2033 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2034 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -1353,6 +1353,7 @@
 | `outputs/reports/s3_semantic_grounding_v5_llm_preflight.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c1a_source_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c1b_factorial_budget_plan_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_execution_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sim_case_c1_result_figure.pdf` | 活动 | 项目文件 |
