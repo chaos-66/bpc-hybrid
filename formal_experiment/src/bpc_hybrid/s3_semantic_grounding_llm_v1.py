@@ -764,7 +764,7 @@ def _legacy_execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[st
 # ---------------------------------------------------------------------------
 
 _SENT_TERMINAL_STATES = frozenset({
-    "sent", "succeeded", "malformed", "rejected", "in_doubt", "usage_unknown",
+    "send_started", "sent", "succeeded", "malformed", "rejected", "in_doubt", "usage_unknown",
 })
 _PRE_SEND_RETRYABLE_STATES = frozenset({
     "pre_send_failed", "blocked_pre_send", "blocked_off_peak", "blocked_budget",
@@ -1090,7 +1090,16 @@ def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
         str(record["request_sha256"]): record
         for record in _read_jsonl_records(normalized_path)
     }
-    requests = list(request_set.get("requests", []))
+    object_requests = list(request_set.get("requests", []))
+    unique_requests: dict[str, dict[str, Any]] = {}
+    for request in object_requests:
+        digest = request.get("request_sha256")
+        if digest != json_sha256(request.get("body")):
+            raise LLMGroundingExecutionError("request_body_hash_mismatch")
+        unique_requests.setdefault(str(digest), request)
+    # One persisted/charged response per identical body. Fan it back out to
+    # every object below, retaining each object's own source index and side.
+    requests = list(unique_requests.values())
     counts = {
         "item_count": len(requests),
         "attempted": 0,
@@ -1475,12 +1484,17 @@ def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
             })
 
     ordered_results = [
-        results_by_request.get(str(request.get("request_sha256")))
-        or blocked_result(request, "not_processed")
-        for request in requests
+        {**(results_by_request.get(str(request.get("request_sha256")))
+            or blocked_result(request, "not_processed")),
+         "fallback_item_id": request.get("fallback_item_id"),
+         "source_index": request.get("source_index"),
+         "side": request.get("side")}
+        for request in object_requests
     ]
     no_double_send = not (set(attempted_request_shas) & resumed_sent_shas)
     run_status = _classify_run_status(counts, counts["item_count"])
+    if known_usage_unknown and run_status == "complete":
+        run_status = "partial"
     total_estimate = sum(int(request.get("input_tokens_estimate") or 0)
                          for request in requests)
     summary = {
@@ -1497,6 +1511,9 @@ def execute_fallback(*, pack: Mapping[str, Any], request_set: Mapping[str, Any],
         "total_output_tokens_actual": known_output_tokens,
         "total_usd_actual": round(known_usd, 6),
         "known_usage_complete": not known_usage_unknown,
+        "requested_object_count": len(object_requests),
+        "unique_request_count": len(requests),
+        "shared_response_object_count": len(object_requests) - len(requests),
         "results": ordered_results,
         "ledger_path": str(ledger_path),
         "normalized_path": str(normalized_path),

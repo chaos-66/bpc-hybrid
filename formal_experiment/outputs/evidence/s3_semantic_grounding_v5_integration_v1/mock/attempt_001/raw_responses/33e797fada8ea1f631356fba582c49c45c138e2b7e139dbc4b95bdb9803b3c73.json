@@ -1,0 +1,27 @@
+{
+  "fallback_item_id": "fb_v5_0015",
+  "request_sha256": "33e797fada8ea1f631356fba582c49c45c138e2b7e139dbc4b95bdb9803b3c73",
+  "response_sha256": "1f702b30ddccb21ee3444bcb430d23b81e833495d7ba43aeab0e670ee66bbac6",
+  "provider": "mock",
+  "model": "mock",
+  "finish_reason": "mock",
+  "usage": null,
+  "decode_usage": null,
+  "input_tokens": 2406,
+  "output_tokens": 108,
+  "usd_cost": 0.003604,
+  "usage_source": "mock_estimate",
+  "usage_known": true,
+  "price_snapshot": {
+    "peak": {
+      "input_cache_miss_per_million": 1.32,
+      "output_per_million": 3.96
+    },
+    "off_peak": {
+      "input_cache_miss_per_million": 0.66,
+      "output_per_million": 1.98
+    }
+  },
+  "off_peak": false,
+  "content": "{\"action_grounding\": {\"activity_id\": \"E0005\", \"confidence\": 0.9, \"status\": \"matched\"}, \"condition\": {\"confidence\": 0.0, \"evidence_ids\": [], \"status\": \"ambiguous\"}, \"constraint\": {\"confidence\": 0.0, \"evidence_ids\": [], \"status\": \"ambiguous\"}, \"exception\": {\"confidence\": 0.0, \"evidence_ids\": [], \"status\": \"not_applicable\"}}"
+}

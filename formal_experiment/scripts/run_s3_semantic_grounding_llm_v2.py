@@ -27,6 +27,9 @@ from bpc_hybrid.s3_semantic_grounding_llm_v1 import (  # noqa: E402
     execute_fallback,
     validate_authorization,
 )
+from bpc_hybrid.s3_semantic_grounding_v5_integration import (  # noqa: E402
+    PREDICTIONS, bind_execution_directory, prepare_inputs, publish_results,
+)
 
 V5_DIR = ROOT / "outputs/evidence/s3_semantic_grounding_v5"
 V5_PACK = V5_DIR / "llm_fallback_candidate_pack_v5.json"
@@ -53,11 +56,13 @@ def _build_preflight():
     return module.build()
 
 
-def _llm_config() -> dict:
+def _llm_config(mode: str) -> dict:
     config = read_json(V5_CONFIG)
     llm = dict(config.get("llm_fallback") or {})
-    llm["run_root_name"] = llm.get("run_root_name") or \
-        "s3_semantic_grounding_llm_v2_real_run"
+    if mode not in {"mock", "real"}:
+        raise ValueError("mode must be mock or real")
+    # A legacy config hard-coded the real directory even for mock runs.
+    llm["run_root_name"] = f"s3_semantic_grounding_llm_v2_{mode}_run"
     return llm
 
 
@@ -71,7 +76,8 @@ def main() -> int:
     args = parser.parse_args()
 
     pack = read_json(V5_PACK)
-    llm = _llm_config()
+    mode = "real" if args.real else "mock"
+    llm = _llm_config(mode)
     request_set = build_request_set(pack, llm)
 
     if args.preflight:
@@ -88,6 +94,18 @@ def main() -> int:
         }, ensure_ascii=False, indent=2))
         return 0
 
+    authorization = None
+    if args.real:
+        if args.authorization is None:
+            raise SystemExit("--real requires --authorization path")
+        authorization = read_json(args.authorization)
+        validation = validate_authorization(authorization, pack, request_set, llm)
+        if not validation["valid"]:
+            raise SystemExit("authorization invalid: " + ",".join(validation["errors"]))
+
+    prepared = prepare_inputs(ROOT, pack, request_set)
+    run_root = bind_execution_directory(OUT_ROOT, llm, mode, pack, request_set,
+                                        prepared["input_hashes"][PREDICTIONS])
     if args.mock:
         mock_config = dict(llm)
         mock_config["off_peak_only"] = False
@@ -96,30 +114,32 @@ def main() -> int:
             output_root=OUT_ROOT, mode="mock")
         write_json(REPORT_ROOT /
                    "s3_semantic_grounding_v5_llm_mock_execution.json", summary)
+        publication = publish_results(ROOT, prepared, pack, request_set, summary,
+                                      run_root, mode)
         print(json.dumps({
             "mode": "mock",
             "run_status": summary["run_status"],
             "counts": summary["counts"],
             "real_api_calls": 0,
+            "evaluation_manifest": publication["manifest"],
+            "evaluated_objects": publication["report"]["object_count"],
         }, ensure_ascii=False, indent=2))
         return 0
 
-    if args.authorization is None:
-        raise SystemExit("--real requires --authorization path")
-    authorization = read_json(args.authorization)
-    validation = validate_authorization(authorization, pack, request_set, llm)
-    if not validation["valid"]:
-        raise SystemExit("authorization invalid: " + ",".join(validation["errors"]))
     summary = execute_fallback(
         pack=pack, request_set=request_set, config=llm,
         output_root=OUT_ROOT, mode="real", authorization=authorization)
     write_json(REPORT_ROOT /
                "s3_semantic_grounding_v5_llm_real_execution.json", summary)
+    publication = publish_results(ROOT, prepared, pack, request_set, summary,
+                                  run_root, mode)
     print(json.dumps({
         "run_status": summary["run_status"],
         "counts": summary["counts"],
         "no_double_send": summary["no_double_send"],
         "known_usage_complete": summary["known_usage_complete"],
+        "evaluation_manifest": publication["manifest"],
+        "evaluated_objects": publication["report"]["object_count"],
     }, ensure_ascii=False, indent=2))
     return 0
 

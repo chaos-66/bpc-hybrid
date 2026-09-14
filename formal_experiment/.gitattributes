@@ -230,3 +230,8 @@ scripts/build_s3_semantic_grounding_v5_llm_preflight.py text eol=lf
 outputs/reports/s3_semantic_grounding_v5_llm_preflight.json text eol=lf
 outputs/reports/s3_semantic_grounding_v5_llm_authorization_request.json text eol=lf
 outputs/reports/s3_semantic_grounding_v5_llm_authorization_request.md text eol=lf
+# S3 v5 end-to-end integration: preserve exact execution evidence bytes.
+src/bpc_hybrid/s3_semantic_grounding_v5_integration.py text eol=lf
+tests/test_s3_semantic_grounding_v5_integration.py text eol=lf
+outputs/evidence/s3_semantic_grounding_v5_integration_v1/** -text
+outputs/reports/s3_semantic_grounding_v5_llm_mock_execution.json text eol=lf

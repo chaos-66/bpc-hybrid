@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-12
-**收录文件**：1855 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-14
+**收录文件**：2010 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -177,6 +177,11 @@
 | `configs/stage3_development_method_registry_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_development_method_registry_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_extended_violation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage3_semantic_grounding_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage3_semantic_grounding_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage3_semantic_grounding_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage3_semantic_grounding_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage3_semantic_grounding_v5.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_corenlp_runtime.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/tfidf_svd_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -709,6 +714,7 @@
 | `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_REFERENCE_SNOWBALL_AND_MARKER_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_WINTER_CODE_SEPARATION_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/THESIS_SUMMARY_AND_8_QUESTIONS_2026-09-12.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/ROUTE_LOCK.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STAGE1_HUMAN_GOLD_GUIDE.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STAGE2_CANONICAL_SCHEMA_SPEC.md` | 活动 | 说明、规范或研究文档 |
@@ -891,6 +897,20 @@
 | `outputs/development/s3_real_rule_diagnostic_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_real_rule_diagnostic_v1/scope_review.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_real_rule_diagnostic_v1/summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v3/control_diagnostic.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v3/input_integrity_checks.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v3/llm_fallback_candidate_pack_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v3/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v3/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v3/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v4/llm_fallback_candidate_pack_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v4/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v4/offline_grounding_demo.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v5/constraint_exception_failure_chains.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v5/llm_fallback_candidate_pack_v5.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v5/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v5/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/s3_semantic_grounding_v5/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage1_formal_capsule_v1/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage1_formal_capsule_v1/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage1_formal_capsule_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -997,6 +1017,94 @@
 | `outputs/evidence/s3_formula_repair_v2/original_three/rules_only/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s3_formula_repair_v2/original_three/rules_only/rule_records.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s3_formula_repair_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v1/artifact_hashes.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/artifact_hashes.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/llm_authorization_request_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/llm_fallback_candidate_pack_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/llm_mock_execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/llm_preflight.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/llm_preflight_canonical_requests.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/llm_preflight_request_set.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v3/artifact_hashes.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v3/control_diagnostic.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v3/input_integrity_checks.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v3/llm_fallback_candidate_pack_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v3/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v3/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v3/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v4/artifact_hashes.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v4/llm_fallback_candidate_pack_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v4/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v4/offline_grounding_demo.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/artifact_hashes.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/constraint_exception_failure_chains.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/llm_authorization_request_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/llm_fallback_candidate_pack_v5.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/llm_preflight_canonical_requests_v2.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/llm_preflight_request_set_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/llm_preflight_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/comparison.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/comparison.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/execution_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/normalized_grounding.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/09e15d124f6856c8254551410f629a16ac973b64f95e887e4efee045b29ae15f.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/0fa54efdea0e3d498c271f2f6512248b0f3efea8c5557930eb142dc2d7b2f285.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/33e797fada8ea1f631356fba582c49c45c138e2b7e139dbc4b95bdb9803b3c73.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/51b381c50e9bd2ea5693d3f6ff033b87e03ca3eecc09d76882171cb67ba88ad0.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/52ce44daaf5dbf4a4788a5c911d5b2f14ffc5d8ae85d2a87ceb519bb6a2b7d7e.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/58e534bf3c4257a23c7acfdf2e4e05ba8e55f3f040b13758d84a2ae5f01d0cdb.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/628a9ada94136e86652d0d42f8b2db0e9449a931856789b76b300a4f91f2cf23.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/69dcb9249f71c30b07a9360e8edf1f8cc613b30125a27018f37636f2acdd8126.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/79496a13b01c52710e58d2d8e62580804a3d63b3012a7410e065c7afaf29367d.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/795e9e2d4f6e781e3a9f8ef0bfe5fa5a84d17a5ee028e28dc4dba3e961ffbf7a.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/8048a5a583f986826a74005d81e2e6bfcf85b326f0a1769b4193334e3302a05a.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/896d2e9a4a1376b21da17c7a66dd1715eaf7676440f27e473ff89a3760baef71.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/89d03ecd0f1953f9bf8bfd187b6febaa42f2c49cd19a93b8f1b00314a4949318.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/8b8b24a07912193e0ba1c1fb553985419e0aeee70f1d802d0568e46d008e4150.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/8fa259626db0a6d9bd0762c877a89dc0ba31564ebf2c4017e7d04e8e47db1f6e.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/aba1b196404c2a316d13050f4af45589345f1ff2ddd1f1451d353e894c2c7447.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/c7c49e9f65850309ad467365c7f10e320276ecb1528979eea1731e5150d80cd8.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/raw_responses/f6931f06c1782bede02599f42fd9280640fd2abcffd87aa64b8bed9af981b70f.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_001/run_identity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/comparison.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/comparison.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/execution_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/normalized_grounding.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/09e15d124f6856c8254551410f629a16ac973b64f95e887e4efee045b29ae15f.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/0fa54efdea0e3d498c271f2f6512248b0f3efea8c5557930eb142dc2d7b2f285.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/33e797fada8ea1f631356fba582c49c45c138e2b7e139dbc4b95bdb9803b3c73.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/51b381c50e9bd2ea5693d3f6ff033b87e03ca3eecc09d76882171cb67ba88ad0.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/52ce44daaf5dbf4a4788a5c911d5b2f14ffc5d8ae85d2a87ceb519bb6a2b7d7e.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/58e534bf3c4257a23c7acfdf2e4e05ba8e55f3f040b13758d84a2ae5f01d0cdb.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/628a9ada94136e86652d0d42f8b2db0e9449a931856789b76b300a4f91f2cf23.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/69dcb9249f71c30b07a9360e8edf1f8cc613b30125a27018f37636f2acdd8126.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/79496a13b01c52710e58d2d8e62580804a3d63b3012a7410e065c7afaf29367d.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/795e9e2d4f6e781e3a9f8ef0bfe5fa5a84d17a5ee028e28dc4dba3e961ffbf7a.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/8048a5a583f986826a74005d81e2e6bfcf85b326f0a1769b4193334e3302a05a.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/896d2e9a4a1376b21da17c7a66dd1715eaf7676440f27e473ff89a3760baef71.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/89d03ecd0f1953f9bf8bfd187b6febaa42f2c49cd19a93b8f1b00314a4949318.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/8b8b24a07912193e0ba1c1fb553985419e0aeee70f1d802d0568e46d008e4150.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/8fa259626db0a6d9bd0762c877a89dc0ba31564ebf2c4017e7d04e8e47db1f6e.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/aba1b196404c2a316d13050f4af45589345f1ff2ddd1f1451d353e894c2c7447.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/c7c49e9f65850309ad467365c7f10e320276ecb1528979eea1731e5150d80cd8.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/f6931f06c1782bede02599f42fd9280640fd2abcffd87aa64b8bed9af981b70f.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/run_identity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_semantic_grounding_v5_integration_v1/offline_acceptance.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/b0_d1_formal_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1207,8 +1315,31 @@
 | `outputs/reports/s3_oracle_gold_rules_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_oracle_gold_rules_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_oracle_gold_rules_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_semantic_grounding_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_semantic_grounding_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_semantic_grounding_v2_arm_c_mock.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v2_arm_comparison.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v2_arm_comparison.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_semantic_grounding_v2_llm_authorization_request.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v2_llm_authorization_request.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_semantic_grounding_v2_llm_mock_execution.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v2_llm_preflight.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v3.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_semantic_grounding_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v4.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_semantic_grounding_v5.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v5.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_semantic_grounding_v5_llm_authorization_request.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v5_llm_authorization_request.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_semantic_grounding_v5_llm_mock_execution.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_semantic_grounding_v5_llm_preflight.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sim_case_c1_result_figure.pdf` | 活动 | 项目文件 |
+| `outputs/reports/sim_case_c1_result_figure.png` | 活动 | 项目文件 |
 | `outputs/reports/sim_case_c1_result_figure.svg` | 活动 | 历史可视化或报告 |
 | `outputs/reports/sim_case_c1_results.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_results.md` | 活动 | 说明、规范或研究文档 |
@@ -1250,6 +1381,7 @@
 | `paper/ABLATION_MATRIX.md` | 活动 | 说明、规范或研究文档 |
 | `paper/CLAIM_EVIDENCE_MATRIX.md` | 活动 | 科学主张、证据状态和解锁条件 |
 | `paper/MENTOR_REPORT_CONTENT_2026-09.md` | 活动 | 说明、规范或研究文档 |
+| `paper/presentations/bpc_hybrid_revised_20260912.pptx` | 活动 | 项目文件 |
 | `paper/presentations/bpc_hybrid_Stage3_completed.pptx` | 活动 | 项目文件 |
 | `paper/README.md` | 活动 | 所在目录的入口说明 |
 | `paper/SIM_CASE_SECTION_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -1399,6 +1531,8 @@
 | `scripts/build_s3_extended_gap_comparison_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_extended_gap_evidence_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s3_semantic_grounding_llm_authorization_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s3_semantic_grounding_v5_llm_preflight.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sim_case_checklist_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_adjudication_asset.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
@@ -1495,6 +1629,13 @@
 | `scripts/run_s3_oracle_gold_rules_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_paired_mechanism_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_real_rule_diagnostic_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_semantic_grounding_llm_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_semantic_grounding_llm_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_semantic_grounding_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_semantic_grounding_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_semantic_grounding_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_semantic_grounding_v4.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_semantic_grounding_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_supplement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1663,6 +1804,13 @@
 | `src/bpc_hybrid/s3_extended_v3_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_v3_repair.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_v3_repair_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_semantic_grounding_llm_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_semantic_grounding_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_semantic_grounding_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_semantic_grounding_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_semantic_grounding_v4.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_semantic_grounding_v5.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_semantic_grounding_v5_integration.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sim_case_c1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1926,6 +2074,13 @@
 | `tests/test_s3_paired_mechanism_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_real_rule_diagnostic_corrections_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_real_rule_diagnostic_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_semantic_grounding_llm_execution_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_semantic_grounding_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_semantic_grounding_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_semantic_grounding_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_semantic_grounding_v4.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_semantic_grounding_v5.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_semantic_grounding_v5_integration.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |

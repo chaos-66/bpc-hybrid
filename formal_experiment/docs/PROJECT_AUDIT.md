@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-13
+**更新时间**：2026-09-14
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -8,6 +8,35 @@
 
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
+
+## 0. 当前验收：S3-V5-RUNNER-INTEGRATION（2026-09-14，零真实 API）
+
+**状态：VERIFIED_OFFLINE_INTEGRATION；Stage 3 整体尚未完成。**
+
+- 已将主工作区从 `45513f3` 快进到 DS 的远端 `51040ca`，保留原有本地修改；
+  DS v3/v4/v5 的 34 个登记产物哈希全部匹配。
+- DS 完成了匿名化修复、两侧对象键、评价口径、逐字段响应应用、动作/证据回绑、
+  执行恢复及 v5 错误锚点保护；这批内容确有落地，但最新入口仍缺少完整预测和评价接线。
+- 本次接通冻结输入→响应→本地复核→v5 保护→80 条预测→配对评价；模拟/真实目录
+  独立并绑定输入身份；22 个候选对象实际只有 18 份唯一请求，相同正文共享响应、
+  保留各自对象 ID 且只计费一次；发送开始后中断不重发，usage 未知不宣称完成。
+- 五个相关测试文件 **42 passed in 0.87s**，快速完整性检查通过；没有执行全量测试。
+  机器字段 `final_experiment_ready=True` 是已有门禁结果，不代表 Stage 3 Oracle 或真实 fallback 已完成。
+- 最终离线恢复：**0 新发送、18 历史响应、22 个响应对象被消费、80 条预测**；21 项
+  检查发生变化，mock Macro-F1 0.7773、配对 28/40、unknown 0.2375 **仅属假响应接线证据**。
+  DS v5 的实际开发效果仍是 F1 **0.6737**、配对 **21/40**、unknown **0.3375**。
+- 接受证据：`outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/`。
+  `attempt_001` 保留为接入器未消费 validated 状态的失败过程证据，不作为闭环验收。
+  原始 v2/v3/v4/v5 预测、manifest、Gold 和用户原有修改未覆盖。
+- preflight 中的 22 是对象请求条目数/保守调用上限；当前执行策略按 18 份唯一正文发送。
+  原候选包与请求正文哈希未变，真实 API=0；旧 v2 授权不能挪用。费用沿用旧 preflight
+  的静态估计，本次没有重新核验供应商价格，不应当作实时报价。
+
+**下一可执行子项：S3-C36-TARGET-PAIRED**。先核查 C36 保存字段、对象范围、两侧和四类检查
+能否支持同口径评价；可以只读重评分才生成表，否则提交字段级缺口与最小补跑清单。
+不得从旧单标签指标反推四类检查，不为了填表改 Gold、改分母或把 unknown 算作合规。
+真实 v5 fallback 另待范围授权；等待时可继续 SEP-C1-A 的三阶段 I/O 和成功/失败案例写作。
+后续较早记录为历史状态，冲突时以本节及下方当前派工表为准。
 
 ﻿﻿## 0. Latest v5 LLM preflight: s3_semantic_grounding_llm_v2 (2026-09-13, zero API)
 
@@ -69,8 +98,8 @@ read-only reused after artifact-hash verification; no API call.
 **Detection change / cost**
 - Changed checks: **2** (both control-side clear determinations demoted to
   unknown).
-- Removed control false alarms: **2** (legacy clear-control diagnostic
-  26 -> 24 false-positive checks).
+- Withdrawn control alarm checks: **2** (legacy diagnostic 26 -> 24;
+  demoted to unknown, not independently verified global false positives).
 - Demoted target-paired variant positives: **0**.
 - Target-paired Macro-F1: **0.6737 -> 0.6737**; pair success **21/40 -> 21/40**;
   target-field unknown rate **0.3375 -> 0.3375**. F1 was not required to rise.
@@ -323,6 +352,8 @@ python formal_experiment/scripts/audit_project.py
 | 收尾任务 | 启动条件 | 实时状态 | 本次事实 / 下一步 |
 |---|---|---|---|
 | SEP-C0 计划修订 | 用户已明确推进原则 | verified（文档范围） | 主 Pipeline、状态和手册改为按依赖推进、尽早完成、逐项诊断修复；撤销中间日历安排。本批未执行实验，Git 备份结果在交接中报告。 |
+| S3-V5-RUNNER-INTEGRATION | DS v5 冻结结果与请求包已有 | verified（离线） | 接通 80 条预测及评价，22 对象共享 18 份响应，恢复新增发送 0，42 项相关测试通过；真实调用仍为 0。 |
+| S3-C36-TARGET-PAIRED | 已有 C36 结果可只读核查 | ready，下一最小子任务 | 先核查同一 40 对及双方四类检查字段；兼容才重评分，不兼容则具名给出缺口和最小补跑范围，禁止拼接旧指标冒充公平比较。 |
 | SEP-C1 写作与比较口径 | 已有方法和案例可整理 | ready | **下一最小子任务 SEP-C1-A**：先把三阶段 I/O、SIM r10 实际成功链和一条真实失败链写入现有方法章节，同时核对原始记录与主张矩阵；随后完成前人比较范围、通用题名及新消融预算准备。 |
 | SEP-C2 必要对照与已授权批次 | 对应口径、输入和运行条件已满足 | 部分待依赖 / 既有批次待启动时核验 | 新对照待 SEP-C1 相应比较范围；既有批次按自身合同推进，不等待整包 SEP-C1。已有 137 次授权继续有效，凭据/载荷/账本的最新可运行性在开始时核验，不按旧记录重复运行。 |
 | SEP-C3 prompt 组合与后处理归因 | 诊断可先做；新运行需因素与适用授权 | 诊断 ready / 新运行 blocked | 旧单删四组不等于完整八组合；待因素定义与独立预算/授权。冻结基线保留，针对已定位问题迭代后继候选，每轮独立记录假设、版本和验证。 |
@@ -349,11 +380,12 @@ python formal_experiment/scripts/audit_project.py
   「两组都只检出 r9/r10」「五个修复件均有效」等表述不能直接沿用。
   当前 A 组有证据对应参考问题 0 条，B/C 各 2 条；有效修复对照 3 件，另外两件有表示/抽取限制。
 - 四类扩展 H 臂有已知路径判断缺陷，属于开发结果；不得用其结果证明机制改善。
-  本轮只锁定收尾计划，不修检查器、不改 Gold、不发布新指标。
+  此后 v3–v5 和本轮入口修复均有独立证据，不替旧 H 臂改写历史结果；mock 不产生真实 LLM 指标。
 
 **写作推进规则**：每个最小任务结束就把可用内容写回现有正文、必要时同步主张矩阵，
 完成 scoped Git checkpoint；简报只报完成、证据、下一步、阻塞和提交/推送结果。
-下一任务默认从 SEP-C1-A 开始，完成就推进下一项可执行工作；遇到影响当前结论的问题先纳入修复循环。
+下一任务从 S3-C36-TARGET-PAIRED 的零 API 兼容性核查开始；SEP-C1-A 写作无需等待真实调用授权。
+完成就推进下一项可执行工作；遇到影响当前结论的问题先纳入修复循环。
 不重做项目总评、不另建路线、不自动启动真实 API。
 
 **2026-09-11 四类扩展定位接线修复与证据范围臂（S3-EXTENDED-EVIDENCE-SCOPE，零 API）**：

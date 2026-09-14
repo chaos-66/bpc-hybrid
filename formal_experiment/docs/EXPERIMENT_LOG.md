@@ -4743,3 +4743,17 @@
 - 仍存在 blocker：无
 - 备注：Request set and authorization request rebuilt from the v5 pack with final executor/prompt code. 22 calls; request-set SHA-256 fdd72c01..., candidate-pack SHA-256 915750b0...; expected input 69032, output cap 11264, USD cap 0.20, off-peak UTC windows 00-01/04-06/10-24. Existing matching authorizations 0; old v2 hashes/pack not reused. Preflight smoke run and executor tests passed; no real API call.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-14T01:04:27.904181+00:00 - S3-V5-RUNNER-INTEGRATION：接通冻结输入、响应回绑、本地检查和配对评价，修复执行隔离与恢复计费
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：42 passed in 0.87s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`51040ca55c25496e40f08576844878261d267abf`；相关未提交路径：48 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：本轮仅执行五个具名文件的相关离线测试，不是全量测试。验证 22 个对象对应 18 个唯一请求、逐对象恢复、零重复调用、发送中断保护、缺失 usage 不报完成、模拟/真实目录隔离、v5 锚点保护和预测先落盘后评价。初次离线尝试 attempt_001 暴露 validated 状态未被接入器消费，现已修正并增加响应消费断言；最终面板恢复验收及 manifest 将在本任务记录中引用。真实 API=0，原有 Gold、用户修改及历史 v2-v5 产物保留。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

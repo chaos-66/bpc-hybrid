@@ -1,0 +1,28 @@
+{
+  "task": "S3-V5-RUNNER-INTEGRATION",
+  "accepted_attempt": "mock/attempt_002",
+  "unaccepted_attempt": {
+    "path": "mock/attempt_001",
+    "reason": "validated responses were not consumed; fixed before final focused validation"
+  },
+  "scope": "offline_mock_only_not_llm_performance",
+  "real_api_calls": 0,
+  "object_count": 80,
+  "consumed_response_object_count": 22,
+  "unique_request_count": 18,
+  "resume_new_sends": 0,
+  "resume_usage_unchanged": true,
+  "reconstructed_predictions_byte_identical": true,
+  "checked_artifact_hash_count": 50,
+  "working_tree_implementation_hashes_match": true,
+  "preserved_unrelated_file_hash_count": 7,
+  "preexisting_command_display_edit_retained": true,
+  "accepted_manifest_sha256": "1c3e893a1fbb90b8d2237cb65ccfc6163250f7732fbe5bff9d07781b8b9f63b3",
+  "focused_validation": {
+    "summary": "42 passed in 0.87s",
+    "full_suite_run": false,
+    "event_timestamp": "2026-09-14T01:04:27.904181+00:00"
+  },
+  "source_binding_note": "Manifest records working-tree raw hashes, not an assertion that the base Git commit contains the implementation. A pre-existing v1 authorization-command display edit is retained locally and excluded from this checkpoint; it does not affect v5 request hashes or execution.",
+  "next_task": "S3-C36-TARGET-PAIRED: zero-API saved-output compatibility audit before any new baseline inference"
+}

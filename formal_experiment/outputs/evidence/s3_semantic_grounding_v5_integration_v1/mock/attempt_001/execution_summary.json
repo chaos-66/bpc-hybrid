@@ -1,0 +1,878 @@
+{
+  "schema_version": "s3_semantic_grounding_llm_execution@2.0.0",
+  "runner_revision": "s3_semantic_grounding_llm_v1",
+  "base_revision": "s3_semantic_grounding_v2",
+  "mode": "mock",
+  "run_status": "complete",
+  "counts": {
+    "item_count": 18,
+    "attempted": 18,
+    "send_attempts": 18,
+    "succeeded": 18,
+    "malformed": 0,
+    "rejected_by_validator": 0,
+    "ambiguous": 0,
+    "resolved": 18,
+    "skipped_resume_protected": 0,
+    "resumed_from_store": 0,
+    "pre_send_failed": 0,
+    "pre_send_blocked": 0,
+    "in_doubt": 0,
+    "usage_unknown": 0,
+    "failed": 0
+  },
+  "coverage": 1.0,
+  "total_input_tokens_estimate": 52735,
+  "total_input_tokens_actual": 52735,
+  "total_output_tokens_actual": 1945,
+  "total_usd_actual": 0.077312,
+  "known_usage_complete": true,
+  "requested_object_count": 22,
+  "unique_request_count": 18,
+  "shared_response_object_count": 4,
+  "results": [
+    {
+      "source_index": 17,
+      "fallback_item_id": "fb_v5_0001",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0024",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "d1323d2b33924f9f5e8e7c7739e7b9532499a660d153f6194ed79f97abcb49d5",
+      "recovered_from_store": false,
+      "request_sha256": "8fa259626db0a6d9bd0762c877a89dc0ba31564ebf2c4017e7d04e8e47db1f6e",
+      "side": "variant"
+    },
+    {
+      "source_index": 22,
+      "fallback_item_id": "fb_v5_0002",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "not_applicable",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0011",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "8484b0fd088e75540be60d0d25d2e7a58e8d475fac333e642b942e17e1585e25",
+      "recovered_from_store": false,
+      "request_sha256": "52ce44daaf5dbf4a4788a5c911d5b2f14ffc5d8ae85d2a87ceb519bb6a2b7d7e",
+      "side": "variant"
+    },
+    {
+      "source_index": 28,
+      "fallback_item_id": "fb_v5_0003",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0024",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "d1323d2b33924f9f5e8e7c7739e7b9532499a660d153f6194ed79f97abcb49d5",
+      "recovered_from_store": false,
+      "request_sha256": "8fa259626db0a6d9bd0762c877a89dc0ba31564ebf2c4017e7d04e8e47db1f6e",
+      "side": "variant"
+    },
+    {
+      "source_index": 31,
+      "fallback_item_id": "fb_v5_0004",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "not_applicable",
+        "exception": "ambiguous"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "b3e8c6d3b4a7b756c4bfe9b0ebab96314ecdda79f8584fdbb34136e5b49bb9d5",
+      "recovered_from_store": false,
+      "request_sha256": "79496a13b01c52710e58d2d8e62580804a3d63b3012a7410e065c7afaf29367d",
+      "side": "variant"
+    },
+    {
+      "source_index": 32,
+      "fallback_item_id": "fb_v5_0005",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "not_applicable",
+        "exception": "ambiguous"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "b3e8c6d3b4a7b756c4bfe9b0ebab96314ecdda79f8584fdbb34136e5b49bb9d5",
+      "recovered_from_store": false,
+      "request_sha256": "8b8b24a07912193e0ba1c1fb553985419e0aeee70f1d802d0568e46d008e4150",
+      "side": "variant"
+    },
+    {
+      "source_index": 33,
+      "fallback_item_id": "fb_v5_0006",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "not_applicable",
+        "exception": "ambiguous"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0044",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "dffe35a612014d2bd6ef0dc922311fda56187614ef5cfd1888ef50e6eabbbe43",
+      "recovered_from_store": false,
+      "request_sha256": "69dcb9249f71c30b07a9360e8edf1f8cc613b30125a27018f37636f2acdd8126",
+      "side": "variant"
+    },
+    {
+      "source_index": 35,
+      "fallback_item_id": "fb_v5_0007",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "ambiguous"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0020",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "2d3034cda236893ae54607f2511da0d6f99c07f077827c102edf516a758129a8",
+      "recovered_from_store": false,
+      "request_sha256": "c7c49e9f65850309ad467365c7f10e320276ecb1528979eea1731e5150d80cd8",
+      "side": "variant"
+    },
+    {
+      "source_index": 40,
+      "fallback_item_id": "fb_v5_0008",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "not_applicable",
+        "constraint": "not_applicable",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0031",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "4a6d36c8ce2721303f32e53d1ebe5bd7daa3d44229ceee71839986bdef4f209d",
+      "recovered_from_store": false,
+      "request_sha256": "58e534bf3c4257a23c7acfdf2e4e05ba8e55f3f040b13758d84a2ae5f01d0cdb",
+      "side": "control"
+    },
+    {
+      "source_index": 41,
+      "fallback_item_id": "fb_v5_0009",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "not_applicable",
+        "constraint": "not_applicable",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0031",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "4a6d36c8ce2721303f32e53d1ebe5bd7daa3d44229ceee71839986bdef4f209d",
+      "recovered_from_store": false,
+      "request_sha256": "58e534bf3c4257a23c7acfdf2e4e05ba8e55f3f040b13758d84a2ae5f01d0cdb",
+      "side": "control"
+    },
+    {
+      "source_index": 42,
+      "fallback_item_id": "fb_v5_0010",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "not_applicable",
+        "exception": "ambiguous"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0044",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "dffe35a612014d2bd6ef0dc922311fda56187614ef5cfd1888ef50e6eabbbe43",
+      "recovered_from_store": false,
+      "request_sha256": "69dcb9249f71c30b07a9360e8edf1f8cc613b30125a27018f37636f2acdd8126",
+      "side": "control"
+    },
+    {
+      "source_index": 43,
+      "fallback_item_id": "fb_v5_0011",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "not_applicable",
+        "exception": "ambiguous"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0044",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "dffe35a612014d2bd6ef0dc922311fda56187614ef5cfd1888ef50e6eabbbe43",
+      "recovered_from_store": false,
+      "request_sha256": "69dcb9249f71c30b07a9360e8edf1f8cc613b30125a27018f37636f2acdd8126",
+      "side": "control"
+    },
+    {
+      "source_index": 52,
+      "fallback_item_id": "fb_v5_0012",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "bd166ca14d8180eb2be63e06a0e8593711aa648d366e839acd176f9bbba3e015",
+      "recovered_from_store": false,
+      "request_sha256": "89d03ecd0f1953f9bf8bfd187b6febaa42f2c49cd19a93b8f1b00314a4949318",
+      "side": "control"
+    },
+    {
+      "source_index": 53,
+      "fallback_item_id": "fb_v5_0013",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "bd166ca14d8180eb2be63e06a0e8593711aa648d366e839acd176f9bbba3e015",
+      "recovered_from_store": false,
+      "request_sha256": "8048a5a583f986826a74005d81e2e6bfcf85b326f0a1769b4193334e3302a05a",
+      "side": "control"
+    },
+    {
+      "source_index": 54,
+      "fallback_item_id": "fb_v5_0014",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0006",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "a9e58d1d211ac519c2edef688eaae34f897bf954197852ee9aa525d9afccce16",
+      "recovered_from_store": false,
+      "request_sha256": "0fa54efdea0e3d498c271f2f6512248b0f3efea8c5557930eb142dc2d7b2f285",
+      "side": "control"
+    },
+    {
+      "source_index": 55,
+      "fallback_item_id": "fb_v5_0015",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0005",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "1f702b30ddccb21ee3444bcb430d23b81e833495d7ba43aeab0e670ee66bbac6",
+      "recovered_from_store": false,
+      "request_sha256": "33e797fada8ea1f631356fba582c49c45c138e2b7e139dbc4b95bdb9803b3c73",
+      "side": "control"
+    },
+    {
+      "source_index": 56,
+      "fallback_item_id": "fb_v5_0016",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0003",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "bd166ca14d8180eb2be63e06a0e8593711aa648d366e839acd176f9bbba3e015",
+      "recovered_from_store": false,
+      "request_sha256": "896d2e9a4a1376b21da17c7a66dd1715eaf7676440f27e473ff89a3760baef71",
+      "side": "control"
+    },
+    {
+      "source_index": 57,
+      "fallback_item_id": "fb_v5_0017",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0024",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "d1323d2b33924f9f5e8e7c7739e7b9532499a660d153f6194ed79f97abcb49d5",
+      "recovered_from_store": false,
+      "request_sha256": "09e15d124f6856c8254551410f629a16ac973b64f95e887e4efee045b29ae15f",
+      "side": "control"
+    },
+    {
+      "source_index": 62,
+      "fallback_item_id": "fb_v5_0018",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "not_applicable",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0011",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "8484b0fd088e75540be60d0d25d2e7a58e8d475fac333e642b942e17e1585e25",
+      "recovered_from_store": false,
+      "request_sha256": "51b381c50e9bd2ea5693d3f6ff033b87e03ca3eecc09d76882171cb67ba88ad0",
+      "side": "control"
+    },
+    {
+      "source_index": 68,
+      "fallback_item_id": "fb_v5_0019",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "not_applicable"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0024",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        }
+      },
+      "response_sha256": "d1323d2b33924f9f5e8e7c7739e7b9532499a660d153f6194ed79f97abcb49d5",
+      "recovered_from_store": false,
+      "request_sha256": "aba1b196404c2a316d13050f4af45589345f1ff2ddd1f1451d353e894c2c7447",
+      "side": "control"
+    },
+    {
+      "source_index": 70,
+      "fallback_item_id": "fb_v5_0020",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "ambiguous"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0004",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "1ef33500d868816bafa3c3d6214215631d0b1683afe72330a9fcba5e4129589d",
+      "recovered_from_store": false,
+      "request_sha256": "f6931f06c1782bede02599f42fd9280640fd2abcffd87aa64b8bed9af981b70f",
+      "side": "control"
+    },
+    {
+      "source_index": 71,
+      "fallback_item_id": "fb_v5_0021",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "not_applicable",
+        "exception": "ambiguous"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0004",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "not_applicable"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "7e2b5ed7d592780bcc65f514936d5c0640e9d3f9ab113d8a0a6e2150e4cc260a",
+      "recovered_from_store": false,
+      "request_sha256": "628a9ada94136e86652d0d42f8b2db0e9449a931856789b76b300a4f91f2cf23",
+      "side": "control"
+    },
+    {
+      "source_index": 75,
+      "fallback_item_id": "fb_v5_0022",
+      "status": "validated",
+      "semantic_status": "resolved",
+      "action_status": "matched",
+      "field_statuses": {
+        "condition": "ambiguous",
+        "constraint": "ambiguous",
+        "exception": "ambiguous"
+      },
+      "response": {
+        "action_grounding": {
+          "activity_id": "E0017",
+          "confidence": 0.9,
+          "status": "matched"
+        },
+        "condition": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "constraint": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        },
+        "exception": {
+          "confidence": 0.0,
+          "evidence_ids": [],
+          "status": "ambiguous"
+        }
+      },
+      "response_sha256": "8a606ff7c691a33d31394ce59364407130dc51a812c8a8fbd138e660354b351a",
+      "recovered_from_store": false,
+      "request_sha256": "795e9e2d4f6e781e3a9f8ef0bfe5fa5a84d17a5ee028e28dc4dba3e961ffbf7a",
+      "side": "control"
+    }
+  ],
+  "ledger_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s3_semantic_grounding_v5\\s3_semantic_grounding_llm_v2_mock_run\\execution_ledger.jsonl",
+  "normalized_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s3_semantic_grounding_v5\\s3_semantic_grounding_llm_v2_mock_run\\normalized_grounding.jsonl",
+  "raw_response_dir": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\s3_semantic_grounding_v5\\s3_semantic_grounding_llm_v2_mock_run\\raw_responses",
+  "ledger_integrity": "ok",
+  "retry": 0,
+  "no_double_send": true,
+  "resume_policy": "sent states and persisted normalized records are terminal; only pre-send failures/blocks are retried on a later invocation"
+}
