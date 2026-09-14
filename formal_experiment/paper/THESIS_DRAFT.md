@@ -9,20 +9,36 @@
 Direct-LLM / Rules+LLM-Repair**；`B0`、`H1`、`D1` 仅作为 legacy 机器 ID，首次出现
 时给出映射（如 “Direct-LLM（旧代号 D1）”），之后正文不再反复使用代号。
 
-## 题目候选
+## 题目（2026-09-14 SEP-C1-B 固定推荐）
 
-面向设计时业务流程合规检查的法规语义解析：传统方法、大语言模型与混合方法的
-分阶段比较
+**推荐中文题名**：
+面向自然语言合规需求的设计时业务流程检查：法规语义解析与传统、大语言模型及混合方法的分阶段比较
+
+**推荐英文题名**：
+Design-Time Business Process Checking for Natural-Language Compliance Requirements: A Stage-Wise Comparison of Rule-Based, Direct-LLM, and Selective Hybrid Approaches
+
+**理由**：用“自然语言合规需求（natural-language compliance requirements）”覆盖法律、监管、制度和业务规则，不把范围写死为“法规”；“设计时业务流程检查”固定 BPMN 流程模型检查场景；“分阶段比较”对应 Stage 1/2/3 与 Rules-Only、Direct-LLM、Rules+LLM-Repair 主线。题名不声称已经跨领域泛化。
+
+**备选 1（中/英）**：
+从自然语言合规需求到流程模型：设计时合规检查的语义解析与分阶段方法比较
+From Natural-Language Compliance Requirements to Process Models: Semantic Parsing and Stage-Wise Method Comparison for Design-Time Compliance Checking
+
+**备选 2（中/英）**：
+设计时业务流程合规检查中的自然语言需求解析：规则、LLM 与混合方法比较
+Parsing Natural-Language Requirements for Design-Time Business Process Compliance Checking: Comparing Rule-Based, LLM, and Hybrid Methods
+
+**范围声明**：本文方法的设计预期范围是以自然语言表述的法律、监管、制度和业务规则，输入为设计时 BPMN 流程模型；输出为 Stage 2 Rule Record 与 Stage 3 matching/violation。现有数据覆盖范围仅为项目 EStG-150（奥地利所得税法英文文本的独立重建 Gold）以及 GDPR-7/S2.11 复杂语料相关面板；这些数据不足以证明跨领域、跨语言或企业真实部署泛化。题名中的通用性仅是设计 scope，不是已验证结论。
 
 ## 摘要
 
-设计时业务流程合规检查需要把法规文本中的规范性要求与流程模型中的活动、参与者
-和控制流进行对应。本文围绕 Sun et al. 提出的三阶段框架，设计一套可追溯的独立
-重建与扩展实验：Stage 1 解析 BPMN 流程结构和标签语义，Stage 2 从法规文本中识别
+设计时业务流程合规检查需要把自然语言合规需求中的规范性要求与流程模型中的活动、参与者
+和控制流进行对应。这里的合规需求涵盖法律、监管、制度和业务规则文本。本文围绕
+Sun et al. 提出的三阶段框架，设计一套可追溯的独立重建与扩展实验：Stage 1 解析
+BPMN 流程结构和标签语义，Stage 2 从自然语言合规需求中识别
 模态及 actor、action、condition、constraint、exception，Stage 3 进行规则—流程
 匹配和违规类型分类。研究将比较代表性非 LLM 方法、paper-faithful Sun 重建、
 Direct-LLM（直接 LLM）和 Rules+LLM-Repair（选择性混合），并在预先冻结的复杂
-法律语料上检验不同方法随复杂度增加的退化边界。
+合规语料上检验不同方法随复杂度增加的退化边界。
 
 已落地的正式/DEV 结果（均为描述性）：Stage 1 固定 GDPR-7 复现（P2 语义
 micro-F1 0.8185 / accuracy 0.6928 / triple 0.4222，structure 1.0 仅共享解析，
@@ -30,7 +46,8 @@ micro-F1 0.8185 / accuracy 0.6928 / triple 0.4222，structure 1.0 仅共享解�
 constraint/modality label 更优，Rules-Only 对 actor/exception 更优，
 Rules+LLM-Repair 为净负对照，§7.2）；Stage 3 在人工 33 条 panel 与新增 30 条
 合成受控错误 panel 上的四方法违规检测（missing_action 最易、incorrect_actor
-依赖参与者语义、out_of_order 最难，§7.4）。
+依赖参与者语义、out_of_order 最难，§7.4）。现有数据覆盖仅为 EStG-150 与
+GDPR-7/S2.11 相关面板；本文不据此声称跨领域、跨语言或企业部署泛化。
 
 [[TODO-RESULT:S2.12：回填复杂度分层结果（Direct/Fallback 为 pending
 authorized extension，不阻塞本文主体）]]
@@ -60,12 +77,15 @@ reconstruction。[[TODO-SOURCE:SUN2024:核对三阶段描述与方法资产页�
 
 ### 1.1 研究问题
 
+本节中的“合规需求”均指以自然语言表述的法律、监管、制度和业务规则；当前证据只覆盖 EStG-150 与 GDPR-7/S2.11 相关面板，RQ 的成立范围不自动扩展到其他领域。
+
 - RQ0：能否完整、可追溯地独立重建 Sun 的三阶段设计时合规检查框架？
-- RQ1：传统方法、完整 Sun 重建、Direct-LLM 和 Rules+LLM-Repair 在 Stage 2 的
-  模态分类与六要素抽取上如何比较？
-- RQ2：法律文本复杂度增加时，各 Stage 2 方法如何退化，错误类型如何变化？
-- RQ3：在 Gold Rule/Process Records 下，多个 Stage 3 baseline 与 LLM/Hybrid
-  方法在匹配和违规类型分类上如何比较？
+- RQ1：在固定 EStG-150 自然语言合规需求上，传统方法、完整 Sun 重建、Direct-LLM
+  和 Rules+LLM-Repair 在 Stage 2 的模态分类与六要素抽取上如何比较？
+- RQ2：自然语言合规需求的文本复杂度增加时，各 Stage 2 方法如何退化，
+  错误类型如何变化？
+- RQ3：在设计时流程模型与 Gold Rule/Process Records 下，多个 Stage 3
+  baseline 与 LLM/Hybrid 方法在匹配和违规类型分类上如何比较？
 - RQ3a（2026-08-22 新增）：在人工裁决的 33 条 violation panel 之外，现有非 LLM
   Stage 3 方法（Winter、Sun、BM25、TF-IDF）在 30 条**合成受控错误**（三类各 10
   条）上分别表现如何？哪种错误类型最易/最难检测？（§7.4.2–7.4.6）
