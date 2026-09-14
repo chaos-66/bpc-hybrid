@@ -9,6 +9,24 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## 0. 交付复核与当前下一项（2026-09-14）
+
+- 已在主工作区接收 `6c22b8a`（C36 v2）和 `4fdc91f`（SEP-C1-A），并普通推送至
+  `origin/codex/b0-r1-a-span-boundaries`；两个原本仅本地的 checkpoint 均已远端备份。
+- C36 v2 的 6 个产物、4 个实现文件、8 个冻结输入及两个依赖的登记哈希核对通过。
+  7 项相关测试沿用 DS 已记录证据；其快速完整性检查在另一工作区执行的限制保留，
+  不宣称此次重新完成全量或同状态整体验证。本轮未运行实验/API/测试。
+- SEP-C1-A 正文收尾：target-paired 限定为四类扩展合成开发面板；补充 Stage 3
+  语义定位扩展所用同源局部 XML 证据；r10 A 组有一条有效配对，实际中断原因为
+  `action_mapping_below_gamma`（0.690984），已纠正“抽取失败或未配对”的归因；
+  r8 的 `xml_counts` 明确来自 capsule 的原始 BPMN 诊断，非 Process Record 字段。
+- C36 v1 的派生 80 行记录已保存 control 布尔/未知值；v2 的新增贡献是兼容性门禁
+  与依赖/阈值绑定，下方历史文字中“补上 v1 持久化缺口”不再作为当前主张。
+
+**唯一下一项：SEP-C1-B（前人比较范围、通用题名、新消融预算准备）。**
+本项尚未执行；完成范围与验收按 MASTER_PIPELINE 的 SEP-C1 执行，不重开已完成的
+C36 比较或 SEP-C1-A，不插入新的约束优化、真实 API 或全量测试。
+
 ## 0. 当前写作验收：SEP-C1-A（2026-09-14，零真实 API）
 
 **Status**: VERIFIED_WRITING_INTEGRATION（paper writing + read-only source check；
@@ -38,7 +56,7 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - SEP-C1-B（前人比较范围、通用题名、新消融预算准备）仍未完成。
 - 正式 Oracle/端到端与真实 v5 fallback 的依赖不变。
 
-**下一步**：继续 SEP-C1-B；或按依赖推进其他 ready 子任务。
+**下一步**：继续 SEP-C1-B。
 
 ## 0. 当前验收：S3-C36-TARGET-PAIRED v2（2026-09-14，零真实 API）
 
@@ -496,7 +514,7 @@ python formal_experiment/scripts/audit_project.py
 |---|---|---|---|
 | SEP-C0 计划修订 | 用户已明确推进原则 | verified（文档范围） | 主 Pipeline、状态和手册改为按依赖推进、尽早完成、逐项诊断修复；撤销中间日历安排。本批未执行实验，Git 备份结果在交接中报告。 |
 | S3-V5-RUNNER-INTEGRATION | DS v5 冻结结果与请求包已有 | verified（离线） | 接通 80 条预测及评价，22 对象共享 18 份响应，恢复新增发送 0，42 项相关测试通过；真实调用仍为 0。 |
-| S3-C36-TARGET-PAIRED | verified zero-API development comparison（v2 门禁） | 验收护栏与依赖绑定通过（blocking=0），control 布尔值持久化；见 outputs/reports/s3_c36_target_paired_v2.*；下一步 SEP-C1-A |
+| S3-C36-TARGET-PAIRED | 冻结 C36 与 v5 预测已有 | verified（v2 门禁，已推送） | 验收护栏与依赖绑定通过；见 outputs/reports/s3_c36_target_paired_v2.*；SEP-C1-A 已完成，下一项 SEP-C1-B。 |
 | SEP-C1 写作与比较口径 | 已有方法和案例可整理 | partial：SEP-C1-A verified | SEP-C1-A 已完成：论文 §3.4/§3.5 写入三阶段 I/O 与 SIM r10 成功链/r8 失败链，C42/C43 入主张矩阵；无新实验/API。剩余 SEP-C1-B：前人比较范围、通用题名、新消融与预算准备。 |
 | SEP-C2 必要对照与已授权批次 | 对应口径、输入和运行条件已满足 | 部分待依赖 / 既有批次待启动时核验 | 新对照待 SEP-C1 相应比较范围；既有批次按自身合同推进，不等待整包 SEP-C1。已有 137 次授权继续有效，凭据/载荷/账本的最新可运行性在开始时核验，不按旧记录重复运行。 |
 | SEP-C3 prompt 组合与后处理归因 | 诊断可先做；新运行需因素与适用授权 | 诊断 ready / 新运行 blocked | 旧单删四组不等于完整八组合；待因素定义与独立预算/授权。冻结基线保留，针对已定位问题迭代后继候选，每轮独立记录假设、版本和验证。 |
@@ -527,7 +545,7 @@ python formal_experiment/scripts/audit_project.py
 
 **写作推进规则**：每个最小任务结束就把可用内容写回现有正文、必要时同步主张矩阵，
 完成 scoped Git checkpoint；简报只报完成、证据、下一步、阻塞和提交/推送结果。
-Next task: S3-C36-TARGET-PAIRED v2 is completed and pushed. Continue SEP-C1-A: write the three-stage I/O and SIM r10 success / r8 failure chains into the existing paper, then update the claim-evidence matrix. Real v5 fallback still awaits scope/hash authorization.
+下一任务：SEP-C1-B。C36 v2 与 SEP-C1-A 已提交并推送；真实 v5 fallback 仍待其范围与载荷授权。
 完成就推进下一项可执行工作；遇到影响当前结论的问题先纳入修复循环。
 不重做项目总评、不另建路线、不自动启动真实 API。
 

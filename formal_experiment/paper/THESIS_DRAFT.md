@@ -161,13 +161,15 @@ decision Gold + 33 条 violation decision Gold（人工裁决，2026-08-08 冻�
 | 阶段 | 输入 | 输出记录 | 关键不变量 | 已知失败模式与本文证据 |
 |---|---|---|---|---|
 | Stage 1 Process Record | BPMN 2.0 XML；固定的流程/样本身份 | canonical Process Record：process/lane/pool、activity/event/gateway、sequenceFlow 与控制流关系、start/end、分支/并行、环、可达性 | 确定性解析；不读 Gold/期望标签；解析失败不补造节点；结构正确不等于语义标签正确 | 事件子流程整体成为 opaque activity，计时器/终止定义不进结构化记录；见 SIM r8 失败链（§3.5.2）与 §7.1 |
-| Stage 2 Rule Record | 法规文本、固定 sample/clause ID、modality 与六要素 schema、受控词汇 | Rule Record：sample/clause ID、source text 与 evidence span、modality、actor/action/condition/constraint/exception、actor-action map、order relations、provenance | 每个字段必须有 evidence span 或显式 null；modality label 与 evidence span 分离；不因抽取失败构造 actor-action 对 | 非 LLM 基线在 r10 上动作抽取失败或未配对；condition 缺失会使下游检查不可执行；见 §7.2 与 §3.5 |
-| Stage 3 Violation Report | 同一身份下的 Process Record + Rule Record；冻结的阈值/决策规则 | matching/violation 逐项检查：matching、missing_action、incorrect_actor、out_of_order；四类扩展 prohibited_action_present、required_condition_not_enforced、constraint_violated、exception_not_handled；evidence/coverage/unknown | 预测先固定再评价；unknown 不等于合规，也不作为负例；expected label 只用于评价分组；不从统一单标签反推四类布尔值 | 动作匹配阈值和局部 scope 不足会留下 unknown；Stage 1 表示缺失会使报警无法证实；见 SIM r8 与 §7.4 |
+| Stage 2 Rule Record | 法规文本、固定 sample/clause ID、modality 与六要素 schema、受控词汇 | Rule Record：sample/clause ID、source text 与 evidence span、modality、actor/action/condition/constraint/exception、actor-action map、order relations、provenance | 每个字段必须有 evidence span 或显式 null；modality label 与 evidence span 分离；不因抽取失败构造 actor-action 对 | r10 的 A 组存在有效配对，但动作 span 含主体和情态词，下游动作匹配未通过阈值；condition 缺失也会使对应检查不可执行；见 §7.2 与 §3.5 |
+| Stage 3 Violation Report | 同一身份下的 Process Record + Rule Record；冻结的阈值/决策规则；语义定位扩展还使用来自同一 BPMN、绑定输入身份的局部 XML 证据 | matching/violation 逐项检查：matching、missing_action、incorrect_actor、out_of_order；四类扩展 prohibited_action_present、required_condition_not_enforced、constraint_violated、exception_not_handled；evidence/coverage/unknown | 预测先固定再评价；unknown 不等于合规，也不作为负例；expected label 只用于评价分组；不从统一单标签反推四类布尔值 | 动作匹配阈值和局部 scope 不足会留下 unknown；Stage 1 表示缺失会使报警无法证实；见 SIM r8 与 §7.4 |
 
-本文主评价单位是 target-paired 检查：variant 正例与 control 负例成对评价；
+四类扩展的冻结合成开发面板采用 target-paired 检查：针对目标违规类型，将
+variant 正例与 control 负例成对评价；control 只保证该目标类型的对照条件。
 variant unknown 记入 recall 的 FN 但单独报告，control unknown 不进入已决 TNR
 分母，pair success 以全部配对为分母。该口径把"未判断"与"判为合规/违规"分开，
-避免把不可观测当成负例。
+避免把不可观测当成负例。该口径不替代 Stage 2 抽取评价、原三类违规评价或
+SIM 案例的证据对应评价，各部分分别报告。
 
 ### 3.5 贯穿案例：SIM 卡入网 r10 成功链与 r8 失败链（development-only）
 
@@ -191,10 +193,13 @@ Stage 2：B/C 的 r10/v2 Rule Record 给出 obligation；actor 为
 Stage 3：动作解析把规则 action 映射到 `Activate SIM card`（similarity 0.8582）；
 该活动的具体 owner evidence 是 `Customer`，与规则要求的 `the phone company`
 不一致，因此 `incorrect_actor=violation`，score 1.0。案例评价把它判为
-`found_with_reference_evidence`；A 组在动作抽取或配对上失败，不能建立这条链。
+`found_with_reference_evidence`。A 组同样有一条有效 actor-action pair，但其动作
+文本为 `, the phone company must activate the SIM card`；该文本到同一模型活动的
+相似度为 0.690984，案例记录的 `incorrect_actor` 为 `undetermined`，原因为
+`action_mapping_below_gamma`。因此 A 组的具体中断点是动作匹配未通过阈值。
 
-这条链说明：只有在 Stage 2 保留 actor-action 配对、Stage 1 提供活动归属，
-Stage 3 才能给出可核验的参与者错位判定；这是单案例机制说明，不是正式 Gold
+这条链说明：Stage 2 的动作文本与有效 actor-action 配对、Stage 1 的活动归属，
+以及 Stage 3 的动作匹配共同决定参与者错位检查能否执行；这是单案例机制说明，不是正式 Gold
 准确率或方法优劣结论。
 
 #### 3.5.2 失败链：r8 的超时终止语义没有进入结构化记录
@@ -203,7 +208,7 @@ Stage 2：B 的 r8/v2 Rule Record 抽取到 action `terminated`、condition
 `if it takes more than 30 days for any reason`、constraint `more than 30 days`，
 但没有有效 actor-action 配对（actor 为 null）。
 
-Stage 1：冻结 Process Record 的 `xml_counts` 显示
+Stage 1：案例 capsule 对原始 BPMN 的诊断字段 `process_facts.xml_counts` 显示
 `timer_event_definitions=0`、`terminate_event_definitions=0`、
 `event_subprocesses=0`；即使修复件在 BPMN 中新增了进程级事件子流程，
 Stage 1 仍把它表示为 opaque activity，计时器起止、中断语义和 process-instance

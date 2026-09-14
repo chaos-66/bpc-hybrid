@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-14
-**收录文件**：2010 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2032 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -988,6 +988,17 @@
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s36_tfidf_svd_stage3_development_v2/threshold_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v1/artifact_hashes.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v1/audit.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v1/c36_winter_target_paired_checks.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v1/comparison.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v1/field_gaps.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v2/artifact_hashes.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v2/audit.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v2/c36_winter_target_paired_checks.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v2/comparison.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/s3_c36_target_paired_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s3_extended_gap_v1/comparison_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s3_extended_gap_v1/comparison_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/evidence/s3_extended_gap_v1/difference_lists.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1298,6 +1309,10 @@
 | `outputs/reports/s35_sun_stage3_threshold_sensitivity_v1_figB_theta_incorrect_actor.svg` | 活动 | 历史可视化或报告 |
 | `outputs/reports/s37_oracle_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_7_oracle_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_c36_target_paired_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_c36_target_paired_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s3_c36_target_paired_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s3_c36_target_paired_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s3_downstream_paired_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_downstream_paired_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_downstream_paired_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -1336,6 +1351,7 @@
 | `outputs/reports/s3_semantic_grounding_v5_llm_authorization_request.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s3_semantic_grounding_v5_llm_mock_execution.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s3_semantic_grounding_v5_llm_preflight.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c1a_source_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sim_case_c1_result_figure.pdf` | 活动 | 项目文件 |
@@ -1616,6 +1632,8 @@
 | `scripts/run_s2_12_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_action_matching_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_c36_target_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_s3_c36_target_paired_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_evidence_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_extended_baseline_04_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1796,6 +1814,8 @@
 | `src/bpc_hybrid/s2_12_stratified_evaluator_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_action_matching_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_c36_target_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_c36_target_paired_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_evidence_checks_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_arm_report.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_extended_evidence_scope_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -2058,6 +2078,8 @@
 | `tests/test_s3_9_synthetic_panel.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_action_matching_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_action_matching_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_c36_target_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_c36_target_paired_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_downstream_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_evidence_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_extended_acceptance_recompute_v1.py` | 活动 | Python 实现、脚本或测试 |
