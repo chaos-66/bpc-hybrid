@@ -100,9 +100,73 @@ S2.12 复杂语料 Direct/Fallback 为 pending authorized extension，不是论�
 
 [[TODO-SOURCE:MICHEL2022/SLEIMI：核对数据、类别和 marker 方法]]
 
-### 2.3 Sun 与 Winter 的方法关系
+### 2.3 前人对照的三层范围：Sun、Winter 与本文方法
 
-[[TODO-SOURCE:SUN2024/WINTER2020：说明继承边界，不把 Winter 代码当 Sun Stage 2]]
+本节固定“与谁比、在什么任务上比、适配到什么程度”，不把文献报告值自动当作同条件
+对照，也不因为 Stage 3 已有比较表就宣称 Stage 2 前人对照完成。
+
+**版本基线。** 本地 `references/papers/Sun_2024_Design_time_BPC.pdf`（SHA-256
+`08a26b7d4e6716eb2e07fce4f2a96420562a9eab6ecb12d8fb8ee351b297fcb2`，28 页）
+是较早作者稿。项目机器合同登记的最终发表版为 DOI
+`10.1007/s11227-023-05626-0`，并记录最终版方法使用 BERT-TextCNN；最终版全文当前
+不在本地证据中。因此 Sun 证据分三层：本地作者稿原文（可直接核对表号与数字）；
+项目登记且来自版本记录的最终版方法描述；以及
+`TODO-SOURCE:SUN2024VOR：最终版期刊、表号、页码和比较结果`。本地作者稿只作
+`VERIFIED_LOCAL_MANUSCRIPT`，不能替代最终版。Winter et al. (2020) 原论文全文
+亦不在本地；本地有项目审计登记的原型代码和输入，Winter 原论文数字与表号保留
+`TODO-SOURCE:WINTER2020`。`Winter wrapper` 与 `Winter-style four-type extension
+baseline` 都是本项目重建/扩展，不能写成 Winter 原论文原生能力。
+
+**本地作者稿可核验的 Sun 对照事实。** 情态分类比较六个 BERT 变体（Table 6）与
+`CF_KW`、`CF_RNN`、`CF_CNN`（Table 7），作者稿报告本方法 P/R/F1
+92.1/94.1/93.1；六要素抽取只有 Table 8 自评（P97.9/R95.3），没有前人抽取基线；
+匹配只报告 AP/MAP 随 τ 变化（Table 9、Table 11），没有前人匹配基线；违规检测
+只比较 Winter（Table 12：Winter 0.58/0.89/0.70，作者方法 0.77/0.83/0.80）。
+最终版是否保留同一比较集合、表号和数字，必须按 `TODO-SOURCE:SUN2024VOR` 复核。
+
+**表 2-1 情态分类（Stage 2A）比较注册**
+
+| 方法/版本 | 原生任务与输入→输出 | 本项目当前实现 | 可比较的共同任务与适配 | 已有结果/状态 |
+|---|---|---|---|---|
+| Sun 最终版（DOI 登记） | 句子级四分类 modality；规范句→label | Rules-Only 的重建使用 BERT-TextCNN + 本地锁定 checkpoint | 同一 EStG-150 modality Gold；最终版超参、权重、split 不可得，需方法级适配 | 项目内正式三方法比较已完成；与 Sun 论文值的比较仅 C3；最终版表号待核 |
+| Sun 作者稿比较臂（CF_KW/CF_RNN/CF_CNN 与六个 BERT） | 同句级四分类；规范句→label | 未把这些比较臂重建为独立四分类 arm；官方 modality 数据已有开发下限探索 | 若审稿要求，需在冻结 split 上重跑同一 evaluator，才能从 C3 升为 C1/C2 | 本地 BERT-TextCNN 对论文报告值为 C3（本地 acc 0.9249/macro-F1 0.8511；作者稿报告 F1 93.1），不能作同等条件结论 |
+| Winter et al. (2020) 原方法 | 四个 signal word 筛出 constraint sentence；无 modality 分类器 | 未作为独立 modality baseline 运行；wrapper 的 lexicon/句级筛选可提供透明下限 | 需把 signal words 映射到四类并显式处理 `may not` 的禁止义；否则只可作未校准下限 | 待运行；`TODO-SOURCE:WINTER2020` |
+| Barrientos et al. (2026) | change-impact schema 内的 3 类 modality；复杂语料 | D/E 1140-real-call 套件，共享三类投影与模块替换 | 只有 obligation/permission/prohibition 共享；definition 不可比；跨 schema C4 | 开发表：Barrientos 原生 macro-F1 0.890，本文 3 类投影 0.822；不能作整体优劣结论 |
+| 本文方法（Rules-Only / Direct-LLM / Rules+LLM-Repair） | Sun 四类 label 与 evidence；规范句→canonical record 的 modality 字段 | 三条冻结 formal arms，共享输入/Gold/evaluator | 同一 EStG-150 正式比较；label 单独成表 | label acc/macro-F1：Rules-Only 0.7400/0.7128、Direct-LLM 0.8333/0.7695、Repair 0.8200/0.8123；正式、描述性、无整体胜者 |
+
+**表 2-2 六要素抽取（Stage 2B）比较注册**
+
+| 方法/版本 | 原生任务与输入→输出 | 本项目当前实现 | 可比较的共同任务与适配 | 已有结果/状态 |
+|---|---|---|---|---|
+| Sun 原方法与作者稿 | CoreNLP + Tregex/Tsurgeon + marker 抽六概念；句子→phrase spans/Rule Record | Rules-Only 的方法级独立重建；公开 marker 重建；Tsurgeon 为诚实非实现并有 fail-closed 守卫 | 同一 EStG-150 六字段 Gold；原 150 IDs、443 spans、完整规则/词典不可得；本项目 clause 结构为扩展 | 项目内正式三方法比较完成；不能把该重建写成 Sun Table 8 的 C1 复现；作者稿 Table 8 是自评而非前人对照 |
+| Winter et al. (2020) 原方法 | 从句切分与 signal-word 义务从句；不做 condition/constraint/exception 六要素抽取 | `winter_clause` 已有从句/义务子句能力，但未接到 EStG-150 Gold | 可比较的最窄共同任务是 obligation-action 集合，而不是六字段 F1；需单独 adapter 和指标 | 未运行；为最小零 API 补证候选；`TODO-SOURCE:WINTER2020` |
+| Sleimi et al. (2018) 谱系 | phrase-level 法律语义元数据与 marker/Tregex 祖先规则 | 项目只用其公开见刊例项重建 marker lexicon，未重建完整抽取器 | 需原文数据/类别映射；否则只能作 C4 定性来源 | 未运行；`TODO-SOURCE:SLEIMI2018` |
+| Michel et al. (2022) | EStG 决策规则/句子级四分类语料 | 官方 modality 数据已登记/审计；不是六要素抽取方法 | 只共享 EStG 来源与句子粒度，不能替代 phrase-level 六要素基线 | 未作为抽取 baseline 运行；`TODO-SOURCE:MICHEL2022` |
+| Barrientos et al. (2026) | RC4PC：precondition/norm/change-impact；无 Sun 六字段 | 仅做模块借用与 adapter 对照；无六字段原生输出 | schema 不同；跨字段不可直接换算，禁止单 F1 总榜 | D/E 中直接替换到本文六字段接口的开发结果为 0，只能解释为接口不兼容，不能判其方法无效 |
+| 本文方法 | 六字段 span + actor-action/order；规范句→Rule Record | 三方法共享 schema/normalization/evaluator | 同一 EStG-150 细/粗 Gold | 正式比较给出字段级互补，Rules+LLM-Repair 为净负对照；无整体胜者声明 |
+
+**表 2-3 下游匹配与违规检查（Stage 3）比较注册**
+
+| 方法/版本 | 原生任务与输入→输出 | 本项目当前实现 | 可比较的共同任务与适配 | 已有结果/状态 |
+|---|---|---|---|---|
+| Winter et al. (2020) 原方法 | 法规条款×BPMN 匹配；obligation/resource/sequence 三类 cost | `winter_stage3` wrapper（S3.4）；对原型 reachability 错误做披露修复 | 同一 GDPR-7 固定 panel 上比较 matching 与三类违规；原 12 个智能电表流程为 proprietary，不能恢复 | 项目 DEV：MAP 0.6429、violation macro-F1 0.373；不是 Winter 原论文数字；`TODO-SOURCE:WINTER2020` |
+| Winter wrapper（本项目重建） | 原型语义转写 + 可移植重放；BPMN/条款→matching/三类 cost | `src/bpc_hybrid/winter_stage3/`，manifest/export index 固定；仅 development | 可作 Winter 风格下限与后续扩展后端；不得称原创方法 | DEV_ONLY；C36/v2 中作为 baseline 的同口径数字以 C42 为准 |
+| Winter-style 四类扩展基线（本项目扩展） | prohibited/condition/constraint/exception 四类目标检查；冻结 panel→per-type 决策 | C36/Winter-style 冻结预测；`s3_c36_target_paired_v2` 统一口径 | 与当前 v5 deterministic 在同一 40 对 target-paired 面板比较；Winter 原论文没有这四类 | DEV_ONLY：Macro-F1 0.6036、pair 18/40、unknown 0.3625、control target FP 0.0750；不得归为 Winter 原生能力 |
+| Sun Def 4–7 重建（S3.5） | matching + missing_action/incorrect_actor/out_of_order；规则与流程→分数/违规 | `src/bpc_hybrid/sun_stage3/`（τ/γ/θ=0.8 冻结） | 同一 GDPR-7 panel 与 33/30 条标签；正式 Oracle 尚未启动 | DEV：MAP 0.8175、violation macro-F1 0.333；阈值敏感性 v1；不得称 formal Oracle |
+| Sun 作者稿 Table 12 | 报告 Winter 与其方法的 P/R/F1 | 未在本项目同数据重跑 | 原数据/实现不可得，只能作 C3 文字比较 | 作者稿 Winter 0.58/0.89/0.70，Sun 0.77/0.83/0.80；最终版表号待核 |
+| BM25 / TF-IDF-SVD | 检索式 matching / 扩展后端 | 项目 development baselines | 只作同 panel 下限，不冒充前人论文原生方法 | DEV_ONLY；数值见 §7.4 与 C36 报告 |
+| Direct-LLM 二阶段→固定 Stage 3 | Stage 2 预测进入同一 Stage 3 的误差传播 | 尚无成对产物；可复用已冻结 Stage 2 predictions 与固定 Stage 3 | 无需新 API 的最小补证：把同一批 Stage 2 预测适配到同一 inference pack，先锁预测再评价 | 缺失；下一阶段零 API 最小任务 |
+| 正式 Oracle / end-to-end | 人工 Gold Rule Records 下的 Stage 3 与两阶段组合 | 未启动、未授权 | 依赖 S2.13、Gold Rule Records、S3.4–S3.6 promotion 与单独授权 | BLOCKED；不得用现有 DEV 表替代 |
+
+**完成、缺失与最小下一步。** 目前已完成的是：本文三种 Stage 2 方法的 formal C1
+比较（同冻结输入/Gold/evaluator）；Stage 3 四类方法的 development 重建/扩展比较；
+Barrientos 模块对照与稳定性套件。仍缺失的是：(1) Stage 2B 上与前人抽取方法的
+同条件 C1/C2 基线——Sun 原论文自己也没有抽取 baseline，Winter 原生不做六要素，
+Sleimi/Michel 尚未接入；(2) Sun 最终版表号/数字的 `TODO-SOURCE` 核验——本地只有
+较早作者稿；(3) Stage 2→Stage 3 的同法成对比较；(4) 正式 Oracle 与 end-to-end——
+受上游冻结、Gold Rule Records 与单独授权约束。最小下一步只做不依赖新 API 的
+适配：先把 Winter obligation-action 或公开 marker 抽取接到同一 EStG-150 Gold，
+并复用冻结 Stage 2 predictions 接入固定 Stage 3；在没有产物前保持“待运行”。
 
 ### 2.4 LLM 的结构化法规表示与 Barrientos et al. (2026)
 
@@ -588,6 +652,26 @@ byte-identical）。规则绑定（variant → process → rule_id）与输入 a
 运行器 `scripts/run_s3_synthetic_panel_v1.py` 以与人工 panel 完全相同的
 `evaluate_stage3_common.py` 口径对四种非 LLM 方法评分；方法无法提供的信号
 明确写 `not applicable`/unobservable，不补 0 冒充支持。
+### 4.6 与前人方法的机制差异和不可比边界
+
+本文对前人的差异必须按层说明，且不得用已有 Stage 3 表替代 Stage 2 对照。
+
+- **对 Sun 的差异是方法级重建，不是作者原实现。** Rules-Only 复现最终版公开方法
+  描述中的 BERT-TextCNN、CoreNLP/Tregex、公开 marker 和抽取顺序；Tsurgeon 当前为
+  诚实非实现并 fail-closed；多 clause canonical record 和 DE/EN 对齐是本项目补充。
+  因此只能写 paper-faithful independent reconstruction，不能写 exact reproduction。
+- **对 Winter 的差异先区分三层。** Winter 原方法是 Stage 3 的条款—流程匹配与
+  obligation/resource/sequence 三类 cost；wrapper 是本项目在 GDPR-7 上的语义转写
+  与 bug 披露修复；Winter-style 四类扩展基线只使用 Winter 风格相似度后端，四个
+  新违规类别及其公式均由本项目定义。三者中的任何一个都不能把结果回写成原论文能力。
+- **对 Barrientos 的差异是任务不同。** 本文输出 Sun 六字段 Rule Record，Barrientos
+  输出 change-impact/RC4PC 表示；共同可比的只有三类 modality 投影、模块替换和
+  schema 合法性/稳定性纪律，不能把跨 schema F1 排成总榜。
+- **对本文三方法的差异集中在 Stage 2 抽取与下游接口选择。** Rules-Only 使用显式
+  marker/句法规则，Direct-LLM 使用 Gold-blind 结构化生成，Rules+LLM-Repair 只在
+  预注册触发条件下修字段；三者共享同一输入、输出合同、normalization、Gold 与
+  evaluator。Stage 2 的字段级差异不应直接换算成 Stage 3 或端到端提升，后者必须
+  走固定 Stage 3 的成对比较。
 
 ## 5. 数据与人工 Gold
 
@@ -660,6 +744,15 @@ Stage 2 分别报告模态分类和六字段/完整 Rule Record 指标；Stage 3
 AP/MAP/Recall@k 和违规分类 P/R/F1。所有方法共享输入、Gold、schema、normalization
 和 evaluator，复杂度分层在查看 test 结果前冻结。与 Barrientos 的数字比较必须
 分表并标证据等级（C1–C4）。
+
+比较前先声明层次与证据等级。Stage 2A（modality label）、Stage 2B（六要素 span）与
+Stage 3（matching/violation）分表；C1 是同一 frozen IDs/Gold/evaluator 的重跑，
+C2 是前人公开数据上的独立复现，C3 只抄录论文报告值，C4 是跨阶段/跨任务适配。
+目前只有本项目三方法 Stage 2 formal C1 和 Stage 3 development 比较已完成；Sun
+最终版原表数值仍是 C3，且最终版全文与表号待核；Winter 原方法、wrapper 与四类扩展
+必须分名分表。**不得因为 §7.4 已有 Stage 3 表就写成 Stage 2 前人对照已完成**；
+Stage 2B 仍缺可比的非 LLM 抽取基线，Stage 3 formal Oracle 和 Stage 2→Stage 3 的
+同法成对比较仍未运行。
 
 ### 6.6 受控消融 AB-1–AB-10 与 Barrientos 消融套件（现状）
 
