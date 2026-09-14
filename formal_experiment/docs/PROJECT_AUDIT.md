@@ -9,6 +9,37 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## 0. 当前写作验收：SEP-C1-A（2026-09-14，零真实 API）
+
+**Status**: VERIFIED_WRITING_INTEGRATION（paper writing + read-only source check；
+无新实验、无真实 API）。
+
+**本轮完成什么**
+- `paper/THESIS_DRAFT.md` 新增 §3.4 三阶段输入/输出契约：Stage 1 Process Record、
+  Stage 2 Rule Record、Stage 3 Violation Report 的输入、输出记录、不变量和已知
+  失败模式；明确 Gold-blind、unknown 不等于合规、expected label 只用于评价分组。
+- 新增 §3.5 贯穿案例（development-only）：SIM 卡入网 r10 成功链（动作映射到
+  `Activate SIM card`，owner `Customer`，required actor `the phone company`，
+  `incorrect_actor=violation`，case 评价 `found_with_reference_evidence`）与
+  r8 失败链（Stage 1 无 timer/terminate/event_subprocess 结构化字段；Stage 3
+  报警为 `machine_alarm_but_reference_correspondence_unverified`；修复件
+  `semantics_entered_detection_chain=false`）。
+- 本节绑定同一 case capsule
+  `outputs/development/sim_case_c1/run_v1/capsule.json`
+  （sha256 `481f068c...`），并引用 `paper/SIM_CASE_SECTION_v1.md`。
+- 只读源核对产物 `outputs/reports/sep_c1a_source_check_v1.json`（sha256
+  `98796fd932bd1e5d9b76cd56f1ebf3749d98568b1be58926730f07f450a20aad`）逐项校验上述
+  r10/r8 值与 capsule 一致。
+- `paper/CLAIM_EVIDENCE_MATRIX.md` 新增 C42（C36 v2 门禁/收尾）与 C43
+  （SEP-C1-A 写作接线），禁止把 development 案例写成正式 Gold、Oracle 或方法优劣。
+
+**边界**
+- 无新实验、无真实 API、无 Gold 修改；未运行全量测试。
+- SEP-C1-B（前人比较范围、通用题名、新消融预算准备）仍未完成。
+- 正式 Oracle/端到端与真实 v5 fallback 的依赖不变。
+
+**下一步**：继续 SEP-C1-B；或按依赖推进其他 ready 子任务。
+
 ## 0. 当前验收：S3-C36-TARGET-PAIRED v2（2026-09-14，零真实 API）
 
 **Status**: VERIFIED_DEVELOPMENT_COMPARISON_V2（development-only synthetic
@@ -466,7 +497,7 @@ python formal_experiment/scripts/audit_project.py
 | SEP-C0 计划修订 | 用户已明确推进原则 | verified（文档范围） | 主 Pipeline、状态和手册改为按依赖推进、尽早完成、逐项诊断修复；撤销中间日历安排。本批未执行实验，Git 备份结果在交接中报告。 |
 | S3-V5-RUNNER-INTEGRATION | DS v5 冻结结果与请求包已有 | verified（离线） | 接通 80 条预测及评价，22 对象共享 18 份响应，恢复新增发送 0，42 项相关测试通过；真实调用仍为 0。 |
 | S3-C36-TARGET-PAIRED | verified zero-API development comparison（v2 门禁） | 验收护栏与依赖绑定通过（blocking=0），control 布尔值持久化；见 outputs/reports/s3_c36_target_paired_v2.*；下一步 SEP-C1-A |
-| SEP-C1 写作与比较口径 | 已有方法和案例可整理 | ready | **下一最小子任务 SEP-C1-A**：先把三阶段 I/O、SIM r10 实际成功链和一条真实失败链写入现有方法章节，同时核对原始记录与主张矩阵；随后完成前人比较范围、通用题名及新消融预算准备。 |
+| SEP-C1 写作与比较口径 | 已有方法和案例可整理 | partial：SEP-C1-A verified | SEP-C1-A 已完成：论文 §3.4/§3.5 写入三阶段 I/O 与 SIM r10 成功链/r8 失败链，C42/C43 入主张矩阵；无新实验/API。剩余 SEP-C1-B：前人比较范围、通用题名、新消融与预算准备。 |
 | SEP-C2 必要对照与已授权批次 | 对应口径、输入和运行条件已满足 | 部分待依赖 / 既有批次待启动时核验 | 新对照待 SEP-C1 相应比较范围；既有批次按自身合同推进，不等待整包 SEP-C1。已有 137 次授权继续有效，凭据/载荷/账本的最新可运行性在开始时核验，不按旧记录重复运行。 |
 | SEP-C3 prompt 组合与后处理归因 | 诊断可先做；新运行需因素与适用授权 | 诊断 ready / 新运行 blocked | 旧单删四组不等于完整八组合；待因素定义与独立预算/授权。冻结基线保留，针对已定位问题迭代后继候选，每轮独立记录假设、版本和验证。 |
 | SEP-C4 下游与四类边界 | 案例/开发诊断已有证据；正式运行需上游门禁 | 诊断可推进 / 正式运行 blocked | 正式 Oracle/端到端仍依赖实质门禁；案例与范围诊断及时写入正文，新问题进入对应修复项，不等待日历截点。 |

@@ -153,6 +153,77 @@ decision Gold + 33 条 violation decision Gold（人工裁决，2026-08-08 冻�
 验证方法包括 Winter wrapper、Sun Def 4–7 重建、BM25、TF-IDF/SVD（§7.4），
 以及 2026-08-22 新增的 30 条合成受控错误 panel（§4.5/§6.4）。
 
+### 3.4 三阶段输入/输出契约
+
+表 3-1 把本文使用的三阶段接口固定下来。该表只描述已经冻结或已登记的实现边界，
+不把开发结果写成正式结论；每个阶段保持 Gold-blind，期望标签只在评价分组时读取。
+
+| 阶段 | 输入 | 输出记录 | 关键不变量 | 已知失败模式与本文证据 |
+|---|---|---|---|---|
+| Stage 1 Process Record | BPMN 2.0 XML；固定的流程/样本身份 | canonical Process Record：process/lane/pool、activity/event/gateway、sequenceFlow 与控制流关系、start/end、分支/并行、环、可达性 | 确定性解析；不读 Gold/期望标签；解析失败不补造节点；结构正确不等于语义标签正确 | 事件子流程整体成为 opaque activity，计时器/终止定义不进结构化记录；见 SIM r8 失败链（§3.5.2）与 §7.1 |
+| Stage 2 Rule Record | 法规文本、固定 sample/clause ID、modality 与六要素 schema、受控词汇 | Rule Record：sample/clause ID、source text 与 evidence span、modality、actor/action/condition/constraint/exception、actor-action map、order relations、provenance | 每个字段必须有 evidence span 或显式 null；modality label 与 evidence span 分离；不因抽取失败构造 actor-action 对 | 非 LLM 基线在 r10 上动作抽取失败或未配对；condition 缺失会使下游检查不可执行；见 §7.2 与 §3.5 |
+| Stage 3 Violation Report | 同一身份下的 Process Record + Rule Record；冻结的阈值/决策规则 | matching/violation 逐项检查：matching、missing_action、incorrect_actor、out_of_order；四类扩展 prohibited_action_present、required_condition_not_enforced、constraint_violated、exception_not_handled；evidence/coverage/unknown | 预测先固定再评价；unknown 不等于合规，也不作为负例；expected label 只用于评价分组；不从统一单标签反推四类布尔值 | 动作匹配阈值和局部 scope 不足会留下 unknown；Stage 1 表示缺失会使报警无法证实；见 SIM r8 与 §7.4 |
+
+本文主评价单位是 target-paired 检查：variant 正例与 control 负例成对评价；
+variant unknown 记入 recall 的 FN 但单独报告，control unknown 不进入已决 TNR
+分母，pair success 以全部配对为分母。该口径把"未判断"与"判为合规/违规"分开，
+避免把不可观测当成负例。
+
+### 3.5 贯穿案例：SIM 卡入网 r10 成功链与 r8 失败链（development-only）
+
+本节绑定同一运行 capsule：`outputs/development/sim_case_c1/run_v1/capsule.json`
+（sha256 `481f068ca45562d5d6c28250284ef02e91abc1ae2cc5f4e2e8373a923af7a4ab`），
+口径为 `development_case_study_not_formal_gold`。A 组是项目锁定非 LLM 基线
+B0 v10a 加冻结 Sun 式三类检测；B 组复用已有真实 LLM Stage 2 预测
+`OURS-FULL/repeat-01` 并投影到 v2 schema；C 组在 B 上追加 REPAIR-V2 四类扩展。
+主评价单位是 r8/v2、r9/v2、r10/v2、r11/v2、r13/v2；r12 只作背景。本节不新增
+API 调用，也不修改 BPMN、规则文本、Gold 或原始预测。
+
+#### 3.5.1 成功链：r10 的动作绑定与参与者错位
+
+Stage 1：Process Record 中存在活动 `Activate SIM card`
+（`sid-D80682C2-0CD4-4B60-93BA-E9C747E28950`），其 lane 归属为 `Customer`。
+
+Stage 2：B/C 的 r10/v2 Rule Record 给出 obligation；actor 为
+`the phone company`，action 为 `... activate the SIM card`，condition 为
+`When the customer receives the SIM card`，并存在有效的 actor-action pair。
+
+Stage 3：动作解析把规则 action 映射到 `Activate SIM card`（similarity 0.8582）；
+该活动的具体 owner evidence 是 `Customer`，与规则要求的 `the phone company`
+不一致，因此 `incorrect_actor=violation`，score 1.0。案例评价把它判为
+`found_with_reference_evidence`；A 组在动作抽取或配对上失败，不能建立这条链。
+
+这条链说明：只有在 Stage 2 保留 actor-action 配对、Stage 1 提供活动归属，
+Stage 3 才能给出可核验的参与者错位判定；这是单案例机制说明，不是正式 Gold
+准确率或方法优劣结论。
+
+#### 3.5.2 失败链：r8 的超时终止语义没有进入结构化记录
+
+Stage 2：B 的 r8/v2 Rule Record 抽取到 action `terminated`、condition
+`if it takes more than 30 days for any reason`、constraint `more than 30 days`，
+但没有有效 actor-action 配对（actor 为 null）。
+
+Stage 1：冻结 Process Record 的 `xml_counts` 显示
+`timer_event_definitions=0`、`terminate_event_definitions=0`、
+`event_subprocesses=0`；即使修复件在 BPMN 中新增了进程级事件子流程，
+Stage 1 仍把它表示为 opaque activity，计时器起止、中断语义和 process-instance
+终止范围都没有进入结构化字段。
+
+Stage 3：missing_action 报警为 violation，B 组最优模型动作是 `Sign contract`
+（similarity 0.7524），但报警没有给出真实的 30 天 bound 或 terminate label；
+condition/constraint 报警也无法补上流程级作用域证据。案例评价因此记为
+`machine_alarm_but_reference_correspondence_unverified`。独立结构核验确认 r8
+修复的 BPMN 语义本身成立，但 `semantics_entered_detection_chain=false`，该修复件
+被排除在有效修复分母之外，原因是 `repair_semantics_not_carried_by_stage1`。
+
+这条失败链把问题定位到 Stage 1/Stage 3 的证据链，而不是把 unknown 写成不合规。
+它同时说明为什么三阶段 I/O 契约必须显式记录不支持构造和无法核验的报警。
+
+其他规则（r9 检出，r11/r13 未检出）及其逐项证据见
+`paper/SIM_CASE_SECTION_v1.md`（sha256
+`837e3d177903bef90f374617483074c3b0fde7659e2344d1d57efda64e00ebae`）；
+本节只展开一条成功链和一条失败链。
+
 ## 4. 方法
 
 本节把三种方法写成**细模块**。方法不是“我们调用了一个 LLM”或“我们写了一个

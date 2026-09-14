@@ -1,0 +1,87 @@
+{
+  "schema_version": "sep_c1a_source_check@1.0.0",
+  "generated_utc": "2026-09-14T07:06:58.403195+00:00",
+  "scope": "development_case_study_not_formal_gold",
+  "capsule": {
+    "path": "outputs/development/sim_case_c1/run_v1/capsule.json",
+    "sha256": "481f068ca45562d5d6c28250284ef02e91abc1ae2cc5f4e2e8373a923af7a4ab",
+    "run_id": "sim_case_c1_run_v1",
+    "claim_scope": "development_case_study_not_formal_gold",
+    "byte_source_workspace": "canonical_main_workspace"
+  },
+  "paper": {
+    "path": "paper/THESIS_DRAFT.md",
+    "sections": [
+      "3.4 三阶段输入/输出契约",
+      "3.5 SIM r10 成功链与 r8 失败链"
+    ]
+  },
+  "matrix_rows": [
+    "C42",
+    "C43"
+  ],
+  "checked_values": {
+    "r10": {
+      "stage1_activity": {
+        "id": "sid-D80682C2-0CD4-4B60-93BA-E9C747E28950",
+        "name": "Activate SIM card",
+        "lanes": [
+          "Customer"
+        ]
+      },
+      "stage2_rule": {
+        "actor": "the phone company",
+        "action": "activate the SIM card",
+        "condition": "When the customer receives the SIM card"
+      },
+      "stage3": {
+        "status": "violation",
+        "score": 1.0,
+        "best_model_action": "Activate SIM card",
+        "similarity": 0.858192,
+        "owner_evidence": [
+          {
+            "activity_id": "sid-D80682C2-0CD4-4B60-93BA-E9C747E28950",
+            "owners": [
+              "Customer"
+            ]
+          }
+        ],
+        "case_judgment": "found_with_reference_evidence"
+      }
+    },
+    "r8": {
+      "stage2_rule": {
+        "action": "terminated",
+        "condition": "if it takes more than 30 days for any reason",
+        "constraint": "more than 30 days",
+        "actor": null
+      },
+      "stage1_xml_counts": {
+        "timer_event_definitions": 0,
+        "time_durations": 0,
+        "boundary_events": 0,
+        "terminate_event_definitions": 0,
+        "event_subprocesses": 0
+      },
+      "stage3": {
+        "machine_status": "violation",
+        "best_model_action": "Sign contract",
+        "similarity": 0.7524,
+        "case_judgment": "machine_alarm_but_reference_correspondence_unverified"
+      },
+      "repair_verification": {
+        "repair_semantics_valid": true,
+        "semantics_entered_detection_chain": false,
+        "excluded_from_effective_repair_denominator": true,
+        "exclusion_reason": "repair_semantics_not_carried_by_stage1"
+      }
+    }
+  },
+  "safety": {
+    "new_experiment_run": false,
+    "real_api_calls": 0,
+    "gold_modified": false,
+    "full_test_suite_run": false
+  }
+}
