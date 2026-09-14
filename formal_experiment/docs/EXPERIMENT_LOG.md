@@ -4841,3 +4841,17 @@
 - 仍存在 blocker：无
 - 备注：Markdown output no longer has a trailing blank line; contract replay and cancellation tests re-run on final state; Direct remains pending; zero API.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-14T13:02:04.308749+00:00 - SEP-C2 fixed-population evaluation: retain failed Direct rows in the 36-row denominator
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：10 passed, 1 warning in 37.96s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`8bf2c8572e5cd85219b0a09e85203f568f1f3ad7`；相关未提交路径：22 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Evaluator encodes in_doubt/failed rows as empty canonical records; verifier and tests assert no success-only subset; zero API; Direct still pending.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

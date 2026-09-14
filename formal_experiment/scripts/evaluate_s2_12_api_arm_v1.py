@@ -12,12 +12,14 @@ Refusal conditions (EvaluationFail, exit 2):
 
 * the prediction capsule does not exist or its manifest status is not
   ``predictions_locked_before_gold_evaluation``;
-* the capsule is ``complete_with_explicit_failures`` — explicit failures do
-  not satisfy the evaluation condition;
 * any committed prediction artifact hash/size drifted;
-* predictions do not contain exactly 36 rows, all with
-  ``request_status == "ok"``;
+* predictions do not contain exactly 36 rows;
 * Gold / frozen stratum drift, or attempt/gold membership mismatch.
+
+A ``complete_with_explicit_failures`` capsule is evaluable: every failed or
+in-doubt row is retained in the fixed 36-row population and encoded as an empty
+canonical record, so it is counted as missing/misclassified rather than silently
+dropped.
 """
 
 from __future__ import annotations
@@ -73,10 +75,12 @@ def _verify_prediction_lock(arm: str) -> dict[str, Any]:
         raise EvaluationFail("prediction capsule is not locked-before-Gold")
     if manifest.get("gold_isolation", {}).get("gold_read_by_runner") is not False:
         raise EvaluationFail("runner Gold-isolation declaration invalid")
-    if manifest.get("capsule_status") != "complete":
+    if manifest.get("capsule_status") not in (
+        "complete", "complete_with_explicit_failures",
+    ):
         raise EvaluationFail(
-            f"capsule status {manifest.get('capsule_status')!r}: explicit "
-            "failures do not satisfy the evaluation condition")
+            f"capsule status {manifest.get('capsule_status')!r}: expected "
+            "complete or complete_with_explicit_failures")
     for name, info in manifest.get("artifacts", {}).items():
         path = pred_dir / name
         if not path.is_file() or _sha(path) != info.get("sha256"):
@@ -130,6 +134,38 @@ def _capsule_cost(arm: str) -> dict[str, Any]:
     }
 
 
+def _evaluation_attempts(records: list[dict[str, Any]],
+                        arm: str) -> tuple[list[dict[str, Any]], int]:
+    """Retain all rows, encoding explicit failures as empty canonical records.
+
+    The denominator stays the fixed evaluated population (36 S2.12 rows).  A
+    failed/in-doubt row never vanishes and is never replaced by another row's
+    output; it contributes an empty clause list and therefore counts as a
+    missed/misclassified extraction.
+    """
+    attempts: list[dict[str, Any]] = []
+    failures = 0
+    for index, row in enumerate(records):
+        if not isinstance(row, dict):
+            raise EvaluationFail(f"prediction row {index} is not an object")
+        sample_id = row.get("sample_id")
+        if not isinstance(sample_id, str) or not sample_id:
+            raise EvaluationFail(f"prediction row {index} has no sample_id")
+        status = row.get("request_status")
+        record = row.get("record")
+        if status == "ok" and isinstance(record, dict) and record.get("sample_id") == sample_id:
+            attempts.append(row)
+            continue
+        failures += 1
+        attempts.append({
+            "sample_id": sample_id,
+            "request_status": status,
+            "record": {"sample_id": sample_id, "clauses": []},
+            "error_category": row.get("error_category"),
+        })
+    return adapt_method_attempts(attempts, arm), failures
+
+
 def build_report(arm: str) -> dict[str, Any]:
     assert_method_active(arm)
     if arm != "direct_llm":
@@ -145,10 +181,7 @@ def build_report(arm: str) -> dict[str, Any]:
     records = prediction_doc.get("records", [])
     if len(records) != 36:
         raise EvaluationFail(f"prediction rows {len(records)} != 36")
-    bad = sorted({row["request_status"] for row in records} - {"ok"})
-    if bad:
-        raise EvaluationFail(f"prediction rows are not all ok: {bad}")
-    attempts = adapt_method_attempts(records, arm)
+    attempts, failed_rows = _evaluation_attempts(records, arm)
     gold_doc = json.loads(GOLD.read_text(encoding="utf-8"))
     gold_records = _gold_records(gold_doc)
     levels = _levels()
@@ -161,6 +194,13 @@ def build_report(arm: str) -> dict[str, Any]:
         "status": f"verified_{arm}_arm_complete",
         "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
         "arm": arm,
+        "evaluation_population": {
+            "records": len(records),
+            "fixed_denominator": 36,
+            "failed_or_in_doubt_rows_retained": failed_rows,
+            "failed_rows_encoded_as_empty_canonical_records": bool(failed_rows),
+            "success_only_subset_used": False,
+        },
         "scope_boundary": {
             "active_methods": ["sun_rule_only", "direct_llm"],
             "cancelled_methods": ["sun_llm_fallback"],
@@ -171,6 +211,7 @@ def build_report(arm: str) -> dict[str, Any]:
             "direct_llm_pending": False,
             "sun_llm_fallback_pending": False,
             "cancelled_repair_arm_used": False,
+            "failed_samples_kept_in_evaluation_population": True,
             "post_result_tuning_performed": False,
             "no_method_rule_prompt_threshold_adjustment_from_gold_or_results": True,
         },

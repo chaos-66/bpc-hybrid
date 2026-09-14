@@ -43,13 +43,17 @@ def verify(arm: str) -> dict:
     rep = json.loads((r / "evaluation.json").read_text(encoding="utf-8"))
     man = json.loads((r / "manifest.json").read_text(encoding="utf-8"))
     rows = pd.get("records", [])
-    ck("capsule locked, complete, 36 ok, text-free",
+    ck("capsule locked, complete-compatible, 36-row fixed population, text-free",
        rm.get("status") == "predictions_locked_before_gold_evaluation"
-       and rm.get("capsule_status") == "complete"
+       and rm.get("capsule_status") in ("complete", "complete_with_explicit_failures")
        and rm.get("safety", {}).get("raw_text_committed") is False
        and pd.get("record_count") == 36 and len(rows) == 36
-       and all(x.get("request_status") == "ok" for x in rows)
        and _text_free(pd))
+    ck("evaluation keeps all rows and never uses a success-only subset",
+       rep.get("evaluation_population", {}).get("fixed_denominator") == 36
+       and rep.get("evaluation_population", {}).get("success_only_subset_used") is False
+       and rep.get("scope_boundary", {}).get(
+           "failed_samples_kept_in_evaluation_population") is True)
     ck("evaluation literal", rep.get("status") == f"verified_{arm}_arm_complete"
        and rep.get("arm") == arm)
     for name, info in rm.get("artifacts", {}).items():

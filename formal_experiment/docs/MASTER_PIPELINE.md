@@ -46,6 +46,8 @@ SEP-C2 下一最小工作为适配两方法执行/评价/冻结合同，保留�
   `arms=('direct_llm',)` 重建路径，不读取 F 阶段账本、修复结果或三方法齐全条件；
   D-CAL=1、D-REST=35 的 36 次预算保留；Direct 未真实运行时 prediction 与
   evaluation 缺失显式保留，不从 fake 响应或其它数据集补。
+- **失败样本总体**：Direct 评价固定保留全部 36 行；`in_doubt`/failed 行按空
+  canonical record 计入漏抽/误判，不使用成功样本子集。
 - **两方法评价/冻结**：`outputs/reports/s2_12_two_method_contract_v1.json` 及其
   manifest 绑定 Rules-Only 既有评价、Direct 预测/评价缺口、输入与请求哈希、输出目录和
   36+74=110 次剩余计划。当前 `comparison.complete=false`、`s2_12_complete=false`、

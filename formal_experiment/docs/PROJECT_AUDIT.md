@@ -32,6 +32,8 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
   36+74=110 次剩余计划；Direct 未真实运行时 `comparison.complete=false`、
   `s2_12_complete=false`、`s2_13_complete=false`，取消的修复组
   `cancelled_repair_arm_required=false`，不得用减少方法数宣称冻结完成。
+- **失败样本总体**：Direct 评价固定保留全部 36 行；`in_doubt`/failed 行按空
+  canonical record 计入漏抽/误判，不比较成功样本子集。
 - 真实 API=0；未创建收费授权；GDPR 默认 `gdpr7_direct_llm_v1` 的 74 条仍为
   `fake_payload_locked` 演练、network=0，不作为真实预测/恢复/promotion 来源；
   真实目录沿用 `gdpr7_direct_llm_raw_real_v1` / `gdpr7_direct_llm_real_v1`。

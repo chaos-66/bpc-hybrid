@@ -79,6 +79,33 @@ def test_finalizer_and_evaluator_reject_cancelled_arm(tmp_path) -> None:
     assert not args.output_dir.exists()
 
 
+def test_failed_direct_rows_are_kept_in_fixed_evaluation_population() -> None:
+    evaluator = _load("sep_c2_eval_population",
+                      "scripts/evaluate_s2_12_api_arm_v1.py")
+    canonical = {
+        "sample_id": "s3",
+        "clauses": [{
+            "modality": {"label": "obligation"},
+            "actors": [], "actions": [], "conditions": [],
+            "constraints": [], "exceptions": [],
+        }],
+    }
+    records = [
+        {"sample_id": "s1", "request_status": "in_doubt", "record": None,
+         "error_category": "raw_response_missing"},
+        {"sample_id": "s2", "request_status": "failed", "record": None,
+         "error_category": "malformed_response"},
+        {"sample_id": "s3", "request_status": "ok", "record": canonical,
+         "error_category": None},
+    ]
+    attempts, failures = evaluator._evaluation_attempts(records, "direct_llm")
+    assert failures == 2
+    assert [a["sample_id"] for a in attempts] == ["s1", "s2", "s3"]
+    assert attempts[0]["record"]["clauses"] == []
+    assert attempts[1]["record"]["clauses"] == []
+    assert attempts[2]["record"]["clauses"][0]["modality"]["label"] == "obligation"
+
+
 def test_contract_keeps_direct_pending_and_s213_incomplete() -> None:
     contract = json.loads(
         (ROOT / "outputs/reports/s2_12_two_method_contract_v1.json"
