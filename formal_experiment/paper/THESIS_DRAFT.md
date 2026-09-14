@@ -5,27 +5,28 @@
 章节的连贯工作稿）
 **写作语言**：中文；技术术语保留规范英文
 **主张控制**：`CLAIM_EVIDENCE_MATRIX.md`
-**命名约定（2026-08-08 导师要求锁定）**：本文统一使用正式名称 **Rules-Only /
-Direct-LLM / Rules+LLM-Repair**；`B0`、`H1`、`D1` 仅作为 legacy 机器 ID，首次出现
-时给出映射（如 “Direct-LLM（旧代号 D1）”），之后正文不再反复使用代号。
+**当前研究范围（2026-09-14 用户决定）**：后续比较使用 **Rules-Only / Direct-LLM**。
+Rules+LLM-Repair（`sun_llm_fallback` / H1）已退出后续全部实验；下文保留的既有
+三方法表和修复组说明仅为历史研究记录，不作为当前贡献、待做对照或冻结前置条件。
+本文不再安排规则先行的 LLM 修复/fallback 实验。`B0`、`D1` 只作兼容机器 ID。
 
 ## 题目（2026-09-14 SEP-C1-B 固定推荐）
 
 **推荐中文题名**：
-面向自然语言合规需求的设计时业务流程检查：法规语义解析与传统、大语言模型及混合方法的分阶段比较
+面向自然语言合规需求的设计时业务流程检查：规则方法与大语言模型的分阶段比较
 
 **推荐英文题名**：
-Design-Time Business Process Checking for Natural-Language Compliance Requirements: A Stage-Wise Comparison of Rule-Based, Direct-LLM, and Selective Hybrid Approaches
+Design-Time Business Process Checking for Natural-Language Compliance Requirements: A Stage-Wise Comparison of Rule-Based and Direct-LLM Approaches
 
-**理由**：用“自然语言合规需求（natural-language compliance requirements）”覆盖法律、监管、制度和业务规则，不把范围写死为“法规”；“设计时业务流程检查”固定 BPMN 流程模型检查场景；“分阶段比较”对应 Stage 1/2/3 与 Rules-Only、Direct-LLM、Rules+LLM-Repair 主线。题名不声称已经跨领域泛化。
+**理由**：用“自然语言合规需求（natural-language compliance requirements）”覆盖法律、监管、制度和业务规则；“设计时业务流程检查”固定 BPMN 流程模型检查场景；“分阶段比较”对应 Stage 1/2/3 与 Rules-Only、Direct-LLM 主线。题名不声称已经跨领域泛化。
 
 **备选 1（中/英）**：
 从自然语言合规需求到流程模型：设计时合规检查的语义解析与分阶段方法比较
 From Natural-Language Compliance Requirements to Process Models: Semantic Parsing and Stage-Wise Method Comparison for Design-Time Compliance Checking
 
 **备选 2（中/英）**：
-设计时业务流程合规检查中的自然语言需求解析：规则、LLM 与混合方法比较
-Parsing Natural-Language Requirements for Design-Time Business Process Compliance Checking: Comparing Rule-Based, LLM, and Hybrid Methods
+设计时业务流程合规检查中的自然语言需求解析：规则方法与大语言模型比较
+Parsing Natural-Language Requirements for Design-Time Business Process Compliance Checking: Comparing Rule-Based and LLM Methods
 
 **范围声明**：本文方法的设计预期范围是以自然语言表述的法律、监管、制度和业务规则，输入为设计时 BPMN 流程模型；输出为 Stage 2 Rule Record 与 Stage 3 matching/violation。现有数据覆盖范围仅为项目 EStG-150（奥地利所得税法英文文本的独立重建 Gold）以及 GDPR-7/S2.11 复杂语料相关面板；这些数据不足以证明跨领域、跨语言或企业真实部署泛化。题名中的通用性仅是设计 scope，不是已验证结论。
 
@@ -37,20 +38,20 @@ Sun et al. 提出的三阶段框架，设计一套可追溯的独立重建与扩
 BPMN 流程结构和标签语义，Stage 2 从自然语言合规需求中识别
 模态及 actor、action、condition、constraint、exception，Stage 3 进行规则—流程
 匹配和违规类型分类。研究将比较代表性非 LLM 方法、paper-faithful Sun 重建、
-Direct-LLM（直接 LLM）和 Rules+LLM-Repair（选择性混合），并在预先冻结的复杂
+Direct-LLM（直接 LLM），并在预先冻结的复杂
 合规语料上检验不同方法随复杂度增加的退化边界。
 
 已落地的正式/DEV 结果（均为描述性）：Stage 1 固定 GDPR-7 复现（P2 语义
 micro-F1 0.8185 / accuracy 0.6928 / triple 0.4222，structure 1.0 仅共享解析，
-§7.1）；Stage 2 正式三方法比较（无整体胜者；Direct-LLM 对 action/condition/
-constraint/modality label 更优，Rules-Only 对 actor/exception 更优，
-Rules+LLM-Repair 为净负对照，§7.2）；Stage 3 在人工 33 条 panel 与新增 30 条
+§7.1）；Stage 2 已发布正式比较中的 Rules-Only 与 Direct-LLM 结果（无整体胜者；
+Direct-LLM 对 action/condition/constraint/modality label 更优，Rules-Only 对
+actor/exception 更优，§7.2）；Stage 3 在人工 33 条 panel 与新增 30 条
 合成受控错误 panel 上的四方法违规检测（missing_action 最易、incorrect_actor
 依赖参与者语义、out_of_order 最难，§7.4）。现有数据覆盖仅为 EStG-150 与
 GDPR-7/S2.11 相关面板；本文不据此声称跨领域、跨语言或企业部署泛化。
 
-[[TODO-RESULT:S2.12：回填复杂度分层结果（Direct/Fallback 为 pending
-authorized extension，不阻塞本文主体）]]
+[[TODO-RESULT:S2.12：适配两方法合同后回填 Rules-Only / Direct-LLM 复杂度分层结果；
+Direct 36 次尚未执行，Fallback 27 次已取消，不列为待完成项。]]
 [[TODO-RESULT:S3.7/S3.10：回填 Oracle 与端到端结果]]
 在上述事项完成前，本摘要对 Oracle/端到端不写性能提升、最佳方法或最终结论。
 
@@ -70,8 +71,7 @@ reconstruction。[[TODO-SOURCE:SUN2024:核对三阶段描述与方法资产页�
 
 大语言模型能够直接生成结构化语义表示，但它们也可能产生 schema 违规、遗漏字段、
 不稳定输出和额外调用成本。因此，本文不预设“LLM 必然更优”，而是把 Direct-LLM、
-不使用 LLM 的完整重建 baseline（Rules-Only），以及只在预注册失败/不确定条件下
-调用 LLM 的 Rules+LLM-Repair（选择性混合）放在相同输入、Gold、输出合同和评价器
+不使用 LLM 的完整重建 baseline（Rules-Only）放在相同输入、Gold、输出合同和评价器
 下比较。复杂法律语料是否会放大不同方法之间的差异，同样作为待检验问题，而不是
 预先成立的结论。
 
@@ -80,12 +80,12 @@ reconstruction。[[TODO-SOURCE:SUN2024:核对三阶段描述与方法资产页�
 本节中的“合规需求”均指以自然语言表述的法律、监管、制度和业务规则；当前证据只覆盖 EStG-150 与 GDPR-7/S2.11 相关面板，RQ 的成立范围不自动扩展到其他领域。
 
 - RQ0：能否完整、可追溯地独立重建 Sun 的三阶段设计时合规检查框架？
-- RQ1：在固定 EStG-150 自然语言合规需求上，传统方法、完整 Sun 重建、Direct-LLM
-  和 Rules+LLM-Repair 在 Stage 2 的模态分类与六要素抽取上如何比较？
+- RQ1：在固定 EStG-150 自然语言合规需求上，前人可比方法、Sun 方法级重建与
+  Direct-LLM 在 Stage 2 的模态分类与六要素抽取上如何比较？
 - RQ2：自然语言合规需求的文本复杂度增加时，各 Stage 2 方法如何退化，
   错误类型如何变化？
-- RQ3：在设计时流程模型与 Gold Rule/Process Records 下，多个 Stage 3
-  baseline 与 LLM/Hybrid 方法在匹配和违规类型分类上如何比较？
+- RQ3：在设计时流程模型与 Gold Rule/Process Records 下，多个 Stage 3 baseline
+  在匹配和违规类型分类上如何比较；Rules-Only 与 Direct-LLM 抽取误差如何影响固定检测器？
 - RQ3a（2026-08-22 新增）：在人工裁决的 33 条 violation panel 之外，现有非 LLM
   Stage 3 方法（Winter、Sun、BM25、TF-IDF）在 30 条**合成受控错误**（三类各 10
   条）上分别表现如何？哪种错误类型最易/最难检测？（§7.4.2–7.4.6）
@@ -539,7 +539,10 @@ macro-F1 0.7695。字段级结论：Direct-LLM 在 action/condition/constraint �
 modality label accuracy 领先；actor 字段落后 Rules-Only。禁止显著性推断，仅描述
 性字段级比较。
 
-### 4.3 Rules+LLM-Repair（规则+LLM 修复，旧代号 H1）—— 对照负结果
+### 4.3 历史探索记录：Rules+LLM-Repair（已退出后续实验）
+
+**2026-09-14 用户决定**：下述结果和机制仅保留为历史溯源，不属于当前方法设计或
+后续对照实验；不再运行、复跑、优化、消融或新增评价，不是 S2.12/S2.13 完成依赖。
 
 **一句话**：同一 Rules-Only，仅按预注册 trigger 让 LLM 修复失败/不确定字段；
 **不作为贡献，只作为对照臂证明“无足够证据约束的选择性 LLM 修复可能产生净负
@@ -568,11 +571,8 @@ confirm 该对照方法在 actor 字段 net-negative（actor F1 0.4296 vs Rules-
    把 precision 打穿（actor spans 65→167 的直接原因）。
 3. **收益上限受限**：修复收益被触发子集覆盖限制，成本—收益不利。
 
-**优化方向（仅供未来参考，当前不执行）**：保守修复配方（actor span 长度上限 +
-候选数上限 + 修复后 verbatim 回指强制校验）；用 risk-coverage 曲线在 development
-上选择触发子集；字段级白名单 + patch 前后 diff 约束。**论文表述约束**：只能作为
-对照臂报告“选择性混合”的负结果，不得把该对照方法写成项目贡献，不得再派发其
-优化任务。
+**范围约束**：该探索已停止，不提出新的优化、复跑或对照实验；既有负结果不构成
+当前方法贡献，不据此声称所有混合方法均无效。
 
 ### 4.4 与 Barrientos et al. (2026) 的逐模块对比表
 
@@ -723,15 +723,17 @@ G0.5 已冻结（`configs/g05_complexity_frozen_v1.json`）。第三方原文 lo
 
 ### 6.1 Stage 2 baseline（0.5 行改为两行）
 
-最低覆盖：简单规则下限、一个强监督学习 baseline、完整 Rules-Only、Rules+
-LLM-Repair 和 Direct-LLM。模态分类（4 类 label 另表）与六要素抽取（span
+最低覆盖：简单规则下限、一个强监督学习 baseline、完整 Rules-Only 与 Direct-LLM；
+各基线按 §2.3 的共同任务确定比较范围。
+Rules+LLM-Repair 不再列入最低覆盖或待运行臂。模态分类（4 类 label 另表）与六要素抽取（span
 P/R/F1 主表，modality evidence-span 单独/辅助）分别报告，不能用只做分类的方法
 冒充完整 Stage 2。
 
 ### 6.2 Stage 3 baseline
 
 最低覆盖：词法/检索下限、Winter、完整 Sun、一个现代 embedding/graph baseline
-（TF-IDF/SVD）；LLM/Hybrid 只在 Oracle 非 LLM 比较稳定后加入。实测（2026-08-22）：
+（TF-IDF/SVD）；后续衔接比较让 Rules-Only 与独立 Direct-LLM 抽取进入同一固定
+Stage 3，不再加入规则＋LLM 修复/fallback 实验。实测（2026-08-22）：
 Winter wrapper（`winter_stage3_development_v1` 配方）、Sun Stage 3 重建
 （`sun_stage3_development_v1`，Def 4–7）、BM25（`bm25_stage3_development_v3`）、
 TF-IDF/SVD（`tfidf_svd_stage3_development_v1`）四者共享同一 inference pack、

@@ -1,6 +1,19 @@
 {
   "schema_version": "sep_c2_execution_preflight@1.0.0",
   "task": "SEP-C2",
+  "dispatch_status": "historical_only_superseded_by_user_scope_reduction",
+  "scope_update_2026_09_14": {
+    "user_instruction": "规则+LLM直接不要了，不在进行规则+LLM的任何实验",
+    "cancelled_method": "sun_llm_fallback",
+    "cancelled_stages": ["F-1", "F-2", "F-3"],
+    "cancelled_calls": 27,
+    "remaining_direct_calls": {"s2_12": 36, "gdpr7": 74, "total": 110},
+    "hybrid_experiments_must_not_run": true,
+    "historical_confirmation_scope_below_is_not_current_authorization": true,
+    "two_method_machine_contract_adaptation_pending": true,
+    "new_api_authorization": false,
+    "automatic_external_transmission_approval_blocker_resolved": false
+  },
   "git_head": "952b405b71f70b25c9f6d78237b92769d30c227a",
   "checked_date": "2026-09-14",
   "status": "blocked_automatic_approval_before_process_start",

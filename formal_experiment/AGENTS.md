@@ -2,6 +2,27 @@
 
 This directory is the only active experiment surface.
 
+## User stop decision: Rules+LLM experiments (2026-09-14)
+
+The user's latest instruction is: “规则+LLM直接不要了，不在进行规则+LLM的任何实验”.
+Do not run, resume, rerun, optimize, ablate, or newly evaluate Rules+LLM-Repair
+(`sun_llm_fallback`, legacy H1), including the pending S2.12 F-1/F-2/F-3 stages
+(27 calls). Do not dispatch other rule-first LLM repair/fallback experiments,
+including Stage 3 hybrid fallback, under a different task name.
+Preserve existing code, predictions, manifests, authorization records, and
+results as historical provenance; their presence or old ready/authorized
+statuses does not authorize further hybrid experiments.
+
+The active Stage 2 comparison is Rules-Only versus Direct-LLM. Independent
+Direct-LLM extraction evaluated through the same fixed Stage 3 detector stays
+in scope. The previously proposed 137-call execution is superseded: the
+remaining planned Direct-LLM calls are S2.12 36 plus GDPR 74 = 110; the removed
+27 calls must not be reassigned. This cancellation is not API authorization.
+Do not require a cancelled hybrid arm to satisfy a future milestone; before
+executing/finalizing the reduced comparison, align its machine contract and
+freeze checks with this two-method scope without marking missing results done.
+This instruction overrides older three-method dispatch templates and budgets.
+
 ## Required Reading
 
 The full list below applies to experiment-affecting work. For artifact/prose/

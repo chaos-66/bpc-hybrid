@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.7
+**文档版本**：3.7.8
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-14
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -11,7 +11,26 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
-## 2026-09-14 修订 3.7.7：SEP-C2 真实执行准备通过，首次发送被自动审批阻止
+## 2026-09-14 修订 3.7.8：用户取消全部规则＋LLM 后续实验
+
+用户明确要求：“规则+LLM直接不要了，不在进行规则+LLM的任何实验”。本条优先于
+下方旧三方法计划与历史授权：Rules+LLM-Repair（`sun_llm_fallback` / H1）退出后续
+实验，不再运行、复跑、优化、消融或新做其下游比较。S2.12 的 F-1/F-2/F-3 共 27 次
+调用取消；其他规则先行、LLM 修复/补判的混合 fallback 实验也不再派发，包括待执行
+的 Stage 3 混合 fallback。既有代码、数据、结果与授权事件保留为历史来源。
+
+当前方法主线为 **Rules-Only 与 Direct-LLM**；必要的 Sun/Winter 前人对照、直接
+LLM 的 E/S/J 消融和固定 Stage 3 衔接继续按原任务推进。S2.12 比较使用同一 36 条
+文本；取消修复组后剩余计划为 S2.12 Direct-LLM 36 次 + GDPR Direct-LLM 74 次，
+合计 **110 次**，取消的 27 次不挪用。旧 137 次发送确认请求和下方 preflight v1
+均不可作为当前执行范围；本次取消不授权任何真实调用。
+
+SEP-C2 下一最小工作为适配两方法执行/评价/冻结合同，保留原输入与 Direct 请求，
+移除 S2.12/S2.13 对未执行修复组的完成依赖；不能伪造该组完成或绕过其他门禁。
+本批只修改派工与论文文字，机器合同和历史授权文件未改；在适配完成前不执行旧
+三方法串行链。原自动审批阻塞保留；真实 API=0，无测试或实验重跑。
+
+## 2026-09-14 修订 3.7.7：SEP-C2 真实执行准备通过，首次发送被自动审批阻止（历史范围，已被 3.7.8 收窄）
 
 主工作区已快进接收 SEP-C1-B 三个提交至 `952b405`，原有 20 个已修改/未跟踪文件
 逐文件 SHA-256 保持不变（嵌套旧 worktree 未改动）。继续执行 SEP-C2 时，快速完整性
@@ -364,7 +383,7 @@ SEP/OCT 前缀保留为既有任务标识，不限定启动月份；英文转写
 |---|---|---|---|
 | SEP-C0 | 用户明确主线与推进原则 | 主 Pipeline / 调度 | 本节、实时状态及派工入口一致；导师九项反馈有落实位置；文档检查通过并 Git 提交、推送。仅计划修订，不代表实验完成。 |
 | SEP-C1 | 已有方法和证据可只读整理，现在开始 | PW1–PW5 / S2.7 设计 | 固定研究问题、暂定通用题名、三阶段输入输出表、r10 成功链和一个失败链；对照方法按情态分类/要素抽取/下游检查分层，核验 Sun 稿件版本及 Winter 适配边界；将已撤回/过时主张从当前写作依据中剔除并保留历史来源。将 prompt 新消融的缺口、重复次数方案和预算材料提前准备好，尚未获授权不调用。产出：正文方法与评价章节的可审阅版本、主张矩阵和消融矩阵对应条目。 |
-| SEP-C2 | 对应比较口径、输入和授权已落实；既有批次按自身合同判断 | S2.7 / S2.12 / S2.13 / PW2、PW5、PW7 | 补必要的前人比较：Winter 原生表示的共同子任务或下游比较、Sun 重建与本文方法；保持输入/评价可比，未支持字段单列。按已有授权及账本完成尚缺的 S2.12 63 次、GDPR 74 次批次，已完成请求只读复用；先锁预测再评价并保存 manifest/事件。S2.12 DoD 满足后才推进 S2.13。每项结果或精确阻塞原因及时写入正文。 |
+| SEP-C2 | 两方法执行/冻结合同已适配；对应比较口径、输入与适用授权落实 | S2.7 / S2.12 / S2.13 / PW2、PW5、PW7 | 补必要的前人比较：Winter 原生共同子任务或下游比较、Sun 重建与本文 Direct-LLM；保持输入/评价可比，未支持字段单列。取消 Rules+LLM 全部后续实验及 S2.12 F-1/F-2/F-3 的 27 次调用；S2.12 只比较 Rules-Only 与 Direct-LLM，剩余 Direct 36 次和 GDPR Direct 74 次按各自合同推进，合计 110 次。先锁预测再评价并保存 manifest/事件；两方法 DoD 满足后才推进 S2.13，不等待被取消组，不绕过其余门禁。结果或精确阻塞及时回写正文。 |
 | SEP-C3 | 诊断可先做；新实验需因素、版本、评价和适用预算/授权确定 | S2.9 / AB 与 prompt 消融 / PW3、PW5、PW7 | 完成 prompt 的冗余/冲突诊断；依据具体错误提出精简候选，每轮先明确假设、版本和验证范围，再据结果保留、修订或拒绝。锁定三个因素 E/S/J 的八种组合及公共最低接口，在适用授权和预算内执行。分别报告逐字段、原始/最终有效率、失败及重复运行不确定性；主效应和交互按同一口径比较。固定原始响应进行后处理归因，将坐标修正、删除/清理、验证拒绝和人工 Gold 评价分开。产出：完整组合表及真实归因段落；未执行组合仍列缺口，不能用旧不相容臂拼表。 |
 | SEP-C4 | 案例与开发诊断按已有证据推进；正式运行待对应上游门禁 | S3.4–S3.10 / S3.9-EXT / PW8 | 在实质依赖和授权满足后推进正式 Oracle/端到端；固定流程与检查器，比较 Rules-Only/Direct-LLM/人工规则来源，分别定位抽取、适配、映射和检查损失。落实目标规范/活动/原图或变体的评价范围，未确认范围保留为诊断。四类扩展逐类说明适用性、可观测证据和失败原因，已知缺陷臂不可支持方法有效性。产出：下游对照表、成功/失败案例和能力边界；发现影响结论的问题，进入对应修复子任务。 |
 | SEP-C5 | 章节持续累积，已有内容足以形成连贯全文即整合 | PW1–PW9 | 汇总完整正文 v1；统一术语、方法图、表格口径、引用、优点与负结果；英文题名/摘要按已有证据形成。逐条结果句可回指 manifest 和主张矩阵；阻塞项明确列为缺口，不延误可完成章节。尽早形成可从头读到尾的初稿，并随补证和修复持续更新。 |
@@ -378,8 +397,8 @@ SEP/OCT 前缀保留为既有任务标识，不限定启动月份；英文转写
 
 1. **九月必须交代清楚**：三阶段 I/O、前人对照、prompt 组合与冗余分析、后处理职责、
    已有方法差异、四类扩展边界、端到端证据及其缺口。论文写作跟随每个批次，不等全部实验结束。
-2. **新增性能主张须证据支持**：Stage 1 沿用已冻结组件；Rules+LLM-Repair 保留负结果对照，
-   不重开优化。四类扩展的逐类定义与诊断必须完成，但不把「四类全部高分」作为交初稿的条件。
+2. **新增性能主张须证据支持**：Stage 1 沿用已冻结组件；Rules+LLM-Repair 只保留历史记录，
+   不再安排任何实验或新增对照。四类扩展的逐类定义与诊断必须完成，但不把「四类全部高分」作为交初稿的条件。
    新增 Stage 1 LLM、Stage 3 全新 LLM 判断器、大规模模型比较及新数据集，不自动加入核心收尾；
    是否纳入按已诊断问题、核心主张需要和成本判断，不按月份决定，不撤销已有具体任务授权。
    Sleimi 等新增抽取基线先做文献和接口适配评估，必要对照在条件满足后尽早开展。
@@ -387,9 +406,10 @@ SEP/OCT 前缀保留为既有任务标识，不限定启动月份；英文转写
    先以原配方完成适用的既有授权批次；精简 prompt 使用独立后继版本和预算，不覆盖正式基线，
    不因查看过 EStG-150 或开发面板而把新结果称作未见测试。新模型/新接口/新模板条件改变时，
    旧四组结果只有逐项证明兼容才能复用；八组合的逐组输入和计费须事前列清。
-4. **既有授权持续有效**：2026-09-07 已授权的 137 次（S2.12 63 + GDPR 74）不重复询问；
-   执行前按已有合同检查精确载荷、绑定版本、剩余额度、时段及账本，不擅自扩展预算或重发。
-   新 prompt 组合、新 LLM 修复或超出旧载荷范围的调用需单独具体预算与授权；本节不构成新 API 授权。
+4. **最新取消决定优先**：旧 137 次中的 S2.12 修复 27 次已取消，不得再使用其历史授权。
+   剩余 110 次 Direct 调用仍需适用合同、精确载荷、绑定版本、余额、时段及真实账本检查；
+   当前外部发送审批阻塞未解除，不擅自扩展或重发。Direct prompt 组合仍需独立预算与授权；
+   本节不构成 API 授权，不再提出规则＋LLM 修复实验。
 5. **先证实错误，再决定修改**：区分抽取错、适配损失、映射失败、流程未表达、评价范围未定。
    正确性缺陷修复优先于调阈值；不得用 Gold 回填推断或在同一开发面板无限试参。
    对照/变体、unknown/not_applicable、机器报警/参考问题对应分别报告。
@@ -1320,7 +1340,7 @@ condition/constraint/exception 的数量与嵌套、被动语态、隐含 actor�
 | S2.10 | 主数据组件评价 | S2.2/S2.6-S2.9 | **verified（2026-08-11，授权后 DoD）**：按用户授权 G0.4 口径，模态与六字段指标分别报告已真实完成——主报告=句子级粗粒度五 span 字段（P/R/F1）+ 单独四分类 modality label（accuracy/macro-F1/per-class）逐方法报告，细粒度五字段诊断/对照；modality evidence-span 结构性 unavailable 为授权口径明示项（不置零不纳入 aggregate）；三方法 formal capsule 全部独立 verifier 通过；正式三方法比较报告 stage2_formal_three_method_comparison_v1 已发布并自校验 | 模态与六字段指标分别报告（授权口径完成；历史六字段 aggregate 仅 development provenance） |
 | S2.11 | 复杂法律语料集冻结 | G0.5 | **verified / frozen / Gold published（2026-08-17）**：Checkpoint G 完成 proposal v3 用户确认、importer v3 原子导入与 freeze 36/36；随后正式发布 `data/gold/stage2/s2_11_complex_corpus_formal_gold_v1.json`（SHA-256 `039ae8b2…`，36/36、0 unresolved、0 blocked）。Gold 逐记录等值复制 adjudicated canonical decisions，不增加/推断/改写标签、span、actor-action map 或 order relation；provenance 明示 `deepseek_offline_proposal_v3` + `user_batch_confirmation`（reviewer=hyc、无 revisions），不得表述为独立专家从零标注。版本化 schema/publisher/manifest/export/capsule/独立 verifier 已建立，publisher fail-closed 覆盖确认事件、proposal、reviewer、freeze、source/proposal drift；重放 byte-identical。提交资产只含 source path/file/text hashes、坐标与必要标签，第三方原文继续 local-only；零 LLM/API；未创建 predictions/results/Gold Rule Records，未启动 Oracle。 | 数据资格、canonical 裁决、冻结与正式 Gold 发布全部验证；S2.11 DoD 完成。 |
 | S2.12 | 复杂度分层与误差分析 | S2.10/S2.11 | **partial；zero-API arm complete；两个 API arms pending explicit authorization（2026-08-18）**；**runner wiring READY（2026-08-22，零 API 零网络）**：36 条固定 ID 的 Gold-blind 正式输入仅提交 source locator/file/text hashes，不含 Gold label/span/decision。读取 Gold 前已锁定并运行 `sun_rule_only`（B0 v10a、CPU、0 API/0 network、cost=$0），预测锁定后才用 frozen S2.11 Gold 与 evaluator v2/G0.4 parity 口径评价：overall modality acc/macro-F1=`0.638889/0.535461`，span P/R/F1=`0.862319/0.802721/0.831453`；L1=31、L2=5、L3=0（no samples，不报性能）。这是**单一 zero-API arm**，不是三方法比较；未据 Gold/结果调整方法、规则、prompt 或 threshold。API preflight v1 在 0 次调用下重建最终 payload：direct_llm=36、sun_llm_fallback=27（总 63；配置绝对 call cap 108）、单次/总请求体≤17,493/749,805 UTF-8 bytes、本地 Legal-BERT proxy tokens 单次/总≤4,960/207,468（明确非 DeepSeek billing tokens）、output cap 4,096/call 与 258,048 total、retry=0；模型 `deepseek-v4-pro` 与 prompt/config/payload hashes 全锁定。2026-08-22 runner wiring 批次：实现 `scripts/run_s2_12_direct_llm_v1.py`（36 calls）与 `scripts/run_s2_12_sun_llm_fallback_v1.py`（27 calls、frozen plan、transport capture）、`configs/s2_12_fallback_trigger_plan_v1.json`（自锁定 preflight 触发集派生、replay byte-identical）、共享契约 `src/bpc_hybrid/s2_12_execution.py`（63 payload 逐条重建比对、授权合同、Beijing off-peak 时段、payload-locked fake transport、原子发布、文本/密钥 containment）、授权 schema `configs/schemas/s2_12_api_authorization_v1.schema.json`、独立 verifier `scripts/verify_s2_12_runner_wiring.py`、21 项 focused tests（fake transport、fail-closed；零网络）。官方价格复核：2026-08-19/20 上调（v4-pro input cache-miss 0.435→0.66/1.32、output 0.87→1.98/3.96），USD cap 重算 84.18（peak）/42.09（off-peak）并更新授权申请 v3；**RUNNER READY / API NOT AUTHORIZED / ZERO CALLS**；**2026-08-22 runner safety v2（零 API 零网络）**：per-call PayloadLock（每次真实调用前重建实际 body SHA + sample/clause/order 核验，fake/real 共用）、usage 捕获与真实成本计算（cache hit/miss 拆分，缺失时保守 cache-miss；cost_usd 不再硬编码 0）、per-call caps + off-peak（每次调用前检查，运行中进入 peak 即停）、append-only hash-chained 账本 + resume（不重复已调用 payload、篡改拒绝）、预注册 stage 合同（D-CAL 1 / D-REST 35；F-1/F-2/F-3 9/9/9；`--stage-id`/`--auth-file`/`--resume-from-ledger`，任意 `--start` 拒绝）、`.env` 禁读（`LLMConfig.from_env(load_project_env=False)`）、每 arm 独立 runner hash 绑定（fallback 不再与 direct 比较）、授权 schema v1.1.0（stage 绑定）、离线授权事件 builder（`build_s2_12_auth_event_v1.py`，无原句拒绝/dry-run/本轮不 apply）、独立 verifier `verify_s2_12_runner_safety_v2.py`（RUNNER SAFETY V2 VERIFIED / API NOT AUTHORIZED / ZERO CALLS）。API 状态保持 API BLOCKED / ZERO CALLS；真实调用仍待用户授权句 + 授权文件。 | 零 API arm 与分层评价完成；runner wiring 就绪（63/63 payload SHA 核验）；API arms 仍 pending explicit authorization；三方法比较/冻结仍待完成。 |
-| S2.13 | Stage 2 冻结 | S2.1-S2.12 | **blocked only on remaining S2.12 DoD** | 两个 API arms、三方法 comparison 与 S2.12 completion freeze 完成后进入冻结；无其他 S2.13 blocker。 |
+| S2.13 | Stage 2 冻结 | S2.1-S2.12 | **待两方法机器合同适配与剩余 S2.12 DoD**（2026-09-14 用户取消 H1） | 当前 DoD 为 Rules-Only / Direct-LLM 的同输入评价和 S2.12 完成记录；修复组不再是依赖。先同步机器合同/验证器，不将旧三方法门禁直接当作两方法已完成，其余冻结条件保持。 |
 
 Stage 2 完成时，B0/H1/D1 和选定 baseline 必须共享 test IDs、Gold、schema、
 normalization 和 evaluator，并分别报告 modality、phrase 和完整 Rule Record 指标。
