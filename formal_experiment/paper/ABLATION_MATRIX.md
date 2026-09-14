@@ -18,7 +18,8 @@
 > 详细预检见 `outputs/reports/barrientos_paper_ablation_preflight_v1.md`；下文历史
 > 结果保留，新消融真实数值仍为TODO，不继续为了凑齐AB编号追加实验。
 
-**版本**：v3（2026-08-30）
+**版本**：v4（2026-09-14）；v3 的 2026-08-30 批量状态保留在下方历史段。
+本轮 SEP-C1-B 只增加完整 E/S/J 组合、分析协议与预算准备，未改变既有 AB 数字。
 **状态**：Barrientos A/B/C 离线套件、D/E 1140-call 固定计划、Direct-LLM 后处理
 三模块离线单因素与三个 Prompt 单因素 450-call 批次均已运行。Prompt 批次失败0，
 实际成本 $3.3650。结论按正、负与字段权衡如实报告。
@@ -31,6 +32,151 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
 （旧代号 H1）。机器 ID 仅为兼容保留。
 **纪律**：跨 schema/跨任务比较（AB-3/AB-4 等）不得用单一 F1 宣称综合优劣，只能
 报告各自口径内结果与定性适配结论；涉及真实 LLM 的消融逐批用户授权。
+
+## SEP-C1-B 完整 E/S/J 2^3 Prompt 组合消融与预算准备（2026-09-14，零 API，未运行）
+
+**状态**：prepared_not_run。本节只固定完整组合、分析协议与授权材料；未创建或修改
+可执行 prompt、检查器或 Gold，未调用真实 LLM/API。八个组合在真实运行和评价完成前
+全部保持待运行。
+
+### 因素定义与共同最低任务/输出接口
+
+- **E 为语义输入输出示例**：冻结 v6 prompt 的 `## Examples` 六个合成 input-output
+  示例，以及 user template 中的 `{few_shot_block}`。E=0 时用已登记的 non-semantic
+  structural template 替换示例，保留可解析输出形状但不提供语义示范。
+- **S 为详细六要素语义规则**：system prompt 中 `Six-element semantics` 标题与规则
+  9-14、`Missing, uncertain, passive, and reference rules` 标题与规则 15-19、
+  `Field-typing precision (D1-R1)` 标题与规则 25-27。S=0 只删除这些文本。
+- **J 为显式 JSON/结构格式说明**：合同介绍、`Output discipline` 标题与规则 1-5、
+  规则 24 中 schema-only 措辞、user template 中 canonical JSON 措辞。J=0 只删除
+  这些显式格式纪律，不删除共同接口。
+- **共同最低任务/输出接口 C（八个组合都保留）**：角色与任务句；规则 6-8 的
+  source-only、精确 span 与 normalized 约束；规则 20-23 的 clause/coordination/
+  ID 约束；规则 24 的 span/reference/no-inference 语义部分；input envelope
+  （input mode/sample_id/source_id/source_text）。E=1 时六个示例、E=0 时 structural
+  template 始终提供可解析 JSON 对象形状，`stage2_prediction.schema.json@1.0.0`
+  仍出现在输出示例或模板中。因此 **J=0 不会破坏共同输出契约**，但会失去额外的
+  JSON-only/键集合/validation 占位纪律。
+
+### 八组合、已有证据与可复用判断
+
+| E S J | 因子状态 | 现有臂/证据 | 可复用性判断 |
+|---|---|---|---|
+| 111 | E1 S1 J1 | `D-full-0813`，150 calls，prompt SHA `3aa64877...`，真实执行 | 配置匹配，可作单因素历史基线/构造校验；不作为主 2^3 因子单元 |
+| 011 | E0 S1 J1 | `D-no-semantic-examples-0813`，prompt SHA `261d7b23...` | 同上；E=0 是结构模板替换，已在 manifest 披露 |
+| 101 | E1 S0 J1 | `D-no-semantic-guidance-0813`，prompt SHA `fa5e9f00...` | 同上；S 删除文本与本节定义一致 |
+| 110 | E1 S1 J0 | `D-no-explicit-json-contract-0813`，prompt SHA `0b7b93ad...` | 同上；输出契约由六示例保留，合法率 1.0 |
+| 100 | E1 S0 J0 | 无配置相同臂 | 待运行 |
+| 010 | E0 S1 J0 | 无配置相同臂 | 待运行 |
+| 001 | E0 S0 J1 | 无配置相同臂 | 待运行 |
+| 000 | E0 S0 J0 | 无配置相同臂 | 待运行 |
+
+**不可直接拼成完整组合的原因**：现有四条臂来自同一 2026-08-30 批次，每臂只有
+1 次，且恰好覆盖 `111/011/101/110` 四个至少两个因素为 1 的格子。该旧批次与
+高阶层因子模式完全混杂；若把它们与缺失四格拼成一个 2^3，批次/时间效应会直接
+进入主效应和交互项。现有结果可以在单因素历史对照中复用，但不能在未说明混杂
+的情况下冒充完整组合。若只追求组合覆盖而非无偏交互，可用它们构造非推荐的
+复用变体；其调用数和费用另列在预算表，不作为主授权范围。
+
+### 推荐设计、重复与采样
+
+- **推荐主设计**：同一批次重跑 8 个组合 x 固定 150 条 EStG-150 样本 x 2 次重复
+  = **2400 次新增调用**；不复用旧四臂作为因子单元。每条样本在每个 arm/repeat 中
+  各调用一次，共 16 个 arm-repeat 观测；全 2^3 模型含 8 个参数，残差自由度 8。
+- **固定样本**：`data/input/estg150_formal_inference_input_v2.json`，150 条，
+  SHA256 `52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2`。
+- **Gold/evaluator**：Stage 2 正式冻结 Gold/evaluator 口径不变；evaluator
+  `sun_literal_overlap_evaluation@2.0.0`，配置 SHA256
+  `352113b568c6075c8b01dafa5fdf2e5ab4a1454bb10933cd2f9c27f5c008cc3f`；真 Gold
+  以冻结 commit `56d2b03` 的 Layer E + membership 构建，等价正式发布件
+  `estg150_formal_gold_v1.json` SHA256
+  `c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100`。
+- **采样参数**：`deepseek-v4-pro`（登记 release `DeepSeek-V4-Pro-0813`），
+  temperature=0、top_p=1、max_tokens=4096、retry=0、stream=false、
+  thinking.type=disabled、response_format=null；只在北京时间闲时执行；API arm
+  不读取 Gold，预测锁定后才评价。
+- **重复含义**：两次为 provider-level 复跑，不是独立样本；主分析同时报告
+  repeat 内差异，不以 repeat 替代 150 条样本的配对结构。
+- **推荐先不做第三重复**。若门控（失败率或重复差异）触发，再单独申请
+  +1200 calls；不得在一批内自动续跑。
+
+### 评价指标、失败计数与预定分析
+
+- **主指标**：每次 arm/repeat 的 `overall.f1`（Sun literal-overlap 六字段
+  statement-level 口径）。**次指标**：六个字段的 P/R/F1、无效/失败计数、
+  合法输出率；modality 分类 label 不在本 factorial 主表中（该 evaluator
+  只看 evidence span），仍按 Stage 2 单独表报告。
+- **失败定义与计数**：网络/API error、空响应、非 JSON、schema/cross-field
+  invalid、identity 不符、无法进入 canonical six-field record，均计失败并保留在
+  150 条分母中；evaluator 对 invalid attempt 按空抽取处理。逐 arm/repeat 报
+  `failed_count`、`valid_output_rate`、`invalid_attempt_count`。任一 arm/repeat 内失败率
+  >5% 标记不稳定，>10% 暂停该组合的因子解释；同时报完整案例敏感性分析
+  （剔除该 arm/repeat 内失败样本后重算），但不得用剔除结果替换主分母。
+- **主效应/交互模型**：以 arm-level `overall.f1` 为响应，编码 E,S,J 取 0/1，
+  拟合全因子模型
+  `Y = mu + aE + bS + cJ + ab(E*S) + ac(E*J) + bc(S*J) + abc(E*S*J) + error`。
+  主效应为边际均值差（E=1 减 E=0，以此类推）；交互项按差中之差定义并明确
+  报告。重复提供纯重复误差；不做未预注册的 p 值或显著性声明。
+- **不确定性**：按 150 个 sample_id 做整簇 bootstrap（B=10,000，所有 arm 共享
+  同一重抽样），每次重算全部 8 个 arm 的 evaluator 并重新拟合模型，报告主效应和
+  交互效应的 percentile 95% CI；同时报告 repeat-level min/max/SD。若 CI 包含 0，
+  只写无区间证据，不写无效应。
+- **口径冻结**：因素文本、组合构造、样本、重复次数、采样参数、指标、失败处理、
+  主/交互分析在运行前锁定；运行后不改因子/阈值/指标；负结果与失败组合照实报告。
+
+### 新增调用数与预算上限
+
+| 方案 | 新增 calls | 预计 input tokens | input cap(x1.5) | output cap(4096/次) | USD cap(peak) | CNY off-peak envelope | 预期成本(线性外推，非上限) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **推荐：同批次 8x150x2** | **2400** | 8,687,550 | 13,031,325 | 9,830,400 | **67.36** | **229.63** | $16.11 / 54.92 元 |
+| 非推荐复用变体（旧四臂 repeat-02 + 缺失四格 x2） | 1800 | 5,841,713 | 8,762,570 | 7,372,800 | 48.92 | 166.76 | $11.39 / 38.84 元 |
+| 可选第三重复（全 8x150x1） | +1200 | 4,343,775 | 6,515,663 | 4,915,200 | +33.68 | +114.81 | +$8.05 / +27.46 元 |
+
+**单臂 estimate（每 150 calls，渲染 body UTF-8 bytes/3 向上取整）**：
+
+| E S J | 臂 | 预计 input tokens |
+|---|---|---:|
+| 111 | D-full-0813 | 880,149 |
+| 011 | E0/S1/J1 | 432,849 |
+| 101 | E1/S0/J1 | 703,149 |
+| 110 | E1/S1/J0 | 829,690 |
+| 100 | E1/S0/J0 | 652,495（计划） |
+| 010 | E0/S1/J0 | 383,395（计划） |
+| 001 | E0/S0/J1 | 255,849（计划） |
+| 000 | E0/S0/J0 | 206,199（计划） |
+
+**计算依据与边界**：
+- input token：按现有 runner 的 `render all requests -> JSON body -> ceil(UTF-8
+  bytes/3)` 计算；111/011/101/110 的单臂值与既有 450-call 预算逐项一致；缺失四臂
+  由冻结 v6 prompt 与已登记 v2 变换确定性组合生成，属计划估算，创建 prompt 后
+  必须重新渲染并替换为最终值；组合生成脚本/规则未在本轮写成可执行 prompt。
+- input cap = 预计 input x 1.5；output cap = calls x 4096；USD cap 与 CNY envelope
+  按 2026-08-30 项目记录价格快照计算并乘 1.2 向上取整。
+- **价格来源与日期**：`https://api-docs.deepseek.com/zh-cn/quick_start/pricing/`；
+  peak：input cache-miss 1.32 USD/1M、output 3.96 USD/1M；off-peak CNY：
+  input 4.5、output 13.5 每 1M。该快照由 2026-08-30 项目合同记录，**本轮
+  2026-09-14 未联网复核**；执行前必须再次核验，若价格或模型 release 变化则停止
+  并重新授权，不得用本表旧价直接调用。
+- **扣除重跑量的条件**：只有状态完成且 prompt/input/evaluator/model release/
+  采样参数全部匹配，才允许把旧结果计入同一分析。本轮旧四臂虽配置匹配，但其
+  设计状态是 4 个单因素臂加 1 个共享 baseline、每臂 1 次、旧批次与至少两个因素
+  为 1 的格子完全混杂，不满足主 2^3 组合的均衡状态，故主推荐预算不扣除它们；
+  非推荐复用变体才把这 600 次旧结果扣为 repeat-01，扣后新增 1800 次。
+- **预期成本**：利用既有 450-call 批次的实际 usage 按 E/S/J 因子线性外推，
+  只作预算参考，不作为硬上限；硬上限以 caps 表为准。
+
+### 后续最小执行范围与授权材料
+
+- 下一实现批次（仍未执行）：在现有 v2 builder/runner 上新增缺失四臂，生成
+  八臂 manifest、prompt hashes 和重新渲染 token 预算；扩展执行器到
+  `8 arms x repeat-01/02`，加入同一授权/账本/off-peak/失败停止门；跑零 API
+  的 dry-run 和预算门，不调用真实 API。
+- 授权材料：见 `docs/API_AUTHORIZATION_REQUEST.md` 第 14 节的草案句和 caps；用户
+  亲自发出逐字授权句并创建授权事件后才可调用；本轮不创建授权事件、不执行。
+- 若复用门禁发现旧臂 prompt/input/evaluator/model release 任一不匹配，旧的
+  600 次也不得复用；主推荐方案本身不依赖旧结果，调用上限不变。
+- **所有 000-111 真实运行/评价保持待运行**；未取得真实 arm manifest 前，不得
+  在论文中写任何组合的消融结果。
 
 ## Barrientos 消融套件 v2（2026-08-22，零 API）——离线完成 + D/E wired
 

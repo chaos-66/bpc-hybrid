@@ -624,3 +624,47 @@ python scripts/run_gdpr7_direct_llm_v1.py `
   `python -m pytest tests/test_s2_12_authorization_files_v1.py -q`，
   并核验 `.gitattributes` 钉住的 LF 资产在 `git checkout` 后仍为原始 LF 字节
   （回归测试已内置）。
+## 14. SEP-C1-B 完整 E/S/J 2^3 Prompt 消融预算与授权草案（2026-09-14，零 API）
+
+**状态**：prepared_not_run。本节只准备授权材料；未创建授权事件，未调用真实 API，
+未修改可执行 prompt、检查器或 Gold。上一项 SEP-C1-B 交付见
+`outputs/reports/sep_c1b_factorial_budget_plan_v1.md` 与 `paper/ABLATION_MATRIX.md`
+SEP-C1-B 节。
+
+**范围与调用数**：同一批次重跑 8 个 E/S/J 组合 x 固定 EStG-150 150 条 x 2 repeats
+= **2400 新增 calls**。2026-08-30 的四条单因素臂（600 calls）配置匹配，但只覆盖
+`111/011/101/110` 四个格子且与高阶层因子模式/批次混杂，因此**主推荐不扣除**
+旧 600 用作因子单元；非推荐复用变体若复核通过可扣为 repeat-01，新增 1800 calls，
+但不得用于主交互因果解释。
+
+**固定资产与采样**：输入
+`data/input/estg150_formal_inference_input_v2.json`（SHA256
+`52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2`）；evaluator
+`sun_literal_overlap_evaluation@2.0.0`（config SHA256
+`352113b568c6075c8b01dafa5fdf2e5ab4a1454bb10933cd2f9c27f5c008cc3f`）；Gold 以冻结
+commit `56d2b03` 的 Layer E + membership 构建，正式件 `estg150_formal_gold_v1.json`
+SHA256 `c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100`。模型
+`deepseek-v4-pro`（release `DeepSeek-V4-Pro-0813`），temperature=0、top_p=1、
+max_tokens=4096、retry=0、stream=false、thinking disabled、response_format=null；
+仅 off-peak；API arm 不读 Gold。
+
+**预算 caps**：预计 input 8,687,550 tokens；input cap 13,031,325；output cap
+9,830,400；USD cap **67.36**（peak 价格快照 2026-08-30）；off-peak CNY envelope
+**229.63 元**。预期成本（外推参考，非上限）约 $16.11 / 54.92 元。价格来源
+`https://api-docs.deepseek.com/zh-cn/quick_start/pricing/`；本轮 2026-09-14
+**未联网复核**，执行前必须再次核验，价格或模型 release 变化则停止并重新授权。
+可选第三重复 +1200 calls / +$8.05 预期不在本授权内，另需单独授权。
+
+**失败与分析约定**：失败包括 API error、空响应、非 JSON、schema/cross-field
+invalid、identity mismatch、无法进入 canonical six-field record；失败保留在 150
+分母，逐 arm/repeat 记 `failed_count`/`valid_output_rate`/`invalid_attempt_count`。
+按 E,S,J 拟合全因子模型，主效应为边际均值差、交互为差中之差；按 150 sample_id
+整簇 bootstrap（B=10,000）报告 95% CI；失败率 >5% 标记不稳定，>10% 暂停该组合
+因子解释；不做未预注册 p 值声明。
+
+**授权草案句（用户亲自逐字发出后才创建授权事件）**：
+`我明确授权执行 SEP-C1-B 完整 E/S/J 2^3 Prompt 消融实验：2400 calls，模型 deepseek-v4-pro（DeepSeek-V4-Pro-0813），temperature=0、top_p=1、max_tokens=4096、retry=0；固定 EStG-150 v2 输入与冻结 Stage 2 Gold/evaluator；USD 硬上限 67.36（peak）、off-peak 229.63 元；仅在北京时间闲时执行，超过任一上限立即停止，不自动续跑。`
+
+**下一实现批次（仍未执行）**：新增缺失四臂；生成八臂 manifest/prompt hashes；
+扩展 runner 到 8x2 并接入授权、账本、off-peak、失败停止门；重新渲染 token 预算并
+跑零 API dry-run。通过后等待用户逐字授权；所有 000-111 真实运行/评价保持待运行。
