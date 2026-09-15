@@ -1,0 +1,228 @@
+{
+  "evaluation": {
+    "confusion_rows_gold_columns_predicted": {
+      "definition": {
+        "__missing__": 0,
+        "definition": 19,
+        "obligation": 7,
+        "permission": 3,
+        "prohibition": 0
+      },
+      "obligation": {
+        "__missing__": 0,
+        "definition": 10,
+        "obligation": 47,
+        "permission": 2,
+        "prohibition": 0
+      },
+      "permission": {
+        "__missing__": 0,
+        "definition": 16,
+        "obligation": 2,
+        "permission": 23,
+        "prohibition": 1
+      },
+      "prohibition": {
+        "__missing__": 0,
+        "definition": 6,
+        "obligation": 2,
+        "permission": 1,
+        "prohibition": 11
+      }
+    },
+    "correct": 100,
+    "evaluator": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+    "evaluator_source": "src/bpc_hybrid/formal_stage2_evaluation.py",
+    "failed_sample_ids": [],
+    "gold_support": {
+      "definition": 29,
+      "obligation": 59,
+      "permission": 42,
+      "prohibition": 20
+    },
+    "missing_sample_ids": [],
+    "official_evaluator": {
+      "accuracy": 0.6666666666666666,
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "macro_f1": 0.6534515318406163,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8034188034188032,
+          "precision": 0.8103448275862069,
+          "recall": 0.7966101694915254
+        },
+        {
+          "class": "permission",
+          "f1": 0.647887323943662,
+          "precision": 0.7931034482758621,
+          "recall": 0.5476190476190477
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.6874999999999999,
+          "precision": 0.9166666666666666,
+          "recall": 0.55
+        },
+        {
+          "class": "definition",
+          "f1": 0.47500000000000003,
+          "precision": 0.37254901960784315,
+          "recall": 0.6551724137931034
+        }
+      ],
+      "records": 150,
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 0
+    },
+    "predicted_count": {
+      "definition": 51,
+      "obligation": 58,
+      "permission": 29,
+      "prohibition": 12
+    },
+    "records_expected": 150,
+    "records_failed": 0,
+    "records_missing": 0,
+    "records_scored": 150,
+    "schema_version": "sep_c2_sun_predecessor_evaluation@1.0.0",
+    "task_id": "estg150_modality_label_classification_v1",
+    "unit": "first clause modality per formal input record, frozen Gold order",
+    "unlabeled_predictions": 0,
+    "unlabeled_sample_ids": []
+  },
+  "execution": {
+    "formal_input": "data/input/estg150_formal_inference_input_v2.json",
+    "formal_input_sha256": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad",
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "records": 150
+  },
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "bert_legal_uncased_textcnn_existing",
+    "notes": "This is the already published B0 classifier component (nlpaueb/legal-bert-base-uncased + TextCNN). Its original train split contains a small number of normalized-text overlaps with EStG-150; therefore it is reported as a diagnostic sensitivity row, not as the primary clean BERT comparison.",
+    "reproduction_class": "existing locally trained checkpoint; reused without retraining",
+    "sun_role": "Existing project S2.4/S2.6 BERT-TextCNN classifier (final-paper-style head), reused read-only",
+    "training_data": "existing S2.4 checkpoint trained on the official EStG modality train split before this SEP-C2 run"
+  },
+  "official_clean_test": {
+    "accuracy": 0.9299516908212561,
+    "confusion_matrix": [
+      [
+        163,
+        4,
+        7,
+        1
+      ],
+      [
+        6,
+        179,
+        0,
+        1
+      ],
+      [
+        5,
+        1,
+        31,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        12
+      ]
+    ],
+    "macro_f1": 0.8753957363391326,
+    "n": 414,
+    "per_class": {
+      "definition": {
+        "f1": 0.9314285714285714,
+        "precision": 0.9314285714285714,
+        "predicted_count": 175,
+        "recall": 0.9314285714285714,
+        "support": 175
+      },
+      "obligation": {
+        "f1": 0.9649595687331537,
+        "precision": 0.9675675675675676,
+        "predicted_count": 185,
+        "recall": 0.9623655913978495,
+        "support": 186
+      },
+      "permission": {
+        "f1": 0.8051948051948051,
+        "precision": 0.7948717948717948,
+        "predicted_count": 39,
+        "recall": 0.8157894736842105,
+        "support": 38
+      },
+      "prohibition": {
+        "f1": 0.8000000000000002,
+        "precision": 0.8,
+        "predicted_count": 15,
+        "recall": 0.8,
+        "support": 15
+      }
+    }
+  },
+  "prediction": {
+    "artifact_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing",
+    "predicted_count": {
+      "definition": 51,
+      "obligation": 58,
+      "permission": 29,
+      "prohibition": 12
+    }
+  },
+  "report_id": "sep_c2_sun_predecessor_bert_legal_uncased_textcnn_existing_v1",
+  "safety": {
+    "estg150_used_for_training_or_selection": "pre-existing checkpoint may contain overlap; flagged",
+    "gold_read_by_prediction_code": false,
+    "gold_used_for_evaluation": true,
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "post_result_tuning": false
+  },
+  "schema_version": "sep_c2_sun_predecessor_report@1.0.0",
+  "status": "completed_zero_api_predecessor_method_run",
+  "training": {
+    "model_card": {
+      "architecture_scope": "full fine-tuned BERT encoder plus TextCNN head",
+      "checkpoint": {
+        "byte_size": 441559200,
+        "path": "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt",
+        "sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+        "versioned_in_main_workspace": false
+      },
+      "classifier_config": {
+        "path": "configs/models/sun_bert_textcnn_s24.json",
+        "sha256": "82f950bce605e405ee1600bca90a961337f30f2933ab807f33998464bb7af498"
+      },
+      "contamination_note": "This checkpoint was trained before this SEP-C2 run on the official split without the EStG-150 overlap exclusion; 24 flagged train rows (including 4 exact normalized matches) may have been seen during training. Therefore this row is diagnostic, not the primary clean BERT comparison.",
+      "estg150_exact_normalized_overlap_rows": 4,
+      "estg150_overlap_rows_flagged_by_clean_splitter": 24,
+      "input_language": "de",
+      "method_id": "bert_legal_uncased_textcnn_existing",
+      "model_family": "Legal-BERT base uncased + TextCNN head (existing project S2.4 reconstruction)",
+      "original_training_rows": 1985,
+      "run_manifest": {
+        "path": "outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json",
+        "sha256": "a67ad5d690155759d068afe37bd32ac8dc0238f237c298ed8ff857accb258026"
+      },
+      "schema_version": "sep_c2_sun_predecessor_existing_bert_model_card@1.0.0"
+    },
+    "model_selection": "existing checkpoint; no new training or selection",
+    "required": false,
+    "training_data": "existing S2.4 checkpoint trained on the official EStG modality train split before this SEP-C2 run"
+  },
+  "version_caveat": "Built against the locally available earlier author manuscript; the final Springer version could not be checked. This row reuses an existing project checkpoint and is flagged for small EStG-150 training overlap; it is a diagnostic, not a clean trained-from-scratch run."
+}

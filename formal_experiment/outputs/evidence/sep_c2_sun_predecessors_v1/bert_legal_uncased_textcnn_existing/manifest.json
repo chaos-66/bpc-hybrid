@@ -1,0 +1,184 @@
+{
+  "claim_scope": "development_zero_api_predecessor_method_comparison",
+  "dataset_audit": {
+    "estg150_probe_count": 300,
+    "excluded_conflicting_duplicate": {
+      "dev": 0,
+      "test": 0,
+      "train": 0
+    },
+    "excluded_cross_split_duplicate": {
+      "dev": 1,
+      "test": 9,
+      "train": 34
+    },
+    "excluded_estg150_overlap": {
+      "dev": 5,
+      "test": 3,
+      "train": 24
+    },
+    "final": {
+      "dev": {
+        "label_distribution": {
+          "definition": 175,
+          "obligation": 185,
+          "permission": 38,
+          "prohibition": 16
+        },
+        "membership_sha256": "4c927d4c81b41d4cd2e1c827b29cf184cce7afc13b83d7f1221f4124b99763e8",
+        "rows": 414,
+        "source_row_indices_sha256": "7230a31b70a920c08e74c3fda38256fdec12ede063bb8ac43768bfc9ef9860b6"
+      },
+      "test": {
+        "label_distribution": {
+          "definition": 175,
+          "obligation": 186,
+          "permission": 38,
+          "prohibition": 15
+        },
+        "membership_sha256": "029020316dcf844009caa5f081ad7efa88833f4d099385cbf7ae9b1587a329bb",
+        "rows": 414,
+        "source_row_indices_sha256": "c45efbd5339c2801a9454acb6229ef64e9a14ba5390167839b844ed1d525ae2d"
+      },
+      "train": {
+        "label_distribution": {
+          "definition": 811,
+          "obligation": 864,
+          "permission": 180,
+          "prohibition": 72
+        },
+        "membership_sha256": "3bc5fa9285955192d6e2786e79b6b371945c18b1231fa1db04ee04d66f06ca5a",
+        "rows": 1927,
+        "source_row_indices_sha256": "6ad99d403da1b8193828a79406fed886164478f6e8c2c8b9fa3a57dcdd741f92"
+      }
+    },
+    "official_split_origin": "project_reconstructed_deterministic_group_aware_split_not_sun_original",
+    "schema_version": "sep_c2_sun_predecessor_split_audit@1.0.0",
+    "source_files": {
+      "dev": {
+        "label_distribution": {
+          "definition": 177,
+          "obligation": 187,
+          "permission": 40,
+          "prohibition": 16
+        },
+        "path": "data/development/modality/sun_estg_modality_v1/splits/dev.jsonl",
+        "rows": 420,
+        "sha256": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6"
+      },
+      "test": {
+        "label_distribution": {
+          "definition": 177,
+          "obligation": 195,
+          "permission": 39,
+          "prohibition": 15
+        },
+        "path": "data/development/modality/sun_estg_modality_v1/splits/test.jsonl",
+        "rows": 426,
+        "sha256": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871"
+      },
+      "train": {
+        "label_distribution": {
+          "definition": 836,
+          "obligation": 891,
+          "permission": 185,
+          "prohibition": 73
+        },
+        "path": "data/development/modality/sun_estg_modality_v1/splits/train.jsonl",
+        "rows": 1985,
+        "sha256": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142"
+      }
+    }
+  },
+  "evaluator_binding": {
+    "byte_size": 8370,
+    "path": "src/bpc_hybrid/formal_stage2_evaluation.py",
+    "sha256": "5cc2276d4a8c0ffd2108be91eb4cab48c0d65f93a8d12c3f54baf7f570517fae"
+  },
+  "external_checkpoint_or_config_bindings": {
+    "classifier": {
+      "architecture_scope": "full fine-tuned BERT encoder plus TextCNN head",
+      "checkpoint": {
+        "byte_size": 441559200,
+        "path": "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt",
+        "sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+        "versioned_in_main_workspace": false
+      },
+      "classifier_config": {
+        "path": "configs/models/sun_bert_textcnn_s24.json",
+        "sha256": "82f950bce605e405ee1600bca90a961337f30f2933ab807f33998464bb7af498"
+      },
+      "contamination_note": "This checkpoint was trained before this SEP-C2 run on the official split without the EStG-150 overlap exclusion; 24 flagged train rows (including 4 exact normalized matches) may have been seen during training. Therefore this row is diagnostic, not the primary clean BERT comparison.",
+      "estg150_exact_normalized_overlap_rows": 4,
+      "estg150_overlap_rows_flagged_by_clean_splitter": 24,
+      "input_language": "de",
+      "method_id": "bert_legal_uncased_textcnn_existing",
+      "model_family": "Legal-BERT base uncased + TextCNN head (existing project S2.4 reconstruction)",
+      "original_training_rows": 1985,
+      "run_manifest": {
+        "path": "outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json",
+        "sha256": "a67ad5d690155759d068afe37bd32ac8dc0238f237c298ed8ff857accb258026"
+      },
+      "schema_version": "sep_c2_sun_predecessor_existing_bert_model_card@1.0.0"
+    },
+    "s26_config": {
+      "path": "configs\\models\\sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126"
+    }
+  },
+  "formal_gold_binding_read_only_for_evaluation": {
+    "byte_size": 474434,
+    "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "sha256": "bde3d15bfe63ed8c404ac902f87ef0664c2566741c47f32581245fb3b5a9a796"
+  },
+  "formal_input_binding": {
+    "byte_size": 207050,
+    "path": "data/input/estg150_formal_inference_input_v2.json",
+    "sha256": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad"
+  },
+  "implementation_bindings": {
+    "scripts/run_sep_c2_sun_predecessor_bert_existing_v1.py": {
+      "byte_size": 4050,
+      "path": "scripts/run_sep_c2_sun_predecessor_bert_existing_v1.py",
+      "sha256": "1d55d69715995c5d03acc5765c12c1fcc3c5c8d21bd7a8a1ca545677b0f10cf5"
+    },
+    "src/bpc_hybrid/sun_predecessors/common.py": {
+      "byte_size": 9216,
+      "path": "src/bpc_hybrid/sun_predecessors/common.py",
+      "sha256": "f63b3aba2881d89d7ea954106372668fbe57e74b9ee4ebb7948ac7c17a6b106d"
+    },
+    "src/bpc_hybrid/sun_predecessors/dataset.py": {
+      "byte_size": 15203,
+      "path": "src/bpc_hybrid/sun_predecessors/dataset.py",
+      "sha256": "aedc7da17c87114b81e7a935402b94c86063ad6bd2a3944bead9cb65cf6dae41"
+    },
+    "src/bpc_hybrid/sun_predecessors/evaluation.py": {
+      "byte_size": 8085,
+      "path": "src/bpc_hybrid/sun_predecessors/evaluation.py",
+      "sha256": "ced1c6c68246698e8564ca5ec0aab054848dd9fe3393c4060a5178a05094cf02"
+    },
+    "src/bpc_hybrid/sun_predecessors/neural.py": {
+      "byte_size": 13323,
+      "path": "src/bpc_hybrid/sun_predecessors/neural.py",
+      "sha256": "38157042dc40fed7aa285c2f6d2a4e016eeb29a5f14c0f1331eebdb353d04a3b"
+    },
+    "src/bpc_hybrid/sun_predecessors/runner_bert_existing.py": {
+      "byte_size": 13374,
+      "path": "src/bpc_hybrid/sun_predecessors/runner_bert_existing.py",
+      "sha256": "50e7290a3313d085d613f859da65d95138319266f7fe04e1b2d4a849f7b1b31d"
+    }
+  },
+  "method_id": "bert_legal_uncased_textcnn_existing",
+  "reproduction_class": "existing locally trained checkpoint; reused without retraining",
+  "safety": {
+    "estg150_used_for_training_or_selection": "pre-existing checkpoint may contain overlap; flagged",
+    "gold_read_by_prediction_code": false,
+    "gold_used_for_evaluation": true,
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "post_result_tuning": false
+  },
+  "schema_version": "sep_c2_sun_predecessor_method_manifest@1.0.0",
+  "sun_source_and_role": "Existing project S2.4/S2.6 BERT-TextCNN classifier (final-paper-style head), reused read-only",
+  "version_caveat": "Built against the locally available earlier author manuscript; the final Springer version could not be checked. This row reuses an existing project checkpoint and is flagged for small EStG-150 training overlap; it is a diagnostic, not a clean trained-from-scratch run."
+}
