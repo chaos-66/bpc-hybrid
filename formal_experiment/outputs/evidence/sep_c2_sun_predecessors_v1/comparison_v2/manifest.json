@@ -1,0 +1,82 @@
+{
+  "method_statuses": {
+    "bert_base_cased": {
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased/predictions.json",
+      "status": "completed_zero_api"
+    },
+    "bert_base_uncased": {
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased/predictions.json",
+      "status": "completed_zero_api"
+    },
+    "bert_large_cased": {
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/predictions.json",
+      "status": "completed_zero_api"
+    },
+    "bert_large_uncased": {
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased/predictions.json",
+      "status": "completed_zero_api"
+    },
+    "bert_legal_cased": {
+      "reason": "The exact cased EU-legislation legal-BERT checkpoint ('bert-legal-cased') is not published in the public nlpaueb Legal-BERT collection (only legal-bert-base-uncased and legal-bert-small-uncased exist), and no author checkpoint/code is present in the public paper repository or Archive.org supplement. A cased generic BERT or an uncased Legal-BERT is not allowed to occupy this exact configuration's completion position.",
+      "status": "blocked_exact_public_checkpoint_unavailable"
+    },
+    "bert_legal_uncased": {
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased/predictions.json",
+      "status": "completed_zero_api"
+    },
+    "bert_legal_uncased_probe": {
+      "diagnostic_only": true,
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe/predictions.json",
+      "status": "completed_diagnostic_supplement_weaker_adaptation"
+    },
+    "bert_legal_uncased_textcnn_existing": {
+      "diagnostic_only": true,
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing/predictions.json",
+      "status": "completed_diagnostic_training_overlap_flagged"
+    },
+    "cf_cnn": {
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/predictions.json",
+      "status": "completed_zero_api"
+    },
+    "cf_kw": {
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw/predictions.json",
+      "status": "completed_zero_api"
+    },
+    "cf_rnn": {
+      "prediction": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn/predictions.json",
+      "status": "completed_zero_api"
+    },
+    "direct_llm": {
+      "prediction": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+      "status": "existing_formal_arm_reused_zero_api"
+    },
+    "sun_rule_only": {
+      "prediction": "data/predictions/b0_formal_arm_v1/predictions.json",
+      "status": "existing_formal_arm_reused_zero_api"
+    }
+  },
+  "report_id": "sep_c2_sun_predecessors_comparison_v2",
+  "safety": {
+    "gold_used_for_evaluation_only": true,
+    "network_calls_were_public_model_repositories_only": true,
+    "new_llm_api_calls": 0,
+    "new_network_calls_for_model_download": true,
+    "new_paid_api_calls": 0,
+    "post_result_tuning": false
+  },
+  "schema_version": "sep_c2_sun_predecessor_comparison_manifest@2.0.0",
+  "source_bindings": {
+    "data/gold/stage2/estg150_formal_gold_v1.json": {
+      "sha256": "bde3d15bfe63ed8c404ac902f87ef0664c2566741c47f32581245fb3b5a9a796"
+    },
+    "data/input/estg150_formal_inference_input_v2.json": {
+      "sha256": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad"
+    },
+    "src/bpc_hybrid/formal_stage2_evaluation.py": {
+      "sha256": "5cc2276d4a8c0ffd2108be91eb4cab48c0d65f93a8d12c3f54baf7f570517fae"
+    },
+    "src/bpc_hybrid/sun_predecessors/evaluation.py": {
+      "sha256": "ced1c6c68246698e8564ca5ec0aab054848dd9fe3393c4060a5178a05094cf02"
+    }
+  }
+}

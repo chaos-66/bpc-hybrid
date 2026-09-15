@@ -1,0 +1,678 @@
+{
+  "architecture_evidence": "Sun et al. (2024), final article, Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
+  "best_dev": {
+    "accuracy": 0.8768115942028986,
+    "confusion_matrix": [
+      [
+        155,
+        13,
+        6,
+        1
+      ],
+      [
+        13,
+        168,
+        3,
+        1
+      ],
+      [
+        4,
+        1,
+        33,
+        0
+      ],
+      [
+        3,
+        5,
+        1,
+        7
+      ]
+    ],
+    "macro_f1": 0.7909387267451784,
+    "n": 414,
+    "per_class": {
+      "definition": {
+        "f1": 0.8857142857142857,
+        "precision": 0.8857142857142857,
+        "predicted_count": 175,
+        "recall": 0.8857142857142857,
+        "support": 175
+      },
+      "obligation": {
+        "f1": 0.9032258064516129,
+        "precision": 0.8983957219251337,
+        "predicted_count": 187,
+        "recall": 0.9081081081081082,
+        "support": 185
+      },
+      "permission": {
+        "f1": 0.8148148148148148,
+        "precision": 0.7674418604651163,
+        "predicted_count": 43,
+        "recall": 0.868421052631579,
+        "support": 38
+      },
+      "prohibition": {
+        "f1": 0.56,
+        "precision": 0.7777777777777778,
+        "predicted_count": 9,
+        "recall": 0.4375,
+        "support": 16
+      }
+    }
+  },
+  "checkpoint": {
+    "byte_size": 442780640,
+    "local_only_do_not_commit": true,
+    "path": "outputs/development/sep_c2_sun_predecessors_v1/bert_base_cased/best_model.pt",
+    "sha256": "f720d055faffc34ba77fb02fcf51cece629d86868ef69c428256cd36e531fda8",
+    "versioned": false
+  },
+  "config": {
+    "architecture": {
+      "activation": "relu",
+      "cls_input": "per-encoder-layer [CLS] vectors CLS1..CLSL, concatenated as a length-L sequence",
+      "dropout": 0.5,
+      "encoder_trainable": true,
+      "filters_per_kernel": 256,
+      "kernel_sizes": [
+        3,
+        4,
+        5
+      ],
+      "max_length": 192,
+      "num_labels": 4,
+      "paper_source": "final article Fig. 3",
+      "pooling": "global_max_over_layer_sequence"
+    },
+    "input_field": "raw_text_de",
+    "labels": [
+      "definition",
+      "obligation",
+      "permission",
+      "prohibition"
+    ],
+    "language": "de",
+    "method_id": "bert_base_cased",
+    "model": {
+      "hidden_size": 768,
+      "local_dir": "bert-base-cased",
+      "local_files_only": true,
+      "num_hidden_layers": 12,
+      "repository_id": "google-bert/bert-base-cased",
+      "revision": "cd5ef92a9fb2f889e972770a36d4ed042daf221e"
+    },
+    "optimization": {
+      "batch_size": 16,
+      "device": "auto",
+      "early_stopping_metric": "macro_f1",
+      "early_stopping_patience": 2,
+      "effective_batch_size": 16,
+      "encoder_learning_rate": 2e-05,
+      "encoder_trainable": true,
+      "gradient_accumulation_steps": 1,
+      "gradient_clip_norm": 1.0,
+      "head_learning_rate": 0.001,
+      "hyperparameter_search": false,
+      "loss": "unweighted_cross_entropy",
+      "max_epochs": 5,
+      "optimizer": "AdamW",
+      "seed": 20260915,
+      "warmup_ratio": 0.1,
+      "weight_decay": 0.01
+    },
+    "post_result_tuning": false,
+    "provenance_caveat": "Kernel widths, filter count, dropout, optimizer parameters, batch size, and stopping rules are not reported by Sun et al.; these reconstruction parameters are frozen before the EStG-150 run.",
+    "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned locally on clean official EStG train split",
+    "schema_version": "sep_c2_sun_predecessor_bert_full_config@1.0.0",
+    "sun_model_label": "bert-base-cased",
+    "sun_source": "Sun et al. (2024), final article Table 6/7 and Section 4.2.1/Fig. 3 (BERT-TextCNN)",
+    "training_data_contract": {
+      "estg150_used_for_training_or_selection": false,
+      "exclude_duplicates": true,
+      "exclude_estg150_overlap": true,
+      "source": "official_project_reconstructed_train_split",
+      "validation_split": "official_project_reconstructed_dev_split"
+    }
+  },
+  "config_path": "configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_base_cased_v1.json",
+  "dataset_audit": {
+    "estg150_probe_count": 300,
+    "excluded_conflicting_duplicate": {
+      "dev": 0,
+      "test": 0,
+      "train": 0
+    },
+    "excluded_cross_split_duplicate": {
+      "dev": 1,
+      "test": 9,
+      "train": 34
+    },
+    "excluded_estg150_overlap": {
+      "dev": 5,
+      "test": 3,
+      "train": 24
+    },
+    "final": {
+      "dev": {
+        "label_distribution": {
+          "definition": 175,
+          "obligation": 185,
+          "permission": 38,
+          "prohibition": 16
+        },
+        "membership_sha256": "4c927d4c81b41d4cd2e1c827b29cf184cce7afc13b83d7f1221f4124b99763e8",
+        "rows": 414,
+        "source_row_indices_sha256": "7230a31b70a920c08e74c3fda38256fdec12ede063bb8ac43768bfc9ef9860b6"
+      },
+      "test": {
+        "label_distribution": {
+          "definition": 175,
+          "obligation": 186,
+          "permission": 38,
+          "prohibition": 15
+        },
+        "membership_sha256": "029020316dcf844009caa5f081ad7efa88833f4d099385cbf7ae9b1587a329bb",
+        "rows": 414,
+        "source_row_indices_sha256": "c45efbd5339c2801a9454acb6229ef64e9a14ba5390167839b844ed1d525ae2d"
+      },
+      "train": {
+        "label_distribution": {
+          "definition": 811,
+          "obligation": 864,
+          "permission": 180,
+          "prohibition": 72
+        },
+        "membership_sha256": "3bc5fa9285955192d6e2786e79b6b371945c18b1231fa1db04ee04d66f06ca5a",
+        "rows": 1927,
+        "source_row_indices_sha256": "6ad99d403da1b8193828a79406fed886164478f6e8c2c8b9fa3a57dcdd741f92"
+      }
+    },
+    "official_split_origin": "project_reconstructed_deterministic_group_aware_split_not_sun_original",
+    "schema_version": "sep_c2_sun_predecessor_split_audit@1.0.0",
+    "source_files": {
+      "dev": {
+        "label_distribution": {
+          "definition": 177,
+          "obligation": 187,
+          "permission": 40,
+          "prohibition": 16
+        },
+        "path": "data/development/modality/sun_estg_modality_v1/splits/dev.jsonl",
+        "rows": 420,
+        "sha256": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6"
+      },
+      "test": {
+        "label_distribution": {
+          "definition": 177,
+          "obligation": 195,
+          "permission": 39,
+          "prohibition": 15
+        },
+        "path": "data/development/modality/sun_estg_modality_v1/splits/test.jsonl",
+        "rows": 426,
+        "sha256": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871"
+      },
+      "train": {
+        "label_distribution": {
+          "definition": 836,
+          "obligation": 891,
+          "permission": 185,
+          "prohibition": 73
+        },
+        "path": "data/development/modality/sun_estg_modality_v1/splits/train.jsonl",
+        "rows": 1985,
+        "sha256": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142"
+      }
+    }
+  },
+  "encoder": {
+    "hidden_size": 768,
+    "max_position_embeddings": 512,
+    "model_dir": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_models\\bert-base-cased",
+    "model_type": "bert",
+    "num_hidden_layers": 12,
+    "vocab_size": 28996
+  },
+  "history": [
+    {
+      "dev": {
+        "accuracy": 0.7222222222222222,
+        "confusion_matrix": [
+          [
+            163,
+            12,
+            0,
+            0
+          ],
+          [
+            48,
+            134,
+            3,
+            0
+          ],
+          [
+            32,
+            4,
+            2,
+            0
+          ],
+          [
+            8,
+            8,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.40990564491202874,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.7652582159624413,
+            "precision": 0.649402390438247,
+            "predicted_count": 251,
+            "recall": 0.9314285714285714,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.7813411078717202,
+            "precision": 0.8481012658227848,
+            "predicted_count": 158,
+            "recall": 0.7243243243243244,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.09302325581395349,
+            "precision": 0.4,
+            "predicted_count": 5,
+            "recall": 0.05263157894736842,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_count": 0,
+            "recall": 0.0,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 1,
+      "train_loss_mean": 1.011576159187585
+    },
+    {
+      "dev": {
+        "accuracy": 0.8333333333333334,
+        "confusion_matrix": [
+          [
+            164,
+            7,
+            3,
+            1
+          ],
+          [
+            35,
+            148,
+            2,
+            0
+          ],
+          [
+            5,
+            1,
+            32,
+            0
+          ],
+          [
+            5,
+            10,
+            0,
+            1
+          ]
+        ],
+        "macro_f1": 0.6654789886039887,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.8541666666666667,
+            "precision": 0.784688995215311,
+            "predicted_count": 209,
+            "recall": 0.9371428571428572,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.8433048433048433,
+            "precision": 0.891566265060241,
+            "predicted_count": 166,
+            "recall": 0.8,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.8533333333333334,
+            "precision": 0.8648648648648649,
+            "predicted_count": 37,
+            "recall": 0.8421052631578947,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.1111111111111111,
+            "precision": 0.5,
+            "predicted_count": 2,
+            "recall": 0.0625,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 2,
+      "train_loss_mean": 0.5935036411955337
+    },
+    {
+      "dev": {
+        "accuracy": 0.8623188405797102,
+        "confusion_matrix": [
+          [
+            153,
+            15,
+            6,
+            1
+          ],
+          [
+            13,
+            169,
+            3,
+            0
+          ],
+          [
+            4,
+            2,
+            32,
+            0
+          ],
+          [
+            3,
+            10,
+            0,
+            3
+          ]
+        ],
+        "macro_f1": 0.7191440086794039,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.8793103448275862,
+            "precision": 0.884393063583815,
+            "predicted_count": 173,
+            "recall": 0.8742857142857143,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.8871391076115485,
+            "precision": 0.8622448979591837,
+            "predicted_count": 196,
+            "recall": 0.9135135135135135,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.810126582278481,
+            "precision": 0.7804878048780488,
+            "predicted_count": 41,
+            "recall": 0.8421052631578947,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.3,
+            "precision": 0.75,
+            "predicted_count": 4,
+            "recall": 0.1875,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 3,
+      "train_loss_mean": 0.4203166457370293
+    },
+    {
+      "dev": {
+        "accuracy": 0.8695652173913043,
+        "confusion_matrix": [
+          [
+            147,
+            22,
+            5,
+            1
+          ],
+          [
+            7,
+            175,
+            3,
+            0
+          ],
+          [
+            4,
+            2,
+            32,
+            0
+          ],
+          [
+            3,
+            7,
+            0,
+            6
+          ]
+        ],
+        "macro_f1": 0.77809815397731,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.8749999999999999,
+            "precision": 0.9130434782608695,
+            "predicted_count": 161,
+            "recall": 0.84,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.8951406649616368,
+            "precision": 0.8495145631067961,
+            "predicted_count": 206,
+            "recall": 0.9459459459459459,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.8205128205128205,
+            "precision": 0.8,
+            "predicted_count": 40,
+            "recall": 0.8421052631578947,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.5217391304347825,
+            "precision": 0.8571428571428571,
+            "predicted_count": 7,
+            "recall": 0.375,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 4,
+      "train_loss_mean": 0.28072204807203666
+    },
+    {
+      "dev": {
+        "accuracy": 0.8768115942028986,
+        "confusion_matrix": [
+          [
+            155,
+            13,
+            6,
+            1
+          ],
+          [
+            13,
+            168,
+            3,
+            1
+          ],
+          [
+            4,
+            1,
+            33,
+            0
+          ],
+          [
+            3,
+            5,
+            1,
+            7
+          ]
+        ],
+        "macro_f1": 0.7909387267451784,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.8857142857142857,
+            "precision": 0.8857142857142857,
+            "predicted_count": 175,
+            "recall": 0.8857142857142857,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.9032258064516129,
+            "precision": 0.8983957219251337,
+            "predicted_count": 187,
+            "recall": 0.9081081081081082,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.8148148148148148,
+            "precision": 0.7674418604651163,
+            "predicted_count": 43,
+            "recall": 0.868421052631579,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.56,
+            "precision": 0.7777777777777778,
+            "predicted_count": 9,
+            "recall": 0.4375,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 5,
+      "train_loss_mean": 0.1719937686912315
+    }
+  ],
+  "method_id": "bert_base_cased",
+  "model_file_hashes": {
+    "config.json": {
+      "byte_size": 570,
+      "sha256": "8b73abed2d67075fd3ec0f840aa53d9cccdc9169c04a7da135c07e721910ed74"
+    },
+    "model.safetensors": {
+      "byte_size": 435755784,
+      "sha256": "1d8bdcee6021e2c25f0325e84889b61c2eb26b843eef5659c247af138d64f050"
+    },
+    "tokenizer.json": {
+      "byte_size": 435797,
+      "sha256": "5b3360be30cdf39081153cf9d30bfb0503c011462fc9f77f097127c83ef0f4d9"
+    },
+    "tokenizer_config.json": {
+      "byte_size": 49,
+      "sha256": "0f6d13e6f4da6f9e24f22ada6bc3be571123d858d7c0c05a8a7cd55a9c23c2e8"
+    },
+    "vocab.txt": {
+      "byte_size": 213450,
+      "sha256": "eeaa9875b23b04b4c54ef759d03db9d1ba1554838f8fb26c5d96fa551df93d02"
+    }
+  },
+  "official_clean_test_metrics": {
+    "accuracy": 0.8671497584541062,
+    "confusion_matrix": [
+      [
+        152,
+        13,
+        8,
+        2
+      ],
+      [
+        12,
+        171,
+        1,
+        2
+      ],
+      [
+        6,
+        1,
+        31,
+        0
+      ],
+      [
+        1,
+        8,
+        1,
+        5
+      ]
+    ],
+    "macro_f1": 0.7456160450491619,
+    "n": 414,
+    "per_class": {
+      "definition": {
+        "f1": 0.8786127167630058,
+        "precision": 0.8888888888888888,
+        "predicted_count": 171,
+        "recall": 0.8685714285714285,
+        "support": 175
+      },
+      "obligation": {
+        "f1": 0.9023746701846964,
+        "precision": 0.8860103626943006,
+        "predicted_count": 193,
+        "recall": 0.9193548387096774,
+        "support": 186
+      },
+      "permission": {
+        "f1": 0.7848101265822786,
+        "precision": 0.7560975609756098,
+        "predicted_count": 41,
+        "recall": 0.8157894736842105,
+        "support": 38
+      },
+      "prohibition": {
+        "f1": 0.4166666666666667,
+        "precision": 0.5555555555555556,
+        "predicted_count": 9,
+        "recall": 0.3333333333333333,
+        "support": 15
+      }
+    }
+  },
+  "schema_version": "sep_c2_sun_predecessor_training@1.0.0",
+  "sequence_length_stats": {
+    "estg150_formal_input": {
+      "max": 532,
+      "max_length": 192,
+      "p50": 115,
+      "p95": 358,
+      "p99": 493,
+      "rows": 150,
+      "rows_over_max_length": 31
+    },
+    "official_dev": {
+      "max": 218,
+      "max_length": 192,
+      "p50": 66,
+      "p95": 155,
+      "p99": 191,
+      "rows": 414,
+      "rows_over_max_length": 3
+    },
+    "official_train": {
+      "max": 215,
+      "max_length": 192,
+      "p50": 70,
+      "p95": 152,
+      "p99": 182,
+      "rows": 1927,
+      "rows_over_max_length": 10
+    }
+  }
+}

@@ -41,6 +41,16 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - 本批为实验代码、机器合同、具名测试与文档更新；未运行实验 API，未改 Gold 或历史
   预测/授权文件；停用规则仍见 `formal_experiment/AGENTS.md`。
 
+﻿## 0.4 SEP-C2 Sun 前人 9 配置收口（2026-09-15，零新增付费 API）
+
+- 当前真实状态：Sun final version Table 6/7 的 9 个前人配置中，8 个已有实际预测和同口径评价；`bert-legal-cased` 因公开精确 checkpoint 不存在而具名阻塞，未用 generic cased BERT 或 uncased Legal-BERT 占位。
+- 架构核实：final Springer version Section 4.2.1 / Fig. 3 已用于核实 BERT-TextCNN = 每层 `[CLS]` 序列 -> TextCNN(3/4/5, 256 filters) -> global max -> 四分类。公开模型 revision 已固定；clean official EStG train 1927 条训练，clean dev 414 条选 checkpoint。
+- 分类结果（acc / macro-F1）：CF_KW 0.6200/0.5322；CF_RNN 0.5667/0.4800；CF_CNN 0.6733/0.6177；bert-base-uncased 0.4467/0.3507；bert-base-cased 0.5733/0.4529；bert-large-uncased 0.5733/0.5245；bert-large-cased 0.6600/0.6024；bert-legal-uncased 0.4800/0.4057；Sun/Rules-Only 0.7400/0.7128；Direct-LLM 0.8333/0.7695。
+- 主评价接线修正：v1 的 fine five-field span-only 汇总不再作为语义主表；v2 使用 G0.4 coarse sentence-level 五字段主表，Rules-Only `0.6984/0.8410/0.7631`，Direct-LLM `0.8695/0.8083/0.8378`；fine five-field 仅诊断。modality evidence 仍 unavailable。
+- 输入/目标：classification 目标为 first Gold clause modality；CF/BERT 使用德语 raw_text_de，Direct-LLM 使用既有英文 approved_text_en；语言和粒度差异作为实验条件记录。
+- 产物：`outputs/reports/sep_c2_sun_predecessors_comparison_v2.json/.md`；每方法 capsule 在 `outputs/evidence/sep_c2_sun_predecessors_v1/`；BERT 配置在 `configs/sep_c2_sun_predecessors_v1/bert_full_v1/`；roster 已更新。
+- 边界：`bert-legal-cased` 仍阻塞；其余 8 个前人配置和 2 个项目方法已可定位复现。下一步写论文证据位置，继续 S2.12/S2.13 既有依赖，不重开 Winter。
+
 ## 0.3 SEP-C2 Sun 前人分类方法与同口径比较实跑（2026-09-15，零 API）
 
 - 按用户纠正执行 Sun et al. (2024) 作者稿明确报告的 Table 7 分类方法

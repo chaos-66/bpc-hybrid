@@ -1,0 +1,206 @@
+{
+  "architecture_evidence": "Sun et al. (2024), final article, Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
+  "checkpoint_binding": {
+    "byte_size": 447468512,
+    "local_only_do_not_commit": true,
+    "path": "outputs/development/sep_c2_sun_predecessors_v1/bert_base_uncased/best_model.pt",
+    "sha256": "be6a6e9d78154709e8b2844f7dec20044c76d34364d5da3440d3e8d9a4919f1c",
+    "versioned": false
+  },
+  "claim_scope": "development_zero_api_predecessor_method_comparison",
+  "config_binding": {
+    "byte_size": 2351,
+    "path": "configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_base_uncased_v1.json",
+    "sha256": "df33df68e11dd59d55b8297b9be6ce376645f587b3143c1e30d7bd3cc78530bd"
+  },
+  "dataset_audit": {
+    "estg150_probe_count": 300,
+    "excluded_conflicting_duplicate": {
+      "dev": 0,
+      "test": 0,
+      "train": 0
+    },
+    "excluded_cross_split_duplicate": {
+      "dev": 1,
+      "test": 9,
+      "train": 34
+    },
+    "excluded_estg150_overlap": {
+      "dev": 5,
+      "test": 3,
+      "train": 24
+    },
+    "final": {
+      "dev": {
+        "label_distribution": {
+          "definition": 175,
+          "obligation": 185,
+          "permission": 38,
+          "prohibition": 16
+        },
+        "membership_sha256": "4c927d4c81b41d4cd2e1c827b29cf184cce7afc13b83d7f1221f4124b99763e8",
+        "rows": 414,
+        "source_row_indices_sha256": "7230a31b70a920c08e74c3fda38256fdec12ede063bb8ac43768bfc9ef9860b6"
+      },
+      "test": {
+        "label_distribution": {
+          "definition": 175,
+          "obligation": 186,
+          "permission": 38,
+          "prohibition": 15
+        },
+        "membership_sha256": "029020316dcf844009caa5f081ad7efa88833f4d099385cbf7ae9b1587a329bb",
+        "rows": 414,
+        "source_row_indices_sha256": "c45efbd5339c2801a9454acb6229ef64e9a14ba5390167839b844ed1d525ae2d"
+      },
+      "train": {
+        "label_distribution": {
+          "definition": 811,
+          "obligation": 864,
+          "permission": 180,
+          "prohibition": 72
+        },
+        "membership_sha256": "3bc5fa9285955192d6e2786e79b6b371945c18b1231fa1db04ee04d66f06ca5a",
+        "rows": 1927,
+        "source_row_indices_sha256": "6ad99d403da1b8193828a79406fed886164478f6e8c2c8b9fa3a57dcdd741f92"
+      }
+    },
+    "official_split_origin": "project_reconstructed_deterministic_group_aware_split_not_sun_original",
+    "schema_version": "sep_c2_sun_predecessor_split_audit@1.0.0",
+    "source_files": {
+      "dev": {
+        "label_distribution": {
+          "definition": 177,
+          "obligation": 187,
+          "permission": 40,
+          "prohibition": 16
+        },
+        "path": "data/development/modality/sun_estg_modality_v1/splits/dev.jsonl",
+        "rows": 420,
+        "sha256": "ad541915d16aaef6119cb3769e6da0b89e8e8af5ec9069ac3a25680040e5a8d6"
+      },
+      "test": {
+        "label_distribution": {
+          "definition": 177,
+          "obligation": 195,
+          "permission": 39,
+          "prohibition": 15
+        },
+        "path": "data/development/modality/sun_estg_modality_v1/splits/test.jsonl",
+        "rows": 426,
+        "sha256": "2f67edad05e3a4d315d9ac65fc0ffd1d83dbaffd2d77a55916d6aa9a6919e871"
+      },
+      "train": {
+        "label_distribution": {
+          "definition": 836,
+          "obligation": 891,
+          "permission": 185,
+          "prohibition": 73
+        },
+        "path": "data/development/modality/sun_estg_modality_v1/splits/train.jsonl",
+        "rows": 1985,
+        "sha256": "a7367cd35e3a5ce7263ad5b0fae4881a989761d4fba21b75bdc75b6e2b83c142"
+      }
+    }
+  },
+  "encoder": {
+    "hidden_size": 768,
+    "max_position_embeddings": 512,
+    "model_dir": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_models\\bert-base-uncased",
+    "model_type": "bert",
+    "num_hidden_layers": 12,
+    "vocab_size": 30522
+  },
+  "evaluator_binding": {
+    "byte_size": 8370,
+    "path": "src/bpc_hybrid/formal_stage2_evaluation.py",
+    "sha256": "5cc2276d4a8c0ffd2108be91eb4cab48c0d65f93a8d12c3f54baf7f570517fae"
+  },
+  "formal_gold_binding_read_only_for_evaluation": {
+    "byte_size": 474434,
+    "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "sha256": "bde3d15bfe63ed8c404ac902f87ef0664c2566741c47f32581245fb3b5a9a796"
+  },
+  "formal_input_binding": {
+    "byte_size": 207050,
+    "path": "data/input/estg150_formal_inference_input_v2.json",
+    "sha256": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad"
+  },
+  "implementation_bindings": {
+    "scripts/run_sep_c2_sun_predecessor_bert_full_v1.py": {
+      "byte_size": 3938,
+      "path": "scripts/run_sep_c2_sun_predecessor_bert_full_v1.py",
+      "sha256": "1a27a0fe976c55c3d6d08551101db2d7a55b307e0d69639a9e6aba6cfb1d6370"
+    },
+    "src/bpc_hybrid/sun_predecessors/bert_full.py": {
+      "byte_size": 15806,
+      "path": "src/bpc_hybrid/sun_predecessors/bert_full.py",
+      "sha256": "daee5c478fd1d24c3fd5861ee6d496b55b5edb0f030fb9a7c71f6a0eb80c6a88"
+    },
+    "src/bpc_hybrid/sun_predecessors/common.py": {
+      "byte_size": 13996,
+      "path": "src/bpc_hybrid/sun_predecessors/common.py",
+      "sha256": "203d5faa9ff5c34beb4b8cf2ac6a71ad2176c211f4ff9e8b00171d35ca4ebf11"
+    },
+    "src/bpc_hybrid/sun_predecessors/dataset.py": {
+      "byte_size": 15203,
+      "path": "src/bpc_hybrid/sun_predecessors/dataset.py",
+      "sha256": "aedc7da17c87114b81e7a935402b94c86063ad6bd2a3944bead9cb65cf6dae41"
+    },
+    "src/bpc_hybrid/sun_predecessors/evaluation.py": {
+      "byte_size": 8085,
+      "path": "src/bpc_hybrid/sun_predecessors/evaluation.py",
+      "sha256": "ced1c6c68246698e8564ca5ec0aab054848dd9fe3393c4060a5178a05094cf02"
+    },
+    "src/bpc_hybrid/sun_predecessors/neural.py": {
+      "byte_size": 13323,
+      "path": "src/bpc_hybrid/sun_predecessors/neural.py",
+      "sha256": "38157042dc40fed7aa285c2f6d2a4e016eeb29a5f14c0f1331eebdb353d04a3b"
+    },
+    "src/bpc_hybrid/sun_predecessors/runner_bert_full.py": {
+      "byte_size": 15759,
+      "path": "src/bpc_hybrid/sun_predecessors/runner_bert_full.py",
+      "sha256": "16c8d4a4b7ec3931ca187c669333cba72fcbeb5f7720c2713f6c9da812cd6c6e"
+    }
+  },
+  "method_id": "bert_base_uncased",
+  "model_file_hashes": {
+    "config.json": {
+      "byte_size": 570,
+      "sha256": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20"
+    },
+    "model.safetensors": {
+      "byte_size": 440449768,
+      "sha256": "68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3"
+    },
+    "pytorch_model.bin": {
+      "byte_size": 440473133,
+      "sha256": "097417381d6c7230bd9e3557456d726de6e83245ec8b24f529f60198a67b203a"
+    },
+    "tokenizer.json": {
+      "byte_size": 466062,
+      "sha256": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98"
+    },
+    "tokenizer_config.json": {
+      "byte_size": 48,
+      "sha256": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10"
+    },
+    "vocab.txt": {
+      "byte_size": 231508,
+      "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    }
+  },
+  "reproduction_class": "public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+  "safety": {
+    "estg150_used_for_training_or_selection": false,
+    "gold_read_by_prediction_code": false,
+    "gold_used_for_evaluation": true,
+    "local_files_only": true,
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "post_result_tuning": false
+  },
+  "schema_version": "sep_c2_sun_predecessor_method_manifest@1.0.0",
+  "sun_source_and_role": "Sun et al. final version Table 6/7 bert-base-uncased comparison; final-paper BERT-TextCNN architecture",
+  "version_caveat": "Architecture and training mode follow the final article Section 4.2.1 / Fig. 3 (per-layer [CLS] sequence -> TextCNN -> global max -> 4-class output). The public encoder revision is pinned in the config; unpublished hyperparameters are stated in the config and treated as reconstruction parameters."
+}

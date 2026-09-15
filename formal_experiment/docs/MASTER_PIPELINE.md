@@ -11,6 +11,30 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
+﻿## 2026-09-15 修订 3.7.13：SEP-C2 Sun 前人 9 配置收口与主评价接线修正（零新增付费 API）
+
+本修订继续 SEP-C2，完成 Sun et al. (2024) final version Table 6/7 的 9 个前人配置收口，并修正 v1 比较报告的两个接线问题。最终状态：**8/9 前人配置已有实际预测与同口径评价；`bert-legal-cased` 因公开精确 checkpoint 不存在而具名阻塞，不用替代模型占位。**
+
+- **原文架构核实**：final Springer version 可访问（DOI `10.1007/s11227-023-05626-0`）。Section 4.2.1 / Fig. 3 明确 BERT 对照为 BERT-TextCNN：取每个 encoder layer 的 `[CLS]`（CLS1..CLSL）组成 TextCNN 输入序列，卷积核 3/4/5、每核 256 filters、global max pooling、四分类输出。作者 repo/Archive.org 未提供该分类代码或 checkpoint；本项按论文最终版架构独立实现。
+- **公开权重与训练**：从公开镜像固定 revision 获取 `google-bert/bert-base-uncased`、`bert-base-cased`、`bert-large-uncased`、`bert-large-cased` 与 `nlpaueb/legal-bert-base-uncased`；全部在同一 clean official EStG modality train（1927 条，排除 EStG-150 原文/译文重叠与重复）上联合 fine-tune encoder+TextCNN，official clean dev 414 条按 macro-F1 选 checkpoint，EStG-150 Gold 不参与训练/选择。`bert-legal-cased` 精确权重未公开；已检查 nlpaueb、Hugging Face 搜索、作者公开 repo、Archive.org supplement，均无该 cased EU-legislation checkpoint，保留为阻塞。
+- **同口径分类结果**（150 条全部在分母，缺失/失败/无标签见 v2 报告）：
+
+  - `CF_KW` 0.6200 acc / 0.5322 macro-F1；`CF_RNN` 0.5667 / 0.4800；`CF_CNN` 0.6733 / 0.6177。
+  - `bert-base-uncased` 0.4467 / 0.3507；`bert-base-cased` 0.5733 / 0.4529；`bert-large-uncased` 0.5733 / 0.5245；`bert-large-cased` 0.6600 / 0.6024；`bert-legal-uncased` 0.4800 / 0.4057。
+  - `Sun/Rules-Only` 0.7400 / 0.7128；`Direct-LLM` 0.8333 / 0.7695。
+  - `bert-legal-cased`：BLOCKED；v2 分类表仍列出第 11 行并标 N/A，不伪造预测或替代 checkpoint。
+- **修正 v1 语义主表接线**：v1 把剔除 modality evidence 后的 fine 五字段汇总放进主表，违反项目 G0.4 合同。v2 主表改用已授权的 coarse sentence-level 五 span 字段。
+  - Rules-Only coarse P/R/F1 `0.6984/0.8410/0.7631`；Direct-LLM coarse `0.8695/0.8083/0.8378`。
+  - fine 五字段仅作诊断：Rules-Only `0.6435/0.7160/0.6778`；Direct-LLM `0.8424/0.6432/0.7294`。
+  - modality evidence 继续 unavailable，不计入总体。
+- **输入/目标审计**：classifier 目标为 G0.4 first Gold clause modality；Gold first-clause 标签分布为 obligation 59 / permission 42 / definition 29 / prohibition 20。
+  CF/BERT 使用德语 raw_text_de；Direct-LLM 使用既有 approved_text_en；B0 使用既有 de classifier + en phrase。语言/粒度差异作为实验条件记录，v2 报告单独列出。
+- **保留补充证据**：frozen encoder + MLP probe（Macro-F1 0.3897）保留为 weak adaptation diagnostic；旧 BERT-TextCNN（0.6535，训练集含 24 条 EStG-150 重叠）保留为 leak diagnostic，均不冒充 clean full fine-tuning。
+- **产物**：`outputs/reports/sep_c2_sun_predecessors_comparison_v2.json/.md` 为修正后 11 行主分类表、coarse/fine 语义表和 input/target audit。
+  每方法独立 capsule 在 `outputs/evidence/sep_c2_sun_predecessors_v1/<method_id>/`，BERT 配置在 `configs/sep_c2_sun_predecessors_v1/bert_full_v1/`。
+- **边界与下一步**：9 个配置中 bert-legal-cased 仍受精确公开权重缺失阻塞；其余 8 个前人配置与两个项目方法已有可定位的预测、配置、训练记录、权重哈希和评价。
+  下一步把 v2 表写入论文证据位置，并按既有依赖继续 S2.12/S2.13 的 Direct 真实运行前置条件；不重开 Winter，不把分类器包装成六要素抽取器。
+
 ## 2026-09-15 修订 3.7.12：SEP-C2 Sun 前人分类方法与同口径比较实跑（零 API）
 
 本轮按用户纠正直接执行 Sun et al. (2024) 实际报告过的前人方法，不再扩展

@@ -1,0 +1,57 @@
+{
+  "config_path": "configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_large_uncased_v1.json",
+  "config_sha256": "e298d99e9cfa74386ead9c8770a068bc2a6081c572aec18653461b1350804e3c",
+  "frozen_architecture": {
+    "activation": "relu",
+    "cls_input": "per-encoder-layer [CLS] vectors CLS1..CLSL, concatenated as a length-L sequence",
+    "dropout": 0.5,
+    "encoder_trainable": true,
+    "filters_per_kernel": 256,
+    "kernel_sizes": [
+      3,
+      4,
+      5
+    ],
+    "max_length": 192,
+    "num_labels": 4,
+    "paper_source": "final article Fig. 3",
+    "pooling": "global_max_over_layer_sequence"
+  },
+  "frozen_model": {
+    "hidden_size": 1024,
+    "local_dir": "bert-large-uncased",
+    "local_files_only": true,
+    "num_hidden_layers": 24,
+    "repository_id": "google-bert/bert-large-uncased",
+    "revision": "6da4b6a26a1877e173fca3225479512db81a5e5b"
+  },
+  "frozen_optimization": {
+    "batch_size": 4,
+    "device": "auto",
+    "early_stopping_metric": "macro_f1",
+    "early_stopping_patience": 2,
+    "effective_batch_size": 4,
+    "encoder_learning_rate": 2e-05,
+    "encoder_trainable": true,
+    "gradient_accumulation_steps": 1,
+    "gradient_clip_norm": 1.0,
+    "head_learning_rate": 0.001,
+    "hyperparameter_search": false,
+    "loss": "unweighted_cross_entropy",
+    "max_epochs": 5,
+    "optimizer": "AdamW",
+    "seed": 20260915,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "bert_large_uncased",
+    "notes": "The final article Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; large 24-layer / 1024-hidden, 24 encoder layers. The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run.",
+    "reproduction_class": "public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+    "sun_role": "Sun et al. final version Table 6/7 bert-large-uncased comparison; final-paper BERT-TextCNN architecture",
+    "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection"
+  },
+  "schema_version": "sep_c2_sun_predecessor_config@1.0.0"
+}
