@@ -252,3 +252,13 @@ outputs/evidence/s3_c36_target_paired_v2/*.json text eol=lf
 outputs/evidence/s3_c36_target_paired_v2/*.jsonl text eol=lf
 outputs/reports/s3_c36_target_paired_v2.json text eol=lf
 outputs/reports/s3_c36_target_paired_v2.md text eol=lf
+# SEP-C2 Sun predecessor reconstruction: exact raw-byte source/result bindings.
+src/bpc_hybrid/sun_predecessors/*.py text eol=lf
+scripts/run_sep_c2_sun_predecessor_v1.py text eol=lf
+scripts/run_sep_c2_sun_predecessor_neural_v1.py text eol=lf
+tests/test_sep_c2_sun_predecessors.py text eol=lf
+configs/sep_c2_sun_predecessors_v1/*.json text eol=lf
+outputs/development/sep_c2_sun_predecessors_v1/** text eol=lf
+outputs/evidence/sep_c2_sun_predecessors_v1/** text eol=lf
+outputs/reports/sep_c2_sun_predecessor_*.json text eol=lf
+outputs/reports/sep_c2_sun_predecessor_*.md text eol=lf
