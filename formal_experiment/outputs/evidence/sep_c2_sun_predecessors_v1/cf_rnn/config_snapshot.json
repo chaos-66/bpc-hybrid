@@ -1,0 +1,35 @@
+{
+  "config_path": "configs/sep_c2_sun_predecessors_v1/cf_rnn_v1.json",
+  "config_sha256": "32a69228b6265958ca8b7b3b8bf82722ca771e126bf0a0172d9b5462af73308e",
+  "frozen_hyperparameters": {
+    "batch_size": 32,
+    "dropout": 0.3,
+    "early_stopping_metric": "macro_f1",
+    "early_stopping_patience": 5,
+    "embedding_initialization": "official EStG_sent_vec.csv 300-d token vectors",
+    "embedding_trainable": true,
+    "gradient_clip_norm": 1.0,
+    "hidden_size": 128,
+    "hyperparameter_search": false,
+    "layers": 1,
+    "learning_rate": 0.001,
+    "loss": "unweighted_cross_entropy",
+    "max_epochs": 30,
+    "max_length": 192,
+    "optimizer": "AdamW",
+    "pooling": "masked mean concatenated with masked max",
+    "seed": 20260915,
+    "type": "bidirectional_lstm",
+    "weight_decay": 0.0001
+  },
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "cf_rnn",
+    "notes": "Sun et al. do not publish hidden size, optimizer, vector initialization, or early-stop details. This run uses the official 300-d token vectors carried by EStG_sent_vec.csv and reports every chosen parameter.",
+    "reproduction_class": "paper-described architecture retrained locally on the official EStG modality train split",
+    "sun_role": "Table 7 bidirectional-LSTM classification baseline (CF_RNN)",
+    "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); dev for selection"
+  },
+  "schema_version": "sep_c2_sun_predecessor_config@1.0.0"
+}
