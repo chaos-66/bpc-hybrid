@@ -11,6 +11,40 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
+## 2026-09-15 修订 3.7.12：SEP-C2 Sun 前人分类方法与同口径比较实跑（零 API）
+
+本轮按用户纠正直接执行 Sun et al. (2024) 实际报告过的前人方法，不再扩展
+Winter clause-region，也不再自行改写为 clause-region detection。
+
+- 方法名单核实：本地作者稿 §5.1/Table 6 列出 6 个预训练 BERT 变体，Table 7
+  列出 `CF_KW`（关键词）、`CF_RNN`（BiLSTM）、`CF_CNN`；§5.2/Table 8 只有
+  Sun 自己的六要素抽取，没有外部六要素方法对照。最终 Springer 版本在当前离线
+  环境不可访问，版本差异未核实；本修订只以作者稿明确支持的方法为准，不把
+  仅出现在参考文献中的方法当作 Sun 实测对照。
+- 已实跑并形成独立 capsule：`CF_KW` 0.5322 Macro-F1（准确率 0.6200）、
+  `CF_RNN` 0.4800（0.5667）、`CF_CNN` 0.6177（0.6733）、clean legal-BERT
+  frozen-encoder probe 0.3897（0.4800）、已有 BERT-TextCNN 诊断行 0.6535
+  （0.6667，原训练集含 24 条标记重叠/4 条精确 normalized 重叠）。5 个
+  BERT 变体因本地无公开权重且无外网而 fail-closed，不能伪造结果。
+- 同口径：全部方法使用 EStG-150 正式输入 v2、正式 Gold v1 和现有
+  `evaluate_modality_labels`；比较报告为
+  `outputs/reports/sep_c2_sun_predecessors_comparison_v1.json/.md`，证据在
+  `outputs/evidence/sep_c2_sun_predecessors_v1/`。历史 Rules-Only/B0 与
+  Direct-LLM 只读复用并重新评价：准确率 0.7400/0.8333、Macro-F1
+  0.7128/0.7695；未新增真实 LLM/API 调用。
+- 语义抽取：Sun 作者稿没有外部六要素抽取对照；CF_KW/CF_RNN/CF_CNN/BERT 只
+  输出 modality，不伪造六要素能力。现有 B0/D1 五字段 span-only
+  P/R/F1：Rules-Only 0.6435/0.7160/0.6778，Direct-LLM
+  0.8424/0.6432/0.7294；逐字段结果见比较报告。
+- 训练纪律：CF_RNN/CF_CNN 用官方 EStG modality train（过滤 EStG-150 重叠和
+  重复后 1927 条）训练、clean dev 414 条选 epoch；测试 Gold 不参与训练、
+  选型或超参选择。跨语料泛化差是真实结果，不以论文数字替换。
+- 边界：以上是项目重建 EStG-150 与项目 Gold 上的结果，不是 Sun 原始 150
+  句 Gold，也不是 Sun Table 6/7 的原数字。Winter 结果保留为附加探索，不再
+  本轮扩展。
+- 下一步：把该同口径比较表和错误案例写入论文正文；继续按依赖推进 S2.12/
+  S2.13，不重开 Winter clause-region 优化，不新增审批文件代替实验。
+
 ## 2026-09-15 修订 3.7.11：SEP-C2 Stage 2B Winter 前人基线首轮实跑（零 API）
 
 本轮直接跑出前人基线首轮结果，不再以范围登记/方案准备代替实验。

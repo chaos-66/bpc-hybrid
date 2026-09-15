@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-14
+**更新时间**：2026-09-15
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -40,6 +40,37 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
   旧 137 次方案及发送确认仍失效；当前取消不构成外部发送授权，自动审批阻塞未解除。
 - 本批为实验代码、机器合同、具名测试与文档更新；未运行实验 API，未改 Gold 或历史
   预测/授权文件；停用规则仍见 `formal_experiment/AGENTS.md`。
+
+## 0.3 SEP-C2 Sun 前人分类方法与同口径比较实跑（2026-09-15，零 API）
+
+- 按用户纠正执行 Sun et al. (2024) 作者稿明确报告的 Table 7 分类方法
+  `CF_KW` / `CF_RNN` / `CF_CNN`，并在同一批 EStG-150 输入、同一正式
+  modality Gold、同一 `evaluate_modality_labels` 评价器上重新评价；不再把
+  前人方法改写成 clause-region detection。
+- 实跑 Macro-F1 / 准确率：`CF_KW` 0.5322 / 0.6200，`CF_RNN` 0.4800 /
+  0.5667，`CF_CNN` 0.6177 / 0.6733；均无真实 LLM/API 调用。
+- BERT 对照：本地公开权重只有 `nlpaueb/legal-bert-base-uncased`。
+  clean frozen-encoder + 本地训练 MLP probe 得 Macro-F1 0.3897 /
+  准确率 0.4800；已有完整 BERT-TextCNN checkpoint 复用为诊断行，得 0.6535
+  / 0.6667，但其原训练集有 24 条 EStG-150 标记重叠（4 条精确
+  normalized 重叠），已明确标为 diagnostic，不冒充 clean 训练结果。其余
+  5 个 Table 6 BERT 变体因本地无权重且无外网 fail-closed，未伪造预测。
+- 同口径比较报告：`outputs/reports/sep_c2_sun_predecessors_comparison_v1.json/.md`；
+  证据目录：`outputs/evidence/sep_c2_sun_predecessors_v1/`。
+- 现有 B0/Rules-Only 与 Direct-LLM 只读复用并重新评价：modality 准确率
+  0.7400 / 0.8333、Macro-F1 0.7128 / 0.7695，Direct 的 1 条无标签预测仍
+  保留在分母；没有新增 LLM 调用。
+- 语义抽取对照：Sun 作者稿 §5.2 没有外部六要素方法；分类器输出 modality，
+  比较报告中明确标为 six-element N/A。B0/D1 五字段 span-only P/R/F1：
+  Rules-Only 0.6435/0.7160/0.6778，Direct-LLM 0.8424/0.6432/0.7294。
+- 训练数据：official EStG modality train 1927 条（排除 EStG-150 重叠及重复），
+  clean dev 414 条选 epoch；EStG-150 Gold 不参与训练或选择。测试语言为
+  `raw_text_de`（BERT/CF 方法与 Sun 的德语 EStG 训练语言一致）；已有
+  Direct-LLM 行使用 `approved_text_en`，报告中按行披露语言差异。
+- 边界：本地作者稿不是最终 Springer 版；最终版若有新增/删除比较方法尚未
+  核实。Winter clause-region 仍是附加探索，本轮停止扩展。
+- 下一步：把比较表、失败案例和具体差异写入论文证据位置；继续 S2.12/S2.13
+  的既有两方法依赖，不重开 Winter 区域指标。
 
 ## 0.2 SEP-C2 Stage 2B Winter 前人基线首轮实跑（2026-09-15，零 API）
 

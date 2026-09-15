@@ -33,7 +33,7 @@
       "sun_role": "bidirectional-LSTM classification baseline in Table 7",
       "classification_supported": true,
       "semantic_fields_native": false,
-      "implementation_status": "pending_execution_in_this_round",
+      "implementation_status": "completed_zero_api_estg150_run",
       "reproduction_class": "paper-described BiLSTM retrained on official EStG train split",
       "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn",
       "notes": "Unpublished hyperparameters are disclosed in the per-method config/manifest."
@@ -44,7 +44,7 @@
       "sun_role": "CNN sentence-classification baseline in Table 7",
       "classification_supported": true,
       "semantic_fields_native": false,
-      "implementation_status": "pending_execution_in_this_round",
+      "implementation_status": "completed_zero_api_estg150_run",
       "reproduction_class": "paper-described CNN retrained on official EStG train split",
       "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn",
       "notes": "Unpublished kernel/filter settings are disclosed in the per-method config/manifest."
@@ -95,10 +95,12 @@
       "sun_role": "best pre-trained comparison in Table 6; Sun's own method family in Table 7",
       "classification_supported": true,
       "semantic_fields_native": false,
-      "implementation_status": "partially_available_local_encoder_cache",
+      "implementation_status": "completed_zero_api_clean_probe_plus_existing_textcnn_diagnostic",
       "reproduction_class": "closest local public match: nlpaueb/legal-bert-base-uncased; encoder frozen + local linear head in this round",
       "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe",
-      "notes": "The local cache is an EU-legislation Legal-BERT base uncased encoder. It is not claimed to be the exact Sun checkpoint."
+      "notes": "The local cache is an EU-legislation Legal-BERT base uncased encoder. It is not claimed to be the exact Sun checkpoint.",
+      "clean_probe_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe",
+      "existing_textcnn_diagnostic_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing"
     },
     {
       "method_id": "bert_legal_cased",
@@ -131,5 +133,26 @@
     "Sleimi et al. is cited in Sun's related work; the local author manuscript does not report running it in Sun's experiment.",
     "Michel et al. (2022) is the modality dataset source in Sun's experiment, but its own classifier is not listed as a Sun comparison method.",
     "Other reference-list names must not be promoted into the comparison table without an explicit in-experiment result table or method statement."
-  ]
+  ],
+  "round_status": {
+    "status": "completed_zero_api_predecessor_execution_round",
+    "completed_methods": [
+      "cf_kw",
+      "cf_rnn",
+      "cf_cnn",
+      "bert_legal_uncased_probe",
+      "bert_legal_uncased_textcnn_existing"
+    ],
+    "blocked_methods": [
+      "bert_base_uncased",
+      "bert_base_cased",
+      "bert_large_uncased",
+      "bert_large_cased",
+      "bert_legal_cased"
+    ],
+    "blocked_reason": "no local public model cache and no outbound network in this environment",
+    "comparison_report": "outputs/reports/sep_c2_sun_predecessors_comparison_v1.json",
+    "semantic_comparison_note": "Sun's author manuscript does not report an external six-element extraction comparison; classifier-only predecessors are marked N/A for six-element output.",
+    "winter_scope_note": "The Winter clause-region result remains a separate additional exploration and is not extended in this round."
+  }
 }
