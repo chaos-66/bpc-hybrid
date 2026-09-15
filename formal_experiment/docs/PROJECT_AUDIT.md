@@ -41,6 +41,16 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - 本批为实验代码、机器合同、具名测试与文档更新；未运行实验 API，未改 Gold 或历史
   预测/授权文件；停用规则仍见 `formal_experiment/AGENTS.md`。
 
+## 0.2 SEP-C2 Stage 2B Winter 前人基线首轮实跑（2026-09-15，零 API）
+
+- 已核实 `references/合规性检查模型代码/model_check` 是 Winter prototype（112 个非缓存文件与 Winter 副本一致），不是 Sun Stage 2；未找到更直接兼容的 Sun 抽取实现。
+- 已在 EStG-150（150 条）与正式 Gold（231 个 clause_span）上固定并运行 `estg150_clause_region_detection_v1`；共同任务只评 clause region，不把义务从句冒充 action span。
+- 实跑：Winter 1.0000/0.8312/0.9078；历史 Rules-Only 0.9398/1.0000/0.9689；历史 Direct-LLM 0.9476/0.9740/0.9606；新增 LLM/API=0。
+- 真实失败例：Winter `estg_000071` 无 signal word 零预测漏 3 区域；Direct-LLM `estg_000112` 零 clause 漏 1 区域。
+- 产物：`outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.*`、`outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/`、public source probe；独立 verifier 与 6 个 focused tests 通过。
+- 边界：Sun 原表 12（0.58/0.89/0.70 vs 0.77/0.83/0.80）是私有 BPMN violation 任务，不能与本适配结果直接比较。
+- 下一步：继续检查/运行更直接兼容的前人实现，并把本轮结果接入论文证据位置。
+
 ## 0.1 SEP-C2 两方法证据收口与 S2.13 v10 后继入口（2026-09-14，零 API）
 
 - `build_s2_12_two_method_contract_v1.py` 已把 `comparison.complete` 改为证据判定：复用 Rules-Only 与 Direct-LLM 既有独立 verifier，并核对冻结输入绑定、36 条固定总体、有限指标和 verifier 重放/绑定结论；只看 `status`/`dataset_id` 不足以完成。

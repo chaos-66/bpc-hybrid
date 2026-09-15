@@ -11,6 +11,20 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
+## 2026-09-15 修订 3.7.11：SEP-C2 Stage 2B Winter 前人基线首轮实跑（零 API）
+
+本轮直接跑出前人基线首轮结果，不再以范围登记/方案准备代替实验。
+
+- Springer 最终版入口可访问；Notes 指向 archive.org input-2 与原型站。本环境 archive.org 超时、原型站 DNS 失败，未下载新包。
+- 作者归属：`references/合规性检查模型代码/model_check` 与 Winter 副本 112 个非缓存文件逐字节相同，额外 11 个均为 `__pycache__/*.pyc`；未发现 Sun Stage 2 源码。可运行实现是 Winter prototype。
+- 固定方案：输入 EStG-150（150 条）、Gold 231 个 clause_span；共同子任务 `estg150_clause_region_detection_v1`；指标为 statement-level 任意非空字符交集 P/R/F1。
+- Winter 原生输出 287 句、163 个 signal-word constraint 句、389 个 obligation clause、9 flows；适配只映射义务从句自身字符区域，明确不支持 action span/six-element，不用 LLM 补字段。
+- 首轮结果：Winter **1.0000/0.8312/0.9078**；历史 Rules-Only **0.9398/1.0000/0.9689**；历史 Direct-LLM **0.9476/0.9740/0.9606**；零新增调用。
+- 真实失败例：Winter estg_000071 无 signal word 零预测漏 3 区域；Direct-LLM estg_000112 零 clause 漏 1 区域；Rules-Only 无 complete miss。
+- 边界：Sun 表 12（Winter 0.58/0.89/0.70；Sun 0.77/0.83/0.80）是私有 BPMN violation 任务，不能与本适配结果直接比较。
+- 产物：`outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.*`、`outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/`、public source probe；独立 verifier 与 6 个 focused tests 通过。
+- 下一步：继续检查更直接兼容的前人抽取实现；若只有 Winter，则补其 Stage 3/同条件可运行复现并把结果接入论文证据位置。
+
 ## 2026-09-14 修订 3.7.10：SEP-C2 两方法证据判定收口与 S2.13 v10 后继入口（零 API）
 
 本修订只修 3.7.9 发现的证据判定缺口，随后直接继续前人基线实跑；未重跑 S2.12 真实实验，真实 API=0。

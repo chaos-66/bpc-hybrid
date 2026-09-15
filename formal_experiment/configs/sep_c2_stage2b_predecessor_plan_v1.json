@@ -1,0 +1,125 @@
+{
+  "schema_version": "sep_c2_stage2b_predecessor_plan@1.0.0",
+  "plan_id": "sep_c2_stage2b_winter_estg150_v1",
+  "registered_at": "2026-09-15",
+  "registered_before_any_metric_view": true,
+  "purpose": "First predecessor-baseline run for SEP-C2 Stage 2B. Run the available Winter et al. (2020) prototype transcription on the frozen EStG-150 Stage 2 input and compare it with the matching historical Rules-Only and Direct-LLM predictions on one fixed, explicitly adapted common subtask: clause-region detection.",
+  "source_audit": {
+    "mentor_package": "references/合规性检查模型代码",
+    "winter_copy": "references/winter_2020_model_check",
+    "sun_full_text": {
+      "path": "references/papers/extracted/sun_2024_full_text.txt",
+      "sha256": "947140c3b7e350b4d35b9b6848c275dd265dc060f517da7a1dcfce43a55eec47",
+      "finding": "Sun 2024 final-paper text cites Winter et al. (2020) as the compared predecessor (Table 12), but the local Sun author package contains the Winter prototype rather than Sun Stage 2 BERT-TextCNN / CoreNLP / Tregex source."
+    },
+    "winter_prototype_files": {
+      "main.py": "affc889ec005bb5e0f73f67df3c2dcdb519f1869f15aabc730b96b9cc0112350",
+      "Paragraph.py": "88f62852c3cb9362e78290913efb005c2a753718175111f6c0d945d18c16c0b2",
+      "Sentence.py": "889b0574282bbac9bb3a682204a1d1afa13cb88aaf9512a8f0e338aba47124b1",
+      "Clause.py": "3e7ad9eaa9ab8998c695bd2a0a42309bd7ccd2f830d41cbd9b57ed281b8fd29e",
+      "signalwords.txt": "447dcdb262065bdd99431dd447321da909800ad4fbd956f9bfce073f2d63e41a",
+      "sequencemarkers.txt": "0f1f62afb6fb33bdca30cd82e17e2b8d4994c6757db9816eb0ef2018084b3c51",
+      "stopwords.txt": "2772e28c477c4c4a3d7e2946a9d59d47ce1d44f3638df9dd6ceb429200f869cf"
+    },
+    "local_transcription": {
+      "path": "src/bpc_hybrid/winter_stage3/winter_clause.py",
+      "sha256": "186806e00729aca70eb52338139cba4e10b09c40ef0db097d8ad238db1fdac56",
+      "role": "active read-only transcription reused for this run"
+    },
+    "references_read_only": true
+  },
+  "input": {
+    "path": "data/input/estg150_formal_inference_input_v2.json",
+    "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "records": 150,
+    "text_field": "approved_text_en",
+    "language": "en_translated_from_de"
+  },
+  "gold": {
+    "path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+    "records": 150,
+    "target_field": "clauses[].clause_span",
+    "gold_clause_count_expected": 231
+  },
+  "historical_predictions": {
+    "sun_rule_only_historical": {
+      "arm_id": "b0_formal_arm_v1",
+      "label": "Rules-Only (historical B0 formal arm)",
+      "path": "data/predictions/b0_formal_arm_v1/predictions.json",
+      "sha256": "fa94991d246db9876b55d6a473644a4a1b93404bc35d3e314d3dba4768d9278d",
+      "manifest_path": "outputs/reports/b0_formal_arm_v1.manifest.json",
+      "input_binding_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+      "gold_binding_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    },
+    "direct_llm_historical": {
+      "arm_id": "direct_llm_formal_arm_v1",
+      "label": "Direct-LLM (historical D1 formal arm)",
+      "path": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+      "sha256": "bbadb6834572e58fb8321204b3bc975c887d23d9ae60bd804bf91137bb46072b",
+      "manifest_path": "outputs/reports/direct_llm_formal_arm_v1.manifest.json",
+      "input_binding_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+      "gold_binding_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    }
+  },
+  "adaptation": {
+    "task_id": "estg150_clause_region_detection_v1",
+    "task_definition": "For each EStG-150 record, predict character regions that are rule clauses. Gold is every clauses[].clause_span in the frozen Stage 2 Gold. This is a clause-segmentation subtask of Stage 2, not six-element extraction.",
+    "winter_mapping": {
+      "native_unit": "WinterClause from parse_regulation_paragraph(only_constraints=True)",
+      "region_rule": "character envelope [min(token.idx), max(token.idx+len(token.text))] of the native clause tokens; no token or span is fabricated",
+      "label": "clause_region_only",
+      "explicitly_not_claimed": [
+        "actor span",
+        "action span",
+        "condition span",
+        "constraint span",
+        "exception span",
+        "six-element extraction",
+        "modality label"
+      ],
+      "definition_only_samples": "naturally produce zero Winter obligations because only_constraints=True filters signal-word sentences; reported as native behaviour, not patched"
+    },
+    "historical_mapping": {
+      "region_rule": "record.clauses[].clause_span from the frozen arm prediction",
+      "same_task_only": true,
+      "six_element_fields_ignored_for_this_metric": true
+    }
+  },
+  "metric": {
+    "metric_id": "global_statement_any_nonempty_character_intersection",
+    "unit": "method over all 150 records",
+    "match_rule": "a predicted clause region counts as matched if it intersects at least one Gold clause_span; a Gold clause_span counts as matched if at least one predicted region intersects it; counts are global over statements, with no one-to-one clause assignment",
+    "reported": [
+      "ground_truth_regions",
+      "predicted_regions",
+      "matched_predictions",
+      "matched_ground_truth",
+      "precision",
+      "recall",
+      "f1",
+      "sample_macro_precision",
+      "sample_macro_recall",
+      "sample_macro_f1",
+      "records_with_prediction",
+      "records_with_full_gold_coverage",
+      "records_with_at_least_one_match",
+      "parse_or_request_failures"
+    ],
+    "no_post_result_tuning": true
+  },
+  "comparison_boundary": {
+    "same_input": "data/input/estg150_formal_inference_input_v2.json",
+    "same_gold": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "not_same_condition_as_sun_final_paper_table_12": true,
+    "reason": "Sun Table 12 compares violation detection on a proprietary smart-meter BPMN case; EStG-150 has no BPMN models and this run does not recreate that task. The clause-region task is an explicit adaptation, so the numbers are not directly comparable to Sun's published Winter-vs-Sun table."
+  },
+  "execution": {
+    "runner": "scripts/run_sep_c2_stage2b_predecessor_baseline_v1.py",
+    "device": "cpu",
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "retry": 0,
+    "no_gold_tuning": true
+  }
+}

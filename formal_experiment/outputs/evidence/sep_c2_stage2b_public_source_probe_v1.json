@@ -1,0 +1,79 @@
+{
+  "schema_version": "sep_c2_stage2b_public_source_probe@1.0.0",
+  "probe_id": "sep_c2_stage2b_public_source_probe_v1",
+  "probed_at": "2026-09-15",
+  "purpose": "Check the public Sun 2024 entry page and predecessor links before the local baseline run; no metric selection depends on this probe.",
+  "sun_final_article": {
+    "url": "https://link.springer.com/article/10.1007/s11227-023-05626-0",
+    "http_status": 200,
+    "retrieved_html_bytes": 412429,
+    "data_availability_note": "The datasets generated during and/or analyzed during the current study are available from the corresponding author on reasonable request.",
+    "notes_extracted": [
+      "Available at https://archive.org/details/input-2",
+      "Available at https://bpcchecking.emoryhuang.cn/"
+    ],
+    "references_checked": [
+      "Winter et al. (2020)",
+      "Michel et al. (2022)"
+    ]
+  },
+  "archive_org_input_2": {
+    "url": "https://archive.org/details/input-2",
+    "attempt": "archive.org/metadata/input-2",
+    "result": "connection timeout (curl exit 28); no bytes retrieved",
+    "local_equivalent_present": true,
+    "local_equivalent": "references/winter_2020_model_check/model_check"
+  },
+  "prototype_site": {
+    "url": "https://bpcchecking.emoryhuang.cn/",
+    "result": "DNS could not resolve from the execution environment (curl exit 6)",
+    "local_equivalents_present": true
+  },
+  "local_author_package_check": {
+    "package": "references/合规性检查模型代码",
+    "finding": "model_check/ contains 112 non-cache files byte-identical to references/winter_2020_model_check/model_check; the 11 extra files are __pycache__/*.pyc. No Sun BERT-TextCNN/CoreNLP/Tregex Stage 2 source was found there.",
+    "method_attribution": "Winter et al. (2020) prototype, not the Sun 2024 Stage 2 implementation"
+  },
+  "published_paper_number_boundary": {
+    "source": "references/papers/extracted/sun_2024_full_text.txt",
+    "source_sha256": "947140c3b7e350b4d35b9b6848c275dd265dc060f517da7a1dcfce43a55eec47",
+    "table": "Table 12: Comparison of accuracy (violation detection on the proprietary smart-meter BPMN case)",
+    "winter_et_al_2020_paper_reported": {
+      "precision": 0.58,
+      "recall": 0.89,
+      "fscore": 0.7
+    },
+    "sun_et_al_2024_paper_reported": {
+      "precision": 0.77,
+      "recall": 0.83,
+      "fscore": 0.8
+    },
+    "note": "These are the paper's published numbers on a different task/data. They are not this project's reproduction numbers and are not directly comparable to the EStG-150 clause-region metric."
+  },
+  "project_reproduction_numbers": {
+    "task": "estg150_clause_region_detection_v1",
+    "report": "outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.json",
+    "report_sha256": "19ed67c196e7e46e819dfbee3f7ab40e3d20ea7447d502dd0a97c67b0b35e8f2",
+    "metrics": {
+      "winter_2020_native_clause_regions": {
+        "precision": 1.0,
+        "recall": 0.8311688311688312,
+        "f1": 0.9078014184397163
+      },
+      "sun_rule_only_historical": {
+        "precision": 0.9397590361445783,
+        "recall": 1.0,
+        "f1": 0.9689440993788819
+      },
+      "direct_llm_historical": {
+        "precision": 0.9475982532751092,
+        "recall": 0.974025974025974,
+        "f1": 0.9606303860229016
+      }
+    }
+  },
+  "zero_api": {
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0
+  }
+}

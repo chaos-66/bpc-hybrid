@@ -1,0 +1,64 @@
+{
+  "schema_version": "sep_c2_stage2b_predecessor_baseline_manifest@1.0.0",
+  "plan": {
+    "path": "formal_experiment/configs/sep_c2_stage2b_predecessor_plan_v1.json",
+    "sha256": "5e6cdc80ea11770c19cb45d24da9a7ac02eddec540f2519beb21feef1cce54f0",
+    "byte_size": 6690
+  },
+  "report": {
+    "path": "outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.json",
+    "sha256": "19ed67c196e7e46e819dfbee3f7ab40e3d20ea7447d502dd0a97c67b0b35e8f2",
+    "byte_size": 155025
+  },
+  "report_md": {
+    "path": "outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.md",
+    "sha256": "5ef96ebd12bc86c51abbb18df5ce636f4f1803332285e873b177c7e5e81c7c8e",
+    "byte_size": 3243
+  },
+  "capsule": {
+    "winter_native.json": {
+      "path": "outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_native.json",
+      "sha256": "ecb3b7582126fe9c1401d2c374f6fe49ebd551dd68c9aa34e25eb2bfc11bd948",
+      "byte_size": 373629
+    },
+    "winter_adapted_clause_regions.json": {
+      "path": "outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_adapted_clause_regions.json",
+      "sha256": "71ad1a8dadef9f989d6ec8b0605961ece6fa1c50b53d5cdd4be8e7834c033c48",
+      "byte_size": 198467
+    },
+    "historical_clause_regions.json": {
+      "path": "outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/historical_clause_regions.json",
+      "sha256": "8b359655134fbf66aeaea7bddbf1fd6f5be1ce206e6897336390d600a480ba51",
+      "byte_size": 195642
+    },
+    "evaluation.json": {
+      "path": "outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/evaluation.json",
+      "sha256": "5f922cb924478a0e87d875aa799933c9c0e31bc0654c3014b0ada38438357752",
+      "byte_size": 150940
+    }
+  },
+  "implementation": {
+    "module": {
+      "path": "formal_experiment/src/bpc_hybrid/sep_c2_stage2b_winter_estg150.py",
+      "sha256": "1e89c8b1c315f09f71919ed802a9bdfbd6e38aee8deac39c537ae8496ef27e9d",
+      "byte_size": 30505
+    },
+    "runner": {
+      "path": "formal_experiment/scripts/run_sep_c2_stage2b_predecessor_baseline_v1.py",
+      "sha256": "2de1a71d7f2828d4a3e0d43c6fff26e428c66c1fcbe085c1fb06f7ae82e90588",
+      "byte_size": 7509
+    },
+    "winter_transcription": {
+      "path": "formal_experiment/src/bpc_hybrid/winter_stage3/winter_clause.py",
+      "sha256": "186806e00729aca70eb52338139cba4e10b09c40ef0db097d8ad238db1fdac56",
+      "byte_size": 8064
+    }
+  },
+  "safety": {
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "gold_read_by_prediction_code": false,
+    "gold_used_for_evaluation": true,
+    "historical_predictions_reused": true
+  }
+}

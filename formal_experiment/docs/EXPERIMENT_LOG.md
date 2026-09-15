@@ -4869,3 +4869,21 @@
 - 仍存在 blocker：无
 - 备注：Missing Direct evidence now fails closed via existing verifiers plus input-binding/36-row/metric checks; S2.13 v10 derives state from the two-method contract and ignores cancelled repair arm.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-15T01:49:08.708073+00:00 - SEP-C2 Stage 2B Winter predecessor first baseline run on EStG-150
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=sep_c2_stage2b_winter_estg150_v1；阶段=SEP-C2 Stage 2B；方法=winter_2020_native_clause_regions；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_sep_c2_stage2b_predecessor_baseline_v1.py --publish`
+- manifest：formal_experiment/outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.manifest.json
+- 结果摘要：150 EStG records; adapted clause-region task; Winter P/R/F1=1.0000/0.8312/0.9078; Rules-Only=0.9398/1.0000/0.9689; Direct-LLM=0.9476/0.9740/0.9606; zero new API.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：6 passed in 9.51s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`35a350dfc461eedf0a9395e9bbb7ed57ede90502`；相关未提交路径：33 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
