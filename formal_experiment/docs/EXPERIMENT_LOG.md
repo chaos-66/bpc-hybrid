@@ -4915,3 +4915,21 @@
 - 仍存在 blocker：无
 - 备注：Retain old normalized transformation semantics in S; regenerate eight prompts, manifest, and offline check; no API or Gold changes.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-15T12:49:12.300575+00:00 - SEP-C3 E/S/J modular prompt real four-arm ablation and rejection
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=SEP-C3-MODULAR-ABLATION-001；阶段=SEP-C3；方法=direct_llm_modular_v1；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_sep_c3_modular_ablation_v1.py --execute --allow-llm --project-env`
+- manifest：outputs/evidence/sep_c3_modular_ablation_v1/manifest.json
+- 结果摘要：600/600 real calls; 111 mean F1=0.7262; 011=0.7470; 101=0.7611; 110=0.7355; old v6=0.7850; acceptance fail; default stays old v6.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：14 passed in 0.15s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`a9dab0614bd4d0ace5ca2c9ca8704ec014a728bd`；相关未提交路径：69 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：600 real Direct-LLM calls; reuses old-v6 D-full-0813 0813 baseline; full 111 coarse five-field mean F1 0.7262 vs old 0.7850, 011/101/110 all higher or insufficient; old v6 remains default.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

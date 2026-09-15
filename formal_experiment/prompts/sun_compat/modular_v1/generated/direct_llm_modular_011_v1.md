@@ -6,9 +6,9 @@ use_S: true
 use_J: true
 source_E_sha256: 8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db
 source_J_sha256: cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523
-source_S_sha256: 6ca5d6d8ef28ecabcd285a05c1e4142e591e4dc380e4ab691a79a6a871961a88
-source_common_sha256: 83cf3856ddf5fef574d4bac054ff235d9eb6181d07361b7075d19c3222cbf8bd
-composition_sha256: 99ee89d57a95a22d899bf41928a612c6fe72821a28430b888b29e06264e47df6
+source_S_sha256: 60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b
+source_common_sha256: a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6
+composition_sha256: 90ccb9d4c27f0df8189673a7680450d396e17bc339343fa4a787b91d81922f5c
 -->
 
 # Direct LLM Modular Prompt v1 (E=0,S=1,J=1)
@@ -33,9 +33,13 @@ Required fields (stage2_prediction.schema.json@1.0.0):
 
 Set schema_version to "1.0.0". Copy sample_id, source_id, and source_text exactly from the input. Use method = {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"} and validation = {"schema_valid": true, "cross_field_valid": true, "errors": []}; the runtime validator overwrites validation and is authoritative. Always include unsupported_or_ambiguous, using [] when empty.
 
+Basic output conventions (always required, independent of any optional semantic guidance):
+- Use zero-based start and exclusive end for every span. For every span, text must equal source_text[start:end]; every child span must lie inside its clause_span.
+- IDs are unique within the complete record. actor_action_map and order_relations entries may reference IDs only from the same clause.
+
 ### S — Semantic interpretation rules
 
-1. Source boundary: use only source_text as evidence. Do not add an actor, object, condition, constraint, exception, or antecedent from outside source_text. Every evidence text must equal source_text[start:end], using zero-based start and exclusive end; every child span must lie inside its clause_span.
+1. Source boundary: use only source_text as evidence. Do not add an actor, object, condition, constraint, exception, or antecedent from outside source_text.
 2. Modality: label each clause obligation, prohibition, permission, or definition. Use the smallest sufficient surface trigger as evidence; include negation evidence when it changes the class.
 3. Actor: the smallest explicit noun phrase or pronominal mention that bears or performs the norm. A subject pronoun (it, they, this, these, such) is a real actor mention, and its exact span is preserved even when the referent is unresolved. If this/these/such modifies a noun, use the complete minimal noun phrase rather than the determiner alone.
 4. Action: the smallest verb-centred phrase that identifies the act, including a necessary object, complement, or particle.
@@ -48,7 +52,7 @@ Set schema_version to "1.0.0". Copy sample_id, source_id, and source_text exactl
 11. Definition and empty records: a definition clause may have no actions. A fragment with no defensible normative clause may have clauses=[] and must report the missing semantic field with a controlled reason.
 12. Clause boundaries: create a separate clause only when a segment has independent normative force, its own modality/actor assignment, or an independently evaluable consequence. A shared modality governing coordinated actions normally stays in one clause.
 13. Coordination: store coordinated actors and actions as separate spans. Add actor_action_map edges only when licensed by the text; do not assume a cross-product when scope is ambiguous.
-14. Order and IDs: add order_relations only when exact textual evidence or construction establishes order; ordinary "and" is not automatically sequential. IDs are unique within the record, and actor_action_map and order_relations may reference IDs only from the same clause.
+14. Order relations: add order_relations only when exact textual evidence or construction establishes order; ordinary "and" is not automatically sequential. Do not add an edge when textual order or scope is ambiguous.
 15. Normalization: normalized may case-fold, fold whitespace, lemmatize without adding arguments, or remove a non-identifying article. It must not replace a pronoun with an antecedent absent from source_text.
 
 ### J — Output organization

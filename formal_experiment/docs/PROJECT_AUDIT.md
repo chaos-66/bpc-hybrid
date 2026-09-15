@@ -21,14 +21,16 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - 本次为纯文档变更：核对内容、链接和 Git 差异；不运行实验审计、代码测试或真实
   API，不改既有结果、Gold、实验门禁和下方两方法任务。
 
-## SEP-C3 prompt 精简与八组合离线拼装（2026-09-15，零 API）
+## SEP-C3 精简 prompt 真实四臂验证与退回（2026-09-15，实际 API=600）
 
-- 已完成公共部分与 E/S/J 三个模块的信息去重和职责重划；新资产在
-  `prompts/sun_compat/modular_v1/`，八组合 prompt/manifest 在 `generated/`。
-- 新增 composer、构建检查脚本和 focused tests；000–111 八组合离线拼装、最低接口、
-  模块关闭无残留、`prompt_loader` 兼容性检查全部通过。
-- 历史 v6、`ablation_v1/v2`、既有 450-call 结果和 runner 未改，旧实验可复现。
-- 本轮真实 API=0，未重跑消融，不声称性能提升；SEP-C3 新运行仍等待适用授权和预算。
+- 先完成公共接口/S 边界修正：零起点右开区间坐标、ID 唯一性与引用合法性统归公共接口；S 保留要素定义、语义归属、范围、歧义和规范关系判断。实际 runner 改为读取 `modular_v1/generated/direct_llm_modular_<ESJ>_v1.md`，不再附旧示例或旧指导。
+- 离线请求检查通过后，真实运行 111/011/101/110 各 150 条，共 600 次 Direct-LLM 调用；固定 EStG-150 input、冻结 Gold、coarse sentence-level 五字段 mean F1 主口径，modality label 分离。旧版完整 v6 复用同一模型发布批次 D-full-0813（无额外调用）。
+- 结果（five-field mean F1）：旧版 0.7850；111=0.7262（-0.0588）；011=0.7470（删 E，+0.0208 vs 111）；101=0.7611（删 S，+0.0349 vs 111）；110=0.7355（删 J，+0.0093 vs 111）。
+- 验收：所有检查失败。完整新版明显退步；三个单模块删除都未达到"完整版至少高 0.01"的贡献标准。actor 是主要退步项（precision 0.354 vs 旧版 0.573；130 predicted vs 82），`estg_000664` 111 把 "The following""taxation" 等非 actor 抽出；E 存在时 `estg_000028` condition 漏抽；J 删除后主口径未下降且 raw bare-JSON 仍 150/150，只有格式收益（新版 150/150 vs 旧版 107/150）但没有主 F1 增量。
+- 处置：退回旧版 `prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md` 为默认 Direct-LLM prompt；`modular_v1` 保留为已实测未通过候选，不得作为正式替换，也不得据本轮结果改口径或补跑。
+- 产物：`outputs/reports/sep_c3_modular_ablation_v1.{json,md}`、`outputs/reports/sep_c3_modular_ablation_analysis_v1.{json,md}`、`outputs/evidence/sep_c3_modular_ablation_v1/`。实际 API=600，失败=0，重试=0，调用上限=750；一次 shell reset 后从 59 条持久化 raw 续跑，样本未重发。
+
+
 
 ## 0. 当前派工：规则＋LLM 已取消（2026-09-14，覆盖下方历史状态）
 

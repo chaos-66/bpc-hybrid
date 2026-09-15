@@ -61,3 +61,7 @@
 - `src/bpc_hybrid/modular_prompt.py`
 - `scripts/build_modular_prompt_v1.py`
 - `tests/test_modular_prompt_v1.py`
+
+## Post-run update (2026-09-15)
+
+Before the real four-arm run, the basic output conventions (zero-based start / exclusive end, ID uniqueness, same-clause reference legality) were moved to `common_system.md`; S keeps element semantics, scope, ambiguity, and normative-relation guidance. The generated prompts and offline check were regenerated. The real 111/011/101/110 validation is reported in `sep_c3_modular_ablation_analysis_v1.md`; the modular v1 full prompt was rejected and the old v6 prompt remains the default.

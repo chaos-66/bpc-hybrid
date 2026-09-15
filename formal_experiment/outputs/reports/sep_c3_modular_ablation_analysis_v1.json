@@ -1,0 +1,233 @@
+{
+  "schema_version": "sep_c3_modular_ablation_analysis@1.0.0",
+  "status": "rejected",
+  "primary_metric": "coarse_five_field_mean_f1",
+  "secondary_aggregate": "coarse_five_field_micro P/R/F1",
+  "modality_policy": "separate four-class label metrics; not mixed into span F1",
+  "table": [
+    {
+      "arm": "old_v6_full_0813",
+      "label": "old v6 full 0813",
+      "source": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01",
+      "sample_count": 150,
+      "main_micro_precision": 0.8149717514124294,
+      "main_micro_recall": 0.8300653594771242,
+      "main_micro_f1": 0.8224493117168078,
+      "main_five_field_mean_f1": 0.7850304424814778,
+      "modality_label_macro_f1": 0.7537201079506458,
+      "modality_label_accuracy": 0.82,
+      "raw_format_valid": 107,
+      "raw_format_total": 150,
+      "raw_format_rate": 0.7133333333333334,
+      "failed_count": 0,
+      "delta_mean_f1_vs_full_111": 0.058825,
+      "delta_micro_f1_vs_full_111": 0.032209,
+      "delta_mean_f1_vs_old": 0.0,
+      "delta_micro_f1_vs_old": 0.0
+    },
+    {
+      "arm": "111",
+      "label": "full 111",
+      "source": "outputs/development/sep_c3_modular_ablation_v1/111/repeat-01",
+      "sample_count": 150,
+      "main_micro_precision": 0.7729885057471264,
+      "main_micro_recall": 0.8082788671023965,
+      "main_micro_f1": 0.7902398853428036,
+      "main_five_field_mean_f1": 0.7262056454982766,
+      "modality_label_macro_f1": 0.7535381285381285,
+      "modality_label_accuracy": 0.82,
+      "raw_format_valid": 150,
+      "raw_format_total": 150,
+      "raw_format_rate": 1.0,
+      "failed_count": 0,
+      "delta_mean_f1_vs_full_111": 0.0,
+      "delta_micro_f1_vs_full_111": 0.0,
+      "delta_mean_f1_vs_old": -0.058825,
+      "delta_micro_f1_vs_old": -0.032209
+    },
+    {
+      "arm": "011",
+      "label": "delete E 011",
+      "source": "outputs/development/sep_c3_modular_ablation_v1/011/repeat-01",
+      "sample_count": 150,
+      "main_micro_precision": 0.7779291553133515,
+      "main_micro_recall": 0.8300653594771242,
+      "main_micro_f1": 0.8031520481113739,
+      "main_five_field_mean_f1": 0.7469554158324833,
+      "modality_label_macro_f1": 0.7635337942092276,
+      "modality_label_accuracy": 0.8266666666666667,
+      "raw_format_valid": 150,
+      "raw_format_total": 150,
+      "raw_format_rate": 1.0,
+      "failed_count": 0,
+      "delta_mean_f1_vs_full_111": 0.02075,
+      "delta_micro_f1_vs_full_111": 0.012912,
+      "delta_mean_f1_vs_old": -0.038075,
+      "delta_micro_f1_vs_old": -0.019297
+    },
+    {
+      "arm": "101",
+      "label": "delete S 101",
+      "source": "outputs/development/sep_c3_modular_ablation_v1/101/repeat-01",
+      "sample_count": 150,
+      "main_micro_precision": 0.8370253164556962,
+      "main_micro_recall": 0.7930283224400871,
+      "main_micro_f1": 0.8144330550967624,
+      "main_five_field_mean_f1": 0.7610556475180569,
+      "modality_label_macro_f1": 0.755381204656567,
+      "modality_label_accuracy": 0.8133333333333334,
+      "raw_format_valid": 150,
+      "raw_format_total": 150,
+      "raw_format_rate": 1.0,
+      "failed_count": 0,
+      "delta_mean_f1_vs_full_111": 0.03485,
+      "delta_micro_f1_vs_full_111": 0.024193,
+      "delta_mean_f1_vs_old": -0.023975,
+      "delta_micro_f1_vs_old": -0.008016
+    },
+    {
+      "arm": "110",
+      "label": "delete J 110",
+      "source": "outputs/development/sep_c3_modular_ablation_v1/110/repeat-01",
+      "sample_count": 150,
+      "main_micro_precision": 0.7779310344827586,
+      "main_micro_recall": 0.8169934640522876,
+      "main_micro_f1": 0.7969838964033982,
+      "main_five_field_mean_f1": 0.7355390106019669,
+      "modality_label_macro_f1": 0.7488343081854532,
+      "modality_label_accuracy": 0.8133333333333334,
+      "raw_format_valid": 150,
+      "raw_format_total": 150,
+      "raw_format_rate": 1.0,
+      "failed_count": 0,
+      "delta_mean_f1_vs_full_111": 0.009333,
+      "delta_micro_f1_vs_full_111": 0.006744,
+      "delta_mean_f1_vs_old": -0.049491,
+      "delta_micro_f1_vs_old": -0.025465
+    }
+  ],
+  "per_field_f1": {
+    "old_v6_full_0813": {
+      "actor": 0.708309,
+      "action": 0.918501,
+      "condition": 0.840531,
+      "constraint": 0.757812,
+      "exception": 0.7
+    },
+    "111": {
+      "actor": 0.515814,
+      "action": 0.928697,
+      "condition": 0.813301,
+      "constraint": 0.741638,
+      "exception": 0.631579
+    },
+    "011": {
+      "actor": 0.513198,
+      "action": 0.912782,
+      "condition": 0.830565,
+      "constraint": 0.772349,
+      "exception": 0.705882
+    },
+    "101": {
+      "actor": 0.675725,
+      "action": 0.928506,
+      "condition": 0.846796,
+      "constraint": 0.687584,
+      "exception": 0.666667
+    },
+    "110": {
+      "actor": 0.477033,
+      "action": 0.925033,
+      "condition": 0.822616,
+      "constraint": 0.776958,
+      "exception": 0.676056
+    }
+  },
+  "acceptance": {
+    "status": "fail",
+    "checks": {
+      "full_not_worse_than_old_by_more_than_0.01": false,
+      "full_minus_011_at_least_0.01": false,
+      "full_minus_101_at_least_0.01": false,
+      "full_minus_110_at_least_0.01": false,
+      "full_not_better_than_old?": null
+    },
+    "interpretation": "all three module deletions must have at least 0.01 lower coarse_five_field_mean_f1 than full 111; the full prompt must not be more than 0.01 below the comparable old v6 full baseline"
+  },
+  "actual_calls": {
+    "planned": 600,
+    "actual_api_attempts_total": 600,
+    "new_sends_in_resumed_process": 541,
+    "resumed_rows_from_first_process_before_shell_reset": 59,
+    "duplicate_sample_sends": 0,
+    "input_tokens": 915525,
+    "output_tokens": 518029,
+    "cost_usd": 3.25988784,
+    "missing_usage_calls": 0
+  },
+  "module_diagnostics": {
+    "E": {
+      "verdict": "negative in this run",
+      "mean_f1_delta_delete_E_minus_full": 0.02075,
+      "interpretation": "The compact E examples are followed by omission of some condition/constraint/exception phrases; deleting E recovers them. This is an observed association, not proof of a single causal token.",
+      "concrete_example": {
+        "sample_id": "estg_000028",
+        "field": "condition",
+        "gold": "when taking into account the converted income",
+        "full_111_predicted": [],
+        "delete_E_011_predicted": [
+          "when taking into account the converted income"
+        ]
+      }
+    },
+    "S": {
+      "verdict": "negative in this run",
+      "mean_f1_delta_delete_S_minus_full": 0.03485,
+      "interpretation": "The condensed S actor rule is associated with extra noun-phrase actors; deleting S raises actor precision from 0.354 to 0.517. The result does not isolate which wording caused it.",
+      "concrete_example": {
+        "sample_id": "estg_000664",
+        "field": "actor",
+        "gold_actor_spans": [],
+        "full_111_predicted_actors": [
+          "The following",
+          "Certain income, in particular foreign income",
+          "taxation",
+          "the tax base or the tax"
+        ],
+        "delete_S_101_predicted_actors": [
+          "Certain income, in particular foreign income",
+          "taxation",
+          "the tax base or the tax"
+        ],
+        "old_v6_full_predicted_actors": [
+          "Certain income, in particular foreign income"
+        ]
+      }
+    },
+    "J": {
+      "verdict": "not accepted; no demonstrated main-F1 increment",
+      "mean_f1_delta_delete_J_minus_full": 0.009333,
+      "raw_format_valid_full": "150/150",
+      "raw_format_valid_delete_J": "150/150",
+      "interpretation": "Deleting J did not lower the primary metric; it was 0.0093 higher than full 111 (below the 0.01 acceptance threshold for a J contribution). Raw bare-JSON validity was already 150/150 without J, so this run provides no F1 or raw-format evidence for keeping J."
+    }
+  },
+  "specific_regression_findings": [
+    "Full 111 mean F1 fell 0.0588 below the comparable old v6 D-full-0813 baseline (0.7262 vs 0.7850).",
+    "Actor precision is the largest single loss: 0.3538 vs 0.5732 old; 130 predicted actor spans vs 82 old, with only 46 matched predicted spans (84 false positives).",
+    "Condition, constraint, and exception F1 also fell (0.8133 vs 0.8405; 0.7416 vs 0.7578; 0.6316 vs 0.7000). Action F1 rose slightly (0.9287 vs 0.9185).",
+    "All three deletions (011, 101, 110) had higher mean F1 than full 111 by 0.0208, 0.0349, and 0.0093 respectively; none of the modules shows the required +0.01 increment."
+  ],
+  "batch_difference": {
+    "baseline_source": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01 (immutable 450-call factorial batch)",
+    "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "same_input_model_sampling_evaluator": true,
+    "recorded_difference": "Old baseline raw bare-JSON format was 107/150; one canonical source_text echo (estg_000092) contains literal \\n instead of newlines. The evaluator scores spans against frozen Gold, so the metric is not affected by that echo difference."
+  },
+  "decision": {
+    "accepted_full_111": false,
+    "default_version_after_this_round": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md (old v6 full)",
+    "modular_v1_status": "rejected_for_default_use; preserve as tested candidate evidence only",
+    "further_revision_action": "Do not silently promote. Any further E/S/J revision needs a new pre-run threshold declaration and a new 600-call validation before it can replace the old v6 default."
+  }
+}

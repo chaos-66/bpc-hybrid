@@ -53,6 +53,8 @@ COMMON_MARKERS = (
     "clause_id, clause_span, modality, actors, actions, conditions, constraints, exceptions, actor_action_map, order_relations",
     '"name": "direct_llm"',
     "stage2_prediction.schema.json@1.0.0",
+    "zero-based start and exclusive end",
+    "IDs are unique within the complete record",
 )
 
 

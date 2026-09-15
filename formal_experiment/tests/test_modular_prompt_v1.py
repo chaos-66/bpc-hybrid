@@ -55,6 +55,20 @@ def test_required_interface_is_in_every_combination_once():
         assert "Clause: clause_id, clause_span, modality" in system
 
 
+def test_basic_output_conventions_live_in_common_not_s():
+    # Deleting S must not remove the coordinate/ID output contract.
+    for code, prompt in mp.render_all().items():
+        system = prompt.system_prompt
+        assert "zero-based start and exclusive end" in system
+        assert "IDs are unique within the complete record" in system
+        assert "may reference IDs only from the same clause" in system
+        if prompt.flags["S"]:
+            assert "Every evidence text must equal" not in system
+            assert "IDs are unique within the record" not in system
+        else:
+            assert "Semantic interpretation rules" not in system
+
+
 def test_disabled_modules_are_absent_and_no_dangling_references():
     for code, prompt in mp.render_all().items():
         flags = prompt.flags

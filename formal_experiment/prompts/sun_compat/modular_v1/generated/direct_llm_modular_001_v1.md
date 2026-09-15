@@ -6,9 +6,9 @@ use_S: false
 use_J: true
 source_E_sha256: 8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db
 source_J_sha256: cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523
-source_S_sha256: 6ca5d6d8ef28ecabcd285a05c1e4142e591e4dc380e4ab691a79a6a871961a88
-source_common_sha256: 83cf3856ddf5fef574d4bac054ff235d9eb6181d07361b7075d19c3222cbf8bd
-composition_sha256: e86301307a9d6a20b1d142a2f9c8c6ac3d9e9fd0901cd36809d9aed29b355ac0
+source_S_sha256: 60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b
+source_common_sha256: a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6
+composition_sha256: 7e00e998e4a09dac54f61f7bf899bb6b3b5437ab94232f4fe897bcf35e6bcc23
 -->
 
 # Direct LLM Modular Prompt v1 (E=0,S=0,J=1)
@@ -32,6 +32,10 @@ Required fields (stage2_prediction.schema.json@1.0.0):
 - unsupported_or_ambiguous entry: field, reason.
 
 Set schema_version to "1.0.0". Copy sample_id, source_id, and source_text exactly from the input. Use method = {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"} and validation = {"schema_valid": true, "cross_field_valid": true, "errors": []}; the runtime validator overwrites validation and is authoritative. Always include unsupported_or_ambiguous, using [] when empty.
+
+Basic output conventions (always required, independent of any optional semantic guidance):
+- Use zero-based start and exclusive end for every span. For every span, text must equal source_text[start:end]; every child span must lie inside its clause_span.
+- IDs are unique within the complete record. actor_action_map and order_relations entries may reference IDs only from the same clause.
 
 ### J — Output organization
 

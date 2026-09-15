@@ -14,3 +14,7 @@ Required fields (stage2_prediction.schema.json@1.0.0):
 - unsupported_or_ambiguous entry: field, reason.
 
 Set schema_version to "1.0.0". Copy sample_id, source_id, and source_text exactly from the input. Use method = {"name": "direct_llm", "schema_source": "stage2_prediction.schema.json@1.0.0"} and validation = {"schema_valid": true, "cross_field_valid": true, "errors": []}; the runtime validator overwrites validation and is authoritative. Always include unsupported_or_ambiguous, using [] when empty.
+
+Basic output conventions (always required, independent of any optional semantic guidance):
+- Use zero-based start and exclusive end for every span. For every span, text must equal source_text[start:end]; every child span must lie inside its clause_span.
+- IDs are unique within the complete record. actor_action_map and order_relations entries may reference IDs only from the same clause.

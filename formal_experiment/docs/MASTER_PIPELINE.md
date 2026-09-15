@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.13
+**文档版本**：3.7.14
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-15
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,20 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-15 修订 3.7.14：SEP-C3 E/S/J 精简 prompt 真实四臂验证（600 API）与退回旧版
+
+按用户本轮授权，完成公共接口/S 边界修正和实际入口接通后，真实运行 111/011/101/110 四个单因素组合各 150 条，共 600 次 Direct-LLM 调用；旧版完整 v6 复用同一模型发布批次 D-full-0813（无额外调用）。固定 EStG-150 input、冻结 Gold、coarse sentence-level 五字段 mean F1 主口径，modality label 分离报告。
+
+结果（主口径 five-field mean F1；旧版 D-full-0813=0.7850）：
+- 111 = 0.7262（比旧版低 0.0588）
+- 011 = 0.7470（删除 E；比 111 高 0.0208）
+- 101 = 0.7611（删除 S；比 111 高 0.0349）
+- 110 = 0.7355（删除 J；比 111 高 0.0093）
+
+验收结论：完整新版明显退步；三个单模块删除均未使完整版达到"至少高 0.01"的贡献标准，全部验收检查失败。actor precision 从旧版 0.573 降到 0.354，111 预测 130 个 actor span（旧版 82），其中 84 个为 FP；`estg_000664` 111 多抽 "The following""taxation" 等非 actor。E 存在时 `estg_000028` 的 condition 漏抽。J 删除后主口径未下降，且 110 的 raw bare-JSON 仍 150/150。新版 raw bare-JSON 150/150 对旧版 107/150 是真实格式收益，但不满足主 F1 门槛。
+
+处置：退回旧版 `prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md` 为默认 Direct-LLM prompt；`modular_v1` 保留为已实测未通过候选，不得作为正式替换。证据：`outputs/reports/sep_c3_modular_ablation_v1.*`、`outputs/reports/sep_c3_modular_ablation_analysis_v1.*`、`outputs/evidence/sep_c3_modular_ablation_v1/`。实际 API=600，失败=0，重试=0，调用上限=750；一次 shell reset 后从 59 条持久化 raw 续跑，样本未重发。
 
 ## 2026-09-15 修订 3.7.13：SEP-C3 Direct-LLM E/S/J 模块精简与八组合离线拼装（零 API）
 

@@ -47,6 +47,8 @@ REQUIRED_COMMON_MARKERS = (
     '"name": "direct_llm"',
     "stage2_prediction.schema.json@1.0.0",
     "unsupported_or_ambiguous",
+    "zero-based start and exclusive end",
+    "IDs are unique within the complete record",
 )
 
 
