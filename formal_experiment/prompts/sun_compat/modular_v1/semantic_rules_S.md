@@ -14,3 +14,4 @@
 12. Clause boundaries: create a separate clause only when a segment has independent normative force, its own modality/actor assignment, or an independently evaluable consequence. A shared modality governing coordinated actions normally stays in one clause.
 13. Coordination: store coordinated actors and actions as separate spans. Add actor_action_map edges only when licensed by the text; do not assume a cross-product when scope is ambiguous.
 14. Order and IDs: add order_relations only when exact textual evidence or construction establishes order; ordinary "and" is not automatically sequential. IDs are unique within the record, and actor_action_map and order_relations may reference IDs only from the same clause.
+15. Normalization: normalized may case-fold, fold whitespace, lemmatize without adding arguments, or remove a non-identifying article. It must not replace a pronoun with an antecedent absent from source_text.

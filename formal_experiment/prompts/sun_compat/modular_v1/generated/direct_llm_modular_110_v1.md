@@ -6,9 +6,9 @@ use_S: true
 use_J: false
 source_E_sha256: 8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db
 source_J_sha256: cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523
-source_S_sha256: a13eaa457931576aa2478cfc7246177f7c8935dce90ef79ca8b3b6f7bb392abd
+source_S_sha256: 6ca5d6d8ef28ecabcd285a05c1e4142e591e4dc380e4ab691a79a6a871961a88
 source_common_sha256: 83cf3856ddf5fef574d4bac054ff235d9eb6181d07361b7075d19c3222cbf8bd
-composition_sha256: 75a0fd1a9e73999b1e1165e061944f4225c478ecd7b4fd84644f60c53e31578e
+composition_sha256: 691e1d133e79ed8808a0f44b0851ed265d10dfb023d1d669907deca38d089399
 -->
 
 # Direct LLM Modular Prompt v1 (E=1,S=1,J=0)
@@ -49,6 +49,7 @@ Set schema_version to "1.0.0". Copy sample_id, source_id, and source_text exactl
 12. Clause boundaries: create a separate clause only when a segment has independent normative force, its own modality/actor assignment, or an independently evaluable consequence. A shared modality governing coordinated actions normally stays in one clause.
 13. Coordination: store coordinated actors and actions as separate spans. Add actor_action_map edges only when licensed by the text; do not assume a cross-product when scope is ambiguous.
 14. Order and IDs: add order_relations only when exact textual evidence or construction establishes order; ordinary "and" is not automatically sequential. IDs are unique within the record, and actor_action_map and order_relations may reference IDs only from the same clause.
+15. Normalization: normalized may case-fold, fold whitespace, lemmatize without adding arguments, or remove a non-identifying article. It must not replace a pronoun with an antecedent absent from source_text.
 ```
 
 ## User Prompt Template

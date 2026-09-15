@@ -4901,3 +4901,17 @@
 - 仍存在 blocker：无
 - 备注：New modular_v1 common/S/E/J sources, eight generated prompts, manifest, offline check report; historical v6 and ablation_v2 unchanged; no real API or Gold modification.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-15T09:38:17.312935+00:00 - SEP-C3 follow-up: restore normalization rule after module simplification (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：9 passed in 0.11s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`d6f571961ab359ce8cd0c087809f625dfca22b67`；相关未提交路径：29 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Retain old normalized transformation semantics in S; regenerate eight prompts, manifest, and offline check; no API or Gold changes.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
