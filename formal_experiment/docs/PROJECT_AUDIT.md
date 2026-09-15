@@ -41,6 +41,14 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - 本批为实验代码、机器合同、具名测试与文档更新；未运行实验 API，未改 Gold 或历史
   预测/授权文件；停用规则仍见 `formal_experiment/AGENTS.md`。
 
+## 0.1 SEP-C2 两方法证据收口与 S2.13 v10 后继入口（2026-09-14，零 API）
+
+- `build_s2_12_two_method_contract_v1.py` 已把 `comparison.complete` 改为证据判定：复用 Rules-Only 与 Direct-LLM 既有独立 verifier，并核对冻结输入绑定、36 条固定总体、有限指标和 verifier 重放/绑定结论；只看 `status`/`dataset_id` 不足以完成。
+- 当前实际证据：Rules-Only 验证通过；`data/predictions/s2_12_direct_llm_v1` 与 `data/results/s2_12_direct_llm_v1` 不存在，因此合同仍 partial，`comparison.complete=false`、`s2_12_complete=false`；S2.12 真实实验未提前标完成，真实 API=0。
+- 新增 S2.13 后继入口 v10 及 schema/outputs：S2.12 状态从两方法合同派生，S2.13 只等待两方法证据，不再等待 `sun_llm_fallback`；v9 及更早胶囊 byte-exact。
+- 具名测试覆盖缺证据拒绝、完整证据通过、取消组不参与和 v10 合同状态；builder replay 与 v10 verifier 通过；未跑全量测试。
+- 下一步：继续 SEP-C2 Stage 2B 前人基线首轮实跑，不以准备报告代替结果。
+
 ## 0. SEP-C2 取消前断点（2026-09-14，历史 137 次范围）
 
 **状态：执行准备已通过；D-CAL 首条真实发送被自动审批阻止，S2.12 未完成。**

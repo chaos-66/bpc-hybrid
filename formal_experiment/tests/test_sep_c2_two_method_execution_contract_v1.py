@@ -129,30 +129,73 @@ def test_contract_keeps_direct_pending_and_s213_incomplete() -> None:
     assert contract["gdpr7_boundary"]["fake_is_not_real_prediction_or_promotion_source"] is True
 
 
-def test_comparison_requires_direct_not_repair() -> None:
+def _valid_eval_doc(arm: str, status: str) -> dict:
+    return {
+        "status": status,
+        "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+        "arm": arm,
+        "metrics": {
+            "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
+            "method_id": arm,
+            "overall": {
+                "samples": 36,
+                "span_fields": {"overall": {
+                    "precision": 0.5, "recall": 0.5, "f1": 0.5}},
+                "modality_labels": {
+                    "records": 36, "accuracy": 0.5, "macro_f1": 0.5},
+            },
+        },
+    }
+
+
+def _complete_evidence() -> dict:
+    return {
+        "verified": True,
+        "failed_checks": [],
+        "input_binding_ok": True,
+        "all_36_rows": True,
+        "metrics_valid": True,
+    }
+
+
+def test_comparison_rejects_status_only_or_partial_evidence() -> None:
     module = _load("sep_c2_contract_builder",
                    "scripts/build_s2_12_two_method_contract_v1.py")
-    rules = {
-        "status": "verified_zero_api_arm_complete",
-        "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
-        "metrics": {"overall": {"span_fields": {"overall": {}},
-                                "modality_labels": {}}},
-    }
-    pending = module.compare_two_methods(rules, None)
-    assert pending["complete"] is False
-    assert "direct_llm_evaluation_missing_or_not_complete" in pending["blockers"]
-    assert pending["fallback_results_or_ledger_required"] is False
+    rules = _valid_eval_doc("sun_rule_only", "verified_zero_api_arm_complete")
+    direct = _valid_eval_doc("direct_llm", "verified_direct_llm_arm_complete")
 
-    direct = {
-        "status": "verified_direct_llm_arm_complete",
-        "dataset_id": "s2_11_barrientos_complex_corpus_36_v1",
-        "metrics": {"overall": {"span_fields": {"overall": {}},
-                                "modality_labels": {}}},
-    }
-    complete = module.compare_two_methods(rules, direct)
+    status_only = module.compare_two_methods(rules, direct)
+    assert status_only["complete"] is False
+    assert any("evidence" in blocker or "metrics" in blocker
+               for blocker in status_only["blockers"])
+
+    partial = dict(_complete_evidence())
+    partial["input_binding_ok"] = False
+    result = module.compare_two_methods(
+        rules, direct,
+        rules_evidence=_complete_evidence(), direct_evidence=partial)
+    assert result["complete"] is False
+    assert "direct_llm_input_binding_missing_or_mismatch" in result["blockers"]
+    assert result["evidence"]["direct_llm"]["input_binding_ok"] is False
+
+
+def test_comparison_accepts_full_verified_evidence_without_repair_group() -> None:
+    module = _load("sep_c2_contract_builder_complete",
+                   "scripts/build_s2_12_two_method_contract_v1.py")
+    rules = _valid_eval_doc("sun_rule_only", "verified_zero_api_arm_complete")
+    direct = _valid_eval_doc("direct_llm", "verified_direct_llm_arm_complete")
+    complete = module.compare_two_methods(
+        rules, direct,
+        rules_evidence=_complete_evidence(),
+        direct_evidence=_complete_evidence())
     assert complete["complete"] is True
     assert complete["blockers"] == []
+    assert complete["fallback_results_or_ledger_required"] is False
+    assert complete["three_method_requirement_removed"] is True
     assert "sun_llm_fallback" in complete["cancelled_methods"]
+    assert "sun_llm_fallback" not in complete["active_methods"]
+    assert complete["evidence"]["direct_llm"]["verified"] is True
+    assert complete["evidence"]["direct_llm"]["metrics_valid"] is True
 
 
 def test_published_contract_is_current_replay() -> None:

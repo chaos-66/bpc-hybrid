@@ -21,11 +21,23 @@
       "historical_provenance_retained": true
     }
   },
+  "current_state": {
+    "s2_12_direct_evidence_complete": false,
+    "s2_12_direct_real_calls_observed": null,
+    "two_method_comparison_complete": false,
+    "s2_13_freeze_eligible": false,
+    "cancelled_repair_arm_used": false
+  },
   "input_request_bindings": {
     "s2_12_input": {
       "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
       "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
       "records": 36
+    },
+    "s2_12_input_file": {
+      "path": "data/input/s2_12_complex_corpus_formal_input_v1.json",
+      "sha256": "892d4284ea70c38f82a47f821c13622f1b07744253429e466038ddb5db96660e",
+      "byte_size": 17784
     },
     "s2_12_active_preflight_lock": {
       "path": "configs/s2_12_active_preflight_v2.json",
@@ -36,6 +48,16 @@
       "path": "outputs/reports/s2_12_active_preflight_v2.json",
       "sha256": "cbec18d103b3c151ccd3225588f9998bbf001cb555473bded970803063aca764",
       "byte_size": 26131
+    },
+    "rules_only_predictions": {
+      "path": "data/predictions/s2_12_sun_rule_only_v1/predictions.json",
+      "sha256": "f1e88ac5167ec1d3f0644dfcbeac60ead18932f766231baf3cb8e86b4af77006",
+      "byte_size": 59951
+    },
+    "rules_only_prediction_manifest": {
+      "path": "data/predictions/s2_12_sun_rule_only_v1/manifest.json",
+      "sha256": "e96d76016e815736fc5b4a588187ee42b3b1c9cc702e28cc607a6da82cd0c3c2",
+      "byte_size": 4250
     },
     "s2_12_direct_prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
     "s2_12_direct_payload_set_sha256": "5804e2b6b24fa93b57df6f0204cf2631496736b074022fa47f361af527297437",
@@ -78,9 +100,11 @@
       "D-CAL": 1,
       "D-REST": 35
     },
+    "s2_12_direct_completed_observed": 0,
     "cancelled_repair_calls": 27,
     "cancelled_repair_calls_reassigned": false,
     "real_api_calls_made": 0,
+    "real_api_calls_made_meaning": "new calls made by this zero-API contract build; observed capsule calls are reported in current_state",
     "real_api_authorization_created": false,
     "retry": 0
   },
@@ -96,6 +120,38 @@
     ],
     "fallback_results_or_ledger_required": false,
     "three_method_requirement_removed": true,
+    "completion_requires": [
+      "existing independent verifier verified",
+      "prediction input binding matches the frozen S2.12 input",
+      "all 36 fixed S2.12 rows present, including explicit failures",
+      "finite 36-row span/modality metrics present"
+    ],
+    "evidence": {
+      "sun_rule_only": {
+        "verified": true,
+        "verifier_path": "scripts/verify_s2_12_sun_rule_only_v1.py",
+        "checks_total": 27,
+        "failed_checks": [],
+        "input_binding_ok": true,
+        "all_36_rows": true,
+        "prediction_row_ids": 36,
+        "metrics_valid": true,
+        "error": null
+      },
+      "direct_llm": {
+        "verified": false,
+        "verifier_path": "scripts/verify_s2_12_api_arm_v1.py",
+        "checks_total": 1,
+        "failed_checks": [
+          "all files exist"
+        ],
+        "input_binding_ok": false,
+        "all_36_rows": false,
+        "prediction_row_ids": null,
+        "metrics_valid": false,
+        "error": null
+      }
+    },
     "metrics": {
       "sun_rule_only": {
         "span_precision": 0.8623188405797102,
@@ -122,13 +178,13 @@
     "required_evidence_for_two_method_completion": [
       "Rules-Only and Direct-LLM real predictions on the same frozen 36 S2.12 inputs",
       "same-caliber evaluation against frozen S2.11 Gold and evaluator v2; the cancelled repair ledger/results are not inputs",
-      "two-method comparison record and S2.12 completion checkpoint before S2.13 freeze"
+      "existing independent verifier replay, frozen input binding, fixed 36-row population, and finite metrics"
     ],
     "cancelled_repair_arm_not_a_completion_condition": true,
     "blockers": [
       "direct_llm_evaluation_missing_or_not_complete"
     ],
-    "note": "S2.13 is not marked complete and does not wait for the cancelled repair arm; it remains blocked until Direct-LLM predictions, evaluation, and the two-method comparison exist."
+    "note": "S2.13 is not marked complete and does not wait for the cancelled repair arm; it remains blocked until complete verified two-method evidence (36-row Direct-LLM prediction capsule, same-caliber evaluation, and comparison) exists."
   },
   "execution_commands": {
     "s2_12_direct": [
@@ -152,6 +208,7 @@
   },
   "authorization_status": {
     "api_authorized": false,
+    "s2_12_external_send_no_longer_needed": false,
     "existing_137_confirmation_scope_superseded": true,
     "current_cancellation_is_not_external_send_authorization": true,
     "new_authorization_file_created_this_round": false,
@@ -169,16 +226,17 @@
     "audit_project_required": true,
     "real_api_calls": 0,
     "network_calls": 0,
+    "observed_s2_12_direct": null,
     "real_results_missing": [
       "S2.12 Direct-LLM D-CAL/D-REST real responses (36 calls; no fake substitution)",
       "S2.12 Direct-LLM finalized prediction capsule at data/predictions/s2_12_direct_llm_v1",
       "S2.12 Direct-LLM evaluation at data/results/s2_12_direct_llm_v1/evaluation.json",
       "S2.12 two-method Rules-Only vs Direct-LLM comparison",
       "GDPR-7 Direct-LLM real 74-call capsule/promotion (fake v1 74 rows excluded)",
-      "successor two-method external-send authorization and automatic approval"
+      "successor two-method external-send authorization and automatic approval (only if remaining calls reveal a new external-send blocker)"
     ],
     "released_scope": "Rules-Only and Direct-LLM; the cancelled 27 repair calls remain removed"
   },
-  "claim_boundary": "This contract and its evidence are implementation/readiness work only. No real Direct-LLM or GDPR API result exists; S2.12 and S2.13 are not complete. The cancelled Rules+LLM-Repair arm is not a dependency and must not be restarted.",
+  "claim_boundary": "This contract and its evidence are implementation/readiness work only. No complete real S2.12 Direct-LLM or GDPR API result is recorded here; S2.12 and S2.13 are not complete. The cancelled Rules+LLM-Repair arm is not a dependency and must not be restarted.",
   "reproduce_command": "python formal_experiment/scripts/build_s2_12_two_method_contract_v1.py --check"
 }

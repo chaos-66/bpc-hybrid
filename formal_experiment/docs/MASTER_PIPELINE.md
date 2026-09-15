@@ -11,6 +11,17 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
+## 2026-09-14 修订 3.7.10：SEP-C2 两方法证据判定收口与 S2.13 v10 后继入口（零 API）
+
+本修订只修 3.7.9 发现的证据判定缺口，随后直接继续前人基线实跑；未重跑 S2.12 真实实验，真实 API=0。
+
+- `comparison.complete` 复用 Rules-Only 与 Direct-LLM 既有独立 verifier，并核对冻结输入绑定、固定 36 条总体（失败行保留）、有限指标和 verifier 绑定/重放结论；只看 `status`/`dataset_id` 不再足够。
+- 必要证据缺失时合同保持 `partial_two_method_contract_pending_direct_llm`；失败真实运行不丢弃样本，也不自动禁止评价。
+- 新增 S2.13 后继入口 v10：S2.12 状态完全从两方法合同派生，S2.13 只等待两方法证据链，取消 `sun_llm_fallback` 修复组依赖；v9 及更早胶囊 byte-exact，历史三方法报告不覆盖。
+- 当前真实状态：Rules-Only 验证通过；S2.12 Direct 预测/评价不存在，因此 `comparison.complete=false`、`s2_13_complete=false`，v10 为 `blocked_only_on_two_method_contract`；未提前标完成。
+- 具名测试覆盖缺证据拒绝、完整证据通过、取消组不参与及 v10 合同驱动状态；未跑全量测试。
+- 下一步：直接执行 SEP-C2 Stage 2B 前人对照首轮实跑（优先 Winter 现成实现与 EStG-150 共同子任务），不以准备文档代替运行结果。
+
 ## 2026-09-14 修订 3.7.8：用户取消全部规则＋LLM 后续实验
 
 用户明确要求：“规则+LLM直接不要了，不在进行规则+LLM的任何实验”。本条优先于

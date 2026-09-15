@@ -4855,3 +4855,17 @@
 - 仍存在 blocker：无
 - 备注：Evaluator encodes in_doubt/failed rows as empty canonical records; verifier and tests assert no success-only subset; zero API; Direct still pending.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-15T01:36:56.097856+00:00 - SEP-C2 two-method evidence contract and S2.13 v10 successor entry
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：16 passed, 1 warning in 32.14s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`e83eac1b5816cfa37626ca15e3898715b2c9f563`；相关未提交路径：32 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Missing Direct evidence now fails closed via existing verifiers plus input-binding/36-row/metric checks; S2.13 v10 derives state from the two-method contract and ignores cancelled repair arm.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
