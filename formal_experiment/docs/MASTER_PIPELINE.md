@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.12
+**文档版本**：3.7.13
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-15
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,17 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-15 修订 3.7.13：SEP-C3 Direct-LLM E/S/J 模块精简与八组合离线拼装（零 API）
+
+本轮只精简现有 Direct-LLM prompt 的公共部分与 E/S/J 三个模块，不运行 API、不重跑消融、不新增性能结论。
+
+- 公共部分只保留任务、输入 envelope、字段名称、固定 `method`/`validation` 值和最低输出接口；语义、示例、格式指导分别归 S/E/J。
+- 删除或合并了历史 prompt 中的逐字/近义重复：constraint 定义、action 排除、condition 定义、空数组约定、精确坐标自检、JSON 键/类型强调和示例内重复的完整 JSON 骨架等。
+- 新资产位于 `prompts/sun_compat/modular_v1/`：`common_system.md`、`user_envelope.md`、`semantic_rules_S.md`、`examples_E.md`、`output_format_J.md`；八组合 prompt 和 manifest 位于其 `generated/`。composer 为 `src/bpc_hybrid/modular_prompt.py`，构建/检查入口为 `scripts/build_modular_prompt_v1.py`。
+- 离线检查 000–111 八组合全部通过：最低接口、关闭模块无残留、无悬空 `{few_shot_block}`、`prompt_loader` 抽取与 renderer 一致、生成文件与 manifest 一致。报告见 `outputs/reports/sep_c3_modular_prompt_v1_offline_check.json`，说明见 `outputs/reports/sep_c3_modular_prompt_v1.md`。
+- 历史 v6 prompt、`ablation_v1/v2`、既有 450-call 结果和运行脚本保持原样，避免影响旧实验复现。
+- 边界：E 示例仍会展示少量字段形态；固定 schema/validator 的坐标与引用校验仍会形成计算耦合。本轮没有证明单因素消融不显著的原因，真实效果仍需单独授权运行。
 
 ## 2026-09-15 修订 3.7.12：PW 写作目标与工作、数据呈现要求
 

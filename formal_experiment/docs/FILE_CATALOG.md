@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-14
-**收录文件**：2034 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-15
+**收录文件**：2084 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -114,6 +114,8 @@
 | `configs/s2_11_batch_import_confirmation_event_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_11_mapping_policy_m1_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_11_user_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/s2_12_active_method_scope_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/s2_12_active_preflight_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_12_api_arms_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_12_api_authorization_D-CAL.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/s2_12_api_authorization_D-REST.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -149,6 +151,7 @@
 | `configs/schemas/s2_12_complex_corpus_input_v1.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_12_execution_readiness_v4.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/schemas/s2_13_s3_7_transition_readiness_v10.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness_v2.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness_v3.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/s2_13_s3_7_transition_readiness_v4.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -167,6 +170,7 @@
 | `configs/schemas/stage3_gold_annotation.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_inference.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_stage2b_predecessor_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_annotation_protocol_s15.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_evaluator_s16.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_evaluator_s16_formal.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1116,6 +1120,11 @@
 | `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/raw_responses/f6931f06c1782bede02599f42fd9280640fd2abcffd87aa64b8bed9af981b70f.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s3_semantic_grounding_v5_integration_v1/mock/attempt_002/run_identity.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/s3_semantic_grounding_v5_integration_v1/offline_acceptance.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/historical_clause_regions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_adapted_clause_regions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_native.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_stage2b_public_source_probe_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/b0_d1_formal_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1249,6 +1258,7 @@
 | `outputs/reports/s2_11_proposal_report_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_proposal_report_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_11_review_surface_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_12_active_preflight_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_api_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_api_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_execution_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1260,9 +1270,16 @@
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_formal_descriptive_error_analysis_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_12_two_method_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_12_two_method_contract_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_12_two_method_contract_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v10.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v10.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v10.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/s2_13_s3_7_transition_readiness_v10_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_13_s3_7_transition_readiness_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1354,6 +1371,11 @@
 | `outputs/reports/sep_c1a_source_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c1b_factorial_budget_plan_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c2_execution_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_modular_prompt_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_modular_prompt_v1_offline_check.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sim_case_c1_result_figure.pdf` | 活动 | 项目文件 |
@@ -1429,6 +1451,21 @@
 | `prompts/sun_compat/dry_run_back_translation.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/dry_run_six_element.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/dry_run_zh_gloss.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/common_system.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/examples_E.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/generated/direct_llm_modular_000_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/generated/direct_llm_modular_001_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/generated/direct_llm_modular_010_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/generated/direct_llm_modular_011_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/generated/direct_llm_modular_100_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/generated/direct_llm_modular_101_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/generated/direct_llm_modular_110_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/generated/direct_llm_modular_111_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/generated/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `prompts/sun_compat/modular_v1/output_format_J.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/README.md` | 活动 | 所在目录的入口说明 |
+| `prompts/sun_compat/modular_v1/semantic_rules_S.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_v1/user_envelope.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/rule_first_llm_fallback_masked_prompt.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/rule_first_llm_fallback_prompt.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/zh_aid/en_back_translation.md` | 活动 | 说明、规范或研究文档 |
@@ -1518,6 +1555,7 @@
 | `scripts/build_gdpr7_stage2_input_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_gold_review_pack.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_h1_trigger_diagnostics.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_modular_prompt_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s1_1_s1_4_matrix_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s1_5_review_surface_authorization_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1529,12 +1567,15 @@
 | `scripts/build_s2_11_g0_5_pre_authorization_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_11_g0_5_pre_authorization_v6.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_11_gates_applied_checkpoint_a.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s2_12_active_preflight_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_api_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_auth_event_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_complex_corpus_input_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_fallback_trigger_plan_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_12_formal_error_analysis_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s2_12_two_method_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_s2_13_s3_7_transition_readiness_v10.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s2_13_s3_7_transition_readiness_v4.py` | 活动 | Python 实现、脚本或测试 |
@@ -1657,6 +1698,7 @@
 | `scripts/run_s3_semantic_grounding_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_semantic_grounding_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c2_stage2b_predecessor_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_supplement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_stage2_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1726,6 +1768,7 @@
 | `scripts/verify_s2_12_runner_wiring.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_12_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_s2_13_s3_7_transition_readiness_v10.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v4.py` | 活动 | Python 实现、脚本或测试 |
@@ -1734,6 +1777,7 @@
 | `scripts/verify_s2_13_s3_7_transition_readiness_v7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v8.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_s2_13_s3_7_transition_readiness_v9.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_sep_c2_stage2b_predecessor_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_solcand_prompt_examples_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_annotation_protocol_s15.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage1_evaluator_s16.py` | 活动 | Python 实现、脚本或测试 |
@@ -1803,6 +1847,7 @@
 | `src/bpc_hybrid/llm_config.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/llm_provider.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/mini_pilot_evaluator.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/modular_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/normalization.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/prompt_loader.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_11_barrientos_adapter.py` | 活动 | Python 实现、脚本或测试 |
@@ -1835,6 +1880,7 @@
 | `src/bpc_hybrid/s3_semantic_grounding_v5_integration.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sep_c2_stage2b_winter_estg150.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sim_case_c1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sim_case_c1_transforms.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
@@ -2025,6 +2071,7 @@
 | `tests/test_llm_client.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_llm_config.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_master_pipeline_and_layout.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_modular_prompt_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_normalization.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_project_structure.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_prompt_contract.py` | 活动 | Python 实现、脚本或测试 |
@@ -2068,6 +2115,7 @@
 | `tests/test_s2_12_runner_wiring.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_12_zero_api_and_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s2_13_s3_7_transition_readiness_v10.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s2_13_s3_7_transition_readiness_v4.py` | 活动 | Python 实现、脚本或测试 |
@@ -2108,6 +2156,8 @@
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c2_stage2b_predecessor_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c2_two_method_execution_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_shared_comparison_correction.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sim_case_c1_run_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sim_case_checklist_v1.py` | 活动 | Python 实现、脚本或测试 |

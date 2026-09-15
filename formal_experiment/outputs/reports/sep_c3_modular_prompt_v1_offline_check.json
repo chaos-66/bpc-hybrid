@@ -1,0 +1,159 @@
+{
+  "schema_version": "d1_modular_prompt_offline_check@1.0.0",
+  "status": "pass",
+  "combination_order": [
+    "E",
+    "S",
+    "J"
+  ],
+  "module_lengths": {
+    "common_system": 1366,
+    "common_user": 101,
+    "S": 3534,
+    "E": 2349,
+    "J": 263
+  },
+  "baseline_prompt": {
+    "path": "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
+    "chars": 17038,
+    "sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895"
+  },
+  "combinations": {
+    "000": {
+      "flags": {
+        "E": false,
+        "S": false,
+        "J": false
+      },
+      "system_chars": 1366,
+      "user_chars": 101,
+      "total_chars": 1467,
+      "system_sha256": "e64a66ae58aaf69a5e472beefa6350cfebeab7ffcd20e97b4f7c0a71e21f485e",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "composition_sha256": "9cfe2a381efd360ba60f9dc845dc9be9b5000ed8278303aeffe2e1c214fbe2f7",
+      "loader_matches": true,
+      "errors": []
+    },
+    "001": {
+      "flags": {
+        "E": false,
+        "S": false,
+        "J": true
+      },
+      "system_chars": 1631,
+      "user_chars": 101,
+      "total_chars": 1732,
+      "system_sha256": "a05063ac768e37a0e64c102f93226f2a22c8ed485eaa5d1de76cda40283f0216",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "composition_sha256": "e86301307a9d6a20b1d142a2f9c8c6ac3d9e9fd0901cd36809d9aed29b355ac0",
+      "loader_matches": true,
+      "errors": []
+    },
+    "010": {
+      "flags": {
+        "E": false,
+        "S": true,
+        "J": false
+      },
+      "system_chars": 4902,
+      "user_chars": 101,
+      "total_chars": 5003,
+      "system_sha256": "c651d5ca5e1f8b38ab70156e0a469a39d8051685e0d0ff8b010f1994e65c6a47",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "composition_sha256": "9282922f7b9869f2cd7c72c09a3ef7a6157a62a9771f02de2d7e2ab37cad0706",
+      "loader_matches": true,
+      "errors": []
+    },
+    "011": {
+      "flags": {
+        "E": false,
+        "S": true,
+        "J": true
+      },
+      "system_chars": 5167,
+      "user_chars": 101,
+      "total_chars": 5268,
+      "system_sha256": "497638d46d48b845b20f6c01e55e89e108f260b24abb55308668d554209a40ee",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "composition_sha256": "84e69c6d67de7d1cefce4f7f0bfa5db6b57e56f024e9d14d2a5aecdd9691f32f",
+      "loader_matches": true,
+      "errors": []
+    },
+    "100": {
+      "flags": {
+        "E": true,
+        "S": false,
+        "J": false
+      },
+      "system_chars": 1366,
+      "user_chars": 2452,
+      "total_chars": 3818,
+      "system_sha256": "e64a66ae58aaf69a5e472beefa6350cfebeab7ffcd20e97b4f7c0a71e21f485e",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "c5c1c2b46242d3406e27cc3a99539f858445ae059ef2287b434acb5d6a95bb39",
+      "loader_matches": true,
+      "errors": []
+    },
+    "101": {
+      "flags": {
+        "E": true,
+        "S": false,
+        "J": true
+      },
+      "system_chars": 1631,
+      "user_chars": 2452,
+      "total_chars": 4083,
+      "system_sha256": "a05063ac768e37a0e64c102f93226f2a22c8ed485eaa5d1de76cda40283f0216",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "f536559f2dadf99d1345336f93743fb57d8fa3636f4978e4d221f0243c40c458",
+      "loader_matches": true,
+      "errors": []
+    },
+    "110": {
+      "flags": {
+        "E": true,
+        "S": true,
+        "J": false
+      },
+      "system_chars": 4902,
+      "user_chars": 2452,
+      "total_chars": 7354,
+      "system_sha256": "c651d5ca5e1f8b38ab70156e0a469a39d8051685e0d0ff8b010f1994e65c6a47",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "75a0fd1a9e73999b1e1165e061944f4225c478ecd7b4fd84644f60c53e31578e",
+      "loader_matches": true,
+      "errors": []
+    },
+    "111": {
+      "flags": {
+        "E": true,
+        "S": true,
+        "J": true
+      },
+      "system_chars": 5167,
+      "user_chars": 2452,
+      "total_chars": 7619,
+      "system_sha256": "497638d46d48b845b20f6c01e55e89e108f260b24abb55308668d554209a40ee",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "ecbca4b0056ef9ebf53c92e5f38a15c75bd234811d2a60113f6c80dad9f4cad3",
+      "loader_matches": true,
+      "errors": []
+    }
+  },
+  "checks": {
+    "eight_combinations_rendered": true,
+    "all_required_interface_markers": true,
+    "disabled_module_text_absent": true,
+    "loader_matches_renderer": true,
+    "generated_files_match_renderer": true,
+    "manifest_valid": true,
+    "user_template_renders": true,
+    "no_dangling_template_placeholders": true
+  },
+  "errors": [],
+  "notes": [
+    "Offline render only; no API/network call was made.",
+    "Module lengths are Unicode character counts, not token counts.",
+    "E remains partly visible as an output example; it does not own output-format rules but necessarily demonstrates a small amount of field shape."
+  ]
+}
