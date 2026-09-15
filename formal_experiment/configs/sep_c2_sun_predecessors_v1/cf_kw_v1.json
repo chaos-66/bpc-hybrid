@@ -1,0 +1,98 @@
+{
+  "schema_version": "sep_c2_sun_predecessor_keyword_rules@1.0.0",
+  "method_id": "cf_kw",
+  "sun_source": "Sun et al. (2024) author-manuscript Table 7, CF_KW baseline",
+  "version_note": "The local PDF is the earlier author manuscript. The final Springer version is not available in this environment; this rule list is a reconstruction, not a published keyword table.",
+  "language": "de",
+  "input_field": "raw_text_de",
+  "class_priority": [
+    "prohibition",
+    "obligation",
+    "permission",
+    "definition_explicit"
+  ],
+  "fallback_label": "fallback",
+  "class_to_evaluator_label": {
+    "definition_explicit": "definition",
+    "prohibition": "prohibition",
+    "obligation": "obligation",
+    "permission": "permission",
+    "fallback": "definition"
+  },
+  "rules": {
+    "definition_explicit": [
+      "\\b(bezeichnet|bezeichnen)\\b",
+      "\\bim\\s+sinne\\b",
+      "\\bversteht\\s+man\\b",
+      "\\b(gilt|gelten)\\s+als\\b",
+      "\\bbedeutet\\b",
+      "\\bals\\s+[^.;]{0,80}?\\s+anzusehen\\b",
+      "\\b(umfasst|umfassen)\\b",
+      "\\b(gehört|gehören)\\s+zu\\b"
+    ],
+    "prohibition": [
+      "\\bdarf\\s+nicht\\b",
+      "\\bdürfen\\s+nicht\\b",
+      "\\bnicht\\s+darf\\b",
+      "\\bnicht\\s+dürfen\\b",
+      "\\bdarf\\s+[^.;]{0,60}?\\bnicht\\b",
+      "\\bdürfen\\s+[^.;]{0,60}?\\bnicht\\b",
+      "\\bverboten\\b",
+      "\\buntersagt\\b",
+      "\\bunzulässig\\b",
+      "\\bnicht\\s+zulässig\\b",
+      "\\bnicht\\s+gestattet\\b",
+      "\\bnicht\\s+erlaubt\\b",
+      "\\bkeinesfalls\\b",
+      "\\bniemals\\b",
+      "\\bhat\\s+[^.;]{0,120}?\\bzu\\s+unterbleiben\\b",
+      "\\bdarf\\s+[^.;]{0,100}?\\bweder\\b",
+      "\\bhat\\s+[^.;]{0,120}?\\bkeine[rn]?\\b[^.;]{0,80}?\\bzu\\b",
+      "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b"
+    ],
+    "obligation": [
+      "\\bmuss\\b",
+      "\\bmüssen\\b",
+      "\\bist\\s+zu\\b",
+      "\\bsind\\s+zu\\b",
+      "\\bhat\\s+zu\\b",
+      "\\bhaben\\s+zu\\b",
+      "\\bist\\s+verpflichtet\\b",
+      "\\bsind\\s+verpflichtet\\b",
+      "\\bverpflichtet\\b",
+      "\\bhat\\s+[^.;]{0,60}?\\bzu\\b",
+      "\\bsind\\s+[^.;]{0,60}?\\bzu\\b",
+      "\\bzu\\s+(erfolgen|entrichten|leisten|berücksichtigen|beachten|unterlassen|zahlen|führen|verwenden|ermitteln|veranlassen|übermitteln|speichern|aufzubewahren)\\b",
+      "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "\\b(ist|sind)\\s+[^.;]{0,120}?\\b(anzuwenden|zu\\s+entrichten|zu\\s+leisten|zu\\s+berücksichtigen|zu\\s+beachten|zu\\s+ermitteln|zu\\s+veranlagen|zu\\s+behandeln|zu\\s+versteuern|zu\\s+zahlen|zu\\s+führen|zu\\s+übermitteln|zu\\s+speichern|zu\\s+unterlassen)",
+      "\\bhat\\s+[^.;]{0,200}?\\bzu\\s+(erfolgen|unterbleiben|veranlassen|verwenden|berücksichtigen|beachten|entrichten|leisten|zahlen|führen|ermitteln|übermitteln|speichern|stellen|vorzunehmen|vorzulegen|zahlen)",
+      "\\b(unterliegt|unterliegen)\\b",
+      "\\b(ist|sind)\\s+[^.;]{0,120}?\\bverpflichtet\\b"
+    ],
+    "permission": [
+      "\\bdarf\\b",
+      "\\bdürfen\\b",
+      "\\bkann\\b",
+      "\\bkönnen\\b",
+      "\\bberechtigt\\b",
+      "\\bzulässig\\b",
+      "\\bgestattet\\b",
+      "\\berlaubt\\b",
+      "\\bsteht\\s+[^.;]{0,60}?\\bzu\\b",
+      "\\b(wird|werden)\\s+[^.;]{0,80}?\\bermächtigt\\b",
+      "\\b(steht|stehen)\\s+[^.;]{0,80}?\\bzu\\b",
+      "\\b(hat|haben)\\s+[^.;]{0,100}?\\b(Anspruch|anspruch)\\b"
+    ]
+  },
+  "post_result_tuning": false,
+  "rule_origin": "a-priori German modal-auxiliary and definitional-cue list; validated once on the official EStG modality dev split only",
+  "validation_history": [
+    {
+      "split": "official_project_reconstructed_dev",
+      "rows": 420,
+      "macro_f1_before_broadening": 0.469,
+      "macro_f1_after_broadening_and_reprioritization": 0.6851,
+      "note": "Rule changes are deterministic a-priori legal cues; dev was used only to verify that the keyword baseline is non-degenerate. EStG-150 Gold was not read."
+    }
+  ]
+}

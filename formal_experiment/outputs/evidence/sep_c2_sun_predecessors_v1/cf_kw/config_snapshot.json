@@ -1,0 +1,14 @@
+{
+  "config_path": "configs/sep_c2_sun_predecessors_v1/cf_kw_v1.json",
+  "config_sha256": "6008d03921971e2428b213d46a464fea0dcc58405b6b96401ed28e7330540318",
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "cf_kw",
+    "notes": "Sun et al. Table 7 reports CF_KW 62.7/64.7/60.8 on their modality split. The local author-manuscript text only says 'simply uses keywords', so the exact keyword list is unavailable. This reconstruction uses an a-priori German legal-modal rule list and a definition fallback.",
+    "reproduction_class": "paper-described rule baseline; keyword list reconstructed because the paper does not publish it",
+    "sun_role": "Table 7 keyword classification baseline (CF_KW)",
+    "training_data": "none (deterministic keyword patterns)"
+  },
+  "schema_version": "sep_c2_sun_predecessor_config@1.0.0"
+}

@@ -1,0 +1,1071 @@
+{
+  "fallback_count": 8,
+  "label_counts": {
+    "definition": 14,
+    "obligation": 62,
+    "permission": 55,
+    "prohibition": 19
+  },
+  "matched_class_counts": {
+    "definition_explicit": 6,
+    "fallback": 8,
+    "obligation": 62,
+    "permission": 55,
+    "prohibition": 19
+  },
+  "matched_decision_count": 142,
+  "records": 150,
+  "rows": [
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bzu\\s+(erfolgen|entrichten|leisten|berücksichtigen|beachten|unterlassen|zahlen|führen|verwenden|ermitteln|veranlassen|übermitteln|speichern|aufzubewahren)\\b",
+      "matched_surface": "zu berücksichtigen",
+      "predicted": "obligation",
+      "sample_id": "estg_000002"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000003"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bzulässig\\b",
+      "matched_surface": "zulässig",
+      "predicted": "permission",
+      "sample_id": "estg_000004"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000020"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdürfen\\b",
+      "matched_surface": "dürfen",
+      "predicted": "permission",
+      "sample_id": "estg_000021"
+    },
+    {
+      "matched_class": "definition_explicit",
+      "matched_rule": "\\bim\\s+sinne\\b",
+      "matched_surface": "im Sinne",
+      "predicted": "definition",
+      "sample_id": "estg_000027"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\bdarf\\s+[^.;]{0,60}?\\bnicht\\b",
+      "matched_surface": "darf jedoch nicht",
+      "predicted": "prohibition",
+      "sample_id": "estg_000028"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bzu\\s+(erfolgen|entrichten|leisten|berücksichtigen|beachten|unterlassen|zahlen|führen|verwenden|ermitteln|veranlassen|übermitteln|speichern|aufzubewahren)\\b",
+      "matched_surface": "zu berücksichtigen",
+      "predicted": "obligation",
+      "sample_id": "estg_000030"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist der durch doppelte Buchfüh- rung zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000031"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000033"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000035"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000036"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(unterliegt|unterliegen)\\b",
+      "matched_surface": "unterliegen",
+      "predicted": "obligation",
+      "sample_id": "estg_000037"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bmüssen\\b",
+      "matched_surface": "müssen",
+      "predicted": "obligation",
+      "sample_id": "estg_000038"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000039"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdürfen\\b",
+      "matched_surface": "dürfen",
+      "predicted": "permission",
+      "sample_id": "estg_000040"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist nach der Anlage zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000043"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist nach dem Durchschnitt der Leistungen zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000044"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000046"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "sind einmal jähr- lich durch den Bundesminister für Wissen- schaft und Forschung im Amtsblatt zur Wie- ner Zeitung zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000051"
+    },
+    {
+      "matched_class": "definition_explicit",
+      "matched_rule": "\\bim\\s+sinne\\b",
+      "matched_surface": "im Sinne",
+      "predicted": "definition",
+      "sample_id": "estg_000052"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bmüssen\\b",
+      "matched_surface": "müssen",
+      "predicted": "obligation",
+      "sample_id": "estg_000055"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht mit steuerfreien Rücklagen zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000056"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000057"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bmüssen\\b",
+      "matched_surface": "müssen",
+      "predicted": "obligation",
+      "sample_id": "estg_000059"
+    },
+    {
+      "matched_class": "fallback",
+      "matched_rule": null,
+      "matched_surface": null,
+      "predicted": "definition",
+      "sample_id": "estg_000060"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist durch Zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000061"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\bdürfen\\s+[^.;]{0,60}?\\bnicht\\b",
+      "matched_surface": "dürfen die Anschaffungskosten nicht",
+      "predicted": "prohibition",
+      "sample_id": "estg_000062"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000068"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdürfen\\b",
+      "matched_surface": "dürfen",
+      "predicted": "permission",
+      "sample_id": "estg_000070"
+    },
+    {
+      "matched_class": "fallback",
+      "matched_rule": null,
+      "matched_surface": null,
+      "predicted": "definition",
+      "sample_id": "estg_000071"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "sind die Anschaffungs- oder Herstellungskosten um die berücksichtigten Beträge an Absetzung für Abnutzung oder an begünstigten Abschreibungen von Herstellungsaufwand zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000074"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bist\\s+zu\\b",
+      "matched_surface": "ist zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000075"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdürfen\\b",
+      "matched_surface": "dürfen",
+      "predicted": "permission",
+      "sample_id": "estg_000077"
+    },
+    {
+      "matched_class": "fallback",
+      "matched_rule": null,
+      "matched_surface": null,
+      "predicted": "definition",
+      "sample_id": "estg_000079"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bmüssen\\b",
+      "matched_surface": "müssen",
+      "predicted": "obligation",
+      "sample_id": "estg_000080"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000082"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "sind die Mehrbeträge als Betriebseinnahmen und die Minderbeträge als Betriebsausgaben zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000083"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist kein Tausch anzunehmen, wenn der Austausch auf Grund einer Verschmelzung erfolgt, die zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000087"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bmüssen\\b",
+      "matched_surface": "müssen",
+      "predicted": "obligation",
+      "sample_id": "estg_000091"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bhat\\s+[^.;]{0,60}?\\bzu\\b",
+      "matched_surface": "hat unter genauer Bezeichnung jedes einzelnen Anlagegutes zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000092"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000094"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bzulässig\\b",
+      "matched_surface": "zulässig",
+      "predicted": "permission",
+      "sample_id": "estg_000095"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000098"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "hat das Finanzamt dem Steuerpflichtigen eine Nachfrist von zwei Wochen zur Vorlage des Verzeichnisses zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000103"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000104"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "sind die Investitionsfreibeträge auf Kapitalkonto oder auf eine als versteuert geltende Rücklage steuerfrei zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000105"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000106"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000108"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "sind, steht ein Investitionsfreibetrag nur zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000109"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\bdarf\\s+[^.;]{0,100}?\\bweder\\b",
+      "matched_surface": "darf ein Investitionsfrei- betrag weder",
+      "predicted": "prohibition",
+      "sample_id": "estg_000111"
+    },
+    {
+      "matched_class": "definition_explicit",
+      "matched_rule": "\\bim\\s+sinne\\b",
+      "matched_surface": "im Sinne",
+      "predicted": "definition",
+      "sample_id": "estg_000112"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bzu\\s+(erfolgen|entrichten|leisten|berücksichtigen|beachten|unterlassen|zahlen|führen|verwenden|ermitteln|veranlassen|übermitteln|speichern|aufzubewahren)\\b",
+      "matched_surface": "zu verwenden",
+      "predicted": "obligation",
+      "sample_id": "estg_000113"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000114"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist der Investitionsfreibetrag im Jahr der Änderung entsprechend anzupassen (zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000115"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000118"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bhat\\s+[^.;]{0,60}?\\bzu\\b",
+      "matched_surface": "hat folgendes zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000119"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "sind die Betriebskosten und die laufenden öffentlichen Abgaben für das Grundstück (Gebäude) sowohl bei den Betriebseinnahmen als auch bei den Betriebsausgaben außer Ansatz zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000121"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist der Verlust mit den für die Vorjahre gebilde- ten Rücklagen, beginnend mit der ältesten, zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000123"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht bis zum Ende der 9-Jahres-Frist der Z 3 zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000124"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000125"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000127"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind)\\s+[^.;]{0,120}?\\b(anzuwenden|zu\\s+entrichten|zu\\s+leisten|zu\\s+berücksichtigen|zu\\s+beachten|zu\\s+ermitteln|zu\\s+veranlagen|zu\\s+behandeln|zu\\s+versteuern|zu\\s+zahlen|zu\\s+führen|zu\\s+übermitteln|zu\\s+speichern|zu\\s+unterlassen)",
+      "matched_surface": "ist anzuwenden",
+      "predicted": "obligation",
+      "sample_id": "estg_000128"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bzulässig\\b",
+      "matched_surface": "zulässig",
+      "predicted": "permission",
+      "sample_id": "estg_000130"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bzulässig\\b",
+      "matched_surface": "zulässig",
+      "predicted": "permission",
+      "sample_id": "estg_000131"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000133"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000134"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000135"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000136"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000139"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bmüssen\\b",
+      "matched_surface": "müssen",
+      "predicted": "obligation",
+      "sample_id": "estg_000143"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000145"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000146"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000148"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bmüssen\\b",
+      "matched_surface": "müssen",
+      "predicted": "obligation",
+      "sample_id": "estg_000161"
+    },
+    {
+      "matched_class": "fallback",
+      "matched_rule": null,
+      "matched_surface": null,
+      "predicted": "definition",
+      "sample_id": "estg_000164"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000173"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000183"
+    },
+    {
+      "matched_class": "fallback",
+      "matched_rule": null,
+      "matched_surface": null,
+      "predicted": "definition",
+      "sample_id": "estg_000195"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "kein Erhöhungsbetrag zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000206"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000207"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind)\\s+[^.;]{0,120}?\\b(anzuwenden|zu\\s+entrichten|zu\\s+leisten|zu\\s+berücksichtigen|zu\\s+beachten|zu\\s+ermitteln|zu\\s+veranlagen|zu\\s+behandeln|zu\\s+versteuern|zu\\s+zahlen|zu\\s+führen|zu\\s+übermitteln|zu\\s+speichern|zu\\s+unterlassen)",
+      "matched_surface": "ist auch dann anzuwenden",
+      "predicted": "obligation",
+      "sample_id": "estg_000208"
+    },
+    {
+      "matched_class": "fallback",
+      "matched_rule": null,
+      "matched_surface": null,
+      "predicted": "definition",
+      "sample_id": "estg_000209"
+    },
+    {
+      "matched_class": "definition_explicit",
+      "matched_rule": "\\bim\\s+sinne\\b",
+      "matched_surface": "im Sinne",
+      "predicted": "definition",
+      "sample_id": "estg_000210"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bhat\\s+zu\\b",
+      "matched_surface": "hat zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000214"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bhat\\s+[^.;]{0,60}?\\bzu\\b",
+      "matched_surface": "hat insoweit zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000218"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bhat\\s+zu\\b",
+      "matched_surface": "hat zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000220"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bhat\\s+zu\\b",
+      "matched_surface": "hat zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000222"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bhat\\s+zu\\b",
+      "matched_surface": "hat zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000223"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000230"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000231"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000232"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdürfen\\b",
+      "matched_surface": "dürfen",
+      "predicted": "permission",
+      "sample_id": "estg_000245"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000247"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\bdarf\\s+[^.;]{0,100}?\\bweder\\b",
+      "matched_surface": "darf weder",
+      "predicted": "prohibition",
+      "sample_id": "estg_000271"
+    },
+    {
+      "matched_class": "definition_explicit",
+      "matched_rule": "\\bim\\s+sinne\\b",
+      "matched_surface": "im Sinne",
+      "predicted": "definition",
+      "sample_id": "estg_000273"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bsind\\s+[^.;]{0,60}?\\bzu\\b",
+      "matched_surface": "sind nur mit 25% zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000277"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000283"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bsind\\s+[^.;]{0,60}?\\bzu\\b",
+      "matched_surface": "sind höchstens die den Bundesbediensteten zustehenden Sätze zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000285"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bzu\\s+(erfolgen|entrichten|leisten|berücksichtigen|beachten|unterlassen|zahlen|führen|verwenden|ermitteln|veranlassen|übermitteln|speichern|aufzubewahren)\\b",
+      "matched_surface": "zu berücksichtigen",
+      "predicted": "obligation",
+      "sample_id": "estg_000286"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000293"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000302"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht durch steuerfreie Subventionen abge- deckt und nicht mit steuerfreien Beträgen zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000306"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000308"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000313"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000326"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht durch 100 S teil- bar ist, so sind Restbeträge bis einschließlich 50 S zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000347"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000366"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000375"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000393"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "Sind im Einkommen lohnsteuerpflichtige Ein- künfte enthalten, ist von den anderen Einkünften ein Veranlagungsfreibetrag bis zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000396"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bzu\\s+(erfolgen|entrichten|leisten|berücksichtigen|beachten|unterlassen|zahlen|führen|verwenden|ermitteln|veranlassen|übermitteln|speichern|aufzubewahren)\\b",
+      "matched_surface": "zu ermitteln",
+      "predicted": "obligation",
+      "sample_id": "estg_000399"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000414"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bverpflichtet\\b",
+      "matched_surface": "verpflichtet",
+      "predicted": "obligation",
+      "sample_id": "estg_000417"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist dieser gleichzeitig mit der Ausschreibung einer Lohnsteu- erkarte für den Ehegatten zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000433"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bist\\s+verpflichtet\\b",
+      "matched_surface": "ist verpflichtet",
+      "predicted": "obligation",
+      "sample_id": "estg_000452"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist, abgesehen von den Fällen einer Veranlagung, im Zuge der Durchführung eines Jahresausgleichs (§ 72) die zuviel einbehaltene Lohnsteuer zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000457"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bhat\\s+[^.;]{0,60}?\\bzu\\b",
+      "matched_surface": "hat die zustän- dige Behörde dafür zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000458"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bzu\\s+(erfolgen|entrichten|leisten|berücksichtigen|beachten|unterlassen|zahlen|führen|verwenden|ermitteln|veranlassen|übermitteln|speichern|aufzubewahren)\\b",
+      "matched_surface": "zu berücksichtigen",
+      "predicted": "obligation",
+      "sample_id": "estg_000465"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bhat\\s+[^.;]{0,60}?\\bzu\\b",
+      "matched_surface": "hat der Arbeitnehmer zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000504"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "sind solche sonstige Bezüge wie ein laufender Bezug nach dem Lohnsteuertarif der Besteuerung zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000505"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bsind\\s+zu\\b",
+      "matched_surface": "sind zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000507"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "sind wie ein laufender Bezug nach dem Lohnsteuertarif der Besteuerung zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000509"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bsind\\s+[^.;]{0,60}?\\bzu\\b",
+      "matched_surface": "sind auch zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000522"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000525"
+    },
+    {
+      "matched_class": "fallback",
+      "matched_rule": null,
+      "matched_surface": null,
+      "predicted": "definition",
+      "sample_id": "estg_000539"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\bhat\\s+[^.;]{0,120}?\\bzu\\s+unterbleiben\\b",
+      "matched_surface": "hat zu unterbleiben",
+      "predicted": "prohibition",
+      "sample_id": "estg_000546"
+    },
+    {
+      "matched_class": "fallback",
+      "matched_rule": null,
+      "matched_surface": null,
+      "predicted": "definition",
+      "sample_id": "estg_000555"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkönnen\\b",
+      "matched_surface": "können",
+      "predicted": "permission",
+      "sample_id": "estg_000560"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000569"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "Kann",
+      "predicted": "permission",
+      "sample_id": "estg_000572"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\b(nicht|keine|kein)\\b[^.;]{0,80}?\\bzu\\b",
+      "matched_surface": "nicht durch Barlohn gedeckt ist, zu",
+      "predicted": "prohibition",
+      "sample_id": "estg_000578"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist, ob sie Arbeitnehmer des Betriebes sind, jede gewünschte Auskunft zur Feststellung ihrer Steuerverhältnisse zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000599"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "ist auch berechtigt, von Personen, bei denen es zweifelhaft ist, ob sie Arbeitnehmer des Betriebes sind, jede Auskunft zur Feststellung ihrer Steuerverhältnisse zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000601"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "hat dem Emp- fänger eine Bescheinigung über die Höhe- der Kapi- talerträge und des Steuerbetrages, über den Zah- lungstag und über die Zeit, für welche die Kapital- erträge gezahlt worden sind, zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000635"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "sind mit ihren Einkünften, von denen kein Steuerabzug vom Arbeitslohn, vom Kapitalertrag oder nach den §§99 bis 101 vorzunehmen ist, zur Einkommen- steuer zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000659"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bkann\\b",
+      "matched_surface": "kann",
+      "predicted": "permission",
+      "sample_id": "estg_000664"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bist\\s+verpflichtet\\b",
+      "matched_surface": "ist verpflichtet",
+      "predicted": "obligation",
+      "sample_id": "estg_000704"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bist\\s+verpflichtet\\b",
+      "matched_surface": "ist verpflichtet",
+      "predicted": "obligation",
+      "sample_id": "estg_000713"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\bhat\\s+[^.;]{0,120}?\\bzu\\s+unterbleiben\\b",
+      "matched_surface": "hat jedoch zu unterbleiben",
+      "predicted": "prohibition",
+      "sample_id": "estg_000716"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bzu\\s+(erfolgen|entrichten|leisten|berücksichtigen|beachten|unterlassen|zahlen|führen|verwenden|ermitteln|veranlassen|übermitteln|speichern|aufzubewahren)\\b",
+      "matched_surface": "zu erfolgen",
+      "predicted": "obligation",
+      "sample_id": "estg_000720"
+    },
+    {
+      "matched_class": "definition_explicit",
+      "matched_rule": "\\bim\\s+sinne\\b",
+      "matched_surface": "im Sinne",
+      "predicted": "definition",
+      "sample_id": "estg_000773"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bverpflichtet\\b",
+      "matched_surface": "verpflichtet",
+      "predicted": "obligation",
+      "sample_id": "estg_000776"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdarf\\b",
+      "matched_surface": "darf",
+      "predicted": "permission",
+      "sample_id": "estg_000785"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\bdürfen\\s+[^.;]{0,60}?\\bnicht\\b",
+      "matched_surface": "dürfen die Eigentümer oder Anteilseigner jene Kapitalanteile nicht",
+      "predicted": "prohibition",
+      "sample_id": "estg_000786"
+    },
+    {
+      "matched_class": "prohibition",
+      "matched_rule": "\\bdürfen\\s+[^.;]{0,60}?\\bnicht\\b",
+      "matched_surface": "dürfen 80% des letzten laufenden Aktivbezugs nicht",
+      "predicted": "prohibition",
+      "sample_id": "estg_000800"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bverpflichtet\\b",
+      "matched_surface": "verpflichtet",
+      "predicted": "obligation",
+      "sample_id": "estg_000812"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\bverpflichtet\\b",
+      "matched_surface": "verpflichtet",
+      "predicted": "obligation",
+      "sample_id": "estg_000816"
+    },
+    {
+      "matched_class": "permission",
+      "matched_rule": "\\bdürfen\\b",
+      "matched_surface": "dürfen",
+      "predicted": "permission",
+      "sample_id": "estg_000854"
+    },
+    {
+      "matched_class": "obligation",
+      "matched_rule": "\\b(ist|sind|hat|haben)\\b[^.;]{0,200}?\\bzu\\b",
+      "matched_surface": "hat, tatsächlich die Abwicklung, ist der Besteuerung der Liquidationsgewinn zugrunde zu",
+      "predicted": "obligation",
+      "sample_id": "estg_000861"
+    }
+  ],
+  "schema_version": "sep_c2_sun_predecessor_cf_kw_diagnostics@1.0.0"
+}

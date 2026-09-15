@@ -1,0 +1,135 @@
+{
+  "schema_version": "sep_c2_sun_predecessor_method_roster@1.0.0",
+  "roster_id": "sun_2024_actual_experiment_methods_v1",
+  "verified_against": {
+    "local_author_manuscript_text": "references/papers/extracted/sun_2024_full_text.txt",
+    "local_author_manuscript_pdf": "references/papers/Sun_2024_Design_time_BPC.pdf",
+    "local_version_status": "earlier_author_manuscript_not_final_springer_version",
+    "final_version_entry": "https://link.springer.com/article/10.1007/s11227-023-05626-0",
+    "final_version_check_status": "blocked_offline_no_network_access",
+    "final_version_caveat": "The final Springer version could not be fetched in this environment. The method roster below is limited to what the local author manuscript explicitly reports as Sun's own experiments. The final version may differ; any additions/removals remain unverified and must not be inferred from reference lists.",
+    "source_location_notes": {
+      "table_6_models": "local text lines 653-670",
+      "table_7_baselines": "local text lines 703-708",
+      "semantic_extraction_setup": "local text lines 717-770",
+      "winter_comparison": "local text lines 872-893"
+    }
+  },
+  "classification_methods": [
+    {
+      "method_id": "cf_kw",
+      "sun_label": "CF_KW",
+      "sun_role": "keyword classification baseline in Table 7",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "completed_zero_api_estg150_run",
+      "reproduction_class": "paper-described rule baseline; keyword list reconstructed",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw",
+      "notes": "Paper does not publish the keyword list. Reconstructed list is frozen in configs/sep_c2_sun_predecessors_v1/cf_kw_v1.json."
+    },
+    {
+      "method_id": "cf_rnn",
+      "sun_label": "CF_RNN",
+      "sun_role": "bidirectional-LSTM classification baseline in Table 7",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "pending_execution_in_this_round",
+      "reproduction_class": "paper-described BiLSTM retrained on official EStG train split",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn",
+      "notes": "Unpublished hyperparameters are disclosed in the per-method config/manifest."
+    },
+    {
+      "method_id": "cf_cnn",
+      "sun_label": "CF_CNN",
+      "sun_role": "CNN sentence-classification baseline in Table 7",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "pending_execution_in_this_round",
+      "reproduction_class": "paper-described CNN retrained on official EStG train split",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn",
+      "notes": "Unpublished kernel/filter settings are disclosed in the per-method config/manifest."
+    },
+    {
+      "method_id": "bert_base_uncased",
+      "sun_label": "bert-base-uncased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "blocked_missing_local_public_weights",
+      "reproduction_class": "not executed: no local cache and no outbound network",
+      "evidence_dir": null
+    },
+    {
+      "method_id": "bert_base_cased",
+      "sun_label": "bert-base-cased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "blocked_missing_local_public_weights",
+      "reproduction_class": "not executed: no local cache and no outbound network",
+      "evidence_dir": null
+    },
+    {
+      "method_id": "bert_large_uncased",
+      "sun_label": "bert-large-uncased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "blocked_missing_local_public_weights",
+      "reproduction_class": "not executed: no local cache and no outbound network",
+      "evidence_dir": null
+    },
+    {
+      "method_id": "bert_large_cased",
+      "sun_label": "bert-large-cased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "blocked_missing_local_public_weights",
+      "reproduction_class": "not executed: no local cache and no outbound network",
+      "evidence_dir": null
+    },
+    {
+      "method_id": "bert_legal_uncased",
+      "sun_label": "bert-legal-uncased",
+      "sun_role": "best pre-trained comparison in Table 6; Sun's own method family in Table 7",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "partially_available_local_encoder_cache",
+      "reproduction_class": "closest local public match: nlpaueb/legal-bert-base-uncased; encoder frozen + local linear head in this round",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe",
+      "notes": "The local cache is an EU-legislation Legal-BERT base uncased encoder. It is not claimed to be the exact Sun checkpoint."
+    },
+    {
+      "method_id": "bert_legal_cased",
+      "sun_label": "bert-legal-cased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "blocked_missing_local_public_weights",
+      "reproduction_class": "not executed: no local cache and no outbound network",
+      "evidence_dir": null
+    }
+  ],
+  "semantic_extraction_methods_in_sun_experiment": [
+    {
+      "method_id": "sun_tregex_tsurgeon_extraction",
+      "sun_role": "Sun's own phrase-level six-element extraction in Section 5.2 / Table 8",
+      "external_method_comparison_in_sun_paper": false,
+      "external_method_comparison_evidence": "The author-manuscript Section 5.2 reports only Sun's own extraction results; no Table comparing external six-element extractors was found.",
+      "project_implementation_status": "existing B0/Sun-style reconstruction already evaluated under the frozen Stage 2 evaluator; no new code required for this task"
+    }
+  ],
+  "downstream_only_methods": [
+    {
+      "method_id": "winter_2020",
+      "sun_role": "process-checking comparison in Table 12 (downstream violation task), not a six-element Stage 2 extractor",
+      "may_be_called_a_six_element_extractor": false
+    }
+  ],
+  "cited_but_not_verified_as_sun_experiment_methods": [
+    "Sleimi et al. is cited in Sun's related work; the local author manuscript does not report running it in Sun's experiment.",
+    "Michel et al. (2022) is the modality dataset source in Sun's experiment, but its own classifier is not listed as a Sun comparison method.",
+    "Other reference-list names must not be promoted into the comparison table without an explicit in-experiment result table or method statement."
+  ]
+}
