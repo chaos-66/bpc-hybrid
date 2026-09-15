@@ -1,6 +1,12 @@
 ﻿# -*- coding: utf-8 -*-
 """Corrected SEP-C2 Sun predecessor comparison report (v2).
 
+Historical note (2026-09-15): this report's not-run `bert_legal_cased` row is
+counted as `records_failed=150`.  That source-pending accounting is superseded
+by `build_sep_c2_target_consistency_diagnosis_v1.py`, which reports
+`records_failed=0`, `records_not_run=150`, and excludes the row from the
+10-method denominator.  This v2 output is retained as historical provenance.
+
 Fixes the v1 report wiring:
 * classification table uses exactly one evaluator for all rows;
 * semantic extraction main table uses the project's coarse sentence-level Gold

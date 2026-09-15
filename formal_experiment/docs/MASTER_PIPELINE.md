@@ -1,6 +1,6 @@
-# BPC-Hybrid 完整实验主 Pipeline
+﻿# BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.13
+**文档版本**：3.7.14
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-15
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -11,7 +11,20 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
-﻿## 2026-09-15 修订 3.7.13：SEP-C2 Sun 前人 9 配置收口与主评价接线修正（零新增付费 API）
+## 2026-09-15 修订 3.7.14：SEP-C2 分类目标一致性诊断与 source-pending 纠错收尾（零 API）
+
+- **目标结构审计**：150 条按有效 Gold clause 分为 A=101（单一有效 clause）、B=15（多 clause 但标签相同）、C=34（多 clause 且标签不同）。首 clause 起点为 0 的 141/150，覆盖完整句的 26/150；overlapping clause spans 9 条；clause list 顺序与字符起点不一致 1 条（`estg_000136`）。
+- test append
+- **评价器合同核查**：Gold 与预测均取 record clause list 中首个非空 modality 标签；
+  10 个已评价方法预测的首个非空索引均为 0；`direct_llm` 的 `estg_000112` 为空 clauses 输出，按未标注错误保留在 150 分母。未修改 G0.4 合同或 Gold。
+- **目标错位定量**：49/150 为多 clause，C=34/150 异标签。
+  C 组首 clause 判错但命中后续 Gold 标签的计数只作解释性上界，不能断言模型预测了后续 clause；B 组全部 clause 同标签，错误不能由后续 clause 解释。
+- **source-pending 纠错**：v2 报告把未运行的 `bert_legal_cased` 记为 150 failed；本修订新增 `outputs/reports/sep_c2_target_consistency_diagnosis_v1.json/.md`，改为 `not_run_source_pending_exact_checkpoint_unavailable`，`records_failed=0`、`records_not_run=150`，不进入 10 方法性能分母。
+- **主表保持**：10 个已评价方法的完整 150 条分类主表与 v2 一致；新增 A/B/C 分组只作解释，不替代主表。
+- **语言限制**：前人 CF/BERT 使用德语 `raw_text_de`；`Sun/Rules-Only` modality head 使用德语对齐单元、phrase 使用英文；`Direct-LLM` 使用既有 `approved_text_en`。语言效应尚不能分离。
+- **论文接线**：`paper/THESIS_DRAFT.md` §6.1/§7.2/§8.4，`paper/CLAIM_EVIDENCE_MATRIX.md` C48；具名验证 `tests/test_sep_c2_target_consistency_diagnosis.py`。
+
+## 2026-09-15 修订 3.7.13：SEP-C2 Sun 前人 9 配置收口与主评价接线修正（零新增付费 API）
 
 本修订继续 SEP-C2，完成 Sun et al. (2024) final version Table 6/7 的 9 个前人配置收口，并修正 v1 比较报告的两个接线问题。最终状态：**8/9 前人配置已有实际预测与同口径评价；`bert-legal-cased` 因公开精确 checkpoint 不存在而具名阻塞，不用替代模型占位。**
 
@@ -345,7 +358,7 @@ DS v5 的有效开发指标仍为 Macro-F1 **0.6737**、配对成功 **21/40**�
 旧诊断的 control 告警 26→24 是撤回两项判断到 unknown；缺少全局负例 Gold，不能称为总体误报率改善。
 各项验收后立即 checkpoint，继续已具备依赖的对照或写作，不设置中间日历等待。
 
-﻿## 2026-09-13 revision 3.6.61: Stage 3 v5 action-anchor consistency repair and constraint/exception failure chains (S3-SEMANTIC-GROUNDING-V5, zero API)
+## 2026-09-13 revision 3.6.61: Stage 3 v5 action-anchor consistency repair and constraint/exception failure chains (S3-SEMANTIC-GROUNDING-V5, zero API)
 
 **Scope**: inspect the frozen v2 per-item constraint/exception failures, add revision
 `s3_semantic_grounding_v5`, and reuse v2/v3/v4 predictions/manifests read-only.

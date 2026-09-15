@@ -41,7 +41,15 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - 本批为实验代码、机器合同、具名测试与文档更新；未运行实验 API，未改 Gold 或历史
   预测/授权文件；停用规则仍见 `formal_experiment/AGENTS.md`。
 
-﻿## 0.4 SEP-C2 Sun 前人 9 配置收口（2026-09-15，零新增付费 API）
+## 0.5 SEP-C2 分类目标一致性诊断与 source-pending 纠错收尾（2026-09-15，零 API）
+
+- **当前结论**：10 个已评价方法没有发现预测实现错误；确认的是一处报告计数错误——`bert_legal_cased` 未运行却被 v2 计为 150 failed。本轮新增诊断报告将其分为 source-pending，`records_failed=0`、`records_not_run=150`，不进入 10 方法分母。
+- **目标结构**：A=101（单一有效 Gold clause）、B=15（多 clause 同标签）、C=34（多 clause 异标签）；首 clause 起点 0 的 141/150，覆盖全文 26/150，9 条 overlapping clause spans，1 条 clause list 非文本起点序（`estg_000136`）。
+- **分组结果**：完整 30 行 A/B/C 指标、C 组 later-match 诊断和 10 个代表性案例见 `outputs/reports/sep_c2_target_consistency_diagnosis_v1.json/.md`；原始 v2 主表保留，不覆盖预测、Gold 或历史版本。
+- **解释边界**：前人句子级单标签模型与 G0.4 first-Gold-clause 目标在 C 组存在目标构造差异；德语/英语、类别先验和 BERT 192 subword 截断均作为条件报告，尚不能分离为单一确定原因。
+- **验证**：`python scripts/build_sep_c2_target_consistency_diagnosis_v1.py --check` 通过；`pytest tests/test_sep_c2_target_consistency_diagnosis.py` 通过。
+
+## 0.4 SEP-C2 Sun 前人 9 配置收口（2026-09-15，零新增付费 API）
 
 - 当前真实状态：Sun final version Table 6/7 的 9 个前人配置中，8 个已有实际预测和同口径评价；`bert-legal-cased` 因公开精确 checkpoint 不存在而具名阻塞，未用 generic cased BERT 或 uncased Legal-BERT 占位。
 - 架构核实：final Springer version Section 4.2.1 / Fig. 3 已用于核实 BERT-TextCNN = 每层 `[CLS]` 序列 -> TextCNN(3/4/5, 256 filters) -> global max -> 四分类。公开模型 revision 已固定；clean official EStG train 1927 条训练，clean dev 414 条选 checkpoint。
@@ -346,7 +354,7 @@ per-type F1（prohibited/condition/constraint/exception）：C36
 真实 v5 fallback 另待范围授权；等待时可继续 SEP-C1-A 的三阶段 I/O 和成功/失败案例写作。
 后续较早记录为历史状态，冲突时以本节及下方当前派工表为准。
 
-﻿﻿## 0. Latest v5 LLM preflight: s3_semantic_grounding_llm_v2 (2026-09-13, zero API)
+## 0. Latest v5 LLM preflight: s3_semantic_grounding_llm_v2 (2026-09-13, zero API)
 
 **Status**: READY_FOR_AUTHORIZATION_DECISION / BLOCKED_NO_MATCHING_AUTHORIZATION.
 

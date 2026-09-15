@@ -730,6 +730,11 @@ Rules+LLM-Repair 不再列入最低覆盖或待运行臂。模态分类（4 类 
 P/R/F1 主表，modality evidence-span 单独/辅助）分别报告，不能用只做分类的方法
 冒充完整 Stage 2。
 
+#### 6.1.1 前人分类配置与目标结构审计（2026-09-15，零 API）
+
+Sun 作者稿 Table 6/7 的 9 个前人配置中，8 个已在统一 EStG-150 正式输入和同一 first-Gold-clause 评价器上实际重评；`bert-legal-cased` 因精确公开权重不存在记为 source-pending，不计为 150 次模型失败，也不进入 10 方法性能分母。为区分全文单标签分类与首个 Gold clause 目标，150 条按有效 Gold clause 固定分为 A=101（单一有效 clause）、B=15（多 clause 同标签）、C=34（多 clause 异标签）三组；分组只用于结果解释和限制说明，不替代完整 150 条主表。
+
+
 ### 6.2 Stage 3 baseline
 
 最低覆盖：词法/检索下限、Winter、完整 Sun、一个现代 embedding/graph baseline
@@ -887,6 +892,38 @@ semantic-field 人工裁决标签。
 领先 Rules-Only；Rules-Only 在 actor（+0.062）与 exception（+0.118）领先
 Direct-LLM；Rules+LLM-Repair 因 actor 过度抽取而 net-negative（actor F1 0.4296，
 vs Rules-Only 0.8203 / Direct-LLM 0.7579）。**无整体胜者声明**。
+
+#### 7.2.1 前人分类配置的同口径重评与目标结构诊断（2026-09-15，零 API）
+
+**完整 150 条 first-Gold-clause 主表**。8 个前人配置、Sun/Rules-Only 与 Direct-LLM 均保留 150/150 分母；Direct-LLM 的 `estg_000112` 为空 clauses 输出，按未标注错误计入分母。`bert-legal-cased` 为 source-pending，不在下表。
+| 方法 | 150 acc | 150 macro-F1 |
+|---|---:|---:|
+| CF_KW | 0.6200 | 0.5322 |
+| CF_RNN | 0.5667 | 0.4800 |
+| CF_CNN | 0.6733 | 0.6177 |
+| bert-base-uncased | 0.4467 | 0.3507 |
+| bert-base-cased | 0.5733 | 0.4529 |
+| bert-large-uncased | 0.5733 | 0.5245 |
+| bert-large-cased | 0.6600 | 0.6024 |
+| bert-legal-uncased | 0.4800 | 0.4057 |
+| Sun/Rules-Only | 0.7400 | 0.7128 |
+| Direct-LLM | 0.8333 | 0.7695 |
+
+**目标结构诊断**。150 条中 A=101、B=15、C=34；首 clause 起点为 0 的 141/150，覆盖完整句的 26/150；9 条存在 overlapping clause spans，1 条 clause list 顺序与字符起点不一致（`estg_000136`）。评价器按冻结 G0.4 合同读取 record clause list 中首个非空 modality 标签，未修改合同或 Gold。
+| 方法 | A acc | B acc | C first acc | C 任意 Gold clause acc | C 首错命中后续标签数 |
+|---|---:|---:|---:|---:|---:|
+| CF_KW | 0.7228 | 0.5333 | 0.3529 | 0.8529 | 17 |
+| CF_RNN | 0.6238 | 0.5333 | 0.4118 | 0.6765 | 9 |
+| CF_CNN | 0.7327 | 0.8667 | 0.4118 | 0.6471 | 8 |
+| bert-base-uncased | 0.4455 | 0.4000 | 0.4706 | 0.6765 | 7 |
+| bert-base-cased | 0.5941 | 0.6667 | 0.4706 | 0.6471 | 6 |
+| bert-large-uncased | 0.5941 | 0.5333 | 0.5294 | 0.8235 | 10 |
+| bert-large-cased | 0.6931 | 0.6000 | 0.5882 | 0.8824 | 10 |
+| bert-legal-uncased | 0.4851 | 0.4000 | 0.5000 | 0.7059 | 7 |
+| Sun/Rules-Only | 0.7921 | 0.6667 | 0.6176 | 0.8529 | 8 |
+| Direct-LLM | 0.9307 | 0.7333 | 0.5882 | 0.8235 | 8 |
+
+**解释与收窄**。B 组多 clause 标签相同，其错误不能由后续 clause 标签解释；C 组任意 Gold clause 命中率只作目标歧义的上界诊断，不能断言模型解码了后续 clause。前人分类器在句子级 EStG modality 数据上训练，输出单一整句标签；当前比较同时受德语/英语输入、训练目标和 first-clause 目标构造影响，不能用该表单独证明架构的纯粹优势。`bert-legal-cased` 是 source-pending，不是模型失败。
 
 ### 7.3 复杂度分层与错误类型（S2.12，零 API arm）
 
@@ -1287,6 +1324,8 @@ Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
 - 合成受控错误 panel 的生成目标按**语法/结构**锁定（非按规则词面选择），因此
   “方法检测不到”可能部分反映目标与原 rule 的词面对齐程度，而不仅是错误本身
   的固有难度；此点已在 §7.4.6 如实讨论。
+
+- **前人分类配置的目标构造与语言条件**：CF/BERT 使用德语 `raw_text_de` 并在句子级 EStG modality 数据上训练，评价目标是 G0.4 first-Gold-clause；Direct-LLM 使用既有 `approved_text_en`，Sun/Rules-Only 的 modality head 使用德语对齐单元。150 条中 49 条为多 clause，C=34 异标签；因此该表支持同一协议下的系统比较，但不能单独证明架构优势，语言效应也尚不能分离。
 
 **外部效度**：
 - 全部 Stage 3 违规结果基于 7 个 GDPR 流程（45 activities）与 GDPR 义务类型
