@@ -26,8 +26,10 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
   来源/hash/Git diff 检查，不运行实验审计、代码测试或真实 API。
 - 阻塞边界：候选 worktree 上次记录 `integrity_pass=false`、
   `final_experiment_ready=false`（Stage 1 等既有门禁）；本次未修复、未重测、未解除。
-  入文前只读远端核查候选分支不存在，HTTPS push 凭据/askpass 阻塞；本次交接
-  另报实际 commit 与 push 结果，不把本地完成称作已远端备份。
+  远端备份阻塞已于本轮解除：核实 GitHub 登录用户与仓库所有者均为 chaos-66 后，
+  普通推送成功并建立 upstream；只读远端核查 `codex/actor-fix-candidate-v1`
+  已到 bd20a1b（本次入文），包含 b4400ec、cd1b5e1、969a719、a4946d9。
+  本条状态回写的最终提交/hash 在交接中核实，不改变尚未通过的实验门禁。
 - SEP-C3 整体仍为 partial：完整组合、重复不确定性与候选效果缺口保留；本项
   完成的是已有证据入文。当前禁止新增真实 API，历史 600 次和其他旧预算不续用。
 
