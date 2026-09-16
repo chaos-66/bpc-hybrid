@@ -9,29 +9,37 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
-## SEP-C3 / PW7 当前进度：已有结果与归因已入文（2026-09-17，零新增 API）
+## SEP-C3 / PW7 当前进度：已有结果、后处理归因与正文回填（2026-09-17，零新增 API）
 
-- 已完成的最小写作子项：正文 §6.6.1/§7.3.2 交代四臂设计、五字段主指标、
-  新版逐字段结果、历史同口径单因素与 actor 过抽；主张矩阵 C48/C49 和消融矩阵
+- 已完成写作与归因子项：正文 §6.6.1/§7.3.2 交代四臂设计、五字段主指标、
+  新版逐字段结果、历史同口径单因素与 actor 过抽；主张矩阵 C48/C49/C50 和消融矩阵
   同步。旧版删 S/J 已高于 full、estg_000028 旧 actor 为空、107 裸 JSON/43 fence
   等修正已纳入证据边界，不再以推测替代单句因果。
+- 新增固定原始响应后处理归因（离线确定性重放，零新增 API）：报告
+  `outputs/reports/sep_c3_postprocessing_attribution_v1.{json,md}`，脚本
+  `scripts/analyze_sep_c3_postprocessing_attribution_v1.py`。解析/fence 均 0 失败；
+  adapter 对旧 v6 actor 无增删移，对 111 是 relay 嵌套接口展开依赖；canonicalizer
+  不新增 actor（旧 v6 actor 87→82，111 actor 136→130），111 final actor FP=84
+  全部已在 raw 输出中存在。111 保存路径未启用最终 validator，0.726206 有 1 条
+  validator-invalid observed；完整 validator 链为 0.725473（149/150，estg_000861
+  order_relations evidence 类型错误）。本轮只交付定位证据，不修复处理链、
+  不补跑、不覆盖历史预测。
 - 实验事实：modular_v1 的 111/011/101/110 各 150 条、共 600 次已执行并拒绝新版；
   旧 v6 继续默认。其余组合未执行，不能将旧批次与新版拼成完整因子结果。
 - actor 最小候选已在 `codex/actor-fix-candidate-v1` 的 linked worktree 落盘，
-  本轮入文前修订为 a4946d9、prompt SHA-256 `5b817abf...`；只改旧规则 10/18/21，
-  六个示例和 user template 不变。规则 21 的 action 拆分不要求 actor 非空。
-  候选未启用、未实测；J 归公共约定/S-E 两因素仍为待验证组织方案。
+  修订为 a4946d9、prompt SHA-256 `5b817abf...`；只改旧规则 10/18/21，六个示例
+  和 user template 不变。规则 21 的 action 拆分不要求 actor 非空。候选未启用、
+  未实测；J 归公共约定/S-E 两因素仍为待验证组织方案。
 - 文件位置：仓库 linked worktree `.tmp/actor_fix_candidate_worktree/formal_experiment/`。
-  主工作区未接收这些修订，原有未提交修改未覆盖。本项为纯文档整理，按内容/
-  来源/hash/Git diff 检查，不运行实验审计、代码测试或真实 API。
+  主工作区未接收这些修订，原有未提交修改未覆盖。本轮后处理归因位于当前
+  SEP-C3 归因分支工作树，不把候选分支或其 worktree 状态当作候选实测。
 - 阻塞边界：候选 worktree 上次记录 `integrity_pass=false`、
   `final_experiment_ready=false`（Stage 1 等既有门禁）；本次未修复、未重测、未解除。
-  远端备份阻塞已于本轮解除：核实 GitHub 登录用户与仓库所有者均为 chaos-66 后，
-  普通推送成功并建立 upstream；只读远端核查 `codex/actor-fix-candidate-v1`
-  已到 bd20a1b（本次入文），包含 b4400ec、cd1b5e1、969a719、a4946d9。
-  本条状态回写的最终提交/hash 在交接中核实，不改变尚未通过的实验门禁。
-- SEP-C3 整体仍为 partial：完整组合、重复不确定性与候选效果缺口保留；本项
-  完成的是已有证据入文。当前禁止新增真实 API，历史 600 次和其他旧预算不续用。
+  远端备份阻塞已于先前解除：只读远端核查 `codex/actor-fix-candidate-v1`
+  已到 1d39372，包含 bd20a1b、a4946d9 等；本轮新提交/分支/推送结果在交接中核实。
+- SEP-C3 整体仍为 partial：完整组合、重复不确定性、候选效果与 111 最终验证链
+  缺口保留；本项完成的是固定响应后处理归因和已有证据入文。当前禁止新增真实
+  API，历史 600 次和其他旧预算不续用。
 
 ## PW 写作目标记录（2026-09-15）
 

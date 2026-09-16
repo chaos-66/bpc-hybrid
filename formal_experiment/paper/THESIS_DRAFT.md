@@ -980,6 +980,8 @@ actor，现有检查没有发现后处理新增这些错误的证据，不能把
 fence，新版 111 为 150 条裸 JSON；这说明输出形式更符合要求，不等于语义
 质量更高，也不等于原始输出已通过全部 schema/坐标校验。
 
+**固定原始响应的后处理归因。** 为区分模型生成与后处理，本轮只对已保存旧 v6 与新版 111 各 150 条 raw 响应做确定性离线重放，零新增 API。解析/fence 阶段两臂均 0 失败；旧版 43/150 带 Markdown fence、107/150 裸 JSON，新版 111 为 150/150 裸 JSON，fence 差异不进入五字段 F1。输出适配器对旧 v6 的 actor 数量、坐标和文本无增删移；新版 111 的 relay 嵌套 span 必须经适配器展开，关闭适配器会让 canonicalizer 丢弃 742 个 field span 和 247 条 edge、主指标变为 0，但最终 validator 观察到 0 条 invalid，说明这是接口依赖而不是适配器的语义抽取能力。canonicalizer 只重锚坐标并删除无法唯一回指的 span/clause/edge，不新增 actor：旧 v6 actor span 87→82（删 5、重锚 60），111 actor span 136→130（删 6、重锚 104）；因此不能据 raw→canonical 的数量下降推断后处理修正了 actor 语义。111 最终 actor FP=84，后处理不新增 actor，这 84 个 FP 全部已在原始响应中存在；旧 v6 对应 FP=35；按删除项 exact-text 诊断，raw actor FP 约为 89（111）/39（旧 v6），该追踪数不是主评价指标。更具体地，111 保存路径只执行适配器+canonicalizer，没有启用最终 `validate_canonical`；重放发现 1/150 条 `estg_000861` 的 `order_relations[0].evidence` 为 object 而非 array，完整 validator 链会整条拒绝该行，使 111 为 149/150 成功、五字段 mean F1=0.725473。上表的 0.726206 是保存路径分数，不是完整后处理链分数；本轮只交付该实现差异的定位证据，不修改处理链、不补跑、不覆盖历史预测。完整条件表、actor 追踪计数与代表性样本见 `outputs/reports/sep_c3_postprocessing_attribution_v1.md`。
+
 **后继候选仍待验证。** 本文据此保留旧 v6 的六个示例和其他字段规则，只在
 未启用候选的规则 10/18/21 中强化角色判断：先判断明确执行者或规范承担者，
 再抽文本范围，最后处理指代、被动和并列；不因名词或主语位置自动填 actor，
@@ -988,7 +990,7 @@ fence，新版 111 为 150 条裸 JSON；这说明输出形式更符合要求，
 答案不是模型实测，尚无性能改进结论。J 归公共固定输出约定、S/E 保留为两个
 因素只是待验证的组织方案，没有替代本节已实测设计或完成新的消融。
 
-证据：新版四臂 manifest/事件见 C48；历史同口径分数与错误计数见
+证据：新版四臂 manifest/事件见 C48/C50；固定原始响应后处理归因与表单见 `outputs/reports/sep_c3_postprocessing_attribution_v1.{json,md}`；历史同口径分数与错误计数见
 `outputs/reports/sep_c3_actor_diagnosis_recompute_v1.json`；原始输出与后处理边界
 见修正后的 `outputs/reports/sep_c3_modular_ablation_root_cause_v1.md`；候选实际
 消息检查见 C49。完整八组合、重复不确定性和候选实测仍为缺口，因此本节结论

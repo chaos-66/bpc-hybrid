@@ -55,6 +55,8 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
 | 新版 000/001/010/100 | — | 未执行；不据此启动补跑 |
 | 旧 v6 actor 最小修复候选 | — | 未注册、未启用、未实测；不能填写性能 |
 
+> **固定原始响应后处理归因（2026-09-17，零新增 API）**：新增 `outputs/reports/sep_c3_postprocessing_attribution_v1.{json,md}`。旧 v6 与 111 解析失败均 0；旧版 43/150 fence、107/150 裸 JSON，111 为 150/150 裸 JSON。adapter 对旧 v6 actor 无增删移，对 111 是 relay 嵌套接口展开依赖；关闭 adapter 会让 111 丢弃 742 个 field span、247 条 edge，得到 0 分但 validator invalid=0。canonicalizer 不新增 actor：旧 v6 actor 87→82（删 5/重锚 60），111 actor 136→130（删 6/重锚 104）；111 final actor FP=84 全部已在 raw 中存在。111 保存路径只跑 adapter+canonicalizer，未启用最终 validator，因此上表 111=0.726206 是保存路径分数，有 1 条 validator-invalid observed；完整 validator 链为 0.725473（149/150，estg_000861 的 order_relations[0].evidence 为 object 而非 array）。本轮只交付该实现差异与归因限制，不修改处理链、不补跑、不覆盖历史预测；旧 v6 仍默认，SEP-C3 仍未完成。
+
 - 2026-09-15 四臂各一次、共 600 次真实调用，失败/重试/样本重复发送均为 0。
   完整候选下降 0.058825；三个模块都未达到保留版至少高 0.01 的原接受标准。
   旧 v6 默认不变；既有调用授权已经用于该批次，不延续到后继候选。

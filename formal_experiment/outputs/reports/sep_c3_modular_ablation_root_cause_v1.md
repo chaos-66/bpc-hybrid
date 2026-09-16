@@ -8,7 +8,7 @@
 ## 0. 结论摘要
 
 1. Barrientos 原文的 FULL/NO-PATTERNS 不是本项目的 E/S/J 消融。原文只报告省略允许模式清单后模型频繁虚构不存在模式/命名不一致的定性观察；Table 5 的 Step 1 P/R/F1 是完整方法主结果，不是消融 F1。artifact 的 NO-PATTERNS 还同时删除了 Control-Flow Exclusivity Rule，剩余文本只是重编号，因此也不是纯词表单因素。本项目的 `barrientos_ablation_suite_v2` 是在我们自己的 runner、模型、任务和 evaluator 上做的借鉴实验，不是作者原消融。
-2. 新版 111 从旧 v6 的 0.7850 降到 0.7262（five-field mean F1，-0.0588）。退步最大来源是 actor 过抽：旧 v6 actor F1=0.7083、82 个预测 span；111 actor F1=0.5158、130 个预测 span。actor 一项贡献了均值差的大约 65%。
+2. 新版 111 从旧 v6 的 0.7850 降到 0.7262（保存路径 five-field mean F1，-0.0588；完整 validator 链为 0.725473，见 §3.4）。退步最大来源是 actor 过抽：旧 v6 actor F1=0.7083、82 个预测 span；111 actor F1=0.5158、130 个预测 span。actor 一项贡献了均值差的大约 65%。
 3. actor 核心定义没有被压缩：旧 v6 第 10/18/21 条与 S 模块第 3/10/13 条语义基本一致。不能把退步归因于某句 actor 定义被压缩。现行证据是：S 模块在当前精简组合中伴随大量额外 actor；删除 S 后 actor 预测从 130 降到 89、actor F1 从 0.5158 升到 0.6757；但残余被动/受事主语错误仍在，且删除 S 会显著丢 constraint。
 4. 删除 E/S/J 都比 111 高，但都没有恢复到旧 v6：011=0.7470、101=0.7611、110=0.7355，仍比旧 v6 低 0.0381/0.0240/0.0495。因此正确结论不是删模块更好，而是 `modular_v1` 的模块职责和组合方式当前有冲突；删模块只暴露了部分冲突。
 5. 推荐：J 降为所有版本共有的最低输出约定，不再作为实验因素；保留 S 与 E 两个可消融因素（候选 B）。但当前 E 不能原样保留，必须重建为完整 JSON 示例；S 也要收窄 actor/边界规则并恢复旧版具体线索。不要为了凑两模块把 E 合并进 S，因为现有成对结果显示 E 和 S 的作用不同。
@@ -124,11 +124,16 @@
 - exception：111 预测 8、命中 6，旧预测 9、命中 7；011 删除 E 去掉 2 个 exception FP 且保留 6 个命中，exception F1 +0.0743。代表例 `estg_000210`：Gold exception=`excluding the generation of electrical energy, gas or heat`；111 exception=[]；011 恢复。但 exception 样本量只有 11，结论强度有限。
 - action：111 F1=0.9287 略高于旧 0.9185；011/101/110 都略低于 111。E/S/J 的组合对 action 有正贡献，删除任一模块都不提升 action。
 
-### 3.4 原始响应 vs canonical 后处理
+### 3.4 原始响应 vs canonical 后处理（旧 v6 与 111 同口径离线归因）
 
-- 直接解析 raw actor span：旧 v6 87->canonical 82；111 136->130；101 94->89。canonicalizer 只删/移少量 span，上述 actor 过抽在 raw 模型输出中已经存在，不是后处理新增。
-- 旧版 raw 有 43/150 Markdown fence；新版四臂全部 150/150 bare JSON。旧版 parser 去 fence 后正常，新版 raw 格式优势不改变主 F1。
-- 因此本轮未发现退步来自后处理差异的证据；错误主要来自模型输出与 prompt 组合。
+本轮固定原始响应，只对旧 v6 D-full-0813 与新版 111 各 150 条做确定性离线重放；新增 API=0。完整机器结果见 `outputs/reports/sep_c3_postprocessing_attribution_v1.json`，人读表见同名 `.md`。本节只对这两臂做后处理归因，不扩展到 011/101/110 或新增组合。
+
+- JSON解析/fence：两臂解析失败均为 0；旧版 43/150 带 Markdown fence、107/150 裸 JSON；111 为 150/150 裸 JSON。fence 差异不进入五字段 F1。
+- 输出适配器：旧 v6 raw 已是 flat canonical 形状，adapter 对 actor span 数量、坐标和文本无增删移；111 raw 是 relay 嵌套 span 形状，adapter 展开后 actor span 数仍为 136→136，也不增删移。若关闭 adapter，111 的 canonicalizer 会丢弃 742 个 field span、247 条 edge，得到 0 分但 validator 观察到 0 条 invalid；这属于接口依赖，不能解释成 adapter 的语义抽取能力。
+- 坐标重锚与 span/关系清理：canonicalizer 只重锚坐标、删除无法唯一回指的 span/clause/edge，不新增 actor。旧 v6 actor span 87→82（删 5、重锚 60）；111 actor span 136→130（删 6、重锚 104）。坐标重锚和删除/清理在实现内耦合，本轮不虚构各自独立 F1 贡献。关闭坐标重锚后旧/新各 149/150 被 validator 拒绝、分数为 0；该降分是坐标有效性门造成的，不是「语义能力全部来自后处理」。
+- schema/cross-field 验证与失败处理：旧 v6 最终 validator 0 条 invalid、150/150 成功；111 最终 validator 发现 1/150 invalid（`estg_000861`，`order_relations[0].evidence` 为 object 而非 array），完整链为 149/150 成功、mean F1=0.725473。111 已保存 modular 路径只执行 adapter+canonicalizer、没有调用 `validate_canonical`，因此 150/150 request_status=ok、mean F1=0.726206，但有 1 条 validator-invalid observed。两个数字不可混同；完整复核见新报告。
+- actor 过抽：111 最终 actor span=130、FP=84；旧 v6 actor span=82、FP=35。由于后处理从不新增 actor，这 84 个 FP 全部已在模型原始响应中存在。111 被 canonicalizer 删除的 6 个 actor span 中，exact-text 诊断显示 5 个不是 Gold actor 文本、1 个 exact text 命中 Gold；旧 v6 删除 5 个中 4 个不是 Gold actor 文本、1 个 exact text 命中 Gold。后处理主要在做坐标重锚，而不是修正 actor 语义。按相同 exact-text 诊断，raw actor FP 约为 89（111）/39（旧 v6）；该追踪数不是主评价指标。
+- 结论：现有证据不支持「修改后处理即可修复本轮 actor 过抽」；同时发现 111 保存路径漏掉最终 validator 的具体实现差异。本轮只交付定位证据，不修改处理链、不补跑、不覆盖历史预测。
 
 ## 4. 为什么精简后退步，为什么删除模块反而更高
 

@@ -1,0 +1,1271 @@
+{
+  "actor_trace": {
+    "111": {
+      "actor_note": "111 raw 为 relay 嵌套形状；adapter 展开 span 但不改变 actor 文本/坐标。",
+      "adapter_actor_spans": 136,
+      "adapter_to_canonicalizer": {
+        "added": 0,
+        "relocated": 104,
+        "removed": 6,
+        "unchanged": 26
+      },
+      "bare_json_count": 150,
+      "canonicalizer_actor_spans": 130,
+      "canonicalizer_to_saved": {
+        "added": 0,
+        "relocated": 0,
+        "removed": 0,
+        "unchanged": 130
+      },
+      "dropped_actor_fp_diagnostic": 5,
+      "dropped_actor_spans": [
+        {
+          "end": 515,
+          "exact_gold_actor_text_match": false,
+          "id": "actor_3",
+          "sample_id": "estg_000037",
+          "start": 507,
+          "text": "the fund"
+        },
+        {
+          "end": 14,
+          "exact_gold_actor_text_match": false,
+          "id": "actor_1",
+          "sample_id": "estg_000061",
+          "start": 12,
+          "text": "it"
+        },
+        {
+          "end": 93,
+          "exact_gold_actor_text_match": false,
+          "id": "act_0",
+          "sample_id": "estg_000082",
+          "start": 91,
+          "text": "it"
+        },
+        {
+          "end": 201,
+          "exact_gold_actor_text_match": true,
+          "id": "act_0",
+          "sample_id": "estg_000103",
+          "start": 187,
+          "text": "the tax office"
+        },
+        {
+          "end": 300,
+          "exact_gold_actor_text_match": false,
+          "id": "actor_0",
+          "sample_id": "estg_000286",
+          "start": 298,
+          "text": "it"
+        },
+        {
+          "end": 193,
+          "exact_gold_actor_text_match": false,
+          "id": "act_1",
+          "sample_id": "estg_000414",
+          "start": 191,
+          "text": "he"
+        }
+      ],
+      "dropped_actor_tp_diagnostic": 1,
+      "final_actor_f1": 0.5158136860264521,
+      "final_actor_fp": 84,
+      "full_contract_actor_spans": 129,
+      "markdown_fence_count": 0,
+      "parser_failures": [],
+      "raw_actor_fp_exact_text_diagnostic": 89,
+      "raw_actor_spans": 136,
+      "raw_actor_tp_exact_text_diagnostic": 47,
+      "raw_to_adapter": {
+        "added": 0,
+        "relocated": 0,
+        "removed": 0,
+        "unchanged": 136
+      },
+      "saved_actor_spans": 130,
+      "source_text_mismatch_records": 0,
+      "validator_invalid_records": [
+        {
+          "errors": [
+            "clauses[0].order_relations[0].evidence must be an array"
+          ],
+          "sample_id": "estg_000861",
+          "saved_path_status": "ok"
+        }
+      ]
+    },
+    "old_v6_full_0813": {
+      "actor_note": "旧 v6 raw 为 flat canonical 形状；adapter 只规范 normalized/id，不改变 actor 文本/坐标。",
+      "adapter_actor_spans": 87,
+      "adapter_to_canonicalizer": {
+        "added": 0,
+        "relocated": 60,
+        "removed": 5,
+        "unchanged": 22
+      },
+      "bare_json_count": 107,
+      "canonicalizer_actor_spans": 82,
+      "canonicalizer_to_saved": {
+        "added": 0,
+        "relocated": 0,
+        "removed": 0,
+        "unchanged": 82
+      },
+      "dropped_actor_fp_diagnostic": 4,
+      "dropped_actor_spans": [
+        {
+          "end": 102,
+          "exact_gold_actor_text_match": false,
+          "id": "a01",
+          "sample_id": "estg_000082",
+          "start": 100,
+          "text": "it"
+        },
+        {
+          "end": 12,
+          "exact_gold_actor_text_match": false,
+          "id": "a01",
+          "sample_id": "estg_000092",
+          "start": 0,
+          "text": "The register"
+        },
+        {
+          "end": 190,
+          "exact_gold_actor_text_match": true,
+          "id": "a01",
+          "sample_id": "estg_000103",
+          "start": 176,
+          "text": "the tax office"
+        },
+        {
+          "end": 302,
+          "exact_gold_actor_text_match": false,
+          "id": "a01",
+          "sample_id": "estg_000286",
+          "start": 300,
+          "text": "it"
+        },
+        {
+          "end": 126,
+          "exact_gold_actor_text_match": false,
+          "id": "a01",
+          "sample_id": "estg_000433",
+          "start": 124,
+          "text": "it"
+        }
+      ],
+      "dropped_actor_tp_diagnostic": 1,
+      "final_actor_f1": 0.7083085465000991,
+      "final_actor_fp": 35,
+      "full_contract_actor_spans": 82,
+      "markdown_fence_count": 43,
+      "parser_failures": [],
+      "raw_actor_fp_exact_text_diagnostic": 39,
+      "raw_actor_spans": 87,
+      "raw_actor_tp_exact_text_diagnostic": 48,
+      "raw_to_adapter": {
+        "added": 0,
+        "relocated": 0,
+        "removed": 0,
+        "unchanged": 87
+      },
+      "saved_actor_spans": 82,
+      "source_text_mismatch_records": 1,
+      "validator_invalid_records": []
+    }
+  },
+  "conclusions": {
+    "confirmed": [
+      "旧 v6 与 111 的 JSON/fence 解析失败均为 0；旧版 43/150 带 Markdown fence、107/150 裸 JSON，111 为 150/150 裸 JSON；fence 差异不进入五字段 F1。",
+      "输出适配器对旧 v6 的 actor span 数、坐标和文本无增删移；111 的 relay 嵌套形状必须经 adapter 展开，关闭 adapter 会让 canonicalizer 丢弃 742 个 field span 和 247 条边，但 validator 观察到 0 条 invalid，得到 0 分。这是接口依赖，不是 adapter 的语义抽取贡献。",
+      "canonicalizer 只做坐标重锚、span/clause/edge 删除，不新增 actor。旧 v6 actor span 87→82（删 5、重锚 60），111 actor span 136→130（删 6、重锚 104）；coordinate 与清理在实现中耦合，不能分别虚构独立 F1 贡献。",
+      "111 最终 canonical actor FP=84；由于后处理从不新增 actor，这 84 个 FP 全部已在原始响应中存在。旧 v6 对应 final actor FP=35。actor 过抽首先是模型输出/prompt 组合问题，不是后处理新增。",
+      "111 保存路径使用 adapter+canonicalizer、未启用最终 canonical validator；最终 validator 会拒绝 1/150 条（estg_000861，order_relations[0].evidence 被模型输出为 object 而非 array）。完整链分数为 0.725473（149/150 成功）；已保存路径分数为 0.726206（150/150 request_status=ok，但 1 条 validator-invalid observed）。"
+    ],
+    "defects": [
+      "具体路径差异：scripts/run_sep_c3_modular_ablation_v1.py 使用 run_barrientos_ablation_suite_v2.parse_same_response/_prediction_row，只执行 relay adapter + span canonicalizer，没有调用 stage2_canonical.validate_canonical；scripts/run_d_full_postprocessing_ablation_v1.py 的完整链会调用该 validator。",
+      "证据：111 重放中 estg_000861 在 adapter+canonicalizer 后 schema_valid=true、cross_field_valid=false，错误为 clauses[0].order_relations[0].evidence must be an array；保存路径 request_status=ok，完整链应整条拒绝。旧 v6 0 条 validator-invalid，故两条路径同分。",
+      "本轮只交付定位证据，不修改处理链、补跑或覆盖已保存预测。"
+    ],
+    "limitations": [
+      "raw actor span 语义 FP 追踪对 canonicalizer 删除项使用 exact text 与 Gold actor 文本集的诊断匹配，不是独立的新 evaluator；主指标仍只使用现有 coarse evaluator 对成功 canonical 行的评分。",
+      "旧 v6 与 111 不是同一生成批次，无法排除 provider 端漂移；本报告不做单句 prompt 因果判断。",
+      "所有 150 条始终保留在分母；被 validator 拒绝或解析失败的记录按空预测处理。"
+    ],
+    "not_attributable": [
+      "不能根据 raw→canonical actor 总数下降 5/6 就说后处理修正了语义 actor 误抽；其中多数是坐标重锚，删除项还包含 1 个 exact text 命中 Gold 的跨版本共同删除样本 estg_000103。",
+      "不能把关闭坐标重锚后的接口失效（149/150 validator rejected 或新 111 关闭 adapter 后 0 分）解释成语义能力来自后处理；这些是 schema/接口依赖造成的整条拒绝或空输出。",
+      "现有证据不能把 actor 过抽归因到某一句 E/S/J 文本，也不能隔离坐标重锚、span 删除和 edge 清理各自对 F1 的独立贡献。",
+      "不能把 0.726206 写成完整后处理链分数；它是当前 modular runner 保存路径分数，完整 validator 链为 0.725473。"
+    ]
+  },
+  "conditions": {
+    "111": {
+      "adapter_gate": {
+        "coarse_five_field_mean_f1": 0.0,
+        "coarse_five_field_micro_f1": 0.0,
+        "condition_id": "gate",
+        "denominator": 150,
+        "failed_records": 149,
+        "five_fields_extracted": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_f1": {
+          "action": 0.0,
+          "actor": 0.0,
+          "condition": 0.0,
+          "constraint": 0.0,
+          "exception": 0.0
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_matched_predictions": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "label": "有输出适配器、无坐标重锚，经最终验证门（=完整链去 canonicalizer）",
+        "nonempty_output_records": 0,
+        "successful_records": 1,
+        "telemetry": {
+          "adapter_degraded_records": 0,
+          "adapter_failures": 0,
+          "adapter_spans_adapted": 719,
+          "adapter_spans_dropped": 0,
+          "canonicalizer_clauses_dropped": 0,
+          "canonicalizer_edges_dropped": 0,
+          "canonicalizer_failures": 0,
+          "canonicalizer_reanchored": 0,
+          "canonicalizer_spans_dropped": 0,
+          "failed_records": 149,
+          "failure_examples": [
+            {
+              "error": "validator: clauses[0].clause_span span text 'Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year' does not match source_text[0:137]='Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year;'; clauses[1].clause_span span text 'in this case, the profit shall be taken into account in determining the income for that calendar year in which the business year ends' does not match source_text[139:263]='n this case, the profit shall be taken into account in determining the income for that calendar year in which the business y'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000002"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'It may cover a shorter period if  \\n1. a business is opened or closed, or  \\n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date.' does not match source_text[0:177]='It may cover a shorter period if  \\n1. a business is opened or closed, or  \\n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a differ'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000003"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text '(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent by official notice.' does not match source_text[0:164]='(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000004"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale.' does not match source_text[0:177]='A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000020"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Free tobacco, free cigars and free cigarettes to employees in tobacco processing establishments, if the products granted may not be sold and are granted only in such a quantity that actually precludes a sale.' does not match source_text[0:190]='Free tobacco, free cigars and free cigarettes to employees in tobacco processing establishments, if the products granted may not be sold and are granted only in such a quantity that actually'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000021"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Section 25(1) items 7, 8, 8a, 9 of the Civilian Service Act 1986) only for part of the calendar year, the income as defined in Section 2(3) items 1 to 3 earned in the remainder of the calendar year and current income from employment as defined in Section 41(4) shall be converted to an annual amount for the purpose of determining the tax rate.' does not match source_text[0:318]='Section 25(1) items 7, 8, 8a, 9 of the Civilian Service Act 1986) only for part of the calendar year, the income as defined in Section 2(3) items 1 to 3 earned in the remainder of the calendar year and current income from employment as defined in Section 41(4) shall be converted to an annual amount for the purpose of'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000027"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'The income shall be taxed at the tax rate that results when taking into account the converted income' does not match source_text[0:101]='The income shall be taxed at the tax rate that results when taking into account the converted income;'; clauses[1].clause_span span text 'however, the tax to be assessed may not be higher than that which would result from the taxation of all emoluments' does not match source_text[102:205]='however, the tax to be assessed may not be higher than that which would result from the taxation of all'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000028"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text \"(3) Income within the meaning of paragraph 1 items 10 and 11 shall be taken into account when determining the tax for the employee's other income.\" does not match source_text[0:128]='(3) Income within the meaning of paragraph 1 items 10 and 11 shall be taken into account when determining the tax for the employ'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000030"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text '(1) Profit is the difference, to be determined by double-entry bookkeeping, between the business assets at the end of the financial year and the business assets at the end of the preceding financial year.' does not match source_text[0:181]='(1) Profit is the difference, to be determined by double-entry bookkeeping, between the business assets at the end of the financial year and the business assets at the end of the pr'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000031"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Gains or losses from the disposal or withdrawal and other changes in value of land that is part of the fixed assets are not to be taken into account.' does not match source_text[0:132]='Gains or losses from the disposal or withdrawal and other changes in value of land that is part of the fixed assets are not to be ta'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000033"
+            }
+          ],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 0,
+          "output_clause_count": 0,
+          "sample_count": 150,
+          "source_text_mismatch_records": 0,
+          "successful_records": 1,
+          "validator_invalid_records_observed": 149,
+          "validator_rejected_records": 149
+        },
+        "validator_invalid_records_observed": 149
+      },
+      "full_contract": {
+        "coarse_five_field_mean_f1": 0.7254734473768475,
+        "coarse_five_field_micro_f1": 0.7889710634020248,
+        "condition_id": "contract",
+        "denominator": 150,
+        "failed_records": 1,
+        "five_fields_extracted": {
+          "action": 229,
+          "actor": 129,
+          "condition": 147,
+          "constraint": 179,
+          "exception": 8
+        },
+        "five_fields_f1": {
+          "action": 0.927192238862202,
+          "actor": 0.5187219893017204,
+          "condition": 0.808236101578586,
+          "constraint": 0.7416379597733082,
+          "exception": 0.631578947368421
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 138,
+          "actor": 39,
+          "condition": 92,
+          "constraint": 94,
+          "exception": 6
+        },
+        "five_fields_matched_predictions": {
+          "action": 214,
+          "actor": 46,
+          "condition": 128,
+          "constraint": 142,
+          "exception": 6
+        },
+        "label": "adapter+canonicalizer+最终 schema/cross-field 验证（完整链）",
+        "nonempty_output_records": 148,
+        "successful_records": 149,
+        "telemetry": {
+          "adapter_degraded_records": 0,
+          "adapter_failures": 0,
+          "adapter_spans_adapted": 719,
+          "adapter_spans_dropped": 0,
+          "canonicalizer_clauses_dropped": 0,
+          "canonicalizer_edges_dropped": 18,
+          "canonicalizer_failures": 0,
+          "canonicalizer_reanchored": 1050,
+          "canonicalizer_spans_dropped": 46,
+          "failed_records": 1,
+          "failure_examples": [
+            {
+              "error": "validator: clauses[0].order_relations[0].evidence must be an array",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000861"
+            }
+          ],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 148,
+          "output_clause_count": 227,
+          "sample_count": 150,
+          "source_text_mismatch_records": 0,
+          "successful_records": 149,
+          "validator_invalid_records_observed": 1,
+          "validator_rejected_records": 1
+        },
+        "validator_invalid_records_observed": 1
+      },
+      "full_minus_adapter": {
+        "coarse_five_field_mean_f1": 0.0,
+        "coarse_five_field_micro_f1": 0.0,
+        "condition_id": "adapter",
+        "denominator": 150,
+        "failed_records": 0,
+        "five_fields_extracted": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_f1": {
+          "action": 0.0,
+          "actor": 0.0,
+          "condition": 0.0,
+          "constraint": 0.0,
+          "exception": 0.0
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_matched_predictions": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "label": "完整链去输出适配器（接口依赖对照）",
+        "nonempty_output_records": 149,
+        "successful_records": 150,
+        "telemetry": {
+          "adapter_degraded_records": 0,
+          "adapter_failures": 0,
+          "adapter_spans_adapted": 0,
+          "adapter_spans_dropped": 0,
+          "canonicalizer_clauses_dropped": 0,
+          "canonicalizer_edges_dropped": 247,
+          "canonicalizer_failures": 0,
+          "canonicalizer_reanchored": 404,
+          "canonicalizer_spans_dropped": 742,
+          "failed_records": 0,
+          "failure_examples": [],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 149,
+          "output_clause_count": 228,
+          "sample_count": 150,
+          "source_text_mismatch_records": 0,
+          "successful_records": 150,
+          "validator_invalid_records_observed": 0,
+          "validator_rejected_records": 0
+        },
+        "validator_invalid_records_observed": 0
+      },
+      "json_fence_gate": {
+        "coarse_five_field_mean_f1": 0.0,
+        "coarse_five_field_micro_f1": 0.0,
+        "condition_id": "gate",
+        "denominator": 150,
+        "failed_records": 149,
+        "five_fields_extracted": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_f1": {
+          "action": 0.0,
+          "actor": 0.0,
+          "condition": 0.0,
+          "constraint": 0.0,
+          "exception": 0.0
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_matched_predictions": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "label": "仅 JSON/fence + 最终验证门（无 adapter/canonicalizer）",
+        "nonempty_output_records": 0,
+        "successful_records": 1,
+        "telemetry": {
+          "failed_records": 149,
+          "failure_examples": [
+            {
+              "error": "validator: clauses[0].clause_span span text 'Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year' does not match source_text[0:137]='Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year;'; clauses[1].clause_span span text 'in this case, the profit shall be taken into account in determining the income for that calendar year in which the business year ends' does not match source_text[139:263]='n this case, the profit shall be taken into account in determining the income for that calendar year in which the business y'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000002"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'It may cover a shorter period if  \\n1. a business is opened or closed, or  \\n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date.' does not match source_text[0:177]='It may cover a shorter period if  \\n1. a business is opened or closed, or  \\n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a differ'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000003"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text '(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent by official notice.' does not match source_text[0:164]='(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000004"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale.' does not match source_text[0:177]='A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000020"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Free tobacco, free cigars and free cigarettes to employees in tobacco processing establishments, if the products granted may not be sold and are granted only in such a quantity that actually precludes a sale.' does not match source_text[0:190]='Free tobacco, free cigars and free cigarettes to employees in tobacco processing establishments, if the products granted may not be sold and are granted only in such a quantity that actually'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000021"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Section 25(1) items 7, 8, 8a, 9 of the Civilian Service Act 1986) only for part of the calendar year, the income as defined in Section 2(3) items 1 to 3 earned in the remainder of the calendar year and current income from employment as defined in Section 41(4) shall be converted to an annual amount for the purpose of determining the tax rate.' does not match source_text[0:318]='Section 25(1) items 7, 8, 8a, 9 of the Civilian Service Act 1986) only for part of the calendar year, the income as defined in Section 2(3) items 1 to 3 earned in the remainder of the calendar year and current income from employment as defined in Section 41(4) shall be converted to an annual amount for the purpose of'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000027"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'The income shall be taxed at the tax rate that results when taking into account the converted income' does not match source_text[0:101]='The income shall be taxed at the tax rate that results when taking into account the converted income;'; clauses[1].clause_span span text 'however, the tax to be assessed may not be higher than that which would result from the taxation of all emoluments' does not match source_text[102:205]='however, the tax to be assessed may not be higher than that which would result from the taxation of all'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000028"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text \"(3) Income within the meaning of paragraph 1 items 10 and 11 shall be taken into account when determining the tax for the employee's other income.\" does not match source_text[0:128]='(3) Income within the meaning of paragraph 1 items 10 and 11 shall be taken into account when determining the tax for the employ'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000030"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text '(1) Profit is the difference, to be determined by double-entry bookkeeping, between the business assets at the end of the financial year and the business assets at the end of the preceding financial year.' does not match source_text[0:181]='(1) Profit is the difference, to be determined by double-entry bookkeeping, between the business assets at the end of the financial year and the business assets at the end of the pr'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000031"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Gains or losses from the disposal or withdrawal and other changes in value of land that is part of the fixed assets are not to be taken into account.' does not match source_text[0:132]='Gains or losses from the disposal or withdrawal and other changes in value of land that is part of the fixed assets are not to be ta'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000033"
+            }
+          ],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 0,
+          "sample_count": 150,
+          "successful_records": 1,
+          "validator_invalid_records_observed": 149,
+          "validator_rejected_records": 149
+        },
+        "validator_invalid_records_observed": 149
+      },
+      "saved_path_no_validator": {
+        "coarse_five_field_mean_f1": 0.7262056454982766,
+        "coarse_five_field_micro_f1": 0.7902398853428036,
+        "condition_id": "validator",
+        "denominator": 150,
+        "failed_records": 0,
+        "five_fields_extracted": {
+          "action": 231,
+          "actor": 130,
+          "condition": 148,
+          "constraint": 179,
+          "exception": 8
+        },
+        "five_fields_f1": {
+          "action": 0.9286968411566371,
+          "actor": 0.5158136860264521,
+          "condition": 0.8133007931665649,
+          "constraint": 0.7416379597733082,
+          "exception": 0.631578947368421
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 139,
+          "actor": 39,
+          "condition": 93,
+          "constraint": 94,
+          "exception": 6
+        },
+        "five_fields_matched_predictions": {
+          "action": 215,
+          "actor": 46,
+          "condition": 129,
+          "constraint": 142,
+          "exception": 6
+        },
+        "label": "adapter+canonicalizer、未启用最终验证门（111 已保存路径）",
+        "nonempty_output_records": 149,
+        "successful_records": 150,
+        "telemetry": {
+          "adapter_degraded_records": 0,
+          "adapter_failures": 0,
+          "adapter_spans_adapted": 719,
+          "adapter_spans_dropped": 0,
+          "canonicalizer_clauses_dropped": 0,
+          "canonicalizer_edges_dropped": 18,
+          "canonicalizer_failures": 0,
+          "canonicalizer_reanchored": 1050,
+          "canonicalizer_spans_dropped": 46,
+          "failed_records": 0,
+          "failure_examples": [],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 149,
+          "output_clause_count": 228,
+          "sample_count": 150,
+          "source_text_mismatch_records": 0,
+          "successful_records": 150,
+          "validator_invalid_records_observed": 1,
+          "validator_rejected_records": 0
+        },
+        "validator_invalid_records_observed": 1
+      },
+      "saved_prediction_replay": {
+        "exactly_matches_saved_path_replay": true,
+        "failed_count": 0,
+        "five_fields_f1": {
+          "action": 0.9286968411566371,
+          "actor": 0.5158136860264521,
+          "condition": 0.8133007931665649,
+          "constraint": 0.7416379597733082,
+          "exception": 0.631578947368421
+        },
+        "mean_f1": 0.7262056454982766
+      }
+    },
+    "old_v6_full_0813": {
+      "adapter_gate": {
+        "coarse_five_field_mean_f1": 0.0,
+        "coarse_five_field_micro_f1": 0.0,
+        "condition_id": "gate",
+        "denominator": 150,
+        "failed_records": 149,
+        "five_fields_extracted": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_f1": {
+          "action": 0.0,
+          "actor": 0.0,
+          "condition": 0.0,
+          "constraint": 0.0,
+          "exception": 0.0
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_matched_predictions": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "label": "有输出适配器、无坐标重锚，经最终验证门（=完整链去 canonicalizer）",
+        "nonempty_output_records": 0,
+        "successful_records": 1,
+        "telemetry": {
+          "adapter_degraded_records": 2,
+          "adapter_failures": 0,
+          "adapter_spans_adapted": 727,
+          "adapter_spans_dropped": 2,
+          "canonicalizer_clauses_dropped": 0,
+          "canonicalizer_edges_dropped": 0,
+          "canonicalizer_failures": 0,
+          "canonicalizer_reanchored": 0,
+          "canonicalizer_spans_dropped": 0,
+          "failed_records": 149,
+          "failure_examples": [
+            {
+              "error": "validator: clauses[0].clause_span span text 'Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year' does not match source_text[0:137]='Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year;'; clauses[1].clause_span span text 'in this case, the profit shall be taken into account in determining the income for that calendar year in which the business year ends' does not match source_text[139:263]='n this case, the profit shall be taken into account in determining the income for that calendar year in which the business y'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000002"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'It may cover a shorter period if  \\n1. a business is opened or closed, or  \\n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date.' does not match source_text[0:174]='It may cover a shorter period if  \\n1. a business is opened or closed, or  \\n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a dif'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000003"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text '(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent by official notice.' does not match source_text[0:157]='(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior '",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000004"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale.' does not match source_text[0:166]='A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually prec'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000020"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Free tobacco, free cigars and free cigarettes to employees in tobacco processing establishments, if the products granted may not be sold and are granted only in such a quantity that actually precludes a sale.' does not match source_text[0:196]='Free tobacco, free cigars and free cigarettes to employees in tobacco processing establishments, if the products granted may not be sold and are granted only in such a quantity that actually precl'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000021"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Section 25(1) items 7, 8, 8a, 9 of the Civilian Service Act 1986) only for part of the calendar year, the income as defined in Section 2(3) items 1 to 3 earned in the remainder of the calendar year and current income from employment as defined in Section 41(4) shall be converted to an annual amount for the purpose of determining the tax rate.' does not match source_text[0:310]='Section 25(1) items 7, 8, 8a, 9 of the Civilian Service Act 1986) only for part of the calendar year, the income as defined in Section 2(3) items 1 to 3 earned in the remainder of the calendar year and current income from employment as defined in Section 41(4) shall be converted to an annual amount for the pu'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000027"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'The income shall be taxed at the tax rate that results when taking into account the converted income' does not match source_text[0:99]='The income shall be taxed at the tax rate that results when taking into account the converted incom'; clauses[1].clause_span span text 'however, the tax to be assessed may not be higher than that which would result from the taxation of all emoluments' does not match source_text[100:205]='; however, the tax to be assessed may not be higher than that which would result from the taxation of all'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000028"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text \"(3) Income within the meaning of paragraph 1 items 10 and 11 shall be taken into account when determining the tax for the employee's other income.\" does not match source_text[0:128]='(3) Income within the meaning of paragraph 1 items 10 and 11 shall be taken into account when determining the tax for the employ'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000030"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Profit is the difference, to be determined by double-entry bookkeeping, between the business assets at the end of the financial year and the business assets at the end of the preceding financial year.' does not match source_text[0:181]='(1) Profit is the difference, to be determined by double-entry bookkeeping, between the business assets at the end of the financial year and the business assets at the end of the pr'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000031"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Gains or losses from the disposal or withdrawal and other changes in value of land that is part of the fixed assets are not to be taken into account.' does not match source_text[0:133]='Gains or losses from the disposal or withdrawal and other changes in value of land that is part of the fixed assets are not to be tak'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000033"
+            }
+          ],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 0,
+          "output_clause_count": 0,
+          "sample_count": 150,
+          "source_text_mismatch_records": 1,
+          "successful_records": 1,
+          "validator_invalid_records_observed": 149,
+          "validator_rejected_records": 149
+        },
+        "validator_invalid_records_observed": 149
+      },
+      "full_contract": {
+        "coarse_five_field_mean_f1": 0.7850304424814778,
+        "coarse_five_field_micro_f1": 0.8224493117168078,
+        "condition_id": "contract",
+        "denominator": 150,
+        "failed_records": 0,
+        "five_fields_extracted": {
+          "action": 225,
+          "actor": 82,
+          "condition": 138,
+          "constraint": 254,
+          "exception": 9
+        },
+        "five_fields_f1": {
+          "action": 0.9185006045949216,
+          "actor": 0.7083085465000991,
+          "condition": 0.840530861596798,
+          "constraint": 0.7578121997155707,
+          "exception": 0.7000000000000001
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 135,
+          "actor": 38,
+          "condition": 95,
+          "constraint": 106,
+          "exception": 7
+        },
+        "five_fields_matched_predictions": {
+          "action": 211,
+          "actor": 47,
+          "condition": 126,
+          "constraint": 186,
+          "exception": 7
+        },
+        "label": "adapter+canonicalizer+最终 schema/cross-field 验证（完整链）",
+        "nonempty_output_records": 148,
+        "successful_records": 150,
+        "telemetry": {
+          "adapter_degraded_records": 2,
+          "adapter_failures": 0,
+          "adapter_spans_adapted": 727,
+          "adapter_spans_dropped": 2,
+          "canonicalizer_clauses_dropped": 1,
+          "canonicalizer_edges_dropped": 11,
+          "canonicalizer_failures": 0,
+          "canonicalizer_reanchored": 1091,
+          "canonicalizer_spans_dropped": 42,
+          "failed_records": 0,
+          "failure_examples": [],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 148,
+          "output_clause_count": 240,
+          "sample_count": 150,
+          "source_text_mismatch_records": 1,
+          "successful_records": 150,
+          "validator_invalid_records_observed": 0,
+          "validator_rejected_records": 0
+        },
+        "validator_invalid_records_observed": 0
+      },
+      "full_minus_adapter": {
+        "coarse_five_field_mean_f1": 0.7850304424814778,
+        "coarse_five_field_micro_f1": 0.8224493117168078,
+        "condition_id": "adapter",
+        "denominator": 150,
+        "failed_records": 0,
+        "five_fields_extracted": {
+          "action": 225,
+          "actor": 82,
+          "condition": 138,
+          "constraint": 254,
+          "exception": 9
+        },
+        "five_fields_f1": {
+          "action": 0.9185006045949216,
+          "actor": 0.7083085465000991,
+          "condition": 0.840530861596798,
+          "constraint": 0.7578121997155707,
+          "exception": 0.7000000000000001
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 135,
+          "actor": 38,
+          "condition": 95,
+          "constraint": 106,
+          "exception": 7
+        },
+        "five_fields_matched_predictions": {
+          "action": 211,
+          "actor": 47,
+          "condition": 126,
+          "constraint": 186,
+          "exception": 7
+        },
+        "label": "完整链去输出适配器（接口依赖对照）",
+        "nonempty_output_records": 148,
+        "successful_records": 150,
+        "telemetry": {
+          "adapter_degraded_records": 0,
+          "adapter_failures": 0,
+          "adapter_spans_adapted": 0,
+          "adapter_spans_dropped": 0,
+          "canonicalizer_clauses_dropped": 1,
+          "canonicalizer_edges_dropped": 11,
+          "canonicalizer_failures": 0,
+          "canonicalizer_reanchored": 1091,
+          "canonicalizer_spans_dropped": 44,
+          "failed_records": 0,
+          "failure_examples": [],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 148,
+          "output_clause_count": 240,
+          "sample_count": 150,
+          "source_text_mismatch_records": 1,
+          "successful_records": 150,
+          "validator_invalid_records_observed": 0,
+          "validator_rejected_records": 0
+        },
+        "validator_invalid_records_observed": 0
+      },
+      "json_fence_gate": {
+        "coarse_five_field_mean_f1": 0.0,
+        "coarse_five_field_micro_f1": 0.0,
+        "condition_id": "gate",
+        "denominator": 150,
+        "failed_records": 149,
+        "five_fields_extracted": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_f1": {
+          "action": 0.0,
+          "actor": 0.0,
+          "condition": 0.0,
+          "constraint": 0.0,
+          "exception": 0.0
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "five_fields_matched_predictions": {
+          "action": 0,
+          "actor": 0,
+          "condition": 0,
+          "constraint": 0,
+          "exception": 0
+        },
+        "label": "仅 JSON/fence + 最终验证门（无 adapter/canonicalizer）",
+        "nonempty_output_records": 0,
+        "successful_records": 1,
+        "telemetry": {
+          "failed_records": 149,
+          "failure_examples": [
+            {
+              "error": "validator: clauses[0].clause_span span text 'Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year' does not match source_text[0:137]='Bookkeeping farmers and foresters and registered traders (Section 5) may, however, have a business year deviating from the calendar year;'; clauses[1].clause_span span text 'in this case, the profit shall be taken into account in determining the income for that calendar year in which the business year ends' does not match source_text[139:263]='n this case, the profit shall be taken into account in determining the income for that calendar year in which the business y'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000002"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'It may cover a shorter period if  \\n1. a business is opened or closed, or  \\n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date.' does not match source_text[0:174]='It may cover a shorter period if  \\n1. a business is opened or closed, or  \\n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a dif'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000003"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text '(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent by official notice.' does not match source_text[0:157]='(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior '",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000004"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale.' does not match source_text[0:166]='A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually prec'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000020"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Free tobacco, free cigars and free cigarettes to employees in tobacco processing establishments, if the products granted may not be sold and are granted only in such a quantity that actually precludes a sale.' does not match source_text[0:196]='Free tobacco, free cigars and free cigarettes to employees in tobacco processing establishments, if the products granted may not be sold and are granted only in such a quantity that actually precl'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000021"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Section 25(1) items 7, 8, 8a, 9 of the Civilian Service Act 1986) only for part of the calendar year, the income as defined in Section 2(3) items 1 to 3 earned in the remainder of the calendar year and current income from employment as defined in Section 41(4) shall be converted to an annual amount for the purpose of determining the tax rate.' does not match source_text[0:310]='Section 25(1) items 7, 8, 8a, 9 of the Civilian Service Act 1986) only for part of the calendar year, the income as defined in Section 2(3) items 1 to 3 earned in the remainder of the calendar year and current income from employment as defined in Section 41(4) shall be converted to an annual amount for the pu'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000027"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'The income shall be taxed at the tax rate that results when taking into account the converted income' does not match source_text[0:99]='The income shall be taxed at the tax rate that results when taking into account the converted incom'; clauses[1].clause_span span text 'however, the tax to be assessed may not be higher than that which would result from the taxation of all emoluments' does not match source_text[100:205]='; however, the tax to be assessed may not be higher than that which would result from the taxation of all'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000028"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text \"(3) Income within the meaning of paragraph 1 items 10 and 11 shall be taken into account when determining the tax for the employee's other income.\" does not match source_text[0:128]='(3) Income within the meaning of paragraph 1 items 10 and 11 shall be taken into account when determining the tax for the employ'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000030"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Profit is the difference, to be determined by double-entry bookkeeping, between the business assets at the end of the financial year and the business assets at the end of the preceding financial year.' does not match source_text[0:181]='(1) Profit is the difference, to be determined by double-entry bookkeeping, between the business assets at the end of the financial year and the business assets at the end of the pr'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000031"
+            },
+            {
+              "error": "validator: clauses[0].clause_span span text 'Gains or losses from the disposal or withdrawal and other changes in value of land that is part of the fixed assets are not to be taken into account.' does not match source_text[0:133]='Gains or losses from the disposal or withdrawal and other changes in value of land that is part of the fixed assets are not to be tak'",
+              "record": {},
+              "request_status": "failed",
+              "sample_id": "estg_000033"
+            }
+          ],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 0,
+          "sample_count": 150,
+          "successful_records": 1,
+          "validator_invalid_records_observed": 149,
+          "validator_rejected_records": 149
+        },
+        "validator_invalid_records_observed": 149
+      },
+      "saved_path_no_validator": {
+        "coarse_five_field_mean_f1": 0.7850304424814778,
+        "coarse_five_field_micro_f1": 0.8224493117168078,
+        "condition_id": "validator",
+        "denominator": 150,
+        "failed_records": 0,
+        "five_fields_extracted": {
+          "action": 225,
+          "actor": 82,
+          "condition": 138,
+          "constraint": 254,
+          "exception": 9
+        },
+        "five_fields_f1": {
+          "action": 0.9185006045949216,
+          "actor": 0.7083085465000991,
+          "condition": 0.840530861596798,
+          "constraint": 0.7578121997155707,
+          "exception": 0.7000000000000001
+        },
+        "five_fields_matched_ground_truth": {
+          "action": 135,
+          "actor": 38,
+          "condition": 95,
+          "constraint": 106,
+          "exception": 7
+        },
+        "five_fields_matched_predictions": {
+          "action": 211,
+          "actor": 47,
+          "condition": 126,
+          "constraint": 186,
+          "exception": 7
+        },
+        "label": "adapter+canonicalizer、未启用最终验证门（111 已保存路径）",
+        "nonempty_output_records": 148,
+        "successful_records": 150,
+        "telemetry": {
+          "adapter_degraded_records": 2,
+          "adapter_failures": 0,
+          "adapter_spans_adapted": 727,
+          "adapter_spans_dropped": 2,
+          "canonicalizer_clauses_dropped": 1,
+          "canonicalizer_edges_dropped": 11,
+          "canonicalizer_failures": 0,
+          "canonicalizer_reanchored": 1091,
+          "canonicalizer_spans_dropped": 42,
+          "failed_records": 0,
+          "failure_examples": [],
+          "json_parse_failures": 0,
+          "nonempty_output_records": 148,
+          "output_clause_count": 240,
+          "sample_count": 150,
+          "source_text_mismatch_records": 1,
+          "successful_records": 150,
+          "validator_invalid_records_observed": 0,
+          "validator_rejected_records": 0
+        },
+        "validator_invalid_records_observed": 0
+      },
+      "saved_prediction_replay": {
+        "exactly_matches_saved_path_replay": true,
+        "failed_count": 0,
+        "five_fields_f1": {
+          "action": 0.9185006045949216,
+          "actor": 0.7083085465000991,
+          "condition": 0.840530861596798,
+          "constraint": 0.7578121997155707,
+          "exception": 0.7000000000000001
+        },
+        "mean_f1": 0.7850304424814778
+      }
+    }
+  },
+  "generated_at_utc": "2026-09-16T17:11:25.433091+00:00",
+  "inputs": {
+    "gold": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\data\\gold\\stage2\\estg150_formal_gold_v1.json",
+      "sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    },
+    "input": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\data\\input\\estg150_formal_inference_input_v2.json",
+      "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2"
+    },
+    "new_canonical_predictions": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\sep_c3_modular_ablation_v1\\111\\repeat-01\\canonical_predictions.jsonl",
+      "sha256": "abf05abcd4d058f285d726e16a1b02eeffb174897bdca48f4876c8d32714d857"
+    },
+    "new_raw": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\sep_c3_modular_ablation_v1\\111\\repeat-01\\raw_responses.jsonl",
+      "sha256": "6f9f8023032f12697aeec20ac87d962d599889da26c20bffcfe901c20260b129"
+    },
+    "old_canonical_predictions": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\barrientos_ablation_suite_v2\\D-full-0813\\repeat-01\\canonical_predictions.jsonl",
+      "sha256": "2dc036c3c72f54e194ad9882aac5b78f2fd0e0a7f9fbdf44dc73baa31ce23195"
+    },
+    "old_raw": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\barrientos_ablation_suite_v2\\D-full-0813\\repeat-01\\raw_responses.jsonl",
+      "sha256": "b45ea6ef530c80162bd2b60fb7877c8728beabcdecc772fe8ff9e338d3bf5dce"
+    }
+  },
+  "provenance": {
+    "prediction_root": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment",
+    "script": "scripts/analyze_sep_c3_postprocessing_attribution_v1.py"
+  },
+  "sample_evidence": {
+    "estg_000028": {
+      "111": {
+        "adapter_actor_texts": [
+          "The income",
+          "the tax to be assessed"
+        ],
+        "canonical_actor_texts": [
+          "The income",
+          "the tax to be assessed"
+        ],
+        "raw_actor_texts": [
+          "The income",
+          "the tax to be assessed"
+        ],
+        "saved_actor_texts": [
+          "The income",
+          "the tax to be assessed"
+        ]
+      },
+      "gold_actor_texts": [],
+      "old_v6_full_0813": {
+        "adapter_actor_texts": [],
+        "canonical_actor_texts": [],
+        "raw_actor_texts": [],
+        "saved_actor_texts": []
+      },
+      "sample_id": "estg_000028",
+      "validator_invalid_records": {
+        "111": [],
+        "old_v6_full_0813": []
+      }
+    },
+    "estg_000037": {
+      "111": {
+        "adapter_actor_texts": [
+          "business expenses",
+          "the fund",
+          "the fund"
+        ],
+        "canonical_actor_texts": [
+          "business expenses",
+          "the fund"
+        ],
+        "raw_actor_texts": [
+          "business expenses",
+          "the fund",
+          "the fund"
+        ],
+        "saved_actor_texts": [
+          "business expenses",
+          "the fund"
+        ]
+      },
+      "gold_actor_texts": [
+        "the fund must be subject to state supervision;\nbb) the fund"
+      ],
+      "old_v6_full_0813": {
+        "adapter_actor_texts": [
+          "the insured person",
+          "the fund",
+          "the fund"
+        ],
+        "canonical_actor_texts": [
+          "the insured person",
+          "the fund",
+          "the fund"
+        ],
+        "raw_actor_texts": [
+          "the insured person",
+          "the fund",
+          "the fund"
+        ],
+        "saved_actor_texts": [
+          "the insured person",
+          "the fund",
+          "the fund"
+        ]
+      },
+      "sample_id": "estg_000037",
+      "validator_invalid_records": {
+        "111": [],
+        "old_v6_full_0813": []
+      }
+    },
+    "estg_000103": {
+      "111": {
+        "adapter_actor_texts": [
+          "the tax office"
+        ],
+        "canonical_actor_texts": [],
+        "raw_actor_texts": [
+          "the tax office"
+        ],
+        "saved_actor_texts": []
+      },
+      "gold_actor_texts": [
+        "the tax office"
+      ],
+      "old_v6_full_0813": {
+        "adapter_actor_texts": [
+          "the tax office"
+        ],
+        "canonical_actor_texts": [],
+        "raw_actor_texts": [
+          "the tax office"
+        ],
+        "saved_actor_texts": []
+      },
+      "sample_id": "estg_000103",
+      "validator_invalid_records": {
+        "111": [],
+        "old_v6_full_0813": []
+      }
+    },
+    "estg_000861": {
+      "111": {
+        "adapter_actor_texts": [
+          "a taxpayer falling under Section 7(3) who has resolved to dissolve"
+        ],
+        "canonical_actor_texts": [
+          "a taxpayer falling under Section 7(3) who has resolved to dissolve"
+        ],
+        "raw_actor_texts": [
+          "a taxpayer falling under Section 7(3) who has resolved to dissolve"
+        ],
+        "saved_actor_texts": [
+          "a taxpayer falling under Section 7(3) who has resolved to dissolve"
+        ]
+      },
+      "gold_actor_texts": [],
+      "old_v6_full_0813": {
+        "adapter_actor_texts": [
+          "the liquidation gain"
+        ],
+        "canonical_actor_texts": [
+          "the liquidation gain"
+        ],
+        "raw_actor_texts": [
+          "the liquidation gain"
+        ],
+        "saved_actor_texts": [
+          "the liquidation gain"
+        ]
+      },
+      "sample_id": "estg_000861",
+      "validator_invalid_records": {
+        "111": [
+          {
+            "errors": [
+              "clauses[0].order_relations[0].evidence must be an array"
+            ],
+            "sample_id": "estg_000861",
+            "saved_path_status": "ok"
+          }
+        ],
+        "old_v6_full_0813": []
+      }
+    }
+  },
+  "schema_version": "sep_c3_postprocessing_attribution@1.0.0",
+  "scope": {
+    "all_150_in_denominator": true,
+    "arms": [
+      "old_v6_full_0813",
+      "111"
+    ],
+    "main_metric_definition": "arithmetic mean of coarse sentence-level actor/action/condition/constraint/exception F1",
+    "measured_layer": "postprocessing_only",
+    "model_generation_effect_claim_allowed": false,
+    "model_responses_fixed": true,
+    "new_api_calls": 0,
+    "primary_metric": "coarse_five_field_mean_f1",
+    "processing_logic_changed": false,
+    "sample_count_per_arm": 150,
+    "thresholds_changed": false
+  },
+  "status": "offline_attribution_only_no_api_no_rerun"
+}
