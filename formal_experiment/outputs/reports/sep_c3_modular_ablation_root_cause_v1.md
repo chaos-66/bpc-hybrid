@@ -53,7 +53,7 @@
 - 模型与采样：均为 `deepseek-v4-pro`，记录发布窗口 `DeepSeek-V4-Pro-0813`，`temperature=0.0`、`top_p=1.0`、`max_tokens=4096`、`stream=False`、`thinking=disabled`、`retry=0`。
 - 输入：同为冻结 EStG-150 `data/input/estg150_formal_inference_input_v2.json`；Gold 同为 `data/gold/stage2/estg150_formal_gold_v1.json`。
 - 评价：旧版不是直接拿它原来的 `evaluation.json`（那个是六字段 overall micro F1=0.7719）和新版比较；本次诊断把旧 D-full 和 111/011/101/110 都用同一个 `evaluate_coarse` 重评。主指标为 `coarse_five_field_mean_f1`，即 actor/action/condition/constraint/exception 五项 F1 的算术平均；`coarse_five_field_micro` 和 `modality_label_macro_f1` 只作旁证，不能混进主指标。
-- 后处理：新版 runner 直接复用旧 `run_barrientos_ablation_suite_v2` 的 `parse_same_response`、adapter、`canonicalize_record_coordinates` 和 `_prediction_row`；新旧使用同一固定 evaluator。旧版 raw 有 107/150 带 Markdown fence，新版四臂均为 150/150 bare JSON；parser 会先去 fence，再 canonicalize，因此 fence 差异不进入 F1。
+- 后处理：新版 runner 直接复用旧 `run_barrientos_ablation_suite_v2` 的 `parse_same_response`、adapter、`canonicalize_record_coordinates` 和 `_prediction_row`；新旧使用同一固定 evaluator。旧版 raw 有 43/150 带 Markdown fence（107/150 为裸 JSON），新版四臂均为 150/150 bare JSON；parser 会先去 fence，再 canonicalize，因此 fence 差异不进入 F1。
 - 生成波动：旧 v6 在本项目没有同一 0813 发布窗口的 EStG-150 重复运行；因此不能完全排除 provider 端漂移。可用的 Barrientos 36 条 OURS-FULL 五次重复整体 F1 约 0.874±0.003，说明 temperature=0 下仍有小波动，但与本轮 actor 0.19 F1 差和大量成对样本差异相比量级较小，只作旁证，不能代替 EStG 重复。
 
 ### 2.2 长度和实际内容变化
@@ -113,7 +113,7 @@
 - 典型模式：
   - `estg_000293`：Gold actor=[]；111 预测 `The following income`；101 删除 S 后为 []。说明 S 相关规则集在当前组合下会推动把指代性主语/受事 NP 当成 actor。
   - `estg_000035`：Gold actor=[]；111 和 110 预测 `The excess of business receipts over business expenses`；old/011/101 均为 []。该例显示 E 与 S 的组合或生成波动可造成同类误报，不能只归因于 S 单独一句。
-  - `estg_000028`：Gold actor=[]；old/101/111/110 都预测 `The income`、`the tax to be assessed`；011 只去掉 `The income`，仍留下 `the tax to be assessed`。这是残余被动/受事主语错误，删除 S 和 E 都没有完全修掉，说明公共/示例层还需要更强的 passive/affected-object 边界约束。
+  - `estg_000028`：Gold actor=[]；旧 v6 D-full-0813 的 actors 实际为空；101/111/110 预测 `The income`、`the tax to be assessed`，011 只留下 `the tax to be assessed`。这是残余被动/受事主语错误，删除 S 和 E 都没有完全修掉，说明公共/示例层还需要更强的 passive/affected-object 边界约束。
   - `estg_000037`：Gold 有 `the fund`；111 只命中一个 fund 且添加 `business expenses`；101 能恢复两个 fund，但又添加 `business expenses` 和 `the insured person`。说明 S 删除也会恢复漏抽 actor，actor 不是单向 S 越多越坏。
 - 现有分析报告用 `estg_000664` 作为删 S 修正 actor 的例子不够干净：101 仍预测 `Certain income...`、`taxation`、`the tax base or the tax`，只去掉了 `The following`。因此应写成 S 删除能减少部分 actor FP，不能写成删 S 修复该类全部 actor 错误。
 
@@ -232,3 +232,36 @@ P3. 下一次验证的最小协议（需另行授权，本轮不调用 API）。
 - 本轮实际 API=0；未补跑、未重试、未新增模型推理。
 - 本报告只记录离线诊断和下一步建议；未新增审批流程、实验框架或并行 pipeline，未修改 Gold、未覆盖历史结果。
 - 报告文件：`formal_experiment/outputs/reports/sep_c3_modular_ablation_root_cause_v1.md`。
+
+## 9. 诊断修正（2026-09-16，离线零 API）
+
+本节只修正事实与结论边界，不覆盖第 1-8 节保留的历史结果、manifest 和实验记录。若本节与上文冲突，以本节为准；配套重算见 `outputs/reports/sep_c3_actor_diagnosis_recompute_v1.json`。
+
+### 9.1 旧版 factorial 按当前 coarse 五字段 mean F1 重算
+
+| arm | mean F1 | actor F1 | action F1 | condition F1 | constraint F1 | exception F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| D-full-0813 | 0.785030442 | 0.708309 | 0.918501 | 0.840531 | 0.757800 | 0.700000 |
+| D-no-semantic-examples-0813 | 0.769143182 | 0.569742 | 0.912211 | 0.865189 | 0.761786 | 0.736842 |
+| D-no-semantic-guidance-0813 | 0.803302330 | 0.763710 | 0.885523 | 0.844575 | 0.777108 | 0.745563 |
+| D-no-explicit-json-contract-0813 | 0.807580535 | 0.697758 | 0.940116 | 0.818723 | 0.763120 | 0.818182 |
+
+结论修正：
+
+- 旧版删除 S/J 后分数更高的现象已经存在：旧 D-no-semantic-guidance=0.803302、旧 D-no-explicit-json-contract=0.807581，均高于旧 D-full=0.785030。因此当前新版删除 S/J 后分数更高，不能全部归因于这次精简。
+- 旧版删除 E 后为 0.769143，低于旧版 full。这支持保留示例有作用，但不能直接证明完整 JSON 形式是唯一有效原因，因为该臂把六条语义 input-output 示例替换为一条非语义 key/type 模板，语义内容、答题示范和 JSON shape 同时变化。
+- 旧版 factorial（2026-08-30，从旧 v6 做单因素修改）与当前 modular_v1（2026-09-15，压缩并重排 S/E/J）在批次、删除范围和示例形态上不同：旧 no-semantic-guidance 只删规则 9-19、25-27，当前 101 删整个 S 模块；旧 no-explicit-json-contract 删规则 1-5，当前 110 删 J 模块（输出组织两条）；旧 D-full 用六条完整 JSON 示例，当前 111 用压缩 E。因此不能跨版本直接做某一句导致某个 F1 差的单句因果归因。
+
+### 9.2 新增诊断事实
+
+- 新版 111 actor 预测 span=130，FP=84；其中 72 个 FP 位于 Gold actor 为空的样本。旧版 D-full-0813 actor 预测 span=82，FP=35；其中 31 个位于 Gold actor 为空的样本。150 个样本中有 109 个 Gold actor 为空；111 在 56 个空 Gold 样本里有 actor 预测，旧版为 27 个。
+- 新版 111 clauses 总数=228，旧版 D-full-0813=240。整体条款没有增加，因此 actor 过抽不能由 clauses 变多解释。
+- 旧版 D-full-0813 在 `estg_000028` 的 actors 实际为 `[]`；新版 111 预测 `The income`、`the tax to be assessed`；011 只剩 `the tax to be assessed`。第 3.2 节的相关错误说法已在本节修正。
+- 旧版 D-full-0813 原始输出为 107 条裸 JSON、43 条带 Markdown fence；新版 111 为 150 条裸 JSON、0 条 fence。第 2.1 节的 fence 计数已修正；parser 会先处理 fence，格式差异不进入主 F1。
+- 必须区分预测 span 命中数与 Gold span 命中数：旧版 actor 预测 span=82、matched_predictions=47、matched_ground_truth=38；111 actor 预测 span=130、matched_predictions=46、matched_ground_truth=39。111 多 48 个预测 span，但预测 span 命中数少 1、Gold span 命中数只多 1，主因是 precision collapse，不是 recall 改善。
+
+### 9.3 主要怀疑与尚不能确定
+
+- 主要怀疑仍是 actor 过抽：额外 actor 大量位于 Gold actor 为空的样本。当前 S 在 111 组合下可能放大该问题，因为 101 删除 S 后 actor FP 从 84 降到 43；但 101 同时丢失 constraint，不能把删除 S 当作修复。
+- 尚不能确定具体哪一条 S/E/J 文本或示例造成过抽；旧版 factorial 说明 S/J 删除效应不是本轮新出现，当前组合的交互作用仍不能由旧版单因素实验替代。
+- 旧 v6 缺少同发布窗口的 EStG-150 重复运行，provider 端生成漂移不能严格排除。
