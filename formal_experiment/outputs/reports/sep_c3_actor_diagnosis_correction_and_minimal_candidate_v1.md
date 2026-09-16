@@ -101,26 +101,32 @@
 
 解决什么错误：针对 Gold actor=[] 的被动/受事主语样本被预测出 `The income`、`the tax to be assessed`、`The report` 等 actor。
 
-### 规则 21：确认 actor 身份后再做并列拆分
+### 规则 21：并列 action 与并列 actor 分开处理
 
-修改前：Store coordinated actors and actions as separate spans；不要在 scope ambiguous 时假设 cross-product。
+修改前：把 coordinated actors and actions 的拆分一起放到先确认每个并列项为 performer/norm bearer 的前提下，可能误伤无明确 actor 的并列 action。
 
-修改后：先确认每个并列项是否 independently explicit performer/norm bearer；确认后才存为 separate spans。明确写出：
+修改后（候选规则 21 原文语义）：
 
-- 不因出现 and 就把所有并列名词拆成 actor；
-- coordinated affected objects、amounts、documents 或其他 non-actor coordinates 留在各自字段。
+1. Store coordinated actions as separate spans, including when `actors=[]`。
+2. 仅对 coordinated actors，先确认每个 coordinate explicitly expresses a performer or norm bearer，再存为 separate spans。
+3. 不因出现 `and` 就把 coordinated affected objects、amounts、documents 或其他 non-actor noun phrases 当作 actor。
+4. 只添加文本授权的 `actor_action_map` edges；scope ambiguous 时不假设 cross-product。
 
-解决什么错误：针对把所有并列名词都拆成 actor 的过抽，同时保留真正的并列执行者。
+解决什么错误：既避免把所有并列名词都拆成 actor，也避免在 `actors=[]` 的被动/无明确 actor 句中把 `reviewed`、`archived` 等并列 action 合并或漏掉。
+
 ## 4. 实际 system / user 消息差异
 
 离线用 `prompt_loader.load_prompt` 对旧 v6 和候选做了实际消息级比较，结果见 `outputs/reports/sep_c3_actor_fix_candidate_offline_check_v1.json`。
 
 - 旧 v6 prompt SHA-256：`3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895`
-- 候选 prompt SHA-256：`df8d4249821b8e66f14414adef725c7624731ccd18f3c46fb8b368e577d1f51e`
+- 上一候选修订 prompt SHA-256：`df8d4249821b8e66f14414adef725c7624731ccd18f3c46fb8b368e577d1f51e`
+- 本次候选 prompt SHA-256：`5b817abfd75c0dd2c75a182d4776d77ef6208abac6abe02617c22f0d8dd300fa`
+- 本次候选 system prompt SHA-256：`2c2a1083a6f59a6a992653bada261fe9140173777c1fc16e694b703fa8d91b4c`
 - `user_prompt_template_unchanged = true`
-- `examples_block_unchanged = true`；六个示例的 JSON 内容逐字不变。
+- `examples_block_unchanged = true`；六个示例的 JSON 内容逐字不变，examples block SHA-256 仍为 `8c7c21738e78804a48c4540812da89c6aa956d04df4498505e9dafc07e699713`。
 - 对同一 sample 渲染出的 user message，`rendered_user_message_unchanged = true`，用户消息 unified diff 为空。
-- system message 的实际 unified diff 只涉及规则 10、18、21；完整 diff 保存在上述 JSON 的 `system_diff_unified`。除这三处外没有其他 system 差异。候选文件前部三个 HTML 注释行原有的行尾空白已归一化；这些行不进入 system/user 消息，不影响上述消息级比较。
+- system message 的实际 unified diff 只涉及规则 10、18、21；机器可核对的 changed rules = `[10, 18, 21]`，完整 diff 保存在上述 JSON 的 `system_diff_unified`。除这三处外没有其他 system 差异。候选文件前部三个 HTML 注释行原有的行尾空白已归一化；这些行不进入 system/user 消息，不影响上述消息级比较。
+- 本次相对旧 v6 仍只修改规则 10、18、21；规则 10、18 保持上一候选修订原样，仅规则 21 按本次收尾要求消除歧义。
 
 ## 5. 离线自我检查
 
@@ -132,24 +138,31 @@
 - 会把指代不确定错误处理成 actor 不存在吗？规则 10(c) 明确禁止把 explicit actor mention with unresolved reference 转成 `actors=[]`；该情况按规则 17 保留并标记。
 - 与 condition/constraint/exception 既有指导冲突吗？规则 12-14、25-27 未改；候选 diff 只动了 actor 相关规则。
 
-### 5.2 独立合成例句的期望行为
+### 5.2 人工期望行为审阅（非模型输出、非运行验证）
 
-以下只用于规则检查，不是模型实测结果，也不是正式 few-shot 示例：
+以下表格记录人工根据候选规则得出的期望行为，只用于规则审阅，不是模型实测结果，也不是正式 few-shot 示例。填写 `expected_actor_spans` 或 `expected_action_spans` 不是运行验证。
 
-| 合成例句 | 期望 actor | 依据 |
+| 例句 | 期望行为 | 依据 |
 |---|---|---|
-| The controller must notify the data subject. | `The controller` | 明确规范承担者 |
-| The tax office shall refund the amount. | `The tax office` | organization 是合法 explicit role |
-| The report must be filed within 72 hours. | `[]` | passive no expressed performer；报告是被处理对象 |
-| The report must be filed by the controller. | `the controller` | 显式 by-phrase 提供执行者 |
-| It may cover a shorter period if a business is opened. | `It` | 合法代词；reference unresolved 仍保留并标记 |
-| The controller and the processor must notify the data subject. | `The controller`, `the processor` | 两个 coordinate 都 independently explicit actor |
-| The controller must retain the report and the records. | `The controller` | 并列 affected objects 不拆成 actor |
-| The income must be taxed. | `[]` | grammatical subject 且为被处理对象，不自动成为 actor |
-| Personal data means information about a person. | `[]` | definition 的主语不必然为 norm bearer |
-| They must notify the data subject. | `They` | role 存在但指代不明，不是 actor 不存在 |
+| The controller must notify the data subject. | actor=`The controller` | 明确规范承担者 |
+| The tax office shall refund the amount. | actor=`The tax office` | organization 是合法 explicit role |
+| The report must be filed within 72 hours. | actor=`[]` | passive no expressed performer；报告是被处理对象 |
+| The report must be filed by the controller. | actor=`the controller` | 显式 by-phrase 提供执行者 |
+| It may cover a shorter period if a business is opened. | actor=`It` | 合法代词；reference unresolved 仍保留并标记 |
+| The controller and the processor must notify the data subject. | actor=`The controller`, `the processor` | 两个 coordinate 都 independently explicit actor |
+| The controller must retain the report and the records. | actor=`The controller` | 并列 affected objects 不拆成 actor |
+| The income must be taxed. | actor=`[]` | grammatical subject 且为被处理对象，不自动成为 actor |
+| Personal data means information about a person. | actor=`[]` | definition 的主语不必然为 norm bearer |
+| They must notify the data subject. | actor=`They` | role 存在但指代不明，不是 actor 不存在 |
+| The report must be reviewed and archived. | actor=`[]`；action=`reviewed`、`archived` 分别独立；actor_id=`null` | 规则 21 明确 coordinated actions 在 `actors=[]` 时仍分别存储；被动无执行者按规则 18 映射 `null` |
 
-候选示例解析检查：六个示例仍可被 `prompt_loader` 读取；六个 JSON 均通过 `validate_canonical` 的 schema 和 cross-field 检查。候选 system message 不包含 `estg_`、`Gold`、`synthetic_` 等按样本/gold 决定输出的 marker。
+候选 fixture 离线检查：六个示例仍可被 `prompt_loader` 读取，六个 JSON 均通过 `validate_canonical` 的 schema 和 cross-field 检查；user template 不变，渲染出的 user message 不变。这个检查只证明候选文件中的示例可解析、字段结构合法，不证明候选抽取行为。候选 system message 不包含 `estg_`、`Gold`、`synthetic_` 等按样本/gold 决定输出的 marker。
+
+### 5.3 验证范围与诚实边界
+
+- 既有测试没有直接加载本候选；既有测试的通过状态不能描述为候选抽取行为已经验证。
+- 本轮没有候选模型输出，没有运行候选推理；期望行为表是人工规则审阅。
+- 候选未注册、未启用，旧 v6 仍为默认。
 
 ## 6. 未改变的条件与交付边界
 
@@ -157,5 +170,6 @@
 - 本轮真实 API=0；没有补跑、重试或新增模型推理。
 - 未修改 Gold、evaluator、后处理、坐标规则、输出接口、其他字段规则、示例数量或消息顺序。
 - 历史预测、metrics、manifest 未覆盖；旧版 factorial 和当前 modular 结果仍按原文件保留。
-- 不宣称候选提升 F1；上述合成期望只是规则检查，不是实验结论。
+- 不宣称候选提升 F1；上述人工期望审阅只是规则检查，不是实验结论，也不代表候选性能改善。
+- 既有测试没有直接加载本候选；其通过状态不能描述为候选抽取行为已经验证。
 - 若后续要验证，仍需用户另行授权真实调用，并使用同一冻结输入、Gold、evaluator 和采样参数。

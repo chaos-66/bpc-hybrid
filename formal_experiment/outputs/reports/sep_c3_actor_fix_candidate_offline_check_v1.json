@@ -1,8 +1,8 @@
 {
   "old_v6_prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
-  "candidate_prompt_sha256": "df8d4249821b8e66f14414adef725c7624731ccd18f3c46fb8b368e577d1f51e",
+  "candidate_prompt_sha256": "5b817abfd75c0dd2c75a182d4776d77ef6208abac6abe02617c22f0d8dd300fa",
   "old_v6_system_prompt_sha256": "5ea3a347e77b76c2995d4a7c78a935bc06ca736913d752ca882d4df62fece6e4",
-  "candidate_system_prompt_sha256": "bc3342f71459db150874a5ec1ca41c34698b1322c01de5a1db00c2cc640ac8e9",
+  "candidate_system_prompt_sha256": "2c2a1083a6f59a6a992653bada261fe9140173777c1fc16e694b703fa8d91b4c",
   "old_v6_user_prompt_template_sha256": "e46ce8fc08c3e4773131a0ff68164d43f8927f12daf4aa0c79dd632976358997",
   "candidate_user_prompt_template_sha256": "e46ce8fc08c3e4773131a0ff68164d43f8927f12daf4aa0c79dd632976358997",
   "old_v6_examples_block_sha256": "8c7c21738e78804a48c4540812da89c6aa956d04df4498505e9dafc07e699713",
@@ -15,7 +15,7 @@
   "examples_validate_cross_field": true,
   "example_validation_errors": [],
   "rendered_user_message_unchanged": true,
-  "system_diff_unified": "--- old_v6_system\n+++ candidate_system\n@@ -34,11 +34,23 @@\n 9. modality is one of obligation, prohibition, permission, definition. Its\n    evidence contains the smallest sufficient surface trigger; include negation\n    evidence when it changes the class.\n-10. actor is the smallest explicit noun phrase or pronominal mention that bears\n-    or performs the norm. A subject pronoun it/they/this/these/such is a real\n-    actor mention. Extract the pronoun exact span even when its reference is\n-    unresolved. If this/these/such modifies a noun, extract the complete minimal\n-    noun phrase instead of the determiner alone.\n+10. Apply the actor decision order below. (a) First decide whether this clause\n+    text explicitly expresses a behavior performer or norm bearer. A noun phrase\n+    is not an actor merely because it is a noun or occupies the grammatical\n+    subject position. Persons, organizations, institutions, and other legal or\n+    compliance roles are eligible when the text explicitly presents them as\n+    that performer or bearer. If no explicit performer or bearer exists, use\n+    actors=[]; do not infer an actor from an affected object, recipient, amount,\n+    document, income, action, or common-sense/world knowledge. (b) Only after\n+    confirming the role, extract the smallest explicit noun phrase or\n+    pronominal mention that expresses it. A pronoun it/they/this/these/such is a\n+    real actor mention when the text presents it in that role; extract the\n+    pronoun exact span even when its reference is unresolved. If\n+    this/these/such modifies a noun, extract the complete minimal noun phrase\n+    instead of the determiner alone. (c) Then apply the reference, passive, and\n+    coordination rules below. Do not convert an explicit actor mention with\n+    unresolved reference into actors=[]; that is rule 17 uncertainty, not\n+    absence.\n 11. action is the smallest verb-centred phrase sufficient to identify the act,\n     including a necessary object, complement, or particle. Exclude modality,\n     condition, constraint, and exception material.\n@@ -64,8 +76,12 @@\n     (for example \"it\"), and add:\n     {\"field\":\"actor\",\"reason\":\"reference_status=unresolved_coreference;independence_status=context_required\"}.\n 18. In a passive clause with no expressed performer, do not infer an actor.\n-    Emit actors=[] and map each expressed action with actor_id=null. When an\n-    explicit by-phrase supplies the relevant performer, extract that phrase.\n+    Emit actors=[] and map each expressed action with actor_id=null. Do not\n+    promote the grammatical subject or an affected object, recipient, amount, or\n+    document to actor merely because it is the subject of a passive verb. When\n+    an explicit by-phrase supplies the relevant performer, extract that phrase.\n+    Do not infer an omitted performer from the action or from common-sense/world\n+    knowledge.\n 19. For a definition clause, actions may be empty. For a fragment that does not\n     contain a defensible normative clause, clauses may be empty and the missing\n     semantic field must be reported with a controlled reason.\n@@ -75,9 +91,13 @@\n     force, its own modality/actor assignment, or an independently evaluable\n     consequence. A shared modality governing coordinated actions normally stays\n     in one clause.\n-21. Store coordinated actors and actions as separate spans. Add only\n-    actor_action_map edges licensed by the text; do not assume a cross-product\n-    when scope is ambiguous.\n+21. Confirm actor identity before coordination. Only after each coordinate is\n+    independently established as an explicit performer or norm bearer, store\n+    coordinated actors and actions as separate spans. Do not split every\n+    coordinated noun phrase into actors merely because of \"and\"; coordinated\n+    affected objects, amounts, documents, or other non-actor coordinates remain\n+    in their own field. Add only actor_action_map edges licensed by the text;\n+    do not assume a cross-product when scope is ambiguous.\n 22. Add order_relations only when exact textual evidence or construction\n     establishes order. Ordinary \"and\" is not automatically sequential.\n 23. IDs are unique within the complete record. actor_action_map and",
+  "system_diff_unified": "--- old_v6_system\n+++ candidate_system\n@@ -34,11 +34,23 @@\n 9. modality is one of obligation, prohibition, permission, definition. Its\n    evidence contains the smallest sufficient surface trigger; include negation\n    evidence when it changes the class.\n-10. actor is the smallest explicit noun phrase or pronominal mention that bears\n-    or performs the norm. A subject pronoun it/they/this/these/such is a real\n-    actor mention. Extract the pronoun exact span even when its reference is\n-    unresolved. If this/these/such modifies a noun, extract the complete minimal\n-    noun phrase instead of the determiner alone.\n+10. Apply the actor decision order below. (a) First decide whether this clause\n+    text explicitly expresses a behavior performer or norm bearer. A noun phrase\n+    is not an actor merely because it is a noun or occupies the grammatical\n+    subject position. Persons, organizations, institutions, and other legal or\n+    compliance roles are eligible when the text explicitly presents them as\n+    that performer or bearer. If no explicit performer or bearer exists, use\n+    actors=[]; do not infer an actor from an affected object, recipient, amount,\n+    document, income, action, or common-sense/world knowledge. (b) Only after\n+    confirming the role, extract the smallest explicit noun phrase or\n+    pronominal mention that expresses it. A pronoun it/they/this/these/such is a\n+    real actor mention when the text presents it in that role; extract the\n+    pronoun exact span even when its reference is unresolved. If\n+    this/these/such modifies a noun, extract the complete minimal noun phrase\n+    instead of the determiner alone. (c) Then apply the reference, passive, and\n+    coordination rules below. Do not convert an explicit actor mention with\n+    unresolved reference into actors=[]; that is rule 17 uncertainty, not\n+    absence.\n 11. action is the smallest verb-centred phrase sufficient to identify the act,\n     including a necessary object, complement, or particle. Exclude modality,\n     condition, constraint, and exception material.\n@@ -64,8 +76,12 @@\n     (for example \"it\"), and add:\n     {\"field\":\"actor\",\"reason\":\"reference_status=unresolved_coreference;independence_status=context_required\"}.\n 18. In a passive clause with no expressed performer, do not infer an actor.\n-    Emit actors=[] and map each expressed action with actor_id=null. When an\n-    explicit by-phrase supplies the relevant performer, extract that phrase.\n+    Emit actors=[] and map each expressed action with actor_id=null. Do not\n+    promote the grammatical subject or an affected object, recipient, amount, or\n+    document to actor merely because it is the subject of a passive verb. When\n+    an explicit by-phrase supplies the relevant performer, extract that phrase.\n+    Do not infer an omitted performer from the action or from common-sense/world\n+    knowledge.\n 19. For a definition clause, actions may be empty. For a fragment that does not\n     contain a defensible normative clause, clauses may be empty and the missing\n     semantic field must be reported with a controlled reason.\n@@ -75,9 +91,13 @@\n     force, its own modality/actor assignment, or an independently evaluable\n     consequence. A shared modality governing coordinated actions normally stays\n     in one clause.\n-21. Store coordinated actors and actions as separate spans. Add only\n-    actor_action_map edges licensed by the text; do not assume a cross-product\n-    when scope is ambiguous.\n+21. Store coordinated actions as separate spans, including when actors=[].\n+    For coordinated actors, first confirm that each coordinate explicitly\n+    expresses a performer or norm bearer, then store them as separate spans.\n+    Do not treat coordinated affected objects, amounts, documents, or other\n+    non-actor noun phrases as actors merely because they are joined by \"and\".\n+    Add only actor_action_map edges licensed by the text; do not assume a\n+    cross-product when scope is ambiguous.\n 22. Add order_relations only when exact textual evidence or construction\n     establishes order. Ordinary \"and\" is not automatically sequential.\n 23. IDs are unique within the complete record. actor_action_map and",
   "rendered_user_diff_unified": "",
   "candidate_system_contains_normalized": {
     "subject_not_automatically_actor": true,
@@ -23,94 +23,132 @@
     "passive_omitted_actor_not_inferred": true,
     "actor_identity_before_coordination": true,
     "coordinated_np_not_auto_split": true,
-    "uncertain_reference_not_emptied": true
+    "uncertain_reference_not_emptied": true,
+    "coordinated_actions_separate_with_empty_actors": true
   },
   "candidate_system_forbidden_markers": {
     "no_formal_sample_id": true,
     "no_gold_mention": true,
     "no_specific_test_sentence": true
   },
-  "synthetic_rule_expectations": [
-    {
-      "case": "explicit_performer",
-      "text": "The controller must notify the data subject.",
-      "expected_actor_spans": [
-        "The controller"
-      ],
-      "reason": "explicit norm bearer, not limited to natural persons"
-    },
-    {
-      "case": "explicit_organization",
-      "text": "The tax office shall refund the amount.",
-      "expected_actor_spans": [
-        "The tax office"
-      ],
-      "reason": "organization is an eligible explicit norm bearer"
-    },
-    {
-      "case": "passive_no_performer",
-      "text": "The report must be filed within 72 hours.",
-      "expected_actor_spans": [],
-      "reason": "passive without explicit performer; affected subject is not actor"
-    },
-    {
-      "case": "passive_explicit_by_phrase",
-      "text": "The report must be filed by the controller.",
-      "expected_actor_spans": [
-        "the controller"
-      ],
-      "reason": "explicit by-phrase supplies performer"
-    },
-    {
-      "case": "legitimate_pronoun_unresolved",
-      "text": "It may cover a shorter period if a business is opened.",
-      "expected_actor_spans": [
-        "It"
-      ],
-      "reason": "explicit pronominal actor mention; keep span and mark unresolved reference"
-    },
-    {
-      "case": "coordinated_explicit_actors",
-      "text": "The controller and the processor must notify the data subject.",
-      "expected_actor_spans": [
-        "The controller",
-        "the processor"
-      ],
-      "reason": "each coordinate independently expresses an actor role"
-    },
-    {
-      "case": "coordinated_affected_objects",
-      "text": "The controller must retain the report and the records.",
-      "expected_actor_spans": [
-        "The controller"
-      ],
-      "reason": "coordinated affected objects are not actors"
-    },
-    {
-      "case": "affected_object_subject",
-      "text": "The income must be taxed.",
-      "expected_actor_spans": [],
-      "reason": "noun/grammatical subject being processed is not automatically actor"
-    },
-    {
-      "case": "definition_subject",
-      "text": "'Personal data' means information about a person.",
-      "expected_actor_spans": [],
-      "reason": "definition grammatical subject need not be norm bearer"
-    },
-    {
-      "case": "unresolved_actor_not_absent",
-      "text": "They must notify the data subject.",
-      "expected_actor_spans": [
-        "They"
-      ],
-      "reason": "explicit pronoun role exists but reference is unresolved; not an empty actor"
-    }
-  ],
   "old_examples_conflict_audit": {
     "example_1_pronoun": "old example 1 keeps It as actor; candidate rule 10(b)/rule 17 preserve this.",
     "example_2_passive": "old example 2 keeps actors=[]; candidate rule 18 preserves this.",
     "example_4_definition": "old example 4 keeps actors=[] for a definition subject; candidate rule 10(a) permits this.",
-    "examples_5_6_fields": "constraint/condition/exception examples are byte-identical; rules 25-27 untouched."
-  }
+    "examples_5_6_fields": "constraint/condition/exception examples are byte-identical; rules 25-27 untouched.",
+    "example_2_passive_coordinated_actions": "Candidate rule 21 now explicitly stores coordinated actions separately when actors=[]; old example 2 remains consistent."
+  },
+  "previous_candidate_prompt_sha256": "df8d4249821b8e66f14414adef725c7624731ccd18f3c46fb8b368e577d1f51e",
+  "previous_candidate_system_prompt_sha256": "bc3342f71459db150874a5ec1ca41c34698b1322c01de5a1db00c2cc640ac8e9",
+  "system_diff_changed_rules": [
+    10,
+    18,
+    21
+  ],
+  "system_diff_only_changed_rules_10_18_21": true,
+  "revision_note": "Rule 21 clarified so coordinated actions are stored as separate spans including actors=[], while actor-coordinate confirmation applies only to coordinated actors. Rules 10 and 18 are unchanged from the preceding candidate revision.",
+  "manual_expected_behavior_review": {
+    "mode": "manual_rule_review_not_model_output_not_runtime_validation",
+    "note": "Rows state the expected rule application for human review only. They are not model outputs; adding expected_actor_spans or expected_action_spans is not an execution or verification claim.",
+    "rows": [
+      {
+        "case": "explicit_performer",
+        "text": "The controller must notify the data subject.",
+        "expected_actor_spans": [
+          "The controller"
+        ],
+        "reason": "explicit norm bearer, not limited to natural persons"
+      },
+      {
+        "case": "explicit_organization",
+        "text": "The tax office shall refund the amount.",
+        "expected_actor_spans": [
+          "The tax office"
+        ],
+        "reason": "organization is an eligible explicit norm bearer"
+      },
+      {
+        "case": "passive_no_performer",
+        "text": "The report must be filed within 72 hours.",
+        "expected_actor_spans": [],
+        "reason": "passive without explicit performer; affected subject is not actor"
+      },
+      {
+        "case": "passive_explicit_by_phrase",
+        "text": "The report must be filed by the controller.",
+        "expected_actor_spans": [
+          "the controller"
+        ],
+        "reason": "explicit by-phrase supplies performer"
+      },
+      {
+        "case": "legitimate_pronoun_unresolved",
+        "text": "It may cover a shorter period if a business is opened.",
+        "expected_actor_spans": [
+          "It"
+        ],
+        "reason": "explicit pronominal actor mention; keep span and mark unresolved reference"
+      },
+      {
+        "case": "coordinated_explicit_actors",
+        "text": "The controller and the processor must notify the data subject.",
+        "expected_actor_spans": [
+          "The controller",
+          "the processor"
+        ],
+        "reason": "each coordinate independently expresses an actor role"
+      },
+      {
+        "case": "coordinated_affected_objects",
+        "text": "The controller must retain the report and the records.",
+        "expected_actor_spans": [
+          "The controller"
+        ],
+        "reason": "coordinated affected objects are not actors"
+      },
+      {
+        "case": "affected_object_subject",
+        "text": "The income must be taxed.",
+        "expected_actor_spans": [],
+        "reason": "noun/grammatical subject being processed is not automatically actor"
+      },
+      {
+        "case": "definition_subject",
+        "text": "'Personal data' means information about a person.",
+        "expected_actor_spans": [],
+        "reason": "definition grammatical subject need not be norm bearer"
+      },
+      {
+        "case": "unresolved_actor_not_absent",
+        "text": "They must notify the data subject.",
+        "expected_actor_spans": [
+          "They"
+        ],
+        "reason": "explicit pronoun role exists but reference is unresolved; not an empty actor"
+      },
+      {
+        "case": "coordinated_passive_actions_no_actor",
+        "text": "The report must be reviewed and archived.",
+        "expected_actor_spans": [],
+        "expected_action_spans": [
+          "reviewed",
+          "archived"
+        ],
+        "expected_actor_action_map": [
+          {
+            "actor_id": null,
+            "action_id": "p01"
+          },
+          {
+            "actor_id": null,
+            "action_id": "p02"
+          }
+        ],
+        "reason": "coordinated actions remain separate spans when actors=[]; each action maps with actor_id=null"
+      }
+    ]
+  },
+  "candidate_behavior_verification_status": "not_run_not_enabled_no_model_output; examples/user-template are offline parser and schema fixtures only",
+  "existing_tests_loaded_candidate": false,
+  "existing_test_scope_note": "Existing tests exercise the default prompt contract and validator; they do not load this candidate, so their passing status does not verify candidate extraction behavior."
 }

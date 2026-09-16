@@ -111,13 +111,13 @@ Clause, coordination, and relation rules:
     force, its own modality/actor assignment, or an independently evaluable
     consequence. A shared modality governing coordinated actions normally stays
     in one clause.
-21. Confirm actor identity before coordination. Only after each coordinate is
-    independently established as an explicit performer or norm bearer, store
-    coordinated actors and actions as separate spans. Do not split every
-    coordinated noun phrase into actors merely because of "and"; coordinated
-    affected objects, amounts, documents, or other non-actor coordinates remain
-    in their own field. Add only actor_action_map edges licensed by the text;
-    do not assume a cross-product when scope is ambiguous.
+21. Store coordinated actions as separate spans, including when actors=[].
+    For coordinated actors, first confirm that each coordinate explicitly
+    expresses a performer or norm bearer, then store them as separate spans.
+    Do not treat coordinated affected objects, amounts, documents, or other
+    non-actor noun phrases as actors merely because they are joined by "and".
+    Add only actor_action_map edges licensed by the text; do not assume a
+    cross-product when scope is ambiguous.
 22. Add order_relations only when exact textual evidence or construction
     establishes order. Ordinary "and" is not automatically sequential.
 23. IDs are unique within the complete record. actor_action_map and

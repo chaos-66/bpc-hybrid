@@ -4933,3 +4933,17 @@
 - 仍存在 blocker：无
 - 备注：600 real Direct-LLM calls; reuses old-v6 D-full-0813 0813 baseline; full 111 coarse five-field mean F1 0.7262 vs old 0.7850, 011/101/110 all higher or insufficient; old v6 remains default.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-16T15:53:20.024533+00:00 - SEP-C3 actor minimal v6 candidate: clarify rule 21 and update offline evidence
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：2 passed in 0.12s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`969a7195e8cdeed5e0be1e405a7fa5698858d83c`；相关未提交路径：3 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：stage1_structural_process_record_not_verified、stage1_label_semantics_p0_p1_not_verified、stage1_annotation_protocol_not_verified、stage1_formal_bpmn_membership_not_promoted、stage1_evaluator_contract_not_verified、final_experiment_not_ready
+- 备注：候选 prompt 仅规则 21 按收尾要求消除歧义；规则 10/18 未动。直接离线用 prompt_loader 重新计算候选 hash、system diff 与 user message diff，确认相对旧 v6 仍仅规则 10/18/21 有变化；六个示例和 user template 不变，示例通过 schema/cross-field。期望行为表仅为人工规则审阅，不是模型输出或运行验证。既有测试未直接加载候选，测试通过只覆盖默认 prompt contract/schema validator；候选行为未由这些测试验证。真实 API=0；候选未注册、未启用，旧 v6 默认不变。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
