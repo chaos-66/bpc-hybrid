@@ -3,6 +3,18 @@
     "data/gold/stage2/estg150_formal_gold_v1.json": "bde3d15bfe63ed8c404ac902f87ef0664c2566741c47f32581245fb3b5a9a796",
     "data/input/estg150_formal_inference_input_v2.json": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad"
   },
+  "metadata_errata": {
+    "date": "2026-09-17",
+    "not_done": [
+      "no experiment or diagnosis rerun",
+      "no metric recomputation",
+      "no model training, inference or checkpoint change",
+      "no Gold, prediction, input, evaluator or training-hyperparameter change"
+    ],
+    "reason": "Correct the contradictory attribution of local-author-manuscript table numbers to the un-reverified final version, and restore the diagnosis manifest's source binding to the currently referenced report version.",
+    "scope": "SEP-C2 source-description metadata only",
+    "successor_binding_rule": "The revised sep_c2_sun_predecessors_comparison_v2.json binding points to the current on-disk LF-canonical file version. Other source_bindings entries are retained from the original manifest and were not part of this source-description errata."
+  },
   "prediction_bindings": {
     "bert_base_cased": "1355d3a348a35366755a80632e5eaf72d237e1bfa6510e75a6f6a064df350eda",
     "bert_base_uncased": "a658fc3bc2317f4a7582840c2680ab03ce6f83b2da463b0fc781c5ceef1e0f9e",
@@ -17,7 +29,24 @@
   },
   "report_id": "sep_c2_target_consistency_diagnosis_v1",
   "report_md_sha256": "54fda5683525c602d2aa2271cad578ac2aff25089a6acb1da47e364600079520",
-  "report_sha256": "436611cc477d9d12897309c3abf7f68709ce64d97bb8299d6a702eb13eeb611f",
+  "report_sha256": "08327066c0af8cef0e7bf17c74bffec6ce82386644d1545836a4db8c8eadfe82",
+  "report_sha256_history": [
+    {
+      "commit": "3a234c3",
+      "sha256": "436611cc477d9d12897309c3abf7f68709ce64d97bb8299d6a702eb13eeb611f",
+      "state": "original SEP-C2 target-consistency diagnosis run"
+    },
+    {
+      "commit": "5b7c357",
+      "sha256": "ff64f0a560e9ad87c69ed38c3ed618bcc1027263122378a96124f25c0675c71c",
+      "state": "2026-09-17 source-text correction in commit 5b7c357 that changed the report but did not update this manifest"
+    },
+    {
+      "commit": "this_scoped_commit",
+      "sha256": "08327066c0af8cef0e7bf17c74bffec6ce82386644d1545836a4db8c8eadfe82",
+      "state": "2026-09-17 metadata errata: source-description strings only; no diagnosis rerun and no metric recomputation"
+    }
+  ],
   "safety": {
     "full_150_denominator_preserved": true,
     "gold_used_for_evaluation_only": true,
@@ -29,8 +58,27 @@
     "source_pending_counted_as_failure": false
   },
   "schema_version": "sep_c2_target_consistency_diagnosis_manifest@1.0.0",
+  "source_binding_history": {
+    "outputs/reports/sep_c2_sun_predecessors_comparison_v2.json": [
+      {
+        "commit": "3a234c3",
+        "sha256": "0416a58dbba9f5a7967810cbc812340768905f644f6e2830ec04fe36b16de535",
+        "state": "original diagnosis source report used by commit 3a234c3"
+      },
+      {
+        "commit": "5b7c357",
+        "sha256": "764fc41ed1cb59d4a1e64d4105b74412d1190b1fd3134ad79019f59ea239f6f0",
+        "state": "2026-09-17 source-text correction in commit 5b7c357; manifest binding was not updated at that commit"
+      },
+      {
+        "commit": "this_scoped_commit",
+        "sha256": "fa5bdd184d5f5fb1434bd27155edb2d66ba845fbe6131d9d6817f1ae331bf91c",
+        "state": "current source-description revision bound by this metadata errata; the original diagnosis metrics still derive from the 3a234c3 report and were not recomputed"
+      }
+    ]
+  },
   "source_bindings": {
-    "outputs/reports/sep_c2_sun_predecessors_comparison_v2.json": "0416a58dbba9f5a7967810cbc812340768905f644f6e2830ec04fe36b16de535",
+    "outputs/reports/sep_c2_sun_predecessors_comparison_v2.json": "fa5bdd184d5f5fb1434bd27155edb2d66ba845fbe6131d9d6817f1ae331bf91c",
     "src/bpc_hybrid/formal_stage2_evaluation.py": "5cc2276d4a8c0ffd2108be91eb4cab48c0d65f93a8d12c3f54baf7f570517fae",
     "src/bpc_hybrid/sun_predecessors/common.py": "203d5faa9ff5c34beb4b8cf2ac6a71ad2176c211f4ff9e8b00171d35ca4ebf11",
     "src/bpc_hybrid/sun_predecessors/evaluation.py": "ced1c6c68246698e8564ca5ec0aab054848dd9fe3393c4060a5178a05094cf02"

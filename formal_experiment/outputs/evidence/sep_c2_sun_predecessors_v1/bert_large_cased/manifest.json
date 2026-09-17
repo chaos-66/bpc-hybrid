@@ -1,5 +1,5 @@
 {
-  "architecture_evidence": "Sun et al. (2024), final article, Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
+  "architecture_evidence": "Project record (2026-09-15) quotes Sun et al. (2024) final article Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
   "checkpoint_binding": {
     "byte_size": 1347082592,
     "local_only_do_not_commit": true,
@@ -9,9 +9,18 @@
   },
   "claim_scope": "development_zero_api_predecessor_method_comparison",
   "config_binding": {
-    "byte_size": 2346,
+    "byte_size": 2476,
     "path": "configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_large_cased_v1.json",
-    "sha256": "400a994eb387ab1cb029141dc13db9091526b64c8f4f6b833a002494815b298d"
+    "sha256": "a9d9682f919a29f32affc881900a821be9f282185257748bd4fda46baa6fe1e5",
+    "source_description_revision": {
+      "current_byte_size": 2476,
+      "current_sha256": "a9d9682f919a29f32affc881900a821be9f282185257748bd4fda46baa6fe1e5",
+      "date": "2026-09-17",
+      "note": "Config binding hash updated after source-description-only revision; no model/training hyperparameter was changed and no run was repeated.",
+      "previous_byte_size": 2346,
+      "previous_sha256": "400a994eb387ab1cb029141dc13db9091526b64c8f4f6b833a002494815b298d",
+      "scope": "source-description strings only"
+    }
   },
   "dataset_audit": {
     "estg150_probe_count": 300,
@@ -186,7 +195,7 @@
       "sha256": "eeaa9875b23b04b4c54ef759d03db9d1ba1554838f8fb26c5d96fa551df93d02"
     }
   },
-  "reproduction_class": "public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+  "reproduction_class": "public pre-trained encoder plus project-record final-version BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
   "safety": {
     "estg150_used_for_training_or_selection": false,
     "gold_read_by_prediction_code": false,
@@ -197,6 +206,6 @@
     "post_result_tuning": false
   },
   "schema_version": "sep_c2_sun_predecessor_method_manifest@1.0.0",
-  "sun_source_and_role": "Sun et al. final version Table 6/7 bert-large-cased comparison; final-paper BERT-TextCNN architecture",
-  "version_caveat": "Architecture and training mode follow the final article Section 4.2.1 / Fig. 3 (per-layer [CLS] sequence -> TextCNN -> global max -> 4-class output). The public encoder revision is pinned in the config; unpublished hyperparameters are stated in the config and treated as reconstruction parameters."
+  "sun_source_and_role": "Sun et al. local author manuscript Table 6, bert-large-cased comparison (directly verified); project-record final-version BERT-TextCNN architecture (not re-fetched/re-verified 2026-09-17)",
+  "version_caveat": "Architecture and training mode follow the project-record final-version Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17) (per-layer [CLS] sequence -> TextCNN -> global max -> 4-class output). The public encoder revision is pinned in the config; unpublished hyperparameters are stated in the config and treated as reconstruction parameters."
 }

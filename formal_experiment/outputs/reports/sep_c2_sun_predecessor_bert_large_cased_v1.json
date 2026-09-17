@@ -1,5 +1,5 @@
 {
-  "architecture_evidence": "Sun et al. (2024), final article, Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
+  "architecture_evidence": "Project record (2026-09-15) quotes Sun et al. (2024) final article Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
   "evaluation": {
     "confusion_rows_gold_columns_predicted": {
       "definition": {
@@ -109,9 +109,9 @@
     "input_field": "raw_text_de",
     "input_language": "de",
     "method_id": "bert_large_cased",
-    "notes": "The final article Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; large 24-layer / 1024-hidden, 24 encoder layers. The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run.",
-    "reproduction_class": "public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
-    "sun_role": "Sun et al. final version Table 6/7 bert-large-cased comparison; final-paper BERT-TextCNN architecture",
+    "notes": "The project-record final-version Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; large 24-layer / 1024-hidden, 24 encoder layers. The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run.",
+    "reproduction_class": "public pre-trained encoder plus project-record final-version BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+    "sun_role": "Sun et al. local author manuscript Table 6, bert-large-cased comparison (directly verified); project-record final-version BERT-TextCNN architecture (not re-fetched/re-verified 2026-09-17)",
     "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection"
   },
   "official_clean_test": {
@@ -331,5 +331,5 @@
     },
     "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection"
   },
-  "version_caveat": "Architecture and training mode follow the final article Section 4.2.1 / Fig. 3 (per-layer [CLS] sequence -> TextCNN -> global max -> 4-class output). The public encoder revision is pinned in the config; unpublished hyperparameters are stated in the config and treated as reconstruction parameters."
+  "version_caveat": "Architecture and training mode follow the project-record final-version Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17) (per-layer [CLS] sequence -> TextCNN -> global max -> 4-class output). The public encoder revision is pinned in the config; unpublished hyperparameters are stated in the config and treated as reconstruction parameters."
 }

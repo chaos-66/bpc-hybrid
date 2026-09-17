@@ -1,7 +1,7 @@
 # SEP-C2 Sun-predecessor run: bert_legal_uncased_textcnn_existing
 
 - status: **completed_zero_api_predecessor_method_run**
-- Sun role: Existing project S2.4/S2.6 BERT-TextCNN classifier (final-paper-style head), reused read-only
+- Sun role: Existing project S2.4/S2.6 BERT-TextCNN classifier (project-record final-version-style head), reused read-only
 - reproduction class: existing locally trained checkpoint; reused without retraining
 - input field/language: `raw_text_de` / `de`
 - records scored: 150 / 150

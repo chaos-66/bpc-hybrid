@@ -1,6 +1,6 @@
 {
   "config_path": "configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_legal_uncased_v1.json",
-  "config_sha256": "6228852a2a7e0e42a86b144352ca0b0a69f780e24980803343ecbd4082cc6f8a",
+  "config_sha256": "01ca61a681ff5f19ce55e925b33a8a2df5f09cb91e264ce33d0e417dcfdc52bf",
   "frozen_architecture": {
     "activation": "relu",
     "cls_input": "per-encoder-layer [CLS] vectors CLS1..CLSL, concatenated as a length-L sequence",
@@ -14,7 +14,7 @@
     ],
     "max_length": 192,
     "num_labels": 4,
-    "paper_source": "final article Fig. 3",
+    "paper_source": "project-record final-version Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
     "pooling": "global_max_over_layer_sequence"
   },
   "frozen_model": {
@@ -48,10 +48,17 @@
     "input_field": "raw_text_de",
     "input_language": "de",
     "method_id": "bert_legal_uncased",
-    "notes": "The final article Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; base 12-layer / 768-hidden, 12 encoder layers. The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run.",
-    "reproduction_class": "public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
-    "sun_role": "Sun et al. final version Table 6/7 bert-legal-uncased (nlpaueb/legal-bert-base-uncased) comparison; final-paper BERT-TextCNN architecture",
+    "notes": "The project-record final-version Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; base 12-layer / 768-hidden, 12 encoder layers. The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run.",
+    "reproduction_class": "public pre-trained encoder plus project-record final-version BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+    "sun_role": "Sun et al. local author manuscript Table 6, bert-legal-uncased (nlpaueb/legal-bert-base-uncased) comparison (directly verified); project-record final-version BERT-TextCNN architecture (not re-fetched/re-verified 2026-09-17)",
     "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection"
   },
-  "schema_version": "sep_c2_sun_predecessor_config@1.0.0"
+  "schema_version": "sep_c2_sun_predecessor_config@1.0.0",
+  "source_description_revision": {
+    "current_config_sha256": "01ca61a681ff5f19ce55e925b33a8a2df5f09cb91e264ce33d0e417dcfdc52bf",
+    "date": "2026-09-17",
+    "note": "Only sun_source/reproduction_class/paper_source were revised; architecture, model, optimizer, seed, data contract and predictions were not changed and no run was repeated.",
+    "previous_config_sha256": "6228852a2a7e0e42a86b144352ca0b0a69f780e24980803343ecbd4082cc6f8a",
+    "scope": "source-description strings only"
+  }
 }

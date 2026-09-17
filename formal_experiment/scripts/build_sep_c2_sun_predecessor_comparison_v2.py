@@ -92,7 +92,7 @@ CLASSIFICATION_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "cf_kw",
         "sun_label": "CF_KW",
-        "sun_source": "Sun et al. (2024) Table 7, CF_KW",
+        "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_KW (final table numbering not re-verified 2026-09-17)",
         "role": "keyword modality-classification baseline (no semantic extraction)",
         "reproduction": "deterministic German keyword rules reconstructed; paper publishes no keyword list",
         "training_or_weights": "none (rule list frozen in configs/sep_c2_sun_predecessors_v1/cf_kw_v1.json)",
@@ -105,7 +105,7 @@ CLASSIFICATION_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "cf_rnn",
         "sun_label": "CF_RNN (BiLSTM)",
-        "sun_source": "Sun et al. (2024) Table 7, CF_RNN",
+        "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_RNN (final table numbering not re-verified 2026-09-17)",
         "role": "BiLSTM modality-classification baseline (no semantic extraction)",
         "reproduction": "paper-described BiLSTM retrained on clean official EStG train split; unpublished hyperparameters disclosed",
         "training_or_weights": "official 300-d EStG vectors + locally trained BiLSTM (1927 train / 414 dev clean rows)",
@@ -118,7 +118,7 @@ CLASSIFICATION_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "cf_cnn",
         "sun_label": "CF_CNN",
-        "sun_source": "Sun et al. (2024) Table 7, CF_CNN",
+        "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_CNN (final table numbering not re-verified 2026-09-17)",
         "role": "CNN modality-classification baseline (no semantic extraction)",
         "reproduction": "paper-described CNN retrained on clean official EStG train split; unpublished hyperparameters disclosed",
         "training_or_weights": "official 300-d EStG vectors + locally trained TextCNN (1927 train / 414 dev clean rows)",
@@ -131,10 +131,10 @@ CLASSIFICATION_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "bert_base_uncased",
         "sun_label": "bert-base-uncased",
-        "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+        "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
         "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
-        "reproduction": "public google-bert/bert-base-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
-        "training_or_weights": "public pinned BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+        "reproduction": "public google-bert/bert-base-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+        "training_or_weights": "public pinned BERT base uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
         "input_field": "raw_text_de",
         "input_language": "de",
         "prediction_path": f"{EVIDENCE_REL}/bert_base_uncased/predictions.json",
@@ -144,10 +144,10 @@ CLASSIFICATION_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "bert_base_cased",
         "sun_label": "bert-base-cased",
-        "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+        "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
         "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
-        "reproduction": "public google-bert/bert-base-cased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
-        "training_or_weights": "public pinned BERT base cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+        "reproduction": "public google-bert/bert-base-cased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+        "training_or_weights": "public pinned BERT base cased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
         "input_field": "raw_text_de",
         "input_language": "de",
         "prediction_path": f"{EVIDENCE_REL}/bert_base_cased/predictions.json",
@@ -157,10 +157,10 @@ CLASSIFICATION_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "bert_large_uncased",
         "sun_label": "bert-large-uncased",
-        "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+        "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
         "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
-        "reproduction": "public google-bert/bert-large-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
-        "training_or_weights": "public pinned BERT large uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+        "reproduction": "public google-bert/bert-large-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+        "training_or_weights": "public pinned BERT large uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
         "input_field": "raw_text_de",
         "input_language": "de",
         "prediction_path": f"{EVIDENCE_REL}/bert_large_uncased/predictions.json",
@@ -170,10 +170,10 @@ CLASSIFICATION_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "bert_large_cased",
         "sun_label": "bert-large-cased",
-        "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+        "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
         "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
-        "reproduction": "public google-bert/bert-large-cased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
-        "training_or_weights": "public pinned BERT large cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+        "reproduction": "public google-bert/bert-large-cased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+        "training_or_weights": "public pinned BERT large cased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
         "input_field": "raw_text_de",
         "input_language": "de",
         "prediction_path": f"{EVIDENCE_REL}/bert_large_cased/predictions.json",
@@ -183,10 +183,10 @@ CLASSIFICATION_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "bert_legal_uncased",
         "sun_label": "bert-legal-uncased",
-        "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+        "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
         "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
-        "reproduction": "public nlpaueb/legal-bert-base-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
-        "training_or_weights": "public pinned Legal-BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+        "reproduction": "public nlpaueb/legal-bert-base-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+        "training_or_weights": "public pinned Legal-BERT base uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
         "input_field": "raw_text_de",
         "input_language": "de",
         "prediction_path": f"{EVIDENCE_REL}/bert_legal_uncased/predictions.json",
@@ -225,7 +225,7 @@ SUPPLEMENTARY_BERT_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "bert_legal_uncased_probe",
         "sun_label": "bert-legal-uncased (frozen-encoder probe; not the main method completion)",
-        "sun_source": "Sun et al. (2024) Table 6 family; project supplement",
+        "sun_source": "Sun et al. (2024) local author manuscript Table 6 family; project supplement (final table numbering not re-verified 2026-09-17)",
         "role": "diagnostic supplement: encoder frozen, MLP head only",
         "reproduction": "public nlpaueb/legal-bert-base-uncased frozen encoder + locally trained 256-unit MLP head",
         "training_or_weights": "frozen public encoder; local MLP head on clean official train (1927/414)",
@@ -239,7 +239,7 @@ SUPPLEMENTARY_BERT_ROWS: list[dict[str, Any]] = [
     {
         "method_id": "bert_legal_uncased_textcnn_existing",
         "sun_label": "Legal-BERT + TextCNN (existing S2.4 checkpoint; diagnostic only)",
-        "sun_source": "Existing project final-paper-style BERT-TextCNN component",
+        "sun_source": "Existing project BERT-TextCNN component reconstructed from the project-record final-version specification",
         "role": "diagnostic reused checkpoint with known training/EStG-150 overlap",
         "reproduction": "existing S2.4/S2.6 checkpoint reused read-only; no retraining in this round",
         "training_or_weights": "existing legal-BERT + TextCNN checkpoint; original train split had 24 flagged EStG-150 overlap rows (4 exact normalized)",
@@ -256,7 +256,7 @@ BLOCKED_ROW = {
     "method_id": "bert_legal_cased",
     "sun_label": "bert-legal-cased",
     "status": "blocked_exact_public_checkpoint_unavailable",
-    "sun_source": "Sun et al. (2024) final version Table 6/7",
+    "sun_source": "Sun et al. (2024) local author manuscript Table 6, cased legal-domain encoder row (directly verified); final-version table numbering not re-verified 2026-09-17",
     "reason": (
         "The exact cased EU-legislation legal-BERT checkpoint ('bert-legal-cased') was not located in "
         "the checked official sources: Sun's text gives no model citation/version, the official "
@@ -496,9 +496,9 @@ def build_report(external_root: Path) -> dict[str, Any]:
             "semantic_diagnostic": "precomputed project fine clause-level evaluation (five span fields)",
         },
         "version_scope": {
-            "sun_source": "Sun et al. (2024) final version, DOI 10.1007/s11227-023-05626-0 (accessible and used to verify Fig. 3 / Section 4.2.1 architecture)",
-            "local_author_manuscript": "also present; final-version architecture check removes the earlier offline-version caveat for BERT-TextCNN",
-            "model_weight_scope": "Four generic BERT/BERT-large public revisions and nlpaueb/legal-bert-base-uncased are pinned; the exact 'bert-legal-cased' checkpoint is not public and remains blocked.",
+            "sun_source": "Sun et al. (2024) final-version BERT-TextCNN architecture: DOI 10.1007/s11227-023-05626-0. Project record says Section 4.2.1 / Fig. 3 was used to verify the architecture; not re-fetched/re-verified 2026-09-17. Local author manuscript Table 6/7 is the directly verified method source for this round.",
+            "local_author_manuscript": "present and directly verified for the local author manuscript Table 6/7 method roster; final-version architecture remains a project record, not a final-text re-check in this round. Final table numbering and numeric equality remain TODO-SOURCE.",
+            "model_weight_scope": "Four generic BERT/BERT-large public revisions and nlpaueb/legal-bert-base-uncased are pinned; the exact 'bert-legal-cased' checkpoint was not located in the checked official sources and remains source-pending, not evidence that it does not exist.",
             "comparison_boundary": "Results are measured on the project's independently reconstructed EStG-150 with project Gold; they are not Sun's original 150-sentence phrase Gold and not the numbers reported in the paper.",
         },
         "classification_table": classification_rows,
@@ -665,7 +665,7 @@ def render_markdown(report: Mapping[str, Any]) -> str:
         "- zero new paid LLM/API calls; Direct-LLM and B0 predictions are reused read-only",
         "- public model downloads only; BERT encoders are pinned in their method configs",
         "- each method has predictions, evaluation, training/weights, config, and checkpoint bindings in its capsule",
-        "- `bert-legal-cased` remains blocked because the exact cased EU-legislation checkpoint is not public; no substitute is reported in its place",
+        "- `bert-legal-cased` remains source-pending because the exact cased EU-legislation checkpoint was not located in the checked official sources (not evidence that it does not exist); no substitute is reported in its place",
         "",
     ]
     return "\n".join(lines)

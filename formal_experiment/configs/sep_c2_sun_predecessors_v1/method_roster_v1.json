@@ -21,7 +21,7 @@
     {
       "method_id": "cf_kw",
       "sun_label": "CF_KW",
-      "sun_role": "keyword classification baseline in Table 7",
+      "sun_role": "keyword classification baseline in local author manuscript Table 7 (final table numbering not re-verified 2026-09-17)",
       "classification_supported": true,
       "semantic_fields_native": false,
       "implementation_status": "completed_zero_api_estg150_run",
@@ -32,7 +32,7 @@
     {
       "method_id": "cf_rnn",
       "sun_label": "CF_RNN",
-      "sun_role": "bidirectional-LSTM classification baseline in Table 7",
+      "sun_role": "bidirectional-LSTM classification baseline in local author manuscript Table 7 (final table numbering not re-verified 2026-09-17)",
       "classification_supported": true,
       "semantic_fields_native": false,
       "implementation_status": "completed_zero_api_estg150_run",
@@ -43,7 +43,7 @@
     {
       "method_id": "cf_cnn",
       "sun_label": "CF_CNN",
-      "sun_role": "CNN sentence-classification baseline in Table 7",
+      "sun_role": "CNN sentence-classification baseline in local author manuscript Table 7 (final table numbering not re-verified 2026-09-17)",
       "classification_supported": true,
       "semantic_fields_native": false,
       "implementation_status": "completed_zero_api_estg150_run",
@@ -54,69 +54,69 @@
     {
       "method_id": "bert_base_uncased",
       "sun_label": "bert-base-uncased",
-      "sun_role": "pre-trained encoder comparison in Table 6",
+      "sun_role": "pre-trained encoder comparison in local author manuscript Table 6; project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
       "classification_supported": true,
       "semantic_fields_native": false,
       "implementation_status": "completed_zero_api_full_bert_textcnn",
-      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "reproduction_class": "public pre-trained encoder + project-record final-version BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
       "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased",
       "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased",
-      "notes": "Public google-bert/bert-base-uncased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "notes": "Public google-bert/bert-base-uncased (pinned revision) + project-record final-version BERT-TextCNN fine-tuned on the clean official EStG train split.",
       "clean_probe_evidence_dir": null,
       "existing_textcnn_diagnostic_evidence_dir": null
     },
     {
       "method_id": "bert_base_cased",
       "sun_label": "bert-base-cased",
-      "sun_role": "pre-trained encoder comparison in Table 6",
+      "sun_role": "pre-trained encoder comparison in local author manuscript Table 6; project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
       "classification_supported": true,
       "semantic_fields_native": false,
       "implementation_status": "completed_zero_api_full_bert_textcnn",
-      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "reproduction_class": "public pre-trained encoder + project-record final-version BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
       "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased",
       "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased",
-      "notes": "Public google-bert/bert-base-cased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "notes": "Public google-bert/bert-base-cased (pinned revision) + project-record final-version BERT-TextCNN fine-tuned on the clean official EStG train split.",
       "clean_probe_evidence_dir": null,
       "existing_textcnn_diagnostic_evidence_dir": null
     },
     {
       "method_id": "bert_large_uncased",
       "sun_label": "bert-large-uncased",
-      "sun_role": "pre-trained encoder comparison in Table 6",
+      "sun_role": "pre-trained encoder comparison in local author manuscript Table 6; project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
       "classification_supported": true,
       "semantic_fields_native": false,
       "implementation_status": "completed_zero_api_full_bert_textcnn",
-      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "reproduction_class": "public pre-trained encoder + project-record final-version BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
       "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased",
       "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased",
-      "notes": "Public google-bert/bert-large-uncased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "notes": "Public google-bert/bert-large-uncased (pinned revision) + project-record final-version BERT-TextCNN fine-tuned on the clean official EStG train split.",
       "clean_probe_evidence_dir": null,
       "existing_textcnn_diagnostic_evidence_dir": null
     },
     {
       "method_id": "bert_large_cased",
       "sun_label": "bert-large-cased",
-      "sun_role": "pre-trained encoder comparison in Table 6",
+      "sun_role": "pre-trained encoder comparison in local author manuscript Table 6; project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
       "classification_supported": true,
       "semantic_fields_native": false,
       "implementation_status": "completed_zero_api_full_bert_textcnn",
-      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "reproduction_class": "public pre-trained encoder + project-record final-version BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
       "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased",
       "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased",
-      "notes": "Public google-bert/bert-large-cased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "notes": "Public google-bert/bert-large-cased (pinned revision) + project-record final-version BERT-TextCNN fine-tuned on the clean official EStG train split.",
       "clean_probe_evidence_dir": null,
       "existing_textcnn_diagnostic_evidence_dir": null
     },
     {
       "method_id": "bert_legal_uncased",
       "sun_label": "bert-legal-uncased",
-      "sun_role": "best pre-trained comparison in Table 6; Sun's own method family in Table 7",
+      "sun_role": "best pre-trained comparison in local author manuscript Table 6; Sun's own method family in local author manuscript Table 7; final table numbering/numbers not re-verified 2026-09-17",
       "classification_supported": true,
       "semantic_fields_native": false,
       "implementation_status": "completed_zero_api_full_bert_textcnn",
-      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "reproduction_class": "public pre-trained encoder + project-record final-version BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
       "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased",
-      "notes": "Public nlpaueb/legal-bert-base-uncased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "notes": "Public nlpaueb/legal-bert-base-uncased (pinned revision) + project-record final-version BERT-TextCNN fine-tuned on the clean official EStG train split.",
       "clean_probe_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe",
       "existing_textcnn_diagnostic_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing",
       "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased"
@@ -124,7 +124,7 @@
     {
       "method_id": "bert_legal_cased",
       "sun_label": "bert-legal-cased",
-      "sun_role": "pre-trained encoder comparison in Table 6",
+      "sun_role": "pre-trained encoder comparison in local author manuscript Table 6; project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
       "classification_supported": true,
       "semantic_fields_native": false,
       "implementation_status": "source_pending_name_ambiguous_exact_public_checkpoint_not_located",
@@ -143,7 +143,7 @@
   "semantic_extraction_methods_in_sun_experiment": [
     {
       "method_id": "sun_tregex_tsurgeon_extraction",
-      "sun_role": "Sun's own phrase-level six-element extraction in Section 5.2 / Table 8",
+      "sun_role": "Sun's own phrase-level six-element extraction in local author manuscript Section 5.2 / Table 8 (final table numbering not re-verified 2026-09-17)",
       "external_method_comparison_in_sun_paper": false,
       "external_method_comparison_evidence": "The author-manuscript Section 5.2 reports only Sun's own extraction results; no Table comparing external six-element extractors was found.",
       "project_implementation_status": "existing B0/Sun-style reconstruction already evaluated under the frozen Stage 2 evaluator; no new code required for this task"
@@ -152,7 +152,7 @@
   "downstream_only_methods": [
     {
       "method_id": "winter_2020",
-      "sun_role": "process-checking comparison in Table 12 (downstream violation task), not a six-element Stage 2 extractor",
+      "sun_role": "process-checking comparison in local author manuscript Table 12 (downstream violation task; final table numbering not re-verified 2026-09-17), not a six-element Stage 2 extractor",
       "may_be_called_a_six_element_extractor": false
     }
   ],

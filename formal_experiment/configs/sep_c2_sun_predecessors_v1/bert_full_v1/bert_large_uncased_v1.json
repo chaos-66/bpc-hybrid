@@ -1,9 +1,9 @@
 {
   "schema_version": "sep_c2_sun_predecessor_bert_full_config@1.0.0",
   "method_id": "bert_large_uncased",
-  "sun_source": "Sun et al. (2024), final article Table 6/7 and Section 4.2.1/Fig. 3 (BERT-TextCNN)",
+  "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified) and project-record final-version Section 4.2.1 / Fig. 3 BERT-TextCNN architecture (not re-fetched/re-verified 2026-09-17)",
   "sun_model_label": "bert-large-uncased",
-  "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned locally on clean official EStG train split",
+  "reproduction_class": "public pre-trained encoder + project-record final-version BERT-TextCNN head, fine-tuned locally on clean official EStG train split",
   "language": "de",
   "input_field": "raw_text_de",
   "labels": [
@@ -21,7 +21,7 @@
     "local_files_only": true
   },
   "architecture": {
-    "paper_source": "final article Fig. 3",
+    "paper_source": "project-record final-version Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
     "cls_input": "per-encoder-layer [CLS] vectors CLS1..CLSL, concatenated as a length-L sequence",
     "kernel_sizes": [
       3,

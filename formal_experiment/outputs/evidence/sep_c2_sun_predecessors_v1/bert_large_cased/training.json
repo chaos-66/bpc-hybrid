@@ -1,5 +1,5 @@
 {
-  "architecture_evidence": "Sun et al. (2024), final article, Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
+  "architecture_evidence": "Project record (2026-09-15) quotes Sun et al. (2024) final article Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
   "best_dev": {
     "accuracy": 0.8985507246376812,
     "confusion_matrix": [
@@ -82,7 +82,7 @@
       ],
       "max_length": 192,
       "num_labels": 4,
-      "paper_source": "final article Fig. 3",
+      "paper_source": "project-record final-version Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
       "pooling": "global_max_over_layer_sequence"
     },
     "input_field": "raw_text_de",
@@ -123,10 +123,10 @@
     },
     "post_result_tuning": false,
     "provenance_caveat": "Kernel widths, filter count, dropout, optimizer parameters, batch size, and stopping rules are not reported by Sun et al.; these reconstruction parameters are frozen before the EStG-150 run.",
-    "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned locally on clean official EStG train split",
+    "reproduction_class": "public pre-trained encoder + project-record final-version BERT-TextCNN head, fine-tuned locally on clean official EStG train split",
     "schema_version": "sep_c2_sun_predecessor_bert_full_config@1.0.0",
     "sun_model_label": "bert-large-cased",
-    "sun_source": "Sun et al. (2024), final article Table 6/7 and Section 4.2.1/Fig. 3 (BERT-TextCNN)",
+    "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified) and project-record final-version Section 4.2.1 / Fig. 3 BERT-TextCNN architecture (not re-fetched/re-verified 2026-09-17)",
     "training_data_contract": {
       "estg150_used_for_training_or_selection": false,
       "exclude_duplicates": true,

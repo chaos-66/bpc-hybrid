@@ -110,7 +110,7 @@
     "method_id": "bert_legal_uncased_textcnn_existing",
     "notes": "This is the already published B0 classifier component (nlpaueb/legal-bert-base-uncased + TextCNN). Its original train split contains a small number of normalized-text overlaps with EStG-150; therefore it is reported as a diagnostic sensitivity row, not as the primary clean BERT comparison.",
     "reproduction_class": "existing locally trained checkpoint; reused without retraining",
-    "sun_role": "Existing project S2.4/S2.6 BERT-TextCNN classifier (final-paper-style head), reused read-only",
+    "sun_role": "Existing project S2.4/S2.6 BERT-TextCNN classifier (project-record final-version-style head), reused read-only",
     "training_data": "existing S2.4 checkpoint trained on the official EStG modality train split before this SEP-C2 run"
   },
   "official_clean_test": {

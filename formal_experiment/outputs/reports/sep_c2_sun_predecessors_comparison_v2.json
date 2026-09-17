@@ -12,7 +12,7 @@
       "reason": "The exact cased EU-legislation legal-BERT checkpoint ('bert-legal-cased') was not located in the checked official sources: Sun's text gives no model citation/version, the official Archive.org supplement contains data only, and the local official model cache contains nlpaueb/legal-bert-base-uncased but no cased legal-BERT. Project-record checks reported no exact Hugging Face/GitHub release. This is source-pending, not evidence that the model or public weights do not exist. A cased generic BERT or an uncased Legal-BERT is not allowed to occupy this exact configuration's completion position.",
       "status": "blocked_exact_public_checkpoint_unavailable",
       "sun_label": "bert-legal-cased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7"
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6, cased legal-domain encoder row (directly verified); final-version table numbering not re-verified 2026-09-17"
     }
   ],
   "classification_table": [
@@ -99,7 +99,7 @@
       "role": "keyword modality-classification baseline (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "CF_KW",
-      "sun_source": "Sun et al. (2024) Table 7, CF_KW",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_KW (final table numbering not re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": null,
@@ -198,7 +198,7 @@
       "role": "BiLSTM modality-classification baseline (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "CF_RNN (BiLSTM)",
-      "sun_source": "Sun et al. (2024) Table 7, CF_RNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_RNN (final table numbering not re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -363,7 +363,7 @@
       "role": "CNN modality-classification baseline (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "CF_CNN",
-      "sun_source": "Sun et al. (2024) Table 7, CF_CNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_CNN (final table numbering not re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -523,12 +523,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public google-bert/bert-base-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-base-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_base_uncased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-base-uncased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -667,7 +667,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned BERT base uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -748,12 +748,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public google-bert/bert-base-cased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-base-cased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_base_cased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-base-cased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -888,7 +888,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned BERT base cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned BERT base cased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -969,12 +969,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public google-bert/bert-large-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-large-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_large_uncased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-large-uncased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -1109,7 +1109,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned BERT large uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned BERT large uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -1190,12 +1190,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public google-bert/bert-large-cased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-large-cased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_large_cased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-large-cased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -1330,7 +1330,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned BERT large cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned BERT large cased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -1411,12 +1411,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public nlpaueb/legal-bert-base-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public nlpaueb/legal-bert-base-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-legal-uncased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -1547,7 +1547,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned Legal-BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned Legal-BERT base uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -1813,7 +1813,7 @@
       "role": "keyword modality-classification baseline (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "CF_KW",
-      "sun_source": "Sun et al. (2024) Table 7, CF_KW",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_KW (final table numbering not re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": null,
@@ -1912,7 +1912,7 @@
       "role": "BiLSTM modality-classification baseline (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "CF_RNN (BiLSTM)",
-      "sun_source": "Sun et al. (2024) Table 7, CF_RNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_RNN (final table numbering not re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -2077,7 +2077,7 @@
       "role": "CNN modality-classification baseline (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "CF_CNN",
-      "sun_source": "Sun et al. (2024) Table 7, CF_CNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_CNN (final table numbering not re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -2237,12 +2237,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public google-bert/bert-base-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-base-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_base_uncased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-base-uncased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -2381,7 +2381,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned BERT base uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -2462,12 +2462,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public google-bert/bert-base-cased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-base-cased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_base_cased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-base-cased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -2602,7 +2602,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned BERT base cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned BERT base cased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -2683,12 +2683,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public google-bert/bert-large-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-large-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_large_uncased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-large-uncased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -2823,7 +2823,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned BERT large uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned BERT large uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -2904,12 +2904,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public google-bert/bert-large-cased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-large-cased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_large_cased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-large-cased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -3044,7 +3044,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned BERT large cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned BERT large cased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -3125,12 +3125,12 @@
       "records_failed": 0,
       "records_missing": 0,
       "records_scored": 150,
-      "reproduction": "public nlpaueb/legal-bert-base-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public nlpaueb/legal-bert-base-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "status": "completed_zero_api",
       "sun_label": "bert-legal-uncased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -3261,7 +3261,7 @@
           }
         }
       },
-      "training_or_weights": "public pinned Legal-BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "training_or_weights": "public pinned Legal-BERT base uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)",
       "unlabeled_predictions": 0
     },
     {
@@ -3469,7 +3469,7 @@
       "result_file": null,
       "status": "blocked_exact_public_checkpoint_unavailable",
       "sun_label": "bert-legal-cased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6, cased legal-domain encoder row (directly verified); final-version table numbering not re-verified 2026-09-17",
       "task": "blocked: exact public checkpoint unavailable",
       "training_binding": null,
       "unlabeled_predictions": 0
@@ -3769,7 +3769,7 @@
       "semantic_output": false,
       "status": "completed_zero_api",
       "sun_label": "CF_KW",
-      "sun_source": "Sun et al. (2024) Table 7, CF_KW",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_KW (final table numbering not re-verified 2026-09-17)",
       "training_or_weights": "none (rule list frozen in configs/sep_c2_sun_predecessors_v1/cf_kw_v1.json)"
     },
     {
@@ -3784,7 +3784,7 @@
       "semantic_output": false,
       "status": "completed_zero_api",
       "sun_label": "CF_RNN (BiLSTM)",
-      "sun_source": "Sun et al. (2024) Table 7, CF_RNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_RNN (final table numbering not re-verified 2026-09-17)",
       "training_or_weights": "official 300-d EStG vectors + locally trained BiLSTM (1927 train / 414 dev clean rows)"
     },
     {
@@ -3799,7 +3799,7 @@
       "semantic_output": false,
       "status": "completed_zero_api",
       "sun_label": "CF_CNN",
-      "sun_source": "Sun et al. (2024) Table 7, CF_CNN",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 7, CF_CNN (final table numbering not re-verified 2026-09-17)",
       "training_or_weights": "official 300-d EStG vectors + locally trained TextCNN (1927 train / 414 dev clean rows)"
     },
     {
@@ -3808,14 +3808,14 @@
       "method_id": "bert_base_uncased",
       "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased/predictions.json",
       "reason": "modality classifier only; no actor/action/condition/constraint/exception spans",
-      "reproduction": "public google-bert/bert-base-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-base-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_base_uncased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "semantic_output": false,
       "status": "completed_zero_api",
       "sun_label": "bert-base-uncased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
-      "training_or_weights": "public pinned BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)"
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
+      "training_or_weights": "public pinned BERT base uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)"
     },
     {
       "input_field": "raw_text_de",
@@ -3823,14 +3823,14 @@
       "method_id": "bert_base_cased",
       "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased/predictions.json",
       "reason": "modality classifier only; no actor/action/condition/constraint/exception spans",
-      "reproduction": "public google-bert/bert-base-cased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-base-cased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_base_cased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "semantic_output": false,
       "status": "completed_zero_api",
       "sun_label": "bert-base-cased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
-      "training_or_weights": "public pinned BERT base cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)"
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
+      "training_or_weights": "public pinned BERT base cased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)"
     },
     {
       "input_field": "raw_text_de",
@@ -3838,14 +3838,14 @@
       "method_id": "bert_large_uncased",
       "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased/predictions.json",
       "reason": "modality classifier only; no actor/action/condition/constraint/exception spans",
-      "reproduction": "public google-bert/bert-large-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-large-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_large_uncased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "semantic_output": false,
       "status": "completed_zero_api",
       "sun_label": "bert-large-uncased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
-      "training_or_weights": "public pinned BERT large uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)"
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
+      "training_or_weights": "public pinned BERT large uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)"
     },
     {
       "input_field": "raw_text_de",
@@ -3853,14 +3853,14 @@
       "method_id": "bert_large_cased",
       "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/predictions.json",
       "reason": "modality classifier only; no actor/action/condition/constraint/exception spans",
-      "reproduction": "public google-bert/bert-large-cased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public google-bert/bert-large-cased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_large_cased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "semantic_output": false,
       "status": "completed_zero_api",
       "sun_label": "bert-large-cased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
-      "training_or_weights": "public pinned BERT large cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)"
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
+      "training_or_weights": "public pinned BERT large cased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)"
     },
     {
       "input_field": "raw_text_de",
@@ -3868,14 +3868,14 @@
       "method_id": "bert_legal_uncased",
       "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased/predictions.json",
       "reason": "modality classifier only; no actor/action/condition/constraint/exception spans",
-      "reproduction": "public nlpaueb/legal-bert-base-uncased + final-paper per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
+      "reproduction": "public nlpaueb/legal-bert-base-uncased + project-record final-version per-layer [CLS] TextCNN head, fine-tuned jointly on clean official EStG train split",
       "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_v1.json",
       "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
       "semantic_output": false,
       "status": "completed_zero_api",
       "sun_label": "bert-legal-uncased",
-      "sun_source": "Sun et al. (2024) final version Table 6/7; Section 4.2.1 / Fig. 3 BERT-TextCNN",
-      "training_or_weights": "public pinned Legal-BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)"
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 (directly verified); final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 per project record (not re-fetched/re-verified 2026-09-17)",
+      "training_or_weights": "public pinned Legal-BERT base uncased encoder + locally trained project-record final-version BERT-TextCNN head (1927/414)"
     },
     {
       "diagnostic_five_field": {
@@ -4224,7 +4224,7 @@
       "role": "diagnostic supplement: encoder frozen, MLP head only",
       "status": "completed_diagnostic_supplement_weaker_adaptation",
       "sun_label": "bert-legal-uncased (frozen-encoder probe; not the main method completion)",
-      "sun_source": "Sun et al. (2024) Table 6 family; project supplement",
+      "sun_source": "Sun et al. (2024) local author manuscript Table 6 family; project supplement (final table numbering not re-verified 2026-09-17)",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": {
@@ -4420,7 +4420,7 @@
       "role": "diagnostic reused checkpoint with known training/EStG-150 overlap",
       "status": "completed_diagnostic_training_overlap_flagged",
       "sun_label": "Legal-BERT + TextCNN (existing S2.4 checkpoint; diagnostic only)",
-      "sun_source": "Existing project final-paper-style BERT-TextCNN component",
+      "sun_source": "Existing project BERT-TextCNN component reconstructed from the project-record final-version specification",
       "task": "first-clause modality label per project G0.4 coarse view",
       "training_binding": {
         "best_dev": null,
@@ -4439,8 +4439,8 @@
   ],
   "version_scope": {
     "comparison_boundary": "Results are measured on the project's independently reconstructed EStG-150 with project Gold; they are not Sun's original 150-sentence phrase Gold and not the numbers reported in the paper.",
-    "local_author_manuscript": "also present; final-version architecture check removes the earlier offline-version caveat for BERT-TextCNN",
-    "model_weight_scope": "Four generic BERT/BERT-large public revisions and nlpaueb/legal-bert-base-uncased are pinned; the exact 'bert-legal-cased' checkpoint is not public and remains blocked.",
-    "sun_source": "Sun et al. (2024) final version, DOI 10.1007/s11227-023-05626-0 (accessible and used to verify Fig. 3 / Section 4.2.1 architecture)"
+    "local_author_manuscript": "present and directly verified for the local author manuscript Table 6/7 method roster; final-version architecture remains a project record, not a final-text re-check in this round. Final table numbering and numeric equality remain TODO-SOURCE.",
+    "model_weight_scope": "Four generic BERT/BERT-large public revisions and nlpaueb/legal-bert-base-uncased are pinned; the exact 'bert-legal-cased' checkpoint was not located in the checked official sources and remains source-pending, not evidence that it does not exist.",
+    "sun_source": "Sun et al. (2024) final-version BERT-TextCNN architecture: DOI 10.1007/s11227-023-05626-0. Project record says Section 4.2.1 / Fig. 3 was used to verify the architecture; not re-fetched/re-verified 2026-09-17. Local author manuscript Table 6/7 is the directly verified method source for this round."
   }
 }
