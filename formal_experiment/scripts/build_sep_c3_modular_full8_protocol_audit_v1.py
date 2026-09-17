@@ -34,6 +34,10 @@ REPORT_MD = (
     ROOT / "outputs" / "reports" / "sep_c3_modular_full8_protocol_audit_v1.md"
 )
 
+V2_EVIDENCE_DIR = (
+    ROOT / "outputs" / "evidence" / "sep_c3_modular_ablation_v2"
+)
+
 
 def _read_json(path: Path) -> dict[str, Any]:
     return core._read_json(path)
@@ -140,20 +144,51 @@ def _existing_arm_binding(arm: str) -> dict[str, Any]:
 
 def _new_arm_binding(arm: str) -> dict[str, Any]:
     prompt = core._prompt(arm)
-    return {
+    development_run_dir = v2.OUT_DIR / arm / "repeat-01"
+    evidence_run_dir = V2_EVIDENCE_DIR / "arms" / arm
+    run_dir = (
+        evidence_run_dir
+        if (evidence_run_dir / "manifest.json").is_file()
+        else development_run_dir
+    )
+    manifest_path = run_dir / "manifest.json"
+    evaluation_path = run_dir / "evaluation.json"
+    raw_path = run_dir / "raw_responses.jsonl"
+    canonical_path = run_dir / "canonical_predictions.jsonl"
+    row: dict[str, Any] = {
         "variant": arm,
         "status": "prepared_not_run",
         "binding": "current_implementation_binding",
-        "planned_run_dir": _relative(v2.OUT_DIR / arm / "repeat-01"),
+        "planned_run_dir": _relative(development_run_dir),
         "planned_raw_responses": _relative(
-            v2.OUT_DIR / arm / "repeat-01" / "raw_responses.jsonl"),
+            development_run_dir / "raw_responses.jsonl"),
         "planned_manifest": _relative(
-            v2.OUT_DIR / arm / "repeat-01" / "manifest.json"),
+            development_run_dir / "manifest.json"),
         "denominator": v2.SAMPLES_PER_ARM,
         "prompt_sha256": core._sha256_text(prompt.to_markdown()),
         "composition_sha256": prompt.composition_sha256,
     }
-
+    if manifest_path.is_file() and evaluation_path.is_file():
+        manifest = _read_json(manifest_path)
+        evaluation_doc = _read_json(evaluation_path)
+        row.update({
+            "status": "executed_incremental_batch",
+            "actual_run_dir": _relative(run_dir),
+            "manifest_sha256": _sha256_file(manifest_path),
+            "evaluation_sha256": _sha256_file(evaluation_path),
+            "raw_responses_sha256": (
+                _sha256_file(raw_path) if raw_path.is_file() else None),
+            "canonical_predictions_sha256": (
+                _sha256_file(canonical_path)
+                if canonical_path.is_file() else None),
+            "actual_call_count": int(manifest.get("actual_call_count", 0)),
+            "resumed_completed_count": int(
+                manifest.get("resumed_completed_count", 0)),
+            "failed_count": int(manifest.get("failed_count", 0)),
+            "denominator": int(evaluation_doc.get("denominator", 0)),
+            "prompt_hashes": manifest.get("prompt_hashes") or {},
+        })
+    return row
 
 def build_report() -> dict[str, Any]:
     budget = v2.validate_suite_config()
@@ -211,6 +246,25 @@ def build_report() -> dict[str, Any]:
             and ph.get("user_sha256") == payload["user_sha256"]
         )
 
+    new_statuses = [row["status"] for row in new.values()]
+    new_all_prepared = all(
+        status == "prepared_not_run" for status in new_statuses)
+    new_all_executed = all(
+        status == "executed_incremental_batch" for status in new_statuses)
+    new_prompt_match: dict[str, bool | None] = {}
+    for arm, row in new.items():
+        if row.get("status") != "executed_incremental_batch":
+            new_prompt_match[arm] = None
+            continue
+        ph = row.get("prompt_hashes") or {}
+        payload = next(v for v in variants if v["variant"] == arm)
+        new_prompt_match[arm] = bool(
+            ph.get("generated_prompt_sha256") == payload["generated_prompt_sha256"]
+            and ph.get("composition_sha256") == payload["composition_sha256"]
+            and ph.get("system_sha256") == payload["system_sha256"]
+            and ph.get("user_sha256") == payload["user_sha256"]
+        )
+
     checks = {
         "eight_variants_present": len(variants) == 8,
         "all_prompt_audits_clean": all(not row["errors"] for row in variants),
@@ -237,6 +291,20 @@ def build_report() -> dict[str, Any]:
         == _sha256_file(core.FORMAL_GOLD),
         "evaluator_hash_bound": evaluator["coarse_metric_sha256"]
         == budget["evaluator_binding"]["coarse_metric_sha256"],
+        "new_arm_state_consistent": new_all_prepared or new_all_executed,
+        "new_arm_execution_artifacts_complete": (
+            new_all_prepared or all(
+                row.get("actual_call_count") is not None
+                and row.get("failed_count") is not None
+                and row.get("denominator") == v2.SAMPLES_PER_ARM
+                and row.get("raw_responses_sha256") is not None
+                and row.get("canonical_predictions_sha256") is not None
+                for row in new.values()
+            )
+        ),
+        "new_arm_prompt_bindings_match_current": (
+            new_all_prepared or all(new_prompt_match.values())
+        ),
         "denominator_preserved": all(
             (row.get("denominator") == v2.SAMPLES_PER_ARM)
             for row in existing.values() if row.get("status") == "existing_executed"
@@ -281,6 +349,7 @@ def build_report() -> dict[str, Any]:
         "consistency": {
             "checks": checks,
             "existing_prompt_match": existing_prompt_match,
+            "new_prompt_match": new_prompt_match,
         },
         "warnings": [
             "The original 111/011/101/110 cells were executed in the earlier "
@@ -308,7 +377,7 @@ def main() -> int:
         f"- status: **{report['status']}**",
         f"- suite: `{report['suite_id']}`",
         "- existing cells: `111/011/101/110` (original execution binding)",
-        "- new cells: `000/001/010/100` (prepared_not_run)",
+        f"- new cells: `000/001/010/100` ({'executed_incremental_batch' if all(row['status'] == 'executed_incremental_batch' for row in report['new_arm_bindings'].values()) else 'prepared_not_run'})",
         f"- model: `{report['model']['id']}` ({report['model']['documented_release']})",
         f"- denominator: {report['denominator']} per arm",
         "",

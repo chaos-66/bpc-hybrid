@@ -1,6 +1,6 @@
 {
   "schema_version": "sep_c3_modular_full8_protocol_audit@1.0.0",
-  "generated_at_utc": "2026-09-17T09:04:26.689274+00:00",
+  "generated_at_utc": "2026-09-17T12:44:19.932507+00:00",
   "network_calls": 0,
   "status": "pass",
   "suite_id": "SEP-C3-MODULAR-ESJ-002",
@@ -329,47 +329,107 @@
   "new_arm_bindings": {
     "000": {
       "variant": "000",
-      "status": "prepared_not_run",
+      "status": "executed_incremental_batch",
       "binding": "current_implementation_binding",
       "planned_run_dir": "outputs/development/sep_c3_modular_ablation_v2/000/repeat-01",
       "planned_raw_responses": "outputs/development/sep_c3_modular_ablation_v2/000/repeat-01/raw_responses.jsonl",
       "planned_manifest": "outputs/development/sep_c3_modular_ablation_v2/000/repeat-01/manifest.json",
       "denominator": 150,
       "prompt_sha256": "45bb324dd1143e1f920e9f8935ed8ecda98c8ebe5a1442ec10f9843b50abdefa",
-      "composition_sha256": "c419c56b661c85cdfc090fbf3824f8b33662a2b835f4b637d7daeaef5ad89d77"
+      "composition_sha256": "c419c56b661c85cdfc090fbf3824f8b33662a2b835f4b637d7daeaef5ad89d77",
+      "actual_run_dir": "outputs/development/sep_c3_modular_ablation_v2/000/repeat-01",
+      "manifest_sha256": "52aee0079951e5ae8fa4a9a431c5637cc82d5de686f8bcf2895028dfdc340625",
+      "evaluation_sha256": "8d475222d84dd7cbf0b2f606e2342a5a9e4f359dd8b834db5db1cb4d5cdd44cd",
+      "raw_responses_sha256": "7c8a8a70d21722a83c2b4c348043172f96e90671301ec8bb09f577ca219680b3",
+      "canonical_predictions_sha256": "c623718a6d2567823c646dd56a3cded0d4771ffe100c6d585cb3b3e0d562e6f3",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "prompt_hashes": {
+        "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+        "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+        "composition_sha256": "c419c56b661c85cdfc090fbf3824f8b33662a2b835f4b637d7daeaef5ad89d77",
+        "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_000_v1.md",
+        "generated_prompt_sha256": "45bb324dd1143e1f920e9f8935ed8ecda98c8ebe5a1442ec10f9843b50abdefa"
+      }
     },
     "001": {
       "variant": "001",
-      "status": "prepared_not_run",
+      "status": "executed_incremental_batch",
       "binding": "current_implementation_binding",
       "planned_run_dir": "outputs/development/sep_c3_modular_ablation_v2/001/repeat-01",
       "planned_raw_responses": "outputs/development/sep_c3_modular_ablation_v2/001/repeat-01/raw_responses.jsonl",
       "planned_manifest": "outputs/development/sep_c3_modular_ablation_v2/001/repeat-01/manifest.json",
       "denominator": 150,
       "prompt_sha256": "f03d5ad274df8e64b0c555559a412e09e56c59afa3e5ab39693088ebc010913c",
-      "composition_sha256": "7e00e998e4a09dac54f61f7bf899bb6b3b5437ab94232f4fe897bcf35e6bcc23"
+      "composition_sha256": "7e00e998e4a09dac54f61f7bf899bb6b3b5437ab94232f4fe897bcf35e6bcc23",
+      "actual_run_dir": "outputs/development/sep_c3_modular_ablation_v2/001/repeat-01",
+      "manifest_sha256": "3582e0f7d9531be094db62ebc1ea5b207c2ede434ad31579e39341bf9b00c719",
+      "evaluation_sha256": "7fd570cd827af4fb50470197e1627d8ee0fa54bb4e06d8869687175c1faa12c2",
+      "raw_responses_sha256": "f63094ed4045a3a3c4a66eacf5902de06bff7d1d13baa5f34b5fb1f33ae86896",
+      "canonical_predictions_sha256": "358a852ec35385a445161fbb0b783984c53ae398a4a727ec7097abc85ba39237",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "prompt_hashes": {
+        "system_sha256": "9ac6b84edcce623b5353fe07b9d9c1ee5ad3867ccfe7c7ad2b41c54f787697d4",
+        "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+        "composition_sha256": "7e00e998e4a09dac54f61f7bf899bb6b3b5437ab94232f4fe897bcf35e6bcc23",
+        "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_001_v1.md",
+        "generated_prompt_sha256": "f03d5ad274df8e64b0c555559a412e09e56c59afa3e5ab39693088ebc010913c"
+      }
     },
     "010": {
       "variant": "010",
-      "status": "prepared_not_run",
+      "status": "executed_incremental_batch",
       "binding": "current_implementation_binding",
       "planned_run_dir": "outputs/development/sep_c3_modular_ablation_v2/010/repeat-01",
       "planned_raw_responses": "outputs/development/sep_c3_modular_ablation_v2/010/repeat-01/raw_responses.jsonl",
       "planned_manifest": "outputs/development/sep_c3_modular_ablation_v2/010/repeat-01/manifest.json",
       "denominator": 150,
       "prompt_sha256": "de3e33eeec7bedd22bb4df195c8353b15f6ef67dca2f4bd911ee5053cb403305",
-      "composition_sha256": "3ebbd9edc657f7f58a6ba3099855373efeeb33a4f160ae643ecdd1cc8ef5b898"
+      "composition_sha256": "3ebbd9edc657f7f58a6ba3099855373efeeb33a4f160ae643ecdd1cc8ef5b898",
+      "actual_run_dir": "outputs/development/sep_c3_modular_ablation_v2/010/repeat-01",
+      "manifest_sha256": "140eaaa6a17dd7b1376160a46e39daa0b18dd84290c76fea7348b3d0de3d9b15",
+      "evaluation_sha256": "12cc36602803617c6ab6b0e9a4e888f326813c8813fc8ab9f3205e21d0d7aa96",
+      "raw_responses_sha256": "a57a655a773318c33adb67430d7df3f8bac61c3ea3af6977f4b773b6d38e0583",
+      "canonical_predictions_sha256": "df7c2f3946c6a03018405e52d8bda95d9279f631c386c700fc08c6aaac08a9d1",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "prompt_hashes": {
+        "system_sha256": "92a53a213570879e512ac7521339a55bbfaca0e130eef7ff576b748fba6cb366",
+        "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+        "composition_sha256": "3ebbd9edc657f7f58a6ba3099855373efeeb33a4f160ae643ecdd1cc8ef5b898",
+        "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_010_v1.md",
+        "generated_prompt_sha256": "de3e33eeec7bedd22bb4df195c8353b15f6ef67dca2f4bd911ee5053cb403305"
+      }
     },
     "100": {
       "variant": "100",
-      "status": "prepared_not_run",
+      "status": "executed_incremental_batch",
       "binding": "current_implementation_binding",
       "planned_run_dir": "outputs/development/sep_c3_modular_ablation_v2/100/repeat-01",
       "planned_raw_responses": "outputs/development/sep_c3_modular_ablation_v2/100/repeat-01/raw_responses.jsonl",
       "planned_manifest": "outputs/development/sep_c3_modular_ablation_v2/100/repeat-01/manifest.json",
       "denominator": 150,
       "prompt_sha256": "9ce3502ea56c14a58bb39d87ab7b7023c5aca51b65909a515c0244601a5b7fee",
-      "composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418"
+      "composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418",
+      "actual_run_dir": "outputs/development/sep_c3_modular_ablation_v2/100/repeat-01",
+      "manifest_sha256": "d9b551a8c6d645b8582353bc588f27308c6943894d1085af76dcb87ec7e8f88d",
+      "evaluation_sha256": "8b8c239f0a00a617d5f4aec81cb76d6763a1463ca02492253f7b0b265eac992f",
+      "raw_responses_sha256": "6a8619ab88d1fe6f0881b760138d38e366361bcbd8f8ea4d8d25858207a4f79c",
+      "canonical_predictions_sha256": "09707343b2e488dc2bc886c95cf2d88f34aedc590fad2630d630faa8cbd2f6b5",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "prompt_hashes": {
+        "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+        "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+        "composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418",
+        "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_100_v1.md",
+        "generated_prompt_sha256": "9ce3502ea56c14a58bb39d87ab7b7023c5aca51b65909a515c0244601a5b7fee"
+      }
     }
   },
   "consistency": {
@@ -386,6 +446,9 @@
       "input_hash_bound": true,
       "gold_hash_bound": true,
       "evaluator_hash_bound": true,
+      "new_arm_state_consistent": true,
+      "new_arm_execution_artifacts_complete": true,
+      "new_arm_prompt_bindings_match_current": true,
       "denominator_preserved": true
     },
     "existing_prompt_match": {
@@ -393,6 +456,12 @@
       "011": true,
       "101": true,
       "110": true
+    },
+    "new_prompt_match": {
+      "000": true,
+      "001": true,
+      "010": true,
+      "100": true
     }
   },
   "warnings": [

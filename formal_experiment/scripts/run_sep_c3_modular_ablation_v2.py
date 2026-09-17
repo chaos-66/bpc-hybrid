@@ -231,9 +231,29 @@ def offline_check() -> dict[str, Any]:
     return report
 
 
+def _arm_evidence_dir(arm: str, base_dir: Path) -> Path:
+    """Locate one arm's persisted evidence directory.
+
+    The original v1 evidence tree stores arms under ``<base>/arms/<arm>``.
+    The incremental v2 tree stores them under ``<base>/<arm>/repeat-01``.
+    This resolver supports both without touching either evidence tree.
+    """
+    candidates = (
+        base_dir / "arms" / arm,
+        base_dir / arm / "repeat-01",
+        base_dir / arm,
+    )
+    for candidate in candidates:
+        if ((candidate / "evaluation.json").is_file()
+                and (candidate / "manifest.json").is_file()):
+            return candidate
+    return candidates[0]
+
+
 def _load_arm_evaluation(arm: str, base_dir: Path) -> dict[str, Any]:
-    eval_path = base_dir / arm / "repeat-01" / "evaluation.json"
-    manifest_path = base_dir / arm / "repeat-01" / "manifest.json"
+    evidence_dir = _arm_evidence_dir(arm, base_dir)
+    eval_path = evidence_dir / "evaluation.json"
+    manifest_path = evidence_dir / "manifest.json"
     evaluation_doc = _read_json(eval_path)
     manifest = _read_json(manifest_path)
     evaluation = evaluation_doc["evaluation"]
@@ -309,12 +329,14 @@ def _factorial_effects(metrics: Mapping[str, Mapping[str, Any]]) -> dict[str, An
         "E_main_effect": round(level_mean("E", "1") - level_mean("E", "0"), 8),
         "S_main_effect": round(level_mean("S", "1") - level_mean("S", "0"), 8),
         "J_main_effect": round(level_mean("J", "1") - level_mean("J", "0"), 8),
+        # Context-specific difference-in-differences contrasts.
+        # ES is read at J=1, EJ at S=1, SJ at E=1.
         "two_way_ES": round(
-            (cells["111"] - cells["101"]) - (cells["011"] - cells["001"]), 8),
-        "two_way_EJ": round(
             (cells["111"] - cells["011"]) - (cells["101"] - cells["001"]), 8),
+        "two_way_EJ": round(
+            (cells["111"] - cells["011"]) - (cells["110"] - cells["010"]), 8),
         "two_way_SJ": round(
-            (cells["111"] - cells["110"]) - (cells["011"] - cells["010"]), 8),
+            (cells["111"] - cells["101"]) - (cells["110"] - cells["100"]), 8),
         "three_way_ESJ": round(
             (cells["111"] - cells["101"] - cells["011"] + cells["001"])
             - (cells["110"] - cells["100"] - cells["010"] + cells["000"]),

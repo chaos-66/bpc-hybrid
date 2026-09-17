@@ -1,0 +1,410 @@
+{
+  "schema_version": "sep_c3_modular_ablation_full8_report@1.0.0",
+  "run_status": "complete_full8",
+  "suite_id": "SEP-C3-MODULAR-ESJ-002",
+  "network_calls_in_this_report": 0,
+  "generated_at_utc": "2026-09-17T12:40:38.447872+00:00",
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "primary_metric": "coarse_five_field_mean_f1",
+  "binding": {
+    "existing_arms_esj": [
+      "111",
+      "011",
+      "101",
+      "110"
+    ],
+    "new_arms_esj": [
+      "000",
+      "001",
+      "010",
+      "100"
+    ],
+    "existing_metric_source": "outputs/evidence/sep_c3_modular_ablation_v1",
+    "new_metric_source": "outputs/development/sep_c3_modular_ablation_v2"
+  },
+  "metrics": {
+    "111": {
+      "source": "outputs/evidence/sep_c3_modular_ablation_v1/arms/111/evaluation.json",
+      "manifest": "outputs/evidence/sep_c3_modular_ablation_v1/arms/111/manifest.json",
+      "actual_call_count": 91,
+      "resumed_completed_count": 59,
+      "failed_count": 0,
+      "denominator": 150,
+      "coarse_five_field_mean_f1": 0.7262056454982766,
+      "coarse_five_field_micro_f1": 0.7902398853428036,
+      "modality_label_macro_f1": 0.7535381285381285,
+      "five_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 130,
+          "matched_predictions": 46,
+          "matched_ground_truth": 39,
+          "misclassified": 84,
+          "missed": 2,
+          "precision": 0.35384615384615387,
+          "recall": 0.9512195121951219,
+          "f1": 0.5158136860264521
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 231,
+          "matched_predictions": 215,
+          "matched_ground_truth": 139,
+          "misclassified": 16,
+          "missed": 11,
+          "precision": 0.9307359307359307,
+          "recall": 0.9266666666666666,
+          "f1": 0.9286968411566371
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 148,
+          "matched_predictions": 129,
+          "matched_ground_truth": 93,
+          "misclassified": 19,
+          "missed": 29,
+          "precision": 0.8716216216216216,
+          "recall": 0.7622950819672131,
+          "f1": 0.8133007931665649
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 179,
+          "matched_predictions": 142,
+          "matched_ground_truth": 94,
+          "misclassified": 37,
+          "missed": 41,
+          "precision": 0.7932960893854749,
+          "recall": 0.6962962962962963,
+          "f1": 0.7416379597733082
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 8,
+          "matched_predictions": 6,
+          "matched_ground_truth": 6,
+          "misclassified": 2,
+          "missed": 5,
+          "precision": 0.75,
+          "recall": 0.5454545454545454,
+          "f1": 0.631578947368421
+        }
+      },
+      "generated_prompt_sha256": "38144b7525c9ffddd001a276f6533ac4c35060b7917ae363e56a11c25824e1f3",
+      "composition_sha256": "ba1d43367f26d6c04f77603b06cc413836517e9388adb745664cffe357851f4b",
+      "binding": "original_execution_binding"
+    },
+    "011": {
+      "source": "outputs/evidence/sep_c3_modular_ablation_v1/arms/011/evaluation.json",
+      "manifest": "outputs/evidence/sep_c3_modular_ablation_v1/arms/011/manifest.json",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "coarse_five_field_mean_f1": 0.7469554158324833,
+      "coarse_five_field_micro_f1": 0.8031520481113739,
+      "modality_label_macro_f1": 0.7635337942092276,
+      "five_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 124,
+          "matched_predictions": 44,
+          "matched_ground_truth": 38,
+          "misclassified": 80,
+          "missed": 3,
+          "precision": 0.3548387096774194,
+          "recall": 0.926829268292683,
+          "f1": 0.5131982811540823
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 248,
+          "matched_predictions": 220,
+          "matched_ground_truth": 141,
+          "misclassified": 28,
+          "missed": 9,
+          "precision": 0.8870967741935484,
+          "recall": 0.94,
+          "f1": 0.9127824858757062
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 183,
+          "matched_predictions": 151,
+          "matched_ground_truth": 102,
+          "misclassified": 32,
+          "missed": 20,
+          "precision": 0.825136612021858,
+          "recall": 0.8360655737704918,
+          "f1": 0.8305651423641071
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 173,
+          "matched_predictions": 150,
+          "matched_ground_truth": 94,
+          "misclassified": 23,
+          "missed": 41,
+          "precision": 0.8670520231213873,
+          "recall": 0.6962962962962963,
+          "f1": 0.7723488168273445
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 6,
+          "matched_predictions": 6,
+          "matched_ground_truth": 6,
+          "misclassified": 0,
+          "missed": 5,
+          "precision": 1.0,
+          "recall": 0.5454545454545454,
+          "f1": 0.7058823529411764
+        }
+      },
+      "generated_prompt_sha256": "d71fd965458cc0de8b4d4c5921ad3f905ed3c4b7cdc8ea70ff7955c43d042136",
+      "composition_sha256": "90ccb9d4c27f0df8189673a7680450d396e17bc339343fa4a787b91d81922f5c",
+      "binding": "original_execution_binding"
+    },
+    "101": {
+      "source": "outputs/evidence/sep_c3_modular_ablation_v1/arms/101/evaluation.json",
+      "manifest": "outputs/evidence/sep_c3_modular_ablation_v1/arms/101/manifest.json",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "coarse_five_field_mean_f1": 0.7610556475180569,
+      "coarse_five_field_micro_f1": 0.8144330550967624,
+      "modality_label_macro_f1": 0.755381204656567,
+      "five_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 89,
+          "matched_predictions": 46,
+          "matched_ground_truth": 40,
+          "misclassified": 43,
+          "missed": 1,
+          "precision": 0.5168539325842697,
+          "recall": 0.975609756097561,
+          "f1": 0.6757253029746604
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 236,
+          "matched_predictions": 218,
+          "matched_ground_truth": 140,
+          "misclassified": 18,
+          "missed": 10,
+          "precision": 0.923728813559322,
+          "recall": 0.9333333333333333,
+          "f1": 0.9285062366899909
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 161,
+          "matched_predictions": 141,
+          "matched_ground_truth": 100,
+          "misclassified": 20,
+          "missed": 22,
+          "precision": 0.8757763975155279,
+          "recall": 0.819672131147541,
+          "f1": 0.8467959882289351
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 139,
+          "matched_predictions": 118,
+          "matched_ground_truth": 78,
+          "misclassified": 21,
+          "missed": 57,
+          "precision": 0.8489208633093526,
+          "recall": 0.5777777777777777,
+          "f1": 0.6875840430300314
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 7,
+          "matched_predictions": 6,
+          "matched_ground_truth": 6,
+          "misclassified": 1,
+          "missed": 5,
+          "precision": 0.8571428571428571,
+          "recall": 0.5454545454545454,
+          "f1": 0.6666666666666665
+        }
+      },
+      "generated_prompt_sha256": "00f0ea3fc2ddf2ef7c765a83f05aa4f64eeba89966a2010c8e3a05151a111891",
+      "composition_sha256": "80ea7d847fc4bcc936d920525dc9b306fd413cc2f2f9fb3fca1416d97e3c780b",
+      "binding": "original_execution_binding"
+    },
+    "110": {
+      "source": "outputs/evidence/sep_c3_modular_ablation_v1/arms/110/evaluation.json",
+      "manifest": "outputs/evidence/sep_c3_modular_ablation_v1/arms/110/manifest.json",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "coarse_five_field_mean_f1": 0.7355390106019669,
+      "coarse_five_field_micro_f1": 0.7969838964033982,
+      "modality_label_macro_f1": 0.7488343081854532,
+      "five_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 137,
+          "matched_predictions": 44,
+          "matched_ground_truth": 38,
+          "misclassified": 93,
+          "missed": 3,
+          "precision": 0.32116788321167883,
+          "recall": 0.926829268292683,
+          "f1": 0.4770328102710414
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 235,
+          "matched_predictions": 217,
+          "matched_ground_truth": 139,
+          "misclassified": 18,
+          "missed": 11,
+          "precision": 0.9234042553191489,
+          "recall": 0.9266666666666666,
+          "f1": 0.9250325845280994
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 156,
+          "matched_predictions": 136,
+          "matched_ground_truth": 95,
+          "misclassified": 20,
+          "missed": 27,
+          "precision": 0.8717948717948718,
+          "recall": 0.7786885245901639,
+          "f1": 0.8226155609321278
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 188,
+          "matched_predictions": 159,
+          "matched_ground_truth": 97,
+          "misclassified": 29,
+          "missed": 38,
+          "precision": 0.8457446808510638,
+          "recall": 0.7185185185185186,
+          "f1": 0.7769577592503968
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 9,
+          "matched_predictions": 8,
+          "matched_ground_truth": 6,
+          "misclassified": 1,
+          "missed": 5,
+          "precision": 0.8888888888888888,
+          "recall": 0.5454545454545454,
+          "f1": 0.676056338028169
+        }
+      },
+      "generated_prompt_sha256": "75ce93f718a7d24962a33cef95a91515261d3a69789d64d4728a838670962fd9",
+      "composition_sha256": "66ac250676b59671182196a706f8249b5e822f22f0f4033cab191a31a1d53082",
+      "binding": "original_execution_binding"
+    },
+    "000": {
+      "source": "outputs/development/sep_c3_modular_ablation_v2/000/repeat-01",
+      "manifest": "outputs/development/sep_c3_modular_ablation_v2/000/repeat-01/manifest.json",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "coarse_five_field_mean_f1": 0.6367491210830866,
+      "coarse_five_field_micro_f1": 0.647329617951731,
+      "modality_label_macro_f1": 0.6937651968710171,
+      "binding": "current_implementation_binding"
+    },
+    "001": {
+      "source": "outputs/development/sep_c3_modular_ablation_v2/001/repeat-01",
+      "manifest": "outputs/development/sep_c3_modular_ablation_v2/001/repeat-01/manifest.json",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "coarse_five_field_mean_f1": 0.618355882378658,
+      "coarse_five_field_micro_f1": 0.6616907569846889,
+      "modality_label_macro_f1": 0.7068581595284779,
+      "binding": "current_implementation_binding"
+    },
+    "010": {
+      "source": "outputs/development/sep_c3_modular_ablation_v2/010/repeat-01",
+      "manifest": "outputs/development/sep_c3_modular_ablation_v2/010/repeat-01/manifest.json",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "coarse_five_field_mean_f1": 0.727789654206652,
+      "coarse_five_field_micro_f1": 0.7991018124142355,
+      "modality_label_macro_f1": 0.7523765344831649,
+      "binding": "current_implementation_binding"
+    },
+    "100": {
+      "source": "outputs/development/sep_c3_modular_ablation_v2/100/repeat-01",
+      "manifest": "outputs/development/sep_c3_modular_ablation_v2/100/repeat-01/manifest.json",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "coarse_five_field_mean_f1": 0.7787634292011848,
+      "coarse_five_field_micro_f1": 0.8153213060016736,
+      "modality_label_macro_f1": 0.7652542313536831,
+      "binding": "current_implementation_binding"
+    }
+  },
+  "deltas": {
+    "111": {
+      "vs_full_111": 0.0
+    },
+    "011": {
+      "vs_full_111": 0.02074977
+    },
+    "101": {
+      "vs_full_111": 0.03485
+    },
+    "110": {
+      "vs_full_111": 0.00933337
+    },
+    "100": {
+      "vs_full_111": 0.05255778
+    },
+    "010": {
+      "vs_full_111": 0.00158401
+    },
+    "001": {
+      "vs_full_111": -0.10784976
+    },
+    "000": {
+      "vs_full_111": -0.08945652
+    }
+  },
+  "factorial_effects": {
+    "E_main_effect": 0.06792841,
+    "S_main_effect": 0.03539141,
+    "J_main_effect": -0.00656716,
+    "two_way_ES": -0.16344954,
+    "two_way_EJ": -0.02849913,
+    "two_way_SJ": 0.00837442,
+    "three_way_ESJ": -0.02918458
+  },
+  "interpretation": {
+    "n_repeats_per_arm": 1,
+    "warning": "The original four cells came from the earlier SEP-C3-MODULAR-ESJ-001 API batch; the four new cells are an incremental later batch. Model/release/settings/prompt family are matched, but batch/time is not. Treat pooled eight-cell effects as descriptive unless this confound is explicitly modelled or all eight cells are rerun in one batch.",
+    "modality": "Modality labels are reported separately and are not folded into the coarse five-field primary metric."
+  }
+}

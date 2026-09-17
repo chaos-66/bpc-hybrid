@@ -1,0 +1,189 @@
+{
+  "arm": "010",
+  "repeat_id": "repeat-01",
+  "denominator": 150,
+  "evaluation": {
+    "schema_version": "sep_c3_coarse_five_field_evaluation@1.0.0",
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "method_id": "direct_llm_modular_010",
+    "view": "coarse_sentence_level",
+    "primary_metric": "coarse_five_field_mean_f1",
+    "primary_metric_note": "arithmetic mean of the five coarse span-field F1 values; the modality label is reported separately and is never mixed into this score",
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+    "five_fields": {
+      "actor": {
+        "ground_truth": 41,
+        "extracted": 138,
+        "matched_predictions": 46,
+        "matched_ground_truth": 38,
+        "misclassified": 92,
+        "missed": 3,
+        "precision": 0.3333333333333333,
+        "recall": 0.926829268292683,
+        "f1": 0.49032258064516127
+      },
+      "action": {
+        "ground_truth": 150,
+        "extracted": 250,
+        "matched_predictions": 228,
+        "matched_ground_truth": 141,
+        "misclassified": 22,
+        "missed": 9,
+        "precision": 0.912,
+        "recall": 0.94,
+        "f1": 0.9257883369330453
+      },
+      "condition": {
+        "ground_truth": 122,
+        "extracted": 190,
+        "matched_predictions": 162,
+        "matched_ground_truth": 105,
+        "misclassified": 28,
+        "missed": 17,
+        "precision": 0.8526315789473684,
+        "recall": 0.860655737704918,
+        "f1": 0.8566248678048044
+      },
+      "constraint": {
+        "ground_truth": 135,
+        "extracted": 181,
+        "matched_predictions": 149,
+        "matched_ground_truth": 91,
+        "misclassified": 32,
+        "missed": 44,
+        "precision": 0.8232044198895028,
+        "recall": 0.674074074074074,
+        "f1": 0.7412124856502488
+      },
+      "exception": {
+        "ground_truth": 11,
+        "extracted": 5,
+        "matched_predictions": 5,
+        "matched_ground_truth": 5,
+        "misclassified": 0,
+        "missed": 6,
+        "precision": 1.0,
+        "recall": 0.45454545454545453,
+        "f1": 0.625
+      }
+    },
+    "coarse_five_field_mean_f1": 0.727789654206652,
+    "coarse_five_field_micro": {
+      "ground_truth": 459,
+      "extracted": 764,
+      "matched_predictions": 590,
+      "matched_ground_truth": 380,
+      "precision": 0.7722513089005235,
+      "recall": 0.8278867102396514,
+      "f1": 0.7991018124142355
+    },
+    "modality_labels": {
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "records": 150,
+      "accuracy": 0.82,
+      "macro_f1": 0.7523765344831649,
+      "per_class": [
+        {
+          "class": "obligation",
+          "precision": 0.8142857142857143,
+          "recall": 0.9661016949152542,
+          "f1": 0.8837209302325583
+        },
+        {
+          "class": "permission",
+          "precision": 0.9523809523809523,
+          "recall": 0.9523809523809523,
+          "f1": 0.9523809523809523
+        },
+        {
+          "class": "prohibition",
+          "precision": 0.6296296296296297,
+          "recall": 0.85,
+          "f1": 0.723404255319149
+        },
+        {
+          "class": "definition",
+          "precision": 0.8181818181818182,
+          "recall": 0.3103448275862069,
+          "f1": 0.45000000000000007
+        }
+      ],
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 0
+    },
+    "modality_evidence_span": {
+      "available": false,
+      "policy": "published decision-only Gold has no local modality evidence spans; never zeroed or aggregated into span F1"
+    },
+    "official_formal_view": {
+      "schema_version": "formal_stage2_span_metrics@1.0.0",
+      "view": "coarse_sentence_level",
+      "dataset_id": "independently_reconstructed_estg_150_v1",
+      "method_id": "direct_llm_modular_010",
+      "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+      "overall": {
+        "ground_truth": 609,
+        "extracted": 997,
+        "matched_predictions": 813,
+        "matched_ground_truth": 527,
+        "misclassified": 184,
+        "missed": 82,
+        "precision": 0.8154463390170511,
+        "recall": 0.8653530377668309,
+        "f1": 0.8396587675496014
+      },
+      "span_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 138,
+          "precision": 0.3333333333333333,
+          "recall": 0.926829268292683,
+          "f1": 0.49032258064516127
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 250,
+          "precision": 0.912,
+          "recall": 0.94,
+          "f1": 0.9257883369330453
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 190,
+          "precision": 0.8526315789473684,
+          "recall": 0.860655737704918,
+          "f1": 0.8566248678048044
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 181,
+          "precision": 0.8232044198895028,
+          "recall": 0.674074074074074,
+          "f1": 0.7412124856502488
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 5,
+          "precision": 1.0,
+          "recall": 0.45454545454545453,
+          "f1": 0.625
+        }
+      },
+      "modality_span": {
+        "available": false,
+        "reason": "published formal Gold stores modality as a plain string; local modality evidence spans are not carried by the decision-only Gold",
+        "ground_truth": 150,
+        "extracted": 233
+      },
+      "no_cross_view_mixing": true
+    },
+    "denominator": 150,
+    "failed_count": 0
+  }
+}
