@@ -4947,3 +4947,11 @@
 - 仍存在 blocker：stage1_structural_process_record_not_verified、stage1_label_semantics_p0_p1_not_verified、stage1_annotation_protocol_not_verified、stage1_formal_bpmn_membership_not_promoted、stage1_evaluator_contract_not_verified、final_experiment_not_ready
 - 备注：候选 prompt 仅规则 21 按收尾要求消除歧义；规则 10/18 未动。直接离线用 prompt_loader 重新计算候选 hash、system diff 与 user message diff，确认相对旧 v6 仍仅规则 10/18/21 有变化；六个示例和 user template 不变，示例通过 schema/cross-field。期望行为表仅为人工规则审阅，不是模型输出或运行验证。既有测试未直接加载候选，测试通过只覆盖默认 prompt contract/schema validator；候选行为未由这些测试验证。真实 API=0；候选未注册、未启用，旧 v6 默认不变。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-17 - SEP-C4 A/B 失败定位与 SEP-C2/C3 论文整合（纯分析/文档，零 API）
+
+- 事件类型：变更/分析（只读已有 C36 v2、v5 predictions 与 synthetic panel v2）
+- 完成：constraint 与 exception 各 10 对逐项追踪；新建 outputs/reports/sep_c4_constraint_failure_localization_v1.{json,md} 与 outputs/reports/sep_c4_exception_failure_localization_v1.{json,md}。
+- 结论：constraint 8 个 unknown 全部是配置不支持的抽象约束，exception 7 个 unknown 主因是 rule-action grounding 未解析/歧义；两类均无足够证据做最小公共映射代码修复。target-paired 单类型 unknown 未被读成合规或违规。
+- 整合：SEP-C2 前人分类配置与分类目标一致性诊断、SEP-C3 modular_v1 四臂/actor/后处理归因保留入文。C2 原 C48 改为 C51，C3 保留 C48/C49/C50；A/B 新增 C52/C53；论文新增 §7.4.8。
+- 边界：真实 API=0；未重跑比较、未生成新预测、未改 Gold/冻结面板/历史 manifest/阈值；不宣称 constraint/exception F1 提升或泛化。

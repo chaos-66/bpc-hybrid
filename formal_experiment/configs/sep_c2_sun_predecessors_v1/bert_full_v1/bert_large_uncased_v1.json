@@ -1,0 +1,67 @@
+{
+  "schema_version": "sep_c2_sun_predecessor_bert_full_config@1.0.0",
+  "method_id": "bert_large_uncased",
+  "sun_source": "Sun et al. (2024), final article Table 6/7 and Section 4.2.1/Fig. 3 (BERT-TextCNN)",
+  "sun_model_label": "bert-large-uncased",
+  "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned locally on clean official EStG train split",
+  "language": "de",
+  "input_field": "raw_text_de",
+  "labels": [
+    "definition",
+    "obligation",
+    "permission",
+    "prohibition"
+  ],
+  "model": {
+    "local_dir": "bert-large-uncased",
+    "repository_id": "google-bert/bert-large-uncased",
+    "revision": "6da4b6a26a1877e173fca3225479512db81a5e5b",
+    "hidden_size": 1024,
+    "num_hidden_layers": 24,
+    "local_files_only": true
+  },
+  "architecture": {
+    "paper_source": "final article Fig. 3",
+    "cls_input": "per-encoder-layer [CLS] vectors CLS1..CLSL, concatenated as a length-L sequence",
+    "kernel_sizes": [
+      3,
+      4,
+      5
+    ],
+    "filters_per_kernel": 256,
+    "activation": "relu",
+    "pooling": "global_max_over_layer_sequence",
+    "dropout": 0.5,
+    "max_length": 192,
+    "num_labels": 4,
+    "encoder_trainable": true
+  },
+  "optimization": {
+    "loss": "unweighted_cross_entropy",
+    "optimizer": "AdamW",
+    "encoder_learning_rate": 2e-05,
+    "head_learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "batch_size": 4,
+    "gradient_accumulation_steps": 1,
+    "effective_batch_size": 4,
+    "max_epochs": 5,
+    "warmup_ratio": 0.1,
+    "gradient_clip_norm": 1.0,
+    "early_stopping_metric": "macro_f1",
+    "early_stopping_patience": 2,
+    "seed": 20260915,
+    "encoder_trainable": true,
+    "device": "auto",
+    "hyperparameter_search": false
+  },
+  "training_data_contract": {
+    "source": "official_project_reconstructed_train_split",
+    "exclude_estg150_overlap": true,
+    "exclude_duplicates": true,
+    "validation_split": "official_project_reconstructed_dev_split",
+    "estg150_used_for_training_or_selection": false
+  },
+  "provenance_caveat": "Kernel widths, filter count, dropout, optimizer parameters, batch size, and stopping rules are not reported by Sun et al.; these reconstruction parameters are frozen before the EStG-150 run.",
+  "post_result_tuning": false
+}

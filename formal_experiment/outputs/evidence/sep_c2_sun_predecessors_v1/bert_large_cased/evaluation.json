@@ -1,0 +1,102 @@
+{
+  "evaluation": {
+    "confusion_rows_gold_columns_predicted": {
+      "definition": {
+        "__missing__": 0,
+        "definition": 16,
+        "obligation": 9,
+        "permission": 2,
+        "prohibition": 2
+      },
+      "obligation": {
+        "__missing__": 0,
+        "definition": 3,
+        "obligation": 52,
+        "permission": 2,
+        "prohibition": 2
+      },
+      "permission": {
+        "__missing__": 0,
+        "definition": 14,
+        "obligation": 4,
+        "permission": 23,
+        "prohibition": 1
+      },
+      "prohibition": {
+        "__missing__": 0,
+        "definition": 0,
+        "obligation": 3,
+        "permission": 9,
+        "prohibition": 8
+      }
+    },
+    "correct": 99,
+    "evaluator": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+    "evaluator_source": "src/bpc_hybrid/formal_stage2_evaluation.py",
+    "failed_sample_ids": [],
+    "gold_support": {
+      "definition": 29,
+      "obligation": 59,
+      "permission": 42,
+      "prohibition": 20
+    },
+    "missing_sample_ids": [],
+    "official_evaluator": {
+      "accuracy": 0.66,
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "macro_f1": 0.6024046861613537,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8188976377952756,
+          "precision": 0.7647058823529411,
+          "recall": 0.8813559322033898
+        },
+        {
+          "class": "permission",
+          "f1": 0.5897435897435898,
+          "precision": 0.6388888888888888,
+          "recall": 0.5476190476190477
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.4848484848484849,
+          "precision": 0.6153846153846154,
+          "recall": 0.4
+        },
+        {
+          "class": "definition",
+          "f1": 0.5161290322580646,
+          "precision": 0.48484848484848486,
+          "recall": 0.5517241379310345
+        }
+      ],
+      "records": 150,
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 0
+    },
+    "predicted_count": {
+      "definition": 33,
+      "obligation": 68,
+      "permission": 36,
+      "prohibition": 13
+    },
+    "records_expected": 150,
+    "records_failed": 0,
+    "records_missing": 0,
+    "records_scored": 150,
+    "schema_version": "sep_c2_sun_predecessor_evaluation@1.0.0",
+    "task_id": "estg150_modality_label_classification_v1",
+    "unit": "first clause modality per formal input record, frozen Gold order",
+    "unlabeled_predictions": 0,
+    "unlabeled_sample_ids": []
+  },
+  "method_id": "bert_large_cased",
+  "schema_version": "sep_c2_sun_predecessor_evaluation_file@1.0.0"
+}

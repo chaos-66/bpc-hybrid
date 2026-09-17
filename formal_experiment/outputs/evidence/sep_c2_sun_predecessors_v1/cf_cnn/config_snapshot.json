@@ -1,0 +1,40 @@
+{
+  "config_path": "configs/sep_c2_sun_predecessors_v1/cf_cnn_v1.json",
+  "config_sha256": "6cf98e49578409984c24639f673b8805a4eb769e0fd2fce659d6223a2163e3db",
+  "frozen_hyperparameters": {
+    "activation": "relu",
+    "batch_size": 32,
+    "dropout": 0.5,
+    "early_stopping_metric": "macro_f1",
+    "early_stopping_patience": 5,
+    "embedding_initialization": "official EStG_sent_vec.csv 300-d token vectors",
+    "embedding_trainable": true,
+    "filters_per_kernel": 100,
+    "gradient_clip_norm": 1.0,
+    "hyperparameter_search": false,
+    "kernel_sizes": [
+      3,
+      4,
+      5
+    ],
+    "learning_rate": 0.001,
+    "loss": "unweighted_cross_entropy",
+    "max_epochs": 30,
+    "max_length": 192,
+    "optimizer": "AdamW",
+    "pooling": "masked global max",
+    "seed": 20260915,
+    "type": "text_cnn",
+    "weight_decay": 0.0001
+  },
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "cf_cnn",
+    "notes": "Sun et al. cite a standard CNN for sentence classification and do not publish the exact kernel/filter settings; the reconstruction uses 3/4/5-gram filters, 100 filters each, dropout 0.5, and the official 300-d token vectors.",
+    "reproduction_class": "paper-described architecture retrained locally on the official EStG modality train split",
+    "sun_role": "Table 7 CNN classification baseline (CF_CNN)",
+    "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); dev for selection"
+  },
+  "schema_version": "sep_c2_sun_predecessor_config@1.0.0"
+}

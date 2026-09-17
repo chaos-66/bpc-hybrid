@@ -1,0 +1,57 @@
+{
+  "method_statuses": {
+    "bert_legal_uncased_probe": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\bert_legal_uncased_probe\\predictions.json",
+      "status": "evaluated"
+    },
+    "bert_legal_uncased_textcnn_existing": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\bert_legal_uncased_textcnn_existing\\predictions.json",
+      "status": "evaluated"
+    },
+    "cf_cnn": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\cf_cnn\\predictions.json",
+      "status": "evaluated"
+    },
+    "cf_kw": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\cf_kw\\predictions.json",
+      "status": "evaluated"
+    },
+    "cf_rnn": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\cf_rnn\\predictions.json",
+      "status": "evaluated"
+    },
+    "direct_llm": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\data\\predictions\\direct_llm_formal_arm_v1\\predictions.json",
+      "status": "evaluated"
+    },
+    "sun_rule_only": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\data\\predictions\\b0_formal_arm_v1\\predictions.json",
+      "status": "evaluated"
+    }
+  },
+  "report_id": "sep_c2_sun_predecessors_comparison_v1",
+  "safety": {
+    "gold_used_for_evaluation_only": true,
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "post_result_tuning": false
+  },
+  "schema_version": "sep_c2_sun_predecessor_comparison_manifest@1.0.0",
+  "source_bindings": {
+    "data/gold/stage2/estg150_formal_gold_v1.json": {
+      "sha256": "bde3d15bfe63ed8c404ac902f87ef0664c2566741c47f32581245fb3b5a9a796"
+    },
+    "data/input/estg150_formal_inference_input_v2.json": {
+      "sha256": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad"
+    },
+    "src/bpc_hybrid/formal_stage2_evaluation.py": {
+      "sha256": "5cc2276d4a8c0ffd2108be91eb4cab48c0d65f93a8d12c3f54baf7f570517fae"
+    },
+    "src/bpc_hybrid/stage2_sun_literal_overlap.py": {
+      "sha256": "58a087de239512a11e87aa8d30f1204dfbd2c0a65818ad04c2aa634f542b3ab9"
+    },
+    "src/bpc_hybrid/sun_predecessors/evaluation.py": {
+      "sha256": "ced1c6c68246698e8564ca5ec0aab054848dd9fe3393c4060a5178a05094cf02"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "input_bindings": {
+    "data/gold/stage2/estg150_formal_gold_v1.json": "bde3d15bfe63ed8c404ac902f87ef0664c2566741c47f32581245fb3b5a9a796",
+    "data/input/estg150_formal_inference_input_v2.json": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad"
+  },
+  "prediction_bindings": {
+    "bert_base_cased": "1355d3a348a35366755a80632e5eaf72d237e1bfa6510e75a6f6a064df350eda",
+    "bert_base_uncased": "a658fc3bc2317f4a7582840c2680ab03ce6f83b2da463b0fc781c5ceef1e0f9e",
+    "bert_large_cased": "f9616624016b32bb46aa7114c31b6e02c4a60a1277a9b5db1b31a83cfc69e250",
+    "bert_large_uncased": "9f05ed48fd7a25746efa15b4a1e5a949c1386f6b2262936d422be4e2c8de9723",
+    "bert_legal_uncased": "831cefec8e28e5e0f18b70db1052a8586edeb9af6ef8917fc354e6a945570416",
+    "cf_cnn": "57d115a8ba22f9571c53bea9f157ae3d2e170f3656d16dc2ea68ffbb7bc595ca",
+    "cf_kw": "20d5b1c7ee7aeb217ac2a963b9a5113f6ace8ab912e8b9f70752e1d99098687a",
+    "cf_rnn": "8ad48144b205cd6643322fb4a0aacfd427fb833256edaccd4d62240831a40f57",
+    "direct_llm": "8c6d07e746c0ee7daae429fd4bd4a2f2032af1c936fe2707a3bae5d48d19c796",
+    "sun_rule_only": "fa94991d246db9876b55d6a473644a4a1b93404bc35d3e314d3dba4768d9278d"
+  },
+  "report_id": "sep_c2_target_consistency_diagnosis_v1",
+  "report_md_sha256": "54fda5683525c602d2aa2271cad578ac2aff25089a6acb1da47e364600079520",
+  "report_sha256": "436611cc477d9d12897309c3abf7f68709ce64d97bb8299d6a702eb13eeb611f",
+  "safety": {
+    "full_150_denominator_preserved": true,
+    "gold_used_for_evaluation_only": true,
+    "gold_used_for_prediction": false,
+    "new_llm_api_calls": 0,
+    "new_model_training_runs": 0,
+    "new_paid_api_calls": 0,
+    "post_result_tuning": false,
+    "source_pending_counted_as_failure": false
+  },
+  "schema_version": "sep_c2_target_consistency_diagnosis_manifest@1.0.0",
+  "source_bindings": {
+    "outputs/reports/sep_c2_sun_predecessors_comparison_v2.json": "0416a58dbba9f5a7967810cbc812340768905f644f6e2830ec04fe36b16de535",
+    "src/bpc_hybrid/formal_stage2_evaluation.py": "5cc2276d4a8c0ffd2108be91eb4cab48c0d65f93a8d12c3f54baf7f570517fae",
+    "src/bpc_hybrid/sun_predecessors/common.py": "203d5faa9ff5c34beb4b8cf2ac6a71ad2176c211f4ff9e8b00171d35ca4ebf11",
+    "src/bpc_hybrid/sun_predecessors/evaluation.py": "ced1c6c68246698e8564ca5ec0aab054848dd9fe3393c4060a5178a05094cf02"
+  }
+}

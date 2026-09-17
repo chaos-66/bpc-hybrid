@@ -1,0 +1,37 @@
+{
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "bert_legal_uncased_textcnn_existing",
+    "notes": "This is the already published B0 classifier component (nlpaueb/legal-bert-base-uncased + TextCNN). Its original train split contains a small number of normalized-text overlaps with EStG-150; therefore it is reported as a diagnostic sensitivity row, not as the primary clean BERT comparison.",
+    "reproduction_class": "existing locally trained checkpoint; reused without retraining",
+    "sun_role": "Existing project S2.4/S2.6 BERT-TextCNN classifier (final-paper-style head), reused read-only",
+    "training_data": "existing S2.4 checkpoint trained on the official EStG modality train split before this SEP-C2 run"
+  },
+  "model_card": {
+    "architecture_scope": "full fine-tuned BERT encoder plus TextCNN head",
+    "checkpoint": {
+      "byte_size": 441559200,
+      "path": "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt",
+      "sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1",
+      "versioned_in_main_workspace": false
+    },
+    "classifier_config": {
+      "path": "configs/models/sun_bert_textcnn_s24.json",
+      "sha256": "82f950bce605e405ee1600bca90a961337f30f2933ab807f33998464bb7af498"
+    },
+    "contamination_note": "This checkpoint was trained before this SEP-C2 run on the official split without the EStG-150 overlap exclusion; 24 flagged train rows (including 4 exact normalized matches) may have been seen during training. Therefore this row is diagnostic, not the primary clean BERT comparison.",
+    "estg150_exact_normalized_overlap_rows": 4,
+    "estg150_overlap_rows_flagged_by_clean_splitter": 24,
+    "input_language": "de",
+    "method_id": "bert_legal_uncased_textcnn_existing",
+    "model_family": "Legal-BERT base uncased + TextCNN head (existing project S2.4 reconstruction)",
+    "original_training_rows": 1985,
+    "run_manifest": {
+      "path": "outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json",
+      "sha256": "a67ad5d690155759d068afe37bd32ac8dc0238f237c298ed8ff857accb258026"
+    },
+    "schema_version": "sep_c2_sun_predecessor_existing_bert_model_card@1.0.0"
+  },
+  "schema_version": "sep_c2_sun_predecessor_config@1.0.0"
+}

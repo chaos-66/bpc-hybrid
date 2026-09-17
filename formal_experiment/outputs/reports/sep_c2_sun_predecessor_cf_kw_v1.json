@@ -1,0 +1,142 @@
+{
+  "evaluation": {
+    "confusion_rows_gold_columns_predicted": {
+      "definition": {
+        "__missing__": 0,
+        "definition": 8,
+        "obligation": 8,
+        "permission": 8,
+        "prohibition": 5
+      },
+      "obligation": {
+        "__missing__": 0,
+        "definition": 5,
+        "obligation": 44,
+        "permission": 2,
+        "prohibition": 8
+      },
+      "permission": {
+        "__missing__": 0,
+        "definition": 1,
+        "obligation": 6,
+        "permission": 35,
+        "prohibition": 0
+      },
+      "prohibition": {
+        "__missing__": 0,
+        "definition": 0,
+        "obligation": 4,
+        "permission": 10,
+        "prohibition": 6
+      }
+    },
+    "correct": 93,
+    "evaluator": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+    "evaluator_source": "src/bpc_hybrid/formal_stage2_evaluation.py",
+    "failed_sample_ids": [],
+    "gold_support": {
+      "definition": 29,
+      "obligation": 59,
+      "permission": 42,
+      "prohibition": 20
+    },
+    "missing_sample_ids": [],
+    "official_evaluator": {
+      "accuracy": 0.62,
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "macro_f1": 0.5321768856892328,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7272727272727273,
+          "precision": 0.7096774193548387,
+          "recall": 0.7457627118644068
+        },
+        {
+          "class": "permission",
+          "f1": 0.7216494845360825,
+          "precision": 0.6363636363636364,
+          "recall": 0.8333333333333334
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.3076923076923077,
+          "precision": 0.3157894736842105,
+          "recall": 0.3
+        },
+        {
+          "class": "definition",
+          "f1": 0.37209302325581395,
+          "precision": 0.5714285714285714,
+          "recall": 0.27586206896551724
+        }
+      ],
+      "records": 150,
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 0
+    },
+    "predicted_count": {
+      "definition": 14,
+      "obligation": 62,
+      "permission": 55,
+      "prohibition": 19
+    },
+    "records_expected": 150,
+    "records_failed": 0,
+    "records_missing": 0,
+    "records_scored": 150,
+    "schema_version": "sep_c2_sun_predecessor_evaluation@1.0.0",
+    "task_id": "estg150_modality_label_classification_v1",
+    "unit": "first clause modality per formal input record, frozen Gold order",
+    "unlabeled_predictions": 0,
+    "unlabeled_sample_ids": []
+  },
+  "execution": {
+    "formal_input": "data/input/estg150_formal_inference_input_v2.json",
+    "formal_input_sha256": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad",
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "records": 150
+  },
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "cf_kw",
+    "notes": "Sun et al. Table 7 reports CF_KW 62.7/64.7/60.8 on their modality split. The local author-manuscript text only says 'simply uses keywords', so the exact keyword list is unavailable. This reconstruction uses an a-priori German legal-modal rule list and a definition fallback.",
+    "reproduction_class": "paper-described rule baseline; keyword list reconstructed because the paper does not publish it",
+    "sun_role": "Table 7 keyword classification baseline (CF_KW)",
+    "training_data": "none (deterministic keyword patterns)"
+  },
+  "prediction": {
+    "artifact_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw",
+    "fallback_count": 8,
+    "predicted_count": {
+      "definition": 14,
+      "obligation": 62,
+      "permission": 55,
+      "prohibition": 19
+    }
+  },
+  "report_id": "sep_c2_sun_predecessor_cf_kw_v1",
+  "safety": {
+    "gold_read_by_prediction_code": false,
+    "gold_used_for_evaluation": true,
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "post_result_tuning": false
+  },
+  "schema_version": "sep_c2_sun_predecessor_report@1.0.0",
+  "status": "completed_zero_api_predecessor_method_run",
+  "training": {
+    "model_selection": "none",
+    "required": false,
+    "training_data": "none (deterministic keyword patterns)"
+  },
+  "version_caveat": "Built against the locally available earlier author manuscript; the final Springer version could not be checked in this offline environment. No exact-original claim is made."
+}

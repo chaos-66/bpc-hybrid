@@ -1,0 +1,43 @@
+{
+  "config_path": "configs/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe_v1.json",
+  "config_sha256": "063f45dddb036e2230cf0c7a39cd200d84c4ce2507e0e07d5e3ab2cb7bcd1321",
+  "encoder": {
+    "feature_pooling": "attention-mask-aware mean of last_hidden_state",
+    "local_files_only": true,
+    "repository_id": "nlpaueb/legal-bert-base-uncased",
+    "revision": "15b570cbf88259610b082a167dacc190124f60f6",
+    "source_config": "configs/models/sun_bert_textcnn_s24.json"
+  },
+  "frozen_hyperparameters": {
+    "batch_size": 64,
+    "early_stopping_metric": "macro_f1",
+    "early_stopping_patience": 10,
+    "feature_extraction_batch_size": 16,
+    "hyperparameter_search": false,
+    "learning_rate": 0.0005,
+    "loss": "unweighted_cross_entropy",
+    "max_epochs": 100,
+    "max_length": 192,
+    "optimizer": "AdamW",
+    "seed": 20260915,
+    "weight_decay": 0.0001
+  },
+  "head": {
+    "activation": "relu",
+    "dropout": 0.3,
+    "hidden_size": 256,
+    "input_dimension": 768,
+    "num_labels": 4,
+    "type": "mlp"
+  },
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "bert_legal_uncased_probe",
+    "notes": "Local cache contains nlpaueb/legal-bert-base-uncased (EU legislation), the closest available match to Sun's bert-legal-uncased family. CPU-only full fine-tuning is not attempted; the encoder is frozen and a linear classification head is trained on clean data. This is disclosed as a weaker, method-level reconstruction.",
+    "reproduction_class": "matched public encoder frozen; classification head trained locally on the clean official train split",
+    "sun_role": "Table 6 bert-legal-uncased comparison; closest locally available public legal-BERT encoder",
+    "training_data": "official Sun/Michel EStG modality train split (filtered); dev for selection"
+  },
+  "schema_version": "sep_c2_sun_predecessor_config@1.0.0"
+}

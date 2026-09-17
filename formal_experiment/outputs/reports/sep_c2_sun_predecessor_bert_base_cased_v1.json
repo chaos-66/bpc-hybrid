@@ -1,0 +1,334 @@
+{
+  "architecture_evidence": "Sun et al. (2024), final article, Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
+  "evaluation": {
+    "confusion_rows_gold_columns_predicted": {
+      "definition": {
+        "__missing__": 0,
+        "definition": 19,
+        "obligation": 5,
+        "permission": 5,
+        "prohibition": 0
+      },
+      "obligation": {
+        "__missing__": 0,
+        "definition": 16,
+        "obligation": 41,
+        "permission": 2,
+        "prohibition": 0
+      },
+      "permission": {
+        "__missing__": 0,
+        "definition": 13,
+        "obligation": 3,
+        "permission": 26,
+        "prohibition": 0
+      },
+      "prohibition": {
+        "__missing__": 0,
+        "definition": 11,
+        "obligation": 2,
+        "permission": 7,
+        "prohibition": 0
+      }
+    },
+    "correct": 86,
+    "evaluator": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+    "evaluator_source": "src/bpc_hybrid/formal_stage2_evaluation.py",
+    "failed_sample_ids": [],
+    "gold_support": {
+      "definition": 29,
+      "obligation": 59,
+      "permission": 42,
+      "prohibition": 20
+    },
+    "missing_sample_ids": [],
+    "official_evaluator": {
+      "accuracy": 0.5733333333333334,
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "macro_f1": 0.4528547671840355,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7454545454545455,
+          "precision": 0.803921568627451,
+          "recall": 0.6949152542372882
+        },
+        {
+          "class": "permission",
+          "f1": 0.6341463414634146,
+          "precision": 0.65,
+          "recall": 0.6190476190476191
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.43181818181818177,
+          "precision": 0.3220338983050847,
+          "recall": 0.6551724137931034
+        }
+      ],
+      "records": 150,
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 0
+    },
+    "predicted_count": {
+      "definition": 59,
+      "obligation": 51,
+      "permission": 40,
+      "prohibition": 0
+    },
+    "records_expected": 150,
+    "records_failed": 0,
+    "records_missing": 0,
+    "records_scored": 150,
+    "schema_version": "sep_c2_sun_predecessor_evaluation@1.0.0",
+    "task_id": "estg150_modality_label_classification_v1",
+    "unit": "first clause modality per formal input record, frozen Gold order",
+    "unlabeled_predictions": 0,
+    "unlabeled_sample_ids": []
+  },
+  "execution": {
+    "formal_input": "data/input/estg150_formal_inference_input_v2.json",
+    "formal_input_sha256": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad",
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "records": 150
+  },
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "bert_base_cased",
+    "notes": "The final article Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; base 12-layer / 768-hidden, 12 encoder layers. The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run.",
+    "reproduction_class": "public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+    "sun_role": "Sun et al. final version Table 6/7 bert-base-cased comparison; final-paper BERT-TextCNN architecture",
+    "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection"
+  },
+  "official_clean_test": {
+    "accuracy": 0.8671497584541062,
+    "confusion_matrix": [
+      [
+        152,
+        13,
+        8,
+        2
+      ],
+      [
+        12,
+        171,
+        1,
+        2
+      ],
+      [
+        6,
+        1,
+        31,
+        0
+      ],
+      [
+        1,
+        8,
+        1,
+        5
+      ]
+    ],
+    "macro_f1": 0.7456160450491619,
+    "n": 414,
+    "per_class": {
+      "definition": {
+        "f1": 0.8786127167630058,
+        "precision": 0.8888888888888888,
+        "predicted_count": 171,
+        "recall": 0.8685714285714285,
+        "support": 175
+      },
+      "obligation": {
+        "f1": 0.9023746701846964,
+        "precision": 0.8860103626943006,
+        "predicted_count": 193,
+        "recall": 0.9193548387096774,
+        "support": 186
+      },
+      "permission": {
+        "f1": 0.7848101265822786,
+        "precision": 0.7560975609756098,
+        "predicted_count": 41,
+        "recall": 0.8157894736842105,
+        "support": 38
+      },
+      "prohibition": {
+        "f1": 0.4166666666666667,
+        "precision": 0.5555555555555556,
+        "predicted_count": 9,
+        "recall": 0.3333333333333333,
+        "support": 15
+      }
+    }
+  },
+  "prediction": {
+    "artifact_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased",
+    "predicted_count": {
+      "definition": 59,
+      "obligation": 51,
+      "permission": 40
+    }
+  },
+  "report_id": "sep_c2_sun_predecessor_bert_base_cased_v1",
+  "safety": {
+    "estg150_used_for_training_or_selection": false,
+    "gold_read_by_prediction_code": false,
+    "gold_used_for_evaluation": true,
+    "local_files_only": true,
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "post_result_tuning": false
+  },
+  "schema_version": "sep_c2_sun_predecessor_report@1.0.0",
+  "status": "completed_zero_api_predecessor_method_run",
+  "training": {
+    "best_dev": {
+      "accuracy": 0.8768115942028986,
+      "confusion_matrix": [
+        [
+          155,
+          13,
+          6,
+          1
+        ],
+        [
+          13,
+          168,
+          3,
+          1
+        ],
+        [
+          4,
+          1,
+          33,
+          0
+        ],
+        [
+          3,
+          5,
+          1,
+          7
+        ]
+      ],
+      "macro_f1": 0.7909387267451784,
+      "n": 414,
+      "per_class": {
+        "definition": {
+          "f1": 0.8857142857142857,
+          "precision": 0.8857142857142857,
+          "predicted_count": 175,
+          "recall": 0.8857142857142857,
+          "support": 175
+        },
+        "obligation": {
+          "f1": 0.9032258064516129,
+          "precision": 0.8983957219251337,
+          "predicted_count": 187,
+          "recall": 0.9081081081081082,
+          "support": 185
+        },
+        "permission": {
+          "f1": 0.8148148148148148,
+          "precision": 0.7674418604651163,
+          "predicted_count": 43,
+          "recall": 0.868421052631579,
+          "support": 38
+        },
+        "prohibition": {
+          "f1": 0.56,
+          "precision": 0.7777777777777778,
+          "predicted_count": 9,
+          "recall": 0.4375,
+          "support": 16
+        }
+      }
+    },
+    "best_epoch": 5,
+    "checkpoint": {
+      "byte_size": 442780640,
+      "local_only_do_not_commit": true,
+      "path": "outputs/development/sep_c2_sun_predecessors_v1/bert_base_cased/best_model.pt",
+      "sha256": "f720d055faffc34ba77fb02fcf51cece629d86868ef69c428256cd36e531fda8",
+      "versioned": false
+    },
+    "clean_dev_rows": 414,
+    "clean_train_rows": 1927,
+    "device": "cuda",
+    "encoder": {
+      "hidden_size": 768,
+      "max_position_embeddings": 512,
+      "model_dir": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_models\\bert-base-cased",
+      "model_type": "bert",
+      "num_hidden_layers": 12,
+      "vocab_size": 28996
+    },
+    "model_file_hashes": {
+      "config.json": {
+        "byte_size": 570,
+        "sha256": "8b73abed2d67075fd3ec0f840aa53d9cccdc9169c04a7da135c07e721910ed74"
+      },
+      "model.safetensors": {
+        "byte_size": 435755784,
+        "sha256": "1d8bdcee6021e2c25f0325e84889b61c2eb26b843eef5659c247af138d64f050"
+      },
+      "tokenizer.json": {
+        "byte_size": 435797,
+        "sha256": "5b3360be30cdf39081153cf9d30bfb0503c011462fc9f77f097127c83ef0f4d9"
+      },
+      "tokenizer_config.json": {
+        "byte_size": 49,
+        "sha256": "0f6d13e6f4da6f9e24f22ada6bc3be571123d858d7c0c05a8a7cd55a9c23c2e8"
+      },
+      "vocab.txt": {
+        "byte_size": 213450,
+        "sha256": "eeaa9875b23b04b4c54ef759d03db9d1ba1554838f8fb26c5d96fa551df93d02"
+      }
+    },
+    "required": true,
+    "sequence_length_stats": {
+      "estg150_formal_input": {
+        "max": 532,
+        "max_length": 192,
+        "p50": 115,
+        "p95": 358,
+        "p99": 493,
+        "rows": 150,
+        "rows_over_max_length": 31
+      },
+      "official_dev": {
+        "max": 218,
+        "max_length": 192,
+        "p50": 66,
+        "p95": 155,
+        "p99": 191,
+        "rows": 414,
+        "rows_over_max_length": 3
+      },
+      "official_train": {
+        "max": 215,
+        "max_length": 192,
+        "p50": 70,
+        "p95": 152,
+        "p99": 182,
+        "rows": 1927,
+        "rows_over_max_length": 10
+      }
+    },
+    "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection"
+  },
+  "version_caveat": "Architecture and training mode follow the final article Section 4.2.1 / Fig. 3 (per-layer [CLS] sequence -> TextCNN -> global max -> 4-class output). The public encoder revision is pinned in the config; unpublished hyperparameters are stated in the config and treated as reconstruction parameters."
+}

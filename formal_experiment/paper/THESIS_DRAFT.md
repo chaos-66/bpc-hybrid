@@ -730,6 +730,11 @@ Rules+LLM-Repair 不再列入最低覆盖或待运行臂。模态分类（4 类 
 P/R/F1 主表，modality evidence-span 单独/辅助）分别报告，不能用只做分类的方法
 冒充完整 Stage 2。
 
+#### 6.1.1 前人分类配置与目标结构审计（2026-09-15，零 API）
+
+Sun 作者稿 Table 6/7 的 9 个前人配置中，8 个已在统一 EStG-150 正式输入和同一 first-Gold-clause 评价器上实际重评；`bert-legal-cased` 因精确公开权重不存在记为 source-pending，不计为 150 次模型失败，也不进入 10 方法性能分母。为区分全文单标签分类与首个 Gold clause 目标，150 条按有效 Gold clause 固定分为 A=101（单一有效 clause）、B=15（多 clause 同标签）、C=34（多 clause 异标签）三组；分组只用于结果解释和限制说明，不替代完整 150 条主表。
+
+
 ### 6.2 Stage 3 baseline
 
 最低覆盖：词法/检索下限、Winter、完整 Sun、一个现代 embedding/graph baseline
@@ -909,6 +914,38 @@ semantic-field 人工裁决标签。
 Direct-LLM；Rules+LLM-Repair 因 actor 过度抽取而 net-negative（actor F1 0.4296，
 vs Rules-Only 0.8203 / Direct-LLM 0.7579）。**无整体胜者声明**。
 
+#### 7.2.1 前人分类配置的同口径重评与目标结构诊断（2026-09-15，零 API）
+
+**完整 150 条 first-Gold-clause 主表**。8 个前人配置、Sun/Rules-Only 与 Direct-LLM 均保留 150/150 分母；Direct-LLM 的 `estg_000112` 为空 clauses 输出，按未标注错误计入分母。`bert-legal-cased` 为 source-pending，不在下表。
+| 方法 | 150 acc | 150 macro-F1 |
+|---|---:|---:|
+| CF_KW | 0.6200 | 0.5322 |
+| CF_RNN | 0.5667 | 0.4800 |
+| CF_CNN | 0.6733 | 0.6177 |
+| bert-base-uncased | 0.4467 | 0.3507 |
+| bert-base-cased | 0.5733 | 0.4529 |
+| bert-large-uncased | 0.5733 | 0.5245 |
+| bert-large-cased | 0.6600 | 0.6024 |
+| bert-legal-uncased | 0.4800 | 0.4057 |
+| Sun/Rules-Only | 0.7400 | 0.7128 |
+| Direct-LLM | 0.8333 | 0.7695 |
+
+**目标结构诊断**。150 条中 A=101、B=15、C=34；首 clause 起点为 0 的 141/150，覆盖完整句的 26/150；9 条存在 overlapping clause spans，1 条 clause list 顺序与字符起点不一致（`estg_000136`）。评价器按冻结 G0.4 合同读取 record clause list 中首个非空 modality 标签，未修改合同或 Gold。
+| 方法 | A acc | B acc | C first acc | C 任意 Gold clause acc | C 首错命中后续标签数 |
+|---|---:|---:|---:|---:|---:|
+| CF_KW | 0.7228 | 0.5333 | 0.3529 | 0.8529 | 17 |
+| CF_RNN | 0.6238 | 0.5333 | 0.4118 | 0.6765 | 9 |
+| CF_CNN | 0.7327 | 0.8667 | 0.4118 | 0.6471 | 8 |
+| bert-base-uncased | 0.4455 | 0.4000 | 0.4706 | 0.6765 | 7 |
+| bert-base-cased | 0.5941 | 0.6667 | 0.4706 | 0.6471 | 6 |
+| bert-large-uncased | 0.5941 | 0.5333 | 0.5294 | 0.8235 | 10 |
+| bert-large-cased | 0.6931 | 0.6000 | 0.5882 | 0.8824 | 10 |
+| bert-legal-uncased | 0.4851 | 0.4000 | 0.5000 | 0.7059 | 7 |
+| Sun/Rules-Only | 0.7921 | 0.6667 | 0.6176 | 0.8529 | 8 |
+| Direct-LLM | 0.9307 | 0.7333 | 0.5882 | 0.8235 | 8 |
+
+**解释与收窄**。B 组多 clause 标签相同，其错误不能由后续 clause 标签解释；C 组任意 Gold clause 命中率只作目标歧义的上界诊断，不能断言模型解码了后续 clause。前人分类器在句子级 EStG modality 数据上训练，输出单一整句标签；当前比较同时受德语/英语输入、训练目标和 first-clause 目标构造影响，不能用该表单独证明架构的纯粹优势。`bert-legal-cased` 是 source-pending，不是模型失败。
+
 ### 7.3 Stage 2 设计分析与错误类型
 
 #### 7.3.1 复杂度分层（S2.12，零 API arm）
@@ -989,6 +1026,8 @@ fence，新版 111 为 150 条裸 JSON；这说明输出形式更符合要求，
 不要求 actor 非空。候选仅完成文件、实际消息差异及示例结构检查，人工期望
 答案不是模型实测，尚无性能改进结论。J 归公共固定输出约定、S/E 保留为两个
 因素只是待验证的组织方案，没有替代本节已实测设计或完成新的消融。
+
+**保存路径与完整 validator 链边界。** 0.726206 是 modular runner 保存路径在 adapter+canonicalizer 下的五字段 mean F1；启用最终 canonical validator 的离线完整链为 0.725473（149/150）。raw actor FP 约 89 只是离线诊断量，不是同口径最终精确 FP，不作为正式计数；正式表使用 final actor FP 84。候选未实测，不写性能改善。
 
 证据：新版四臂 manifest/事件见 C48/C50；固定原始响应后处理归因与表单见 `outputs/reports/sep_c3_postprocessing_attribution_v1.{json,md}`；历史同口径分数与错误计数见
 `outputs/reports/sep_c3_actor_diagnosis_recompute_v1.json`；原始输出与后处理边界
@@ -1201,6 +1240,15 @@ Sun et al. 将 γ 视为可调的语义等价门槛。其多数流程模型在 �
   false-positive rate；33 条 panel 每个测试点预路由单一 gold 类型，跨类型 FP
   结构性不可能出现，Precision 面板仅按 Sun 口径保留，信息以 Recall/F1 为主。
 
+#### 7.4.8 SEP-C4 constraint 与 exception 失败定位（DEV_ONLY，2026-09-17，零 API）
+
+在 C36 v2 的同一 40 对 target-paired 开发面板上，当前 v5 deterministic 的四类 macro-F1 为 0.6737，Winter-style 四类扩展对照为 0.6036；pair success 分别为 21/40 与 18/40，target unknown 分别为 0.3375 与 0.3625，control target FP 分别为 0.0250 与 0.0750。该比较只说明固定开发面板上的同口径描述性差异，不是 formal Oracle，也不是直接 Winter 原论文成绩。
+constraint_violated：当前 v5 为 TP=2、FN_observed=0、FN_unknown=8、F1=0.3333；对照为 TP=6、FN_observed=0、FN_unknown=4、F1=0.7500。01-02 是 timer 数值上限矛盾，当前检查正确判为 violation；03-10 的 rule constraint 是 without undue delay、without hindrance、clear and plain language 等抽象约束。冻结配置只支持 time_limit，并规定 unsupported abstract constraints 不得用确定性相似度判成合规或违规，因此这 8 例保留 unknown。这 8 例同时存在 rule-action grounding 不一致（03-06 resolved 但 action_match=false；07-10 ambiguous/unresolved）；并且合成 panel 在这 8 例把 annotation/dataObject 插入 control、variant 保持 source，标签语义是缺少抽象约束复述，不是 variant 中的运行时数值/状态矛盾。没有足够证据支持公共映射代码最小修复；不得为提高 F1 调阈值、改 Gold 或删样本。
+
+exception_not_handled：当前 v5 为 TP=3、FN_observed=0、FN_unknown=7、F1=0.4615；对照为 TP=3、FN_observed=1、FN_unknown=6、F1=0.4615。7 个 unknown 的主因是 rule-action grounding unresolved/ambiguous：variant 确实缺少插入的 handler，但检查器无法把 exception 绑定到可靠动作锚点；06 另有一个无关 alternate branch 被标为 dedicated handler candidate，但动作 grounding 本身 ambiguous。target-paired 单类型检查没有把 unknown 读成合规或违规；combined decision 可能因优先级输出其他类型 violation，论文引用时必须区分单类型检查与最终单标签。没有足够证据支持最小公共映射代码修复。
+
+本节仅为失败定位，不声称 constraint/exception 性能改善，不把 unknown 当作合规或违规，不修改阈值、Gold、样本、历史预测或检查器代码。逐项追踪、输入哈希和证据表分别见 outputs/reports/sep_c4_constraint_failure_localization_v1.{json,md} 与 outputs/reports/sep_c4_exception_failure_localization_v1.{json,md}，主张矩阵见 C52/C53。
+
 [[TODO-RESULT:S3.7：Oracle Stage 3 与 end-to-end 分表]]
 
 ### 7.5 端到端消融
@@ -1381,6 +1429,8 @@ Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
 - 合成受控错误 panel 的生成目标按**语法/结构**锁定（非按规则词面选择），因此
   “方法检测不到”可能部分反映目标与原 rule 的词面对齐程度，而不仅是错误本身
   的固有难度；此点已在 §7.4.6 如实讨论。
+
+- **前人分类配置的目标构造与语言条件**：CF/BERT 使用德语 `raw_text_de` 并在句子级 EStG modality 数据上训练，评价目标是 G0.4 first-Gold-clause；Direct-LLM 使用既有 `approved_text_en`，Sun/Rules-Only 的 modality head 使用德语对齐单元。150 条中 49 条为多 clause，C=34 异标签；因此该表支持同一协议下的系统比较，但不能单独证明架构优势，语言效应也尚不能分离。
 
 **外部效度**：
 - 全部 Stage 3 违规结果基于 7 个 GDPR 流程（45 activities）与 GDPR 义务类型

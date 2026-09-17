@@ -9,6 +9,18 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## SEP-C4 A/B 失败定位与 SEP-C2/C3 论文整合（2026-09-17，零 API）
+
+- 状态：constraint/exception 已基于冻结开发面板完成逐项失败定位；A/B 均未发现足以安全修复的最小公共代码缺陷，未改映射代码、阈值、Gold、样本、历史预测或 manifest。
+
+- constraint：当前 v5 per-type TP=2/FN_observed=0/FN_unknown=8/F1=0.3333；Winter-style 四类扩展对照 TP=6/F1=0.7500。8 个 unknown 全部来自 unsupported abstract constraint kind，配置禁止对这类约束做确定性相似度 verdict；同一 8 例 action grounding 也不一致。
+
+- exception：当前 v5 per-type TP=3/FN_observed=0/FN_unknown=7/F1=0.4615；Winter-style 四类扩展对照 TP=3/FN_observed=1/FN_unknown=6/F1=0.4615。7 个 unknown 主因是 rule-action grounding unresolved/ambiguous，单类型检查未把 unknown 当成合规或违规。
+
+- 论文整合：SEP-C2 前人配置与分类目标诊断、SEP-C3 modular_v1 四臂/actor/后处理归因均已保留。C2 分类目标诊断由 C48 改为 C51，C3 保留 C48/C49/C50；A/B 新增 C52/C53，论文新增 §7.4.8。
+
+- 报告：outputs/reports/sep_c4_constraint_failure_localization_v1.{json,md}；outputs/reports/sep_c4_exception_failure_localization_v1.{json,md}。开发面板不是 formal Oracle；不宣称 F1 提升或泛化。
+
 ## SEP-C3 / PW7 当前进度：已有结果、后处理归因与正文回填（2026-09-17，零新增 API）
 
 - 已完成写作与归因子项：正文 §6.6.1/§7.3.2 交代四臂设计、五字段主指标、
@@ -95,6 +107,55 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
   旧 137 次方案及发送确认仍失效；当前取消不构成外部发送授权，自动审批阻塞未解除。
 - 本批为实验代码、机器合同、具名测试与文档更新；未运行实验 API，未改 Gold 或历史
   预测/授权文件；停用规则仍见 `formal_experiment/AGENTS.md`。
+
+## 0.5 SEP-C2 分类目标一致性诊断与 source-pending 纠错收尾（2026-09-15，零 API）
+
+- **当前结论**：10 个已评价方法没有发现预测实现错误；确认的是一处报告计数错误——`bert_legal_cased` 未运行却被 v2 计为 150 failed。本轮新增诊断报告将其分为 source-pending，`records_failed=0`、`records_not_run=150`，不进入 10 方法分母。
+- **目标结构**：A=101（单一有效 Gold clause）、B=15（多 clause 同标签）、C=34（多 clause 异标签）；首 clause 起点 0 的 141/150，覆盖全文 26/150，9 条 overlapping clause spans，1 条 clause list 非文本起点序（`estg_000136`）。
+- **分组结果**：完整 30 行 A/B/C 指标、C 组 later-match 诊断和 10 个代表性案例见 `outputs/reports/sep_c2_target_consistency_diagnosis_v1.json/.md`；原始 v2 主表保留，不覆盖预测、Gold 或历史版本。
+- **解释边界**：前人句子级单标签模型与 G0.4 first-Gold-clause 目标在 C 组存在目标构造差异；德语/英语、类别先验和 BERT 192 subword 截断均作为条件报告，尚不能分离为单一确定原因。
+- **验证**：`python scripts/build_sep_c2_target_consistency_diagnosis_v1.py --check` 通过；`pytest tests/test_sep_c2_target_consistency_diagnosis.py` 通过。
+
+## 0.4 SEP-C2 Sun 前人 9 配置收口（2026-09-15，零新增付费 API）
+
+- 当前真实状态：Sun final version Table 6/7 的 9 个前人配置中，8 个已有实际预测和同口径评价；`bert-legal-cased` 因公开精确 checkpoint 不存在而具名阻塞，未用 generic cased BERT 或 uncased Legal-BERT 占位。
+- 架构核实：final Springer version Section 4.2.1 / Fig. 3 已用于核实 BERT-TextCNN = 每层 `[CLS]` 序列 -> TextCNN(3/4/5, 256 filters) -> global max -> 四分类。公开模型 revision 已固定；clean official EStG train 1927 条训练，clean dev 414 条选 checkpoint。
+- 分类结果（acc / macro-F1）：CF_KW 0.6200/0.5322；CF_RNN 0.5667/0.4800；CF_CNN 0.6733/0.6177；bert-base-uncased 0.4467/0.3507；bert-base-cased 0.5733/0.4529；bert-large-uncased 0.5733/0.5245；bert-large-cased 0.6600/0.6024；bert-legal-uncased 0.4800/0.4057；Sun/Rules-Only 0.7400/0.7128；Direct-LLM 0.8333/0.7695。
+- 主评价接线修正：v1 的 fine five-field span-only 汇总不再作为语义主表；v2 使用 G0.4 coarse sentence-level 五字段主表，Rules-Only `0.6984/0.8410/0.7631`，Direct-LLM `0.8695/0.8083/0.8378`；fine five-field 仅诊断。modality evidence 仍 unavailable。
+- 输入/目标：classification 目标为 first Gold clause modality；CF/BERT 使用德语 raw_text_de，Direct-LLM 使用既有英文 approved_text_en；语言和粒度差异作为实验条件记录。
+- 产物：`outputs/reports/sep_c2_sun_predecessors_comparison_v2.json/.md`；每方法 capsule 在 `outputs/evidence/sep_c2_sun_predecessors_v1/`；BERT 配置在 `configs/sep_c2_sun_predecessors_v1/bert_full_v1/`；roster 已更新。
+- 边界：`bert-legal-cased` 仍阻塞；其余 8 个前人配置和 2 个项目方法已可定位复现。下一步写论文证据位置，继续 S2.12/S2.13 既有依赖，不重开 Winter。
+
+## 0.3 SEP-C2 Sun 前人分类方法与同口径比较实跑（2026-09-15，零 API）
+
+- 按用户纠正执行 Sun et al. (2024) 作者稿明确报告的 Table 7 分类方法
+  `CF_KW` / `CF_RNN` / `CF_CNN`，并在同一批 EStG-150 输入、同一正式
+  modality Gold、同一 `evaluate_modality_labels` 评价器上重新评价；不再把
+  前人方法改写成 clause-region detection。
+- 实跑 Macro-F1 / 准确率：`CF_KW` 0.5322 / 0.6200，`CF_RNN` 0.4800 /
+  0.5667，`CF_CNN` 0.6177 / 0.6733；均无真实 LLM/API 调用。
+- BERT 对照：本地公开权重只有 `nlpaueb/legal-bert-base-uncased`。
+  clean frozen-encoder + 本地训练 MLP probe 得 Macro-F1 0.3897 /
+  准确率 0.4800；已有完整 BERT-TextCNN checkpoint 复用为诊断行，得 0.6535
+  / 0.6667，但其原训练集有 24 条 EStG-150 标记重叠（4 条精确
+  normalized 重叠），已明确标为 diagnostic，不冒充 clean 训练结果。其余
+  5 个 Table 6 BERT 变体因本地无权重且无外网 fail-closed，未伪造预测。
+- 同口径比较报告：`outputs/reports/sep_c2_sun_predecessors_comparison_v1.json/.md`；
+  证据目录：`outputs/evidence/sep_c2_sun_predecessors_v1/`。
+- 现有 B0/Rules-Only 与 Direct-LLM 只读复用并重新评价：modality 准确率
+  0.7400 / 0.8333、Macro-F1 0.7128 / 0.7695，Direct 的 1 条无标签预测仍
+  保留在分母；没有新增 LLM 调用。
+- 语义抽取对照：Sun 作者稿 §5.2 没有外部六要素方法；分类器输出 modality，
+  比较报告中明确标为 six-element N/A。B0/D1 五字段 span-only P/R/F1：
+  Rules-Only 0.6435/0.7160/0.6778，Direct-LLM 0.8424/0.6432/0.7294。
+- 训练数据：official EStG modality train 1927 条（排除 EStG-150 重叠及重复），
+  clean dev 414 条选 epoch；EStG-150 Gold 不参与训练或选择。测试语言为
+  `raw_text_de`（BERT/CF 方法与 Sun 的德语 EStG 训练语言一致）；已有
+  Direct-LLM 行使用 `approved_text_en`，报告中按行披露语言差异。
+- 边界：本地作者稿不是最终 Springer 版；最终版若有新增/删除比较方法尚未
+  核实。Winter clause-region 仍是附加探索，本轮停止扩展。
+- 下一步：把比较表、失败案例和具体差异写入论文证据位置；继续 S2.12/S2.13
+  的既有两方法依赖，不重开 Winter 区域指标。
 
 ## 0.2 SEP-C2 Stage 2B Winter 前人基线首轮实跑（2026-09-15，零 API）
 
@@ -360,7 +421,7 @@ per-type F1（prohibited/condition/constraint/exception）：C36
 真实 v5 fallback 另待范围授权；等待时可继续 SEP-C1-A 的三阶段 I/O 和成功/失败案例写作。
 后续较早记录为历史状态，冲突时以本节及下方当前派工表为准。
 
-﻿﻿## 0. Latest v5 LLM preflight: s3_semantic_grounding_llm_v2 (2026-09-13, zero API)
+## 0. Latest v5 LLM preflight: s3_semantic_grounding_llm_v2 (2026-09-13, zero API)
 
 **Status**: READY_FOR_AUTHORIZATION_DECISION / BLOCKED_NO_MATCHING_AUTHORIZATION.
 

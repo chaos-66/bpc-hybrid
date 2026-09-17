@@ -1,0 +1,4587 @@
+{
+  "case_studies": {
+    "cases": [
+      {
+        "approved_text_en": "The income shall be taxed at the tax rate that results when taking into account the converted income; however, the tax to be assessed may not be higher than that which would result from the taxation of all emoluments.",
+        "category": "C_first_wrong_pred_matches_later",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw/predictions.json"
+        ],
+        "gold_all_labels": [
+          "obligation",
+          "prohibition"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "c1",
+            "end": 100,
+            "index": 0,
+            "modality": "obligation",
+            "start": 0,
+            "text": "The income shall be taxed at the tax rate that results when taking into account the converted income"
+          },
+          {
+            "clause_id": "c2",
+            "end": 216,
+            "index": 1,
+            "modality": "prohibition",
+            "start": 102,
+            "text": "however, the tax to be assessed may not be higher than that which would result from the taxation of all emoluments"
+          }
+        ],
+        "gold_first_label": "obligation",
+        "group": "C",
+        "interpretation": "Prediction equals a later Gold clause label; this is a clue, not proof that the model decoded that later clause.",
+        "method_id": "cf_kw",
+        "predicted_clauses": [
+          {
+            "actions": [],
+            "actor_action_map": [],
+            "actors": [],
+            "clause_id": "estg_000028.c1",
+            "clause_span": {
+              "end": 245,
+              "start": 0,
+              "text": "Das Einkommen ist mit jenem Steuersatz zu besteuern, der sich unter Berücksichtigung der umgerechneten Einkünfte ergibt; die festzuset- zende Steuer darf jedoch nicht höher sein als jene, die sich bei Besteuerung sämtlicher Bezüge ergeben würde."
+            },
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 17,
+                  "start": 0,
+                  "text": "darf jedoch nicht"
+                }
+              ],
+              "label": "prohibition"
+            },
+            "order_relations": []
+          }
+        ],
+        "predicted_label": "prohibition",
+        "raw_text_de": "Das Einkommen ist mit jenem Steuersatz zu besteuern, der sich unter Berücksichtigung der umgerechneten Einkünfte ergibt; die festzuset- zende Steuer darf jedoch nicht höher sein als jene, die sich bei Besteuerung sämtlicher Bezüge ergeben würde.",
+        "sample_id": "estg_000028"
+      },
+      {
+        "approved_text_en": "The certificate is not required if the invention is already protected by patent law. — The research allowance generally amounts to up to 12% of research expenditures. — An increased research allowance of up to 18% may be claimed if the inventions are not made available to other persons for substantial exploitation.",
+        "category": "C_first_wrong_pred_matches_later",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/predictions.json"
+        ],
+        "gold_all_labels": [
+          "permission",
+          "definition",
+          "permission"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "c1",
+            "end": 84,
+            "index": 0,
+            "modality": "permission",
+            "start": 0,
+            "text": "The certificate is not required if the invention is already protected by patent law."
+          },
+          {
+            "clause_id": "c2",
+            "end": 166,
+            "index": 1,
+            "modality": "definition",
+            "start": 87,
+            "text": "The research allowance generally amounts to up to 12% of research expenditures."
+          },
+          {
+            "clause_id": "c3",
+            "end": 316,
+            "index": 2,
+            "modality": "permission",
+            "start": 169,
+            "text": "An increased research allowance of up to 18% may be claimed if the inventions are not made available to other persons for substantial exploitation."
+          }
+        ],
+        "gold_first_label": "permission",
+        "group": "C",
+        "interpretation": "Prediction equals a later Gold clause label; this is a clue, not proof that the model decoded that later clause.",
+        "method_id": "cf_cnn",
+        "predicted_clauses": [
+          {
+            "actions": [],
+            "actor_action_map": [],
+            "actors": [],
+            "clause_id": "estg_000046.c1",
+            "clause_span": {
+              "end": 358,
+              "start": 0,
+              "text": "Die Bescheinigung ist nicht erforderlich, wenn die Erfindung bereits patentrechtlich geschützt ist. — Der Forschungsfreibetrag beträgt grund- sätzlich bis zu 12% der Forschungsauf- wendungen. — Ein erhöhter Forschungsfreibetrag bis zu 18% kann geltend gemacht werden, wenn die Erfindungen nicht anderen Personen zur wesentlichen Verwertung überlassen werden."
+            },
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 358,
+                  "start": 0,
+                  "text": "Die Bescheinigung ist nicht erforderlich, wenn die Erfindung bereits patentrechtlich geschützt ist. — Der Forschungsfreibetrag beträgt grund- sätzlich bis zu 12% der Forschungsauf- wendungen. — Ein erhöhter Forschungsfreibetrag bis zu 18% kann geltend gemacht werden, wenn die Erfindungen nicht anderen Personen zur wesentlichen Verwertung überlassen werden."
+                }
+              ],
+              "label": "definition"
+            },
+            "order_relations": []
+          }
+        ],
+        "predicted_label": "definition",
+        "raw_text_de": "Die Bescheinigung ist nicht erforderlich, wenn die Erfindung bereits patentrechtlich geschützt ist. — Der Forschungsfreibetrag beträgt grund- sätzlich bis zu 12% der Forschungsauf- wendungen. — Ein erhöhter Forschungsfreibetrag bis zu 18% kann geltend gemacht werden, wenn die Erfindungen nicht anderen Personen zur wesentlichen Verwertung überlassen werden.",
+        "sample_id": "estg_000046"
+      },
+      {
+        "approved_text_en": "The agreement must provide that the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council. dd) The contributions are deductible to the extent that they are required under the articles of association for benefit entitlements of current and former members of the taxpayer’s enterprises.",
+        "category": "C_first_wrong_pred_matches_later",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/predictions.json"
+        ],
+        "gold_all_labels": [
+          "obligation",
+          "permission",
+          "permission"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "c1",
+            "end": 196,
+            "index": 0,
+            "modality": "obligation",
+            "start": 0,
+            "text": "The agreement must provide that the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council."
+          },
+          {
+            "clause_id": "c2",
+            "end": 195,
+            "index": 1,
+            "modality": "permission",
+            "start": 32,
+            "text": "the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council"
+          },
+          {
+            "clause_id": "c3",
+            "end": 390,
+            "index": 2,
+            "modality": "permission",
+            "start": 197,
+            "text": "dd) The contributions are deductible to the extent that they are required under the articles of association for benefit entitlements of current and former members of the taxpayer’s enterprises."
+          }
+        ],
+        "gold_first_label": "obligation",
+        "group": "C",
+        "interpretation": "Prediction equals a later Gold clause label; this is a clue, not proof that the model decoded that later clause.",
+        "method_id": "bert_large_cased",
+        "predicted_clauses": [
+          {
+            "actions": [],
+            "actor_action_map": [],
+            "actors": [],
+            "clause_id": "estg_000039.c1",
+            "clause_span": {
+              "end": 408,
+              "start": 0,
+              "text": "Die Vereinbarung muß regeln, daß die laufenden Beitragslei- stungen des Steuerpflichtigen nur aus zwingenden wirtschaftlichen Grün- den und nur nach Beratung mit dem Betriebsrat ausgesetzt oder einge- schränkt werden können. dd) Die Beiträge sind abzugsfähig, soweit sie satzungsmäßig für Leistungsan- sprüche der Zugehörigen und frühe- ren Zugehörigen der Betriebe des Steuerpflichtigen vorgeschrieben sind."
+            },
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 408,
+                  "start": 0,
+                  "text": "Die Vereinbarung muß regeln, daß die laufenden Beitragslei- stungen des Steuerpflichtigen nur aus zwingenden wirtschaftlichen Grün- den und nur nach Beratung mit dem Betriebsrat ausgesetzt oder einge- schränkt werden können. dd) Die Beiträge sind abzugsfähig, soweit sie satzungsmäßig für Leistungsan- sprüche der Zugehörigen und frühe- ren Zugehörigen der Betriebe des Steuerpflichtigen vorgeschrieben sind."
+                }
+              ],
+              "label": "permission"
+            },
+            "order_relations": []
+          }
+        ],
+        "predicted_label": "permission",
+        "raw_text_de": "Die Vereinbarung muß regeln, daß die laufenden Beitragslei- stungen des Steuerpflichtigen nur aus zwingenden wirtschaftlichen Grün- den und nur nach Beratung mit dem Betriebsrat ausgesetzt oder einge- schränkt werden können. dd) Die Beiträge sind abzugsfähig, soweit sie satzungsmäßig für Leistungsan- sprüche der Zugehörigen und frühe- ren Zugehörigen der Betriebe des Steuerpflichtigen vorgeschrieben sind.",
+        "sample_id": "estg_000039"
+      },
+      {
+        "approved_text_en": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale. 20.",
+        "category": "C_first_wrong_pred_matches_later",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "data/predictions/b0_formal_arm_v1/predictions.json"
+        ],
+        "gold_all_labels": [
+          "definition",
+          "prohibition",
+          "obligation"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "c1",
+            "end": 177,
+            "index": 0,
+            "modality": "definition",
+            "start": 0,
+            "text": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale"
+          },
+          {
+            "clause_id": "c2",
+            "end": 101,
+            "index": 1,
+            "modality": "prohibition",
+            "start": 45,
+            "text": "the free drink allowance may not be sold by the employee"
+          },
+          {
+            "clause_id": "c3",
+            "end": 177,
+            "index": 2,
+            "modality": "obligation",
+            "start": 111,
+            "text": "it is only granted in such quantity as to actually preclude a sale"
+          }
+        ],
+        "gold_first_label": "definition",
+        "group": "C",
+        "interpretation": "Prediction equals a later Gold clause label; this is a clue, not proof that the model decoded that later clause.",
+        "method_id": "sun_rule_only",
+        "predicted_clauses": [
+          {
+            "actions": [
+              {
+                "end": 116,
+                "id": "estg_000020.c1.action.1",
+                "normalized": "is that the free drink allowance may not be sold by the employee and that it is",
+                "start": 37,
+                "text": "is that the free drink allowance may not be sold by the employee and that it is"
+              },
+              {
+                "end": 101,
+                "id": "estg_000020.c1.action.2",
+                "normalized": "not be sold by the employee",
+                "start": 74,
+                "text": "not be sold by the employee"
+              }
+            ],
+            "actor_action_map": [
+              {
+                "action_id": "estg_000020.c1.action.2",
+                "actor_id": "estg_000020.c1.actor.1"
+              }
+            ],
+            "actors": [
+              {
+                "end": 101,
+                "id": "estg_000020.c1.actor.1",
+                "normalized": "the employee",
+                "start": 89,
+                "text": "the employee"
+              }
+            ],
+            "alignment": {
+              "confidence": 0.6,
+              "evidence": {
+                "de_units": 2
+              },
+              "status": "heuristic_monotone_pack_unvalidated",
+              "supported": true
+            },
+            "clause_id": "estg_000020.c1",
+            "clause_span": {
+              "end": 182,
+              "start": 0,
+              "text": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale. 20."
+            },
+            "conditions": [
+              {
+                "end": 36,
+                "id": "estg_000020.c1.condition.1",
+                "normalized": "for the tax exemption",
+                "start": 15,
+                "text": "for the tax exemption"
+              },
+              {
+                "end": 137,
+                "id": "estg_000020.c1.condition.2",
+                "normalized": "that the free drink allowance may not be sold by the employee and that it is only granted in such",
+                "start": 40,
+                "text": "that the free drink allowance may not be sold by the employee and that it is only granted in such"
+              }
+            ],
+            "constraints": [
+              {
+                "end": 121,
+                "id": "estg_000020.c1.constraint.1",
+                "normalized": "only",
+                "start": 117,
+                "text": "only"
+              },
+              {
+                "end": 177,
+                "id": "estg_000020.c1.constraint.2",
+                "normalized": "in such quantity as to actually preclude a sale",
+                "start": 130,
+                "text": "in such quantity as to actually preclude a sale"
+              }
+            ],
+            "edge_evidence": [
+              {
+                "action_id": "estg_000020.c1.action.2",
+                "actor_id": "estg_000020.c1.actor.1",
+                "confidence": 0.9,
+                "ownership_relation": "obl",
+                "sentence_index": 0
+              }
+            ],
+            "exceptions": [],
+            "modality": {
+              "diagnostic": {
+                "alignment_status": "heuristic_monotone_pack_unvalidated",
+                "clause_classifier_label": "definition",
+                "marker_label": "prohibition",
+                "marker_surface": "may not",
+                "placeholder_classifier_input": false,
+                "record_classifier_label": "definition",
+                "validated_alignment": false
+              },
+              "evidence": [
+                {
+                  "end": 73,
+                  "start": 70,
+                  "text": "may"
+                }
+              ],
+              "label": "prohibition",
+              "route": "prohibition_negation"
+            },
+            "order_relations": [],
+            "scope_stats": {
+              "final_affected_spans": 4,
+              "legacy_broken_only_label_ignored": 2,
+              "lexicon_invoked": 3,
+              "lexicon_raw_matched": 4,
+              "scope_accepted": 4,
+              "scope_expand_warnings": 0,
+              "scope_rejected": 0,
+              "tregex_accepted": 2,
+              "tregex_candidates": 2,
+              "tregex_final_affected": 2
+            }
+          }
+        ],
+        "predicted_label": "prohibition",
+        "raw_text_de": "Voraussetzung für die Steuerbefreiung ist, daß der Haustrunk vom Arbeitnehmer nicht verkauft werden darf und daß er nur in einer solchen Menge gewährt wird, die einen Verkauf tatsächlich ausschließt. 20.",
+        "sample_id": "estg_000020"
+      },
+      {
+        "approved_text_en": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale. 20.",
+        "category": "C_first_wrong_pred_matches_later",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "data/predictions/direct_llm_formal_arm_v1/predictions.json"
+        ],
+        "gold_all_labels": [
+          "definition",
+          "prohibition",
+          "obligation"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "c1",
+            "end": 177,
+            "index": 0,
+            "modality": "definition",
+            "start": 0,
+            "text": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale"
+          },
+          {
+            "clause_id": "c2",
+            "end": 101,
+            "index": 1,
+            "modality": "prohibition",
+            "start": 45,
+            "text": "the free drink allowance may not be sold by the employee"
+          },
+          {
+            "clause_id": "c3",
+            "end": 177,
+            "index": 2,
+            "modality": "obligation",
+            "start": 111,
+            "text": "it is only granted in such quantity as to actually preclude a sale"
+          }
+        ],
+        "gold_first_label": "definition",
+        "group": "C",
+        "interpretation": "Prediction equals a later Gold clause label; this is a clue, not proof that the model decoded that later clause.",
+        "method_id": "direct_llm",
+        "predicted_clauses": [
+          {
+            "actions": [
+              {
+                "end": 85,
+                "id": "p01",
+                "normalized": "sold",
+                "start": 81,
+                "text": "sold"
+              },
+              {
+                "end": 129,
+                "id": "p02",
+                "normalized": "granted",
+                "start": 122,
+                "text": "granted"
+              }
+            ],
+            "actor_action_map": [
+              {
+                "action_id": "p01",
+                "actor_id": "a01"
+              },
+              {
+                "action_id": "p02",
+                "actor_id": null
+              }
+            ],
+            "actors": [
+              {
+                "end": 101,
+                "id": "a01",
+                "normalized": "the employee",
+                "start": 89,
+                "text": "the employee"
+              }
+            ],
+            "clause_id": "estg_000020_c01",
+            "clause_span": {
+              "end": 178,
+              "start": 0,
+              "text": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale."
+            },
+            "conditions": [],
+            "constraints": [
+              {
+                "end": 121,
+                "id": "c01",
+                "normalized": "only",
+                "start": 117,
+                "text": "only"
+              },
+              {
+                "end": 177,
+                "id": "c02",
+                "normalized": "in such quantity as to actually preclude a sale",
+                "start": 130,
+                "text": "in such quantity as to actually preclude a sale"
+              }
+            ],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 77,
+                  "start": 70,
+                  "text": "may not"
+                },
+                {
+                  "end": 77,
+                  "start": 74,
+                  "text": "not"
+                }
+              ],
+              "label": "prohibition"
+            },
+            "order_relations": []
+          }
+        ],
+        "predicted_label": "prohibition",
+        "raw_text_de": "Voraussetzung für die Steuerbefreiung ist, daß der Haustrunk vom Arbeitnehmer nicht verkauft werden darf und daß er nur in einer solchen Menge gewährt wird, die einen Verkauf tatsächlich ausschließt. 20.",
+        "sample_id": "estg_000020"
+      },
+      {
+        "approved_text_en": "(7) For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise, the following shall apply with regard to repair expenses:\n— Repair expenses that are incurred using correspondingly earmarked tax-free subsidies from public funds (Section 3(1) item 3, Section 3(1) item 5 subitems d and e, Section 3(1) item 6) shall, to that extent, be excluded from the profit determination.\n— If, after offsetting the losses within the meaning of Section 11(1) item 3 determined without taking into account the repair expenses, tax-free reserves under Section 11 still exist, the repair expenses not covered by tax-free subsidies shall be offset against these tax-free reserves.\n— Those repair expenses that were not covered by tax-free subsidies and were not to be offset against tax-free reserves shall be deducted in equal installments over ten years.",
+        "category": "B_all_clauses_same_but_first_wrong",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw/predictions.json"
+        ],
+        "gold_all_labels": [
+          "obligation",
+          "obligation",
+          "obligation",
+          "obligation"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "c1",
+            "end": 217,
+            "index": 0,
+            "modality": "obligation",
+            "start": 0,
+            "text": "(7) For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise, the following shall apply with regard to repair expenses:"
+          },
+          {
+            "clause_id": "c2",
+            "end": 469,
+            "index": 1,
+            "modality": "obligation",
+            "start": 220,
+            "text": "Repair expenses that are incurred using correspondingly earmarked tax-free subsidies from public funds (Section 3(1) item 3, Section 3(1) item 5 subitems d and e, Section 3(1) item 6) shall, to that extent, be excluded from the profit determination."
+          },
+          {
+            "clause_id": "c3",
+            "end": 757,
+            "index": 2,
+            "modality": "obligation",
+            "start": 472,
+            "text": "If, after offsetting the losses within the meaning of Section 11(1) item 3 determined without taking into account the repair expenses, tax-free reserves under Section 11 still exist, the repair expenses not covered by tax-free subsidies shall be offset against these tax-free reserves."
+          },
+          {
+            "clause_id": "c4",
+            "end": 933,
+            "index": 3,
+            "modality": "obligation",
+            "start": 760,
+            "text": "Those repair expenses that were not covered by tax-free subsidies and were not to be offset against tax-free reserves shall be deducted in equal installments over ten years."
+          }
+        ],
+        "gold_first_label": "obligation",
+        "group": "B",
+        "interpretation": "All Gold clauses share one label, so a later different label cannot explain this error.",
+        "method_id": "cf_kw",
+        "predicted_clauses": [
+          {
+            "actions": [],
+            "actor_action_map": [],
+            "actors": [],
+            "clause_id": "estg_000056.c1",
+            "clause_span": {
+              "end": 1008,
+              "start": 0,
+              "text": "(7) Bei Gebäuden, die zum Anlagevermögen gehören und Personen, die nicht betriebszugehö- rige Arbeitnehmer sind, für Wohnzwecke entgelt- lich überlassen werden, gilt hinsichtlich der Instandsetzungsaufwendungen folgendes: — Instandsetzungsaufwendungen, die unter Verwendung von entsprechend gewidmeten steuerfreien Subventionen aus öffentlichen Mitteln (§ 3 Abs. 1 Z 3, § 3 Abs. 1 Z 5 lit. d und e, § 3 Abs. 1 Z 6) aufgewendet werden, scheiden insoweit aus der Gewinnermittlung aus. — Sind nach Verrechnung der ohne Berücksich- tigung der Instandsetzungsaufwendungen ermittelten Verluste im Sinne des § 11 Abs. 1 Z 3 noch steuerfreie Rücklagen nach § 11 vorhanden, dann sind die nicht durch steuer- freie Subventionen abgedeckten Instandset- zungsaufwendungen mit diesen steuerfreien Rücklagen zu verrechnen. — Jene Instandsetzungsaufwendungen, die nicht durch steuerfreie Subventionen abge- deckt und nicht mit steuerfreien Rücklagen zu verrechnen waren, sind gleichmäßig auf zehn Jahre verteilt abzusetzen."
+            },
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 35,
+                  "start": 0,
+                  "text": "nicht mit steuerfreien Rücklagen zu"
+                }
+              ],
+              "label": "prohibition"
+            },
+            "order_relations": []
+          }
+        ],
+        "predicted_label": "prohibition",
+        "raw_text_de": "(7) Bei Gebäuden, die zum Anlagevermögen gehören und Personen, die nicht betriebszugehö- rige Arbeitnehmer sind, für Wohnzwecke entgelt- lich überlassen werden, gilt hinsichtlich der Instandsetzungsaufwendungen folgendes: — Instandsetzungsaufwendungen, die unter Verwendung von entsprechend gewidmeten steuerfreien Subventionen aus öffentlichen Mitteln (§ 3 Abs. 1 Z 3, § 3 Abs. 1 Z 5 lit. d und e, § 3 Abs. 1 Z 6) aufgewendet werden, scheiden insoweit aus der Gewinnermittlung aus. — Sind nach Verrechnung der ohne Berücksich- tigung der Instandsetzungsaufwendungen ermittelten Verluste im Sinne des § 11 Abs. 1 Z 3 noch steuerfreie Rücklagen nach § 11 vorhanden, dann sind die nicht durch steuer- freie Subventionen abgedeckten Instandset- zungsaufwendungen mit diesen steuerfreien Rücklagen zu verrechnen. — Jene Instandsetzungsaufwendungen, die nicht durch steuerfreie Subventionen abge- deckt und nicht mit steuerfreien Rücklagen zu verrechnen waren, sind gleichmäßig auf zehn Jahre verteilt abzusetzen.",
+        "sample_id": "estg_000056"
+      },
+      {
+        "approved_text_en": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972; in this case, the additional amounts shall be treated as business income and the reduced amounts as business expenses. 13.",
+        "category": "B_all_clauses_same_but_first_wrong",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "data/predictions/direct_llm_formal_arm_v1/predictions.json"
+        ],
+        "gold_all_labels": [
+          "definition",
+          "definition"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "c1",
+            "end": 107,
+            "index": 0,
+            "modality": "definition",
+            "start": 0,
+            "text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972"
+          },
+          {
+            "clause_id": "c2",
+            "end": 227,
+            "index": 1,
+            "modality": "definition",
+            "start": 109,
+            "text": "in this case, the additional amounts shall be treated as business income and the reduced amounts as business expenses."
+          }
+        ],
+        "gold_first_label": "definition",
+        "group": "B",
+        "interpretation": "All Gold clauses share one label, so a later different label cannot explain this error.",
+        "method_id": "direct_llm",
+        "predicted_clauses": [
+          {
+            "actions": [
+              {
+                "end": 19,
+                "id": "p01",
+                "normalized": "apply",
+                "start": 14,
+                "text": "apply"
+              }
+            ],
+            "actor_action_map": [
+              {
+                "action_id": "p01",
+                "actor_id": "a01"
+              }
+            ],
+            "actors": [
+              {
+                "end": 4,
+                "id": "a01",
+                "normalized": "this",
+                "start": 0,
+                "text": "This"
+              }
+            ],
+            "clause_id": "estg_000083_c01",
+            "clause_span": {
+              "end": 107,
+              "start": 0,
+              "text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972"
+            },
+            "conditions": [
+              {
+                "end": 107,
+                "id": "d01",
+                "normalized": "if the input tax is adjusted under section 12(10) and (11) of the turnover tax act 1972",
+                "start": 20,
+                "text": "if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972"
+              }
+            ],
+            "constraints": [
+              {
+                "end": 107,
+                "id": "c01",
+                "normalized": "under section 12(10) and (11) of the turnover tax act 1972",
+                "start": 49,
+                "text": "under Section 12(10) and (11) of the Turnover Tax Act 1972"
+              }
+            ],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 19,
+                  "start": 5,
+                  "text": "does not apply"
+                }
+              ],
+              "label": "prohibition"
+            },
+            "order_relations": []
+          },
+          {
+            "actions": [
+              {
+                "end": 181,
+                "id": "p02",
+                "normalized": "treated as business income",
+                "start": 155,
+                "text": "treated as business income"
+              },
+              {
+                "end": 226,
+                "id": "p03",
+                "normalized": "as business expenses",
+                "start": 206,
+                "text": "as business expenses"
+              }
+            ],
+            "actor_action_map": [
+              {
+                "action_id": "p02",
+                "actor_id": null
+              },
+              {
+                "action_id": "p03",
+                "actor_id": null
+              }
+            ],
+            "actors": [],
+            "clause_id": "estg_000083_c02",
+            "clause_span": {
+              "end": 227,
+              "start": 109,
+              "text": "in this case, the additional amounts shall be treated as business income and the reduced amounts as business expenses."
+            },
+            "conditions": [
+              {
+                "end": 121,
+                "id": "d02",
+                "normalized": "in this case",
+                "start": 109,
+                "text": "in this case"
+              }
+            ],
+            "constraints": [],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 151,
+                  "start": 146,
+                  "text": "shall"
+                }
+              ],
+              "label": "obligation"
+            },
+            "order_relations": []
+          }
+        ],
+        "predicted_label": "prohibition",
+        "raw_text_de": "Dies gilt nicht, wenn die Vorsteuer nach §12 Abs. 10 und 11 des Umsatzsteuergesetzes 1972 berichtigt wird; in diesem Fall sind die Mehrbeträge als Betriebseinnahmen und die Minderbeträge als Betriebsausgaben zu behandeln. 13.",
+        "sample_id": "estg_000083"
+      },
+      {
+        "approved_text_en": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale. 20.",
+        "category": "C_first_correct_with_later_different",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/predictions.json"
+        ],
+        "gold_all_labels": [
+          "definition",
+          "prohibition",
+          "obligation"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "c1",
+            "end": 177,
+            "index": 0,
+            "modality": "definition",
+            "start": 0,
+            "text": "A prerequisite for the tax exemption is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale"
+          },
+          {
+            "clause_id": "c2",
+            "end": 101,
+            "index": 1,
+            "modality": "prohibition",
+            "start": 45,
+            "text": "the free drink allowance may not be sold by the employee"
+          },
+          {
+            "clause_id": "c3",
+            "end": 177,
+            "index": 2,
+            "modality": "obligation",
+            "start": 111,
+            "text": "it is only granted in such quantity as to actually preclude a sale"
+          }
+        ],
+        "gold_first_label": "definition",
+        "group": "C",
+        "interpretation": "The first-clause label is correct even though later clauses have different labels.",
+        "method_id": "bert_large_cased",
+        "predicted_clauses": [
+          {
+            "actions": [],
+            "actor_action_map": [],
+            "actors": [],
+            "clause_id": "estg_000020.c1",
+            "clause_span": {
+              "end": 203,
+              "start": 0,
+              "text": "Voraussetzung für die Steuerbefreiung ist, daß der Haustrunk vom Arbeitnehmer nicht verkauft werden darf und daß er nur in einer solchen Menge gewährt wird, die einen Verkauf tatsächlich ausschließt. 20."
+            },
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 203,
+                  "start": 0,
+                  "text": "Voraussetzung für die Steuerbefreiung ist, daß der Haustrunk vom Arbeitnehmer nicht verkauft werden darf und daß er nur in einer solchen Menge gewährt wird, die einen Verkauf tatsächlich ausschließt. 20."
+                }
+              ],
+              "label": "definition"
+            },
+            "order_relations": []
+          }
+        ],
+        "predicted_label": "definition",
+        "raw_text_de": "Voraussetzung für die Steuerbefreiung ist, daß der Haustrunk vom Arbeitnehmer nicht verkauft werden darf und daß er nur in einer solchen Menge gewährt wird, die einen Verkauf tatsächlich ausschließt. 20.",
+        "sample_id": "estg_000020"
+      },
+      {
+        "approved_text_en": "It may cover a shorter period if  \n1. a business is opened or closed, or  \n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date.",
+        "category": "low_frequency_class_error",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/predictions.json"
+        ],
+        "gold_all_labels": [
+          "permission"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "estg_000003_c01",
+            "end": 194,
+            "index": 0,
+            "modality": "permission",
+            "start": 0,
+            "text": "It may cover a shorter period if  \n1. a business is opened or closed, or  \n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date."
+          }
+        ],
+        "gold_first_label": "permission",
+        "group": "A",
+        "interpretation": "Low-frequency class error; report together with the official train prior shift, not as a code defect.",
+        "method_id": "cf_cnn",
+        "predicted_clauses": [
+          {
+            "actions": [],
+            "actor_action_map": [],
+            "actors": [],
+            "clause_id": "estg_000003.c1",
+            "clause_span": {
+              "end": 259,
+              "start": 0,
+              "text": "Einen kürzeren Zeitraum darf es dann umfassen, wenn 1. ein Betrieb eröffnet oder aufgegeben wird oder 2. das Wirtschaftsjahr bei einem buchführenden Land- und Forstwirt oder einem protokollier- ten Gewerbetreibenden auf einen anderen Stichtag umgestellt wird."
+            },
+            "conditions": [],
+            "constraints": [],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 259,
+                  "start": 0,
+                  "text": "Einen kürzeren Zeitraum darf es dann umfassen, wenn 1. ein Betrieb eröffnet oder aufgegeben wird oder 2. das Wirtschaftsjahr bei einem buchführenden Land- und Forstwirt oder einem protokollier- ten Gewerbetreibenden auf einen anderen Stichtag umgestellt wird."
+                }
+              ],
+              "label": "definition"
+            },
+            "order_relations": []
+          }
+        ],
+        "predicted_label": "definition",
+        "raw_text_de": "Einen kürzeren Zeitraum darf es dann umfassen, wenn 1. ein Betrieb eröffnet oder aufgegeben wird oder 2. das Wirtschaftsjahr bei einem buchführenden Land- und Forstwirt oder einem protokollier- ten Gewerbetreibenden auf einen anderen Stichtag umgestellt wird.",
+        "sample_id": "estg_000003"
+      },
+      {
+        "approved_text_en": "(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent by official notice.",
+        "category": "low_frequency_class_error",
+        "code_paths": [
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_gold",
+          "src/bpc_hybrid/sun_predecessors/evaluation.py::_first_modality_from_attempt",
+          "src/bpc_hybrid/formal_stage2_evaluation.py::evaluate_modality_labels",
+          "data/predictions/b0_formal_arm_v1/predictions.json"
+        ],
+        "gold_all_labels": [
+          "permission"
+        ],
+        "gold_clauses": [
+          {
+            "clause_id": "estg_000004_c01",
+            "end": 184,
+            "index": 0,
+            "modality": "permission",
+            "start": 0,
+            "text": "(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent by official notice."
+          }
+        ],
+        "gold_first_label": "permission",
+        "group": "A",
+        "interpretation": "Low-frequency class error; report together with the official train prior shift, not as a code defect.",
+        "method_id": "sun_rule_only",
+        "predicted_clauses": [
+          {
+            "actions": [],
+            "actor_action_map": [],
+            "actors": [],
+            "alignment": {
+              "confidence": 0.95,
+              "evidence": {
+                "de_anchors": [
+                  "num:7)"
+                ],
+                "de_index": 0,
+                "en_anchors": [
+                  "num:7)"
+                ]
+              },
+              "status": "validated_anchor_alignment",
+              "supported": true
+            },
+            "clause_id": "estg_000004.c1",
+            "clause_span": {
+              "end": 184,
+              "start": 0,
+              "text": "(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent by official notice."
+            },
+            "conditions": [
+              {
+                "end": 140,
+                "id": "estg_000004.c1.condition.1",
+                "normalized": "a change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office",
+                "start": 4,
+                "text": "A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office"
+              }
+            ],
+            "constraints": [
+              {
+                "end": 140,
+                "id": "estg_000004.c1.constraint.1",
+                "normalized": "(7) a change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office",
+                "start": 0,
+                "text": "(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office"
+              }
+            ],
+            "edge_evidence": [],
+            "exceptions": [],
+            "modality": {
+              "diagnostic": {
+                "alignment_status": "validated_anchor_alignment",
+                "clause_classifier_label": "definition",
+                "marker_label": null,
+                "marker_surface": null,
+                "placeholder_classifier_input": false,
+                "record_classifier_label": "definition",
+                "validated_alignment": true
+              },
+              "evidence": [
+                {
+                  "end": 184,
+                  "start": 0,
+                  "text": "(7) A change of the fiscal year to a different closing date is only permissible if there are substantial business reasons and the tax office has given prior consent by official notice."
+                }
+              ],
+              "label": "definition",
+              "route": "validated_aligned_classifier"
+            },
+            "order_relations": [],
+            "scope_stats": {
+              "final_affected_spans": 2,
+              "legacy_broken_only_label_ignored": 1,
+              "lexicon_invoked": 3,
+              "lexicon_raw_matched": 2,
+              "scope_accepted": 2,
+              "scope_expand_warnings": 0,
+              "scope_rejected": 0,
+              "tregex_accepted": 2,
+              "tregex_candidates": 2,
+              "tregex_final_affected": 2
+            }
+          }
+        ],
+        "predicted_label": "definition",
+        "raw_text_de": "(7) Die Umstellung des Wirtschaftsjahres auf einen anderen Stichtag ist nur zulässig, wenn gewichtige betriebliche Gründe vorliegen und das Finanzamt vorher bescheidmäßig zugestimmt hat.",
+        "sample_id": "estg_000004"
+      }
+    ],
+    "selection_rule": "Stratified purposeful cases fixed before report rendering in CASE_SPECS: wrong-but-later-match, same-label-group error, correct-first with later variation, and low-frequency-class error, across keyword/CF/BERT/project families."
+  },
+  "conclusions": {
+    "one_sentence_conclusion": "No prediction-code error was found in the 10 evaluated methods; the only confirmed reporting error was counting the not-run bert_legal_cased configuration as 150 failed model runs, now corrected. The full-150 first-clause table is valid under the frozen protocol, but 49/150 multi-clause records and 34/150 heterogeneous-label records make the full-text-vs-first-clause target construction an explicit interpretation limit.",
+    "paper_ready_text": "实验设置新增目标结构审计：150 条按有效 Gold clause 分成 A（单一有效 clause，101/150）、B（多个 clause 但标签相同，15/150）、C（多个 clause 且标签不同，34/150）。评价器固定读取每个 record 的首个非空 modality 标签，符合 G0.4 合同；但八种前人分类器都在句子级 EStG modality 数据上训练并输出单一整句标签，因此 C 组存在全文分类与首个 Gold clause 目标不对齐的问题。结果解释仍以完整 150 条 first-clause 主表为准，预测命中任意 Gold clause 的上界诊断，不能据此断言模型预测了后续 clause。限制：bert_legal_cased 记为 source-pending 而非失败；德/英输入、训练目标和类别先验差异尚不能分离，不能仅凭本表证明架构的纯粹优势。"
+  },
+  "evaluator": {
+    "classification": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+    "target": "G0.4 first non-empty Gold clause modality"
+  },
+  "formal_gold": "data/gold/stage2/estg150_formal_gold_v1.json",
+  "formal_input": "data/input/estg150_formal_inference_input_v2.json",
+  "group_metrics": [
+    {
+      "accuracy": 0.7227722772277227,
+      "any_gold_clause_accuracy": 0.7227722772277227,
+      "any_gold_clause_match": 73,
+      "correct": 73,
+      "errors": 28,
+      "first_label_confusion": {
+        "definition->definition": 4,
+        "definition->obligation": 4,
+        "definition->permission": 3,
+        "definition->prohibition": 3,
+        "obligation->definition": 4,
+        "obligation->obligation": 35,
+        "obligation->permission": 1,
+        "obligation->prohibition": 2,
+        "permission->definition": 1,
+        "permission->obligation": 2,
+        "permission->permission": 31,
+        "prohibition->obligation": 2,
+        "prohibition->permission": 6,
+        "prohibition->prohibition": 3
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.5784529097680262,
+      "macro_f1_supported_classes": 0.5784529097680262,
+      "method_id": "cf_kw",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8235294117647058,
+          "precision": 0.813953488372093,
+          "recall": 0.8333333333333334
+        },
+        {
+          "class": "permission",
+          "f1": 0.8266666666666665,
+          "precision": 0.7560975609756098,
+          "recall": 0.9117647058823529
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.3157894736842105,
+          "precision": 0.375,
+          "recall": 0.2727272727272727
+        },
+        {
+          "class": "definition",
+          "f1": 0.34782608695652173,
+          "precision": 0.4444444444444444,
+          "recall": 0.2857142857142857
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 28,
+      "wrong_sample_ids": [
+        "estg_000027",
+        "estg_000031",
+        "estg_000052",
+        "estg_000057",
+        "estg_000060",
+        "estg_000068",
+        "estg_000087",
+        "estg_000109",
+        "estg_000113",
+        "estg_000124",
+        "estg_000230",
+        "estg_000231",
+        "estg_000245",
+        "estg_000283",
+        "estg_000293",
+        "estg_000302",
+        "estg_000308",
+        "estg_000313",
+        "estg_000326",
+        "estg_000414",
+        "estg_000417",
+        "estg_000522",
+        "estg_000539",
+        "estg_000555",
+        "estg_000572",
+        "estg_000578",
+        "estg_000601",
+        "estg_000720"
+      ]
+    },
+    {
+      "accuracy": 0.5333333333333333,
+      "any_gold_clause_accuracy": 0.5333333333333333,
+      "any_gold_clause_match": 8,
+      "correct": 8,
+      "errors": 7,
+      "first_label_confusion": {
+        "definition->definition": 2,
+        "definition->obligation": 1,
+        "obligation->definition": 1,
+        "obligation->obligation": 4,
+        "obligation->prohibition": 3,
+        "permission->permission": 1,
+        "prohibition->permission": 2,
+        "prohibition->prohibition": 1
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.516941391941392,
+      "macro_f1_supported_classes": 0.516941391941392,
+      "method_id": "cf_kw",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.6153846153846154,
+          "precision": 0.8,
+          "recall": 0.5
+        },
+        {
+          "class": "permission",
+          "f1": 0.5,
+          "precision": 0.3333333333333333,
+          "recall": 1.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.28571428571428575,
+          "precision": 0.25,
+          "recall": 0.3333333333333333
+        },
+        {
+          "class": "definition",
+          "f1": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 7,
+      "wrong_sample_ids": [
+        "estg_000056",
+        "estg_000079",
+        "estg_000083",
+        "estg_000207",
+        "estg_000306",
+        "estg_000347",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.35294117647058826,
+      "any_gold_clause_accuracy": 0.8529411764705882,
+      "any_gold_clause_match": 29,
+      "correct": 12,
+      "errors": 22,
+      "first_label_confusion": {
+        "definition->definition": 2,
+        "definition->obligation": 3,
+        "definition->permission": 5,
+        "definition->prohibition": 2,
+        "obligation->obligation": 5,
+        "obligation->permission": 1,
+        "obligation->prohibition": 3,
+        "permission->obligation": 4,
+        "permission->permission": 3,
+        "prohibition->obligation": 2,
+        "prohibition->permission": 2,
+        "prohibition->prohibition": 2
+      },
+      "first_wrong_pred_matches_later": 17,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000028",
+        "estg_000037",
+        "estg_000039",
+        "estg_000059",
+        "estg_000128",
+        "estg_000136",
+        "estg_000161",
+        "estg_000206",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000271",
+        "estg_000664",
+        "estg_000776",
+        "estg_000800",
+        "estg_000816",
+        "estg_000854"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.3403806338588947,
+      "macro_f1_supported_classes": 0.3403806338588947,
+      "method_id": "cf_kw",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.43478260869565216,
+          "precision": 0.35714285714285715,
+          "recall": 0.5555555555555556
+        },
+        {
+          "class": "permission",
+          "f1": 0.33333333333333326,
+          "precision": 0.2727272727272727,
+          "recall": 0.42857142857142855
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.30769230769230765,
+          "precision": 0.2857142857142857,
+          "recall": 0.3333333333333333
+        },
+        {
+          "class": "definition",
+          "f1": 0.2857142857142857,
+          "precision": 1.0,
+          "recall": 0.16666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 22,
+      "wrong_sample_ids": [
+        "estg_000020",
+        "estg_000021",
+        "estg_000028",
+        "estg_000037",
+        "estg_000039",
+        "estg_000040",
+        "estg_000059",
+        "estg_000082",
+        "estg_000128",
+        "estg_000136",
+        "estg_000161",
+        "estg_000206",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000271",
+        "estg_000664",
+        "estg_000776",
+        "estg_000800",
+        "estg_000816",
+        "estg_000854"
+      ]
+    },
+    {
+      "accuracy": 0.6237623762376238,
+      "any_gold_clause_accuracy": 0.6237623762376238,
+      "any_gold_clause_match": 63,
+      "correct": 63,
+      "errors": 38,
+      "first_label_confusion": {
+        "definition->definition": 13,
+        "definition->obligation": 1,
+        "obligation->definition": 5,
+        "obligation->obligation": 36,
+        "obligation->permission": 1,
+        "permission->definition": 20,
+        "permission->obligation": 3,
+        "permission->permission": 11,
+        "prohibition->definition": 4,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 3,
+        "prohibition->prohibition": 3
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.5523266535529875,
+      "macro_f1_supported_classes": 0.5523266535529875,
+      "method_id": "cf_rnn",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8674698795180722,
+          "precision": 0.8780487804878049,
+          "recall": 0.8571428571428571
+        },
+        {
+          "class": "permission",
+          "f1": 0.4489795918367347,
+          "precision": 0.7333333333333333,
+          "recall": 0.3235294117647059
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.42857142857142855,
+          "precision": 1.0,
+          "recall": 0.2727272727272727
+        },
+        {
+          "class": "definition",
+          "f1": 0.46428571428571436,
+          "precision": 0.30952380952380953,
+          "recall": 0.9285714285714286
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 38,
+      "wrong_sample_ids": [
+        "estg_000002",
+        "estg_000003",
+        "estg_000004",
+        "estg_000027",
+        "estg_000035",
+        "estg_000036",
+        "estg_000052",
+        "estg_000068",
+        "estg_000095",
+        "estg_000106",
+        "estg_000108",
+        "estg_000109",
+        "estg_000111",
+        "estg_000118",
+        "estg_000125",
+        "estg_000127",
+        "estg_000130",
+        "estg_000131",
+        "estg_000133",
+        "estg_000135",
+        "estg_000143",
+        "estg_000183",
+        "estg_000230",
+        "estg_000245",
+        "estg_000308",
+        "estg_000313",
+        "estg_000326",
+        "estg_000366",
+        "estg_000393",
+        "estg_000417",
+        "estg_000452",
+        "estg_000465",
+        "estg_000525",
+        "estg_000560",
+        "estg_000569",
+        "estg_000578",
+        "estg_000601",
+        "estg_000720"
+      ]
+    },
+    {
+      "accuracy": 0.5333333333333333,
+      "any_gold_clause_accuracy": 0.5333333333333333,
+      "any_gold_clause_match": 8,
+      "correct": 8,
+      "errors": 7,
+      "first_label_confusion": {
+        "definition->definition": 2,
+        "definition->obligation": 1,
+        "obligation->definition": 3,
+        "obligation->obligation": 5,
+        "permission->permission": 1,
+        "prohibition->definition": 1,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 1
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.4444444444444444,
+      "macro_f1_supported_classes": 0.4444444444444444,
+      "method_id": "cf_rnn",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.6666666666666666,
+          "precision": 0.7142857142857143,
+          "recall": 0.625
+        },
+        {
+          "class": "permission",
+          "f1": 0.6666666666666666,
+          "precision": 0.5,
+          "recall": 1.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.4444444444444444,
+          "precision": 0.3333333333333333,
+          "recall": 0.6666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 7,
+      "wrong_sample_ids": [
+        "estg_000038",
+        "estg_000056",
+        "estg_000083",
+        "estg_000207",
+        "estg_000306",
+        "estg_000716",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.4117647058823529,
+      "any_gold_clause_accuracy": 0.6764705882352942,
+      "any_gold_clause_match": 23,
+      "correct": 14,
+      "errors": 20,
+      "first_label_confusion": {
+        "definition->definition": 9,
+        "definition->obligation": 1,
+        "definition->permission": 2,
+        "obligation->definition": 2,
+        "obligation->obligation": 5,
+        "obligation->permission": 1,
+        "obligation->prohibition": 1,
+        "permission->definition": 6,
+        "permission->obligation": 1,
+        "prohibition->definition": 4,
+        "prohibition->obligation": 2
+      },
+      "first_wrong_pred_matches_later": 9,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000028",
+        "estg_000046",
+        "estg_000128",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000286",
+        "estg_000664"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.27525252525252525,
+      "macro_f1_supported_classes": 0.27525252525252525,
+      "method_id": "cf_rnn",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.5555555555555556,
+          "precision": 0.5555555555555556,
+          "recall": 0.5555555555555556
+        },
+        {
+          "class": "permission",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.5454545454545454,
+          "precision": 0.42857142857142855,
+          "recall": 0.75
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 20,
+      "wrong_sample_ids": [
+        "estg_000021",
+        "estg_000028",
+        "estg_000039",
+        "estg_000046",
+        "estg_000059",
+        "estg_000062",
+        "estg_000070",
+        "estg_000077",
+        "estg_000082",
+        "estg_000128",
+        "estg_000161",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000271",
+        "estg_000286",
+        "estg_000664",
+        "estg_000786",
+        "estg_000816"
+      ]
+    },
+    {
+      "accuracy": 0.7326732673267327,
+      "any_gold_clause_accuracy": 0.7326732673267327,
+      "any_gold_clause_match": 74,
+      "correct": 74,
+      "errors": 27,
+      "first_label_confusion": {
+        "definition->definition": 12,
+        "definition->obligation": 2,
+        "obligation->definition": 3,
+        "obligation->obligation": 38,
+        "obligation->permission": 1,
+        "permission->definition": 12,
+        "permission->obligation": 1,
+        "permission->permission": 20,
+        "permission->prohibition": 1,
+        "prohibition->definition": 4,
+        "prohibition->permission": 3,
+        "prohibition->prohibition": 4
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.6596627890873841,
+      "macro_f1_supported_classes": 0.6596627890873841,
+      "method_id": "cf_cnn",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.9156626506024096,
+          "precision": 0.926829268292683,
+          "recall": 0.9047619047619048
+        },
+        {
+          "class": "permission",
+          "f1": 0.6896551724137931,
+          "precision": 0.8333333333333334,
+          "recall": 0.5882352941176471
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.5000000000000001,
+          "precision": 0.8,
+          "recall": 0.36363636363636365
+        },
+        {
+          "class": "definition",
+          "f1": 0.5333333333333333,
+          "precision": 0.3870967741935484,
+          "recall": 0.8571428571428571
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 27,
+      "wrong_sample_ids": [
+        "estg_000002",
+        "estg_000003",
+        "estg_000004",
+        "estg_000031",
+        "estg_000033",
+        "estg_000035",
+        "estg_000052",
+        "estg_000068",
+        "estg_000095",
+        "estg_000106",
+        "estg_000108",
+        "estg_000109",
+        "estg_000111",
+        "estg_000113",
+        "estg_000118",
+        "estg_000130",
+        "estg_000131",
+        "estg_000245",
+        "estg_000277",
+        "estg_000313",
+        "estg_000452",
+        "estg_000522",
+        "estg_000560",
+        "estg_000569",
+        "estg_000601",
+        "estg_000720",
+        "estg_000812"
+      ]
+    },
+    {
+      "accuracy": 0.8666666666666667,
+      "any_gold_clause_accuracy": 0.8666666666666667,
+      "any_gold_clause_match": 13,
+      "correct": 13,
+      "errors": 2,
+      "first_label_confusion": {
+        "definition->definition": 2,
+        "definition->obligation": 1,
+        "obligation->obligation": 8,
+        "permission->permission": 1,
+        "prohibition->definition": 1,
+        "prohibition->prohibition": 2
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.8519607843137255,
+      "macro_f1_supported_classes": 0.8519607843137255,
+      "method_id": "cf_cnn",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.9411764705882353,
+          "precision": 0.8888888888888888,
+          "recall": 1.0
+        },
+        {
+          "class": "permission",
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.8,
+          "precision": 1.0,
+          "recall": 0.6666666666666666
+        },
+        {
+          "class": "definition",
+          "f1": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 2,
+      "wrong_sample_ids": [
+        "estg_000083",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.4117647058823529,
+      "any_gold_clause_accuracy": 0.6470588235294118,
+      "any_gold_clause_match": 22,
+      "correct": 14,
+      "errors": 20,
+      "first_label_confusion": {
+        "definition->definition": 8,
+        "definition->obligation": 1,
+        "definition->permission": 1,
+        "definition->prohibition": 2,
+        "obligation->definition": 3,
+        "obligation->obligation": 5,
+        "obligation->permission": 1,
+        "permission->definition": 7,
+        "prohibition->definition": 3,
+        "prohibition->obligation": 2,
+        "prohibition->prohibition": 1
+      },
+      "first_wrong_pred_matches_later": 8,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000046",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000285",
+        "estg_000664",
+        "estg_000800"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.32382650029708854,
+      "macro_f1_supported_classes": 0.32382650029708854,
+      "method_id": "cf_cnn",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.5882352941176471,
+          "precision": 0.625,
+          "recall": 0.5555555555555556
+        },
+        {
+          "class": "permission",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.2222222222222222,
+          "precision": 0.3333333333333333,
+          "recall": 0.16666666666666666
+        },
+        {
+          "class": "definition",
+          "f1": 0.4848484848484849,
+          "precision": 0.38095238095238093,
+          "recall": 0.6666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 20,
+      "wrong_sample_ids": [
+        "estg_000021",
+        "estg_000028",
+        "estg_000039",
+        "estg_000046",
+        "estg_000059",
+        "estg_000070",
+        "estg_000077",
+        "estg_000082",
+        "estg_000128",
+        "estg_000161",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000271",
+        "estg_000285",
+        "estg_000664",
+        "estg_000786",
+        "estg_000800",
+        "estg_000816"
+      ]
+    },
+    {
+      "accuracy": 0.44554455445544555,
+      "any_gold_clause_accuracy": 0.44554455445544555,
+      "any_gold_clause_match": 45,
+      "correct": 45,
+      "errors": 56,
+      "first_label_confusion": {
+        "definition->definition": 8,
+        "definition->obligation": 5,
+        "definition->permission": 1,
+        "obligation->definition": 15,
+        "obligation->obligation": 27,
+        "permission->definition": 21,
+        "permission->obligation": 3,
+        "permission->permission": 10,
+        "prohibition->definition": 10,
+        "prohibition->permission": 1
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.3428438569103531,
+      "macro_f1_supported_classes": 0.3428438569103531,
+      "method_id": "bert_base_uncased",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7012987012987013,
+          "precision": 0.7714285714285715,
+          "recall": 0.6428571428571429
+        },
+        {
+          "class": "permission",
+          "f1": 0.4347826086956522,
+          "precision": 0.8333333333333334,
+          "recall": 0.29411764705882354
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.23529411764705882,
+          "precision": 0.14814814814814814,
+          "recall": 0.5714285714285714
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 56,
+      "wrong_sample_ids": [
+        "estg_000002",
+        "estg_000003",
+        "estg_000004",
+        "estg_000027",
+        "estg_000031",
+        "estg_000033",
+        "estg_000035",
+        "estg_000036",
+        "estg_000051",
+        "estg_000052",
+        "estg_000055",
+        "estg_000060",
+        "estg_000068",
+        "estg_000074",
+        "estg_000075",
+        "estg_000087",
+        "estg_000091",
+        "estg_000094",
+        "estg_000095",
+        "estg_000108",
+        "estg_000109",
+        "estg_000111",
+        "estg_000112",
+        "estg_000113",
+        "estg_000118",
+        "estg_000123",
+        "estg_000127",
+        "estg_000130",
+        "estg_000131",
+        "estg_000133",
+        "estg_000134",
+        "estg_000143",
+        "estg_000145",
+        "estg_000146",
+        "estg_000148",
+        "estg_000183",
+        "estg_000230",
+        "estg_000245",
+        "estg_000247",
+        "estg_000277",
+        "estg_000308",
+        "estg_000313",
+        "estg_000326",
+        "estg_000375",
+        "estg_000393",
+        "estg_000507",
+        "estg_000522",
+        "estg_000539",
+        "estg_000546",
+        "estg_000555",
+        "estg_000560",
+        "estg_000572",
+        "estg_000601",
+        "estg_000720",
+        "estg_000773",
+        "estg_000861"
+      ]
+    },
+    {
+      "accuracy": 0.4,
+      "any_gold_clause_accuracy": 0.4,
+      "any_gold_clause_match": 6,
+      "correct": 6,
+      "errors": 9,
+      "first_label_confusion": {
+        "definition->definition": 3,
+        "obligation->definition": 5,
+        "obligation->obligation": 3,
+        "permission->definition": 1,
+        "prohibition->definition": 1,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 1
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.24038461538461536,
+      "macro_f1_supported_classes": 0.24038461538461536,
+      "method_id": "bert_base_uncased",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.5,
+          "precision": 0.75,
+          "recall": 0.375
+        },
+        {
+          "class": "permission",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.4615384615384615,
+          "precision": 0.3,
+          "recall": 1.0
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 9,
+      "wrong_sample_ids": [
+        "estg_000038",
+        "estg_000056",
+        "estg_000061",
+        "estg_000173",
+        "estg_000207",
+        "estg_000306",
+        "estg_000347",
+        "estg_000716",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.47058823529411764,
+      "any_gold_clause_accuracy": 0.6764705882352942,
+      "any_gold_clause_match": 23,
+      "correct": 16,
+      "errors": 18,
+      "first_label_confusion": {
+        "definition->definition": 8,
+        "definition->obligation": 2,
+        "definition->permission": 2,
+        "obligation->definition": 3,
+        "obligation->obligation": 6,
+        "permission->definition": 4,
+        "permission->obligation": 1,
+        "permission->permission": 2,
+        "prohibition->definition": 3,
+        "prohibition->obligation": 2,
+        "prohibition->permission": 1
+      },
+      "first_wrong_pred_matches_later": 7,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000080",
+        "estg_000128",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000664",
+        "estg_000800"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.36666666666666664,
+      "macro_f1_supported_classes": 0.36666666666666664,
+      "method_id": "bert_base_uncased",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.6,
+          "precision": 0.5454545454545454,
+          "recall": 0.6666666666666666
+        },
+        {
+          "class": "permission",
+          "f1": 0.3333333333333333,
+          "precision": 0.4,
+          "recall": 0.2857142857142857
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.5333333333333333,
+          "precision": 0.4444444444444444,
+          "recall": 0.6666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 18,
+      "wrong_sample_ids": [
+        "estg_000021",
+        "estg_000059",
+        "estg_000062",
+        "estg_000077",
+        "estg_000080",
+        "estg_000082",
+        "estg_000128",
+        "estg_000161",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000271",
+        "estg_000286",
+        "estg_000664",
+        "estg_000786",
+        "estg_000800",
+        "estg_000816"
+      ]
+    },
+    {
+      "accuracy": 0.594059405940594,
+      "any_gold_clause_accuracy": 0.594059405940594,
+      "any_gold_clause_match": 60,
+      "correct": 60,
+      "errors": 41,
+      "first_label_confusion": {
+        "definition->definition": 8,
+        "definition->obligation": 3,
+        "definition->permission": 3,
+        "obligation->definition": 11,
+        "obligation->obligation": 30,
+        "obligation->permission": 1,
+        "permission->definition": 10,
+        "permission->obligation": 2,
+        "permission->permission": 22,
+        "prohibition->definition": 6,
+        "prohibition->permission": 5
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.4456686170971885,
+      "macro_f1_supported_classes": 0.4456686170971885,
+      "method_id": "bert_base_cased",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7792207792207793,
+          "precision": 0.8571428571428571,
+          "recall": 0.7142857142857143
+        },
+        {
+          "class": "permission",
+          "f1": 0.6769230769230768,
+          "precision": 0.7096774193548387,
+          "recall": 0.6470588235294118
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.32653061224489793,
+          "precision": 0.22857142857142856,
+          "recall": 0.5714285714285714
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 41,
+      "wrong_sample_ids": [
+        "estg_000003",
+        "estg_000004",
+        "estg_000027",
+        "estg_000031",
+        "estg_000033",
+        "estg_000035",
+        "estg_000036",
+        "estg_000052",
+        "estg_000055",
+        "estg_000060",
+        "estg_000068",
+        "estg_000074",
+        "estg_000075",
+        "estg_000087",
+        "estg_000091",
+        "estg_000095",
+        "estg_000109",
+        "estg_000111",
+        "estg_000113",
+        "estg_000118",
+        "estg_000130",
+        "estg_000131",
+        "estg_000143",
+        "estg_000148",
+        "estg_000230",
+        "estg_000231",
+        "estg_000245",
+        "estg_000277",
+        "estg_000283",
+        "estg_000308",
+        "estg_000313",
+        "estg_000326",
+        "estg_000414",
+        "estg_000507",
+        "estg_000522",
+        "estg_000546",
+        "estg_000555",
+        "estg_000572",
+        "estg_000601",
+        "estg_000713",
+        "estg_000720"
+      ]
+    },
+    {
+      "accuracy": 0.6666666666666666,
+      "any_gold_clause_accuracy": 0.6666666666666666,
+      "any_gold_clause_match": 10,
+      "correct": 10,
+      "errors": 5,
+      "first_label_confusion": {
+        "definition->definition": 3,
+        "obligation->definition": 2,
+        "obligation->obligation": 6,
+        "permission->permission": 1,
+        "prohibition->definition": 1,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 1
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.5333333333333333,
+      "macro_f1_supported_classes": 0.5333333333333333,
+      "method_id": "bert_base_cased",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7999999999999999,
+          "precision": 0.8571428571428571,
+          "recall": 0.75
+        },
+        {
+          "class": "permission",
+          "f1": 0.6666666666666666,
+          "precision": 0.5,
+          "recall": 1.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.6666666666666666,
+          "precision": 0.5,
+          "recall": 1.0
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 5,
+      "wrong_sample_ids": [
+        "estg_000038",
+        "estg_000207",
+        "estg_000306",
+        "estg_000716",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.47058823529411764,
+      "any_gold_clause_accuracy": 0.6470588235294118,
+      "any_gold_clause_match": 22,
+      "correct": 16,
+      "errors": 18,
+      "first_label_confusion": {
+        "definition->definition": 8,
+        "definition->obligation": 2,
+        "definition->permission": 2,
+        "obligation->definition": 3,
+        "obligation->obligation": 5,
+        "obligation->permission": 1,
+        "permission->definition": 3,
+        "permission->obligation": 1,
+        "permission->permission": 3,
+        "prohibition->definition": 4,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 1
+      },
+      "first_wrong_pred_matches_later": 6,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000039",
+        "estg_000128",
+        "estg_000136",
+        "estg_000208",
+        "estg_000218",
+        "estg_000776"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.37936507936507935,
+      "macro_f1_supported_classes": 0.37936507936507935,
+      "method_id": "bert_base_cased",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.5555555555555556,
+          "precision": 0.5555555555555556,
+          "recall": 0.5555555555555556
+        },
+        {
+          "class": "permission",
+          "f1": 0.42857142857142855,
+          "precision": 0.42857142857142855,
+          "recall": 0.42857142857142855
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.5333333333333333,
+          "precision": 0.4444444444444444,
+          "recall": 0.6666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 18,
+      "wrong_sample_ids": [
+        "estg_000021",
+        "estg_000039",
+        "estg_000062",
+        "estg_000077",
+        "estg_000082",
+        "estg_000128",
+        "estg_000136",
+        "estg_000161",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000271",
+        "estg_000286",
+        "estg_000504",
+        "estg_000776",
+        "estg_000786",
+        "estg_000816"
+      ]
+    },
+    {
+      "accuracy": 0.594059405940594,
+      "any_gold_clause_accuracy": 0.594059405940594,
+      "any_gold_clause_match": 60,
+      "correct": 60,
+      "errors": 41,
+      "first_label_confusion": {
+        "definition->definition": 9,
+        "definition->obligation": 4,
+        "definition->permission": 1,
+        "obligation->definition": 11,
+        "obligation->obligation": 31,
+        "permission->definition": 14,
+        "permission->obligation": 1,
+        "permission->permission": 19,
+        "prohibition->definition": 8,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 1,
+        "prohibition->prohibition": 1
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.4909536138966519,
+      "macro_f1_supported_classes": 0.4909536138966519,
+      "method_id": "bert_large_uncased",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7848101265822786,
+          "precision": 0.8378378378378378,
+          "recall": 0.7380952380952381
+        },
+        {
+          "class": "permission",
+          "f1": 0.6909090909090908,
+          "precision": 0.9047619047619048,
+          "recall": 0.5588235294117647
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.16666666666666669,
+          "precision": 1.0,
+          "recall": 0.09090909090909091
+        },
+        {
+          "class": "definition",
+          "f1": 0.32142857142857145,
+          "precision": 0.21428571428571427,
+          "recall": 0.6428571428571429
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 41,
+      "wrong_sample_ids": [
+        "estg_000002",
+        "estg_000003",
+        "estg_000004",
+        "estg_000027",
+        "estg_000030",
+        "estg_000036",
+        "estg_000052",
+        "estg_000060",
+        "estg_000068",
+        "estg_000074",
+        "estg_000087",
+        "estg_000094",
+        "estg_000095",
+        "estg_000105",
+        "estg_000106",
+        "estg_000108",
+        "estg_000109",
+        "estg_000111",
+        "estg_000113",
+        "estg_000118",
+        "estg_000119",
+        "estg_000123",
+        "estg_000130",
+        "estg_000131",
+        "estg_000133",
+        "estg_000230",
+        "estg_000245",
+        "estg_000273",
+        "estg_000277",
+        "estg_000308",
+        "estg_000313",
+        "estg_000326",
+        "estg_000452",
+        "estg_000522",
+        "estg_000546",
+        "estg_000555",
+        "estg_000560",
+        "estg_000572",
+        "estg_000601",
+        "estg_000720",
+        "estg_000773"
+      ]
+    },
+    {
+      "accuracy": 0.5333333333333333,
+      "any_gold_clause_accuracy": 0.5333333333333333,
+      "any_gold_clause_match": 8,
+      "correct": 8,
+      "errors": 7,
+      "first_label_confusion": {
+        "definition->definition": 3,
+        "obligation->definition": 4,
+        "obligation->obligation": 4,
+        "permission->definition": 1,
+        "prohibition->definition": 1,
+        "prohibition->permission": 1,
+        "prohibition->prohibition": 1
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.41666666666666663,
+      "macro_f1_supported_classes": 0.41666666666666663,
+      "method_id": "bert_large_uncased",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.6666666666666666,
+          "precision": 1.0,
+          "recall": 0.5
+        },
+        {
+          "class": "permission",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.5,
+          "precision": 1.0,
+          "recall": 0.3333333333333333
+        },
+        {
+          "class": "definition",
+          "f1": 0.5,
+          "precision": 0.3333333333333333,
+          "recall": 1.0
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 7,
+      "wrong_sample_ids": [
+        "estg_000056",
+        "estg_000061",
+        "estg_000173",
+        "estg_000207",
+        "estg_000306",
+        "estg_000347",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.5294117647058824,
+      "any_gold_clause_accuracy": 0.8235294117647058,
+      "any_gold_clause_match": 28,
+      "correct": 18,
+      "errors": 16,
+      "first_label_confusion": {
+        "definition->definition": 9,
+        "definition->obligation": 3,
+        "obligation->definition": 2,
+        "obligation->obligation": 6,
+        "obligation->permission": 1,
+        "permission->definition": 3,
+        "permission->obligation": 3,
+        "permission->permission": 1,
+        "prohibition->definition": 3,
+        "prohibition->obligation": 1,
+        "prohibition->prohibition": 2
+      },
+      "first_wrong_pred_matches_later": 10,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000046",
+        "estg_000059",
+        "estg_000082",
+        "estg_000128",
+        "estg_000161",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000286",
+        "estg_000776"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.4720916057122954,
+      "macro_f1_supported_classes": 0.4720916057122954,
+      "method_id": "bert_large_uncased",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.5454545454545455,
+          "precision": 0.46153846153846156,
+          "recall": 0.6666666666666666
+        },
+        {
+          "class": "permission",
+          "f1": 0.22222222222222224,
+          "precision": 0.5,
+          "recall": 0.14285714285714285
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.5,
+          "precision": 1.0,
+          "recall": 0.3333333333333333
+        },
+        {
+          "class": "definition",
+          "f1": 0.6206896551724139,
+          "precision": 0.5294117647058824,
+          "recall": 0.75
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 16,
+      "wrong_sample_ids": [
+        "estg_000021",
+        "estg_000039",
+        "estg_000046",
+        "estg_000059",
+        "estg_000077",
+        "estg_000082",
+        "estg_000128",
+        "estg_000161",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000271",
+        "estg_000286",
+        "estg_000776",
+        "estg_000786",
+        "estg_000816"
+      ]
+    },
+    {
+      "accuracy": 0.693069306930693,
+      "any_gold_clause_accuracy": 0.693069306930693,
+      "any_gold_clause_match": 70,
+      "correct": 70,
+      "errors": 31,
+      "first_label_confusion": {
+        "definition->definition": 8,
+        "definition->obligation": 5,
+        "definition->permission": 1,
+        "obligation->definition": 1,
+        "obligation->obligation": 38,
+        "obligation->permission": 1,
+        "obligation->prohibition": 2,
+        "permission->definition": 13,
+        "permission->obligation": 1,
+        "permission->permission": 19,
+        "permission->prohibition": 1,
+        "prohibition->permission": 6,
+        "prohibition->prohibition": 5
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.6193579959557045,
+      "macro_f1_supported_classes": 0.6193579959557045,
+      "method_id": "bert_large_cased",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8837209302325582,
+          "precision": 0.8636363636363636,
+          "recall": 0.9047619047619048
+        },
+        {
+          "class": "permission",
+          "f1": 0.6229508196721312,
+          "precision": 0.7037037037037037,
+          "recall": 0.5588235294117647
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.5263157894736842,
+          "precision": 0.625,
+          "recall": 0.45454545454545453
+        },
+        {
+          "class": "definition",
+          "f1": 0.4444444444444444,
+          "precision": 0.36363636363636365,
+          "recall": 0.5714285714285714
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 31,
+      "wrong_sample_ids": [
+        "estg_000003",
+        "estg_000004",
+        "estg_000031",
+        "estg_000035",
+        "estg_000036",
+        "estg_000052",
+        "estg_000055",
+        "estg_000087",
+        "estg_000095",
+        "estg_000108",
+        "estg_000109",
+        "estg_000111",
+        "estg_000113",
+        "estg_000118",
+        "estg_000119",
+        "estg_000130",
+        "estg_000131",
+        "estg_000139",
+        "estg_000146",
+        "estg_000230",
+        "estg_000231",
+        "estg_000273",
+        "estg_000283",
+        "estg_000308",
+        "estg_000313",
+        "estg_000417",
+        "estg_000465",
+        "estg_000522",
+        "estg_000560",
+        "estg_000601",
+        "estg_000720"
+      ]
+    },
+    {
+      "accuracy": 0.6,
+      "any_gold_clause_accuracy": 0.6,
+      "any_gold_clause_match": 9,
+      "correct": 9,
+      "errors": 6,
+      "first_label_confusion": {
+        "definition->definition": 2,
+        "definition->obligation": 1,
+        "obligation->definition": 2,
+        "obligation->obligation": 6,
+        "permission->permission": 1,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 2
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.4553571428571429,
+      "macro_f1_supported_classes": 0.4553571428571429,
+      "method_id": "bert_large_cased",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.75,
+          "precision": 0.75,
+          "recall": 0.75
+        },
+        {
+          "class": "permission",
+          "f1": 0.5,
+          "precision": 0.3333333333333333,
+          "recall": 1.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.5714285714285715,
+          "precision": 0.5,
+          "recall": 0.6666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 6,
+      "wrong_sample_ids": [
+        "estg_000056",
+        "estg_000083",
+        "estg_000207",
+        "estg_000306",
+        "estg_000716",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.5882352941176471,
+      "any_gold_clause_accuracy": 0.8823529411764706,
+      "any_gold_clause_match": 30,
+      "correct": 20,
+      "errors": 14,
+      "first_label_confusion": {
+        "definition->definition": 6,
+        "definition->obligation": 3,
+        "definition->permission": 1,
+        "definition->prohibition": 2,
+        "obligation->obligation": 8,
+        "obligation->permission": 1,
+        "permission->definition": 1,
+        "permission->obligation": 3,
+        "permission->permission": 3,
+        "prohibition->obligation": 2,
+        "prohibition->permission": 1,
+        "prohibition->prohibition": 3
+      },
+      "first_wrong_pred_matches_later": 10,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000039",
+        "estg_000040",
+        "estg_000062",
+        "estg_000077",
+        "estg_000128",
+        "estg_000218",
+        "estg_000222",
+        "estg_000776",
+        "estg_000800",
+        "estg_000816"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.569642988590357,
+      "macro_f1_supported_classes": 0.569642988590357,
+      "method_id": "bert_large_cased",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.64,
+          "precision": 0.5,
+          "recall": 0.8888888888888888
+        },
+        {
+          "class": "permission",
+          "f1": 0.4615384615384615,
+          "precision": 0.5,
+          "recall": 0.42857142857142855
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.5454545454545454,
+          "precision": 0.6,
+          "recall": 0.5
+        },
+        {
+          "class": "definition",
+          "f1": 0.631578947368421,
+          "precision": 0.8571428571428571,
+          "recall": 0.5
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 14,
+      "wrong_sample_ids": [
+        "estg_000039",
+        "estg_000040",
+        "estg_000059",
+        "estg_000062",
+        "estg_000077",
+        "estg_000082",
+        "estg_000128",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000776",
+        "estg_000800",
+        "estg_000816",
+        "estg_000854"
+      ]
+    },
+    {
+      "accuracy": 0.48514851485148514,
+      "any_gold_clause_accuracy": 0.48514851485148514,
+      "any_gold_clause_match": 49,
+      "correct": 49,
+      "errors": 52,
+      "first_label_confusion": {
+        "definition->definition": 11,
+        "definition->obligation": 2,
+        "definition->permission": 1,
+        "obligation->definition": 15,
+        "obligation->obligation": 24,
+        "obligation->permission": 1,
+        "obligation->prohibition": 2,
+        "permission->definition": 21,
+        "permission->permission": 13,
+        "prohibition->definition": 9,
+        "prohibition->permission": 1,
+        "prohibition->prohibition": 1
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.42075630252100843,
+      "macro_f1_supported_classes": 0.42075630252100843,
+      "method_id": "bert_legal_uncased",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7058823529411765,
+          "precision": 0.9230769230769231,
+          "recall": 0.5714285714285714
+        },
+        {
+          "class": "permission",
+          "f1": 0.52,
+          "precision": 0.8125,
+          "recall": 0.38235294117647056
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.14285714285714288,
+          "precision": 0.3333333333333333,
+          "recall": 0.09090909090909091
+        },
+        {
+          "class": "definition",
+          "f1": 0.3142857142857143,
+          "precision": 0.19642857142857142,
+          "recall": 0.7857142857142857
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 52,
+      "wrong_sample_ids": [
+        "estg_000003",
+        "estg_000004",
+        "estg_000033",
+        "estg_000036",
+        "estg_000043",
+        "estg_000044",
+        "estg_000052",
+        "estg_000055",
+        "estg_000060",
+        "estg_000068",
+        "estg_000087",
+        "estg_000091",
+        "estg_000095",
+        "estg_000098",
+        "estg_000103",
+        "estg_000108",
+        "estg_000109",
+        "estg_000111",
+        "estg_000113",
+        "estg_000118",
+        "estg_000123",
+        "estg_000127",
+        "estg_000130",
+        "estg_000131",
+        "estg_000134",
+        "estg_000139",
+        "estg_000143",
+        "estg_000145",
+        "estg_000148",
+        "estg_000183",
+        "estg_000230",
+        "estg_000231",
+        "estg_000245",
+        "estg_000247",
+        "estg_000277",
+        "estg_000308",
+        "estg_000313",
+        "estg_000326",
+        "estg_000375",
+        "estg_000452",
+        "estg_000465",
+        "estg_000507",
+        "estg_000546",
+        "estg_000560",
+        "estg_000572",
+        "estg_000599",
+        "estg_000601",
+        "estg_000704",
+        "estg_000713",
+        "estg_000773",
+        "estg_000812",
+        "estg_000861"
+      ]
+    },
+    {
+      "accuracy": 0.4,
+      "any_gold_clause_accuracy": 0.4,
+      "any_gold_clause_match": 6,
+      "correct": 6,
+      "errors": 9,
+      "first_label_confusion": {
+        "definition->definition": 3,
+        "obligation->definition": 5,
+        "obligation->obligation": 3,
+        "permission->definition": 1,
+        "prohibition->definition": 1,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 1
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.24038461538461536,
+      "macro_f1_supported_classes": 0.24038461538461536,
+      "method_id": "bert_legal_uncased",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.5,
+          "precision": 0.75,
+          "recall": 0.375
+        },
+        {
+          "class": "permission",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.4615384615384615,
+          "precision": 0.3,
+          "recall": 1.0
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 9,
+      "wrong_sample_ids": [
+        "estg_000038",
+        "estg_000056",
+        "estg_000061",
+        "estg_000173",
+        "estg_000207",
+        "estg_000306",
+        "estg_000347",
+        "estg_000716",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.5,
+      "any_gold_clause_accuracy": 0.7058823529411765,
+      "any_gold_clause_match": 24,
+      "correct": 17,
+      "errors": 17,
+      "first_label_confusion": {
+        "definition->definition": 10,
+        "definition->obligation": 1,
+        "definition->prohibition": 1,
+        "obligation->definition": 2,
+        "obligation->obligation": 6,
+        "obligation->permission": 1,
+        "permission->definition": 5,
+        "permission->obligation": 1,
+        "permission->permission": 1,
+        "prohibition->definition": 4,
+        "prohibition->obligation": 2
+      },
+      "first_wrong_pred_matches_later": 7,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000046",
+        "estg_000062",
+        "estg_000128",
+        "estg_000208",
+        "estg_000232",
+        "estg_000286",
+        "estg_000776"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.3649654439128123,
+      "macro_f1_supported_classes": 0.3649654439128123,
+      "method_id": "bert_legal_uncased",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.631578947368421,
+          "precision": 0.6,
+          "recall": 0.6666666666666666
+        },
+        {
+          "class": "permission",
+          "f1": 0.22222222222222224,
+          "precision": 0.5,
+          "recall": 0.14285714285714285
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.6060606060606061,
+          "precision": 0.47619047619047616,
+          "recall": 0.8333333333333334
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 17,
+      "wrong_sample_ids": [
+        "estg_000021",
+        "estg_000039",
+        "estg_000046",
+        "estg_000059",
+        "estg_000062",
+        "estg_000077",
+        "estg_000082",
+        "estg_000128",
+        "estg_000161",
+        "estg_000208",
+        "estg_000222",
+        "estg_000232",
+        "estg_000271",
+        "estg_000286",
+        "estg_000776",
+        "estg_000786",
+        "estg_000816"
+      ]
+    },
+    {
+      "accuracy": 0.7920792079207921,
+      "any_gold_clause_accuracy": 0.7920792079207921,
+      "any_gold_clause_match": 80,
+      "correct": 80,
+      "errors": 21,
+      "first_label_confusion": {
+        "definition->definition": 6,
+        "definition->obligation": 8,
+        "obligation->definition": 1,
+        "obligation->obligation": 40,
+        "obligation->permission": 1,
+        "permission->definition": 4,
+        "permission->obligation": 3,
+        "permission->permission": 27,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 3,
+        "prohibition->prohibition": 7
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.7349027095835606,
+      "macro_f1_supported_classes": 0.7349027095835606,
+      "method_id": "sun_rule_only",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8510638297872339,
+          "precision": 0.7692307692307693,
+          "recall": 0.9523809523809523
+        },
+        {
+          "class": "permission",
+          "f1": 0.8307692307692308,
+          "precision": 0.8709677419354839,
+          "recall": 0.7941176470588235
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.7777777777777778,
+          "precision": 1.0,
+          "recall": 0.6363636363636364
+        },
+        {
+          "class": "definition",
+          "f1": 0.4799999999999999,
+          "precision": 0.5454545454545454,
+          "recall": 0.42857142857142855
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 21,
+      "wrong_sample_ids": [
+        "estg_000002",
+        "estg_000004",
+        "estg_000031",
+        "estg_000052",
+        "estg_000087",
+        "estg_000095",
+        "estg_000109",
+        "estg_000111",
+        "estg_000130",
+        "estg_000131",
+        "estg_000277",
+        "estg_000293",
+        "estg_000302",
+        "estg_000308",
+        "estg_000313",
+        "estg_000414",
+        "estg_000522",
+        "estg_000572",
+        "estg_000601",
+        "estg_000720",
+        "estg_000773"
+      ]
+    },
+    {
+      "accuracy": 0.6666666666666666,
+      "any_gold_clause_accuracy": 0.6666666666666666,
+      "any_gold_clause_match": 10,
+      "correct": 10,
+      "errors": 5,
+      "first_label_confusion": {
+        "definition->definition": 2,
+        "definition->obligation": 1,
+        "obligation->definition": 3,
+        "obligation->obligation": 5,
+        "permission->permission": 1,
+        "prohibition->definition": 1,
+        "prohibition->prohibition": 2
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.7396825396825397,
+      "macro_f1_supported_classes": 0.7396825396825397,
+      "method_id": "sun_rule_only",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7142857142857143,
+          "precision": 0.8333333333333334,
+          "recall": 0.625
+        },
+        {
+          "class": "permission",
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.8,
+          "precision": 1.0,
+          "recall": 0.6666666666666666
+        },
+        {
+          "class": "definition",
+          "f1": 0.4444444444444444,
+          "precision": 0.3333333333333333,
+          "recall": 0.6666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 5,
+      "wrong_sample_ids": [
+        "estg_000079",
+        "estg_000083",
+        "estg_000220",
+        "estg_000306",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.6176470588235294,
+      "any_gold_clause_accuracy": 0.8529411764705882,
+      "any_gold_clause_match": 29,
+      "correct": 21,
+      "errors": 13,
+      "first_label_confusion": {
+        "definition->definition": 5,
+        "definition->obligation": 6,
+        "definition->prohibition": 1,
+        "obligation->obligation": 9,
+        "permission->definition": 2,
+        "permission->obligation": 2,
+        "permission->permission": 3,
+        "prohibition->definition": 1,
+        "prohibition->obligation": 1,
+        "prohibition->prohibition": 4
+      },
+      "first_wrong_pred_matches_later": 8,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000020",
+        "estg_000037",
+        "estg_000046",
+        "estg_000059",
+        "estg_000082",
+        "estg_000161",
+        "estg_000222",
+        "estg_000776"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.6234848484848484,
+      "macro_f1_supported_classes": 0.6234848484848484,
+      "method_id": "sun_rule_only",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.6666666666666666,
+          "precision": 0.5,
+          "recall": 1.0
+        },
+        {
+          "class": "permission",
+          "f1": 0.6,
+          "precision": 1.0,
+          "recall": 0.42857142857142855
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.7272727272727272,
+          "precision": 0.8,
+          "recall": 0.6666666666666666
+        },
+        {
+          "class": "definition",
+          "f1": 0.5,
+          "precision": 0.625,
+          "recall": 0.4166666666666667
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 13,
+      "wrong_sample_ids": [
+        "estg_000020",
+        "estg_000037",
+        "estg_000046",
+        "estg_000059",
+        "estg_000082",
+        "estg_000128",
+        "estg_000136",
+        "estg_000161",
+        "estg_000222",
+        "estg_000664",
+        "estg_000776",
+        "estg_000786",
+        "estg_000854"
+      ]
+    },
+    {
+      "accuracy": 0.9306930693069307,
+      "any_gold_clause_accuracy": 0.9306930693069307,
+      "any_gold_clause_match": 94,
+      "correct": 94,
+      "errors": 7,
+      "first_label_confusion": {
+        "definition->None": 1,
+        "definition->definition": 8,
+        "definition->obligation": 4,
+        "definition->prohibition": 1,
+        "obligation->obligation": 41,
+        "obligation->permission": 1,
+        "permission->permission": 34,
+        "prohibition->prohibition": 11
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "A",
+      "macro_f1_fixed4": 0.9029576121030394,
+      "macro_f1_supported_classes": 0.9029576121030394,
+      "method_id": "direct_llm",
+      "n": 101,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.9425287356321839,
+          "precision": 0.9111111111111111,
+          "recall": 0.9761904761904762
+        },
+        {
+          "class": "permission",
+          "f1": 0.9855072463768115,
+          "precision": 0.9714285714285714,
+          "recall": 1.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.9565217391304348,
+          "precision": 0.9166666666666666,
+          "recall": 1.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.7272727272727273,
+          "precision": 1.0,
+          "recall": 0.5714285714285714
+        }
+      ],
+      "unlabeled": 1,
+      "unlabeled_sample_ids": [
+        "estg_000112"
+      ],
+      "wrong_labeled": 6,
+      "wrong_sample_ids": [
+        "estg_000002",
+        "estg_000087",
+        "estg_000112",
+        "estg_000414",
+        "estg_000522",
+        "estg_000572",
+        "estg_000773"
+      ]
+    },
+    {
+      "accuracy": 0.7333333333333333,
+      "any_gold_clause_accuracy": 0.7333333333333333,
+      "any_gold_clause_match": 11,
+      "correct": 11,
+      "errors": 4,
+      "first_label_confusion": {
+        "definition->prohibition": 3,
+        "obligation->obligation": 8,
+        "permission->permission": 1,
+        "prohibition->definition": 1,
+        "prohibition->prohibition": 2
+      },
+      "first_wrong_pred_matches_later": 0,
+      "first_wrong_pred_matches_later_sample_ids": [],
+      "group": "B",
+      "macro_f1_fixed4": 0.625,
+      "macro_f1_supported_classes": 0.625,
+      "method_id": "direct_llm",
+      "n": 15,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        {
+          "class": "permission",
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.5,
+          "precision": 0.4,
+          "recall": 0.6666666666666666
+        },
+        {
+          "class": "definition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 4,
+      "wrong_sample_ids": [
+        "estg_000083",
+        "estg_000209",
+        "estg_000210",
+        "estg_000785"
+      ]
+    },
+    {
+      "accuracy": 0.5882352941176471,
+      "any_gold_clause_accuracy": 0.8235294117647058,
+      "any_gold_clause_match": 28,
+      "correct": 20,
+      "errors": 14,
+      "first_label_confusion": {
+        "definition->definition": 2,
+        "definition->obligation": 4,
+        "definition->permission": 2,
+        "definition->prohibition": 4,
+        "obligation->obligation": 9,
+        "permission->obligation": 1,
+        "permission->permission": 5,
+        "permission->prohibition": 1,
+        "prohibition->definition": 1,
+        "prohibition->permission": 1,
+        "prohibition->prohibition": 4
+      },
+      "first_wrong_pred_matches_later": 8,
+      "first_wrong_pred_matches_later_sample_ids": [
+        "estg_000020",
+        "estg_000037",
+        "estg_000059",
+        "estg_000071",
+        "estg_000664",
+        "estg_000776",
+        "estg_000800",
+        "estg_000854"
+      ],
+      "group": "C",
+      "macro_f1_fixed4": 0.5623188405797102,
+      "macro_f1_supported_classes": 0.5623188405797102,
+      "method_id": "direct_llm",
+      "n": 34,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.782608695652174,
+          "precision": 0.6428571428571429,
+          "recall": 1.0
+        },
+        {
+          "class": "permission",
+          "f1": 0.6666666666666666,
+          "precision": 0.625,
+          "recall": 0.7142857142857143
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.5333333333333333,
+          "precision": 0.4444444444444444,
+          "recall": 0.6666666666666666
+        },
+        {
+          "class": "definition",
+          "f1": 0.26666666666666666,
+          "precision": 0.6666666666666666,
+          "recall": 0.16666666666666666
+        }
+      ],
+      "unlabeled": 0,
+      "unlabeled_sample_ids": [],
+      "wrong_labeled": 14,
+      "wrong_sample_ids": [
+        "estg_000020",
+        "estg_000021",
+        "estg_000037",
+        "estg_000046",
+        "estg_000059",
+        "estg_000071",
+        "estg_000082",
+        "estg_000136",
+        "estg_000218",
+        "estg_000664",
+        "estg_000776",
+        "estg_000786",
+        "estg_000800",
+        "estg_000854"
+      ]
+    }
+  ],
+  "implementation_audit": {
+    "findings": [
+      {
+        "action": "Separate bert_legal_cased as source-pending; exclude it from the 10-method denominator and from failure counts.",
+        "corrected_records_failed": 0,
+        "corrected_records_not_run": 150,
+        "id": "source_pending_not_counted_as_failure",
+        "included_in_10_method_performance_denominator": false,
+        "status": "confirmed_reporting_error_corrected_in_this_report",
+        "v2_records_failed": 150,
+        "v2_records_missing": 150
+      },
+      {
+        "action": "No label-index inversion or class-order divergence found.",
+        "bert_labels": [
+          "definition",
+          "obligation",
+          "permission",
+          "prohibition"
+        ],
+        "formal_evaluator_classes": [
+          "obligation",
+          "permission",
+          "prohibition",
+          "definition"
+        ],
+        "id": "label_mapping_and_class_order",
+        "neural_labels": [
+          "definition",
+          "obligation",
+          "permission",
+          "prohibition"
+        ],
+        "sets_equal": true,
+        "status": "checked_no_model_code_error_found"
+      },
+      {
+        "action": "Evaluator uses first non-empty label in record order, matching G0.4. The whole-text training vs first-clause target remains an interpretation limit.",
+        "gold_unsorted_sample_ids": [
+          "estg_000136"
+        ],
+        "id": "first_clause_selection",
+        "prediction_nonzero_first_index": {
+          "bert_base_cased": 0,
+          "bert_base_uncased": 0,
+          "bert_large_cased": 0,
+          "bert_large_uncased": 0,
+          "bert_legal_uncased": 0,
+          "cf_cnn": 0,
+          "cf_kw": 0,
+          "cf_rnn": 0,
+          "direct_llm": 0,
+          "sun_rule_only": 0
+        },
+        "status": "checked_contract_consistent_but_target_construction_condition"
+      },
+      {
+        "action": "CF_RNN/CF_CNN have max 188 word tokens (<192); BERT right-truncates 25-31/150 records at 192 subword tokens; exact German first-clause truncation cannot be mapped because Gold spans are English.",
+        "id": "truncation_audit",
+        "status": "checked_condition_not_code_error"
+      },
+      {
+        "action": "Full 150 denominator preserved; the single Direct-LLM empty-clause prediction is counted as an error, not dropped.",
+        "id": "missing_and_denominator",
+        "records_failed": {
+          "bert_base_cased": 0,
+          "bert_base_uncased": 0,
+          "bert_large_cased": 0,
+          "bert_large_uncased": 0,
+          "bert_legal_uncased": 0,
+          "cf_cnn": 0,
+          "cf_kw": 0,
+          "cf_rnn": 0,
+          "direct_llm": 0,
+          "sun_rule_only": 0
+        },
+        "records_scored": {
+          "bert_base_cased": 150,
+          "bert_base_uncased": 150,
+          "bert_large_cased": 150,
+          "bert_large_uncased": 150,
+          "bert_legal_uncased": 150,
+          "cf_cnn": 150,
+          "cf_kw": 150,
+          "cf_rnn": 150,
+          "direct_llm": 150,
+          "sun_rule_only": 150
+        },
+        "status": "checked_no_model_code_error_found",
+        "unlabeled": {
+          "bert_base_cased": 0,
+          "bert_base_uncased": 0,
+          "bert_large_cased": 0,
+          "bert_large_uncased": 0,
+          "bert_legal_uncased": 0,
+          "cf_cnn": 0,
+          "cf_kw": 0,
+          "cf_rnn": 0,
+          "direct_llm": 1,
+          "sun_rule_only": 0
+        }
+      },
+      {
+        "action": "Runner code builds attempts before evaluation.evaluate_attempts; only evaluation loads Gold. No Gold leakage was found.",
+        "id": "gold_used_for_prediction",
+        "prediction_entrypoints": [
+          "src/bpc_hybrid/sun_predecessors/runner.py",
+          "src/bpc_hybrid/sun_predecessors/runner_neural.py",
+          "src/bpc_hybrid/sun_predecessors/runner_bert_full.py"
+        ],
+        "status": "checked_no_model_code_error_found"
+      },
+      {
+        "action": "German/English and sentence-level vs first-clause differences remain confounded with architecture; report, do not claim a pure architecture effect.",
+        "id": "language_and_class_prior_conditions",
+        "language_effect_separable": false,
+        "status": "checked_experiment_condition_not_code_error"
+      }
+    ],
+    "source_pending": {
+      "included_in_10_method_performance_denominator": false,
+      "method_id": "bert_legal_cased",
+      "n_records": 150,
+      "reason": "Exact public cased EU-legislation Legal-BERT checkpoint is not available; this is source-pending, not a model failure.",
+      "records_failed": 0,
+      "records_missing": 150,
+      "records_not_run": 150,
+      "records_scored": 0,
+      "status": "not_run_source_pending_exact_checkpoint_unavailable",
+      "unlabeled_predictions": 0
+    }
+  },
+  "overall_classification_table": [
+    {
+      "accuracy": 0.62,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "raw_text_de",
+      "input_language": "de",
+      "macro_f1": 0.5321768856892328,
+      "macro_precision": 0.5583147752078143,
+      "macro_recall": 0.5387395285408143,
+      "method_id": "cf_kw",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7272727272727273,
+          "precision": 0.7096774193548387,
+          "recall": 0.7457627118644068
+        },
+        {
+          "class": "permission",
+          "f1": 0.7216494845360825,
+          "precision": 0.6363636363636364,
+          "recall": 0.8333333333333334
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.3076923076923077,
+          "precision": 0.3157894736842105,
+          "recall": 0.3
+        },
+        {
+          "class": "definition",
+          "f1": 0.37209302325581395,
+          "precision": 0.5714285714285714,
+          "recall": 0.27586206896551724
+        }
+      ],
+      "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_cf_kw_v1.json",
+      "role": "keyword modality-classification baseline (no semantic extraction)",
+      "status": "completed_zero_api",
+      "sun_label": "CF_KW",
+      "training_or_weights": "none (rule list frozen in configs/sep_c2_sun_predecessors_v1/cf_kw_v1.json)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.5666666666666667,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "raw_text_de",
+      "input_language": "de",
+      "macro_f1": 0.4799990352091893,
+      "macro_precision": 0.6262109077040428,
+      "macro_recall": 0.5107403773899974,
+      "method_id": "cf_rnn",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7931034482758621,
+          "precision": 0.8070175438596491,
+          "recall": 0.7796610169491526
+        },
+        {
+          "class": "permission",
+          "f1": 0.3870967741935483,
+          "precision": 0.6,
+          "recall": 0.2857142857142857
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.24999999999999997,
+          "precision": 0.75,
+          "recall": 0.15
+        },
+        {
+          "class": "definition",
+          "f1": 0.48979591836734687,
+          "precision": 0.34782608695652173,
+          "recall": 0.8275862068965517
+        }
+      ],
+      "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_cf_rnn_v1.json",
+      "role": "BiLSTM modality-classification baseline (no semantic extraction)",
+      "status": "completed_zero_api",
+      "sun_label": "CF_RNN (BiLSTM)",
+      "training_or_weights": "official 300-d EStG vectors + locally trained BiLSTM (1927 train / 414 dev clean rows)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.6733333333333333,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "raw_text_de",
+      "input_language": "de",
+      "macro_f1": 0.6177416786112438,
+      "macro_precision": 0.689272030651341,
+      "macro_recall": 0.6182568673290474,
+      "method_id": "cf_cnn",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8717948717948718,
+          "precision": 0.8793103448275862,
+          "recall": 0.864406779661017
+        },
+        {
+          "class": "permission",
+          "f1": 0.6086956521739131,
+          "precision": 0.7777777777777778,
+          "recall": 0.5
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.4666666666666667,
+          "precision": 0.7,
+          "recall": 0.35
+        },
+        {
+          "class": "definition",
+          "f1": 0.5238095238095237,
+          "precision": 0.4,
+          "recall": 0.7586206896551724
+        }
+      ],
+      "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_cf_cnn_v1.json",
+      "role": "CNN modality-classification baseline (no semantic extraction)",
+      "status": "completed_zero_api",
+      "sun_label": "CF_CNN",
+      "training_or_weights": "official 300-d EStG vectors + locally trained TextCNN (1927 train / 414 dev clean rows)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.44666666666666666,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "raw_text_de",
+      "input_language": "de",
+      "macro_f1": 0.35072320026448467,
+      "macro_precision": 0.40459349593495936,
+      "macro_recall": 0.3877640477582032,
+      "method_id": "bert_base_uncased",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.6605504587155964,
+          "precision": 0.72,
+          "recall": 0.6101694915254238
+        },
+        {
+          "class": "permission",
+          "f1": 0.4,
+          "precision": 0.6666666666666666,
+          "recall": 0.2857142857142857
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.3423423423423424,
+          "precision": 0.23170731707317074,
+          "recall": 0.6551724137931034
+        }
+      ],
+      "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_base_uncased_v1.json",
+      "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
+      "status": "completed_zero_api",
+      "sun_label": "bert-base-uncased",
+      "training_or_weights": "public pinned BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.5733333333333334,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "raw_text_de",
+      "input_language": "de",
+      "macro_f1": 0.4528547671840355,
+      "macro_precision": 0.4439888667331339,
+      "macro_recall": 0.4922838217695027,
+      "method_id": "bert_base_cased",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7454545454545455,
+          "precision": 0.803921568627451,
+          "recall": 0.6949152542372882
+        },
+        {
+          "class": "permission",
+          "f1": 0.6341463414634146,
+          "precision": 0.65,
+          "recall": 0.6190476190476191
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "class": "definition",
+          "f1": 0.43181818181818177,
+          "precision": 0.3220338983050847,
+          "recall": 0.6551724137931034
+        }
+      ],
+      "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_base_cased_v1.json",
+      "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
+      "status": "completed_zero_api",
+      "sun_label": "bert-base-cased",
+      "training_or_weights": "public pinned BERT base cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.5733333333333334,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "raw_text_de",
+      "input_language": "de",
+      "macro_f1": 0.5245118367324371,
+      "macro_precision": 0.7253540305010894,
+      "macro_recall": 0.5238109153655618,
+      "method_id": "bert_large_uncased",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7256637168141593,
+          "precision": 0.7592592592592593,
+          "recall": 0.6949152542372882
+        },
+        {
+          "class": "permission",
+          "f1": 0.6060606060606061,
+          "precision": 0.8333333333333334,
+          "recall": 0.47619047619047616
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.33333333333333337,
+          "precision": 1.0,
+          "recall": 0.2
+        },
+        {
+          "class": "definition",
+          "f1": 0.43298969072164945,
+          "precision": 0.3088235294117647,
+          "recall": 0.7241379310344828
+        }
+      ],
+      "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_large_uncased_v1.json",
+      "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
+      "status": "completed_zero_api",
+      "sun_label": "bert-large-uncased",
+      "training_or_weights": "public pinned BERT large uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.66,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "raw_text_de",
+      "input_language": "de",
+      "macro_f1": 0.6024046861613537,
+      "macro_precision": 0.6259569678687326,
+      "macro_recall": 0.5951747794383679,
+      "method_id": "bert_large_cased",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8188976377952756,
+          "precision": 0.7647058823529411,
+          "recall": 0.8813559322033898
+        },
+        {
+          "class": "permission",
+          "f1": 0.5897435897435898,
+          "precision": 0.6388888888888888,
+          "recall": 0.5476190476190477
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.4848484848484849,
+          "precision": 0.6153846153846154,
+          "recall": 0.4
+        },
+        {
+          "class": "definition",
+          "f1": 0.5161290322580646,
+          "precision": 0.48484848484848486,
+          "recall": 0.5517241379310345
+        }
+      ],
+      "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_large_cased_v1.json",
+      "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
+      "status": "completed_zero_api",
+      "sun_label": "bert-large-cased",
+      "training_or_weights": "public pinned BERT large cased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.48,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "raw_text_de",
+      "input_language": "de",
+      "macro_f1": 0.40570237422272465,
+      "macro_precision": 0.5219260435571688,
+      "macro_recall": 0.4425603935320475,
+      "method_id": "bert_legal_uncased",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.6666666666666665,
+          "precision": 0.825,
+          "recall": 0.559322033898305
+        },
+        {
+          "class": "permission",
+          "f1": 0.4590163934426229,
+          "precision": 0.7368421052631579,
+          "recall": 0.3333333333333333
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.08333333333333334,
+          "precision": 0.25,
+          "recall": 0.05
+        },
+        {
+          "class": "definition",
+          "f1": 0.41379310344827586,
+          "precision": 0.27586206896551724,
+          "recall": 0.8275862068965517
+        }
+      ],
+      "prediction_path": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_v1.json",
+      "role": "pre-trained BERT-TextCNN modality-classification comparison (no semantic extraction)",
+      "status": "completed_zero_api",
+      "sun_label": "bert-legal-uncased",
+      "training_or_weights": "public pinned Legal-BERT base uncased encoder + locally trained final-paper BERT-TextCNN head (1927/414)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.74,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "raw_text_de (classifier) + approved_text_en (phrases)",
+      "input_language": "de classifier / en phrase view",
+      "macro_f1": 0.712845542257307,
+      "macro_precision": 0.761203007518797,
+      "macro_recall": 0.6879063343630848,
+      "method_id": "sun_rule_only",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8,
+          "precision": 0.7105263157894737,
+          "recall": 0.9152542372881356
+        },
+        {
+          "class": "permission",
+          "f1": 0.8051948051948051,
+          "precision": 0.8857142857142857,
+          "recall": 0.7380952380952381
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.7647058823529412,
+          "precision": 0.9285714285714286,
+          "recall": 0.65
+        },
+        {
+          "class": "definition",
+          "f1": 0.48148148148148145,
+          "precision": 0.52,
+          "recall": 0.4482758620689655
+        }
+      ],
+      "prediction_path": "data/predictions/b0_formal_arm_v1/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "data/results/b0_formal_arm_v1/modality_labels.json",
+      "role": "complete Stage 2 method: modality + five span fields",
+      "status": "existing_formal_arm_reused_zero_api",
+      "sun_label": "Sun/Rules-Only",
+      "training_or_weights": "existing B0 checkpoint/config",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.8333333333333334,
+      "evaluator_matches_v2": true,
+      "evaluator_recomputed": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+      "input_field": "approved_text_en",
+      "input_language": "en",
+      "macro_f1": 0.7694506979014613,
+      "macro_precision": 0.8154855095153603,
+      "macro_recall": 0.782564846511369,
+      "method_id": "direct_llm",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.9206349206349207,
+          "precision": 0.8656716417910447,
+          "recall": 0.9830508474576272
+        },
+        {
+          "class": "permission",
+          "f1": 0.9302325581395349,
+          "precision": 0.9090909090909091,
+          "recall": 0.9523809523809523
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.7391304347826088,
+          "precision": 0.6538461538461539,
+          "recall": 0.85
+        },
+        {
+          "class": "definition",
+          "f1": 0.4878048780487806,
+          "precision": 0.8333333333333334,
+          "recall": 0.3448275862068966
+        }
+      ],
+      "prediction_path": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "result_file": "data/results/direct_llm_formal_arm_v1/modality_labels.json",
+      "role": "complete Stage 2 method: modality + five span fields",
+      "status": "existing_formal_arm_reused_zero_api",
+      "sun_label": "Direct-LLM",
+      "training_or_weights": "existing Direct-LLM prediction snapshot",
+      "unlabeled_predictions": 1
+    }
+  ],
+  "report_id": "sep_c2_target_consistency_diagnosis_v1",
+  "safety": {
+    "full_150_denominator_preserved": true,
+    "gold_used_for_evaluation_only": true,
+    "gold_used_for_prediction": false,
+    "new_llm_api_calls": 0,
+    "new_model_training_runs": 0,
+    "new_paid_api_calls": 0,
+    "post_result_tuning": false,
+    "source_pending_counted_as_failure": false
+  },
+  "schema_version": "sep_c2_target_consistency_diagnosis@1.0.0",
+  "semantic_extraction_main_table_source": "outputs/reports/sep_c2_sun_predecessors_comparison_v2.json",
+  "semantic_extraction_main_table_unchanged": true,
+  "source_report": "outputs/reports/sep_c2_sun_predecessors_comparison_v2.json",
+  "status": "completed_10_evaluated_one_source_pending",
+  "target_misalignment": {
+    "clause_order_not_sorted_by_start": 1,
+    "first_clause_covers_full_sentence": 26,
+    "first_clause_start_zero": 141,
+    "heterogeneous_multi_clause_C": 34,
+    "homogeneous_multi_clause_B": 15,
+    "multi_clause_total_B_plus_C": 49,
+    "overlapping_clause_spans": 9,
+    "per_method": {
+      "bert_base_cased": {
+        "A_errors": 41,
+        "B_errors": 5,
+        "C_any_gold_clause_accuracy": 0.6470588235294118,
+        "C_errors": 18,
+        "C_exact_first_accuracy": 0.47058823529411764,
+        "C_first_errors_matching_later": 6
+      },
+      "bert_base_uncased": {
+        "A_errors": 56,
+        "B_errors": 9,
+        "C_any_gold_clause_accuracy": 0.6764705882352942,
+        "C_errors": 18,
+        "C_exact_first_accuracy": 0.47058823529411764,
+        "C_first_errors_matching_later": 7
+      },
+      "bert_large_cased": {
+        "A_errors": 31,
+        "B_errors": 6,
+        "C_any_gold_clause_accuracy": 0.8823529411764706,
+        "C_errors": 14,
+        "C_exact_first_accuracy": 0.5882352941176471,
+        "C_first_errors_matching_later": 10
+      },
+      "bert_large_uncased": {
+        "A_errors": 41,
+        "B_errors": 7,
+        "C_any_gold_clause_accuracy": 0.8235294117647058,
+        "C_errors": 16,
+        "C_exact_first_accuracy": 0.5294117647058824,
+        "C_first_errors_matching_later": 10
+      },
+      "bert_legal_uncased": {
+        "A_errors": 52,
+        "B_errors": 9,
+        "C_any_gold_clause_accuracy": 0.7058823529411765,
+        "C_errors": 17,
+        "C_exact_first_accuracy": 0.5,
+        "C_first_errors_matching_later": 7
+      },
+      "cf_cnn": {
+        "A_errors": 27,
+        "B_errors": 2,
+        "C_any_gold_clause_accuracy": 0.6470588235294118,
+        "C_errors": 20,
+        "C_exact_first_accuracy": 0.4117647058823529,
+        "C_first_errors_matching_later": 8
+      },
+      "cf_kw": {
+        "A_errors": 28,
+        "B_errors": 7,
+        "C_any_gold_clause_accuracy": 0.8529411764705882,
+        "C_errors": 22,
+        "C_exact_first_accuracy": 0.35294117647058826,
+        "C_first_errors_matching_later": 17
+      },
+      "cf_rnn": {
+        "A_errors": 38,
+        "B_errors": 7,
+        "C_any_gold_clause_accuracy": 0.6764705882352942,
+        "C_errors": 20,
+        "C_exact_first_accuracy": 0.4117647058823529,
+        "C_first_errors_matching_later": 9
+      },
+      "direct_llm": {
+        "A_errors": 7,
+        "B_errors": 4,
+        "C_any_gold_clause_accuracy": 0.8235294117647058,
+        "C_errors": 14,
+        "C_exact_first_accuracy": 0.5882352941176471,
+        "C_first_errors_matching_later": 8
+      },
+      "sun_rule_only": {
+        "A_errors": 21,
+        "B_errors": 5,
+        "C_any_gold_clause_accuracy": 0.8529411764705882,
+        "C_errors": 13,
+        "C_exact_first_accuracy": 0.6176470588235294,
+        "C_first_errors_matching_later": 8
+      }
+    },
+    "single_valid_clause_A": 101
+  },
+  "target_structure": {
+    "group_ids": {
+      "A": [
+        "estg_000002",
+        "estg_000003",
+        "estg_000004",
+        "estg_000027",
+        "estg_000030",
+        "estg_000031",
+        "estg_000033",
+        "estg_000035",
+        "estg_000036",
+        "estg_000043",
+        "estg_000044",
+        "estg_000051",
+        "estg_000052",
+        "estg_000055",
+        "estg_000057",
+        "estg_000060",
+        "estg_000068",
+        "estg_000074",
+        "estg_000075",
+        "estg_000087",
+        "estg_000091",
+        "estg_000092",
+        "estg_000094",
+        "estg_000095",
+        "estg_000098",
+        "estg_000103",
+        "estg_000104",
+        "estg_000105",
+        "estg_000106",
+        "estg_000108",
+        "estg_000109",
+        "estg_000111",
+        "estg_000112",
+        "estg_000113",
+        "estg_000114",
+        "estg_000115",
+        "estg_000118",
+        "estg_000119",
+        "estg_000121",
+        "estg_000123",
+        "estg_000124",
+        "estg_000125",
+        "estg_000127",
+        "estg_000130",
+        "estg_000131",
+        "estg_000133",
+        "estg_000134",
+        "estg_000135",
+        "estg_000139",
+        "estg_000143",
+        "estg_000145",
+        "estg_000146",
+        "estg_000148",
+        "estg_000183",
+        "estg_000195",
+        "estg_000214",
+        "estg_000223",
+        "estg_000230",
+        "estg_000231",
+        "estg_000245",
+        "estg_000247",
+        "estg_000273",
+        "estg_000277",
+        "estg_000283",
+        "estg_000293",
+        "estg_000302",
+        "estg_000308",
+        "estg_000313",
+        "estg_000326",
+        "estg_000366",
+        "estg_000375",
+        "estg_000393",
+        "estg_000396",
+        "estg_000399",
+        "estg_000414",
+        "estg_000417",
+        "estg_000433",
+        "estg_000452",
+        "estg_000457",
+        "estg_000458",
+        "estg_000465",
+        "estg_000507",
+        "estg_000522",
+        "estg_000525",
+        "estg_000539",
+        "estg_000546",
+        "estg_000555",
+        "estg_000560",
+        "estg_000569",
+        "estg_000572",
+        "estg_000578",
+        "estg_000599",
+        "estg_000601",
+        "estg_000635",
+        "estg_000659",
+        "estg_000704",
+        "estg_000713",
+        "estg_000720",
+        "estg_000773",
+        "estg_000812",
+        "estg_000861"
+      ],
+      "B": [
+        "estg_000038",
+        "estg_000056",
+        "estg_000061",
+        "estg_000079",
+        "estg_000083",
+        "estg_000173",
+        "estg_000207",
+        "estg_000209",
+        "estg_000210",
+        "estg_000220",
+        "estg_000306",
+        "estg_000347",
+        "estg_000505",
+        "estg_000716",
+        "estg_000785"
+      ],
+      "C": [
+        "estg_000020",
+        "estg_000021",
+        "estg_000028",
+        "estg_000037",
+        "estg_000039",
+        "estg_000040",
+        "estg_000046",
+        "estg_000059",
+        "estg_000062",
+        "estg_000070",
+        "estg_000071",
+        "estg_000077",
+        "estg_000080",
+        "estg_000082",
+        "estg_000128",
+        "estg_000136",
+        "estg_000161",
+        "estg_000164",
+        "estg_000206",
+        "estg_000208",
+        "estg_000218",
+        "estg_000222",
+        "estg_000232",
+        "estg_000271",
+        "estg_000285",
+        "estg_000286",
+        "estg_000504",
+        "estg_000509",
+        "estg_000664",
+        "estg_000776",
+        "estg_000786",
+        "estg_000800",
+        "estg_000816",
+        "estg_000854"
+      ],
+      "D": []
+    },
+    "groups": {
+      "A": {
+        "clause_count_distribution": {
+          "1": 101
+        },
+        "first_covers_full": 25,
+        "first_label_support": {
+          "definition": 14,
+          "obligation": 42,
+          "permission": 34,
+          "prohibition": 11
+        },
+        "first_span_length": {
+          "max": 823,
+          "p50": 207,
+          "p90": 382
+        },
+        "first_start_zero": 96,
+        "n": 101
+      },
+      "B": {
+        "clause_count_distribution": {
+          "2": 11,
+          "3": 2,
+          "4": 2
+        },
+        "first_covers_full": 0,
+        "first_label_support": {
+          "definition": 3,
+          "obligation": 8,
+          "permission": 1,
+          "prohibition": 3
+        },
+        "first_span_length": {
+          "max": 513,
+          "p50": 138,
+          "p90": 381
+        },
+        "first_start_zero": 14,
+        "n": 15
+      },
+      "C": {
+        "clause_count_distribution": {
+          "2": 16,
+          "3": 12,
+          "4": 5,
+          "6": 1
+        },
+        "first_covers_full": 1,
+        "first_label_support": {
+          "definition": 12,
+          "obligation": 9,
+          "permission": 7,
+          "prohibition": 6
+        },
+        "first_span_length": {
+          "max": 906,
+          "p50": 151,
+          "p90": 355
+        },
+        "first_start_zero": 31,
+        "n": 34
+      },
+      "D": {
+        "clause_count_distribution": {},
+        "first_covers_full": 0,
+        "first_label_support": {},
+        "first_span_length": {
+          "max": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "first_start_zero": 0,
+        "n": 0
+      }
+    },
+    "overall": {
+      "clause_count_distribution": {
+        "1": 101,
+        "2": 27,
+        "3": 14,
+        "4": 7,
+        "6": 1
+      },
+      "first_clause_char_length": {
+        "max": 906,
+        "p50": 195,
+        "p90": 381
+      },
+      "first_clause_covers_full_sentence": 26,
+      "first_clause_label_support": {
+        "definition": 29,
+        "obligation": 59,
+        "permission": 42,
+        "prohibition": 20
+      },
+      "first_clause_start_zero": 141,
+      "group_counts": {
+        "A": 101,
+        "B": 15,
+        "C": 34,
+        "D": 0
+      },
+      "n_records": 150,
+      "overlapping_sample_ids": [
+        "estg_000020",
+        "estg_000037",
+        "estg_000039",
+        "estg_000077",
+        "estg_000082",
+        "estg_000136",
+        "estg_000347",
+        "estg_000776",
+        "estg_000854"
+      ],
+      "records_with_clause_order_not_sorted_by_start": 1,
+      "records_with_clause_spans_overlapping": 9,
+      "records_with_first_clause_not_start_zero": [
+        {
+          "first_end": 136,
+          "first_label": "prohibition",
+          "first_start": 97,
+          "group": "C",
+          "sample_id": "estg_000021",
+          "source_length": 212
+        },
+        {
+          "first_end": 344,
+          "first_label": "obligation",
+          "first_start": 102,
+          "group": "A",
+          "sample_id": "estg_000027",
+          "source_length": 344
+        },
+        {
+          "first_end": 237,
+          "first_label": "definition",
+          "first_start": 174,
+          "group": "A",
+          "sample_id": "estg_000112",
+          "source_length": 538
+        },
+        {
+          "first_end": 166,
+          "first_label": "obligation",
+          "first_start": 25,
+          "group": "A",
+          "sample_id": "estg_000396",
+          "source_length": 166
+        },
+        {
+          "first_end": 835,
+          "first_label": "obligation",
+          "first_start": 25,
+          "group": "A",
+          "sample_id": "estg_000507",
+          "source_length": 835
+        },
+        {
+          "first_end": 214,
+          "first_label": "prohibition",
+          "first_start": 45,
+          "group": "A",
+          "sample_id": "estg_000720",
+          "source_length": 215
+        },
+        {
+          "first_end": 211,
+          "first_label": "prohibition",
+          "first_start": 87,
+          "group": "B",
+          "sample_id": "estg_000785",
+          "source_length": 350
+        },
+        {
+          "first_end": 449,
+          "first_label": "prohibition",
+          "first_start": 203,
+          "group": "C",
+          "sample_id": "estg_000786",
+          "source_length": 554
+        },
+        {
+          "first_end": 202,
+          "first_label": "permission",
+          "first_start": 4,
+          "group": "C",
+          "sample_id": "estg_000816",
+          "source_length": 335
+        }
+      ],
+      "records_without_valid_gold_clause": 0,
+      "unsorted_sample_ids": [
+        "estg_000136"
+      ]
+    }
+  },
+  "truncation_audit": {
+    "approved_text_en_word_token_stats": {
+      "max": 199,
+      "p50": 41,
+      "p90": 111,
+      "p95": 138,
+      "rows_over_192": 2
+    },
+    "bert_base_cased": {
+      "formal_input": {
+        "max": 532,
+        "max_length": 192,
+        "p50": 115,
+        "p95": 358,
+        "p99": 493,
+        "rows": 150,
+        "rows_over_max_length": 31
+      },
+      "protocol": "WordPiece right truncation, max_length=192 subword tokens"
+    },
+    "bert_base_uncased": {
+      "formal_input": {
+        "max": 464,
+        "max_length": 192,
+        "p50": 102,
+        "p95": 317,
+        "p99": 431,
+        "rows": 150,
+        "rows_over_max_length": 27
+      },
+      "protocol": "WordPiece right truncation, max_length=192 subword tokens"
+    },
+    "bert_large_cased": {
+      "formal_input": {
+        "max": 532,
+        "max_length": 192,
+        "p50": 115,
+        "p95": 358,
+        "p99": 493,
+        "rows": 150,
+        "rows_over_max_length": 31
+      },
+      "protocol": "WordPiece right truncation, max_length=192 subword tokens"
+    },
+    "bert_large_uncased": {
+      "formal_input": {
+        "max": 464,
+        "max_length": 192,
+        "p50": 102,
+        "p95": 317,
+        "p99": 431,
+        "rows": 150,
+        "rows_over_max_length": 27
+      },
+      "protocol": "WordPiece right truncation, max_length=192 subword tokens"
+    },
+    "bert_legal_uncased": {
+      "formal_input": {
+        "max": 450,
+        "max_length": 192,
+        "p50": 97,
+        "p95": 288,
+        "p99": 407,
+        "rows": 150,
+        "rows_over_max_length": 25
+      },
+      "protocol": "WordPiece right truncation, max_length=192 subword tokens"
+    },
+    "cf_cnn": {
+      "formal_input": {
+        "max": 188,
+        "max_length": 192,
+        "rows_over_192": 0
+      },
+      "protocol": "whitespace tokens, max_length=192"
+    },
+    "cf_kw": {
+      "protocol": "regex over full raw_text_de",
+      "truncation": false
+    },
+    "cf_rnn": {
+      "formal_input": {
+        "max": 188,
+        "max_length": 192,
+        "rows_over_192": 0
+      },
+      "protocol": "whitespace tokens, max_length=192"
+    },
+    "direct_llm": {
+      "protocol": "existing snapshot reused read-only; no new truncation",
+      "truncation": false
+    },
+    "exact_german_first_clause_boundaries": "unavailable: Gold clause spans are over approved_text_en and no validated German alignment exists in the frozen evidence.",
+    "raw_text_de_word_token_stats": {
+      "max": 188,
+      "p50": 37,
+      "p90": 97,
+      "p95": 119,
+      "rows_over_192": 0
+    },
+    "sun_rule_only": {
+      "protocol": "existing snapshot reused read-only; no new truncation",
+      "truncation": false
+    }
+  }
+}

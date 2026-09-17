@@ -1,0 +1,41 @@
+{
+  "schema_version": "sep_c2_sun_predecessor_neural_config@1.0.0",
+  "method_id": "cf_rnn",
+  "sun_source": "Sun et al. (2024) author-manuscript Table 7, CF_RNN baseline: bidirectional LSTM for text classification",
+  "reproduction_class": "paper-described BiLSTM architecture retrained locally; unpublished hyperparameters disclosed",
+  "language": "de",
+  "input_field": "raw_text_de",
+  "labels": ["definition", "obligation", "permission", "prohibition"],
+  "architecture": {
+    "type": "bidirectional_lstm",
+    "layers": 1,
+    "hidden_size": 128,
+    "pooling": "masked mean concatenated with masked max",
+    "dropout": 0.3,
+    "embedding_initialization": "official EStG_sent_vec.csv 300-d token vectors",
+    "embedding_trainable": true
+  },
+  "optimization": {
+    "loss": "unweighted_cross_entropy",
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "max_epochs": 30,
+    "early_stopping_patience": 5,
+    "early_stopping_metric": "macro_f1",
+    "gradient_clip_norm": 1.0,
+    "seed": 20260915,
+    "max_length": 192,
+    "hyperparameter_search": false
+  },
+  "training_data_contract": {
+    "source": "official_project_reconstructed_train_split",
+    "exclude_estg150_overlap": true,
+    "exclude_duplicates": true,
+    "validation_split": "official_project_reconstructed_dev_split",
+    "estg150_used_for_training_or_selection": false
+  },
+  "provenance_caveat": "Sun et al. do not publish hidden size, optimizer, initialization, or stopping rules. These choices are frozen before the EStG-150 run and are reported as reconstruction parameters.",
+  "post_result_tuning": false
+}

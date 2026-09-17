@@ -1,0 +1,184 @@
+{
+  "schema_version": "sep_c2_sun_predecessor_method_roster@1.0.0",
+  "roster_id": "sun_2024_actual_experiment_methods_v1",
+  "verified_against": {
+    "local_author_manuscript_text": "references/papers/extracted/sun_2024_full_text.txt",
+    "local_author_manuscript_pdf": "references/papers/Sun_2024_Design_time_BPC.pdf",
+    "local_version_status": "earlier_author_manuscript_not_final_springer_version",
+    "final_version_entry": "https://link.springer.com/article/10.1007/s11227-023-05626-0",
+    "final_version_check_status": "verified_online_2026-09-15",
+    "final_version_caveat": "Final article accessed on 2026-09-15; Section 4.2.1 / Fig. 3 was used to verify the BERT-TextCNN architecture (per-layer [CLS] sequence -> TextCNN -> global max -> four-class output). Model-weight availability remains separate from architecture verification.",
+    "source_location_notes": {
+      "table_6_models": "local text lines 653-670",
+      "table_7_baselines": "local text lines 703-708",
+      "semantic_extraction_setup": "local text lines 717-770",
+      "winter_comparison": "local text lines 872-893"
+    },
+    "final_version_architecture_verified": true
+  },
+  "classification_methods": [
+    {
+      "method_id": "cf_kw",
+      "sun_label": "CF_KW",
+      "sun_role": "keyword classification baseline in Table 7",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "completed_zero_api_estg150_run",
+      "reproduction_class": "paper-described rule baseline; keyword list reconstructed",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw",
+      "notes": "Paper does not publish the keyword list. Reconstructed list is frozen in configs/sep_c2_sun_predecessors_v1/cf_kw_v1.json."
+    },
+    {
+      "method_id": "cf_rnn",
+      "sun_label": "CF_RNN",
+      "sun_role": "bidirectional-LSTM classification baseline in Table 7",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "completed_zero_api_estg150_run",
+      "reproduction_class": "paper-described BiLSTM retrained on official EStG train split",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn",
+      "notes": "Unpublished hyperparameters are disclosed in the per-method config/manifest."
+    },
+    {
+      "method_id": "cf_cnn",
+      "sun_label": "CF_CNN",
+      "sun_role": "CNN sentence-classification baseline in Table 7",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "completed_zero_api_estg150_run",
+      "reproduction_class": "paper-described CNN retrained on official EStG train split",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn",
+      "notes": "Unpublished kernel/filter settings are disclosed in the per-method config/manifest."
+    },
+    {
+      "method_id": "bert_base_uncased",
+      "sun_label": "bert-base-uncased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "completed_zero_api_full_bert_textcnn",
+      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased",
+      "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased",
+      "notes": "Public google-bert/bert-base-uncased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "clean_probe_evidence_dir": null,
+      "existing_textcnn_diagnostic_evidence_dir": null
+    },
+    {
+      "method_id": "bert_base_cased",
+      "sun_label": "bert-base-cased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "completed_zero_api_full_bert_textcnn",
+      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased",
+      "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased",
+      "notes": "Public google-bert/bert-base-cased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "clean_probe_evidence_dir": null,
+      "existing_textcnn_diagnostic_evidence_dir": null
+    },
+    {
+      "method_id": "bert_large_uncased",
+      "sun_label": "bert-large-uncased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "completed_zero_api_full_bert_textcnn",
+      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased",
+      "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased",
+      "notes": "Public google-bert/bert-large-uncased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "clean_probe_evidence_dir": null,
+      "existing_textcnn_diagnostic_evidence_dir": null
+    },
+    {
+      "method_id": "bert_large_cased",
+      "sun_label": "bert-large-cased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "completed_zero_api_full_bert_textcnn",
+      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased",
+      "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased",
+      "notes": "Public google-bert/bert-large-cased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "clean_probe_evidence_dir": null,
+      "existing_textcnn_diagnostic_evidence_dir": null
+    },
+    {
+      "method_id": "bert_legal_uncased",
+      "sun_label": "bert-legal-uncased",
+      "sun_role": "best pre-trained comparison in Table 6; Sun's own method family in Table 7",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "completed_zero_api_full_bert_textcnn",
+      "reproduction_class": "public pre-trained encoder + final-paper BERT-TextCNN head, fine-tuned jointly on the clean official EStG train split",
+      "evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased",
+      "notes": "Public nlpaueb/legal-bert-base-uncased (pinned revision) + final-paper BERT-TextCNN fine-tuned on the clean official EStG train split.",
+      "clean_probe_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe",
+      "existing_textcnn_diagnostic_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing",
+      "full_bert_textcnn_evidence_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased"
+    },
+    {
+      "method_id": "bert_legal_cased",
+      "sun_label": "bert-legal-cased",
+      "sun_role": "pre-trained encoder comparison in Table 6",
+      "classification_supported": true,
+      "semantic_fields_native": false,
+      "implementation_status": "blocked_exact_public_checkpoint_unavailable",
+      "reproduction_class": "exact cased EU-legislation legal-BERT checkpoint unavailable from public sources; no substitute placed in this slot",
+      "evidence_dir": null,
+      "blocked_scope": "One of the nine requested baseline configurations remains open.",
+      "attempted_public_paths": [
+        "https://huggingface.co/nlpaueb/legal-bert-base-cased (404; no such model)",
+        "Hugging Face model search for legal-bert / eurlex / legal cased families (no exact cased EU-legislation model)",
+        "GitHub repository matching the final-paper title (only README/LICENSE; no model or training code)",
+        "Archive.org Decision_Logic_data.zip (EStG_raw.txt / EStG_sent_vec.csv / estg.html only; no checkpoint)"
+      ],
+      "notes": "A generic cased BERT or the uncased Legal-BERT is not the exact configuration and is therefore not reported as this row."
+    }
+  ],
+  "semantic_extraction_methods_in_sun_experiment": [
+    {
+      "method_id": "sun_tregex_tsurgeon_extraction",
+      "sun_role": "Sun's own phrase-level six-element extraction in Section 5.2 / Table 8",
+      "external_method_comparison_in_sun_paper": false,
+      "external_method_comparison_evidence": "The author-manuscript Section 5.2 reports only Sun's own extraction results; no Table comparing external six-element extractors was found.",
+      "project_implementation_status": "existing B0/Sun-style reconstruction already evaluated under the frozen Stage 2 evaluator; no new code required for this task"
+    }
+  ],
+  "downstream_only_methods": [
+    {
+      "method_id": "winter_2020",
+      "sun_role": "process-checking comparison in Table 12 (downstream violation task), not a six-element Stage 2 extractor",
+      "may_be_called_a_six_element_extractor": false
+    }
+  ],
+  "cited_but_not_verified_as_sun_experiment_methods": [
+    "Sleimi et al. is cited in Sun's related work; the local author manuscript does not report running it in Sun's experiment.",
+    "Michel et al. (2022) is the modality dataset source in Sun's experiment, but its own classifier is not listed as a Sun comparison method.",
+    "Other reference-list names must not be promoted into the comparison table without an explicit in-experiment result table or method statement."
+  ],
+  "round_status": {
+    "status": "completed_zero_api_predecessor_execution_round",
+    "completed_methods": [
+      "cf_kw",
+      "cf_rnn",
+      "cf_cnn",
+      "bert_legal_uncased_probe",
+      "bert_legal_uncased_textcnn_existing"
+    ],
+    "blocked_methods": [
+      "bert_base_uncased",
+      "bert_base_cased",
+      "bert_large_uncased",
+      "bert_large_cased",
+      "bert_legal_cased"
+    ],
+    "blocked_reason": "no local public model cache and no outbound network in this environment",
+    "comparison_report": "outputs/reports/sep_c2_sun_predecessors_comparison_v1.json",
+    "semantic_comparison_note": "Sun's author manuscript does not report an external six-element extraction comparison; classifier-only predecessors are marked N/A for six-element output.",
+    "winter_scope_note": "The Winter clause-region result remains a separate additional exploration and is not extended in this round."
+  }
+}

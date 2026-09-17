@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-17
-**收录文件**：2125 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2261 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -171,6 +171,16 @@
 | `configs/schemas/stage3_inference.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sep_c2_stage2b_predecessor_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_base_cased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_base_uncased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_large_cased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_large_uncased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/bert_full_v1/bert_legal_uncased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/cf_cnn_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/cf_kw_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/cf_rnn_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c2_sun_predecessors_v1/method_roster_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sep_c3_modular_ablation_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_annotation_protocol_s15.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_evaluator_s16.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -690,6 +700,10 @@
 | `docs/INDEX.md` | 活动 | 说明、规范或研究文档 |
 | `docs/LLM_BUDGET_PROPOSAL_2026-07-12.md` | 活动 | 说明、规范或研究文档 |
 | `docs/MASTER_PIPELINE.md` | 活动 | 唯一完整三阶段路线与任务树 |
+| `docs/MASTER_PIPELINE.md` | 活动 | 唯一完整三阶段路线与任务树 |
+| `docs/MASTER_PIPELINE.md` | 活动 | 唯一完整三阶段路线与任务树 |
+| `docs/PROJECT_AUDIT.md` | 活动 | 唯一实时项目状态（兼容文件名） |
+| `docs/PROJECT_AUDIT.md` | 活动 | 唯一实时项目状态（兼容文件名） |
 | `docs/PROJECT_AUDIT.md` | 活动 | 唯一实时项目状态（兼容文件名） |
 | `docs/REAL_WORLD_ISSUE_REGISTER.md` | 活动 | 说明、规范或研究文档 |
 | `docs/REPRODUCTION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
@@ -1125,6 +1139,71 @@
 | `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_adapted_clause_regions.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_native.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c2_stage2b_public_source_probe_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_cased/training.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_base_uncased/training.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_cased/training.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_large_uncased/training.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased/training.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_probe/training.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing/model_card.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/bert_legal_uncased_textcnn_existing/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn/training.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_kw/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn/config_snapshot.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn/diagnostics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/cf_rnn/training.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/comparison/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/comparison/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/comparison_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_sun_predecessors_v1/comparison_v2/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_target_consistency_diagnosis_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c2_target_consistency_diagnosis_v1/report.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1400,6 +1479,32 @@
 | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_base_cased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_base_cased_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_base_uncased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_base_uncased_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_large_cased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_large_cased_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_large_uncased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_large_uncased_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_probe_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_probe_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_textcnn_existing_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_textcnn_existing_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_cf_cnn_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_cf_cnn_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_cf_kw_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_cf_kw_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessor_cf_rnn_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessor_cf_rnn_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessors_comparison_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessors_comparison_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_sun_predecessors_comparison_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_sun_predecessors_comparison_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c2_target_consistency_diagnosis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c2_target_consistency_diagnosis_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_actor_diagnosis_correction_and_minimal_candidate_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_actor_diagnosis_recompute_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_actor_fix_candidate_offline_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1413,6 +1518,10 @@
 | `outputs/reports/sep_c3_modular_prompt_v1_offline_check.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_postprocessing_attribution_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_postprocessing_attribution_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c4_constraint_failure_localization_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c4_constraint_failure_localization_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c4_exception_failure_localization_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c4_exception_failure_localization_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sim_case_c1_checklist.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sim_case_c1_result_figure.pdf` | 活动 | 项目文件 |
@@ -1461,6 +1570,8 @@
 | `paper/presentations/bpc_hybrid_Stage3_completed.pptx` | 活动 | 项目文件 |
 | `paper/README.md` | 活动 | 所在目录的入口说明 |
 | `paper/SIM_CASE_SECTION_v1.md` | 活动 | 说明、规范或研究文档 |
+| `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |
+| `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |
 | `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |
 
 ## `prompts`
@@ -1630,6 +1741,10 @@
 | `scripts/build_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_semantic_grounding_llm_authorization_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_semantic_grounding_v5_llm_preflight.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sep_c2_sun_predecessor_bert_features_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sep_c2_sun_predecessor_comparison_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sep_c2_sun_predecessor_comparison_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sep_c2_target_consistency_diagnosis_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sim_case_checklist_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_adjudication_asset.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
@@ -1737,6 +1852,11 @@
 | `scripts/run_s3_semantic_grounding_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sep_c2_stage2b_predecessor_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c2_sun_predecessor_bert_existing_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c2_sun_predecessor_bert_full_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c2_sun_predecessor_bert_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c2_sun_predecessor_neural_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c2_sun_predecessor_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sep_c3_modular_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_supplement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1945,6 +2065,19 @@
 | `src/bpc_hybrid/sun_compat/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/similarity_engine.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_compat/stage3_adapter.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/bert_full.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/bert_probe.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/common.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/dataset.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/evaluation.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/keyword.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/neural.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/runner.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/runner_bert.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/runner_bert_existing.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/runner_bert_full.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_predecessors/runner_neural.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_stage3/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_stage3/gdpr_change_classifier.py` | 活动 | Python 实现、脚本或测试 |
@@ -2196,7 +2329,10 @@
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c2_bert_full_architecture.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sep_c2_stage2b_predecessor_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c2_sun_predecessors.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c2_target_consistency_diagnosis.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sep_c2_two_method_execution_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sep_c3_modular_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_shared_comparison_correction.py` | 活动 | Python 实现、脚本或测试 |

@@ -1,0 +1,946 @@
+{
+  "blocked_methods": [
+    {
+      "method_id": "bert-base-uncased",
+      "reason": "no local public weights; offline environment cannot download",
+      "sun_source": "Table 6, bert-base-uncased"
+    },
+    {
+      "method_id": "bert-base-cased",
+      "reason": "no local public weights; offline environment cannot download",
+      "sun_source": "Table 6, bert-base-cased"
+    },
+    {
+      "method_id": "bert-large-uncased",
+      "reason": "no local public weights; offline environment cannot download",
+      "sun_source": "Table 6, bert-large-uncased"
+    },
+    {
+      "method_id": "bert-large-cased",
+      "reason": "no local public weights; offline environment cannot download",
+      "sun_source": "Table 6, bert-large-cased"
+    },
+    {
+      "method_id": "bert-legal-cased",
+      "reason": "no local public weights; offline environment cannot download",
+      "sun_source": "Table 6, bert-legal-cased"
+    }
+  ],
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "evaluator": {
+    "modality": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+    "semantic": "bpc_hybrid.stage2_sun_literal_overlap.evaluate_sun_literal_overlap"
+  },
+  "formal_gold": "data/gold/stage2/estg150_formal_gold_v1.json",
+  "formal_input": "data/input/estg150_formal_inference_input_v2.json",
+  "method_statuses": {
+    "bert_legal_uncased_probe": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\bert_legal_uncased_probe\\predictions.json",
+      "status": "evaluated"
+    },
+    "bert_legal_uncased_textcnn_existing": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\bert_legal_uncased_textcnn_existing\\predictions.json",
+      "status": "evaluated"
+    },
+    "cf_cnn": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\cf_cnn\\predictions.json",
+      "status": "evaluated"
+    },
+    "cf_kw": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\cf_kw\\predictions.json",
+      "status": "evaluated"
+    },
+    "cf_rnn": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\outputs\\evidence\\sep_c2_sun_predecessors_v1\\cf_rnn\\predictions.json",
+      "status": "evaluated"
+    },
+    "direct_llm": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\data\\predictions\\direct_llm_formal_arm_v1\\predictions.json",
+      "status": "evaluated"
+    },
+    "sun_rule_only": {
+      "path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_sun_predecessors\\formal_experiment\\data\\predictions\\b0_formal_arm_v1\\predictions.json",
+      "status": "evaluated"
+    }
+  },
+  "modality_table": [
+    {
+      "accuracy": 0.62,
+      "error_examples": [
+        {
+          "gold": "definition",
+          "predicted": "permission",
+          "sample_id": "estg_000020"
+        },
+        {
+          "gold": "prohibition",
+          "predicted": "permission",
+          "sample_id": "estg_000021"
+        },
+        {
+          "gold": "obligation",
+          "predicted": "definition",
+          "sample_id": "estg_000027"
+        },
+        {
+          "gold": "obligation",
+          "predicted": "prohibition",
+          "sample_id": "estg_000028"
+        },
+        {
+          "gold": "definition",
+          "predicted": "obligation",
+          "sample_id": "estg_000031"
+        }
+      ],
+      "gold_support": {
+        "definition": 29,
+        "obligation": 59,
+        "permission": 42,
+        "prohibition": 20
+      },
+      "input_language": "de (raw_text_de)",
+      "macro_f1": 0.5321768856892328,
+      "macro_precision": 0.5583147752078143,
+      "macro_recall": 0.5387395285408143,
+      "method_id": "cf_kw",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7272727272727273,
+          "precision": 0.7096774193548387,
+          "recall": 0.7457627118644068
+        },
+        {
+          "class": "permission",
+          "f1": 0.7216494845360825,
+          "precision": 0.6363636363636364,
+          "recall": 0.8333333333333334
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.3076923076923077,
+          "precision": 0.3157894736842105,
+          "recall": 0.3
+        },
+        {
+          "class": "definition",
+          "f1": 0.37209302325581395,
+          "precision": 0.5714285714285714,
+          "recall": 0.27586206896551724
+        }
+      ],
+      "predicted_count": {
+        "definition": 14,
+        "obligation": 62,
+        "permission": 55,
+        "prohibition": 19
+      },
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "reproduction": "deterministic German keyword rules reconstructed because the paper omits the keyword list",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_cf_kw_v1.json",
+      "role": "keyword modality-classification baseline; no semantic extraction",
+      "status": "completed_zero_api",
+      "sun_source": "Sun et al. (2024) author-manuscript Table 7, CF_KW",
+      "task": "first-clause modality label (same frozen evaluator as B0/D1)",
+      "training_or_weights": "none (rule list frozen in configs/sep_c2_sun_predecessors_v1/cf_kw_v1.json)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.5666666666666667,
+      "error_examples": [
+        {
+          "gold": "obligation",
+          "predicted": "permission",
+          "sample_id": "estg_000002"
+        },
+        {
+          "gold": "permission",
+          "predicted": "definition",
+          "sample_id": "estg_000003"
+        },
+        {
+          "gold": "permission",
+          "predicted": "obligation",
+          "sample_id": "estg_000004"
+        },
+        {
+          "gold": "prohibition",
+          "predicted": "definition",
+          "sample_id": "estg_000021"
+        },
+        {
+          "gold": "obligation",
+          "predicted": "definition",
+          "sample_id": "estg_000027"
+        }
+      ],
+      "gold_support": {
+        "definition": 29,
+        "obligation": 59,
+        "permission": 42,
+        "prohibition": 20
+      },
+      "input_language": "de (raw_text_de)",
+      "macro_f1": 0.4799990352091893,
+      "macro_precision": 0.6262109077040428,
+      "macro_recall": 0.5107403773899974,
+      "method_id": "cf_rnn",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.7931034482758621,
+          "precision": 0.8070175438596491,
+          "recall": 0.7796610169491526
+        },
+        {
+          "class": "permission",
+          "f1": 0.3870967741935483,
+          "precision": 0.6,
+          "recall": 0.2857142857142857
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.24999999999999997,
+          "precision": 0.75,
+          "recall": 0.15
+        },
+        {
+          "class": "definition",
+          "f1": 0.48979591836734687,
+          "precision": 0.34782608695652173,
+          "recall": 0.8275862068965517
+        }
+      ],
+      "predicted_count": {
+        "definition": 69,
+        "obligation": 57,
+        "permission": 20,
+        "prohibition": 4
+      },
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "reproduction": "BiLSTM retrained locally on clean official EStG train split; unpublished hyperparameters disclosed",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_cf_rnn_v1.json",
+      "role": "neural modality-classification baseline; no semantic extraction",
+      "status": "completed_zero_api",
+      "sun_source": "Sun et al. (2024) author-manuscript Table 7, CF_RNN (BiLSTM)",
+      "task": "first-clause modality label (same frozen evaluator as B0/D1)",
+      "training_or_weights": "official 300-d EStG vectors + locally trained BiLSTM (train 1927 / dev 414 clean rows)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.6733333333333333,
+      "error_examples": [
+        {
+          "gold": "obligation",
+          "predicted": "permission",
+          "sample_id": "estg_000002"
+        },
+        {
+          "gold": "permission",
+          "predicted": "definition",
+          "sample_id": "estg_000003"
+        },
+        {
+          "gold": "permission",
+          "predicted": "definition",
+          "sample_id": "estg_000004"
+        },
+        {
+          "gold": "prohibition",
+          "predicted": "definition",
+          "sample_id": "estg_000021"
+        },
+        {
+          "gold": "obligation",
+          "predicted": "definition",
+          "sample_id": "estg_000028"
+        }
+      ],
+      "gold_support": {
+        "definition": 29,
+        "obligation": 59,
+        "permission": 42,
+        "prohibition": 20
+      },
+      "input_language": "de (raw_text_de)",
+      "macro_f1": 0.6177416786112438,
+      "macro_precision": 0.689272030651341,
+      "macro_recall": 0.6182568673290474,
+      "method_id": "cf_cnn",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8717948717948718,
+          "precision": 0.8793103448275862,
+          "recall": 0.864406779661017
+        },
+        {
+          "class": "permission",
+          "f1": 0.6086956521739131,
+          "precision": 0.7777777777777778,
+          "recall": 0.5
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.4666666666666667,
+          "precision": 0.7,
+          "recall": 0.35
+        },
+        {
+          "class": "definition",
+          "f1": 0.5238095238095237,
+          "precision": 0.4,
+          "recall": 0.7586206896551724
+        }
+      ],
+      "predicted_count": {
+        "definition": 55,
+        "obligation": 58,
+        "permission": 27,
+        "prohibition": 10
+      },
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "reproduction": "3/4/5-gram CNN retrained locally on clean official EStG train split; unpublished hyperparameters disclosed",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_cf_cnn_v1.json",
+      "role": "neural modality-classification baseline; no semantic extraction",
+      "status": "completed_zero_api",
+      "sun_source": "Sun et al. (2024) author-manuscript Table 7, CF_CNN",
+      "task": "first-clause modality label (same frozen evaluator as B0/D1)",
+      "training_or_weights": "official 300-d EStG vectors + locally trained TextCNN (train 1927 / dev 414 clean rows)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.48,
+      "error_examples": [
+        {
+          "gold": "permission",
+          "predicted": "definition",
+          "sample_id": "estg_000003"
+        },
+        {
+          "gold": "permission",
+          "predicted": "obligation",
+          "sample_id": "estg_000004"
+        },
+        {
+          "gold": "prohibition",
+          "predicted": "definition",
+          "sample_id": "estg_000021"
+        },
+        {
+          "gold": "obligation",
+          "predicted": "definition",
+          "sample_id": "estg_000027"
+        },
+        {
+          "gold": "definition",
+          "predicted": "obligation",
+          "sample_id": "estg_000031"
+        }
+      ],
+      "gold_support": {
+        "definition": 29,
+        "obligation": 59,
+        "permission": 42,
+        "prohibition": 20
+      },
+      "input_language": "de (raw_text_de)",
+      "macro_f1": 0.3897335685391891,
+      "macro_precision": 0.6150039386159412,
+      "macro_recall": 0.3991755030475077,
+      "method_id": "bert_legal_uncased_probe",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.6122448979591836,
+          "precision": 0.5113636363636364,
+          "recall": 0.7627118644067796
+        },
+        {
+          "class": "permission",
+          "f1": 0.39344262295081966,
+          "precision": 0.631578947368421,
+          "recall": 0.2857142857142857
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.18181818181818182,
+          "precision": 1.0,
+          "recall": 0.1
+        },
+        {
+          "class": "definition",
+          "f1": 0.37142857142857144,
+          "precision": 0.3170731707317073,
+          "recall": 0.4482758620689655
+        }
+      ],
+      "predicted_count": {
+        "definition": 41,
+        "obligation": 88,
+        "permission": 19,
+        "prohibition": 2
+      },
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "reproduction": "closest local public encoder (nlpaueb/legal-bert-base-uncased) frozen + locally trained MLP probe; full CPU fine-tuning not attempted",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_probe_v1.json",
+      "role": "pre-trained legal-BERT modality-classification comparison; no semantic extraction",
+      "status": "completed_zero_api_weaker_adaptation_disclosed",
+      "sun_source": "Sun et al. (2024) author-manuscript Table 6, bert-legal-uncased",
+      "task": "first-clause modality label (same frozen evaluator as B0/D1)",
+      "training_or_weights": "public legal-BERT base uncased encoder + locally trained 256-unit MLP head on clean official train (1927/414)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.6666666666666666,
+      "error_examples": [
+        {
+          "gold": "obligation",
+          "predicted": "permission",
+          "sample_id": "estg_000002"
+        },
+        {
+          "gold": "permission",
+          "predicted": "definition",
+          "sample_id": "estg_000003"
+        },
+        {
+          "gold": "permission",
+          "predicted": "definition",
+          "sample_id": "estg_000004"
+        },
+        {
+          "gold": "prohibition",
+          "predicted": "definition",
+          "sample_id": "estg_000021"
+        },
+        {
+          "gold": "definition",
+          "predicted": "obligation",
+          "sample_id": "estg_000031"
+        }
+      ],
+      "gold_support": {
+        "definition": 29,
+        "obligation": 59,
+        "permission": 42,
+        "prohibition": 20
+      },
+      "input_language": "de (raw_text_de)",
+      "macro_f1": 0.6534515318406163,
+      "macro_precision": 0.7231659905341447,
+      "macro_recall": 0.6373504077259191,
+      "method_id": "bert_legal_uncased_textcnn_existing",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8034188034188032,
+          "precision": 0.8103448275862069,
+          "recall": 0.7966101694915254
+        },
+        {
+          "class": "permission",
+          "f1": 0.647887323943662,
+          "precision": 0.7931034482758621,
+          "recall": 0.5476190476190477
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.6874999999999999,
+          "precision": 0.9166666666666666,
+          "recall": 0.55
+        },
+        {
+          "class": "definition",
+          "f1": 0.47500000000000003,
+          "precision": 0.37254901960784315,
+          "recall": 0.6551724137931034
+        }
+      ],
+      "predicted_count": {
+        "definition": 51,
+        "obligation": 58,
+        "permission": 29,
+        "prohibition": 12
+      },
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "reproduction": "reused existing project S2.4/S2.6 checkpoint; no retraining in this round",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_textcnn_existing_v1.json",
+      "role": "existing full fine-tuned BERT-TextCNN modality classifier reused read-only; diagnostic only",
+      "status": "completed_diagnostic_training_overlap_flagged",
+      "sun_source": "Sun et al. (2024) final-paper-style BERT-TextCNN component (author-manuscript Table 6 best encoder family; final version Figure 3 architecture)",
+      "task": "first-clause modality label (same frozen evaluator as B0/D1)",
+      "training_or_weights": "existing S2.4 Legal-BERT + TextCNN checkpoint; original train split has 24 flagged EStG-150 overlap rows (4 exact normalized)",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.74,
+      "error_examples": [
+        {
+          "gold": "obligation",
+          "predicted": "permission",
+          "sample_id": "estg_000002"
+        },
+        {
+          "gold": "permission",
+          "predicted": "definition",
+          "sample_id": "estg_000004"
+        },
+        {
+          "gold": "definition",
+          "predicted": "prohibition",
+          "sample_id": "estg_000020"
+        },
+        {
+          "gold": "definition",
+          "predicted": "obligation",
+          "sample_id": "estg_000031"
+        },
+        {
+          "gold": "definition",
+          "predicted": "obligation",
+          "sample_id": "estg_000037"
+        }
+      ],
+      "gold_support": {
+        "definition": 29,
+        "obligation": 59,
+        "permission": 42,
+        "prohibition": 20
+      },
+      "input_language": "de classifier input + en phrase input (existing B0 formal arm)",
+      "macro_f1": 0.712845542257307,
+      "macro_precision": 0.761203007518797,
+      "macro_recall": 0.6879063343630848,
+      "method_id": "sun_rule_only",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8,
+          "precision": 0.7105263157894737,
+          "recall": 0.9152542372881356
+        },
+        {
+          "class": "permission",
+          "f1": 0.8051948051948051,
+          "precision": 0.8857142857142857,
+          "recall": 0.7380952380952381
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.7647058823529412,
+          "precision": 0.9285714285714286,
+          "recall": 0.65
+        },
+        {
+          "class": "definition",
+          "f1": 0.48148148148148145,
+          "precision": 0.52,
+          "recall": 0.4482758620689655
+        }
+      ],
+      "predicted_count": {
+        "definition": 25,
+        "obligation": 76,
+        "permission": 35,
+        "prohibition": 14
+      },
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "reproduction": "project paper-faithful independent reconstruction; existing formal B0 arm reused read-only",
+      "result_file": "data/results/b0_formal_arm_v1/modality_labels.json",
+      "role": "Sun/Rules-Only complete Stage 2 method; six-element extraction and modality",
+      "status": "existing_formal_arm_reused_zero_api",
+      "sun_source": "Sun et al. (2024) complete Stage 2 baseline as reconstructed by this project (B0 formal arm)",
+      "task": "first-clause modality label (same frozen evaluator as B0/D1)",
+      "training_or_weights": "existing B0 checkpoint/config; no new training or LLM call in this comparison",
+      "unlabeled_predictions": 0
+    },
+    {
+      "accuracy": 0.8333333333333334,
+      "error_examples": [
+        {
+          "gold": "obligation",
+          "predicted": "permission",
+          "sample_id": "estg_000002"
+        },
+        {
+          "gold": "definition",
+          "predicted": "prohibition",
+          "sample_id": "estg_000020"
+        },
+        {
+          "gold": "prohibition",
+          "predicted": "permission",
+          "sample_id": "estg_000021"
+        },
+        {
+          "gold": "definition",
+          "predicted": "obligation",
+          "sample_id": "estg_000037"
+        },
+        {
+          "gold": "permission",
+          "predicted": "prohibition",
+          "sample_id": "estg_000046"
+        }
+      ],
+      "gold_support": {
+        "definition": 29,
+        "obligation": 59,
+        "permission": 42,
+        "prohibition": 20
+      },
+      "input_language": "en (approved_text_en)",
+      "macro_f1": 0.7694506979014613,
+      "macro_precision": 0.8154855095153603,
+      "macro_recall": 0.782564846511369,
+      "method_id": "direct_llm",
+      "n_records": 150,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.9206349206349207,
+          "precision": 0.8656716417910447,
+          "recall": 0.9830508474576272
+        },
+        {
+          "class": "permission",
+          "f1": 0.9302325581395349,
+          "precision": 0.9090909090909091,
+          "recall": 0.9523809523809523
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.7391304347826088,
+          "precision": 0.6538461538461539,
+          "recall": 0.85
+        },
+        {
+          "class": "definition",
+          "f1": 0.4878048780487806,
+          "precision": 0.8333333333333334,
+          "recall": 0.3448275862068966
+        }
+      ],
+      "predicted_count": {
+        "definition": 12,
+        "obligation": 67,
+        "permission": 44,
+        "prohibition": 26
+      },
+      "records_failed": 0,
+      "records_missing": 0,
+      "records_scored": 150,
+      "reproduction": "existing Direct-LLM formal arm reused read-only; no new LLM call in this comparison",
+      "result_file": "data/results/direct_llm_formal_arm_v1/modality_labels.json",
+      "role": "complete Stage 2 replacement; six-element extraction and modality",
+      "status": "existing_formal_arm_reused_zero_api",
+      "sun_source": "not a Sun method; direct LLM replacement arm in the project comparison",
+      "task": "first-clause modality label (same frozen evaluator as B0/D1)",
+      "training_or_weights": "existing Direct-LLM formal prediction snapshot",
+      "unlabeled_predictions": 1
+    }
+  ],
+  "report_id": "sep_c2_sun_predecessors_comparison_v1",
+  "safety": {
+    "gold_used_for_evaluation_only": true,
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "post_result_tuning": false
+  },
+  "schema_version": "sep_c2_sun_predecessor_comparison@1.0.0",
+  "semantic_table": [
+    {
+      "input_language": "de (raw_text_de)",
+      "method_id": "cf_kw",
+      "native_six_element_output": false,
+      "reason": "modality classifier only; it does not produce actor/action/condition/constraint/exception spans and must not be credited with six-element extraction",
+      "reproduction": "deterministic German keyword rules reconstructed because the paper omits the keyword list",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_cf_kw_v1.json",
+      "role": "keyword modality-classification baseline; no semantic extraction",
+      "status": "completed_zero_api",
+      "sun_source": "Sun et al. (2024) author-manuscript Table 7, CF_KW",
+      "task": "not_applicable",
+      "training_or_weights": "none (rule list frozen in configs/sep_c2_sun_predecessors_v1/cf_kw_v1.json)"
+    },
+    {
+      "input_language": "de (raw_text_de)",
+      "method_id": "cf_rnn",
+      "native_six_element_output": false,
+      "reason": "modality classifier only; it does not produce actor/action/condition/constraint/exception spans and must not be credited with six-element extraction",
+      "reproduction": "BiLSTM retrained locally on clean official EStG train split; unpublished hyperparameters disclosed",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_cf_rnn_v1.json",
+      "role": "neural modality-classification baseline; no semantic extraction",
+      "status": "completed_zero_api",
+      "sun_source": "Sun et al. (2024) author-manuscript Table 7, CF_RNN (BiLSTM)",
+      "task": "not_applicable",
+      "training_or_weights": "official 300-d EStG vectors + locally trained BiLSTM (train 1927 / dev 414 clean rows)"
+    },
+    {
+      "input_language": "de (raw_text_de)",
+      "method_id": "cf_cnn",
+      "native_six_element_output": false,
+      "reason": "modality classifier only; it does not produce actor/action/condition/constraint/exception spans and must not be credited with six-element extraction",
+      "reproduction": "3/4/5-gram CNN retrained locally on clean official EStG train split; unpublished hyperparameters disclosed",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_cf_cnn_v1.json",
+      "role": "neural modality-classification baseline; no semantic extraction",
+      "status": "completed_zero_api",
+      "sun_source": "Sun et al. (2024) author-manuscript Table 7, CF_CNN",
+      "task": "not_applicable",
+      "training_or_weights": "official 300-d EStG vectors + locally trained TextCNN (train 1927 / dev 414 clean rows)"
+    },
+    {
+      "input_language": "de (raw_text_de)",
+      "method_id": "bert_legal_uncased_probe",
+      "native_six_element_output": false,
+      "reason": "modality classifier only; it does not produce actor/action/condition/constraint/exception spans and must not be credited with six-element extraction",
+      "reproduction": "closest local public encoder (nlpaueb/legal-bert-base-uncased) frozen + locally trained MLP probe; full CPU fine-tuning not attempted",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_probe_v1.json",
+      "role": "pre-trained legal-BERT modality-classification comparison; no semantic extraction",
+      "status": "completed_zero_api_weaker_adaptation_disclosed",
+      "sun_source": "Sun et al. (2024) author-manuscript Table 6, bert-legal-uncased",
+      "task": "not_applicable",
+      "training_or_weights": "public legal-BERT base uncased encoder + locally trained 256-unit MLP head on clean official train (1927/414)"
+    },
+    {
+      "input_language": "de (raw_text_de)",
+      "method_id": "bert_legal_uncased_textcnn_existing",
+      "native_six_element_output": false,
+      "reason": "modality classifier only; it does not produce actor/action/condition/constraint/exception spans and must not be credited with six-element extraction",
+      "reproduction": "reused existing project S2.4/S2.6 checkpoint; no retraining in this round",
+      "result_file": "outputs/reports/sep_c2_sun_predecessor_bert_legal_uncased_textcnn_existing_v1.json",
+      "role": "existing full fine-tuned BERT-TextCNN modality classifier reused read-only; diagnostic only",
+      "status": "completed_diagnostic_training_overlap_flagged",
+      "sun_source": "Sun et al. (2024) final-paper-style BERT-TextCNN component (author-manuscript Table 6 best encoder family; final version Figure 3 architecture)",
+      "task": "not_applicable",
+      "training_or_weights": "existing S2.4 Legal-BERT + TextCNN checkpoint; original train split has 24 flagged EStG-150 overlap rows (4 exact normalized)"
+    },
+    {
+      "input_language": "de classifier input + en phrase input (existing B0 formal arm)",
+      "invalid_attempt_count": 0,
+      "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+      "method_id": "sun_rule_only",
+      "modality_span_available": false,
+      "modality_span_reason": "published Gold stores modality as a plain string; evidence spans are absent",
+      "n_records": 150,
+      "per_field": {
+        "action": {
+          "extracted": 244,
+          "f1": 0.8554026399759472,
+          "ground_truth": 247,
+          "matched_ground_truth": 211,
+          "matched_predictions": 209,
+          "misclassified": 35,
+          "missed": 36,
+          "precision": 0.8565573770491803,
+          "recall": 0.854251012145749
+        },
+        "actor": {
+          "extracted": 65,
+          "f1": 0.8038834951456311,
+          "ground_truth": 48,
+          "matched_ground_truth": 46,
+          "matched_predictions": 45,
+          "misclassified": 20,
+          "missed": 2,
+          "precision": 0.6923076923076923,
+          "recall": 0.9583333333333334
+        },
+        "condition": {
+          "extracted": 239,
+          "f1": 0.705423471848942,
+          "ground_truth": 214,
+          "matched_ground_truth": 163,
+          "matched_predictions": 157,
+          "misclassified": 82,
+          "missed": 51,
+          "precision": 0.6569037656903766,
+          "recall": 0.7616822429906542
+        },
+        "constraint": {
+          "extracted": 330,
+          "f1": 0.4913493402728364,
+          "ground_truth": 302,
+          "matched_ground_truth": 159,
+          "matched_predictions": 152,
+          "misclassified": 178,
+          "missed": 143,
+          "precision": 0.46060606060606063,
+          "recall": 0.5264900662251656
+        },
+        "exception": {
+          "extracted": 14,
+          "f1": 0.8148148148148148,
+          "ground_truth": 13,
+          "matched_ground_truth": 11,
+          "matched_predictions": 11,
+          "misclassified": 3,
+          "missed": 2,
+          "precision": 0.7857142857142857,
+          "recall": 0.8461538461538461
+        }
+      },
+      "published_evaluator_overall": {
+        "extracted": 1141,
+        "f1": 0.5909440691836959,
+        "ground_truth": 824,
+        "matched_ground_truth": 590,
+        "matched_predictions": 574,
+        "misclassified": 567,
+        "missed": 234,
+        "precision": 0.5030674846625767,
+        "recall": 0.7160194174757282
+      },
+      "reproduction": "project paper-faithful independent reconstruction; existing formal B0 arm reused read-only",
+      "result_file": "data/results/b0_formal_arm_v1/modality_labels.json",
+      "role": "Sun/Rules-Only complete Stage 2 method; six-element extraction and modality",
+      "span_only_overall": {
+        "excludes_modality_evidence": true,
+        "extracted": 892,
+        "f1": 0.6778243012801525,
+        "fields_included": [
+          "actor",
+          "action",
+          "condition",
+          "constraint",
+          "exception"
+        ],
+        "ground_truth": 824,
+        "matched_ground_truth": 590,
+        "matched_predictions": 574,
+        "precision": 0.6434977578475336,
+        "recall": 0.7160194174757282
+      },
+      "status": "existing_formal_arm_reused_zero_api",
+      "sun_source": "Sun et al. (2024) complete Stage 2 baseline as reconstructed by this project (B0 formal arm)",
+      "task": "Sun literal-overlap per-field span extraction (same evaluator as B0/D1)",
+      "training_or_weights": "existing B0 checkpoint/config; no new training or LLM call in this comparison"
+    },
+    {
+      "input_language": "en (approved_text_en)",
+      "invalid_attempt_count": 0,
+      "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+      "method_id": "direct_llm",
+      "modality_span_available": false,
+      "modality_span_reason": "published Gold stores modality as a plain string; evidence spans are absent",
+      "n_records": 150,
+      "per_field": {
+        "action": {
+          "extracted": 210,
+          "f1": 0.8799825746024831,
+          "ground_truth": 247,
+          "matched_ground_truth": 202,
+          "matched_predictions": 200,
+          "misclassified": 10,
+          "missed": 45,
+          "precision": 0.9523809523809523,
+          "recall": 0.8178137651821862
+        },
+        "actor": {
+          "extracted": 60,
+          "f1": 0.7222222222222223,
+          "ground_truth": 48,
+          "matched_ground_truth": 39,
+          "matched_predictions": 39,
+          "misclassified": 21,
+          "missed": 9,
+          "precision": 0.65,
+          "recall": 0.8125
+        },
+        "condition": {
+          "extracted": 135,
+          "f1": 0.7863159258779318,
+          "ground_truth": 214,
+          "matched_ground_truth": 148,
+          "matched_predictions": 123,
+          "misclassified": 12,
+          "missed": 66,
+          "precision": 0.9111111111111111,
+          "recall": 0.6915887850467289
+        },
+        "constraint": {
+          "extracted": 175,
+          "f1": 0.5481510327930033,
+          "ground_truth": 302,
+          "matched_ground_truth": 133,
+          "matched_predictions": 127,
+          "misclassified": 48,
+          "missed": 169,
+          "precision": 0.7257142857142858,
+          "recall": 0.44039735099337746
+        },
+        "exception": {
+          "extracted": 10,
+          "f1": 0.6956521739130435,
+          "ground_truth": 13,
+          "matched_ground_truth": 8,
+          "matched_predictions": 8,
+          "misclassified": 2,
+          "missed": 5,
+          "precision": 0.8,
+          "recall": 0.6153846153846154
+        }
+      },
+      "published_evaluator_overall": {
+        "extracted": 820,
+        "f1": 0.6240996626104099,
+        "ground_truth": 824,
+        "matched_ground_truth": 530,
+        "matched_predictions": 497,
+        "misclassified": 323,
+        "missed": 294,
+        "precision": 0.6060975609756097,
+        "recall": 0.6432038834951457
+      },
+      "reproduction": "existing Direct-LLM formal arm reused read-only; no new LLM call in this comparison",
+      "result_file": "data/results/direct_llm_formal_arm_v1/modality_labels.json",
+      "role": "complete Stage 2 replacement; six-element extraction and modality",
+      "span_only_overall": {
+        "excludes_modality_evidence": true,
+        "extracted": 590,
+        "f1": 0.7294372414251455,
+        "fields_included": [
+          "actor",
+          "action",
+          "condition",
+          "constraint",
+          "exception"
+        ],
+        "ground_truth": 824,
+        "matched_ground_truth": 530,
+        "matched_predictions": 497,
+        "precision": 0.8423728813559322,
+        "recall": 0.6432038834951457
+      },
+      "status": "existing_formal_arm_reused_zero_api",
+      "sun_source": "not a Sun method; direct LLM replacement arm in the project comparison",
+      "task": "Sun literal-overlap per-field span extraction (same evaluator as B0/D1)",
+      "training_or_weights": "existing Direct-LLM formal prediction snapshot"
+    }
+  ],
+  "status": "completed_zero_api_same_evaluator_comparison",
+  "version_scope": {
+    "final_springer_version": "not accessible offline; not claimed as final-version reproduction",
+    "final_version_check_status": "blocked_no_network",
+    "local_source": "earlier author manuscript (references/papers/extracted/sun_2024_full_text.txt)"
+  }
+}

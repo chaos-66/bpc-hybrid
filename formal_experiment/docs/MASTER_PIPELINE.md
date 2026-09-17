@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.15
+**文档版本**：3.7.16
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-17
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,16 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-17 修订 3.7.16：SEP-C4 A/B 失败定位与 SEP-C2/C3 论文整合
+
+完成 SEP-C4 中 constraint 与 exception 两类失败定位：基于已保存的 C36 v2 target-paired 报告、80 条检查记录、v5 predictions 与 synthetic panel v2，逐项追踪规范约束/例外、rule action、grounded action、BPMN 可观察证据和 per-type 判断，不新增 API、不重跑比较、不生成新预测。
+
+constraint：当前 v5 为 TP=2/FN_observed=0/FN_unknown=8、F1=0.3333；Winter-style 四类扩展对照为 TP=6/F1=0.7500。8 个 unknown 均为抽象约束，冻结配置只支持 time_limit 且禁止对 unsupported abstract constraints 做确定性 verdict；同一 8 例还伴随 action grounding 不一致。exception：当前 v5 为 TP=3/FN_observed=0/FN_unknown=7、F1=0.4615；对照为 TP=3/FN_observed=1/FN_unknown=6/F1=0.4615。7 个 unknown 主因是 rule action 无法稳定绑定；单类型检查没有把 unknown 当成合规或违规。两类均无足够证据支撑最小公共映射代码修复。
+
+论文整合：保留 SEP-C2 前人分类配置与分类目标一致性诊断；保留 SEP-C3 modular_v1 四臂、actor 过抽和后处理归因。C2 的原 C48（分类目标一致性）改为 C51；C3 保留 C48/C49/C50。论文同时引用 C48-C51，A/B 定位新增 C52/C53，编号冲突解决。
+
+边界：只整理已有证据和论文，不延续 SEP-C3 prompt/actor/validator 修复；不调真实 API、不补跑、不改 Gold/冻结面板/历史预测/阈值；开发面板结论不宣称为 formal Oracle 或泛化提升。报告见 outputs/reports/sep_c4_constraint_failure_localization_v1.{json,md} 与 outputs/reports/sep_c4_exception_failure_localization_v1.{json,md}。
 
 ## 2026-09-17 修订 3.7.15：SEP-C3 / PW7 已有消融结果与归因入文（零新增 API）
 
@@ -58,6 +68,77 @@ PW1–PW9 以完整说明已有研究工作、具体贡献和相关数据为写�
 章节与候选图表清单统一放在 `paper/README.md`，本文件 §12.1 引用该清单。
 本次仅登记写作要求与覆盖清单，不声称全部论文内容已写完，不改变既有实验任务、
 两方法范围、指标口径或完成状态；没有新增实验、API 调用或代码测试。
+
+### SEP-C2 归档（合并自 `codex/sep-c2-sun-predecessors`；保留原主张编号内容）
+## 2026-09-15 修订 3.7.14：SEP-C2 分类目标一致性诊断与 source-pending 纠错收尾（零 API）
+
+- **目标结构审计**：150 条按有效 Gold clause 分为 A=101（单一有效 clause）、B=15（多 clause 但标签相同）、C=34（多 clause 且标签不同）。首 clause 起点为 0 的 141/150，覆盖完整句的 26/150；overlapping clause spans 9 条；clause list 顺序与字符起点不一致 1 条（`estg_000136`）。
+- **评价器合同核查**：Gold 与预测均取 record clause list 中首个非空 modality 标签；
+  10 个已评价方法预测的首个非空索引均为 0；`direct_llm` 的 `estg_000112` 为空 clauses 输出，按未标注错误保留在 150 分母。未修改 G0.4 合同或 Gold。
+- **目标错位定量**：49/150 为多 clause，C=34/150 异标签。
+  C 组首 clause 判错但命中后续 Gold 标签的计数只作解释性上界，不能断言模型预测了后续 clause；B 组全部 clause 同标签，错误不能由后续 clause 解释。
+- **source-pending 纠错**：v2 报告把未运行的 `bert_legal_cased` 记为 150 failed；本修订新增 `outputs/reports/sep_c2_target_consistency_diagnosis_v1.json/.md`，改为 `not_run_source_pending_exact_checkpoint_unavailable`，`records_failed=0`、`records_not_run=150`，不进入 10 方法性能分母。
+- **主表保持**：10 个已评价方法的完整 150 条分类主表与 v2 一致；新增 A/B/C 分组只作解释，不替代主表。
+- **语言限制**：前人 CF/BERT 使用德语 `raw_text_de`；`Sun/Rules-Only` modality head 使用德语对齐单元、phrase 使用英文；`Direct-LLM` 使用既有 `approved_text_en`。语言效应尚不能分离。
+- **论文接线**：`paper/THESIS_DRAFT.md` §6.1/§7.2/§8.4，`paper/CLAIM_EVIDENCE_MATRIX.md` C51；具名验证 `tests/test_sep_c2_target_consistency_diagnosis.py`。
+
+## 2026-09-15 修订 3.7.13：SEP-C2 Sun 前人 9 配置收口与主评价接线修正（零新增付费 API）
+
+本修订继续 SEP-C2，完成 Sun et al. (2024) final version Table 6/7 的 9 个前人配置收口，并修正 v1 比较报告的两个接线问题。最终状态：**8/9 前人配置已有实际预测与同口径评价；`bert-legal-cased` 因公开精确 checkpoint 不存在而具名阻塞，不用替代模型占位。**
+
+- **原文架构核实**：final Springer version 可访问（DOI `10.1007/s11227-023-05626-0`）。Section 4.2.1 / Fig. 3 明确 BERT 对照为 BERT-TextCNN：取每个 encoder layer 的 `[CLS]`（CLS1..CLSL）组成 TextCNN 输入序列，卷积核 3/4/5、每核 256 filters、global max pooling、四分类输出。作者 repo/Archive.org 未提供该分类代码或 checkpoint；本项按论文最终版架构独立实现。
+- **公开权重与训练**：从公开镜像固定 revision 获取 `google-bert/bert-base-uncased`、`bert-base-cased`、`bert-large-uncased`、`bert-large-cased` 与 `nlpaueb/legal-bert-base-uncased`；全部在同一 clean official EStG modality train（1927 条，排除 EStG-150 原文/译文重叠与重复）上联合 fine-tune encoder+TextCNN，official clean dev 414 条按 macro-F1 选 checkpoint，EStG-150 Gold 不参与训练/选择。`bert-legal-cased` 精确权重未公开；已检查 nlpaueb、Hugging Face 搜索、作者公开 repo、Archive.org supplement，均无该 cased EU-legislation checkpoint，保留为阻塞。
+- **同口径分类结果**（150 条全部在分母，缺失/失败/无标签见 v2 报告）：
+
+  - `CF_KW` 0.6200 acc / 0.5322 macro-F1；`CF_RNN` 0.5667 / 0.4800；`CF_CNN` 0.6733 / 0.6177。
+  - `bert-base-uncased` 0.4467 / 0.3507；`bert-base-cased` 0.5733 / 0.4529；`bert-large-uncased` 0.5733 / 0.5245；`bert-large-cased` 0.6600 / 0.6024；`bert-legal-uncased` 0.4800 / 0.4057。
+  - `Sun/Rules-Only` 0.7400 / 0.7128；`Direct-LLM` 0.8333 / 0.7695。
+  - `bert-legal-cased`：BLOCKED；v2 分类表仍列出第 11 行并标 N/A，不伪造预测或替代 checkpoint。
+- **修正 v1 语义主表接线**：v1 把剔除 modality evidence 后的 fine 五字段汇总放进主表，违反项目 G0.4 合同。v2 主表改用已授权的 coarse sentence-level 五 span 字段。
+  - Rules-Only coarse P/R/F1 `0.6984/0.8410/0.7631`；Direct-LLM coarse `0.8695/0.8083/0.8378`。
+  - fine 五字段仅作诊断：Rules-Only `0.6435/0.7160/0.6778`；Direct-LLM `0.8424/0.6432/0.7294`。
+  - modality evidence 继续 unavailable，不计入总体。
+- **输入/目标审计**：classifier 目标为 G0.4 first Gold clause modality；Gold first-clause 标签分布为 obligation 59 / permission 42 / definition 29 / prohibition 20。
+  CF/BERT 使用德语 raw_text_de；Direct-LLM 使用既有 approved_text_en；B0 使用既有 de classifier + en phrase。语言/粒度差异作为实验条件记录，v2 报告单独列出。
+- **保留补充证据**：frozen encoder + MLP probe（Macro-F1 0.3897）保留为 weak adaptation diagnostic；旧 BERT-TextCNN（0.6535，训练集含 24 条 EStG-150 重叠）保留为 leak diagnostic，均不冒充 clean full fine-tuning。
+- **产物**：`outputs/reports/sep_c2_sun_predecessors_comparison_v2.json/.md` 为修正后 11 行主分类表、coarse/fine 语义表和 input/target audit。
+  每方法独立 capsule 在 `outputs/evidence/sep_c2_sun_predecessors_v1/<method_id>/`，BERT 配置在 `configs/sep_c2_sun_predecessors_v1/bert_full_v1/`。
+- **边界与下一步**：9 个配置中 bert-legal-cased 仍受精确公开权重缺失阻塞；其余 8 个前人配置与两个项目方法已有可定位的预测、配置、训练记录、权重哈希和评价。
+  下一步把 v2 表写入论文证据位置，并按既有依赖继续 S2.12/S2.13 的 Direct 真实运行前置条件；不重开 Winter，不把分类器包装成六要素抽取器。
+
+## 2026-09-15 修订 3.7.12：SEP-C2 Sun 前人分类方法与同口径比较实跑（零 API）
+
+本轮按用户纠正直接执行 Sun et al. (2024) 实际报告过的前人方法，不再扩展
+Winter clause-region，也不再自行改写为 clause-region detection。
+
+- 方法名单核实：本地作者稿 §5.1/Table 6 列出 6 个预训练 BERT 变体，Table 7
+  列出 `CF_KW`（关键词）、`CF_RNN`（BiLSTM）、`CF_CNN`；§5.2/Table 8 只有
+  Sun 自己的六要素抽取，没有外部六要素方法对照。最终 Springer 版本在当前离线
+  环境不可访问，版本差异未核实；本修订只以作者稿明确支持的方法为准，不把
+  仅出现在参考文献中的方法当作 Sun 实测对照。
+- 已实跑并形成独立 capsule：`CF_KW` 0.5322 Macro-F1（准确率 0.6200）、
+  `CF_RNN` 0.4800（0.5667）、`CF_CNN` 0.6177（0.6733）、clean legal-BERT
+  frozen-encoder probe 0.3897（0.4800）、已有 BERT-TextCNN 诊断行 0.6535
+  （0.6667，原训练集含 24 条标记重叠/4 条精确 normalized 重叠）。5 个
+  BERT 变体因本地无公开权重且无外网而 fail-closed，不能伪造结果。
+- 同口径：全部方法使用 EStG-150 正式输入 v2、正式 Gold v1 和现有
+  `evaluate_modality_labels`；比较报告为
+  `outputs/reports/sep_c2_sun_predecessors_comparison_v1.json/.md`，证据在
+  `outputs/evidence/sep_c2_sun_predecessors_v1/`。历史 Rules-Only/B0 与
+  Direct-LLM 只读复用并重新评价：准确率 0.7400/0.8333、Macro-F1
+  0.7128/0.7695；未新增真实 LLM/API 调用。
+- 语义抽取：Sun 作者稿没有外部六要素抽取对照；CF_KW/CF_RNN/CF_CNN/BERT 只
+  输出 modality，不伪造六要素能力。现有 B0/D1 五字段 span-only
+  P/R/F1：Rules-Only 0.6435/0.7160/0.6778，Direct-LLM
+  0.8424/0.6432/0.7294；逐字段结果见比较报告。
+- 训练纪律：CF_RNN/CF_CNN 用官方 EStG modality train（过滤 EStG-150 重叠和
+  重复后 1927 条）训练、clean dev 414 条选 epoch；测试 Gold 不参与训练、
+  选型或超参选择。跨语料泛化差是真实结果，不以论文数字替换。
+- 边界：以上是项目重建 EStG-150 与项目 Gold 上的结果，不是 Sun 原始 150
+  句 Gold，也不是 Sun Table 6/7 的原数字。Winter 结果保留为附加探索，不再
+  本轮扩展。
+- 下一步：把该同口径比较表和错误案例写入论文正文；继续按依赖推进 S2.12/
+  S2.13，不重开 Winter clause-region 优化，不新增审批文件代替实验。
 
 ## 2026-09-15 修订 3.7.11：SEP-C2 Stage 2B Winter 前人基线首轮实跑（零 API）
 
@@ -335,7 +416,7 @@ DS v5 的有效开发指标仍为 Macro-F1 **0.6737**、配对成功 **21/40**�
 旧诊断的 control 告警 26→24 是撤回两项判断到 unknown；缺少全局负例 Gold，不能称为总体误报率改善。
 各项验收后立即 checkpoint，继续已具备依赖的对照或写作，不设置中间日历等待。
 
-﻿## 2026-09-13 revision 3.6.61: Stage 3 v5 action-anchor consistency repair and constraint/exception failure chains (S3-SEMANTIC-GROUNDING-V5, zero API)
+## 2026-09-13 revision 3.6.61: Stage 3 v5 action-anchor consistency repair and constraint/exception failure chains (S3-SEMANTIC-GROUNDING-V5, zero API)
 
 **Scope**: inspect the frozen v2 per-item constraint/exception failures, add revision
 `s3_semantic_grounding_v5`, and reuse v2/v3/v4 predictions/manifests read-only.
@@ -2256,7 +2337,9 @@ development-only；S3.7 formal Oracle not started；Gold Rule Records absent。
 | 3.6.12 | 2026-08-15 | **S2.11/G0.5 授权前工程收口与用户决策包 v3（零 API/零 gate 翻转）**：(1) Barrientos adapter 核心 `src/bpc_hybrid/s2_11_barrientos_adapter.py`——synthetic/shadow implementation verified，仅接受显式输入、不扫描 references/；fail-closed typed 错误码（LICENSE_NOT_QUALIFIED/ACTIVATION_NOT_AUTHORIZED/MAPPING_POLICY_NOT_APPROVED/SYNTHETIC_POLICY_IN_FORMAL_MODE/INVALID_STRUCTURE/UNKNOWN_MODALITY/DEFINITION_NOT_PRODUCIBLE/MAPPING_POLICY_INCOMPLETE/INVALID_MAPPED_MODALITY/MISSING_TEXT_PROVENANCE/MISSING_SPAN_ALIGNMENT/INVALID_SPAN/AMBIGUOUS_SPAN/UNRESOLVED_CROSS_REFERENCE）；输出仅 candidate_only/review_candidate，external_annotation 仅 review aid；(2) 重写 `test_g07_barrientos_adapter_contract.py`（删除 `or True` 空断言，25 项真实执行测试）；(3) G0.5 候选合同 `configs/g05_complexity_candidate_draft_v1.json`（status=draft_not_frozen、retrospective_use_forbidden、L1/L2/L3 确定性规则/优先级/边界/缺失与冲突处理，覆盖 MASTER 要求的全部复杂度字段）+ `src/bpc_hybrid/g05_complexity_candidate.py` + 20 项 synthetic 边界测试；(4) 用户决策包 v3（schema/builder/独立 verifier/30 项测试/JSON/MD/manifest/export index）：许可核账只读（references/barrientos_2026 91 文件按 名称+sha256+size 盘点、无 LICENSE/COPYING/NOTICE/README/metadata → license_status=unknown_pending_confirmation、ready_for_data_activation=false、activation 授权句 null；paper/code/data/activation 四分状态）；映射选项 M1（identity candidate mapping，推荐）/M2（conservative no-mapping），未应用；空白人工 Gold 协议（review/adjudication/freeze/publication 分离、user_only、未创建 data/gold）；分离用户门禁 G1（许可证据，ready=false/null）/G2（激活，ready=false/null）/G3（映射选择，ready=true + dry-run 授权句）/G4（G0.5 冻结，ready=true + dry-run 授权句）/G5（空白 Gold review surface，ready=true + dry-run 授权句）；manifest 精确集合重建 + export 精确重建 + 单 EOF newline + 全部篡改负例 fail-closed；MASTER S3.7/下一真实路径改指 v2 transition capsule（v1 历史），新增 §12.0b；PROJECT_AUDIT 过渡核账行明确 v2 当前/v1 历史、S2.13 行 adapter 状态更新、证据入口加 v3；全量测试通过；零新增 LLM/API，Gold/contract/methods/predictions/results/references/Stage 3 gate/S2.11-S2.13 状态均未修改，未生成 Oracle 授权句 | 决策包 v3（builder/verifier/manifest）+ adapter + G0.5 draft + record_change 事件 + audit --with-tests |
 | 3.6.11 | 2026-08-15 | **S2.13→S3.7 transition readiness v2：收敛 Gold 缺失探测、manifest/export 完整性校验与实时状态矛盾（零 API/零 gate 翻转）**：v1 capsule 全部文件逐字节保留（v1 verifier 继续通过、git hash-object 与 HEAD 一致）；新建 v2 capsule（schema/build/verify/test/reports，8 文件）——**Gold Rule Records 三态探测**（无候选→exist=false + 9 rule IDs + 显式绑定被检查的 Stage 2 EStG-150 Gold path/hash；任何 rule_record/rule-record 命名候选（data/gold/**、outputs/reports/**、历史 readiness 文档提及的具体路径）→ builder fail-closed 报错并列出路径，绝不报告 exist=false、绝不自行提升；exist=true 保留给未来用户授权 freeze/publication 路径，v2 未实现）；**manifest 精确重建**（verifier 在内存用磁盘 report/MD 字节与重收集 bindings 重建完整 manifest，与磁盘逐键比较，缺项/多余项/byte_size 篡改/同步重算 export hash 均 fail）；**export index 精确重建**（磁盘 report/MD/manifest 字节确定性重建，结构完全相等，重算哈希不能绕过）；**严格 verifier 判定**（非 JSON verifier 需 exit 0 + 显式成功行，"VERIFIED" 裸子串因 "NOT VERIFIED" 也包含而被拒绝）；Markdown 单 EOF newline；audit false 分支措辞改为仅描述真实计算条件并明示与 S2.13/S3.7/full-pipeline 无关（gate 计算/合同/状态值未变）+ true/false 双向回归测试；PROJECT_AUDIT 陈旧行原位收敛（sun_rule_only/D1/正式结果目录/S2.4-6/B0-R2-R5/S3.2-S3.3/当前派工/§1 结论），队列与派工收敛为真实下一路径（S2.11/G0.5 → S2.12 → S2.13 → 用户 Gold Rule Records → S3.4-S3.6 → S3.7 单独授权）；MASTER P1-P4 里程碑修正（P1 数据/Gold 完成但 G0.5/S2.11 未完成；P2 完整 B0 完成；P3 三方法正式比较完成、复杂扩展未完成；P4 D1 正式 arm 已发布、H1 comparison-only、复杂集仍 blocked）；全量测试通过；本轮零新增 LLM/API，Gold/contract/methods/predictions/results/Stage 3 gate/S2.13 状态均未修改，未生成 Oracle 授权句 | 过渡 capsule v2（builder/verifier/manifest）+ audit.py 措辞修复 + PROJECT_AUDIT/MASTER 收敛 + record_change 事件 + audit --with-tests |
 | 3.6.10 | 2026-08-15 | **S2.13→S3.7 过渡核账与 fail-closed readiness 加固（过渡控制 capsule v1，零 API/零 gate 翻转）**：新建确定性过渡控制 capsule `s2_13_s3_7_transition_readiness_v1`（schema + builder + 独立 verifier + 14 项聚焦测试 + JSON/MD/manifest/export index）——逐项从磁盘资产/manifest/hash/实际执行的独立 verifier 重新推导依赖矩阵（S1.7=frozen；S2.10=verified；S2.11=blocked（许可/数据激活/3→4 映射/人工 Gold/G0.5/Barrientos adapter 精确 blockers 重读自 s2_11 资产）；S2.12=partial/retrospective；S2.13=blocked（DoD 未改、未拆新任务）；Stage 1 Process Gold 存在且 verifier 通过（7/135/7）；Stage 3 matching 25+violation 33 decision Gold 存在且与 frozen correction 一致（≠ Gold Rule Records）；9 个 GDPR rule IDs（article6/7/15/16/17/20/22/33/34）的正式 Gold Rule Records 不存在且本轮未创建/未推断；S3.4/S3.5/S3.6=development_only；formal_oracle_started=false、formal_oracle_authorized=false、ready_for_oracle_authorization=false、authorization_sentence=null、no_pseudo_oracle=true）；旧报告（s2_13_stage2_freeze_gap_capsule.{json,md}、s3_7_oracle_readiness_v2、s37_oracle_readiness_v1、formal_benchmark_release_v2 历史 exclusions、两个硬编码“Process Gold 不存在”的旧 builder）声明 supersede 其“当前状态判断”，文件本身逐字节保留未修改；audit.py 陈旧静态尾部改为动态生成（final_experiment_ready=true 仅代表 Stage 2 三方法正式评价/最终指标机器门禁就绪，不代表 S2.13/S3.7/全 Pipeline 完成），新增矛盾消除回归测试；独立 verifier 实际运行 7 个既有 verifier + 重跑 audit 并逐项比对；全量测试通过；本轮零新增 LLM/API，Gold/contract/methods/predictions/results/Stage 3 gate/S2.13 状态均未修改，未生成 Oracle 授权句 | 过渡 capsule v1（builder/verifier/manifest）+ audit.py 措辞修复 + record_change 事件 + audit --with-tests |
-| 3.6.9 | 2026-08-10 | **formal Gold 发布授权执行（用户授权，packet v2 落地）**：按 ormal_gold_authorization_packet_v2 执行机器合同变更（实际授权日 2026-08-10）——stage3.status→locked（含 relock_note 2026-08-10）、ormal_gold_publication_gate.status→
+| 3.6.9 | 2026-08-10 | **formal Gold 发布授权执行（用户授权，packet v2 落地）**：按
+ormal_gold_authorization_packet_v2 执行机器合同变更（实际授权日 2026-08-10）——stage3.status→locked（含 relock_note 2026-08-10）、
+ormal_gold_publication_gate.status→
 eady_for_formal_gold_publication（白名单精确匹配 + 授权 note）、stage2_dataset.freeze_policy→完整重锁文本（保留数据/许可/冻结范围/禁止事项治理，仅更新已满足的 pending/relock 状态）；audit：formal_gold_publication_ready **False→True**、BLOCKERS 5→3（消除 formal_gold_publication_paused、stage3_benchmark_not_locked；保留 final_experiment_not_ready/formal_methods_not_ready/formal_capsule_not_frozen）、final_experiment_ready 仍 False；formal Gold 已可发布（LLM-assisted human-adjudicated）；不隐含 S1.7/S2.13/Gold Rule-Process Records/formal Oracle/最终实验完成，不授权任何 LLM/API | 用户授权（packet v2 授权句）+ audit --with-tests + record_change 事件 |
 | 3.6.8 | 2026-08-08 | **BM25 candidate-specific 语义修复 + S3.6-A v3 重跑 + Stage 3 method registry v2 + formal Gold 授权包 v2**：BM25 v1/v2 的 sim(a,b) 忽略候选文本（返回 action corpus 最佳文档分数）→ 固定选第一个 action、actor/BO 误用 action corpus、order 可能映射错误 ID；修复：BM25Index candidate-specific score(query,candidate)（候选自身 tf/dl + 域语料 IDF/avgdl，真实 [0,1] 上界归一化 sum(IDF*(k1+1))，b 真实生效，空输入=0）、BaselineScorer 双域 sims factory + 真实 action ID 映射 + 确定性 tie-breaking/duplicate；BM25 v3（config v3 + run v3：MAP 0.6833→0.6595、binary F1 0.4→0.0，v2 invalid → v3 corrected before/after 报告）；v1/v2 标记 superseded_invalid_candidate_agnostic_similarity（不入 comparison/registry active/论文）；TF-IDF 经内容级 byte-identical 验证不受 ID 修复影响（无 duplicate labels）保留 v2；registry v2（active 指向 BM25 v3、superseded_invalid_runs=v1/v2、frozen_at 非 null、config 三 hash 区分：run snapshot/run manifest/当前工作树）；authorization packet v2（JSON Pointer 完整 before/after、freeze_policy 治理内容保留仅更新状态、临时副本门禁校验 False→True、活动合同字节断言未变、明确 formal Gold 与方法正确性为不同门禁）；全量 1621 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction/未翻转任何正式门禁 | registry v2 + packet v2 + audit --with-tests + record_change 事件 |
 | 3.6.7 | 2026-08-08 | **S3.6 sensitivity 修复 + Stage 3 development 方法冻结注册表 + S3.7 前置核账 + formal Gold 授权包（dry-run）**：(1) baseline sensitivity 方法修复——BaselineScorer 的 gamma/theta 影响映射/R/C/分母/可观测性，sweep 改为重实例化 scorer 重算（删 mappings parameter-free 错误声明；matching tau 仍为固定 score cutoff；5 项手算 fixture 证明 gamma 改变 missing/actor observability/order denominator、theta 改变 actor 判定）；v2 runs（主阈值 0.5 不变，主指标与 v1 byte-identical）；(2) 措辞修正：Sun config 输入（inference pack=运行输入、blank pack=验证/溯源）、S3.6 阈值 0.5（fixed development setting before this run、非 blind preregistration、benchmark exposure 未排除）；(3) 方法冻结注册表 configs/stage3_development_method_registry_v1.json（5 方法：run/config/implementation/evidence capsule hashes、primary thresholds、exposure 状态、已知局限、formal_oracle_claim_allowed=false、confirmatory_claim_allowed=false、变更须新版本）；(4) S3.7 Oracle 输入真实性核账 outputs/reports/s37_oracle_readiness_v1.json——真正 Gold Rule/Process Records 均不存在（adapter 输出≠Gold），status=blocked_on_s1_7_s2_13，禁止伪 Oracle；(5) formal Gold 用户授权包 outputs/reports/formal_gold_authorization_packet_v1.{json,md}（dry-run：route/stage2/stage3/gate/freeze 现状+证据、拟议 before/after、预期 blocker 消除/保留、回滚、授权句；未修改合同）；全量 1609 passed/24 skipped；未读 .env/未调 LLM/未改 Gold/BPMN/correction/未翻转任何正式门禁 | registry/readiness/packet + audit --with-tests + record_change 事件 |

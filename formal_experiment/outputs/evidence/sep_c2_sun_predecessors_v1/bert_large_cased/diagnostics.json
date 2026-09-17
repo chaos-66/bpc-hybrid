@@ -1,0 +1,497 @@
+{
+  "architecture_evidence": "Sun et al. (2024), final article, Section 4.2.1 / Fig. 3: 'For each encoding layer, the vector of its first token (i.e., [CLS]) is extracted, and these vectors are concatenated together as the input of the TextCNN layer.' The figure labels CLS1..CLS12 and a TextCNN with kernel widths 3/4/5 and 256 filters per width.",
+  "encoder": {
+    "hidden_size": 1024,
+    "max_position_embeddings": 512,
+    "model_dir": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\sep_c2_models\\bert-large-cased",
+    "model_type": "bert",
+    "num_hidden_layers": 24,
+    "vocab_size": 28996
+  },
+  "method_id": "bert_large_cased",
+  "official_clean_test_metrics": {
+    "accuracy": 0.8768115942028986,
+    "confusion_matrix": [
+      [
+        150,
+        14,
+        5,
+        6
+      ],
+      [
+        7,
+        172,
+        1,
+        6
+      ],
+      [
+        4,
+        2,
+        31,
+        1
+      ],
+      [
+        1,
+        3,
+        1,
+        10
+      ]
+    ],
+    "macro_f1": 0.786194955448188,
+    "n": 414,
+    "per_class": {
+      "definition": {
+        "f1": 0.8902077151335311,
+        "precision": 0.9259259259259259,
+        "predicted_count": 162,
+        "recall": 0.8571428571428571,
+        "support": 175
+      },
+      "obligation": {
+        "f1": 0.9124668435013262,
+        "precision": 0.900523560209424,
+        "predicted_count": 191,
+        "recall": 0.9247311827956989,
+        "support": 186
+      },
+      "permission": {
+        "f1": 0.8157894736842104,
+        "precision": 0.8157894736842105,
+        "predicted_count": 38,
+        "recall": 0.8157894736842105,
+        "support": 38
+      },
+      "prohibition": {
+        "f1": 0.5263157894736841,
+        "precision": 0.43478260869565216,
+        "predicted_count": 23,
+        "recall": 0.6666666666666666,
+        "support": 15
+      }
+    }
+  },
+  "predicted_label_counts": {
+    "definition": 33,
+    "obligation": 68,
+    "permission": 36,
+    "prohibition": 13
+  },
+  "schema_version": "sep_c2_sun_predecessor_bert_full_diagnostics@1.0.0",
+  "sequence_length_stats": {
+    "estg150_formal_input": {
+      "max": 532,
+      "max_length": 192,
+      "p50": 115,
+      "p95": 358,
+      "p99": 493,
+      "rows": 150,
+      "rows_over_max_length": 31
+    },
+    "official_dev": {
+      "max": 218,
+      "max_length": 192,
+      "p50": 66,
+      "p95": 155,
+      "p99": 191,
+      "rows": 414,
+      "rows_over_max_length": 3
+    },
+    "official_train": {
+      "max": 215,
+      "max_length": 192,
+      "p50": 70,
+      "p95": 152,
+      "p99": 182,
+      "rows": 1927,
+      "rows_over_max_length": 10
+    }
+  },
+  "training_best_dev": {
+    "accuracy": 0.8985507246376812,
+    "confusion_matrix": [
+      [
+        155,
+        14,
+        4,
+        2
+      ],
+      [
+        4,
+        174,
+        3,
+        4
+      ],
+      [
+        3,
+        1,
+        34,
+        0
+      ],
+      [
+        2,
+        5,
+        0,
+        9
+      ]
+    ],
+    "macro_f1": 0.8185161842491712,
+    "n": 414,
+    "per_class": {
+      "definition": {
+        "f1": 0.9144542772861357,
+        "precision": 0.9451219512195121,
+        "predicted_count": 164,
+        "recall": 0.8857142857142857,
+        "support": 175
+      },
+      "obligation": {
+        "f1": 0.9182058047493404,
+        "precision": 0.8969072164948454,
+        "predicted_count": 194,
+        "recall": 0.9405405405405406,
+        "support": 185
+      },
+      "permission": {
+        "f1": 0.860759493670886,
+        "precision": 0.8292682926829268,
+        "predicted_count": 41,
+        "recall": 0.8947368421052632,
+        "support": 38
+      },
+      "prohibition": {
+        "f1": 0.5806451612903225,
+        "precision": 0.6,
+        "predicted_count": 15,
+        "recall": 0.5625,
+        "support": 16
+      }
+    }
+  },
+  "training_history": [
+    {
+      "dev": {
+        "accuracy": 0.7439613526570048,
+        "confusion_matrix": [
+          [
+            162,
+            13,
+            0,
+            0
+          ],
+          [
+            39,
+            146,
+            0,
+            0
+          ],
+          [
+            28,
+            10,
+            0,
+            0
+          ],
+          [
+            5,
+            11,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.39804400977995114,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.7921760391198045,
+            "precision": 0.6923076923076923,
+            "predicted_count": 234,
+            "recall": 0.9257142857142857,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.8,
+            "precision": 0.8111111111111111,
+            "predicted_count": 180,
+            "recall": 0.7891891891891892,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_count": 0,
+            "recall": 0.0,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_count": 0,
+            "recall": 0.0,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 1,
+      "train_loss_mean": 1.2256370129695495
+    },
+    {
+      "dev": {
+        "accuracy": 0.8140096618357487,
+        "confusion_matrix": [
+          [
+            147,
+            18,
+            10,
+            0
+          ],
+          [
+            9,
+            170,
+            6,
+            0
+          ],
+          [
+            9,
+            9,
+            20,
+            0
+          ],
+          [
+            3,
+            12,
+            1,
+            0
+          ]
+        ],
+        "macro_f1": 0.5633550882281847,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.8571428571428572,
+            "precision": 0.875,
+            "predicted_count": 168,
+            "recall": 0.84,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.8629441624365483,
+            "precision": 0.8133971291866029,
+            "predicted_count": 209,
+            "recall": 0.918918918918919,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.5333333333333333,
+            "precision": 0.5405405405405406,
+            "predicted_count": 37,
+            "recall": 0.5263157894736842,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted_count": 0,
+            "recall": 0.0,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 2,
+      "train_loss_mean": 0.977145986699503
+    },
+    {
+      "dev": {
+        "accuracy": 0.857487922705314,
+        "confusion_matrix": [
+          [
+            160,
+            10,
+            4,
+            1
+          ],
+          [
+            20,
+            162,
+            3,
+            0
+          ],
+          [
+            6,
+            4,
+            27,
+            1
+          ],
+          [
+            3,
+            7,
+            0,
+            6
+          ]
+        ],
+        "macro_f1": 0.7523889154323937,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.8791208791208791,
+            "precision": 0.8465608465608465,
+            "predicted_count": 189,
+            "recall": 0.9142857142857143,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.8804347826086957,
+            "precision": 0.8852459016393442,
+            "predicted_count": 183,
+            "recall": 0.8756756756756757,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.7499999999999999,
+            "precision": 0.7941176470588235,
+            "predicted_count": 34,
+            "recall": 0.7105263157894737,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.5,
+            "precision": 0.75,
+            "predicted_count": 8,
+            "recall": 0.375,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 3,
+      "train_loss_mean": 0.6781492789436476
+    },
+    {
+      "dev": {
+        "accuracy": 0.8985507246376812,
+        "confusion_matrix": [
+          [
+            155,
+            14,
+            4,
+            2
+          ],
+          [
+            4,
+            174,
+            3,
+            4
+          ],
+          [
+            3,
+            1,
+            34,
+            0
+          ],
+          [
+            2,
+            5,
+            0,
+            9
+          ]
+        ],
+        "macro_f1": 0.8185161842491712,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.9144542772861357,
+            "precision": 0.9451219512195121,
+            "predicted_count": 164,
+            "recall": 0.8857142857142857,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.9182058047493404,
+            "precision": 0.8969072164948454,
+            "predicted_count": 194,
+            "recall": 0.9405405405405406,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.860759493670886,
+            "precision": 0.8292682926829268,
+            "predicted_count": 41,
+            "recall": 0.8947368421052632,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.5806451612903225,
+            "precision": 0.6,
+            "predicted_count": 15,
+            "recall": 0.5625,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 4,
+      "train_loss_mean": 0.38253461570071273
+    },
+    {
+      "dev": {
+        "accuracy": 0.9009661835748792,
+        "confusion_matrix": [
+          [
+            161,
+            9,
+            4,
+            1
+          ],
+          [
+            5,
+            173,
+            3,
+            4
+          ],
+          [
+            6,
+            1,
+            30,
+            1
+          ],
+          [
+            2,
+            5,
+            0,
+            9
+          ]
+        ],
+        "macro_f1": 0.807723801365238,
+        "n": 414,
+        "per_class": {
+          "definition": {
+            "f1": 0.9226361031518626,
+            "precision": 0.9252873563218391,
+            "predicted_count": 174,
+            "recall": 0.92,
+            "support": 175
+          },
+          "obligation": {
+            "f1": 0.9276139410187668,
+            "precision": 0.9202127659574468,
+            "predicted_count": 188,
+            "recall": 0.9351351351351351,
+            "support": 185
+          },
+          "permission": {
+            "f1": 0.8,
+            "precision": 0.8108108108108109,
+            "predicted_count": 37,
+            "recall": 0.7894736842105263,
+            "support": 38
+          },
+          "prohibition": {
+            "f1": 0.5806451612903225,
+            "precision": 0.6,
+            "predicted_count": 15,
+            "recall": 0.5625,
+            "support": 16
+          }
+        }
+      },
+      "epoch": 5,
+      "train_loss_mean": 0.23002578174871013
+    }
+  ]
+}

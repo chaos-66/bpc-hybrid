@@ -1,0 +1,59 @@
+{
+  "schema_version": "sep_c2_sun_predecessor_bert_config@1.0.0",
+  "method_id": "bert_legal_uncased_probe",
+  "sun_source": "Sun et al. (2024) author-manuscript Table 6, bert-legal-uncased comparison row",
+  "reproduction_class": "closest available public legal-BERT encoder frozen; two-layer MLP probe trained locally on clean official train split; full CPU fine-tuning not attempted",
+  "language": "de",
+  "input_field": "raw_text_de",
+  "labels": [
+    "definition",
+    "obligation",
+    "permission",
+    "prohibition"
+  ],
+  "encoder": {
+    "source_config": "configs/models/sun_bert_textcnn_s24.json",
+    "repository_id": "nlpaueb/legal-bert-base-uncased",
+    "revision": "15b570cbf88259610b082a167dacc190124f60f6",
+    "local_files_only": true,
+    "feature_pooling": "attention-mask-aware mean of last_hidden_state"
+  },
+  "head": {
+    "type": "mlp",
+    "input_dimension": 768,
+    "hidden_size": 256,
+    "num_labels": 4,
+    "dropout": 0.3,
+    "activation": "relu"
+  },
+  "optimization": {
+    "loss": "unweighted_cross_entropy",
+    "optimizer": "AdamW",
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "batch_size": 64,
+    "max_epochs": 100,
+    "early_stopping_patience": 10,
+    "early_stopping_metric": "macro_f1",
+    "max_length": 192,
+    "feature_extraction_batch_size": 16,
+    "seed": 20260915,
+    "hyperparameter_search": false
+  },
+  "training_data_contract": {
+    "source": "official_project_reconstructed_train_split",
+    "exclude_estg150_overlap": true,
+    "exclude_duplicates": true,
+    "validation_split": "official_project_reconstructed_dev_split",
+    "estg150_used_for_training_or_selection": false
+  },
+  "caveat": "The public EU-legislation legal-BERT base uncased encoder is the closest local match to Sun's bert-legal-uncased family, but it is not claimed to be Sun's exact checkpoint. Only the linear head is trained; the encoder is frozen.",
+  "post_result_tuning": false,
+  "head_selection_history": {
+    "selection_split": "official_clean_dev",
+    "metric": "macro_f1",
+    "linear_probe_best_dev_macro_f1": 0.5398,
+    "mlp_256_dropout0.3_lr5e-4_best_dev_macro_f1": 0.6082,
+    "selection_uses_estg150_gold": false
+  }
+}

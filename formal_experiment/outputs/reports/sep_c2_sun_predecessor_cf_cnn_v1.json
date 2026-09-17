@@ -1,0 +1,279 @@
+{
+  "evaluation": {
+    "confusion_rows_gold_columns_predicted": {
+      "definition": {
+        "__missing__": 0,
+        "definition": 22,
+        "obligation": 4,
+        "permission": 1,
+        "prohibition": 2
+      },
+      "obligation": {
+        "__missing__": 0,
+        "definition": 6,
+        "obligation": 51,
+        "permission": 2,
+        "prohibition": 0
+      },
+      "permission": {
+        "__missing__": 0,
+        "definition": 19,
+        "obligation": 1,
+        "permission": 21,
+        "prohibition": 1
+      },
+      "prohibition": {
+        "__missing__": 0,
+        "definition": 8,
+        "obligation": 2,
+        "permission": 3,
+        "prohibition": 7
+      }
+    },
+    "correct": 101,
+    "evaluator": "bpc_hybrid.formal_stage2_evaluation.evaluate_modality_labels",
+    "evaluator_source": "src/bpc_hybrid/formal_stage2_evaluation.py",
+    "failed_sample_ids": [],
+    "gold_support": {
+      "definition": 29,
+      "obligation": 59,
+      "permission": 42,
+      "prohibition": 20
+    },
+    "missing_sample_ids": [],
+    "official_evaluator": {
+      "accuracy": 0.6733333333333333,
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "macro_f1": 0.6177416786112438,
+      "per_class": [
+        {
+          "class": "obligation",
+          "f1": 0.8717948717948718,
+          "precision": 0.8793103448275862,
+          "recall": 0.864406779661017
+        },
+        {
+          "class": "permission",
+          "f1": 0.6086956521739131,
+          "precision": 0.7777777777777778,
+          "recall": 0.5
+        },
+        {
+          "class": "prohibition",
+          "f1": 0.4666666666666667,
+          "precision": 0.7,
+          "recall": 0.35
+        },
+        {
+          "class": "definition",
+          "f1": 0.5238095238095237,
+          "precision": 0.4,
+          "recall": 0.7586206896551724
+        }
+      ],
+      "records": 150,
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 0
+    },
+    "predicted_count": {
+      "definition": 55,
+      "obligation": 58,
+      "permission": 27,
+      "prohibition": 10
+    },
+    "records_expected": 150,
+    "records_failed": 0,
+    "records_missing": 0,
+    "records_scored": 150,
+    "schema_version": "sep_c2_sun_predecessor_evaluation@1.0.0",
+    "task_id": "estg150_modality_label_classification_v1",
+    "unit": "first clause modality per formal input record, frozen Gold order",
+    "unlabeled_predictions": 0,
+    "unlabeled_sample_ids": []
+  },
+  "execution": {
+    "formal_input": "data/input/estg150_formal_inference_input_v2.json",
+    "formal_input_sha256": "c4adada63ab1c2c48a031d32a5583451c9eba83a736570acd7314ab7e0134cad",
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "records": 150
+  },
+  "method": {
+    "input_field": "raw_text_de",
+    "input_language": "de",
+    "method_id": "cf_cnn",
+    "notes": "Sun et al. cite a standard CNN for sentence classification and do not publish the exact kernel/filter settings; the reconstruction uses 3/4/5-gram filters, 100 filters each, dropout 0.5, and the official 300-d token vectors.",
+    "reproduction_class": "paper-described architecture retrained locally on the official EStG modality train split",
+    "sun_role": "Table 7 CNN classification baseline (CF_CNN)",
+    "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); dev for selection"
+  },
+  "official_clean_test": {
+    "accuracy": 0.8647342995169082,
+    "confusion_matrix": [
+      [
+        150,
+        13,
+        11,
+        1
+      ],
+      [
+        10,
+        172,
+        0,
+        4
+      ],
+      [
+        6,
+        1,
+        31,
+        0
+      ],
+      [
+        2,
+        6,
+        2,
+        5
+      ]
+    ],
+    "macro_f1": 0.7351965098854099,
+    "n": 414,
+    "per_class": {
+      "definition": {
+        "f1": 0.8746355685131195,
+        "precision": 0.8928571428571429,
+        "predicted_count": 168,
+        "recall": 0.8571428571428571,
+        "support": 175
+      },
+      "obligation": {
+        "f1": 0.9100529100529101,
+        "precision": 0.8958333333333334,
+        "predicted_count": 192,
+        "recall": 0.9247311827956989,
+        "support": 186
+      },
+      "permission": {
+        "f1": 0.7560975609756098,
+        "precision": 0.7045454545454546,
+        "predicted_count": 44,
+        "recall": 0.8157894736842105,
+        "support": 38
+      },
+      "prohibition": {
+        "f1": 0.4,
+        "precision": 0.5,
+        "predicted_count": 10,
+        "recall": 0.3333333333333333,
+        "support": 15
+      }
+    }
+  },
+  "prediction": {
+    "artifact_dir": "outputs/evidence/sep_c2_sun_predecessors_v1/cf_cnn",
+    "predicted_count": {
+      "definition": 55,
+      "obligation": 58,
+      "permission": 27,
+      "prohibition": 10
+    }
+  },
+  "report_id": "sep_c2_sun_predecessor_cf_cnn_v1",
+  "safety": {
+    "estg150_used_for_training_or_selection": false,
+    "gold_read_by_prediction_code": false,
+    "gold_used_for_evaluation": true,
+    "new_llm_api_calls": 0,
+    "new_network_calls": 0,
+    "post_result_tuning": false
+  },
+  "schema_version": "sep_c2_sun_predecessor_report@1.0.0",
+  "status": "completed_zero_api_predecessor_method_run",
+  "training": {
+    "best_dev": {
+      "accuracy": 0.8888888888888888,
+      "confusion_matrix": [
+        [
+          151,
+          18,
+          6,
+          0
+        ],
+        [
+          10,
+          173,
+          2,
+          0
+        ],
+        [
+          3,
+          1,
+          34,
+          0
+        ],
+        [
+          2,
+          4,
+          0,
+          10
+        ]
+      ],
+      "macro_f1": 0.8532494376760316,
+      "n": 414,
+      "per_class": {
+        "definition": {
+          "f1": 0.8856304985337244,
+          "precision": 0.9096385542168675,
+          "predicted_count": 166,
+          "recall": 0.8628571428571429,
+          "support": 175
+        },
+        "obligation": {
+          "f1": 0.9081364829396326,
+          "precision": 0.8826530612244898,
+          "predicted_count": 196,
+          "recall": 0.9351351351351351,
+          "support": 185
+        },
+        "permission": {
+          "f1": 0.8500000000000001,
+          "precision": 0.8095238095238095,
+          "predicted_count": 42,
+          "recall": 0.8947368421052632,
+          "support": 38
+        },
+        "prohibition": {
+          "f1": 0.7692307692307693,
+          "precision": 1.0,
+          "predicted_count": 10,
+          "recall": 0.625,
+          "support": 16
+        }
+      }
+    },
+    "best_epoch": 5,
+    "checkpoint": {
+      "byte_size": 7053174,
+      "local_only_do_not_commit": true,
+      "path": "outputs/development/sep_c2_sun_predecessors_v1/cf_cnn/best_model.pt",
+      "sha256": "8e7d38160028565a69ef9452791dde7491fe84e560c51e9cf6b71d09998e4bf6",
+      "versioned": false
+    },
+    "clean_dev_rows": 414,
+    "clean_train_rows": 1927,
+    "oov_rate": {
+      "dev": 0.042327527488566705,
+      "estg150_formal_input": 0.22139406487232574,
+      "official_test": 0.040641605983074196,
+      "train": 0.0
+    },
+    "required": true,
+    "training_data": "official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); dev for selection"
+  },
+  "version_caveat": "Built against the locally available earlier author manuscript; the final Springer version could not be checked in this offline environment. Hyperparameters not given by Sun are frozen in the method config and reported here."
+}
