@@ -15,6 +15,17 @@ This directory is the only active experiment surface.
 的 PW1–PW9。数字真实性、来源、完成状态与已有比较口径仍须准确；本文档记录写作要求，
 不把未完成实验标为完成，不改变下方两方法范围或 API/Gold/正式发布边界。
 
+## User publication priority: CSCWD 2027 (2026-09-17)
+
+用户希望以 CSCWD 2027 为投稿目标，按 2026-10-31 截稿准备；本轮提供的当届通知
+另列 2027-01-31 录用通知、2027-05-26 至 28 Brisbane 会议。保留已有 9 月 30 日
+导师完整初稿目标。写作以说明已有工作、受控比较与有证据的观察为主，不为显眼创新
+自动新增模块、实验或恢复已取消方法；这不等于放弃原创贡献或保证 C 类会议录用。
+最相近文献、证据边界及当届信息核验深度见 `paper/CSCWD_POSITIONING.md`。
+不得写“首次 LLM+BPC”或以改名/不同 schema 代替实质差异；完整技术记录与精简会议稿
+分层组织。该笔记不是新状态页，计划/进度仍在 MASTER_PIPELINE / PROJECT_AUDIT。
+本次投稿准备不新增真实 API、Gold、正式运行或全量测试授权。
+
 ## User stop decision: Rules+LLM experiments (2026-09-14)
 
 The user's latest instruction is: “规则+LLM直接不要了，不在进行规则+LLM的任何实验”.

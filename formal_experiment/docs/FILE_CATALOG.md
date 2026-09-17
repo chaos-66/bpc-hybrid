@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-15
-**收录文件**：2084 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-17
+**收录文件**：2120 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -171,6 +171,7 @@
 | `configs/schemas/stage3_inference.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sep_c2_stage2b_predecessor_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_modular_ablation_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_annotation_protocol_s15.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_evaluator_s16.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_evaluator_s16_formal.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1125,6 +1126,32 @@
 | `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_adapted_clause_regions.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_native.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c2_stage2b_public_source_probe_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/101/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/101/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/101/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/101/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/101/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/101/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/110/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/110/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/110/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/110/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/110/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/110/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/111/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/111/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/111/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/111/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/111/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/arms/111/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/b0_d1_formal_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1374,6 +1401,11 @@
 | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_modular_ablation_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_ablation_analysis_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_modular_ablation_offline_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_prompt_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_prompt_v1_offline_check.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1420,6 +1452,7 @@
 |---|---|---|
 | `paper/ABLATION_MATRIX.md` | 活动 | 说明、规范或研究文档 |
 | `paper/CLAIM_EVIDENCE_MATRIX.md` | 活动 | 科学主张、证据状态和解锁条件 |
+| `paper/CSCWD_POSITIONING.md` | 活动 | 说明、规范或研究文档 |
 | `paper/MENTOR_REPORT_CONTENT_2026-09.md` | 活动 | 说明、规范或研究文档 |
 | `paper/presentations/bpc_hybrid_revised_20260912.pptx` | 活动 | 项目文件 |
 | `paper/presentations/bpc_hybrid_Stage3_completed.pptx` | 活动 | 项目文件 |
@@ -1699,6 +1732,7 @@
 | `scripts/run_s3_semantic_grounding_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sep_c2_stage2b_predecessor_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c3_modular_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_supplement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_stage2_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1881,6 +1915,7 @@
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sep_c2_stage2b_winter_estg150.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sep_c3_modular_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sim_case_c1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sim_case_c1_transforms.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/smoke.py` | 活动 | Python 实现、脚本或测试 |
@@ -2158,6 +2193,7 @@
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sep_c2_stage2b_predecessor_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sep_c2_two_method_execution_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_modular_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_shared_comparison_correction.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sim_case_c1_run_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sim_case_checklist_v1.py` | 活动 | Python 实现、脚本或测试 |

@@ -73,5 +73,8 @@
 
 | C47 | SEP-C2 Stage 2B 前人基线首轮实跑（2026-09-15，zero API）：EStG-150 与正式 Gold 上固定 `estg150_clause_region_detection_v1`（231 个 clause_span，statement-level 任意非空字符交集 P/R/F1）；Winter prototype 转写 1.0000/0.8312/0.9078，历史 Rules-Only 0.9398/1.0000/0.9689，历史 Direct-LLM 0.9476/0.9740/0.9606；三者同输入同 Gold，历史预测只读复用 | VERIFIED_PROJECT_FACT（development adapted subtask；zero API；不是 Sun Table 12 的 BPMN violation 任务） | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.{json,md,manifest.json}`；`outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/{winter_native,winter_adapted_clause_regions,historical_clause_regions,evaluation}.json`；`outputs/evidence/sep_c2_stage2b_public_source_probe_v1.json` | 可写：Winter 原生输出只适配 clause region、不冒充 action span；`references/合规性检查模型代码/model_check` 核实为 Winter prototype 而非 Sun Stage 2；原论文数字（Winter 0.58/0.89/0.70、Sun 0.77/0.83/0.80）与本项目实跑数字分开。禁止写：Sun Table 12 同条件复现、Winter 六要素抽取、或把本适配指标与论文表 12 直接比较 |
 
+| C48 | CSCWD 2027 写作定位：完整说明方法适配、同口径比较与错误/能力边界；不为显眼创新自动扩实验 | VERIFIED_PROJECT_FACT（2026-09-17 用户写作目标；不是录用或性能结论） | `paper/CSCWD_POSITIONING.md`；`AGENTS.md` 投稿目标；现有结果仍分别引用 C23–C25/C41–C47 及原始报告 | 可写：方法来源、显式适配、已有描述性观察；下游影响仍以对应任务实际证据为准。不得写：C 类无需原创性、仅换 LLM 已构成充分创新、确定性校验保证合规判断正确、当前已可保证录用 | SEP-C1/PW1–PW5 与 SEP-C4/PW8；没有新增 API/正式运行授权 |
+| C49 | 近期相关工作已覆盖 LLM+BPC、Sun 语义与 LLM、法规结构化及流程合规推理等方向，不能宣称这些宽泛组合为首次 | VERIFIED_PRIMARY_SOURCE（核验深度分论文记录；非穷尽查新） | `paper/CSCWD_POSITIONING.md` §3 的 R1–R6 原始链接：LegalChanges4BPC/Kölbel 阅读 HTML 正文；Wang/COLING/RC4PC 本轮主要为官方摘要，RC4PC 另有既有核查 | 可写：有来源支持的任务/表示/评价差异；不得由摘要未提及推断原文完全未做，不得把“未找到完全相同流程”当新颖性证明；两篇 Barrientos 明确区分 | PW2：将近邻写入 Related Work，补读摘要级文献全文；最相近方法不同 schema 的零分不能作优越性证据 |
+
 新增任何结果性句子前，先在本表新增一行。正式回填必须记录 manifest 路径、事件
 时间、样本数、失败数、模型和 evaluator 版本；否则维持 `BLOCKED_RESULT`。
