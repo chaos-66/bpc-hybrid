@@ -1,9 +1,10 @@
 ﻿# -*- coding: utf-8 -*-
-"""SEP-C2 final-paper BERT-TextCNN predecessor runner.
+"""SEP-C2 BERT-TextCNN predecessor runner.
 
-The implementation covers the six pre-trained encoder rows in Sun et al.
-(2024) Table 6/7.  Each row uses the same final-paper head: per-layer [CLS]
-sequence -> TextCNN -> max pooling -> four-class linear output.  The encoder
+The implementation covers six pre-trained encoder rows sourced from the local
+Sun et al. (2024) author manuscript Table 6.  The head follows the
+project-record final-version architecture (Section 4.2.1 / Fig. 3; not
+re-fetched/re-verified 2026-09-17): per-layer [CLS] sequence -> TextCNN -> max pooling -> four-class linear output.  The encoder
 and head are fine-tuned together on the clean official EStG modality train
 split; the official dev split selects the epoch.  EStG-150 Gold is read only
 after predictions have been materialised for evaluation.

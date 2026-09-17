@@ -11,9 +11,15 @@
       "no model training, inference or checkpoint change",
       "no Gold, prediction, input, evaluator or training-hyperparameter change"
     ],
-    "reason": "Correct the contradictory attribution of local-author-manuscript table numbers to the un-reverified final version, and restore the diagnosis manifest's source binding to the currently referenced report version.",
+    "reason": "Correct the contradictory attribution of local-author-manuscript table numbers to the un-reverified final version in reports, generation sources, and method-spec strings; restore the diagnosis manifest source binding to the currently referenced report version; and align the common.py source binding with the source-description revision while preserving the original run-time binding.",
     "scope": "SEP-C2 source-description metadata only",
-    "successor_binding_rule": "The revised sep_c2_sun_predecessors_comparison_v2.json binding points to the current on-disk LF-canonical file version. Other source_bindings entries are retained from the original manifest and were not part of this source-description errata."
+    "successor_binding_rule": "Current source_bindings entries point to the current on-disk LF-canonical file versions for the revised report and common.py. source_binding_history preserves the original report version and the original CRLF run-time binding for common.py; no diagnosis rerun or metric recomputation is implied.",
+    "followup_record": {
+      "date": "2026-09-17",
+      "path": "outputs/evidence/sep_c2_sun_predecessors_v1/SOURCE_DESCRIPTION_ERRATUM_2026-09-17.json#followup",
+      "scope": "common.py method-spec strings and runner/probe source docstrings only",
+      "note": "Detailed previous/current hashes for all files touched by the follow-up are recorded in the referenced evidence copy."
+    }
   },
   "prediction_bindings": {
     "bert_base_cased": "1355d3a348a35366755a80632e5eaf72d237e1bfa6510e75a6f6a064df350eda",
@@ -75,12 +81,29 @@
         "sha256": "fa5bdd184d5f5fb1434bd27155edb2d66ba845fbe6131d9d6817f1ae331bf91c",
         "state": "current source-description revision bound by this metadata errata; the original diagnosis metrics still derive from the 3a234c3 report and were not recomputed"
       }
+    ],
+    "src/bpc_hybrid/sun_predecessors/common.py": [
+      {
+        "commit": "3a234c3",
+        "sha256": "203d5faa9ff5c34beb4b8cf2ac6a71ad2176c211f4ff9e8b00171d35ca4ebf11",
+        "state": "Original diagnosis manifest binding for the run-time CRLF working-tree bytes. The same source text after LF normalization is Git blob 7ec6eea59bf2026814113dab1e568d49324ab54a22ecd81dd2f019cdb28c389e."
+      },
+      {
+        "commit": "5b7c357",
+        "sha256": "203d5faa9ff5c34beb4b8cf2ac6a71ad2176c211f4ff9e8b00171d35ca4ebf11",
+        "state": "Unchanged by the 2026-09-17 report source-text correction; the manifest still pointed at the original run-time bytes."
+      },
+      {
+        "commit": "this_scoped_commit",
+        "sha256": "a6008a89779f04696e040ed41e8511c409e1d4978946bff230dbdb8f22afd45b",
+        "state": "Source-description strings only in the shared method-spec module; no diagnosis rerun and no metric recomputation. The original diagnosis metrics still derive from the 3a234c3 code/run binding."
+      }
     ]
   },
   "source_bindings": {
     "outputs/reports/sep_c2_sun_predecessors_comparison_v2.json": "fa5bdd184d5f5fb1434bd27155edb2d66ba845fbe6131d9d6817f1ae331bf91c",
     "src/bpc_hybrid/formal_stage2_evaluation.py": "5cc2276d4a8c0ffd2108be91eb4cab48c0d65f93a8d12c3f54baf7f570517fae",
-    "src/bpc_hybrid/sun_predecessors/common.py": "203d5faa9ff5c34beb4b8cf2ac6a71ad2176c211f4ff9e8b00171d35ca4ebf11",
+    "src/bpc_hybrid/sun_predecessors/common.py": "a6008a89779f04696e040ed41e8511c409e1d4978946bff230dbdb8f22afd45b",
     "src/bpc_hybrid/sun_predecessors/evaluation.py": "ced1c6c68246698e8564ca5ec0aab054848dd9fe3393c4060a5178a05094cf02"
   }
 }

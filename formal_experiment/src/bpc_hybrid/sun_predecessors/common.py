@@ -173,18 +173,18 @@ class MethodSpec:
 METHOD_SPECS: dict[str, MethodSpec] = {
     "cf_kw": MethodSpec(
         method_id="cf_kw",
-        sun_role="Table 7 keyword classification baseline (CF_KW)",
+        sun_role="local author-manuscript Table 7 keyword classification baseline (CF_KW)",
         reproduction_class="paper-described rule baseline; keyword list reconstructed because the paper does not publish it",
         input_field="raw_text_de",
         input_language="de",
         training_data="none (deterministic keyword patterns)",
-        notes=("Sun et al. Table 7 reports CF_KW 62.7/64.7/60.8 on their modality split. "
+        notes=("Sun et al. local author manuscript Table 7 reports CF_KW 62.7/64.7/60.8 on their modality split. "
                "The local author-manuscript text only says 'simply uses keywords', so the exact keyword list is unavailable. "
                "This reconstruction uses an a-priori German legal-modal rule list and a definition fallback."),
     ),
     "cf_rnn": MethodSpec(
         method_id="cf_rnn",
-        sun_role="Table 7 bidirectional-LSTM classification baseline (CF_RNN)",
+        sun_role="local author-manuscript Table 7 bidirectional-LSTM classification baseline (CF_RNN)",
         reproduction_class="paper-described architecture retrained locally on the official EStG modality train split",
         input_field="raw_text_de",
         input_language="de",
@@ -194,7 +194,7 @@ METHOD_SPECS: dict[str, MethodSpec] = {
     ),
     "cf_cnn": MethodSpec(
         method_id="cf_cnn",
-        sun_role="Table 7 CNN classification baseline (CF_CNN)",
+        sun_role="local author-manuscript Table 7 CNN classification baseline (CF_CNN)",
         reproduction_class="paper-described architecture retrained locally on the official EStG modality train split",
         input_field="raw_text_de",
         input_language="de",
@@ -204,57 +204,57 @@ METHOD_SPECS: dict[str, MethodSpec] = {
     ),
     "bert_base_uncased": MethodSpec(
         method_id="bert_base_uncased",
-        sun_role="Sun et al. final version Table 6/7 bert-base-uncased comparison; final-paper BERT-TextCNN architecture",
-        reproduction_class="public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+        sun_role="local author-manuscript Table 6 bert-base-uncased comparison (directly verified); project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
+        reproduction_class="public pre-trained encoder plus project-record final-version BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
         input_field="raw_text_de",
         input_language="de",
         training_data="official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection",
-        notes=("The final article Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; base 12-layer / 768-hidden, 12 encoder layers. "
-               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run."),
+        notes=("Project record (2026-09-15) quotes the final article Section 4.2.1 / Fig. 3 as specifying per-layer [CLS] vectors as the TextCNN input; base 12-layer / 768-hidden, 12 encoder layers. "
+               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run. Final table numbering/numeric equality with the local author manuscript is not re-verified 2026-09-17 (TODO-SOURCE)."),
     ),
     "bert_base_cased": MethodSpec(
         method_id="bert_base_cased",
-        sun_role="Sun et al. final version Table 6/7 bert-base-cased comparison; final-paper BERT-TextCNN architecture",
-        reproduction_class="public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+        sun_role="local author-manuscript Table 6 bert-base-cased comparison (directly verified); project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
+        reproduction_class="public pre-trained encoder plus project-record final-version BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
         input_field="raw_text_de",
         input_language="de",
         training_data="official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection",
-        notes=("The final article Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; base 12-layer / 768-hidden, 12 encoder layers. "
-               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run."),
+        notes=("Project record (2026-09-15) quotes the final article Section 4.2.1 / Fig. 3 as specifying per-layer [CLS] vectors as the TextCNN input; base 12-layer / 768-hidden, 12 encoder layers. "
+               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run. Final table numbering/numeric equality with the local author manuscript is not re-verified 2026-09-17 (TODO-SOURCE)."),
     ),
     "bert_large_uncased": MethodSpec(
         method_id="bert_large_uncased",
-        sun_role="Sun et al. final version Table 6/7 bert-large-uncased comparison; final-paper BERT-TextCNN architecture",
-        reproduction_class="public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+        sun_role="local author-manuscript Table 6 bert-large-uncased comparison (directly verified); project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
+        reproduction_class="public pre-trained encoder plus project-record final-version BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
         input_field="raw_text_de",
         input_language="de",
         training_data="official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection",
-        notes=("The final article Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; large 24-layer / 1024-hidden, 24 encoder layers. "
-               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run."),
+        notes=("Project record (2026-09-15) quotes the final article Section 4.2.1 / Fig. 3 as specifying per-layer [CLS] vectors as the TextCNN input; large 24-layer / 1024-hidden, 24 encoder layers. "
+               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run. Final table numbering/numeric equality with the local author manuscript is not re-verified 2026-09-17 (TODO-SOURCE)."),
     ),
     "bert_large_cased": MethodSpec(
         method_id="bert_large_cased",
-        sun_role="Sun et al. final version Table 6/7 bert-large-cased comparison; final-paper BERT-TextCNN architecture",
-        reproduction_class="public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+        sun_role="local author-manuscript Table 6 bert-large-cased comparison (directly verified); project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
+        reproduction_class="public pre-trained encoder plus project-record final-version BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
         input_field="raw_text_de",
         input_language="de",
         training_data="official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection",
-        notes=("The final article Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; large 24-layer / 1024-hidden, 24 encoder layers. "
-               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run."),
+        notes=("Project record (2026-09-15) quotes the final article Section 4.2.1 / Fig. 3 as specifying per-layer [CLS] vectors as the TextCNN input; large 24-layer / 1024-hidden, 24 encoder layers. "
+               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run. Final table numbering/numeric equality with the local author manuscript is not re-verified 2026-09-17 (TODO-SOURCE)."),
     ),
     "bert_legal_uncased": MethodSpec(
         method_id="bert_legal_uncased",
-        sun_role="Sun et al. final version Table 6/7 bert-legal-uncased (nlpaueb/legal-bert-base-uncased) comparison; final-paper BERT-TextCNN architecture",
-        reproduction_class="public pre-trained encoder plus final-paper BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
+        sun_role="local author-manuscript Table 6 bert-legal-uncased (nlpaueb/legal-bert-base-uncased) comparison (directly verified); project-record final-version BERT-TextCNN architecture Section 4.2.1 / Fig. 3 (not re-fetched/re-verified 2026-09-17)",
+        reproduction_class="public pre-trained encoder plus project-record final-version BERT-TextCNN head, fine-tuned locally on the clean official EStG train split",
         input_field="raw_text_de",
         input_language="de",
         training_data="official Sun/Michel EStG modality train split (filtered against EStG-150 duplicates); official dev for selection",
-        notes=("The final article Section 4.2.1 / Fig. 3 specifies per-layer [CLS] vectors as the TextCNN input; base 12-layer / 768-hidden, 12 encoder layers. "
-               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run."),
+        notes=("Project record (2026-09-15) quotes the final article Section 4.2.1 / Fig. 3 as specifying per-layer [CLS] vectors as the TextCNN input; base 12-layer / 768-hidden, 12 encoder layers. "
+               "The encoder revision is pinned in the method config. Unpublished hyperparameters are frozen there before the EStG-150 run. Final table numbering/numeric equality with the local author manuscript is not re-verified 2026-09-17 (TODO-SOURCE)."),
     ),
     "bert_legal_uncased_probe": MethodSpec(
         method_id="bert_legal_uncased_probe",
-        sun_role="Table 6 bert-legal-uncased comparison; closest locally available public legal-BERT encoder",
+        sun_role="local author-manuscript Table 6 bert-legal-uncased comparison; closest locally available public legal-BERT encoder (final table numbering not re-verified 2026-09-17)",
         reproduction_class="matched public encoder frozen; classification head trained locally on the clean official train split",
         input_field="raw_text_de",
         input_language="de",
@@ -265,7 +265,7 @@ METHOD_SPECS: dict[str, MethodSpec] = {
     ),
     "bert_legal_uncased_textcnn_existing": MethodSpec(
         method_id="bert_legal_uncased_textcnn_existing",
-        sun_role="Existing project S2.4/S2.6 BERT-TextCNN classifier (final-paper-style head), reused read-only",
+        sun_role="Existing project S2.4/S2.6 BERT-TextCNN classifier using the project-record final-version head, reused read-only",
         reproduction_class="existing locally trained checkpoint; reused without retraining",
         input_field="raw_text_de",
         input_language="de",

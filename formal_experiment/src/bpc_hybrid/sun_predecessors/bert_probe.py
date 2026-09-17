@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """bert-legal-uncased comparison: frozen public legal-BERT + trained linear head.
 
-This is the closest local match to Sun et al.'s Table 6 ``bert-legal-uncased``
-row.  The encoder is the public ``nlpaueb/legal-bert-base-uncased`` snapshot,
+This is the closest local match to the ``bert-legal-uncased`` row in the
+local Sun et al. (2024) author manuscript Table 6; the final table numbering
+is not re-verified here.  The encoder is the public ``nlpaueb/legal-bert-base-uncased`` snapshot,
 loaded from the local Hugging Face cache with no network.  Full CPU
 fine-tuning of a 110M-parameter encoder is not attempted; instead the encoder
 is frozen and a supervised linear classification head is trained on the clean

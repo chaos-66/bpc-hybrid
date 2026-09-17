@@ -190,4 +190,4 @@ Direct LLM 不接收 baseline 预测，不运行 Sun 规则，不读 Gold；输�
 - `paper/THESIS_DRAFT.md` 第 135、140-141、735 行：把 `bert-legal-cased` 的精确公开权重不存在改为名称歧义、已核查公开来源未定位到精确 checkpoint；source-pending，不替代。
 - `paper/THESIS_DRAFT.md` 第 153、162、172 行：Winter 原方法描述应写三类 control-flow/resource 违规 + 三个 cost 分量；无 modality 分类器；future work 明确提到 optional/prohibitive/data/time，不得写成其他类型无法处理。
 - `paper/CLAIM_EVIDENCE_MATRIX.md` C44/C51：把 final 表号/数字与 final 正文复核状态分开；C51 已有 source-pending 结论可复用。
-- `configs/sep_c2_sun_predecessors_v1/bert_full_v1/*.json` 中的 `sun_source` 仍写 final article Table 6/7。若晚间沿用这些配置描述 final 表号，应先重新取得 final 正文；否则改写为 local author manuscript Table 6/7 + project-record final Fig. 3 architecture。
+- `configs/sep_c2_sun_predecessors_v1/bert_full_v1/*.json` 中的 `sun_source` 与 `src/bpc_hybrid/sun_predecessors/common.py` 的 `METHOD_SPECS` 已改为 local author manuscript Table 6/7 + project-record final Fig. 3 architecture；final 表号/数字仍为 TODO-SOURCE，未重新取得 final 正文。
