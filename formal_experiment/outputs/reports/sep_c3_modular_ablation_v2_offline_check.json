@@ -1,0 +1,616 @@
+{
+  "schema_version": "sep_c3_modular_ablation_offline_check@2.0.0",
+  "status": "pass",
+  "generated_at_utc": "2026-09-17T09:00:16.087727+00:00",
+  "network_calls": 0,
+  "planned_calls": 600,
+  "call_cap": 750,
+  "audit_arms": [
+    "111",
+    "011",
+    "101",
+    "110",
+    "100",
+    "010",
+    "001",
+    "000"
+  ],
+  "execution_arms": [
+    "000",
+    "001",
+    "010",
+    "100"
+  ],
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "input_path": "data\\input\\estg150_formal_inference_input_v2.json",
+  "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+  "gold_path": "data\\gold\\stage2\\estg150_formal_gold_v1.json",
+  "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+  "arms": {
+    "111": {
+      "flags": {
+        "E": true,
+        "S": true,
+        "J": true
+      },
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_111_v1.md",
+      "generated_prompt_sha256": "38144b7525c9ffddd001a276f6533ac4c35060b7917ae363e56a11c25824e1f3",
+      "loader_matches_composer": true,
+      "system_chars": 5562,
+      "user_chars": 2452,
+      "system_sha256": "807b16d20a102b7fadd32a402073b2921cb4a4b490ed1baaba9a9c043a161dca",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "ba1d43367f26d6c04f77603b06cc413836517e9388adb745664cffe357851f4b",
+      "estimated_input_tokens_150": 437695,
+      "execution_arm": false,
+      "errors": []
+    },
+    "011": {
+      "flags": {
+        "E": false,
+        "S": true,
+        "J": true
+      },
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_011_v1.md",
+      "generated_prompt_sha256": "d71fd965458cc0de8b4d4c5921ad3f905ed3c4b7cdc8ea70ff7955c43d042136",
+      "loader_matches_composer": true,
+      "system_chars": 5562,
+      "user_chars": 101,
+      "system_sha256": "807b16d20a102b7fadd32a402073b2921cb4a4b490ed1baaba9a9c043a161dca",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "composition_sha256": "90ccb9d4c27f0df8189673a7680450d396e17bc339343fa4a787b91d81922f5c",
+      "estimated_input_tokens_150": 314049,
+      "execution_arm": false,
+      "errors": []
+    },
+    "101": {
+      "flags": {
+        "E": true,
+        "S": false,
+        "J": true
+      },
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_101_v1.md",
+      "generated_prompt_sha256": "00f0ea3fc2ddf2ef7c765a83f05aa4f64eeba89966a2010c8e3a05151a111891",
+      "loader_matches_composer": true,
+      "system_chars": 2021,
+      "user_chars": 2452,
+      "system_sha256": "9ac6b84edcce623b5353fe07b9d9c1ee5ad3867ccfe7c7ad2b41c54f787697d4",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "80ea7d847fc4bcc936d920525dc9b306fd413cc2f2f9fb3fca1416d97e3c780b",
+      "estimated_input_tokens_150": 259449,
+      "execution_arm": false,
+      "errors": []
+    },
+    "110": {
+      "flags": {
+        "E": true,
+        "S": true,
+        "J": false
+      },
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_110_v1.md",
+      "generated_prompt_sha256": "75ce93f718a7d24962a33cef95a91515261d3a69789d64d4728a838670962fd9",
+      "loader_matches_composer": true,
+      "system_chars": 5297,
+      "user_chars": 2452,
+      "system_sha256": "92a53a213570879e512ac7521339a55bbfaca0e130eef7ff576b748fba6cb366",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "66ac250676b59671182196a706f8249b5e822f22f0f4033cab191a31a1d53082",
+      "estimated_input_tokens_150": 424090,
+      "execution_arm": false,
+      "errors": []
+    },
+    "100": {
+      "flags": {
+        "E": true,
+        "S": false,
+        "J": false
+      },
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_100_v1.md",
+      "generated_prompt_sha256": "9ce3502ea56c14a58bb39d87ab7b7023c5aca51b65909a515c0244601a5b7fee",
+      "loader_matches_composer": true,
+      "system_chars": 1756,
+      "user_chars": 2452,
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418",
+      "estimated_input_tokens_150": 245845,
+      "execution_arm": true,
+      "errors": []
+    },
+    "010": {
+      "flags": {
+        "E": false,
+        "S": true,
+        "J": false
+      },
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_010_v1.md",
+      "generated_prompt_sha256": "de3e33eeec7bedd22bb4df195c8353b15f6ef67dca2f4bd911ee5053cb403305",
+      "loader_matches_composer": true,
+      "system_chars": 5297,
+      "user_chars": 101,
+      "system_sha256": "92a53a213570879e512ac7521339a55bbfaca0e130eef7ff576b748fba6cb366",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "composition_sha256": "3ebbd9edc657f7f58a6ba3099855373efeeb33a4f160ae643ecdd1cc8ef5b898",
+      "estimated_input_tokens_150": 300445,
+      "execution_arm": true,
+      "errors": []
+    },
+    "001": {
+      "flags": {
+        "E": false,
+        "S": false,
+        "J": true
+      },
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_001_v1.md",
+      "generated_prompt_sha256": "f03d5ad274df8e64b0c555559a412e09e56c59afa3e5ab39693088ebc010913c",
+      "loader_matches_composer": true,
+      "system_chars": 2021,
+      "user_chars": 101,
+      "system_sha256": "9ac6b84edcce623b5353fe07b9d9c1ee5ad3867ccfe7c7ad2b41c54f787697d4",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "composition_sha256": "7e00e998e4a09dac54f61f7bf899bb6b3b5437ab94232f4fe897bcf35e6bcc23",
+      "estimated_input_tokens_150": 135790,
+      "execution_arm": true,
+      "errors": []
+    },
+    "000": {
+      "flags": {
+        "E": false,
+        "S": false,
+        "J": false
+      },
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_000_v1.md",
+      "generated_prompt_sha256": "45bb324dd1143e1f920e9f8935ed8ecda98c8ebe5a1442ec10f9843b50abdefa",
+      "loader_matches_composer": true,
+      "system_chars": 1756,
+      "user_chars": 101,
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "composition_sha256": "c419c56b661c85cdfc090fbf3824f8b33662a2b835f4b637d7daeaef5ad89d77",
+      "estimated_input_tokens_150": 122199,
+      "execution_arm": true,
+      "errors": []
+    }
+  },
+  "estimated_total_input_tokens": 2239562,
+  "estimated_execution_input_tokens": 804279,
+  "baselines": {
+    "old_v6_full_0813_reused": {
+      "status": "evaluated_zero_api",
+      "path": "outputs\\development\\barrientos_ablation_suite_v2\\D-full-0813\\repeat-01\\canonical_predictions.jsonl",
+      "sha256": "2dc036c3c72f54e194ad9882aac5b78f2fd0e0a7f9fbdf44dc73baa31ce23195",
+      "label": "historical old v6 full prompt, same model-release batch",
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "evaluation": {
+        "schema_version": "sep_c3_coarse_five_field_evaluation@1.0.0",
+        "dataset_id": "independently_reconstructed_estg_150_v1",
+        "method_id": "old_v6_full_0813_reused",
+        "view": "coarse_sentence_level",
+        "primary_metric": "coarse_five_field_mean_f1",
+        "primary_metric_note": "arithmetic mean of the five coarse span-field F1 values; the modality label is reported separately and is never mixed into this score",
+        "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+        "five_fields": {
+          "actor": {
+            "ground_truth": 41,
+            "extracted": 82,
+            "matched_predictions": 47,
+            "matched_ground_truth": 38,
+            "misclassified": 35,
+            "missed": 3,
+            "precision": 0.573170731707317,
+            "recall": 0.926829268292683,
+            "f1": 0.7083085465000991
+          },
+          "action": {
+            "ground_truth": 150,
+            "extracted": 225,
+            "matched_predictions": 211,
+            "matched_ground_truth": 135,
+            "misclassified": 14,
+            "missed": 15,
+            "precision": 0.9377777777777778,
+            "recall": 0.9,
+            "f1": 0.9185006045949216
+          },
+          "condition": {
+            "ground_truth": 122,
+            "extracted": 138,
+            "matched_predictions": 126,
+            "matched_ground_truth": 95,
+            "misclassified": 12,
+            "missed": 27,
+            "precision": 0.9130434782608695,
+            "recall": 0.7786885245901639,
+            "f1": 0.840530861596798
+          },
+          "constraint": {
+            "ground_truth": 135,
+            "extracted": 254,
+            "matched_predictions": 186,
+            "matched_ground_truth": 106,
+            "misclassified": 68,
+            "missed": 29,
+            "precision": 0.7322834645669292,
+            "recall": 0.7851851851851852,
+            "f1": 0.7578121997155707
+          },
+          "exception": {
+            "ground_truth": 11,
+            "extracted": 9,
+            "matched_predictions": 7,
+            "matched_ground_truth": 7,
+            "misclassified": 2,
+            "missed": 4,
+            "precision": 0.7777777777777778,
+            "recall": 0.6363636363636364,
+            "f1": 0.7000000000000001
+          }
+        },
+        "coarse_five_field_mean_f1": 0.7850304424814778,
+        "coarse_five_field_micro": {
+          "ground_truth": 459,
+          "extracted": 708,
+          "matched_predictions": 577,
+          "matched_ground_truth": 381,
+          "precision": 0.8149717514124294,
+          "recall": 0.8300653594771242,
+          "f1": 0.8224493117168078
+        },
+        "modality_labels": {
+          "schema_version": "formal_stage2_modality_labels@1.0.0",
+          "classes": [
+            "obligation",
+            "permission",
+            "prohibition",
+            "definition"
+          ],
+          "records": 150,
+          "accuracy": 0.82,
+          "macro_f1": 0.7537201079506458,
+          "per_class": [
+            {
+              "class": "obligation",
+              "precision": 0.8382352941176471,
+              "recall": 0.9661016949152542,
+              "f1": 0.8976377952755905
+            },
+            {
+              "class": "permission",
+              "precision": 0.9090909090909091,
+              "recall": 0.9523809523809523,
+              "f1": 0.9302325581395349
+            },
+            {
+              "class": "prohibition",
+              "precision": 0.6666666666666666,
+              "recall": 0.9,
+              "f1": 0.7659574468085106
+            },
+            {
+              "class": "definition",
+              "precision": 0.8888888888888888,
+              "recall": 0.27586206896551724,
+              "f1": 0.42105263157894735
+            }
+          ],
+          "separate_from_span_metrics": true,
+          "unlabeled_predictions": 2
+        },
+        "modality_evidence_span": {
+          "available": false,
+          "policy": "published decision-only Gold has no local modality evidence spans; never zeroed or aggregated into span F1"
+        },
+        "official_formal_view": {
+          "schema_version": "formal_stage2_span_metrics@1.0.0",
+          "view": "coarse_sentence_level",
+          "dataset_id": "independently_reconstructed_estg_150_v1",
+          "method_id": "old_v6_full_0813_reused",
+          "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+          "overall": {
+            "ground_truth": 609,
+            "extracted": 946,
+            "matched_predictions": 813,
+            "matched_ground_truth": 524,
+            "misclassified": 133,
+            "missed": 85,
+            "precision": 0.8594080338266384,
+            "recall": 0.8604269293924466,
+            "f1": 0.8599171797933228
+          },
+          "span_fields": {
+            "actor": {
+              "ground_truth": 41,
+              "extracted": 82,
+              "precision": 0.573170731707317,
+              "recall": 0.926829268292683,
+              "f1": 0.7083085465000991
+            },
+            "action": {
+              "ground_truth": 150,
+              "extracted": 225,
+              "precision": 0.9377777777777778,
+              "recall": 0.9,
+              "f1": 0.9185006045949216
+            },
+            "condition": {
+              "ground_truth": 122,
+              "extracted": 138,
+              "precision": 0.9130434782608695,
+              "recall": 0.7786885245901639,
+              "f1": 0.840530861596798
+            },
+            "constraint": {
+              "ground_truth": 135,
+              "extracted": 254,
+              "precision": 0.7322834645669292,
+              "recall": 0.7851851851851852,
+              "f1": 0.7578121997155707
+            },
+            "exception": {
+              "ground_truth": 11,
+              "extracted": 9,
+              "precision": 0.7777777777777778,
+              "recall": 0.6363636363636364,
+              "f1": 0.7000000000000001
+            }
+          },
+          "modality_span": {
+            "available": false,
+            "reason": "published formal Gold stores modality as a plain string; local modality evidence spans are not carried by the decision-only Gold",
+            "ground_truth": 150,
+            "extracted": 238
+          },
+          "no_cross_view_mixing": true
+        },
+        "denominator": 150,
+        "failed_count": 0
+      }
+    },
+    "old_v6_full_hist_r3_preview": {
+      "status": "evaluated_zero_api",
+      "path": "outputs\\development\\s27_d1_v6_r3_clean_rerun_150_hist56d_v1\\d1_responses.jsonl",
+      "sha256": "9188093c5b30d288c749e1dc6da9d88eb5df4fd4c08a73518f6b4ff243dca36e",
+      "label": "historical old v6 full prompt snapshot; context only",
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "evaluation": {
+        "schema_version": "sep_c3_coarse_five_field_evaluation@1.0.0",
+        "dataset_id": "independently_reconstructed_estg_150_v1",
+        "method_id": "old_v6_full_hist_r3_preview",
+        "view": "coarse_sentence_level",
+        "primary_metric": "coarse_five_field_mean_f1",
+        "primary_metric_note": "arithmetic mean of the five coarse span-field F1 values; the modality label is reported separately and is never mixed into this score",
+        "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+        "five_fields": {
+          "actor": {
+            "ground_truth": 41,
+            "extracted": 60,
+            "matched_predictions": 40,
+            "matched_ground_truth": 36,
+            "misclassified": 20,
+            "missed": 5,
+            "precision": 0.6666666666666666,
+            "recall": 0.8780487804878049,
+            "f1": 0.7578947368421053
+          },
+          "action": {
+            "ground_truth": 150,
+            "extracted": 210,
+            "matched_predictions": 205,
+            "matched_ground_truth": 137,
+            "misclassified": 5,
+            "missed": 13,
+            "precision": 0.9761904761904762,
+            "recall": 0.9133333333333333,
+            "f1": 0.9437163978494625
+          },
+          "condition": {
+            "ground_truth": 122,
+            "extracted": 135,
+            "matched_predictions": 124,
+            "matched_ground_truth": 94,
+            "misclassified": 11,
+            "missed": 28,
+            "precision": 0.9185185185185185,
+            "recall": 0.7704918032786885,
+            "f1": 0.8380185491408441
+          },
+          "constraint": {
+            "ground_truth": 135,
+            "extracted": 175,
+            "matched_predictions": 136,
+            "matched_ground_truth": 96,
+            "misclassified": 39,
+            "missed": 39,
+            "precision": 0.7771428571428571,
+            "recall": 0.7111111111111111,
+            "f1": 0.7426621160409557
+          },
+          "exception": {
+            "ground_truth": 11,
+            "extracted": 10,
+            "matched_predictions": 8,
+            "matched_ground_truth": 8,
+            "misclassified": 2,
+            "missed": 3,
+            "precision": 0.8,
+            "recall": 0.7272727272727273,
+            "f1": 0.761904761904762
+          }
+        },
+        "coarse_five_field_mean_f1": 0.8088393123556259,
+        "coarse_five_field_micro": {
+          "ground_truth": 459,
+          "extracted": 590,
+          "matched_predictions": 513,
+          "matched_ground_truth": 371,
+          "precision": 0.8694915254237288,
+          "recall": 0.8082788671023965,
+          "f1": 0.8377685388362014
+        },
+        "modality_labels": {
+          "schema_version": "formal_stage2_modality_labels@1.0.0",
+          "classes": [
+            "obligation",
+            "permission",
+            "prohibition",
+            "definition"
+          ],
+          "records": 150,
+          "accuracy": 0.8333333333333334,
+          "macro_f1": 0.7694506979014613,
+          "per_class": [
+            {
+              "class": "obligation",
+              "precision": 0.8656716417910447,
+              "recall": 0.9830508474576272,
+              "f1": 0.9206349206349207
+            },
+            {
+              "class": "permission",
+              "precision": 0.9090909090909091,
+              "recall": 0.9523809523809523,
+              "f1": 0.9302325581395349
+            },
+            {
+              "class": "prohibition",
+              "precision": 0.6538461538461539,
+              "recall": 0.85,
+              "f1": 0.7391304347826088
+            },
+            {
+              "class": "definition",
+              "precision": 0.8333333333333334,
+              "recall": 0.3448275862068966,
+              "f1": 0.4878048780487806
+            }
+          ],
+          "separate_from_span_metrics": true,
+          "unlabeled_predictions": 1
+        },
+        "modality_evidence_span": {
+          "available": false,
+          "policy": "published decision-only Gold has no local modality evidence spans; never zeroed or aggregated into span F1"
+        },
+        "official_formal_view": {
+          "schema_version": "formal_stage2_span_metrics@1.0.0",
+          "view": "coarse_sentence_level",
+          "dataset_id": "independently_reconstructed_estg_150_v1",
+          "method_id": "old_v6_full_hist_r3_preview",
+          "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+          "overall": {
+            "ground_truth": 609,
+            "extracted": 820,
+            "matched_predictions": 741,
+            "matched_ground_truth": 515,
+            "misclassified": 79,
+            "missed": 94,
+            "precision": 0.9036585365853659,
+            "recall": 0.8456486042692939,
+            "f1": 0.873691717540343
+          },
+          "span_fields": {
+            "actor": {
+              "ground_truth": 41,
+              "extracted": 60,
+              "precision": 0.6666666666666666,
+              "recall": 0.8780487804878049,
+              "f1": 0.7578947368421053
+            },
+            "action": {
+              "ground_truth": 150,
+              "extracted": 210,
+              "precision": 0.9761904761904762,
+              "recall": 0.9133333333333333,
+              "f1": 0.9437163978494625
+            },
+            "condition": {
+              "ground_truth": 122,
+              "extracted": 135,
+              "precision": 0.9185185185185185,
+              "recall": 0.7704918032786885,
+              "f1": 0.8380185491408441
+            },
+            "constraint": {
+              "ground_truth": 135,
+              "extracted": 175,
+              "precision": 0.7771428571428571,
+              "recall": 0.7111111111111111,
+              "f1": 0.7426621160409557
+            },
+            "exception": {
+              "ground_truth": 11,
+              "extracted": 10,
+              "precision": 0.8,
+              "recall": 0.7272727272727273,
+              "f1": 0.761904761904762
+            }
+          },
+          "modality_span": {
+            "available": false,
+            "reason": "published formal Gold stores modality as a plain string; local modality evidence spans are not carried by the decision-only Gold",
+            "ground_truth": 150,
+            "extracted": 230
+          },
+          "no_cross_view_mixing": true
+        },
+        "denominator": 150,
+        "failed_count": 0
+      }
+    }
+  },
+  "checks": {
+    "arm_111_clean": true,
+    "arm_011_clean": true,
+    "arm_101_clean": true,
+    "arm_110_clean": true,
+    "arm_100_clean": true,
+    "arm_010_clean": true,
+    "arm_001_clean": true,
+    "arm_000_clean": true,
+    "planned_calls_match_execution_arms": true,
+    "six_hundred_call_plan": true,
+    "call_cap_750_recorded": true,
+    "baseline_old_full_0813_available": true
+  },
+  "notes": [
+    "Offline request check only; no network/API call was made.",
+    "Request bodies are rendered from prompts/sun_compat/modular_v1/generated.",
+    "The old-v6 full 0813 baseline is reused from the immutable 450-call factorial batch.",
+    "Primary metric is coarse_five_field_mean_f1; modality labels are separate.",
+    "An incremental suite may audit all eight cells while planning only the missing arms."
+  ],
+  "suite_id": "SEP-C3-MODULAR-ESJ-002",
+  "existing_arms_esj": [
+    "111",
+    "011",
+    "101",
+    "110"
+  ],
+  "planned_arms_esj": [
+    "000",
+    "001",
+    "010",
+    "100"
+  ],
+  "full_factorial_arms_esj": [
+    "111",
+    "011",
+    "101",
+    "110",
+    "100",
+    "010",
+    "001",
+    "000"
+  ]
+}

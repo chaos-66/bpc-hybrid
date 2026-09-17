@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 """SEP-C3 real-run entry for the modular E/S/J Direct-LLM prompt family.
 
-Arms (combination order E/S/J):
+Arms (legacy v1 batch; combination order E/S/J):
   111 = full modular prompt
   011 = delete E (examples)
   101 = delete S (semantic rules)
   110 = delete J (output organization)
+
+The generic functions also render the four missing cells
+  100 = E only, 010 = S only, 001 = J only, 000 = common skeleton only
+so the v2 adapter can complete the full 2^3 factorial without cloning the
+call/parse/evaluate stack.  The legacy four-arm defaults and historical report
+paths remain unchanged.
 
 The runner sends exactly the generated modular system/user messages for the
 requested arm.  It never appends the historical v6 examples, ``few_shot_block``
@@ -39,14 +45,16 @@ import run_barrientos_ablation_suite_v2 as base  # noqa: E402
 from bpc_hybrid.h1_transport import H1RequestPolicy  # noqa: E402
 from bpc_hybrid.llm_client import LLMRequest, RealAPITransport  # noqa: E402
 from bpc_hybrid.llm_config import LLMConfig  # noqa: E402
-from bpc_hybrid.modular_prompt import render_modular_prompt  # noqa: E402
+from bpc_hybrid.modular_prompt import COMBINATIONS, render_modular_prompt  # noqa: E402
 from bpc_hybrid.prompt_loader import load_prompt  # noqa: E402
 from bpc_hybrid.sep_c3_modular_evaluation import (  # noqa: E402
     attempt_rows,
     evaluate_coarse,
 )
 
-ARMS = ("111", "011", "101", "110")
+LEGACY_ARMS = ("111", "011", "101", "110")
+ARMS = LEGACY_ARMS
+ALL_ARMS = tuple(sorted(COMBINATIONS))
 SAMPLES_PER_ARM = 150
 PLANNED_CALLS = 600
 CALL_CAP = 750
@@ -151,11 +159,12 @@ def _write_json(path: Path, value: Any) -> None:
     )
 
 
-def samples() -> list[dict[str, str]]:
+def samples(samples_per_arm: int = SAMPLES_PER_ARM) -> list[dict[str, str]]:
     doc = _read_json(ESTG_INPUT)
     rows = doc.get("records")
-    if not isinstance(rows, list) or len(rows) != SAMPLES_PER_ARM:
-        raise SepC3Error("EStG input must contain exactly 150 records")
+    if not isinstance(rows, list) or len(rows) != samples_per_arm:
+        raise SepC3Error(
+            f"EStG input must contain exactly {samples_per_arm} records")
     out = [
         {
             "sample_id": str(row["sample_id"]),
@@ -164,13 +173,13 @@ def samples() -> list[dict[str, str]]:
         }
         for row in rows
     ]
-    if len({r["sample_id"] for r in out}) != SAMPLES_PER_ARM:
+    if len({r["sample_id"] for r in out}) != samples_per_arm:
         raise SepC3Error("EStG sample ids must be unique")
     return out
 
 
 def _prompt(arm: str):
-    if arm not in ARMS:
+    if arm not in ALL_ARMS:
         raise SepC3Error(f"unknown arm: {arm}")
     return render_modular_prompt(arm)
 
@@ -226,10 +235,13 @@ def _request_bytes(arm: str, sample_id: str, source_text: str) -> bytes:
     ).encode("utf-8")
 
 
-def _baseline_attempts(path: Path) -> list[dict[str, Any]]:
+def _baseline_attempts(path: Path,
+                       samples_per_arm: int = SAMPLES_PER_ARM,
+                       ) -> list[dict[str, Any]]:
     rows = _read_jsonl(path)
-    if len(rows) != SAMPLES_PER_ARM:
-        raise SepC3Error(f"baseline rows must be 150: {path} ({len(rows)})")
+    if len(rows) != samples_per_arm:
+        raise SepC3Error(
+            f"baseline rows must be {samples_per_arm}: {path} ({len(rows)})")
     return [
         {
             "sample_id": str(row["sample_id"]),
@@ -240,7 +252,9 @@ def _baseline_attempts(path: Path) -> list[dict[str, Any]]:
     ]
 
 
-def _evaluate_baselines(gold_doc: dict[str, Any]) -> dict[str, Any]:
+def _evaluate_baselines(gold_doc: dict[str, Any],
+                        samples_per_arm: int = SAMPLES_PER_ARM,
+                        ) -> dict[str, Any]:
     out: dict[str, Any] = {}
     for key, path, label in (
         ("old_v6_full_0813_reused", D_FULL_0813,
@@ -253,7 +267,7 @@ def _evaluate_baselines(gold_doc: dict[str, Any]) -> dict[str, Any]:
             continue
         evaluation = evaluate_coarse(
             gold_doc,
-            _baseline_attempts(path),
+            _baseline_attempts(path, samples_per_arm),
             method_id=key,
         )
         out[key] = {
@@ -269,13 +283,44 @@ def _evaluate_baselines(gold_doc: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
-def offline_check() -> dict[str, Any]:
+def offline_check(
+    *,
+    arms: Sequence[str] | None = None,
+    execution_arms: Sequence[str] | None = None,
+    planned_calls: int | None = None,
+    call_cap: int | None = None,
+    samples_per_arm: int | None = None,
+    output_path: Path | None = None,
+) -> dict[str, Any]:
+    """Run a deterministic, zero-network prompt and request check.
+
+    ``arms`` controls which combinations are audited.  ``execution_arms``
+    controls the call-plan arithmetic and makes the incremental v2 suite
+    explicit: audit all eight factorial cells while planning only the four
+    missing cells for a new API batch.
+    """
+    audit_arms = tuple(arms or ARMS)
+    run_arms = tuple(execution_arms or audit_arms)
+    if not audit_arms:
+        raise SepC3Error("offline check requires at least one audit arm")
+    if not run_arms:
+        raise SepC3Error("offline check requires at least one execution arm")
+    for arm in set(audit_arms) | set(run_arms):
+        _prompt(arm)
+
+    run_samples = SAMPLES_PER_ARM if samples_per_arm is None else int(samples_per_arm)
+    run_planned = PLANNED_CALLS if planned_calls is None else int(planned_calls)
+    run_cap = CALL_CAP if call_cap is None else int(call_cap)
+    report_path = Path(output_path or OFFLINE_REPORT)
+
     gold_doc = _read_json(FORMAL_GOLD)
-    prompts = {arm: _prompt(arm) for arm in ARMS}
+    input_rows = samples(run_samples)
+    prompts = {arm: _prompt(arm) for arm in audit_arms}
     checks: dict[str, bool] = {}
     arm_rows: dict[str, Any] = {}
     total_input_tokens = 0
-    for arm in ARMS:
+    execution_input_tokens = 0
+    for arm in audit_arms:
         prompt = prompts[arm]
         errors: list[str] = []
         text = prompt.system_prompt + "\n" + prompt.user_prompt_template
@@ -302,11 +347,13 @@ def offline_check() -> dict[str, Any]:
             errors.append("source_text render failed")
 
         per_sample_tokens = []
-        for row in samples():
+        for row in input_rows:
             body_bytes = _request_bytes(arm, row["sample_id"], row["text"])
             per_sample_tokens.append(math.ceil(len(body_bytes) / 3))
         arm_input = sum(per_sample_tokens)
         total_input_tokens += arm_input
+        if arm in run_arms:
+            execution_input_tokens += arm_input
         generated = _load_generated_prompt(arm)
         arm_rows[arm] = {
             "flags": dict(prompt.flags),
@@ -322,23 +369,29 @@ def offline_check() -> dict[str, Any]:
             "user_sha256": _sha256_text(prompt.user_prompt_template),
             "composition_sha256": prompt.composition_sha256,
             "estimated_input_tokens_150": arm_input,
+            "execution_arm": arm in run_arms,
             "errors": errors,
         }
         checks[f"arm_{arm}_clean"] = not errors
 
-    baselines = _evaluate_baselines(gold_doc)
-    checks["six_hundred_call_plan"] = PLANNED_CALLS == 600
-    checks["call_cap_750_recorded"] = CALL_CAP == 750
+    baselines = _evaluate_baselines(gold_doc, run_samples)
+    checks["planned_calls_match_execution_arms"] = (
+        run_planned == run_samples * len(run_arms)
+    )
+    checks["six_hundred_call_plan"] = run_planned == 600
+    checks["call_cap_750_recorded"] = run_cap == 750
     checks["baseline_old_full_0813_available"] = (
         baselines["old_v6_full_0813_reused"]["status"] == "evaluated_zero_api"
     )
     report = {
-        "schema_version": "sep_c3_modular_ablation_offline_check@1.0.0",
+        "schema_version": "sep_c3_modular_ablation_offline_check@1.1.0",
         "status": "pass" if all(checks.values()) else "fail",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "network_calls": 0,
-        "planned_calls": PLANNED_CALLS,
-        "call_cap": CALL_CAP,
+        "planned_calls": run_planned,
+        "call_cap": run_cap,
+        "audit_arms": list(audit_arms),
+        "execution_arms": list(run_arms),
         "model": {
             "id": MODEL_ALIAS,
             "documented_release": MODEL_RELEASE,
@@ -355,6 +408,7 @@ def offline_check() -> dict[str, Any]:
         "gold_sha256": _sha256_file(FORMAL_GOLD),
         "arms": arm_rows,
         "estimated_total_input_tokens": total_input_tokens,
+        "estimated_execution_input_tokens": execution_input_tokens,
         "baselines": baselines,
         "checks": checks,
         "notes": [
@@ -362,9 +416,10 @@ def offline_check() -> dict[str, Any]:
             "Request bodies are rendered from prompts/sun_compat/modular_v1/generated.",
             "The old-v6 full 0813 baseline is reused from the immutable 450-call factorial batch.",
             "Primary metric is coarse_five_field_mean_f1; modality labels are separate.",
+            "An incremental suite may audit all eight cells while planning only the missing arms.",
         ],
     }
-    _write_json(OFFLINE_REPORT, report)
+    _write_json(report_path, report)
     return report
 
 
@@ -468,12 +523,18 @@ class AblationBudgetGate:
         }
 
 
-def _load_budget() -> dict[str, Any]:
-    budget = _read_json(BUDGET_PATH)
-    if int(budget.get("planned_calls", 0)) != PLANNED_CALLS:
-        raise SepC3Error("budget planned_calls must be 600")
-    if int(budget.get("call_cap", 0)) != CALL_CAP:
-        raise SepC3Error("budget call_cap must be 750")
+def _load_budget(
+    path: Path | None = None,
+    *,
+    planned_calls: int = PLANNED_CALLS,
+    call_cap: int = CALL_CAP,
+) -> dict[str, Any]:
+    budget = _read_json(Path(path or BUDGET_PATH))
+    if int(budget.get("planned_calls", 0)) != planned_calls:
+        raise SepC3Error(
+            f"budget planned_calls must be {planned_calls}")
+    if int(budget.get("call_cap", 0)) != call_cap:
+        raise SepC3Error(f"budget call_cap must be {call_cap}")
     for key in ("input_token_cap", "output_token_cap", "usd_cost_cap"):
         if not isinstance(budget.get(key), (int, float)) or budget[key] <= 0:
             raise SepC3Error(f"invalid budget cap: {key}")
@@ -544,9 +605,14 @@ def _cost_of(usage: Mapping[str, Any] | None,
     )
 
 
-def _restore_gate(gate: AblationBudgetGate) -> None:
-    for arm in ARMS:
-        run_dir = OUT_DIR / arm / "repeat-01"
+def _restore_gate(
+    gate: AblationBudgetGate,
+    *,
+    arms: Sequence[str] | None = None,
+    out_dir: Path | None = None,
+) -> None:
+    for arm in (arms or ARMS):
+        run_dir = Path(out_dir or OUT_DIR) / arm / "repeat-01"
         for row in _read_jsonl(run_dir / "raw_responses.jsonl"):
             usage = row.get("usage") if isinstance(row, Mapping) else None
             returned_model = (
@@ -620,8 +686,9 @@ def _call_once(arm: str, sample: Mapping[str, str], transport: Any,
 
 def _run_arm(arm: str, rows: Sequence[Mapping[str, str]], transport: Any,
              gate: AblationBudgetGate, budget: Mapping[str, Any],
-             gold_doc: dict[str, Any]) -> dict[str, Any]:
-    run_dir = OUT_DIR / arm / "repeat-01"
+             gold_doc: dict[str, Any],
+             *, out_dir: Path | None = None) -> dict[str, Any]:
+    run_dir = Path(out_dir or OUT_DIR) / arm / "repeat-01"
     run_dir.mkdir(parents=True, exist_ok=True)
     raw_path = run_dir / "raw_responses.jsonl"
     ledger_path = run_dir / "calls_ledger.jsonl"
@@ -716,11 +783,35 @@ def _run_arm(arm: str, rows: Sequence[Mapping[str, str]], transport: Any,
     }
 
 
-def execute(project_env: bool = False, *, transport_factory: Any = None) -> dict[str, Any]:
-    budget = _load_budget()
+def execute(
+    project_env: bool = False,
+    *,
+    transport_factory: Any = None,
+    arms: Sequence[str] | None = None,
+    out_dir: Path | None = None,
+    budget_path: Path | None = None,
+    planned_calls: int | None = None,
+    call_cap: int | None = None,
+    samples_per_arm: int | None = None,
+    result_writer: Any = None,
+) -> dict[str, Any]:
+    run_arms = tuple(arms or ARMS)
+    run_out_dir = Path(out_dir or OUT_DIR)
+    run_budget_path = Path(budget_path or BUDGET_PATH)
+    run_planned = PLANNED_CALLS if planned_calls is None else int(planned_calls)
+    run_call_cap = CALL_CAP if call_cap is None else int(call_cap)
+    run_samples = SAMPLES_PER_ARM if samples_per_arm is None else int(samples_per_arm)
+    for arm in run_arms:
+        _prompt(arm)
+
+    budget = _load_budget(
+        run_budget_path,
+        planned_calls=run_planned,
+        call_cap=run_call_cap,
+    )
     gold_doc = _read_json(FORMAL_GOLD)
     gate = AblationBudgetGate(budget, MODEL_ALIAS)
-    _restore_gate(gate)
+    _restore_gate(gate, arms=run_arms, out_dir=run_out_dir)
 
     real = transport_factory is None
     if real:
@@ -738,14 +829,16 @@ def execute(project_env: bool = False, *, transport_factory: Any = None) -> dict
     else:
         config = None
 
+    input_rows = samples(run_samples)
     result: dict[str, Any] = {
-        "schema_version": "sep_c3_modular_ablation_execution@1.0.0",
-        "planned_calls": PLANNED_CALLS,
-        "call_cap": CALL_CAP,
+        "schema_version": "sep_c3_modular_ablation_execution@1.1.0",
+        "planned_calls": run_planned,
+        "call_cap": run_call_cap,
         "actual_calls": 0,
         "completed_samples": 0,
         "aborted": False,
         "runs": [],
+        "arms": list(run_arms),
         "model": {
             "id": MODEL_ALIAS,
             "documented_release": MODEL_RELEASE,
@@ -759,14 +852,15 @@ def execute(project_env: bool = False, *, transport_factory: Any = None) -> dict
     }
     started = time.time()
     try:
-        for arm in ARMS:
+        for arm in run_arms:
             run = _run_arm(
                 arm,
-                samples(),
+                input_rows,
                 transport_factory(),
                 gate,
                 budget,
                 gold_doc,
+                out_dir=run_out_dir,
             )
             manifest = run["manifest"]
             result["actual_calls"] += manifest["actual_call_count"]
@@ -792,14 +886,17 @@ def execute(project_env: bool = False, *, transport_factory: Any = None) -> dict
     result["runtime_seconds"] = round(time.time() - started, 3)
     result["complete"] = (
         not result["aborted"]
-        and result["completed_samples"] == PLANNED_CALLS
-        and gate.calls_made == PLANNED_CALLS
-        and len(result["runs"]) == len(ARMS)
+        and result["completed_samples"] == run_planned
+        and gate.calls_made == run_planned
+        and len(result["runs"]) == len(run_arms)
     )
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    _write_json(OUT_DIR / "execution_summary.json", result)
+    run_out_dir.mkdir(parents=True, exist_ok=True)
+    _write_json(run_out_dir / "execution_summary.json", result)
     if result["complete"]:
-        _write_result_report(result)
+        if result_writer is not None:
+            result_writer(result)
+        else:
+            _write_result_report(result)
     return result
 
 

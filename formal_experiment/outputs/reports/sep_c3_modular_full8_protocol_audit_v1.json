@@ -1,0 +1,403 @@
+{
+  "schema_version": "sep_c3_modular_full8_protocol_audit@1.0.0",
+  "generated_at_utc": "2026-09-17T09:04:26.689274+00:00",
+  "network_calls": 0,
+  "status": "pass",
+  "suite_id": "SEP-C3-MODULAR-ESJ-002",
+  "combination_order": [
+    "E",
+    "S",
+    "J"
+  ],
+  "bit_semantics": {
+    "E": "synthetic worked examples (user-prompt module)",
+    "S": "semantic interpretation rules (system-prompt module)",
+    "J": "output organization / JSON discipline (system-prompt module)"
+  },
+  "existing_arms_esj": [
+    "111",
+    "011",
+    "101",
+    "110"
+  ],
+  "new_arms_esj": [
+    "000",
+    "001",
+    "010",
+    "100"
+  ],
+  "full_factorial_arms_esj": [
+    "111",
+    "011",
+    "101",
+    "110",
+    "100",
+    "010",
+    "001",
+    "000"
+  ],
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "provider": "openai_compatible"
+  },
+  "inference_parameters": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null
+  },
+  "denominator": 150,
+  "data_binding": {
+    "input_path": "data/input/estg150_formal_inference_input_v2.json",
+    "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+    "reconstruction_dataset_id": "independently_reconstructed_estg_150_v1"
+  },
+  "prompt_binding": {
+    "prompt_family": "direct_llm_modular_v1",
+    "generated_manifest": "prompts/sun_compat/modular_v1/generated/manifest.json",
+    "generated_manifest_sha256": "fec71111b3edcd20d15777878e44b110d73fcc558591426b39d8e7c6210e0dd9",
+    "common_source_sha256": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6"
+  },
+  "evaluator_binding": {
+    "coarse_metric_module": "src/bpc_hybrid/sep_c3_modular_evaluation.py",
+    "coarse_metric_sha256": "31363c2e0bad27ebbe2b9e1fa56b5aae3cbe2e1e5c12204627e173a8db8b5330",
+    "frozen_evaluator_module": "src/bpc_hybrid/stage2_sun_literal_overlap.py",
+    "frozen_evaluator_sha256": "a6df234611ef63ab9d47a3d5e886c3a711ccce8c6e5d8e164e42826bef978de7",
+    "primary_metric": "coarse_five_field_mean_f1",
+    "postprocessing_version": "d1_schema_adapter + span_canonicalizer current implementation; same call path as the original four cells"
+  },
+  "variants": [
+    {
+      "variant": "111",
+      "flags": {
+        "E": true,
+        "S": true,
+        "J": true
+      },
+      "prompt_family": "direct_llm_modular_v1",
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_111_v1.md",
+      "generated_prompt_sha256": "38144b7525c9ffddd001a276f6533ac4c35060b7917ae363e56a11c25824e1f3",
+      "composition_sha256": "ba1d43367f26d6c04f77603b06cc413836517e9388adb745664cffe357851f4b",
+      "common_source_sha256": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+      "module_source_hashes": {
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "S": "60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b",
+        "J": "cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523"
+      },
+      "system_sha256": "807b16d20a102b7fadd32a402073b2921cb4a4b490ed1baaba9a9c043a161dca",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "errors": []
+    },
+    {
+      "variant": "011",
+      "flags": {
+        "E": false,
+        "S": true,
+        "J": true
+      },
+      "prompt_family": "direct_llm_modular_v1",
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_011_v1.md",
+      "generated_prompt_sha256": "d71fd965458cc0de8b4d4c5921ad3f905ed3c4b7cdc8ea70ff7955c43d042136",
+      "composition_sha256": "90ccb9d4c27f0df8189673a7680450d396e17bc339343fa4a787b91d81922f5c",
+      "common_source_sha256": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+      "module_source_hashes": {
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "S": "60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b",
+        "J": "cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523"
+      },
+      "system_sha256": "807b16d20a102b7fadd32a402073b2921cb4a4b490ed1baaba9a9c043a161dca",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "errors": []
+    },
+    {
+      "variant": "101",
+      "flags": {
+        "E": true,
+        "S": false,
+        "J": true
+      },
+      "prompt_family": "direct_llm_modular_v1",
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_101_v1.md",
+      "generated_prompt_sha256": "00f0ea3fc2ddf2ef7c765a83f05aa4f64eeba89966a2010c8e3a05151a111891",
+      "composition_sha256": "80ea7d847fc4bcc936d920525dc9b306fd413cc2f2f9fb3fca1416d97e3c780b",
+      "common_source_sha256": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+      "module_source_hashes": {
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "S": "60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b",
+        "J": "cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523"
+      },
+      "system_sha256": "9ac6b84edcce623b5353fe07b9d9c1ee5ad3867ccfe7c7ad2b41c54f787697d4",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "errors": []
+    },
+    {
+      "variant": "110",
+      "flags": {
+        "E": true,
+        "S": true,
+        "J": false
+      },
+      "prompt_family": "direct_llm_modular_v1",
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_110_v1.md",
+      "generated_prompt_sha256": "75ce93f718a7d24962a33cef95a91515261d3a69789d64d4728a838670962fd9",
+      "composition_sha256": "66ac250676b59671182196a706f8249b5e822f22f0f4033cab191a31a1d53082",
+      "common_source_sha256": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+      "module_source_hashes": {
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "S": "60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b",
+        "J": "cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523"
+      },
+      "system_sha256": "92a53a213570879e512ac7521339a55bbfaca0e130eef7ff576b748fba6cb366",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "errors": []
+    },
+    {
+      "variant": "100",
+      "flags": {
+        "E": true,
+        "S": false,
+        "J": false
+      },
+      "prompt_family": "direct_llm_modular_v1",
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_100_v1.md",
+      "generated_prompt_sha256": "9ce3502ea56c14a58bb39d87ab7b7023c5aca51b65909a515c0244601a5b7fee",
+      "composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418",
+      "common_source_sha256": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+      "module_source_hashes": {
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "S": "60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b",
+        "J": "cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523"
+      },
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "errors": []
+    },
+    {
+      "variant": "010",
+      "flags": {
+        "E": false,
+        "S": true,
+        "J": false
+      },
+      "prompt_family": "direct_llm_modular_v1",
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_010_v1.md",
+      "generated_prompt_sha256": "de3e33eeec7bedd22bb4df195c8353b15f6ef67dca2f4bd911ee5053cb403305",
+      "composition_sha256": "3ebbd9edc657f7f58a6ba3099855373efeeb33a4f160ae643ecdd1cc8ef5b898",
+      "common_source_sha256": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+      "module_source_hashes": {
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "S": "60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b",
+        "J": "cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523"
+      },
+      "system_sha256": "92a53a213570879e512ac7521339a55bbfaca0e130eef7ff576b748fba6cb366",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "errors": []
+    },
+    {
+      "variant": "001",
+      "flags": {
+        "E": false,
+        "S": false,
+        "J": true
+      },
+      "prompt_family": "direct_llm_modular_v1",
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_001_v1.md",
+      "generated_prompt_sha256": "f03d5ad274df8e64b0c555559a412e09e56c59afa3e5ab39693088ebc010913c",
+      "composition_sha256": "7e00e998e4a09dac54f61f7bf899bb6b3b5437ab94232f4fe897bcf35e6bcc23",
+      "common_source_sha256": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+      "module_source_hashes": {
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "S": "60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b",
+        "J": "cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523"
+      },
+      "system_sha256": "9ac6b84edcce623b5353fe07b9d9c1ee5ad3867ccfe7c7ad2b41c54f787697d4",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "errors": []
+    },
+    {
+      "variant": "000",
+      "flags": {
+        "E": false,
+        "S": false,
+        "J": false
+      },
+      "prompt_family": "direct_llm_modular_v1",
+      "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_000_v1.md",
+      "generated_prompt_sha256": "45bb324dd1143e1f920e9f8935ed8ecda98c8ebe5a1442ec10f9843b50abdefa",
+      "composition_sha256": "c419c56b661c85cdfc090fbf3824f8b33662a2b835f4b637d7daeaef5ad89d77",
+      "common_source_sha256": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+      "module_source_hashes": {
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "S": "60b8162a5038f3f44ae01f31eed2ba428b0eae481de02fa2616ee29ac775ca5b",
+        "J": "cf7ed652fb08742e89f593a2ac115ac522d26dba2a8f2218a132683c17000523"
+      },
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+      "errors": []
+    }
+  ],
+  "existing_arm_bindings": {
+    "111": {
+      "variant": "111",
+      "status": "existing_executed",
+      "binding": "original_execution_binding",
+      "evidence_manifest_path": "outputs/evidence/sep_c3_modular_ablation_v1/arms/111/manifest.json",
+      "evidence_evaluation_path": "outputs/evidence/sep_c3_modular_ablation_v1/arms/111/evaluation.json",
+      "manifest_sha256": "11935483ca6a9d6ee26fb4ec472a3e4d39721fd09fd665b6817c1e26edd12eb5",
+      "evaluation_sha256": "ee03859e3cdf116f0eaf243a32efa4e5f66b3e88fc11efd2ab98169b31564fbe",
+      "actual_call_count": 91,
+      "resumed_completed_count": 59,
+      "failed_count": 0,
+      "denominator": 150,
+      "prompt_hashes": {
+        "system_sha256": "807b16d20a102b7fadd32a402073b2921cb4a4b490ed1baaba9a9c043a161dca",
+        "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+        "composition_sha256": "ba1d43367f26d6c04f77603b06cc413836517e9388adb745664cffe357851f4b",
+        "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_111_v1.md",
+        "generated_prompt_sha256": "38144b7525c9ffddd001a276f6533ac4c35060b7917ae363e56a11c25824e1f3"
+      }
+    },
+    "011": {
+      "variant": "011",
+      "status": "existing_executed",
+      "binding": "original_execution_binding",
+      "evidence_manifest_path": "outputs/evidence/sep_c3_modular_ablation_v1/arms/011/manifest.json",
+      "evidence_evaluation_path": "outputs/evidence/sep_c3_modular_ablation_v1/arms/011/evaluation.json",
+      "manifest_sha256": "039a9c90f49191e421969775de3b4a396efdbe32023f4a029c140f6c9f976c68",
+      "evaluation_sha256": "1006999daf1ed57910ed19a64134887263d8271e072c38e29aca58c99f0e8898",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "prompt_hashes": {
+        "system_sha256": "807b16d20a102b7fadd32a402073b2921cb4a4b490ed1baaba9a9c043a161dca",
+        "user_sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338",
+        "composition_sha256": "90ccb9d4c27f0df8189673a7680450d396e17bc339343fa4a787b91d81922f5c",
+        "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_011_v1.md",
+        "generated_prompt_sha256": "d71fd965458cc0de8b4d4c5921ad3f905ed3c4b7cdc8ea70ff7955c43d042136"
+      }
+    },
+    "101": {
+      "variant": "101",
+      "status": "existing_executed",
+      "binding": "original_execution_binding",
+      "evidence_manifest_path": "outputs/evidence/sep_c3_modular_ablation_v1/arms/101/manifest.json",
+      "evidence_evaluation_path": "outputs/evidence/sep_c3_modular_ablation_v1/arms/101/evaluation.json",
+      "manifest_sha256": "453276c52a50c5e4bae8b6c698244c72223dcf42e519410b35169506a1746913",
+      "evaluation_sha256": "a2a804ec7cc32e26804fc67a1b53b0ca474ff1da129b7eb20650dd932ce448f6",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "prompt_hashes": {
+        "system_sha256": "9ac6b84edcce623b5353fe07b9d9c1ee5ad3867ccfe7c7ad2b41c54f787697d4",
+        "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+        "composition_sha256": "80ea7d847fc4bcc936d920525dc9b306fd413cc2f2f9fb3fca1416d97e3c780b",
+        "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_101_v1.md",
+        "generated_prompt_sha256": "00f0ea3fc2ddf2ef7c765a83f05aa4f64eeba89966a2010c8e3a05151a111891"
+      }
+    },
+    "110": {
+      "variant": "110",
+      "status": "existing_executed",
+      "binding": "original_execution_binding",
+      "evidence_manifest_path": "outputs/evidence/sep_c3_modular_ablation_v1/arms/110/manifest.json",
+      "evidence_evaluation_path": "outputs/evidence/sep_c3_modular_ablation_v1/arms/110/evaluation.json",
+      "manifest_sha256": "7d9774a962d614ca891425bb2159e46d8cd6effd05ffc974e6e5ac4ae08f9311",
+      "evaluation_sha256": "d688776b94fd5914e05b6f2a294dcea2a489cfca247e26330d5951b0ce450e08",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "denominator": 150,
+      "prompt_hashes": {
+        "system_sha256": "92a53a213570879e512ac7521339a55bbfaca0e130eef7ff576b748fba6cb366",
+        "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+        "composition_sha256": "66ac250676b59671182196a706f8249b5e822f22f0f4033cab191a31a1d53082",
+        "generated_prompt_path": "prompts/sun_compat/modular_v1/generated/direct_llm_modular_110_v1.md",
+        "generated_prompt_sha256": "75ce93f718a7d24962a33cef95a91515261d3a69789d64d4728a838670962fd9"
+      }
+    }
+  },
+  "new_arm_bindings": {
+    "000": {
+      "variant": "000",
+      "status": "prepared_not_run",
+      "binding": "current_implementation_binding",
+      "planned_run_dir": "outputs/development/sep_c3_modular_ablation_v2/000/repeat-01",
+      "planned_raw_responses": "outputs/development/sep_c3_modular_ablation_v2/000/repeat-01/raw_responses.jsonl",
+      "planned_manifest": "outputs/development/sep_c3_modular_ablation_v2/000/repeat-01/manifest.json",
+      "denominator": 150,
+      "prompt_sha256": "45bb324dd1143e1f920e9f8935ed8ecda98c8ebe5a1442ec10f9843b50abdefa",
+      "composition_sha256": "c419c56b661c85cdfc090fbf3824f8b33662a2b835f4b637d7daeaef5ad89d77"
+    },
+    "001": {
+      "variant": "001",
+      "status": "prepared_not_run",
+      "binding": "current_implementation_binding",
+      "planned_run_dir": "outputs/development/sep_c3_modular_ablation_v2/001/repeat-01",
+      "planned_raw_responses": "outputs/development/sep_c3_modular_ablation_v2/001/repeat-01/raw_responses.jsonl",
+      "planned_manifest": "outputs/development/sep_c3_modular_ablation_v2/001/repeat-01/manifest.json",
+      "denominator": 150,
+      "prompt_sha256": "f03d5ad274df8e64b0c555559a412e09e56c59afa3e5ab39693088ebc010913c",
+      "composition_sha256": "7e00e998e4a09dac54f61f7bf899bb6b3b5437ab94232f4fe897bcf35e6bcc23"
+    },
+    "010": {
+      "variant": "010",
+      "status": "prepared_not_run",
+      "binding": "current_implementation_binding",
+      "planned_run_dir": "outputs/development/sep_c3_modular_ablation_v2/010/repeat-01",
+      "planned_raw_responses": "outputs/development/sep_c3_modular_ablation_v2/010/repeat-01/raw_responses.jsonl",
+      "planned_manifest": "outputs/development/sep_c3_modular_ablation_v2/010/repeat-01/manifest.json",
+      "denominator": 150,
+      "prompt_sha256": "de3e33eeec7bedd22bb4df195c8353b15f6ef67dca2f4bd911ee5053cb403305",
+      "composition_sha256": "3ebbd9edc657f7f58a6ba3099855373efeeb33a4f160ae643ecdd1cc8ef5b898"
+    },
+    "100": {
+      "variant": "100",
+      "status": "prepared_not_run",
+      "binding": "current_implementation_binding",
+      "planned_run_dir": "outputs/development/sep_c3_modular_ablation_v2/100/repeat-01",
+      "planned_raw_responses": "outputs/development/sep_c3_modular_ablation_v2/100/repeat-01/raw_responses.jsonl",
+      "planned_manifest": "outputs/development/sep_c3_modular_ablation_v2/100/repeat-01/manifest.json",
+      "denominator": 150,
+      "prompt_sha256": "9ce3502ea56c14a58bb39d87ab7b7023c5aca51b65909a515c0244601a5b7fee",
+      "composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418"
+    }
+  },
+  "consistency": {
+    "checks": {
+      "eight_variants_present": true,
+      "all_prompt_audits_clean": true,
+      "flags_match_esj_bits": true,
+      "common_skeleton_identical": true,
+      "eight_composition_hashes_distinct": true,
+      "eight_generated_prompt_hashes_distinct": true,
+      "four_existing_prompt_bindings_match_current": true,
+      "new_output_dir_differs_from_v1": true,
+      "new_report_paths_differ_from_v1": true,
+      "input_hash_bound": true,
+      "gold_hash_bound": true,
+      "evaluator_hash_bound": true,
+      "denominator_preserved": true
+    },
+    "existing_prompt_match": {
+      "111": true,
+      "011": true,
+      "101": true,
+      "110": true
+    }
+  },
+  "warnings": [
+    "The original 111/011/101/110 cells were executed in the earlier SEP-C3-MODULAR-ESJ-001 batch; 000/001/010/100 will be a later incremental batch. Model/release/prompt/evaluator settings are matched, but batch/time is confounded with the factorial cells if the eight cells are pooled without acknowledging this.",
+    "The original 111 arm row was persisted across a process resume (59 durable rows reused, 91 new sends); the suite manifest records 150/150 total attempts and zero duplicate sample sends.",
+    "The four existing cells are original execution binding. The four new cells are current implementation binding. No historical result file was rewritten by this audit."
+  ]
+}

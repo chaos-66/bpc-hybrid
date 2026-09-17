@@ -4933,3 +4933,17 @@
 - 仍存在 blocker：无
 - 备注：600 real Direct-LLM calls; reuses old-v6 D-full-0813 0813 baseline; full 111 coarse five-field mean F1 0.7262 vs old 0.7850, 011/101/110 all higher or insufficient; old v6 remains default.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-17T09:03:52.180440+00:00 - SEP-C3 full 2^3 E/S/J ablation preparation: add missing 000/001/010/100 incremental runner wrapper, v2 budget, offline check, full8 protocol audit, and focused tests; zero API calls and no overwrite of v1 results
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：21 passed in 1.80s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`5b6be1e40efb9a6ce586551a68ae505f2d6ff07b`；相关未提交路径：25 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Frozen Gold is read read-only by the existing deterministic evaluator/offline check; no Gold content was modified. No real API call was made.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
