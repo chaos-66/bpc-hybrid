@@ -1,0 +1,553 @@
+{
+  "schema_version": "sep_c4_constraint_failure_localization@1.0.0",
+  "revision": "sep_c4_constraint_failure_localization_v1",
+  "generated_utc": "2026-09-17T02:16:35.259796+00:00",
+  "scope": "development_only_synthetic_controlled_panel_40_pairs",
+  "baseline_name": "Winter-style four-type extension baseline (not a direct Winter paper result)",
+  "method_under_review": "s3_semantic_grounding_v5 deterministic frozen predictions",
+  "inputs": {
+    "c36_target_paired_report_v2": {
+      "path": "outputs/reports/s3_c36_target_paired_v2.json",
+      "sha256": "d4679e06498c73dd29952720ab0a91f71f368f0195bc8220b1a4415beefbb889"
+    },
+    "c36_target_paired_checks_v2": {
+      "path": "outputs/evidence/s3_c36_target_paired_v2/c36_winter_target_paired_checks.jsonl",
+      "sha256": "0a818244317eed6aa9ee66f1a43fd69406be40b4d78d2961608b335dcfe00830"
+    },
+    "v5_predictions": {
+      "path": "outputs/evidence/s3_semantic_grounding_v5/predictions.jsonl",
+      "sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b"
+    },
+    "synthetic_panel_v2": {
+      "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+      "sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81"
+    },
+    "constraint_checker": {
+      "path": "src/bpc_hybrid/s3_semantic_grounding_v1.py",
+      "sha256": "ea1907479ea02611582fe3c1adf7295a4354f2f395979e259cfc5a2dbde49983"
+    },
+    "exception_checker": {
+      "path": "src/bpc_hybrid/s3_semantic_grounding_v1.py",
+      "sha256": "ea1907479ea02611582fe3c1adf7295a4354f2f395979e259cfc5a2dbde49983"
+    },
+    "action_anchor_guard": {
+      "path": "src/bpc_hybrid/s3_semantic_grounding_v5.py",
+      "sha256": "dc3b931a79a9f8aa44d58b6c7c74b68d907ad8de8cf6e3770b5d0b05bfff5507"
+    }
+  },
+  "summary": {
+    "baseline": {
+      "TP": 6,
+      "FN_observed_negative": 0,
+      "FN_unknown": 4,
+      "F1": 0.75
+    },
+    "current_v5": {
+      "TP": 2,
+      "FN_observed_negative": 0,
+      "FN_unknown": 8,
+      "F1": 0.3333
+    }
+  },
+  "root_cause_counts": {
+    "action_mapping_or_scope_error_contributing": 8,
+    "time_quantity_interpretation_error": 0,
+    "bpmn_variant_does_not_express_required_constraint_evidence": 8,
+    "evaluation_target_or_reference_correspondence_ambiguity": 8,
+    "unsupported_abstract_constraint_kind_by_config": 8
+  },
+  "cases": [
+    {
+      "item_id": "syn_v2_constraint_violated_01",
+      "mutation_sub_kind": "timer",
+      "rule_id": "article33",
+      "process_id": "gdpr_1_data_breach",
+      "sentence_idx": 0,
+      "rule_constraint": "not later than 72 hours",
+      "rule_action": "notify the personal data breach",
+      "variant_equals_source_bytes": false,
+      "control_equals_source_bytes": true,
+      "target_activity_id_in_mutation_config": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "action_grounding": {
+        "status": "resolved",
+        "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+        "resolved_label": "Retrieve breached data",
+        "action_match": false,
+        "anchor_valid": true,
+        "anchor_reason": "resolved_label_is_action_consistent"
+      },
+      "current_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": "explicit_numeric_time_bound_exceeds_rule_limit",
+        "constraint_kind": null,
+        "score": 1.0,
+        "evidence": [
+          {
+            "evidence": {
+              "id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+              "kind": "subProcess",
+              "relation": "action_anchored_node_time",
+              "text": "7 days"
+            },
+            "hours": 168,
+            "value": "7 days"
+          }
+        ],
+        "rule_bound": {
+          "hours": 72,
+          "unit": "hour",
+          "value": "not later than 72 hours"
+        }
+      },
+      "baseline_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "constraint_violated",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "explicit_numeric_time_bound_exceeds_rule_limit",
+        "violation_type": "constraint_violated"
+      },
+      "root_cause_primary": "none_current_tp_numeric_timer_contradiction",
+      "contributing_factors": [
+        "rule_action_grounding_not_action_consistent"
+      ]
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_02",
+      "mutation_sub_kind": "timer",
+      "rule_id": "article33",
+      "process_id": "gdpr_1_data_breach",
+      "sentence_idx": 1,
+      "rule_constraint": "within 72 hours",
+      "rule_action": "accompanied by reasons for the delay",
+      "variant_equals_source_bytes": false,
+      "control_equals_source_bytes": true,
+      "target_activity_id_in_mutation_config": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+      "action_grounding": {
+        "status": "resolved",
+        "activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+        "resolved_label": "Handle delay",
+        "action_match": false,
+        "anchor_valid": true,
+        "anchor_reason": "resolved_label_is_action_consistent"
+      },
+      "current_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": "explicit_numeric_time_bound_exceeds_rule_limit",
+        "constraint_kind": null,
+        "score": 1.0,
+        "evidence": [
+          {
+            "evidence": {
+              "id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+              "kind": "subProcess",
+              "relation": "action_anchored_node_time",
+              "text": "30 days"
+            },
+            "hours": 720,
+            "value": "30 days"
+          }
+        ],
+        "rule_bound": {
+          "hours": 72,
+          "unit": "hour",
+          "value": "within 72 hours"
+        }
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_mapping_below_gamma"
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "constraint_violated",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "explicit_numeric_time_bound_exceeds_rule_limit",
+        "violation_type": "constraint_violated"
+      },
+      "root_cause_primary": "none_current_tp_numeric_timer_contradiction",
+      "contributing_factors": [
+        "rule_action_grounding_not_action_consistent"
+      ]
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_03",
+      "mutation_sub_kind": "annotation",
+      "rule_id": "article16",
+      "process_id": "gdpr_6_right_to_rectify",
+      "sentence_idx": 0,
+      "rule_constraint": "without undue delay",
+      "rule_action": "have the right to obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+      "action_grounding": {
+        "status": "resolved",
+        "activity_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+        "resolved_label": "Communicate the rectification",
+        "action_match": false,
+        "anchor_valid": true,
+        "anchor_reason": "resolved_label_is_action_consistent"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "unsupported_abstract_constraint_kind",
+        "constraint_kind": "timeliness",
+        "score": null,
+        "evidence": null,
+        "rule_bound": null
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_mapping_below_gamma"
+      },
+      "final_decision": {
+        "decision": "abstention",
+        "pending_types": [
+          "constraint_violated"
+        ],
+        "predicted": null,
+        "reason": "semantic_grounding_ambiguous"
+      },
+      "root_cause_primary": "bpmn_variant_does_not_express_abstract_constraint_evidence",
+      "contributing_factors": [
+        "unsupported_abstract_constraint_kind_by_config",
+        "rule_action_grounding_not_action_consistent"
+      ]
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_04",
+      "mutation_sub_kind": "annotation",
+      "rule_id": "article34",
+      "process_id": "gdpr_1_data_breach",
+      "sentence_idx": 0,
+      "rule_constraint": "without undue delay",
+      "rule_action": "communicate the personal data breach",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "action_grounding": {
+        "status": "resolved",
+        "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+        "resolved_label": "Retrieve breached data",
+        "action_match": false,
+        "anchor_valid": true,
+        "anchor_reason": "resolved_label_is_action_consistent"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "unsupported_abstract_constraint_kind",
+        "constraint_kind": "timeliness",
+        "score": null,
+        "evidence": null,
+        "rule_bound": null
+      },
+      "baseline_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "required_condition_not_enforced",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+        "violation_type": "required_condition_not_enforced"
+      },
+      "root_cause_primary": "bpmn_variant_does_not_express_abstract_constraint_evidence",
+      "contributing_factors": [
+        "unsupported_abstract_constraint_kind_by_config",
+        "rule_action_grounding_not_action_consistent"
+      ]
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_05",
+      "mutation_sub_kind": "annotation",
+      "rule_id": "article17",
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "sentence_idx": 0,
+      "rule_constraint": "without undue delay",
+      "rule_action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+      "action_grounding": {
+        "status": "resolved",
+        "activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+        "resolved_label": "Communication with data subject",
+        "action_match": false,
+        "anchor_valid": true,
+        "anchor_reason": "resolved_label_is_action_consistent"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "unsupported_abstract_constraint_kind",
+        "constraint_kind": "timeliness",
+        "score": null,
+        "evidence": null,
+        "rule_bound": null
+      },
+      "baseline_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "required_condition_not_enforced",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+        "violation_type": "required_condition_not_enforced"
+      },
+      "root_cause_primary": "bpmn_variant_does_not_express_abstract_constraint_evidence",
+      "contributing_factors": [
+        "unsupported_abstract_constraint_kind_by_config",
+        "rule_action_grounding_not_action_consistent"
+      ]
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_06",
+      "mutation_sub_kind": "annotation",
+      "rule_id": "article17",
+      "process_id": "gdpr_4_right_of_portability",
+      "sentence_idx": 0,
+      "rule_constraint": "without undue delay",
+      "rule_action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "action_grounding": {
+        "status": "resolved",
+        "activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+        "resolved_label": "Retrieve available data of the data subject",
+        "action_match": false,
+        "anchor_valid": true,
+        "anchor_reason": "resolved_label_is_action_consistent"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "unsupported_abstract_constraint_kind",
+        "constraint_kind": "timeliness",
+        "score": null,
+        "evidence": null,
+        "rule_bound": null
+      },
+      "baseline_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "required_condition_not_enforced",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+        "violation_type": "required_condition_not_enforced"
+      },
+      "root_cause_primary": "bpmn_variant_does_not_express_abstract_constraint_evidence",
+      "contributing_factors": [
+        "unsupported_abstract_constraint_kind_by_config",
+        "rule_action_grounding_not_action_consistent"
+      ]
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_07",
+      "mutation_sub_kind": "annotation",
+      "rule_id": "article20",
+      "process_id": "gdpr_3_right_to_access",
+      "sentence_idx": 0,
+      "rule_constraint": "without hindrance",
+      "rule_action": "have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided , where the processing is based on consent pursuant to point ( a ) of Article 6(1 ) or point ( a ) of Article 9(2 ) or",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "action_grounding": {
+        "status": "ambiguous",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "unsupported_abstract_constraint_kind",
+        "constraint_kind": "restriction",
+        "score": null,
+        "evidence": null,
+        "rule_bound": null
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_mapping_below_gamma"
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "required_condition_not_enforced",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+        "violation_type": "required_condition_not_enforced"
+      },
+      "root_cause_primary": "bpmn_variant_does_not_express_abstract_constraint_evidence",
+      "contributing_factors": [
+        "unsupported_abstract_constraint_kind_by_config",
+        "rule_action_grounding_not_action_consistent"
+      ]
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_08",
+      "mutation_sub_kind": "dataobject",
+      "rule_id": "article20",
+      "process_id": "gdpr_4_right_of_portability",
+      "sentence_idx": 0,
+      "rule_constraint": "without hindrance",
+      "rule_action": "have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided , where the processing is based on consent pursuant to point ( a ) of Article 6(1 ) or point ( a ) of Article 9(2 ) or",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "action_grounding": {
+        "status": "ambiguous",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "unsupported_abstract_constraint_kind",
+        "constraint_kind": "restriction",
+        "score": null,
+        "evidence": null,
+        "rule_bound": null
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_mapping_below_gamma"
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "required_condition_not_enforced",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+        "violation_type": "required_condition_not_enforced"
+      },
+      "root_cause_primary": "bpmn_variant_does_not_express_abstract_constraint_evidence",
+      "contributing_factors": [
+        "unsupported_abstract_constraint_kind_by_config",
+        "rule_action_grounding_not_action_consistent"
+      ]
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_09",
+      "mutation_sub_kind": "dataobject",
+      "rule_id": "article17",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "sentence_idx": 0,
+      "rule_constraint": "without undue delay",
+      "rule_action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "action_grounding": {
+        "status": "ambiguous",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "unsupported_abstract_constraint_kind",
+        "constraint_kind": "timeliness",
+        "score": null,
+        "evidence": null,
+        "rule_bound": null
+      },
+      "baseline_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "abstention",
+        "pending_types": [
+          "required_condition_not_enforced",
+          "constraint_violated"
+        ],
+        "predicted": null,
+        "reason": "semantic_grounding_ambiguous"
+      },
+      "root_cause_primary": "bpmn_variant_does_not_express_abstract_constraint_evidence",
+      "contributing_factors": [
+        "unsupported_abstract_constraint_kind_by_config",
+        "rule_action_grounding_not_action_consistent"
+      ]
+    },
+    {
+      "item_id": "syn_v2_constraint_violated_10",
+      "mutation_sub_kind": "dataobject",
+      "rule_id": "article7",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "sentence_idx": 1,
+      "rule_constraint": "clear and plain language",
+      "rule_action": "presented in a manner which is clearly distinguishable from the other matters",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-84724963-837C-4BDB-80FC-61877E2077AA",
+      "action_grounding": {
+        "status": "ambiguous",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "unsupported_abstract_constraint_kind",
+        "constraint_kind": "form",
+        "score": null,
+        "evidence": null,
+        "rule_bound": null
+      },
+      "baseline_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "required_condition_not_enforced",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+        "violation_type": "required_condition_not_enforced"
+      },
+      "root_cause_primary": "bpmn_variant_does_not_express_abstract_constraint_evidence",
+      "contributing_factors": [
+        "unsupported_abstract_constraint_kind_by_config",
+        "rule_action_grounding_not_action_consistent"
+      ]
+    }
+  ],
+  "conclusion": "The eight non-time-limit constraint failures are expected fail-closed unknowns: v1 config supports time_limit only and explicitly prohibits deterministic similarity verdicts for abstract constraints. All eight also have non-action-consistent rule-action grounding, but fixing action grounding alone would not remove the abstract-kind gate. Cases 01-02 are explicit numeric timer contradictions and are correctly violated. No code, threshold, Gold, sample, or historical prediction change is justified by this evidence."
+}
