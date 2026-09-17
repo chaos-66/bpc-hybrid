@@ -1,0 +1,505 @@
+{
+  "schema_version": "sep_c4_exception_failure_localization@1.0.0",
+  "revision": "sep_c4_exception_failure_localization_v1",
+  "generated_utc": "2026-09-17T02:16:35.259883+00:00",
+  "scope": "development_only_synthetic_controlled_panel_40_pairs",
+  "baseline_name": "Winter-style four-type extension baseline (not a direct Winter paper result)",
+  "method_under_review": "s3_semantic_grounding_v5 deterministic frozen predictions",
+  "inputs": {
+    "c36_target_paired_report_v2": {
+      "path": "outputs/reports/s3_c36_target_paired_v2.json",
+      "sha256": "d4679e06498c73dd29952720ab0a91f71f368f0195bc8220b1a4415beefbb889"
+    },
+    "c36_target_paired_checks_v2": {
+      "path": "outputs/evidence/s3_c36_target_paired_v2/c36_winter_target_paired_checks.jsonl",
+      "sha256": "0a818244317eed6aa9ee66f1a43fd69406be40b4d78d2961608b335dcfe00830"
+    },
+    "v5_predictions": {
+      "path": "outputs/evidence/s3_semantic_grounding_v5/predictions.jsonl",
+      "sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b"
+    },
+    "synthetic_panel_v2": {
+      "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+      "sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81"
+    },
+    "constraint_checker": {
+      "path": "src/bpc_hybrid/s3_semantic_grounding_v1.py",
+      "sha256": "ea1907479ea02611582fe3c1adf7295a4354f2f395979e259cfc5a2dbde49983"
+    },
+    "exception_checker": {
+      "path": "src/bpc_hybrid/s3_semantic_grounding_v1.py",
+      "sha256": "ea1907479ea02611582fe3c1adf7295a4354f2f395979e259cfc5a2dbde49983"
+    },
+    "action_anchor_guard": {
+      "path": "src/bpc_hybrid/s3_semantic_grounding_v5.py",
+      "sha256": "dc3b931a79a9f8aa44d58b6c7c74b68d907ad8de8cf6e3770b5d0b05bfff5507"
+    }
+  },
+  "summary": {
+    "baseline": {
+      "TP": 3,
+      "FN_observed_negative": 1,
+      "FN_unknown": 6,
+      "F1": 0.4615
+    },
+    "current_v5": {
+      "TP": 3,
+      "FN_observed_negative": 0,
+      "FN_unknown": 7,
+      "F1": 0.4615
+    }
+  },
+  "root_cause_counts": {
+    "exception_condition_confusion": 0,
+    "exception_scope_binding_error_contributing": 1,
+    "action_mapping_failure_contributing": 7,
+    "process_lacks_handler_evidence_but_action_not_bindable": 7,
+    "unknown_read_as_satisfied_or_violation_in_target_paired_check": 0
+  },
+  "cases": [
+    {
+      "item_id": "syn_v2_exception_not_handled_01",
+      "mutation_sub_kind": "boundary",
+      "rule_id": "article33",
+      "process_id": "gdpr_1_data_breach",
+      "sentence_idx": 0,
+      "rule_exception": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+      "rule_action": "notify the personal data breach",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "action_grounding": {
+        "status": "resolved",
+        "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+        "resolved_label": "Retrieve breached data",
+        "action_match": false,
+        "anchor_valid": true,
+        "anchor_reason": "resolved_label_is_action_consistent"
+      },
+      "current_check": {
+        "status": "not_handled",
+        "violation": true,
+        "reason": "no_structurally_relevant_handler_in_closed_downstream_surface",
+        "score": 1.0,
+        "handler_candidates": null
+      },
+      "baseline_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "exception_not_handled",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "no_structurally_relevant_handler_in_closed_downstream_surface",
+        "violation_type": "exception_not_handled"
+      },
+      "root_cause_primary": "none_current_tp_no_handler_with_resolved_action",
+      "contributing_factors": []
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_02",
+      "mutation_sub_kind": "boundary",
+      "rule_id": "article34",
+      "process_id": "gdpr_1_data_breach",
+      "sentence_idx": 2,
+      "rule_exception": "shall not be required if the controller has implemented appropriate technical and organisational protection measures",
+      "rule_action": "referred to",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "action_grounding": {
+        "status": "unresolved",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_grounding_unresolved",
+        "score": null,
+        "handler_candidates": null
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_mapping_below_gamma"
+      },
+      "final_decision": {
+        "decision": "abstention",
+        "pending_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "predicted": null,
+        "reason": "semantic_grounding_ambiguous"
+      },
+      "root_cause_primary": "rule_action_grounding_not_resolved_or_ambiguous",
+      "contributing_factors": [
+        "no_handler_in_variant_but_rule_action_not_bindable"
+      ]
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_03",
+      "mutation_sub_kind": "boundary",
+      "rule_id": "article34",
+      "process_id": "gdpr_1_data_breach",
+      "sentence_idx": 3,
+      "rule_exception": "shall not be required if the controller has taken subsequent measures which ensure that the high risk to the rights and freedoms of data subjects referred to in paragraph 1 is no longer likely to materialise",
+      "rule_action": "referred to",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+      "action_grounding": {
+        "status": "unresolved",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_grounding_unresolved",
+        "score": null,
+        "handler_candidates": null
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_mapping_below_gamma"
+      },
+      "final_decision": {
+        "decision": "abstention",
+        "pending_types": [
+          "prohibited_action_present",
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "predicted": null,
+        "reason": "semantic_grounding_ambiguous"
+      },
+      "root_cause_primary": "rule_action_grounding_not_resolved_or_ambiguous",
+      "contributing_factors": [
+        "no_handler_in_variant_but_rule_action_not_bindable"
+      ]
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_04",
+      "mutation_sub_kind": "boundary",
+      "rule_id": "article22",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "sentence_idx": 1,
+      "rule_exception": "shall not apply if the decision is necessary for entering into",
+      "rule_action": "apply",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+      "action_grounding": {
+        "status": "ambiguous",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "no_handler_and_action_grounding_ambiguous",
+        "score": null,
+        "handler_candidates": null
+      },
+      "baseline_check": {
+        "status": "negative",
+        "violation": false,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "abstention",
+        "pending_types": [
+          "required_condition_not_enforced",
+          "exception_not_handled"
+        ],
+        "predicted": null,
+        "reason": "semantic_grounding_ambiguous"
+      },
+      "root_cause_primary": "rule_action_grounding_not_resolved_or_ambiguous",
+      "contributing_factors": [
+        "no_handler_in_variant_but_rule_action_not_bindable"
+      ]
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_05",
+      "mutation_sub_kind": "boundary",
+      "rule_id": "article17",
+      "process_id": "gdpr_7_right_to_be_forgotten",
+      "sentence_idx": 8,
+      "rule_exception": "shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information",
+      "rule_action": "apply to the extent that processing is necessary for exercising the right of freedom of expression and information",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+      "action_grounding": {
+        "status": "resolved",
+        "activity_id": "sid-7E4D1233-F8F9-4883-9711-2B148DA4EF67",
+        "resolved_label": "Communication with data subject",
+        "action_match": false,
+        "anchor_valid": true,
+        "anchor_reason": "resolved_label_is_action_consistent"
+      },
+      "current_check": {
+        "status": "not_handled",
+        "violation": true,
+        "reason": "no_structurally_relevant_handler_in_closed_downstream_surface",
+        "score": 1.0,
+        "handler_candidates": null
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "no_exception_candidates"
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "exception_not_handled",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "no_structurally_relevant_handler_in_closed_downstream_surface",
+        "violation_type": "exception_not_handled"
+      },
+      "root_cause_primary": "none_current_tp_no_handler_with_resolved_action",
+      "contributing_factors": []
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_06",
+      "mutation_sub_kind": "branch",
+      "rule_id": "article33",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "sentence_idx": 0,
+      "rule_exception": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+      "rule_action": "notify the personal data breach",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-F4998816-41A2-476E-9C55-4E097F0388E4",
+      "action_grounding": {
+        "status": "ambiguous",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "dedicated_handler_candidate_exists_but_semantics_ambiguous",
+        "score": null,
+        "handler_candidates": [
+          {
+            "dedicated_handler_structure": true,
+            "id": "branch:sid-AF4FDEB5-D08E-4E25-B701-772A7C984A31",
+            "kind": "alternate_branch",
+            "text": "Withdraw aborted not continue"
+          }
+        ]
+      },
+      "baseline_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "abstention",
+        "pending_types": [
+          "required_condition_not_enforced",
+          "constraint_violated",
+          "exception_not_handled"
+        ],
+        "predicted": null,
+        "reason": "semantic_grounding_ambiguous"
+      },
+      "root_cause_primary": "rule_action_grounding_not_resolved_or_ambiguous",
+      "contributing_factors": [
+        "no_handler_in_variant_but_rule_action_not_bindable",
+        "unrelated_or_ambiguous_alternate_branch_candidate"
+      ]
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_07",
+      "mutation_sub_kind": "branch",
+      "rule_id": "article20",
+      "process_id": "gdpr_3_right_to_access",
+      "sentence_idx": 1,
+      "rule_exception": "where technically feasible",
+      "rule_action": "have the right to have the personal data transmitted directly from one controller to another , where technically feasible",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+      "action_grounding": {
+        "status": "ambiguous",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "no_handler_and_action_grounding_ambiguous",
+        "score": null,
+        "handler_candidates": null
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_mapping_below_gamma"
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "required_condition_not_enforced",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+        "violation_type": "required_condition_not_enforced"
+      },
+      "root_cause_primary": "rule_action_grounding_not_resolved_or_ambiguous",
+      "contributing_factors": [
+        "no_handler_in_variant_but_rule_action_not_bindable"
+      ]
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_08",
+      "mutation_sub_kind": "branch",
+      "rule_id": "article20",
+      "process_id": "gdpr_4_right_of_portability",
+      "sentence_idx": 1,
+      "rule_exception": "where technically feasible",
+      "rule_action": "have the right to have the personal data transmitted directly from one controller to another , where technically feasible",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+      "action_grounding": {
+        "status": "ambiguous",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "no_handler_and_action_grounding_ambiguous",
+        "score": null,
+        "handler_candidates": null
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_mapping_below_gamma"
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "required_condition_not_enforced",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+        "violation_type": "required_condition_not_enforced"
+      },
+      "root_cause_primary": "rule_action_grounding_not_resolved_or_ambiguous",
+      "contributing_factors": [
+        "no_handler_in_variant_but_rule_action_not_bindable"
+      ]
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_09",
+      "mutation_sub_kind": "branch",
+      "rule_id": "article20",
+      "process_id": "gdpr_6_right_to_rectify",
+      "sentence_idx": 1,
+      "rule_exception": "where technically feasible",
+      "rule_action": "have the right to have the personal data transmitted directly from one controller to another , where technically feasible",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "action_grounding": {
+        "status": "ambiguous",
+        "activity_id": null,
+        "resolved_label": "",
+        "action_match": false,
+        "anchor_valid": null,
+        "anchor_reason": "action_grounding_not_resolved"
+      },
+      "current_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "no_handler_and_action_grounding_ambiguous",
+        "score": null,
+        "handler_candidates": null
+      },
+      "baseline_check": {
+        "status": "unknown",
+        "violation": null,
+        "reason": "action_mapping_below_gamma"
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "required_condition_not_enforced",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+        "violation_type": "required_condition_not_enforced"
+      },
+      "root_cause_primary": "rule_action_grounding_not_resolved_or_ambiguous",
+      "contributing_factors": [
+        "no_handler_in_variant_but_rule_action_not_bindable"
+      ]
+    },
+    {
+      "item_id": "syn_v2_exception_not_handled_10",
+      "mutation_sub_kind": "branch",
+      "rule_id": "article15",
+      "process_id": "gdpr_3_right_to_access",
+      "sentence_idx": 11,
+      "rule_exception": "unless otherwise requested by the data subject",
+      "rule_action": "makes Where the request by electronic means",
+      "variant_equals_source_bytes": true,
+      "control_equals_source_bytes": false,
+      "target_activity_id_in_mutation_config": "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+      "action_grounding": {
+        "status": "resolved",
+        "activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+        "resolved_label": "Retrieve available data of the data subject",
+        "action_match": false,
+        "anchor_valid": true,
+        "anchor_reason": "resolved_label_is_action_consistent"
+      },
+      "current_check": {
+        "status": "not_handled",
+        "violation": true,
+        "reason": "no_structurally_relevant_handler_in_closed_downstream_surface",
+        "score": 1.0,
+        "handler_candidates": null
+      },
+      "baseline_check": {
+        "status": "violated",
+        "violation": true,
+        "reason": null
+      },
+      "final_decision": {
+        "decision": "violation",
+        "predicted": "exception_not_handled",
+        "priority_policy": "explicit_structural_specificity_v1",
+        "reason": "no_structurally_relevant_handler_in_closed_downstream_surface",
+        "violation_type": "exception_not_handled"
+      },
+      "root_cause_primary": "none_current_tp_no_handler_with_resolved_action",
+      "contributing_factors": []
+    }
+  ],
+  "conclusion": "The seven exception unknowns are fail-closed abstentions caused by rule-action grounding not being resolved/ambiguous; the variant processes do lack the inserted handler, but the checker cannot bind the exception to a reliable action anchor. One case also contains an ambiguous dedicated branch candidate. No target-paired unknown is read as satisfied/violated. No minimal code fix is justified without a separate bounded action-grounding improvement and authorization."
+}
