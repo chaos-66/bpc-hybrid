@@ -17,7 +17,7 @@
       "status": "completed_zero_api"
     },
     "bert_legal_cased": {
-      "reason": "The exact cased EU-legislation legal-BERT checkpoint ('bert-legal-cased') is not published in the public nlpaueb Legal-BERT collection (only legal-bert-base-uncased and legal-bert-small-uncased exist), and no author checkpoint/code is present in the public paper repository or Archive.org supplement. A cased generic BERT or an uncased Legal-BERT is not allowed to occupy this exact configuration's completion position.",
+      "reason": "The exact cased EU-legislation legal-BERT checkpoint ('bert-legal-cased') was not located in the checked official sources: Sun's text gives no model citation/version, the official Archive.org supplement contains data only, and the local official model cache contains nlpaueb/legal-bert-base-uncased but no cased legal-BERT. Project-record checks reported no exact Hugging Face/GitHub release. This is source-pending, not evidence that the model or public weights do not exist. A cased generic BERT or an uncased Legal-BERT is not allowed to occupy this exact configuration's completion position.",
       "status": "blocked_exact_public_checkpoint_unavailable"
     },
     "bert_legal_uncased": {

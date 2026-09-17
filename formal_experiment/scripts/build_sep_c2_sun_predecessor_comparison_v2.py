@@ -258,17 +258,19 @@ BLOCKED_ROW = {
     "status": "blocked_exact_public_checkpoint_unavailable",
     "sun_source": "Sun et al. (2024) final version Table 6/7",
     "reason": (
-        "The exact cased EU-legislation legal-BERT checkpoint ('bert-legal-cased') is not published "
-        "in the public nlpaueb Legal-BERT collection (only legal-bert-base-uncased and "
-        "legal-bert-small-uncased exist), and no author checkpoint/code is present in the public "
-        "paper repository or Archive.org supplement. A cased generic BERT or an uncased Legal-BERT "
-        "is not allowed to occupy this exact configuration's completion position."
+        "The exact cased EU-legislation legal-BERT checkpoint ('bert-legal-cased') was not located in "
+        "the checked official sources: Sun's text gives no model citation/version, the official "
+        "Archive.org supplement contains data only, and the local official model cache contains "
+        "nlpaueb/legal-bert-base-uncased but no cased legal-BERT. Project-record checks reported no "
+        "exact Hugging Face/GitHub release. This is source-pending, not evidence that the model or "
+        "public weights do not exist. A cased generic BERT or an uncased Legal-BERT is not allowed "
+        "to occupy this exact configuration's completion position."
     ),
     "attempted_public_paths": [
-        "https://huggingface.co/nlpaueb/legal-bert-base-cased (404; no such model)",
-        "Hugging Face model search: legal-bert / eurlex / legal cased family (no exact cased EU-legislation model)",
-        "GitHub repository title-matching the final paper: only README/LICENSE, no model or training code",
-        "Archive.org Decision_Logic_data.zip: data members only (EStG_raw.txt, EStG_sent_vec.csv, estg.html), no checkpoint",
+        "https://huggingface.co/nlpaueb/legal-bert-base-cased (project-record check 404; no model page returned)",
+        "Hugging Face model search (project record): legal-bert / eurlex / legal cased family; exact cased EU-legislation model not located",
+        "GitHub repository title-matching the final paper (project record): only README/LICENSE; no model or training code",
+        "Archive.org Decision_Logic_data.zip (2026-09-17 local inspection): data members only (EStG_raw.txt, EStG_sent_vec.csv, estg.html); no checkpoint or training code",
     ],
     "blocked_scope": "One of the nine requested baseline configurations remains open; all other eight predecessor configurations and the two project methods proceed.",
 }

@@ -6,15 +6,16 @@
     "local_author_manuscript_pdf": "references/papers/Sun_2024_Design_time_BPC.pdf",
     "local_version_status": "earlier_author_manuscript_not_final_springer_version",
     "final_version_entry": "https://link.springer.com/article/10.1007/s11227-023-05626-0",
-    "final_version_check_status": "verified_online_2026-09-15",
-    "final_version_caveat": "Final article accessed on 2026-09-15; Section 4.2.1 / Fig. 3 was used to verify the BERT-TextCNN architecture (per-layer [CLS] sequence -> TextCNN -> global max -> four-class output). Model-weight availability remains separate from architecture verification.",
+    "final_version_check_status": "project_record_verified_online_2026-09-15_not_reverified_2026-09-17",
+    "final_version_caveat": "Project record says the final article was accessed online on 2026-09-15 and Section 4.2.1 / Fig. 3 was used to verify the BERT-TextCNN architecture (per-layer [CLS] sequence -> TextCNN -> global max -> four-class output). On 2026-09-17 the final full text could not be re-fetched from this environment (outbound HTTPS failed), so final table numbering and numeric equality with the local author manuscript remain TODO-SOURCE. Model-weight availability remains separate from architecture verification.",
     "source_location_notes": {
       "table_6_models": "local text lines 653-670",
       "table_7_baselines": "local text lines 703-708",
       "semantic_extraction_setup": "local text lines 717-770",
       "winter_comparison": "local text lines 872-893"
     },
-    "final_version_architecture_verified": true
+    "final_version_architecture_verified": true,
+    "final_version_table_number_and_numbers_reverified_2026_09_17": false
   },
   "classification_methods": [
     {
@@ -126,17 +127,17 @@
       "sun_role": "pre-trained encoder comparison in Table 6",
       "classification_supported": true,
       "semantic_fields_native": false,
-      "implementation_status": "blocked_exact_public_checkpoint_unavailable",
-      "reproduction_class": "exact cased EU-legislation legal-BERT checkpoint unavailable from public sources; no substitute placed in this slot",
+      "implementation_status": "source_pending_name_ambiguous_exact_public_checkpoint_not_located",
+      "reproduction_class": "Sun's bert-legal-cased name is ambiguous and no exact public checkpoint was located in the checked official sources on 2026-09-17; source-pending, no substitute placed in this slot",
       "evidence_dir": null,
       "blocked_scope": "One of the nine requested baseline configurations remains open.",
       "attempted_public_paths": [
-        "https://huggingface.co/nlpaueb/legal-bert-base-cased (404; no such model)",
-        "Hugging Face model search for legal-bert / eurlex / legal cased families (no exact cased EU-legislation model)",
-        "GitHub repository matching the final-paper title (only README/LICENSE; no model or training code)",
-        "Archive.org Decision_Logic_data.zip (EStG_raw.txt / EStG_sent_vec.csv / estg.html only; no checkpoint)"
+        "https://huggingface.co/nlpaueb/legal-bert-base-cased (project-record check 404; no model page returned)",
+        "Hugging Face model search (project record): legal-bert / eurlex / legal cased families; exact cased EU-legislation model not located",
+        "GitHub repository matching the final-paper title (project record): only README/LICENSE; no model or training code",
+        "Archive.org Decision_Logic_data.zip (2026-09-17 local inspection): EStG_raw.txt / EStG_sent_vec.csv / estg.html only; no checkpoint or training code"
       ],
-      "notes": "A generic cased BERT or the uncased Legal-BERT is not the exact configuration and is therefore not reported as this row."
+      "notes": "Source-pending: the exact cased EU-legislation legal-BERT configuration cannot be uniquely identified from Sun's text and no exact public checkpoint was located in the checked official sources. This is not evidence that the model or public weights do not exist. A generic cased BERT or the uncased Legal-BERT is not the exact configuration and is therefore not reported as this row."
     }
   ],
   "semantic_extraction_methods_in_sun_experiment": [

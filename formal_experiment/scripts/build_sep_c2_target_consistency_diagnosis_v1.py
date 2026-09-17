@@ -361,7 +361,7 @@ def build_report() -> dict[str, Any]:
         "n_records": 150, "records_scored": 0, "records_missing": 150,
         "records_failed": 0, "records_not_run": 150, "unlabeled_predictions": 0,
         "included_in_10_method_performance_denominator": False,
-        "reason": "Exact public cased EU-legislation Legal-BERT checkpoint is not available; this is source-pending, not a model failure.",
+        "reason": "Exact public cased EU-legislation Legal-BERT checkpoint was not located in the checked official sources; this is source-pending, not a model failure.",
     }
     v2_source = next(r for r in v2.get("classification_table_declared_11_rows", []) if r.get("method_id") == "bert_legal_cased")
     audit = {
