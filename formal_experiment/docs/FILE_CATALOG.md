@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-17
-**收录文件**：2261 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2255 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -700,10 +700,6 @@
 | `docs/INDEX.md` | 活动 | 说明、规范或研究文档 |
 | `docs/LLM_BUDGET_PROPOSAL_2026-07-12.md` | 活动 | 说明、规范或研究文档 |
 | `docs/MASTER_PIPELINE.md` | 活动 | 唯一完整三阶段路线与任务树 |
-| `docs/MASTER_PIPELINE.md` | 活动 | 唯一完整三阶段路线与任务树 |
-| `docs/MASTER_PIPELINE.md` | 活动 | 唯一完整三阶段路线与任务树 |
-| `docs/PROJECT_AUDIT.md` | 活动 | 唯一实时项目状态（兼容文件名） |
-| `docs/PROJECT_AUDIT.md` | 活动 | 唯一实时项目状态（兼容文件名） |
 | `docs/PROJECT_AUDIT.md` | 活动 | 唯一实时项目状态（兼容文件名） |
 | `docs/REAL_WORLD_ISSUE_REGISTER.md` | 活动 | 说明、规范或研究文档 |
 | `docs/REPRODUCTION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
@@ -1570,8 +1566,6 @@
 | `paper/presentations/bpc_hybrid_Stage3_completed.pptx` | 活动 | 项目文件 |
 | `paper/README.md` | 活动 | 所在目录的入口说明 |
 | `paper/SIM_CASE_SECTION_v1.md` | 活动 | 说明、规范或研究文档 |
-| `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |
-| `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |
 | `paper/THESIS_DRAFT.md` | 活动 | 中文论文连续工作稿与结果占位 |
 
 ## `prompts`
