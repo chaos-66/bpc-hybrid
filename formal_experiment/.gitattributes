@@ -268,3 +268,11 @@ scripts/build_sep_c2_sun_predecessor_bert_features_v1.py text eol=lf
 scripts/build_sep_c2_sun_predecessor_comparison_v1.py text eol=lf
 outputs/reports/sep_c2_sun_predecessors_comparison_v1.json text eol=lf
 outputs/reports/sep_c2_sun_predecessors_comparison_v1.md text eol=lf
+# SEP-C4 action-anchor-scope v1 candidate: preserve exact LF text bytes.
+src/bpc_hybrid/s3_semantic_grounding_v6.py text eol=lf
+scripts/run_sep_c4_action_anchor_scope_v1.py text eol=lf
+tests/test_s3_semantic_grounding_v6.py text eol=lf
+outputs/evidence/sep_c4_action_anchor_scope_v1/*.json text eol=lf
+outputs/evidence/sep_c4_action_anchor_scope_v1/*.jsonl text eol=lf
+outputs/reports/sep_c4_action_anchor_scope_v1.json text eol=lf
+outputs/reports/sep_c4_action_anchor_scope_v1.md text eol=lf

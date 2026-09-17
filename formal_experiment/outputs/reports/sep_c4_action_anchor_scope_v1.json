@@ -1,0 +1,1887 @@
+{
+  "schema_version": "sep_c4_action_anchor_scope_report@1.0.0",
+  "run_id": "sep_c4_action_anchor_scope_v1",
+  "revision": "s3_semantic_grounding_v6",
+  "status": "CANDIDATE_OFFLINE_REPLAY_VERIFIED",
+  "claim_boundary": "Development-only frozen-panel replay. Candidate disambiguation and anchor-scoped evidence checks are code-verified; F1 is not required to increase. No real API/model inference/similarity recomputation.",
+  "manifest": {
+    "schema_version": "sep_c4_action_anchor_scope_manifest@1.0.0",
+    "run_id": "sep_c4_action_anchor_scope_v1",
+    "revision": "s3_semantic_grounding_v6",
+    "scope": "development_only_candidate",
+    "generated_utc": "2026-09-17T03:19:11.175073+00:00",
+    "inputs": {
+      "v2_predictions": {
+        "path": "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl",
+        "expected_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+        "actual_raw_sha256": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092",
+        "actual_canonical_lf_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+        "match": true
+      },
+      "panel": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+      "v5_predictions_for_comparison": {
+        "available": true,
+        "path": "outputs/evidence/s3_semantic_grounding_v5/predictions.jsonl",
+        "expected_sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+        "actual_raw_sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+        "actual_canonical_lf_sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+        "match": true
+      }
+    },
+    "implementation": {
+      "module": "src/bpc_hybrid/s3_semantic_grounding_v6.py",
+      "module_sha256": "48f3f675145387b3351e3566a524475869814d2b9c09100755cd813205882a44",
+      "runner": "scripts/run_sep_c4_action_anchor_scope_v1.py",
+      "runner_sha256": "955fe0f7aeaaf78f051705042f7a48e9a527155799d572be214ba950359db8a3",
+      "tests": "tests/test_s3_semantic_grounding_v6.py",
+      "tests_sha256": "130c408316d3761d25ae2c47560985cd73832efb088182a4d34f8d882c4ad73a"
+    },
+    "coverage": {
+      "panel_variants": 40,
+      "base_rows": 80,
+      "variant_rows": 40,
+      "control_rows": 40,
+      "unique_bpmn_paths_verified": 80,
+      "model_similarity_recomputed": false,
+      "model_inference_calls": 0,
+      "real_api_calls": 0,
+      "network_calls": 0,
+      "saved_candidates_reused": true
+    },
+    "safety": {
+      "human_gold_read": false,
+      "human_gold_modified": false,
+      "real_api_calls": 0,
+      "network_calls": 0,
+      "model_inference_calls": 0,
+      "model_similarity_recomputed": false,
+      "historical_predictions_overwritten": false,
+      "thresholds_changed": false,
+      "gold_modified": false,
+      "panel_modified": false
+    },
+    "new_output_paths": {
+      "evidence": "outputs/evidence/sep_c4_action_anchor_scope_v1",
+      "development": "outputs/development/sep_c4_action_anchor_scope_v1",
+      "report_json": "outputs/reports/sep_c4_action_anchor_scope_v1.json",
+      "report_md": "outputs/reports/sep_c4_action_anchor_scope_v1.md"
+    }
+  },
+  "metrics": {
+    "schema_version": "sep_c4_action_anchor_scope_metrics@1.0.0",
+    "run_id": "sep_c4_action_anchor_scope_v1",
+    "revision": "s3_semantic_grounding_v6",
+    "scope": "development_only_candidate",
+    "read_only_reuse": {
+      "path": "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl",
+      "expected_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+      "actual_raw_sha256": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092",
+      "actual_canonical_lf_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+      "match": true
+    },
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "model_inference_calls": 0,
+    "candidate_v6": {
+      "macro_f1_four_types": 0.7263,
+      "pair_success": 19,
+      "pair_success_count": 19,
+      "pair_success_rate": 0.475,
+      "target_field_unknown_rate": 0.3875,
+      "unknown_rate_variant": 0.3875,
+      "control_target_false_positive_rate": 0.025,
+      "control_false_positive_rate": 0.025,
+      "per_type": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "f1": 1.0,
+          "variant": {
+            "TP": 10,
+            "FN_observed_negative": 0,
+            "FN_unknown": 0,
+            "FN": 0,
+            "decided": 10,
+            "unknown": 0,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 8,
+            "FP": 0,
+            "unknown": 2,
+            "decided": 8,
+            "coverage": 0.8,
+            "denominator_pairs": 10
+          },
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.0,
+          "unknown_rate_control": 0.2,
+          "control_fpr_over_all_pairs": 0.0
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "f1": 0.9,
+          "variant": {
+            "TP": 9,
+            "FN_observed_negative": 0,
+            "FN_unknown": 1,
+            "FN": 1,
+            "decided": 9,
+            "unknown": 1,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 1,
+            "unknown": 0,
+            "decided": 10,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.1,
+          "unknown_rate_control": 0.0,
+          "control_fpr_over_all_pairs": 0.1
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "f1": 0.1818,
+          "variant": {
+            "TP": 1,
+            "FN_observed_negative": 0,
+            "FN_unknown": 9,
+            "FN": 9,
+            "decided": 1,
+            "unknown": 9,
+            "coverage": 0.1,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 1,
+            "FP": 0,
+            "unknown": 9,
+            "decided": 1,
+            "coverage": 0.1,
+            "denominator_pairs": 10
+          },
+          "pair_success": 1,
+          "pair_success_rate": 0.1,
+          "unknown_rate_variant": 0.9,
+          "unknown_rate_control": 0.9,
+          "control_fpr_over_all_pairs": 0.0
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "f1": 0.8235,
+          "variant": {
+            "TP": 7,
+            "FN_observed_negative": 0,
+            "FN_unknown": 3,
+            "FN": 3,
+            "decided": 7,
+            "unknown": 3,
+            "coverage": 0.7,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 3,
+            "FP": 0,
+            "unknown": 7,
+            "decided": 3,
+            "coverage": 0.3,
+            "denominator_pairs": 10
+          },
+          "pair_success": 2,
+          "pair_success_rate": 0.2,
+          "unknown_rate_variant": 0.3,
+          "unknown_rate_control": 0.7,
+          "control_fpr_over_all_pairs": 0.0
+        }
+      }
+    },
+    "baseline_v2": {
+      "macro_f1_four_types": 0.6737,
+      "pair_success": 21,
+      "pair_success_count": 21,
+      "pair_success_rate": 0.525,
+      "target_field_unknown_rate": 0.3375,
+      "unknown_rate_variant": 0.3375,
+      "control_target_false_positive_rate": 0.025,
+      "control_false_positive_rate": 0.025,
+      "per_type": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "f1": 1.0,
+          "variant": {
+            "TP": 10,
+            "FN_observed_negative": 0,
+            "FN_unknown": 0,
+            "FN": 0,
+            "decided": 10,
+            "unknown": 0,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 8,
+            "FP": 0,
+            "unknown": 2,
+            "decided": 8,
+            "coverage": 0.8,
+            "denominator_pairs": 10
+          },
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.0,
+          "unknown_rate_control": 0.2,
+          "control_fpr_over_all_pairs": 0.0
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "f1": 0.9,
+          "variant": {
+            "TP": 9,
+            "FN_observed_negative": 0,
+            "FN_unknown": 1,
+            "FN": 1,
+            "decided": 9,
+            "unknown": 1,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 1,
+            "unknown": 0,
+            "decided": 10,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.1,
+          "unknown_rate_control": 0.0,
+          "control_fpr_over_all_pairs": 0.1
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "f1": 0.3333,
+          "variant": {
+            "TP": 2,
+            "FN_observed_negative": 0,
+            "FN_unknown": 8,
+            "FN": 8,
+            "decided": 2,
+            "unknown": 8,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 2,
+            "FP": 0,
+            "unknown": 8,
+            "decided": 2,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "pair_success": 2,
+          "pair_success_rate": 0.2,
+          "unknown_rate_variant": 0.8,
+          "unknown_rate_control": 0.8,
+          "control_fpr_over_all_pairs": 0.0
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "f1": 0.4615,
+          "variant": {
+            "TP": 3,
+            "FN_observed_negative": 0,
+            "FN_unknown": 7,
+            "FN": 7,
+            "decided": 3,
+            "unknown": 7,
+            "coverage": 0.3,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 0,
+            "unknown": 1,
+            "decided": 9,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "pair_success": 3,
+          "pair_success_rate": 0.3,
+          "unknown_rate_variant": 0.7,
+          "unknown_rate_control": 0.1,
+          "control_fpr_over_all_pairs": 0.0
+        }
+      }
+    },
+    "baseline_v5": {
+      "macro_f1_four_types": 0.6737,
+      "pair_success": 21,
+      "pair_success_count": 21,
+      "pair_success_rate": 0.525,
+      "target_field_unknown_rate": 0.3375,
+      "unknown_rate_variant": 0.3375,
+      "control_target_false_positive_rate": 0.025,
+      "control_false_positive_rate": 0.025,
+      "per_type": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "f1": 1.0,
+          "variant": {
+            "TP": 10,
+            "FN_observed_negative": 0,
+            "FN_unknown": 0,
+            "FN": 0,
+            "decided": 10,
+            "unknown": 0,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 8,
+            "FP": 0,
+            "unknown": 2,
+            "decided": 8,
+            "coverage": 0.8,
+            "denominator_pairs": 10
+          },
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.0,
+          "unknown_rate_control": 0.2,
+          "control_fpr_over_all_pairs": 0.0
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "f1": 0.9,
+          "variant": {
+            "TP": 9,
+            "FN_observed_negative": 0,
+            "FN_unknown": 1,
+            "FN": 1,
+            "decided": 9,
+            "unknown": 1,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 1,
+            "unknown": 0,
+            "decided": 10,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.1,
+          "unknown_rate_control": 0.0,
+          "control_fpr_over_all_pairs": 0.1
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "f1": 0.3333,
+          "variant": {
+            "TP": 2,
+            "FN_observed_negative": 0,
+            "FN_unknown": 8,
+            "FN": 8,
+            "decided": 2,
+            "unknown": 8,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 2,
+            "FP": 0,
+            "unknown": 8,
+            "decided": 2,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "pair_success": 2,
+          "pair_success_rate": 0.2,
+          "unknown_rate_variant": 0.8,
+          "unknown_rate_control": 0.8,
+          "control_fpr_over_all_pairs": 0.0
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "f1": 0.4615,
+          "variant": {
+            "TP": 3,
+            "FN_observed_negative": 0,
+            "FN_unknown": 7,
+            "FN": 7,
+            "decided": 3,
+            "unknown": 7,
+            "coverage": 0.3,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 0,
+            "unknown": 1,
+            "decided": 9,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "pair_success": 3,
+          "pair_success_rate": 0.3,
+          "unknown_rate_variant": 0.7,
+          "unknown_rate_control": 0.1,
+          "control_fpr_over_all_pairs": 0.0
+        }
+      }
+    },
+    "target_paired_candidate_v6": {
+      "schema_version": "s3_target_paired_evaluator@3.0.0",
+      "evaluation_kind": "target_paired_causal",
+      "primary": true,
+      "total_pairs": 40,
+      "per_type": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "variant": {
+            "TP": 10,
+            "FN_observed_negative": 0,
+            "FN_unknown": 0,
+            "FN": 0,
+            "decided": 10,
+            "unknown": 0,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 8,
+            "FP": 0,
+            "unknown": 2,
+            "decided": 8,
+            "coverage": 0.8,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "precision_denominator_tp_plus_fp": 10,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 1.0,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.0,
+          "unknown_rate_control": 0.2
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "variant": {
+            "TP": 9,
+            "FN_observed_negative": 0,
+            "FN_unknown": 1,
+            "FN": 1,
+            "decided": 9,
+            "unknown": 1,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 1,
+            "unknown": 0,
+            "decided": 10,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "precision": 0.9,
+          "recall": 0.9,
+          "f1": 0.9,
+          "precision_denominator_tp_plus_fp": 10,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.9,
+          "tnr_over_decided_controls": 0.9,
+          "control_fpr_over_decided_controls": 0.1,
+          "control_fpr_over_all_pairs": 0.1,
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.1,
+          "unknown_rate_control": 0.0
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "variant": {
+            "TP": 1,
+            "FN_observed_negative": 0,
+            "FN_unknown": 9,
+            "FN": 9,
+            "decided": 1,
+            "unknown": 9,
+            "coverage": 0.1,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 1,
+            "FP": 0,
+            "unknown": 9,
+            "decided": 1,
+            "coverage": 0.1,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.1,
+          "f1": 0.1818,
+          "precision_denominator_tp_plus_fp": 1,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.1,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 1,
+          "pair_success_rate": 0.1,
+          "unknown_rate_variant": 0.9,
+          "unknown_rate_control": 0.9
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "variant": {
+            "TP": 7,
+            "FN_observed_negative": 0,
+            "FN_unknown": 3,
+            "FN": 3,
+            "decided": 7,
+            "unknown": 3,
+            "coverage": 0.7,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 3,
+            "FP": 0,
+            "unknown": 7,
+            "decided": 3,
+            "coverage": 0.3,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.7,
+          "f1": 0.8235,
+          "precision_denominator_tp_plus_fp": 7,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.7,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 2,
+          "pair_success_rate": 0.2,
+          "unknown_rate_variant": 0.3,
+          "unknown_rate_control": 0.7
+        }
+      },
+      "aggregate_side_outcomes_mutually_exclusive": {
+        "variant": {
+          "positive": 27,
+          "negative_observed_wrong": 0,
+          "unknown": 13,
+          "total": 40,
+          "coverage": 0.675,
+          "unknown_rate": 0.325
+        },
+        "control": {
+          "negative": 21,
+          "positive_false_alarm": 1,
+          "unknown": 18,
+          "total": 40,
+          "coverage": 0.55,
+          "unknown_rate": 0.45,
+          "false_positive_rate_over_decided_controls": 0.0455,
+          "false_positive_rate_over_all_pairs": 0.025
+        }
+      },
+      "pair_level_outcomes_mutually_exclusive": {
+        "control_unknown": 7,
+        "both_correct": 19,
+        "control_false_alarm": 1,
+        "variant_unknown": 2,
+        "both_unknown": 11
+      },
+      "macro_f1_four_types": 0.7263,
+      "control_target_false_positive_rate": 0.025,
+      "control_target_false_positive_rate_over_decided_controls": 0.0455,
+      "target_field_unknown_rate": 0.3875,
+      "variant_unknown_rate": 0.325,
+      "control_unknown_rate": 0.45,
+      "variant_coverage": 0.675,
+      "control_coverage": 0.55,
+      "pair_success_rate": 0.475,
+      "pair_success_count": 19,
+      "pair_success_denominator": 40,
+      "explicit_denominators": {
+        "variant_positive_tp_denominator": "all scored variant checks",
+        "variant_failure_fn_denominator": "all scored variant checks",
+        "recall_includes_unknown_as_fn": true,
+        "control_tnr_denominator": "decided controls (TN+FP) only",
+        "control_unknown_denominator": "all scored control checks",
+        "pair_success_denominator": "all paired variant/control checks",
+        "unknown_is_not_a_compliant_prediction": true,
+        "all_side_checks_denominator_for_overall_unknown_rate": "all four target-type checks across both sides"
+      },
+      "uses_expected_only_for_evaluation_grouping": true,
+      "does_not_mutate_predictions": true
+    },
+    "target_paired_baseline_v2": {
+      "schema_version": "s3_target_paired_evaluator@3.0.0",
+      "evaluation_kind": "target_paired_causal",
+      "primary": true,
+      "total_pairs": 40,
+      "per_type": {
+        "prohibited_action_present": {
+          "pairs": 10,
+          "variant": {
+            "TP": 10,
+            "FN_observed_negative": 0,
+            "FN_unknown": 0,
+            "FN": 0,
+            "decided": 10,
+            "unknown": 0,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 8,
+            "FP": 0,
+            "unknown": 2,
+            "decided": 8,
+            "coverage": 0.8,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "precision_denominator_tp_plus_fp": 10,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 1.0,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.0,
+          "unknown_rate_control": 0.2
+        },
+        "required_condition_not_enforced": {
+          "pairs": 10,
+          "variant": {
+            "TP": 9,
+            "FN_observed_negative": 0,
+            "FN_unknown": 1,
+            "FN": 1,
+            "decided": 9,
+            "unknown": 1,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 1,
+            "unknown": 0,
+            "decided": 10,
+            "coverage": 1.0,
+            "denominator_pairs": 10
+          },
+          "precision": 0.9,
+          "recall": 0.9,
+          "f1": 0.9,
+          "precision_denominator_tp_plus_fp": 10,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.9,
+          "tnr_over_decided_controls": 0.9,
+          "control_fpr_over_decided_controls": 0.1,
+          "control_fpr_over_all_pairs": 0.1,
+          "pair_success": 8,
+          "pair_success_rate": 0.8,
+          "unknown_rate_variant": 0.1,
+          "unknown_rate_control": 0.0
+        },
+        "constraint_violated": {
+          "pairs": 10,
+          "variant": {
+            "TP": 2,
+            "FN_observed_negative": 0,
+            "FN_unknown": 8,
+            "FN": 8,
+            "decided": 2,
+            "unknown": 8,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 2,
+            "FP": 0,
+            "unknown": 8,
+            "decided": 2,
+            "coverage": 0.2,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.3333,
+          "precision_denominator_tp_plus_fp": 2,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.2,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 2,
+          "pair_success_rate": 0.2,
+          "unknown_rate_variant": 0.8,
+          "unknown_rate_control": 0.8
+        },
+        "exception_not_handled": {
+          "pairs": 10,
+          "variant": {
+            "TP": 3,
+            "FN_observed_negative": 0,
+            "FN_unknown": 7,
+            "FN": 7,
+            "decided": 3,
+            "unknown": 7,
+            "coverage": 0.3,
+            "denominator_pairs": 10
+          },
+          "control": {
+            "TN": 9,
+            "FP": 0,
+            "unknown": 1,
+            "decided": 9,
+            "coverage": 0.9,
+            "denominator_pairs": 10
+          },
+          "precision": 1.0,
+          "recall": 0.3,
+          "f1": 0.4615,
+          "precision_denominator_tp_plus_fp": 3,
+          "recall_denominator_tp_plus_fn": 10,
+          "tpr_over_all_pairs": 0.3,
+          "tnr_over_decided_controls": 1.0,
+          "control_fpr_over_decided_controls": 0.0,
+          "control_fpr_over_all_pairs": 0.0,
+          "pair_success": 3,
+          "pair_success_rate": 0.3,
+          "unknown_rate_variant": 0.7,
+          "unknown_rate_control": 0.1
+        }
+      },
+      "aggregate_side_outcomes_mutually_exclusive": {
+        "variant": {
+          "positive": 24,
+          "negative_observed_wrong": 0,
+          "unknown": 16,
+          "total": 40,
+          "coverage": 0.6,
+          "unknown_rate": 0.4
+        },
+        "control": {
+          "negative": 28,
+          "positive_false_alarm": 1,
+          "unknown": 11,
+          "total": 40,
+          "coverage": 0.725,
+          "unknown_rate": 0.275,
+          "false_positive_rate_over_decided_controls": 0.0345,
+          "false_positive_rate_over_all_pairs": 0.025
+        }
+      },
+      "pair_level_outcomes_mutually_exclusive": {
+        "control_unknown": 2,
+        "both_correct": 21,
+        "control_false_alarm": 1,
+        "variant_unknown": 7,
+        "both_unknown": 9
+      },
+      "macro_f1_four_types": 0.6737,
+      "control_target_false_positive_rate": 0.025,
+      "control_target_false_positive_rate_over_decided_controls": 0.0345,
+      "target_field_unknown_rate": 0.3375,
+      "variant_unknown_rate": 0.4,
+      "control_unknown_rate": 0.275,
+      "variant_coverage": 0.6,
+      "control_coverage": 0.725,
+      "pair_success_rate": 0.525,
+      "pair_success_count": 21,
+      "pair_success_denominator": 40,
+      "explicit_denominators": {
+        "variant_positive_tp_denominator": "all scored variant checks",
+        "variant_failure_fn_denominator": "all scored variant checks",
+        "recall_includes_unknown_as_fn": true,
+        "control_tnr_denominator": "decided controls (TN+FP) only",
+        "control_unknown_denominator": "all scored control checks",
+        "pair_success_denominator": "all paired variant/control checks",
+        "unknown_is_not_a_compliant_prediction": true,
+        "all_side_checks_denominator_for_overall_unknown_rate": "all four target-type checks across both sides"
+      },
+      "uses_expected_only_for_evaluation_grouping": true,
+      "does_not_mutate_predictions": true
+    },
+    "outcome_deltas": {
+      "prohibited_action_present": {
+        "variant_tp_before": 10,
+        "variant_tp_after": 10,
+        "variant_tp_lost_items": [],
+        "variant_tp_gained_items": [],
+        "variant_unknown_before": 0,
+        "variant_unknown_after": 0,
+        "control_fp_before": 0,
+        "control_fp_after": 0,
+        "control_unknown_before": 2,
+        "control_unknown_after": 2
+      },
+      "required_condition_not_enforced": {
+        "variant_tp_before": 9,
+        "variant_tp_after": 9,
+        "variant_tp_lost_items": [],
+        "variant_tp_gained_items": [],
+        "variant_unknown_before": 1,
+        "variant_unknown_after": 1,
+        "control_fp_before": 1,
+        "control_fp_after": 1,
+        "control_unknown_before": 0,
+        "control_unknown_after": 0
+      },
+      "constraint_violated": {
+        "variant_tp_before": 2,
+        "variant_tp_after": 1,
+        "variant_tp_lost_items": [
+          "syn_v2_constraint_violated_01:variant"
+        ],
+        "variant_tp_gained_items": [],
+        "variant_unknown_before": 8,
+        "variant_unknown_after": 9,
+        "control_fp_before": 0,
+        "control_fp_after": 0,
+        "control_unknown_before": 8,
+        "control_unknown_after": 9
+      },
+      "exception_not_handled": {
+        "variant_tp_before": 3,
+        "variant_tp_after": 7,
+        "variant_tp_lost_items": [],
+        "variant_tp_gained_items": [
+          "syn_v2_exception_not_handled_04:variant",
+          "syn_v2_exception_not_handled_07:variant",
+          "syn_v2_exception_not_handled_08:variant",
+          "syn_v2_exception_not_handled_09:variant"
+        ],
+        "variant_unknown_before": 7,
+        "variant_unknown_after": 3,
+        "control_fp_before": 0,
+        "control_fp_after": 0,
+        "control_unknown_before": 1,
+        "control_unknown_after": 7
+      }
+    },
+    "changes": {
+      "total_rows": 80,
+      "changed_row_count": 22,
+      "action_change_count": 11,
+      "action_reason_change_count": 37,
+      "check_change_count_by_target": {
+        "constraint_violated": 6,
+        "exception_not_handled": 12
+      },
+      "check_reason_only_change_count_by_target": {
+        "exception_not_handled": 6,
+        "constraint_violated": 2
+      },
+      "changed_rows": [
+        {
+          "item_id": "syn_v2_required_condition_01",
+          "side": "variant",
+          "expected_label": "required_condition_not_enforced",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {
+            "constraint_violated": {
+              "before": {
+                "status": "satisfied",
+                "observable": true,
+                "violation": false,
+                "reason": "explicit_numeric_time_bound_is_equal_or_tighter"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            },
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_required_condition_04",
+          "side": "variant",
+          "expected_label": "required_condition_not_enforced",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {},
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_01",
+          "side": "variant",
+          "expected_label": "constraint_violated",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {
+            "constraint_violated": {
+              "before": {
+                "status": "violated",
+                "observable": true,
+                "violation": true,
+                "reason": "explicit_numeric_time_bound_exceeds_rule_limit"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            },
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_04",
+          "side": "variant",
+          "expected_label": "constraint_violated",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {},
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_01",
+          "side": "variant",
+          "expected_label": "exception_not_handled",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {
+            "constraint_violated": {
+              "before": {
+                "status": "satisfied",
+                "observable": true,
+                "violation": false,
+                "reason": "explicit_numeric_time_bound_is_equal_or_tighter"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            },
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_04",
+          "side": "variant",
+          "expected_label": "exception_not_handled",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "no_handler_and_action_grounding_ambiguous"
+              },
+              "after": {
+                "status": "not_handled",
+                "observable": true,
+                "violation": true,
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_06",
+          "side": "variant",
+          "expected_label": "exception_not_handled",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "constraint_violated": {
+              "before": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "time_bound_absence_not_decidable_from_ambiguous_grounding"
+              },
+              "after": {
+                "status": "violated",
+                "observable": true,
+                "violation": true,
+                "reason": "per_candidate_explicit_time_bound_absent_from_closed_action_scope"
+              }
+            },
+            "exception_not_handled": {
+              "before": {
+                "reason": "dedicated_handler_candidate_exists_but_semantics_ambiguous"
+              },
+              "after": {
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            }
+          },
+          "check_reason_only_changes": {
+            "exception_not_handled": {
+              "before": {
+                "reason": "dedicated_handler_candidate_exists_but_semantics_ambiguous"
+              },
+              "after": {
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            }
+          },
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_07",
+          "side": "variant",
+          "expected_label": "exception_not_handled",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "no_handler_and_action_grounding_ambiguous"
+              },
+              "after": {
+                "status": "not_handled",
+                "observable": true,
+                "violation": true,
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_08",
+          "side": "variant",
+          "expected_label": "exception_not_handled",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "no_handler_and_action_grounding_ambiguous"
+              },
+              "after": {
+                "status": "not_handled",
+                "observable": true,
+                "violation": true,
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_09",
+          "side": "variant",
+          "expected_label": "exception_not_handled",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "no_handler_and_action_grounding_ambiguous"
+              },
+              "after": {
+                "status": "not_handled",
+                "observable": true,
+                "violation": true,
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_03",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "no_handler_and_action_grounding_ambiguous"
+              },
+              "after": {
+                "status": "not_handled",
+                "observable": true,
+                "violation": true,
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_prohibited_action_04",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "no_handler_and_action_grounding_ambiguous"
+              },
+              "after": {
+                "status": "not_handled",
+                "observable": true,
+                "violation": true,
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_required_condition_01",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {
+            "constraint_violated": {
+              "before": {
+                "status": "satisfied",
+                "observable": true,
+                "violation": false,
+                "reason": "explicit_numeric_time_bound_is_equal_or_tighter"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            },
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_required_condition_04",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {},
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_01",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {
+            "constraint_violated": {
+              "before": {
+                "status": "satisfied",
+                "observable": true,
+                "violation": false,
+                "reason": "explicit_numeric_time_bound_is_equal_or_tighter"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            },
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "check_reason_only_changes": {
+            "exception_not_handled": {
+              "before": {
+                "reason": "no_structurally_relevant_handler_in_closed_downstream_surface"
+              },
+              "after": {
+                "reason": "per_candidate_no_structurally_relevant_handler_in_closed_downstream_surface"
+              }
+            }
+          },
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_constraint_violated_04",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {},
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_01",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "syn_handler_syn_v2_exception_not_handled_01",
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+                "syn_handler_syn_v2_exception_not_handled_01"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+                "syn_handler_syn_v2_exception_not_handled_01"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "handled",
+                "observable": true,
+                "violation": false,
+                "reason": "exception_handler_evidence_found"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            },
+            "constraint_violated": {
+              "before": {
+                "reason": "unbound_global_constraint_evidence_requires_semantic_grounding"
+              },
+              "after": {
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            }
+          },
+          "check_reason_only_changes": {
+            "constraint_violated": {
+              "before": {
+                "reason": "unbound_global_constraint_evidence_requires_semantic_grounding"
+              },
+              "after": {
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            }
+          },
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_06",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "resolved",
+              "reason": "strong_candidate_signal",
+              "activity_id": "syn_handler_syn_v2_exception_not_handled_06",
+              "strong_activity_ids": [
+                "syn_handler_syn_v2_exception_not_handled_06"
+              ]
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "lexical_and_semantic_winner_conflict",
+              "activity_id": null,
+              "strong_activity_ids": [
+                "syn_handler_syn_v2_exception_not_handled_06"
+              ]
+            },
+            "identity_changed": true,
+            "reason_changed": true
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "handled",
+                "observable": true,
+                "violation": false,
+                "reason": "exception_handler_evidence_found"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            },
+            "constraint_violated": {
+              "before": {
+                "reason": "explicit_time_bound_absent_from_closed_action_scope"
+              },
+              "after": {
+                "reason": "per_candidate_explicit_time_bound_absent_from_closed_action_scope"
+              }
+            }
+          },
+          "check_reason_only_changes": {
+            "constraint_violated": {
+              "before": {
+                "reason": "explicit_time_bound_absent_from_closed_action_scope"
+              },
+              "after": {
+                "reason": "per_candidate_explicit_time_bound_absent_from_closed_action_scope"
+              }
+            }
+          },
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_07",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "handled",
+                "observable": true,
+                "violation": false,
+                "reason": "exception_handler_evidence_found"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_08",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "handled",
+                "observable": true,
+                "violation": false,
+                "reason": "exception_handler_evidence_found"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_09",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "handled",
+                "observable": true,
+                "violation": false,
+                "reason": "exception_handler_evidence_found"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        },
+        {
+          "item_id": "syn_v2_exception_not_handled_10",
+          "side": "control",
+          "expected_label": "none",
+          "action_grounding": {
+            "before": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "after": {
+              "status": "ambiguous",
+              "reason": "multiple_or_weak_activity_candidates",
+              "activity_id": null,
+              "strong_activity_ids": []
+            },
+            "identity_changed": false,
+            "reason_changed": false
+          },
+          "checks": {
+            "exception_not_handled": {
+              "before": {
+                "status": "handled",
+                "observable": true,
+                "violation": false,
+                "reason": "exception_handler_evidence_found"
+              },
+              "after": {
+                "status": "unknown",
+                "observable": false,
+                "violation": null,
+                "reason": "per_candidate_action_scope_evidence_not_consensual"
+              }
+            }
+          },
+          "check_reason_only_changes": {},
+          "changed": true
+        }
+      ]
+    }
+  }
+}

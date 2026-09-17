@@ -1,0 +1,63 @@
+{
+  "schema_version": "sep_c4_action_anchor_scope_manifest@1.0.0",
+  "run_id": "sep_c4_action_anchor_scope_v1",
+  "revision": "s3_semantic_grounding_v6",
+  "scope": "development_only_candidate",
+  "generated_utc": "2026-09-17T03:19:11.175073+00:00",
+  "inputs": {
+    "v2_predictions": {
+      "path": "outputs/evidence/s3_semantic_grounding_v2/predictions.jsonl",
+      "expected_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+      "actual_raw_sha256": "b17b859465e6ee5ebbdefcfc7e4ecb93a5b4d58ada5baca6cfd9746e8bdd2092",
+      "actual_canonical_lf_sha256": "a6c70b1301b83d9cf4f9e6ea24a33e677a6608e9fc2c3efb1fd9a8869350eb85",
+      "match": true
+    },
+    "panel": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+    "v5_predictions_for_comparison": {
+      "available": true,
+      "path": "outputs/evidence/s3_semantic_grounding_v5/predictions.jsonl",
+      "expected_sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+      "actual_raw_sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+      "actual_canonical_lf_sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b",
+      "match": true
+    }
+  },
+  "implementation": {
+    "module": "src/bpc_hybrid/s3_semantic_grounding_v6.py",
+    "module_sha256": "48f3f675145387b3351e3566a524475869814d2b9c09100755cd813205882a44",
+    "runner": "scripts/run_sep_c4_action_anchor_scope_v1.py",
+    "runner_sha256": "955fe0f7aeaaf78f051705042f7a48e9a527155799d572be214ba950359db8a3",
+    "tests": "tests/test_s3_semantic_grounding_v6.py",
+    "tests_sha256": "130c408316d3761d25ae2c47560985cd73832efb088182a4d34f8d882c4ad73a"
+  },
+  "coverage": {
+    "panel_variants": 40,
+    "base_rows": 80,
+    "variant_rows": 40,
+    "control_rows": 40,
+    "unique_bpmn_paths_verified": 80,
+    "model_similarity_recomputed": false,
+    "model_inference_calls": 0,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "saved_candidates_reused": true
+  },
+  "safety": {
+    "human_gold_read": false,
+    "human_gold_modified": false,
+    "real_api_calls": 0,
+    "network_calls": 0,
+    "model_inference_calls": 0,
+    "model_similarity_recomputed": false,
+    "historical_predictions_overwritten": false,
+    "thresholds_changed": false,
+    "gold_modified": false,
+    "panel_modified": false
+  },
+  "new_output_paths": {
+    "evidence": "outputs/evidence/sep_c4_action_anchor_scope_v1",
+    "development": "outputs/development/sep_c4_action_anchor_scope_v1",
+    "report_json": "outputs/reports/sep_c4_action_anchor_scope_v1.json",
+    "report_md": "outputs/reports/sep_c4_action_anchor_scope_v1.md"
+  }
+}

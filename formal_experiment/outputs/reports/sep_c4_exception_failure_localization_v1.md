@@ -41,3 +41,10 @@
 
 ## 边界
 本报告基于 A 完成后的同一代码状态；A 未修改公共映射代码。仅重读已保存 C36 v2 与 v5 predictions，不重跑比较、不生成新预测、不调 API。开发面板不是 formal Oracle。
+
+## V6 锚点解释校正（后加说明；原始逐项数据、hash、分母均未改写）
+
+- action_match=false 是标签是否词面命中 rule action 的检查结果，不是语义错误判定；有独立词面或语义支持路径时，锚点仍可能可用。
+- 旧实现的 resolved 仅表示从多个候选中排序取首；若词面 winner 与 semantic winner 冲突，v6 候选会保留 ambiguous，不以排序、activity_id 或遍历顺序强制 resolved。
+- 缺少 action/field 支持时，v6 锚点状态为 unconfirmed，不再写 resolved_label_is_action_consistent。
+- 本校正不修改本文件原始表格、输入绑定或历史结果。v6 候选的逐条变化和重新计算的 checks/decision 见 outputs/reports/sep_c4_action_anchor_scope_v1.json 和 .md。
