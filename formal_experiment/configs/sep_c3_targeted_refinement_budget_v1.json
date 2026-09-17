@@ -1,0 +1,103 @@
+{
+  "schema_version": "sep_c3_targeted_refinement_budget@1.0.0",
+  "suite_id": "SEP-C3-TARGETED-REFINEMENT-001",
+  "status": "prepared_not_run",
+  "purpose": "Development/mechanism-oriented targeted refinement on the frozen EStG-150: common+E baseline A plus independently switchable R_A, R_C, and R_A+R_C.",
+  "base_suite_id": "SEP-C3-MODULAR-ESJ-001",
+  "arms": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "arm_definitions": {
+    "A": "common + E (frozen 100 baseline)",
+    "B": "common + E + R_A",
+    "C": "common + E + R_C",
+    "D": "common + E + R_A + R_C"
+  },
+  "samples_per_arm": 150,
+  "planned_calls": 600,
+  "call_cap": 750,
+  "estimated_input_tokens": 1046679,
+  "estimated_input_tokens_per_arm": {
+    "A": 245845,
+    "B": 263290,
+    "C": 260049,
+    "D": 277495
+  },
+  "input_token_cap": 2800000,
+  "output_token_cap": 2500000,
+  "usd_cost_cap": 16.0,
+  "repeat_strategy": {
+    "repeat_id": "repeat-01",
+    "repeats_per_arm": 1,
+    "note": "One repeat per arm as specified for this refinement round."
+  },
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "provider": "openai_compatible"
+  },
+  "inference": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null
+  },
+  "data_binding": {
+    "input_path": "data/input/estg150_formal_inference_input_v2.json",
+    "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+  },
+  "prompt_binding": {
+    "prompt_family": "direct_llm_refinement_v1",
+    "generated_manifest": "prompts/sun_compat/modular_refinement_v1/generated/manifest.json",
+    "generated_manifest_sha256": "3d9ceb897b0582bf862a7d4c9ca130b07533a37c272e59b37c7323bededc9414",
+    "baseline_100_composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418",
+    "arm_composition_sha256": {
+      "A": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418",
+      "B": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1",
+      "C": "a015da8e3f08c561050b0de1604163a6aba5a0a8d1a60e4fe8c56bd3e2eb2266",
+      "D": "7901ebe541abe25fe2753db514b284a82c4d37c54535ad54824eac597fff15c9"
+    }
+  },
+  "schedule_binding": {
+    "path": "configs/sep_c3_targeted_refinement_schedule_v1.json",
+    "sha256": "63cd957f9ff4d3261dfcf407fac207fad910ca67b521f9b0b549737b80ac94ca",
+    "scheme": "sample_level_random_permutation",
+    "level": "sample_level"
+  },
+  "parser_binding": {
+    "schema_adapter_module": "src/bpc_hybrid/d1_schema_adapter.py",
+    "schema_adapter_sha256": "457d01cfcc663e8594a163db603c2e1d31cbffce4523d3ed7cdfaf16328edbf3",
+    "span_canonicalizer_module": "src/bpc_hybrid/d1_span_canonicalizer.py",
+    "span_canonicalizer_sha256": "e29672deabb7b2aabd535c5d8552b4d2c4b49699e2582f31fbe394d26da65dce"
+  },
+  "evaluator_binding": {
+    "coarse_metric_module": "src/bpc_hybrid/sep_c3_modular_evaluation.py",
+    "coarse_metric_sha256": "31363c2e0bad27ebbe2b9e1fa56b5aae3cbe2e1e5c12204627e173a8db8b5330",
+    "frozen_evaluator_module": "src/bpc_hybrid/stage2_sun_literal_overlap.py",
+    "frozen_evaluator_sha256": "a6df234611ef63ab9d47a3d5e886c3a711ccce8c6e5d8e164e42826bef978de7",
+    "primary_metric": "coarse_five_field_mean_f1",
+    "method_id_prefix": "direct_llm_refinement_"
+  },
+  "failure_policy": "Persist failed attempts in the 150-sample denominator; one recorded send per scheduled sample/arm; no result-dependent retry.",
+  "price_snapshot": {
+    "currency": "USD",
+    "mode_used_for_gate": "peak_conservative",
+    "input_cache_miss_per_million": 1.32,
+    "output_per_million": 3.96,
+    "source_url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "verified_at_utc": "2026-08-30T00:00:00Z",
+    "note": "Reuses the project price snapshot from the SEP-C3 modular budget; no online re-check during this zero-network preparation step."
+  },
+  "actuals": null,
+  "generated_at_utc": "2026-09-17T13:49:45.629888+00:00"
+}

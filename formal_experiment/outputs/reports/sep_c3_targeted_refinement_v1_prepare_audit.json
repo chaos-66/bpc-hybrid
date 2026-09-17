@@ -1,0 +1,25 @@
+{
+  "schema_version": "sep_c3_targeted_refinement_prepare_audit@1.0.0",
+  "status": "pass",
+  "network_calls": 0,
+  "suite_id": "SEP-C3-TARGETED-REFINEMENT-001",
+  "generated_at_utc": "2026-09-17T13:53:48.071497+00:00",
+  "prompt_audit": "outputs/reports/sep_c3_targeted_refinement_v1_prompt_audit.json",
+  "schedule_path": "configs/sep_c3_targeted_refinement_schedule_v1.json",
+  "schedule_sha256": "63cd957f9ff4d3261dfcf407fac207fad910ca67b521f9b0b549737b80ac94ca",
+  "budget_path": "configs/sep_c3_targeted_refinement_budget_v1.json",
+  "config_diff_path": "outputs/reports/sep_c3_targeted_refinement_v1_config_diff.json",
+  "estimated_input_tokens": 1046679,
+  "interleaving": {
+    "level": "sample_level",
+    "arms_per_block": 4,
+    "block_count": 150,
+    "arm_order_regenerated_per_sample": true
+  },
+  "statuses": {
+    "prompt_audit_pass": true,
+    "config_diff_pass": true,
+    "schedule_call_count_600": true,
+    "budget_call_count_600": true
+  }
+}

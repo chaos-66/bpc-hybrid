@@ -1,0 +1,114 @@
+{
+  "schema_version": "sep_c3_targeted_refinement_config_diff@1.0.0",
+  "status": "pass",
+  "baseline": {
+    "runner": "scripts/run_sep_c3_modular_ablation_v1.py",
+    "prompt_family": "direct_llm_modular_v1",
+    "baseline_arm_esj": "100",
+    "model": {
+      "id": "deepseek-v4-pro",
+      "documented_release": "DeepSeek-V4-Pro-0813",
+      "provider": "openai_compatible"
+    },
+    "sampling": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 4096,
+      "retry": 0,
+      "stream": false,
+      "thinking": {
+        "type": "disabled"
+      },
+      "response_format": null
+    },
+    "data_binding": {
+      "input_path": "data/input/estg150_formal_inference_input_v2.json",
+      "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+      "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+      "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    },
+    "parser_binding": {
+      "schema_adapter_module": "src/bpc_hybrid/d1_schema_adapter.py",
+      "schema_adapter_sha256": "457d01cfcc663e8594a163db603c2e1d31cbffce4523d3ed7cdfaf16328edbf3",
+      "span_canonicalizer_module": "src/bpc_hybrid/d1_span_canonicalizer.py",
+      "span_canonicalizer_sha256": "e29672deabb7b2aabd535c5d8552b4d2c4b49699e2582f31fbe394d26da65dce"
+    },
+    "evaluator_binding": {
+      "coarse_metric_module": "src/bpc_hybrid/sep_c3_modular_evaluation.py",
+      "coarse_metric_sha256": "31363c2e0bad27ebbe2b9e1fa56b5aae3cbe2e1e5c12204627e173a8db8b5330",
+      "frozen_evaluator_module": "src/bpc_hybrid/stage2_sun_literal_overlap.py",
+      "frozen_evaluator_sha256": "a6df234611ef63ab9d47a3d5e886c3a711ccce8c6e5d8e164e42826bef978de7",
+      "primary_metric": "coarse_five_field_mean_f1"
+    }
+  },
+  "refinement": {
+    "runner": "scripts/run_sep_c3_targeted_refinement_v1.py",
+    "prompt_family": "direct_llm_refinement_v1",
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "model": {
+      "id": "deepseek-v4-pro",
+      "documented_release": "DeepSeek-V4-Pro-0813",
+      "provider": "openai_compatible"
+    },
+    "sampling": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 4096,
+      "retry": 0,
+      "stream": false,
+      "thinking": {
+        "type": "disabled"
+      },
+      "response_format": null
+    },
+    "data_binding": {
+      "input_path": "data/input/estg150_formal_inference_input_v2.json",
+      "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+      "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+      "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+    },
+    "parser_binding": {
+      "schema_adapter_module": "src/bpc_hybrid/d1_schema_adapter.py",
+      "schema_adapter_sha256": "457d01cfcc663e8594a163db603c2e1d31cbffce4523d3ed7cdfaf16328edbf3",
+      "span_canonicalizer_module": "src/bpc_hybrid/d1_span_canonicalizer.py",
+      "span_canonicalizer_sha256": "e29672deabb7b2aabd535c5d8552b4d2c4b49699e2582f31fbe394d26da65dce"
+    },
+    "evaluator_binding": {
+      "coarse_metric_module": "src/bpc_hybrid/sep_c3_modular_evaluation.py",
+      "coarse_metric_sha256": "31363c2e0bad27ebbe2b9e1fa56b5aae3cbe2e1e5c12204627e173a8db8b5330",
+      "frozen_evaluator_module": "src/bpc_hybrid/stage2_sun_literal_overlap.py",
+      "frozen_evaluator_sha256": "a6df234611ef63ab9d47a3d5e886c3a711ccce8c6e5d8e164e42826bef978de7",
+      "primary_metric": "coarse_five_field_mean_f1"
+    },
+    "schedule": {
+      "path": "configs/sep_c3_targeted_refinement_schedule_v1.json",
+      "sha256": "63cd957f9ff4d3261dfcf407fac207fad910ca67b521f9b0b549737b80ac94ca",
+      "scheme": "sample_level_random_permutation",
+      "level": "sample_level"
+    }
+  },
+  "identity_checks": {
+    "model_identical": true,
+    "sampling_identical": true,
+    "data_binding_identical": true,
+    "parser_binding_identical": true,
+    "evaluator_binding_identical": true
+  },
+  "non_prompt_differences": [],
+  "prompt_only_changes": {
+    "prompt_family": "direct_llm_modular_v1 -> direct_llm_refinement_v1",
+    "baseline_arm": "100 -> A",
+    "repair_arms_added": [
+      "B (R_A)",
+      "C (R_C)",
+      "D (R_A+R_C)"
+    ],
+    "s_included": false,
+    "j_included": false
+  }
+}

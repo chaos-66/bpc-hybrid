@@ -1,0 +1,1 @@
+Actor: extract only an explicitly stated entity that bears responsibility for performing, refraining from, or being subject to the regulated action. Do not label objects, resources, amounts, or other mentioned noun phrases as actors merely because they are salient in the sentence. If no responsible entity is explicitly stated, return no actor.

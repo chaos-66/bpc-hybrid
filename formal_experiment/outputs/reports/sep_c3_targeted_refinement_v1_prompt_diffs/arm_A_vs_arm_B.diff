@@ -1,0 +1,9 @@
+--- arm_A_sent_prompt.txt
++++ arm_B_sent_prompt.txt
+@@ -19,4 +19,6 @@
+ - Use zero-based start and exclusive end for every span. For every span, text must equal source_text[start:end]; every child span must lie inside its clause_span.
+ - IDs are unique within the complete record. actor_action_map and order_relations entries may reference IDs only from the same clause.
++
++Actor: extract only an explicitly stated entity that bears responsibility for performing, refraining from, or being subject to the regulated action. Do not label objects, resources, amounts, or other mentioned noun phrases as actors merely because they are salient in the sentence. If no responsible entity is explicitly stated, return no actor.
+ 
+ <!--USER-->

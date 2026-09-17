@@ -1,0 +1,1 @@
+Constraint: extract an explicit phrase when it directly restricts when, how, how much, for what purpose, under what legal reference, or with what exclusivity the regulated action applies. Extract the complete restrictive phrase rather than an isolated cue word such as ‘only’.

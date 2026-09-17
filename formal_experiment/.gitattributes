@@ -252,3 +252,21 @@ outputs/evidence/s3_c36_target_paired_v2/*.json text eol=lf
 outputs/evidence/s3_c36_target_paired_v2/*.jsonl text eol=lf
 outputs/reports/s3_c36_target_paired_v2.json text eol=lf
 outputs/reports/s3_c36_target_paired_v2.md text eol=lf
+
+
+# SEP-C3 targeted refinement v1 (2026-09-17): preserve the exact LF bytes of
+# the new prompt/config/schedule/report family whose SHA-256 bindings are
+# recorded in the Phase-1 audit and in the prepared budget contract.  Scope is
+# intentionally limited to this feature; no broad text=auto or *.json rule.
+src/bpc_hybrid/modular_refinement_prompt.py text eol=lf
+scripts/build_sep_c3_targeted_refinement_v1.py text eol=lf
+scripts/prepare_sep_c3_targeted_refinement_v1.py text eol=lf
+scripts/run_sep_c3_targeted_refinement_v1.py text eol=lf
+prompts/sun_compat/modular_refinement_v1/** text eol=lf
+configs/sep_c3_targeted_refinement_budget_v1.json text eol=lf
+configs/sep_c3_targeted_refinement_schedule_v1.json text eol=lf
+outputs/reports/sep_c3_targeted_refinement_v1_prompt_audit.json text eol=lf
+outputs/reports/sep_c3_targeted_refinement_v1_config_diff.json text eol=lf
+outputs/reports/sep_c3_targeted_refinement_v1_prepare_audit.json text eol=lf
+outputs/reports/sep_c3_targeted_refinement_v1_phase1_audit.md text eol=lf
+outputs/reports/sep_c3_targeted_refinement_v1_prompt_diffs/*.diff text eol=lf
