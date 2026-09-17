@@ -48,3 +48,10 @@
 - 旧实现的 resolved 仅表示从多个候选中排序取首；若词面 winner 与 semantic winner 冲突，v6 候选会保留 ambiguous，不以排序、activity_id 或遍历顺序强制 resolved。
 - 缺少 action/field 支持时，v6 锚点状态为 unconfirmed，不再写 resolved_label_is_action_consistent。
 - 本校正不修改本文件原始表格、输入绑定或历史结果。v6 候选的逐条变化和重新计算的 checks/decision 见 outputs/reports/sep_c4_action_anchor_scope_v1.json 和 .md。
+
+## V7 证据合格候选一致性修复（后加说明；原始逐项数据、hash、分母均未改写）
+- v6 ambiguous 分支把全部检索候选逐一设为 resolved 后调用旧检查器；当 `disambiguation.effective_support={}` 且所有候选都无 handler 时，被合并成确定 `not_handled`。
+- 四条 `syn_v2_exception_not_handled_04/07/08/09` 均为该情形；v7 只对非空 `effective_support` 的证据合格候选做逐候选一致性检查，这四条改为 `unknown`。
+- 冻结 40 对回放：exception variant TP 7→3、FN_unknown 3→7；v7 macro-F1 0.6053，不是性能改善；v6 的 0.7263 不能引用为收益。
+- 唯一精确匹配、resolved 单锚点取证、prohibited 存在性判断、上游 action 抽取和抽象约束限制不变。
+- 证据：`outputs/reports/sep_c4_action_anchor_scope_v2.{json,md}`、`outputs/evidence/sep_c4_action_anchor_scope_v2/manifest.json`、`tests/test_s3_semantic_grounding_v7.py`。

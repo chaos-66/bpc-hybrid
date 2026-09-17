@@ -4955,3 +4955,21 @@
 - 结论：constraint 8 个 unknown 全部是配置不支持的抽象约束，exception 7 个 unknown 主因是 rule-action grounding 未解析/歧义；两类均无足够证据做最小公共映射代码修复。target-paired 单类型 unknown 未被读成合规或违规。
 - 整合：SEP-C2 前人分类配置与分类目标一致性诊断、SEP-C3 modular_v1 四臂/actor/后处理归因保留入文。C2 原 C48 改为 C51，C3 保留 C48/C49/C50；A/B 新增 C52/C53；论文新增 §7.4.8。
 - 边界：真实 API=0；未重跑比较、未生成新预测、未改 Gold/冻结面板/历史 manifest/阈值；不宣称 constraint/exception F1 提升或泛化。
+
+## 2026-09-17T04:31:57.181947+00:00 - SEP-C4 v7 修复 ambiguous 无证据支持候选被合并为确定 exception/condition 违规的漏洞；离线重放 40 对/80 条，v6 产物不覆盖
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=sep_c4_action_anchor_scope_v2；阶段=stage3；方法=s3_semantic_grounding_v7；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_sep_c4_action_anchor_scope_v2.py`
+- manifest：outputs/evidence/sep_c4_action_anchor_scope_v2/manifest.json
+- 结果摘要：candidate v7 four-type macro-F1 0.6053 (v6 0.7263, v2 0.6737); exception TP 7->3, four empty-effective-support v6 TPs return to unknown; condition TP 9->7; record checker-context consistency 80/80; zero API
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：17 passed in 0.14s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`2bbea1de9552c0f6d057767c33a69c490262eb7d`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：stage1_structural_process_record_not_verified、stage1_label_semantics_p0_p1_not_verified、stage1_annotation_protocol_not_verified、stage1_formal_bpmn_membership_not_promoted、stage1_evaluator_contract_not_verified、final_experiment_not_ready
+- 备注：development-only frozen-panel offline replay; F1 drop withdraws unsupported TPs; not a proven performance improvement
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

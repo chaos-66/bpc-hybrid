@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-17
-**收录文件**：2265 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2275 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
@@ -1231,6 +1231,11 @@
 | `outputs/evidence/sep_c4_action_anchor_scope_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c4_action_anchor_scope_v1/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c4_action_anchor_scope_v1/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c4_action_anchor_scope_v2/artifact_hashes.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c4_action_anchor_scope_v2/change_report.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c4_action_anchor_scope_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c4_action_anchor_scope_v2/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c4_action_anchor_scope_v2/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/b0_d1_formal_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1521,6 +1526,8 @@
 | `outputs/reports/sep_c3_postprocessing_attribution_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c4_action_anchor_scope_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c4_action_anchor_scope_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c4_action_anchor_scope_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c4_action_anchor_scope_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c4_constraint_failure_localization_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c4_constraint_failure_localization_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c4_exception_failure_localization_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1860,6 +1867,7 @@
 | `scripts/run_sep_c2_sun_predecessor_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sep_c3_modular_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sep_c4_action_anchor_scope_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c4_action_anchor_scope_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_supplement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_stage2_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -2040,6 +2048,7 @@
 | `src/bpc_hybrid/s3_semantic_grounding_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_semantic_grounding_v5_integration.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s3_semantic_grounding_v6.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/s3_semantic_grounding_v7.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sep_c2_stage2b_winter_estg150.py` | 活动 | Python 实现、脚本或测试 |
@@ -2330,6 +2339,7 @@
 | `tests/test_s3_semantic_grounding_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_semantic_grounding_v5_integration.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s3_semantic_grounding_v6.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_s3_semantic_grounding_v7.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sampling_params.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |

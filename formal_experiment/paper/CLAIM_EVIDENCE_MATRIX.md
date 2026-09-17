@@ -86,5 +86,7 @@
 | C54 | SEP-C2 与 SEP-C3 的 C48 编号冲突已解决：C2 分类目标一致性诊断改为 C51，C3 保留 C48/C49/C50；论文 §7.2.1 与 §6.6.1/§7.3.2 同时保留双方结果并交叉引用 | VERIFIED_PROJECT_FACT（写作与证据整合；零实验/API） | paper/THESIS_DRAFT.md §7.2.1、§6.6.1、§7.3.2；paper/CLAIM_EVIDENCE_MATRIX.md C48-C51；docs/MASTER_PIPELINE.md SEP-C2 归档与 C3 记录 | 可写两分支成果均保留、编号无歧义；不得把 C2 classification 与 C3 extraction/ablation 混成同一指标或同一批次 | 已完成（2026-09-17）；后续新增结果仍须逐条回指 manifest/hash |
 
 
+| C55 | SEP-C4 v7 修复（2026-09-17，DEV_ONLY，zero API）：v6 ambiguous 分支曾对全部检索候选（含 effective_support={}）套用 resolved 假设，把「所有候选都没有 handler」错误合并为确定 exception violation；v7 只对非空 effective_support 的证据合格候选做一致性检查，无证据支持时 condition/constraint/exception 保持 unknown。冻结 40 对重放：四条 v6 新增 exception TP 04/07/08/09 全部退回 unknown，exception variant TP 7→3；condition TP 9→7；v7 macro-F1 0.6053（v6 0.7263、v2 0.6737）、pair success 17/40、target unknown 0.4750；checker-context 80/80 一致。0.7263 不是已证明改善。 | VERIFIED_PROJECT_FACT（发展性离线修复；零 API；不声明性能改善） | outputs/reports/sep_c4_action_anchor_scope_v2.{json,md}；outputs/evidence/sep_c4_action_anchor_scope_v2/；src/bpc_hybrid/s3_semantic_grounding_v7.py；tests/test_s3_semantic_grounding_v7.py；v6 产物保留 | 可写 v6 漏洞原因、v7 修复边界和撤回的 TP；不得写性能改善、不得称全部四类解决 | 抽象约束/上游 action 抽取/Stage 2 validator/Stage 3 prompt 另议 |
+
 新增任何结果性句子前，先在本表新增一行。正式回填必须记录 manifest 路径、事件
 时间、样本数、失败数、模型和 evaluator 版本；否则维持 `BLOCKED_RESULT`。

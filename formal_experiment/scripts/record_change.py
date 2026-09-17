@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -175,10 +176,10 @@ def _run_focused_tests(targets: list[str], timeout_seconds: int = 180) -> dict:
     selected = _focused_targets(targets)
     if timeout_seconds <= 0:
         raise ValueError("Test timeout must be positive")
-    temporary_root = FORMAL_ROOT / ".tmp"
+    temporary_root = FORMAL_ROOT / ".tmp" / "record_change"
     temporary_root.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix="record-focused-", dir=temporary_root,
-                                     ignore_cleanup_errors=True) as temporary:
+    temporary = Path(tempfile.mkdtemp(prefix="record-focused-", dir=temporary_root))
+    try:
         command = [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
                    "--basetemp", str(Path(temporary) / "pytest"), *selected]
         try:
@@ -190,6 +191,8 @@ def _run_focused_tests(targets: list[str], timeout_seconds: int = 180) -> dict:
         except subprocess.TimeoutExpired:
             returncode = 124
             output = f"ERROR: focused tests timed out after {timeout_seconds}s; no wider tests started"
+    finally:
+        shutil.rmtree(temporary, ignore_errors=True)
     return {"command": command, "targets": selected, "scope": "focused",
             "source": "fresh_run", "returncode": returncode,
             "passed": returncode == 0, "output": output}
