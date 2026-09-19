@@ -41,9 +41,7 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
 
 ## SEP-C1-B 完整 E/S/J 2^3 Prompt 组合消融与预算准备（2026-09-14，零 API，未运行）
 
-**状态**：prepared_not_run。本节只固定完整组合、分析协议与授权材料；未创建或修改
-可执行 prompt、检查器或 Gold，未调用真实 LLM/API。八个组合在真实运行和评价完成前
-全部保持待运行。
+**状态**：prepared_not_run（仅指本节 SEP-C1-B 同批双重复 2400-call 主设计）。本节只固定完整组合、分析协议与授权材料；未创建或修改可执行 prompt、检查器或 Gold，未调用真实 LLM/API。本主设计的 000-111 在真实运行和评价完成前全部保持待运行。注意：SEP-C3-MODULAR-ESJ-002 的 000-111 八格已各执行一次（前批 111/011/101/110 与增量批 000/001/010/100，commit 18f5cf9），但那是不同 prompt 实现、非同批、每格一次，不能替代本节的同批双重复设计。
 
 ### 因素定义与共同最低任务/输出接口
 
@@ -76,6 +74,8 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
 | 010 | E0 S1 J0 | 无配置相同臂 | 待运行 |
 | 001 | E0 S0 J1 | 无配置相同臂 | 待运行 |
 | 000 | E0 S0 J0 | 无配置相同臂 | 待运行 |
+
+**注意**：上表的待运行是 SEP-C1-B 计划口径。SEP-C3-MODULAR-ESJ-002 已用另一渲染的 modular_v1 执行 000/001/010/100（以及前批 111/011/101/110），每格 150、failed=0、无重复；两者不能混同为同一消融。
 
 **不可直接拼成完整组合的原因**：现有四条臂来自同一 2026-08-30 批次，每臂只有
 1 次，且恰好覆盖 `111/011/101/110` 四个至少两个因素为 1 的格子。该旧批次与
@@ -181,12 +181,11 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
   亲自发出逐字授权句并创建授权事件后才可调用；本轮不创建授权事件、不执行。
 - 若复用门禁发现旧臂 prompt/input/evaluator/model release 任一不匹配，旧的
   600 次也不得复用；主推荐方案本身不依赖旧结果，调用上限不变。
-- **所有 000-111 真实运行/评价保持待运行**；未取得真实 arm manifest 前，不得
-  在论文中写任何组合的消融结果。
+- **本节 SEP-C1-B 同批双重复主设计的所有 000-111 真实运行/评价保持待运行**；未取得该主设计的真实 arm manifest 前，不得把它写成已完成。SEP-C3-MODULAR-ESJ-002 的 000-111 已另有单次真实 manifest（commit 18f5cf9；`outputs/reports/sep_c3_modular_ablation_v2.json`、`outputs/reports/sep_c3_modular_full8_protocol_audit_v1.md`），但仍是非同批、每格一次，不得写成稳定主效应/交互。
 
 ## SEP-C3 targeted refinement A/B/C/D 设计取舍与收口（2026-09-19，零 API，已有 600-call 证据）
 
-**状态**：targeted refinement 探索已收口；A/B/C/D 的 600-call 结果是**一次运行的开发/探索证据**，不是新的正式性能结论。B 仅为本轮研究参照，正式默认 Direct-LLM prompt 未替换；完整 E/S/J 八组合、已有原始响应的后处理归因和重复运行不确定性仍未完成。本节不新增 API，不修改 prompt、runner、正式默认配置或模型参数。
+**状态**：targeted refinement 探索已收口；A/B/C/D 的 600-call 结果是**一次运行的开发/探索证据**，不是新的正式性能结论。B 仅为本轮研究参照，正式默认 Direct-LLM prompt 未替换；SEP-C3-MODULAR-ESJ-002 的 E/S/J 000-111 八格已由前批+增量批各执行一次（commit 18f5cf9；每臂 150、failed=0、无重复发送），但非同批、每格一次，不能作稳定主效应/交互；已有原始响应后处理归因仅本地分支 9b50729 覆盖旧 v6 与 modular 111，其余 arms 未覆盖且 adapter/canonicalizer/validator 子步骤贡献不可独立分离；重复运行不确定性仍未完成。本节不新增 API，不修改 prompt、runner、正式默认配置或模型参数。
 
 ### 四臂定义与设计取舍
 
@@ -230,7 +229,7 @@ D 的五字段 mean F1=0.7858，高于 B 的 0.7806；因此不能写"B 总分�
 - Recovery/FP 校正：52 条 recovery 比较记录 / 37 个独立 sample_id / 52 个恢复 Gold span；A→C 27、B→D 25；跨方向 15 个样本重合；原 taxonomy 40 条 / 28 个样本，漏掉 12 条 / 9 个样本。旧 time=33 和 legal-reference=0 结论撤回；完整可解释 21、部分内容 29、仅 overlap 2。详见 `outputs/reports/sep_c3_constraint_refinement_v2_semantic_review.{md,json}`。
 - AI 多标签语义复核不是人工 Gold，也不改变冻结评价器；coarse overlap 分数不等于完整语义恢复。
 - 本面板已参与错误分析和 prompt 选择，EStG-150 不是新方案的独立盲测；每臂只有一次运行；旧 E/S/J 组合来自不同批次，不能把不同批次最高分拼成连续提升故事。
-- 未完成：完整 8 组合真实运行、原始响应后处理归因、重复运行不确定性；整个 SEP-C3 不能因本轮收口标记完成。
+- 已完成：SEP-C3-MODULAR-ESJ-002 的 000-111 八格各一次真实运行（前批+增量批，commit 18f5cf9，每臂 150、failed=0、无重复发送），但非同批且无重复，不能作稳定主效应/交互。未完成：SEP-C1-B 同批双重复 2400-call 主设计、原始响应后处理归因（仅本地分支 9b50729 覆盖旧 v6+111，其余 arms 未覆盖且子步骤贡献不可独立分离）、重复运行不确定性；整个 SEP-C3 不能因本轮收口标记完成。
 
 ## Barrientos 消融套件 v2（2026-08-22，零 API）——离线完成 + D/E wired
 

@@ -22,7 +22,7 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 ## SEP-C3 targeted refinement A/B/C/D 设计收口与论文接入（2026-09-19，零 API）
 
-- **状态**：targeted refinement 探索已收口；A/B/C/D 是一次 600-call 开发/探索运行。B 仅为本轮研究参照，正式默认仍是 v6，B 的正式替换未完成；五臂 v2 750-call 计划 NO-GO/未执行；完整 E/S/J 八组合、原始响应后处理归因和重复运行仍未完成。整个 SEP-C3 不能因本轮收口标记完成。
+- **状态**：targeted refinement 探索已收口；A/B/C/D 是一次 600-call 开发/探索运行。B 仅为本轮研究参照，正式默认仍是 v6，B 的正式替换未完成；五臂 v2 750-call 计划 NO-GO/未执行；SEP-C3 modular_v1 的 000-111 八个 E/S/J 组合已全部执行（前一批 111/011/101/110；增量批 000/001/010/100；每臂 150 条、failed=0、无重复发送），但非同批交错、每格仅一次，批次/时间与因子单元混杂，不能据此作稳定主效应/交互结论；固定原始响应后处理归因仅本地分支 9b50729 覆盖旧 v6 与 modular 111，其余 arms 未覆盖且 adapter/canonicalizer/validator 子步骤贡献不可独立分离；重复运行不确定性仍未完成。整个 SEP-C3 不能因本轮收口标记完成。
 - **同批结果**：A/B/C/D 五字段 mean F1 为 0.7246/0.7806/0.7558/0.7858；actor F1 为 0.6314/0.7672/0.6807/0.7284；constraint P/R/F1 为 A 0.8015/0.5556/0.6562、B 0.8102/0.6074/0.6943、C 0.7525/0.7185/0.7351、D 0.7553/0.7778/0.7664。每臂 150 条，共 600 calls，成功 600、失败 0；模型/采样/输入/Gold/evaluator 与既有 targeted refinement 合同一致。
 - **取舍**：D 的 mean F1 高于 B，不能写 B 总分最高。保留 B 是因为 B 的 actor F1（0.7672）高于 D（0.7284），B 只用 R_A、composition 更简单，而旧 R_C 的 recall 收益伴随 precision 下降、FP 净增加和 B→D 六个空-Gold actor regression；这是考虑简洁性、actor 表现和副作用后的保守研究取舍，不是事后创造的验收阈值。
 - **taxonomy 校正**：原 40 条/28 样本改为 52 条 recovery 比较记录/37 个独立 sample_id/52 个恢复 Gold span（A→C 27、B→D 25；15 个样本重合）；旧 time=33 与 legal-reference=0 撤回；校正标签为 AI 多标签复核，不是人工 Gold；完整可解释 21、部分内容 29、仅 overlap 2。
@@ -115,6 +115,7 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - 当前实际证据：Rules-Only 验证通过；`data/predictions/s2_12_direct_llm_v1` 与 `data/results/s2_12_direct_llm_v1` 不存在，因此合同仍 partial，`comparison.complete=false`、`s2_12_complete=false`；S2.12 真实实验未提前标完成，真实 API=0。
 - 新增 S2.13 后继入口 v10 及 schema/outputs：S2.12 状态从两方法合同派生，S2.13 只等待两方法证据，不再等待 `sun_llm_fallback`；v9 及更早胶囊 byte-exact。
 - 具名测试覆盖缺证据拒绝、完整证据通过、取消组不参与和 v10 合同状态；builder replay 与 v10 verifier 通过；未跑全量测试。
+- **Direct-36 零调用就绪核验（2026-09-19）**：`outputs/reports/s2_12_direct36_readiness_review_v1.md`。Rules-Only 36 条完整可验；Direct 无可复用 raw/partial/失败/in_doubt 记录；输入/prompt/model/Gold/evaluator 绑定一致；但 successor 两方法授权缺失、总输入 token 与 USD 硬上限未给、外部发送审批和当前价格复核未过；旧 137/D-CAL/D-REST 授权绑定旧 runner+已取消 fallback，不能复用。总体 **BLOCKED**（仅就绪判断，本轮零调用）。
 - 下一步：继续 SEP-C2 Stage 2B 前人基线首轮实跑，不以准备报告代替结果。
 
 ## 0. SEP-C2 取消前断点（2026-09-14，历史 137 次范围）
@@ -140,7 +141,7 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 **证据/确认范围**：`outputs/reports/sep_c2_execution_preflight_v1.json`。本 checkpoint
 只保存检查结果与阻塞，不创建新 API 授权，不改 Gold、代码或历史预测；无新增测试。
 **下一项不变**：SEP-C2，接续 D-CAL → D-REST → F-1/F-2/F-3 → 同口径评价；GDPR
-批次及下游成对比较按既有合同执行。S2.13、完整八组合和 v5 fallback 状态不提升。
+批次及下游成对比较按既有合同执行。S2.13 和 v5 fallback 状态不提升；SEP-C3 modular_v1 八组合已在后续增量批各执行一次，但仍非同批/无重复，不能提升为稳定主效应/交互结论。
 
 ## 0. 交付复核与当前下一项（2026-09-14）
 
@@ -158,7 +159,7 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 
 **唯一下一项：SEP-C2（必要前人对照与既有授权批次）。**
 SEP-C1-B 已完成：前人比较范围、通用题名与完整 E/S/J 2^3 消融预算准备已写入
-现有正文、主张矩阵和消融矩阵；真实实验/API/测试均为 0，所有八组合保持待运行。
+现有正文、主张矩阵和消融矩阵；该 SEP-C1-B 同批双重复 2400-call 主设计本身真实实验/API/测试均为 0，其八组合保持待运行。另：SEP-C3 modular_v1 八组合已有单次真实执行（commit 18f5cf9 及前批），但非同批、每格一次，不能混写为该主设计已完成。
 SEP-C2 启动时先核验既有 137 次授权、账本、载荷与进程环境可运行性；不重开已完成
 的 C36 比较或 SEP-C1-A，不插入新的约束优化或全量测试。
 
@@ -177,7 +178,7 @@ asset check；无新实验、无真实 API、无可执行 prompt/检查器/Gold 
   `outputs/reports/sep_c1b_factorial_budget_plan_v1.md`（八组合、E/S/J 定义、共同
   接口、推荐 2400 calls、非推荐复用 1800 calls、价格/日期/未核实声明）；授权草案
   见 `docs/API_AUTHORIZATION_REQUEST.md` §14。
-- 主张矩阵新增 C44/C45/C46；八组合真实结果全部待运行。
+- 主张矩阵新增 C44/C45/C46；上述 SEP-C1-B 计划的八组合真实结果仍待运行；SEP-C3 modular_v1 八组合已有单次结果，不得混写为该计划已完成。
 
 **边界**
 - 未创建授权事件，未调用真实 LLM/API；未新增或修改 executable prompt、检查器、
@@ -680,9 +681,9 @@ python formal_experiment/scripts/audit_project.py
 | SEP-C0 计划修订 | 用户已明确推进原则 | verified（文档范围） | 主 Pipeline、状态和手册改为按依赖推进、尽早完成、逐项诊断修复；撤销中间日历安排。本批未执行实验，Git 备份结果在交接中报告。 |
 | S3-V5-RUNNER-INTEGRATION | DS v5 冻结结果与请求包已有 | verified（离线） | 接通 80 条预测及评价，22 对象共享 18 份响应，恢复新增发送 0，42 项相关测试通过；真实调用仍为 0。 |
 | S3-C36-TARGET-PAIRED | 冻结 C36 与 v5 预测已有 | verified（v2 门禁，已推送） | 验收护栏与依赖绑定通过；见 outputs/reports/s3_c36_target_paired_v2.*；SEP-C1-A/B 已完成，下一项 SEP-C2。 |
-| SEP-C1 写作与比较口径 | 已有方法和案例可整理 | verified：SEP-C1-A+B | SEP-C1-A 已完成：论文 §3.4/§3.5 写入三阶段 I/O 与 SIM r10 成功链/r8 失败链，C42/C43 入主张矩阵；无新实验/API。SEP-C1-B 已完成：前人比较范围、通用题名、八组合消融与预算准备（C44-C46）；八组合真实结果仍待运行。 |
+| SEP-C1 写作与比较口径 | 已有方法和案例可整理 | verified：SEP-C1-A+B | SEP-C1-A 已完成：论文 §3.4/§3.5 写入三阶段 I/O 与 SIM r10 成功链/r8 失败链，C42/C43 入主张矩阵；无新实验/API。SEP-C1-B 已完成：前人比较范围、通用题名、八组合消融与预算准备（C44-C46）；该 SEP-C1-B 同批双重复设计的八组合真实结果仍待运行；另 SEP-C3 modular_v1 八格已各执行一次但非同批、无重复，不能混写。 |
 | SEP-C2 必要对照与剩余 Direct 批次 | 两方法合同已适配；运行仍需实际证据与适用权限 | 修复组取消；Direct 结果待执行 | v10 衔接报告中 Rules-Only 36 条已验证，Direct 缺完整预测/评价；保留 Direct 36 + GDPR 74 = 110 次既有计划。执行任务按真实账本和现有授权检查，本轮不重验凭据或外部发送状态；不恢复修复组。 |
-| SEP-C3 prompt 组合与后处理归因 | 诊断已有；新运行仍需适用授权 | targeted refinement 已收口；完整八组合/后处理归因/重复运行未完成 | 2026-09-19 完成 A/B/C/D 一次 600-call 开发运行；B 仅研究参照，正式默认仍为 v6；旧 R_C 保留混合结果；五臂 v2 未执行；详见文首与 sep_c3_constraint_refinement_v2_semantic_review。 |
+| SEP-C3 prompt 组合与后处理归因 | 诊断已有；新运行仍需适用授权 | targeted refinement 已收口；八格已执行一次但非同批/无重复；后处理归因仅旧 v6+111 局部；重复运行未完成 | 2026-09-19 完成 A/B/C/D 一次 600-call 开发运行；modular_v1 000-111 已由前批+增量批各执行一次（commit 18f5cf9，1200 completed samples；批次混杂，不能作稳定主效应/交互）；后处理归因仅本地分支 9b50729 覆盖旧 v6+111，其余 arms 未覆盖且 adapter/canonicalizer/validator 子步骤贡献不可独立分离；B 仅研究参照，正式默认仍为 v6；旧 R_C 保留混合结果；五臂 v2 未执行；详见文首、sep_c3_constraint_refinement_v2_semantic_review 与 sep_c3_postprocessing_attribution_v1。 |
 | SEP-C4 下游与四类边界 | 案例/开发诊断已有证据；正式运行需上游门禁 | 诊断可推进 / 正式运行 blocked | 正式 Oracle/端到端仍依赖实质门禁；案例与范围诊断及时写入正文，新问题进入对应修复项，不等待日历截点。 |
 | SEP-C5 全文 v1 | 已有章节和证据可持续整合 | ready | 现有正文从现在逐段完善，尽早形成可通读全文；必要结果缺口具名列出，后续补证和修复及时回写。 |
 | SEP-C6 导师初稿 | 全文 v1 可审阅 | blocked（待全文） | 完成即交付给用户，最晚 9 月 30 日前提供完整初稿，由用户送导师。 |
