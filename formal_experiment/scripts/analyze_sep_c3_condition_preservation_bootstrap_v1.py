@@ -49,6 +49,9 @@ BOOTSTRAP_SEED = 20260919
 BOOTSTRAP_RESAMPLES = 10_000
 BOOTSTRAP_INTERVAL = "95% percentile"
 DEFAULT_GOLD = ROOT / "data" / "gold" / "stage2" / "estg150_formal_gold_v1.json"
+DEFAULT_INPUT = (
+    ROOT / "data" / "input" / "estg150_formal_inference_input_v2.json"
+)
 DEFAULT_OUTPUT = (
     ROOT
     / "outputs"
@@ -256,6 +259,13 @@ def paired_bootstrap(
                 float(arm_metrics[left][metric])
                 - float(arm_metrics[right][metric])
             )
+    point_counts = {arm: _zero_counts() for arm in ARMS}
+    for arm in ARMS:
+        for sid in sample_order:
+            _add_counts(point_counts[arm], counts_by_arm[arm][sid])
+    point_metrics = {
+        arm: _metrics_from_field_counts(point_counts[arm]) for arm in ARMS
+    }
     result: dict[str, Any] = {
         "seed": seed,
         "resamples": resamples,
@@ -267,13 +277,24 @@ def paired_bootstrap(
             "sum per-sample frozen-evaluator counts, then recompute F1; "
             "never average per-sample F1"
         ),
+        "point_metrics": point_metrics,
+        "point_metric_basis": (
+            "sum counts over the complete frozen 150-sample denominator, "
+            "then recompute the metric"
+        ),
         "comparisons": {},
     }
     for name, values in diffs.items():
+        left_arm, right_arm, metric_name = COMPARISONS[name]
+        point_difference = float(point_metrics[left_arm][metric_name]) - float(
+            point_metrics[right_arm][metric_name]
+        )
+        bootstrap_mean_difference = sum(values) / len(values)
         lo, hi = _interval(values)
         result["comparisons"][name] = {
             "difference_values": values,
-            "point_difference": sum(values) / len(values),
+            "point_difference": point_difference,
+            "bootstrap_mean_difference": bootstrap_mean_difference,
             "ci95_percentile": [lo, hi],
             "contains_zero": lo <= 0.0 <= hi,
         }
@@ -282,9 +303,17 @@ def paired_bootstrap(
 
 def _load_arm_predictions(
     paths: Mapping[str, Path],
+    expected_sample_ids: Sequence[str],
 ) -> tuple[dict[str, list[dict[str, Any]]], list[str]]:
+    expected_ids = [str(sid) for sid in expected_sample_ids]
+    if len(expected_ids) != 150:
+        raise BootstrapError(
+            f"frozen input must contain exactly 150 sample_ids, got {len(expected_ids)}"
+        )
+    if len(expected_ids) != len(set(expected_ids)):
+        raise BootstrapError("frozen input sample_ids are not unique")
+    expected_set = set(expected_ids)
     rows_by_arm: dict[str, list[dict[str, Any]]] = {}
-    reference_ids: list[str] | None = None
     for arm in ARMS:
         rows = _read_jsonl(paths[arm])
         ids = [str(row.get("sample_id") or "") for row in rows]
@@ -292,16 +321,18 @@ def _load_arm_predictions(
             raise BootstrapError(f"{arm}: missing sample_id")
         if len(ids) != len(set(ids)):
             raise BootstrapError(f"{arm}: duplicate sample_id")
-        if reference_ids is None:
-            reference_ids = ids
-        elif set(ids) != set(reference_ids):
+        observed_set = set(ids)
+        if observed_set != expected_set or len(ids) != len(expected_ids):
+            missing = sorted(expected_set - observed_set)
+            extra = sorted(observed_set - expected_set)
             raise BootstrapError(
-                f"{arm}: sample membership differs from BASE/RC1"
+                f"{arm}: sample membership does not match the frozen 150."
+                f" denominator={len(ids)}, missing={missing[:10]}"
+                f"{'...' if len(missing) > 10 else ''},"
+                f" extra={extra[:10]}{'...' if len(extra) > 10 else ''}"
             )
         rows_by_arm[arm] = rows
-    return rows_by_arm, list(reference_ids or [])
-
-
+    return rows_by_arm, list(expected_ids)
 def _point_metrics(
     gold_doc: Mapping[str, Any],
     rows_by_arm: Mapping[str, Sequence[Mapping[str, Any]]],
@@ -549,6 +580,7 @@ def analyze(
     base_path: Path,
     rc1_path: Path,
     rc_keep_path: Path,
+    input_path: Path = DEFAULT_INPUT,
     gold_path: Path = DEFAULT_GOLD,
     output_path: Path = DEFAULT_OUTPUT,
     resamples: int = BOOTSTRAP_RESAMPLES,
@@ -558,11 +590,21 @@ def analyze(
         raise BootstrapError(
             "this round fixes resamples=10000 and seed=20260919"
         )
-    rows_by_arm, sample_order = _load_arm_predictions({
-        "BASE": base_path,
-        "RC1": rc1_path,
-        "RC_KEEP": rc_keep_path,
-    })
+    input_doc = _read_json(input_path)
+    input_records = input_doc.get("records")
+    if not isinstance(input_records, list):
+        raise BootstrapError("frozen input records must be a list")
+    expected_ids = [str(record.get("sample_id") or "") for record in input_records]
+    if any(not sid for sid in expected_ids):
+        raise BootstrapError("frozen input contains a missing sample_id")
+    rows_by_arm, sample_order = _load_arm_predictions(
+        {
+            "BASE": base_path,
+            "RC1": rc1_path,
+            "RC_KEEP": rc_keep_path,
+        },
+        expected_ids,
+    )
     gold_doc = _read_json(gold_path)
     coarse_gold = {str(rec["sample_id"]): rec for rec in build_coarse_view(gold_doc)}
     counts_by_arm: dict[str, dict[str, dict[str, dict[str, int]]]] = {}
@@ -620,8 +662,10 @@ def analyze(
             "BASE": str(base_path),
             "RC1": str(rc1_path),
             "RC_KEEP": str(rc_keep_path),
+            "frozen_input": str(input_path),
             "gold": str(gold_path),
         },
+        "expected_sample_count": len(expected_ids),
         "sample_order": sample_order,
         "denominator_per_arm": {
             arm: len(rows_by_arm[arm]) for arm in ARMS
@@ -654,6 +698,7 @@ def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--base", type=Path, required=True)
     parser.add_argument("--rc1", type=Path, required=True)
     parser.add_argument("--rc-keep", type=Path, required=True)
+    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--gold", type=Path, default=DEFAULT_GOLD)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     return parser.parse_args(argv)
@@ -665,6 +710,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         base_path=args.base,
         rc1_path=args.rc1,
         rc_keep_path=args.rc_keep,
+        input_path=args.input,
         gold_path=args.gold,
         output_path=args.output,
     )

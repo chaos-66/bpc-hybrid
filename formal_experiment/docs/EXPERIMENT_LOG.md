@@ -4975,3 +4975,17 @@
 - 仍存在 blocker：无
 - 备注：Zero API; 450 offline rendered request bodies; frozen schedule seed=20260919; lightweight canonical backend; authorization status not_authorized; old runner execute path not reused.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-19T12:53:46.853509+00:00 - SEP-C3 condition-preservation dedicated executor and paired-analysis fixes; zero-API acceptance
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：18 passed in 70.69s (0:01:10)
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`7ea6c130046d26b8955955d2a376ded209ca7f85`；相关未提交路径：25 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Adds dedicated 450-call executor, new authorization event/execution contract, lightweight validator binding, pre-send attempt ledger, cache-aware usage fields, full-150 analysis completeness check, and actual point-difference vs bootstrap-mean distinction. No real API call.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

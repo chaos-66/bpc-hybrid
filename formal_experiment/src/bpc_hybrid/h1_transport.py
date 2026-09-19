@@ -177,7 +177,13 @@ def _extract_usage(data: Mapping[str, Any]) -> dict[str, int | float]:
     raw_usage = data.get("usage")
     if not isinstance(raw_usage, Mapping):
         return usage
-    for key in ("prompt_tokens", "completion_tokens", "total_tokens"):
+    for key in (
+        "prompt_tokens",
+        "completion_tokens",
+        "total_tokens",
+        "prompt_cache_hit_tokens",
+        "prompt_cache_miss_tokens",
+    ):
         value = _numeric(raw_usage.get(key))
         if value is not None:
             usage[key] = value

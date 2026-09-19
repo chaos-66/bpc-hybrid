@@ -1,0 +1,31 @@
+{
+  "schema_version": "sep_c3_condition_preservation_authorization_event@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "status": "authorized",
+  "authorization_text_scope": "user instruction: full design and authorization sections, verbatim as recorded in this event",
+  "authorization_text": "在 D:\\Paper\\experiment\\bpc-hybrid 中执行 SEP-C3 condition-preservation 验证。\n\n本任务要求完成：必要实现 → 零 API 验收 → 验收通过后真实运行 → 配对分析 → Git 保存。\n不要只提交新的准备报告后结束。\n\n一、研究设计已经确定，不得自行设计或修改 Prompt\n\n固定三组，每组冻结 EStG-150 各运行一次：\n- BASE：common + E + R_A，实际请求等价旧 B。\n- RC1：BASE + 旧 R_C，实际请求等价旧 D。\n- RC_KEEP：RC1 后仅追加以下一句：\n\nKeep each applicability condition as a complete proposition in conditions; extracting an overlapping or nested constraint must not replace or remove that condition.\n\n禁止改写上述句子；禁止修改 common、E、R_A、旧 R_C。\n不得新增候选、样本、重复轮次、校准调用或替补调用。\n不得改 Gold、评价规则、历史预测或正式默认 Prompt。\n\n复用已准备的三组 Prompt、450 个请求、固定交错 schedule，以及既有 judgment_rules。\n不要重新随机化或重新选择样本。\n\n二、API 授权与预算\n\n本指令实际由用户发送后，授权执行本次实验：\n- 模型：deepseek-v4-pro。\n- 服务：DeepSeek 官方 API；不得换模型或中转渠道。\n- 计划及最多真实请求：450 次。\n- retry=0；每个 sample_id、arm 只允许发送一次。\n- 每次 max_tokens=4096；其余推理参数沿用冻结配置。\n- 总费用不得超过 10 USD。\n- 沿用已准备的输入、输出 token 资源限制，不得自行扩大。\n- 失败、超时和不确定发送均计入调用预算，不补发。\n- 不包含其他实验的调用授权。\n\n将本条用户指令及其哈希记录为本轮授权依据，不复用旧授权。\n\n已有官方美元价格依据：\nhttps://api-docs.deepseek.com/quick_start/pricing/\n每百万 tokens：\n高峰：输入缓存未命中 1.32、缓存命中 0.044、输出 3.96。\n空闲：输入缓存未命中 0.66、缓存命中 0.022、输出 1.98。\n\n预算预留统一使用高峰、输入全部缓存未命中的保守价格。\n实际费用另按可核实的 usage、缓存和适用费率记录。\n核对官方价格不属于收费模型探测，不得为查价格增加模型调用。\n如官方价格变化，重新计算；只有仍满足本次固定预算才可继续。\n\nbytes/3 是输入 token 粗估，不得称为严格上限。\n实现调用前预算检查和保守预留；费用或 usage 无法核实时停止后续发送，保留已发生记录，不得按零费用继续。\n不得读取或打印 formal_experiment/.env；只使用已有安全凭据方式，不输出密钥。",
+  "authorization_text_sha256": "a04ea8b7740f9128f5a00672a316bba3d2af5fe0e0776a6cdfba69e8f319fd47",
+  "model": "deepseek-v4-pro",
+  "provider": "openai_compatible",
+  "service": "DeepSeek official API",
+  "planned_calls": 450,
+  "call_cap": 450,
+  "retry": 0,
+  "max_tokens": 4096,
+  "usd_budget_cap": 10.0,
+  "price_snapshot": {
+    "source_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "peak": {
+      "input_cache_miss_per_million": 1.32,
+      "input_cache_hit_per_million": 0.044,
+      "output_per_million": 3.96
+    },
+    "off_peak": {
+      "input_cache_miss_per_million": 0.66,
+      "input_cache_hit_per_million": 0.022,
+      "output_per_million": 1.98
+    }
+  },
+  "not_reusing_old_authorization": true,
+  "created_at_utc": "2026-09-19T12:45:46.828621+00:00"
+}
