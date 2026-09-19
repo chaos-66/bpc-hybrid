@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-17
+**更新时间**：2026-09-19
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -8,6 +8,23 @@
 
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
+
+## SEP-C3 Constraint Refinement v2 调用价值审查（2026-09-19，零 API）
+
+- 当前结论：**5 arms × 150 = 750 calls 不启动**。用户要求严格校对、确认有用才跑；
+  本轮发现 temporal-only 的关键依据存在 taxonomy 错分，未满足运行条件。
+- 审查依据为本地提交 `fb96071` 的 600-call A/B/C/D 证据；独立核对 600 条 canonical
+  的 3,000 个样本×arm×字段计数，全部一致。R_A 收益、R_C recall/FP 权衡和 B→D
+  六个 empty-Gold actor regression 的计数保留；不把语义分类错误当成预测数据损坏。
+- 原 time 33 条实际为两组比较相加、23 个独立样本。分类器把 `to`、`within`、`may`
+  和法律年份当作时间，数量上限/法律引用等被误分；“主要 time、legal reference=0”
+  不能用作设计结论。taxonomy 还漏掉了全部 52 次 recovery 中仍有 FP 的 12 次。
+- 全部 7 条 manual-review 记录（6 个样本）已有 AI 离线复核意见，但未冒充人工裁决，
+  原标记保持不变。未标记的 recovery 同样存在明显误分，下一步先校准完整语义归因，
+  再确定是否值得运行、需要哪些 arms；不自动把五臂换成另一批调用。
+- 审查报告：`outputs/reports/sep_c3_constraint_refinement_v2_go_no_go_review.md`。
+  本批仅分析与文档；API=0，Gold/prompt/评价器/历史结果未改，不运行项目审计或测试。
+  历史 `fb96071` 的分支未配置 upstream，仍不能标为远端已备份。
 
 ## CSCWD 2027 投稿定位与核验（2026-09-17，文档范围）
 
