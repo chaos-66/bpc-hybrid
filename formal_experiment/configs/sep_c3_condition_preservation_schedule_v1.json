@@ -1,0 +1,3643 @@
+{
+  "schema_version": "sep_c3_condition_preservation_schedule@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "scheme": "sample_level_six_permutations_25_each_seed_20260919",
+  "runtime_seed": 20260919,
+  "rng": "python random.Random(seed).shuffle",
+  "permutation_order": [
+    "BASE>RC1>RC_KEEP",
+    "BASE>RC_KEEP>RC1",
+    "RC1>BASE>RC_KEEP",
+    "RC1>RC_KEEP>BASE",
+    "RC_KEEP>BASE>RC1",
+    "RC_KEEP>RC1>BASE"
+  ],
+  "permutation_counts": {
+    "BASE>RC1>RC_KEEP": 25,
+    "BASE>RC_KEEP>RC1": 25,
+    "RC1>BASE>RC_KEEP": 25,
+    "RC1>RC_KEEP>BASE": 25,
+    "RC_KEEP>BASE>RC1": 25,
+    "RC_KEEP>RC1>BASE": 25
+  },
+  "interleaving": {
+    "level": "sample_level",
+    "arms_per_block": 3,
+    "block_count": 150,
+    "arm_order_fixed_per_sample": true,
+    "schedule_frozen_before_run": true
+  },
+  "arms": [
+    "BASE",
+    "RC1",
+    "RC_KEEP"
+  ],
+  "samples_per_arm": 150,
+  "planned_calls": 450,
+  "input_path": "data/input/estg150_formal_inference_input_v2.json",
+  "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+  "entries": [
+    {
+      "execution_index": 0,
+      "sample_order_index": 0,
+      "sample_id": "estg_000002",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 1,
+      "sample_order_index": 0,
+      "sample_id": "estg_000002",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 2,
+      "sample_order_index": 0,
+      "sample_id": "estg_000002",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 3,
+      "sample_order_index": 1,
+      "sample_id": "estg_000003",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 4,
+      "sample_order_index": 1,
+      "sample_id": "estg_000003",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 5,
+      "sample_order_index": 1,
+      "sample_id": "estg_000003",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 6,
+      "sample_order_index": 2,
+      "sample_id": "estg_000004",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 7,
+      "sample_order_index": 2,
+      "sample_id": "estg_000004",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 8,
+      "sample_order_index": 2,
+      "sample_id": "estg_000004",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 9,
+      "sample_order_index": 3,
+      "sample_id": "estg_000020",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 10,
+      "sample_order_index": 3,
+      "sample_id": "estg_000020",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 11,
+      "sample_order_index": 3,
+      "sample_id": "estg_000020",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 12,
+      "sample_order_index": 4,
+      "sample_id": "estg_000021",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 13,
+      "sample_order_index": 4,
+      "sample_id": "estg_000021",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 14,
+      "sample_order_index": 4,
+      "sample_id": "estg_000021",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 15,
+      "sample_order_index": 5,
+      "sample_id": "estg_000027",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 16,
+      "sample_order_index": 5,
+      "sample_id": "estg_000027",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 17,
+      "sample_order_index": 5,
+      "sample_id": "estg_000027",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 18,
+      "sample_order_index": 6,
+      "sample_id": "estg_000028",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 19,
+      "sample_order_index": 6,
+      "sample_id": "estg_000028",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 20,
+      "sample_order_index": 6,
+      "sample_id": "estg_000028",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 21,
+      "sample_order_index": 7,
+      "sample_id": "estg_000030",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 22,
+      "sample_order_index": 7,
+      "sample_id": "estg_000030",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 23,
+      "sample_order_index": 7,
+      "sample_id": "estg_000030",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 24,
+      "sample_order_index": 8,
+      "sample_id": "estg_000031",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 25,
+      "sample_order_index": 8,
+      "sample_id": "estg_000031",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 26,
+      "sample_order_index": 8,
+      "sample_id": "estg_000031",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 27,
+      "sample_order_index": 9,
+      "sample_id": "estg_000033",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 28,
+      "sample_order_index": 9,
+      "sample_id": "estg_000033",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 29,
+      "sample_order_index": 9,
+      "sample_id": "estg_000033",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 30,
+      "sample_order_index": 10,
+      "sample_id": "estg_000035",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 31,
+      "sample_order_index": 10,
+      "sample_id": "estg_000035",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 32,
+      "sample_order_index": 10,
+      "sample_id": "estg_000035",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 33,
+      "sample_order_index": 11,
+      "sample_id": "estg_000036",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 34,
+      "sample_order_index": 11,
+      "sample_id": "estg_000036",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 35,
+      "sample_order_index": 11,
+      "sample_id": "estg_000036",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 36,
+      "sample_order_index": 12,
+      "sample_id": "estg_000037",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 37,
+      "sample_order_index": 12,
+      "sample_id": "estg_000037",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 38,
+      "sample_order_index": 12,
+      "sample_id": "estg_000037",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 39,
+      "sample_order_index": 13,
+      "sample_id": "estg_000038",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 40,
+      "sample_order_index": 13,
+      "sample_id": "estg_000038",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 41,
+      "sample_order_index": 13,
+      "sample_id": "estg_000038",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 42,
+      "sample_order_index": 14,
+      "sample_id": "estg_000039",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 43,
+      "sample_order_index": 14,
+      "sample_id": "estg_000039",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 44,
+      "sample_order_index": 14,
+      "sample_id": "estg_000039",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 45,
+      "sample_order_index": 15,
+      "sample_id": "estg_000040",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 46,
+      "sample_order_index": 15,
+      "sample_id": "estg_000040",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 47,
+      "sample_order_index": 15,
+      "sample_id": "estg_000040",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 48,
+      "sample_order_index": 16,
+      "sample_id": "estg_000043",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 49,
+      "sample_order_index": 16,
+      "sample_id": "estg_000043",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 50,
+      "sample_order_index": 16,
+      "sample_id": "estg_000043",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 51,
+      "sample_order_index": 17,
+      "sample_id": "estg_000044",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 52,
+      "sample_order_index": 17,
+      "sample_id": "estg_000044",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 53,
+      "sample_order_index": 17,
+      "sample_id": "estg_000044",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 54,
+      "sample_order_index": 18,
+      "sample_id": "estg_000046",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 55,
+      "sample_order_index": 18,
+      "sample_id": "estg_000046",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 56,
+      "sample_order_index": 18,
+      "sample_id": "estg_000046",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 57,
+      "sample_order_index": 19,
+      "sample_id": "estg_000051",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 58,
+      "sample_order_index": 19,
+      "sample_id": "estg_000051",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 59,
+      "sample_order_index": 19,
+      "sample_id": "estg_000051",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 60,
+      "sample_order_index": 20,
+      "sample_id": "estg_000052",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 61,
+      "sample_order_index": 20,
+      "sample_id": "estg_000052",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 62,
+      "sample_order_index": 20,
+      "sample_id": "estg_000052",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 63,
+      "sample_order_index": 21,
+      "sample_id": "estg_000055",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 64,
+      "sample_order_index": 21,
+      "sample_id": "estg_000055",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 65,
+      "sample_order_index": 21,
+      "sample_id": "estg_000055",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 66,
+      "sample_order_index": 22,
+      "sample_id": "estg_000056",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 67,
+      "sample_order_index": 22,
+      "sample_id": "estg_000056",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 68,
+      "sample_order_index": 22,
+      "sample_id": "estg_000056",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 69,
+      "sample_order_index": 23,
+      "sample_id": "estg_000057",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 70,
+      "sample_order_index": 23,
+      "sample_id": "estg_000057",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 71,
+      "sample_order_index": 23,
+      "sample_id": "estg_000057",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 72,
+      "sample_order_index": 24,
+      "sample_id": "estg_000059",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 73,
+      "sample_order_index": 24,
+      "sample_id": "estg_000059",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 74,
+      "sample_order_index": 24,
+      "sample_id": "estg_000059",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 75,
+      "sample_order_index": 25,
+      "sample_id": "estg_000060",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 76,
+      "sample_order_index": 25,
+      "sample_id": "estg_000060",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 77,
+      "sample_order_index": 25,
+      "sample_id": "estg_000060",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 78,
+      "sample_order_index": 26,
+      "sample_id": "estg_000061",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 79,
+      "sample_order_index": 26,
+      "sample_id": "estg_000061",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 80,
+      "sample_order_index": 26,
+      "sample_id": "estg_000061",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 81,
+      "sample_order_index": 27,
+      "sample_id": "estg_000062",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 82,
+      "sample_order_index": 27,
+      "sample_id": "estg_000062",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 83,
+      "sample_order_index": 27,
+      "sample_id": "estg_000062",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 84,
+      "sample_order_index": 28,
+      "sample_id": "estg_000068",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 85,
+      "sample_order_index": 28,
+      "sample_id": "estg_000068",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 86,
+      "sample_order_index": 28,
+      "sample_id": "estg_000068",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 87,
+      "sample_order_index": 29,
+      "sample_id": "estg_000070",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 88,
+      "sample_order_index": 29,
+      "sample_id": "estg_000070",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 89,
+      "sample_order_index": 29,
+      "sample_id": "estg_000070",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 90,
+      "sample_order_index": 30,
+      "sample_id": "estg_000071",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 91,
+      "sample_order_index": 30,
+      "sample_id": "estg_000071",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 92,
+      "sample_order_index": 30,
+      "sample_id": "estg_000071",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 93,
+      "sample_order_index": 31,
+      "sample_id": "estg_000074",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 94,
+      "sample_order_index": 31,
+      "sample_id": "estg_000074",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 95,
+      "sample_order_index": 31,
+      "sample_id": "estg_000074",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 96,
+      "sample_order_index": 32,
+      "sample_id": "estg_000075",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 97,
+      "sample_order_index": 32,
+      "sample_id": "estg_000075",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 98,
+      "sample_order_index": 32,
+      "sample_id": "estg_000075",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 99,
+      "sample_order_index": 33,
+      "sample_id": "estg_000077",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 100,
+      "sample_order_index": 33,
+      "sample_id": "estg_000077",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 101,
+      "sample_order_index": 33,
+      "sample_id": "estg_000077",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 102,
+      "sample_order_index": 34,
+      "sample_id": "estg_000079",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 103,
+      "sample_order_index": 34,
+      "sample_id": "estg_000079",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 104,
+      "sample_order_index": 34,
+      "sample_id": "estg_000079",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 105,
+      "sample_order_index": 35,
+      "sample_id": "estg_000080",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 106,
+      "sample_order_index": 35,
+      "sample_id": "estg_000080",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 107,
+      "sample_order_index": 35,
+      "sample_id": "estg_000080",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 108,
+      "sample_order_index": 36,
+      "sample_id": "estg_000082",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 109,
+      "sample_order_index": 36,
+      "sample_id": "estg_000082",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 110,
+      "sample_order_index": 36,
+      "sample_id": "estg_000082",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 111,
+      "sample_order_index": 37,
+      "sample_id": "estg_000083",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 112,
+      "sample_order_index": 37,
+      "sample_id": "estg_000083",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 113,
+      "sample_order_index": 37,
+      "sample_id": "estg_000083",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 114,
+      "sample_order_index": 38,
+      "sample_id": "estg_000087",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 115,
+      "sample_order_index": 38,
+      "sample_id": "estg_000087",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 116,
+      "sample_order_index": 38,
+      "sample_id": "estg_000087",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 117,
+      "sample_order_index": 39,
+      "sample_id": "estg_000091",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 118,
+      "sample_order_index": 39,
+      "sample_id": "estg_000091",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 119,
+      "sample_order_index": 39,
+      "sample_id": "estg_000091",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 120,
+      "sample_order_index": 40,
+      "sample_id": "estg_000092",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 121,
+      "sample_order_index": 40,
+      "sample_id": "estg_000092",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 122,
+      "sample_order_index": 40,
+      "sample_id": "estg_000092",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 123,
+      "sample_order_index": 41,
+      "sample_id": "estg_000094",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 124,
+      "sample_order_index": 41,
+      "sample_id": "estg_000094",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 125,
+      "sample_order_index": 41,
+      "sample_id": "estg_000094",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 126,
+      "sample_order_index": 42,
+      "sample_id": "estg_000095",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 127,
+      "sample_order_index": 42,
+      "sample_id": "estg_000095",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 128,
+      "sample_order_index": 42,
+      "sample_id": "estg_000095",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 129,
+      "sample_order_index": 43,
+      "sample_id": "estg_000098",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 130,
+      "sample_order_index": 43,
+      "sample_id": "estg_000098",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 131,
+      "sample_order_index": 43,
+      "sample_id": "estg_000098",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 132,
+      "sample_order_index": 44,
+      "sample_id": "estg_000103",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 133,
+      "sample_order_index": 44,
+      "sample_id": "estg_000103",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 134,
+      "sample_order_index": 44,
+      "sample_id": "estg_000103",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 135,
+      "sample_order_index": 45,
+      "sample_id": "estg_000104",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 136,
+      "sample_order_index": 45,
+      "sample_id": "estg_000104",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 137,
+      "sample_order_index": 45,
+      "sample_id": "estg_000104",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 138,
+      "sample_order_index": 46,
+      "sample_id": "estg_000105",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 139,
+      "sample_order_index": 46,
+      "sample_id": "estg_000105",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 140,
+      "sample_order_index": 46,
+      "sample_id": "estg_000105",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 141,
+      "sample_order_index": 47,
+      "sample_id": "estg_000106",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 142,
+      "sample_order_index": 47,
+      "sample_id": "estg_000106",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 143,
+      "sample_order_index": 47,
+      "sample_id": "estg_000106",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 144,
+      "sample_order_index": 48,
+      "sample_id": "estg_000108",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 145,
+      "sample_order_index": 48,
+      "sample_id": "estg_000108",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 146,
+      "sample_order_index": 48,
+      "sample_id": "estg_000108",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 147,
+      "sample_order_index": 49,
+      "sample_id": "estg_000109",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 148,
+      "sample_order_index": 49,
+      "sample_id": "estg_000109",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 149,
+      "sample_order_index": 49,
+      "sample_id": "estg_000109",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 150,
+      "sample_order_index": 50,
+      "sample_id": "estg_000111",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 151,
+      "sample_order_index": 50,
+      "sample_id": "estg_000111",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 152,
+      "sample_order_index": 50,
+      "sample_id": "estg_000111",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 153,
+      "sample_order_index": 51,
+      "sample_id": "estg_000112",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 154,
+      "sample_order_index": 51,
+      "sample_id": "estg_000112",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 155,
+      "sample_order_index": 51,
+      "sample_id": "estg_000112",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 156,
+      "sample_order_index": 52,
+      "sample_id": "estg_000113",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 157,
+      "sample_order_index": 52,
+      "sample_id": "estg_000113",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 158,
+      "sample_order_index": 52,
+      "sample_id": "estg_000113",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 159,
+      "sample_order_index": 53,
+      "sample_id": "estg_000114",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 160,
+      "sample_order_index": 53,
+      "sample_id": "estg_000114",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 161,
+      "sample_order_index": 53,
+      "sample_id": "estg_000114",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 162,
+      "sample_order_index": 54,
+      "sample_id": "estg_000115",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 163,
+      "sample_order_index": 54,
+      "sample_id": "estg_000115",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 164,
+      "sample_order_index": 54,
+      "sample_id": "estg_000115",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 165,
+      "sample_order_index": 55,
+      "sample_id": "estg_000118",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 166,
+      "sample_order_index": 55,
+      "sample_id": "estg_000118",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 167,
+      "sample_order_index": 55,
+      "sample_id": "estg_000118",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 168,
+      "sample_order_index": 56,
+      "sample_id": "estg_000119",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 169,
+      "sample_order_index": 56,
+      "sample_id": "estg_000119",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 170,
+      "sample_order_index": 56,
+      "sample_id": "estg_000119",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 171,
+      "sample_order_index": 57,
+      "sample_id": "estg_000121",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 172,
+      "sample_order_index": 57,
+      "sample_id": "estg_000121",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 173,
+      "sample_order_index": 57,
+      "sample_id": "estg_000121",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 174,
+      "sample_order_index": 58,
+      "sample_id": "estg_000123",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 175,
+      "sample_order_index": 58,
+      "sample_id": "estg_000123",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 176,
+      "sample_order_index": 58,
+      "sample_id": "estg_000123",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 177,
+      "sample_order_index": 59,
+      "sample_id": "estg_000124",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 178,
+      "sample_order_index": 59,
+      "sample_id": "estg_000124",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 179,
+      "sample_order_index": 59,
+      "sample_id": "estg_000124",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 180,
+      "sample_order_index": 60,
+      "sample_id": "estg_000125",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 181,
+      "sample_order_index": 60,
+      "sample_id": "estg_000125",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 182,
+      "sample_order_index": 60,
+      "sample_id": "estg_000125",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 183,
+      "sample_order_index": 61,
+      "sample_id": "estg_000127",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 184,
+      "sample_order_index": 61,
+      "sample_id": "estg_000127",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 185,
+      "sample_order_index": 61,
+      "sample_id": "estg_000127",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 186,
+      "sample_order_index": 62,
+      "sample_id": "estg_000128",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 187,
+      "sample_order_index": 62,
+      "sample_id": "estg_000128",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 188,
+      "sample_order_index": 62,
+      "sample_id": "estg_000128",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 189,
+      "sample_order_index": 63,
+      "sample_id": "estg_000130",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 190,
+      "sample_order_index": 63,
+      "sample_id": "estg_000130",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 191,
+      "sample_order_index": 63,
+      "sample_id": "estg_000130",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 192,
+      "sample_order_index": 64,
+      "sample_id": "estg_000131",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 193,
+      "sample_order_index": 64,
+      "sample_id": "estg_000131",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 194,
+      "sample_order_index": 64,
+      "sample_id": "estg_000131",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 195,
+      "sample_order_index": 65,
+      "sample_id": "estg_000133",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 196,
+      "sample_order_index": 65,
+      "sample_id": "estg_000133",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 197,
+      "sample_order_index": 65,
+      "sample_id": "estg_000133",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 198,
+      "sample_order_index": 66,
+      "sample_id": "estg_000134",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 199,
+      "sample_order_index": 66,
+      "sample_id": "estg_000134",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 200,
+      "sample_order_index": 66,
+      "sample_id": "estg_000134",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 201,
+      "sample_order_index": 67,
+      "sample_id": "estg_000135",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 202,
+      "sample_order_index": 67,
+      "sample_id": "estg_000135",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 203,
+      "sample_order_index": 67,
+      "sample_id": "estg_000135",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 204,
+      "sample_order_index": 68,
+      "sample_id": "estg_000136",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 205,
+      "sample_order_index": 68,
+      "sample_id": "estg_000136",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 206,
+      "sample_order_index": 68,
+      "sample_id": "estg_000136",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 207,
+      "sample_order_index": 69,
+      "sample_id": "estg_000139",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 208,
+      "sample_order_index": 69,
+      "sample_id": "estg_000139",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 209,
+      "sample_order_index": 69,
+      "sample_id": "estg_000139",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 210,
+      "sample_order_index": 70,
+      "sample_id": "estg_000143",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 211,
+      "sample_order_index": 70,
+      "sample_id": "estg_000143",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 212,
+      "sample_order_index": 70,
+      "sample_id": "estg_000143",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 213,
+      "sample_order_index": 71,
+      "sample_id": "estg_000145",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 214,
+      "sample_order_index": 71,
+      "sample_id": "estg_000145",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 215,
+      "sample_order_index": 71,
+      "sample_id": "estg_000145",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 216,
+      "sample_order_index": 72,
+      "sample_id": "estg_000146",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 217,
+      "sample_order_index": 72,
+      "sample_id": "estg_000146",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 218,
+      "sample_order_index": 72,
+      "sample_id": "estg_000146",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 219,
+      "sample_order_index": 73,
+      "sample_id": "estg_000148",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 220,
+      "sample_order_index": 73,
+      "sample_id": "estg_000148",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 221,
+      "sample_order_index": 73,
+      "sample_id": "estg_000148",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 222,
+      "sample_order_index": 74,
+      "sample_id": "estg_000161",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 223,
+      "sample_order_index": 74,
+      "sample_id": "estg_000161",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 224,
+      "sample_order_index": 74,
+      "sample_id": "estg_000161",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 225,
+      "sample_order_index": 75,
+      "sample_id": "estg_000164",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 226,
+      "sample_order_index": 75,
+      "sample_id": "estg_000164",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 227,
+      "sample_order_index": 75,
+      "sample_id": "estg_000164",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 228,
+      "sample_order_index": 76,
+      "sample_id": "estg_000173",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 229,
+      "sample_order_index": 76,
+      "sample_id": "estg_000173",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 230,
+      "sample_order_index": 76,
+      "sample_id": "estg_000173",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 231,
+      "sample_order_index": 77,
+      "sample_id": "estg_000183",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 232,
+      "sample_order_index": 77,
+      "sample_id": "estg_000183",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 233,
+      "sample_order_index": 77,
+      "sample_id": "estg_000183",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 234,
+      "sample_order_index": 78,
+      "sample_id": "estg_000195",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 235,
+      "sample_order_index": 78,
+      "sample_id": "estg_000195",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 236,
+      "sample_order_index": 78,
+      "sample_id": "estg_000195",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 237,
+      "sample_order_index": 79,
+      "sample_id": "estg_000206",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 238,
+      "sample_order_index": 79,
+      "sample_id": "estg_000206",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 239,
+      "sample_order_index": 79,
+      "sample_id": "estg_000206",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 240,
+      "sample_order_index": 80,
+      "sample_id": "estg_000207",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 241,
+      "sample_order_index": 80,
+      "sample_id": "estg_000207",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 242,
+      "sample_order_index": 80,
+      "sample_id": "estg_000207",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 243,
+      "sample_order_index": 81,
+      "sample_id": "estg_000208",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 244,
+      "sample_order_index": 81,
+      "sample_id": "estg_000208",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 245,
+      "sample_order_index": 81,
+      "sample_id": "estg_000208",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 246,
+      "sample_order_index": 82,
+      "sample_id": "estg_000209",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 247,
+      "sample_order_index": 82,
+      "sample_id": "estg_000209",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 248,
+      "sample_order_index": 82,
+      "sample_id": "estg_000209",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 249,
+      "sample_order_index": 83,
+      "sample_id": "estg_000210",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 250,
+      "sample_order_index": 83,
+      "sample_id": "estg_000210",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 251,
+      "sample_order_index": 83,
+      "sample_id": "estg_000210",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 252,
+      "sample_order_index": 84,
+      "sample_id": "estg_000214",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 253,
+      "sample_order_index": 84,
+      "sample_id": "estg_000214",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 254,
+      "sample_order_index": 84,
+      "sample_id": "estg_000214",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 255,
+      "sample_order_index": 85,
+      "sample_id": "estg_000218",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 256,
+      "sample_order_index": 85,
+      "sample_id": "estg_000218",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 257,
+      "sample_order_index": 85,
+      "sample_id": "estg_000218",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 258,
+      "sample_order_index": 86,
+      "sample_id": "estg_000220",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 259,
+      "sample_order_index": 86,
+      "sample_id": "estg_000220",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 260,
+      "sample_order_index": 86,
+      "sample_id": "estg_000220",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 261,
+      "sample_order_index": 87,
+      "sample_id": "estg_000222",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 262,
+      "sample_order_index": 87,
+      "sample_id": "estg_000222",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 263,
+      "sample_order_index": 87,
+      "sample_id": "estg_000222",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 264,
+      "sample_order_index": 88,
+      "sample_id": "estg_000223",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 265,
+      "sample_order_index": 88,
+      "sample_id": "estg_000223",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 266,
+      "sample_order_index": 88,
+      "sample_id": "estg_000223",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 267,
+      "sample_order_index": 89,
+      "sample_id": "estg_000230",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 268,
+      "sample_order_index": 89,
+      "sample_id": "estg_000230",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 269,
+      "sample_order_index": 89,
+      "sample_id": "estg_000230",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 270,
+      "sample_order_index": 90,
+      "sample_id": "estg_000231",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 271,
+      "sample_order_index": 90,
+      "sample_id": "estg_000231",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 272,
+      "sample_order_index": 90,
+      "sample_id": "estg_000231",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 273,
+      "sample_order_index": 91,
+      "sample_id": "estg_000232",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 274,
+      "sample_order_index": 91,
+      "sample_id": "estg_000232",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 275,
+      "sample_order_index": 91,
+      "sample_id": "estg_000232",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 276,
+      "sample_order_index": 92,
+      "sample_id": "estg_000245",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 277,
+      "sample_order_index": 92,
+      "sample_id": "estg_000245",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 278,
+      "sample_order_index": 92,
+      "sample_id": "estg_000245",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 279,
+      "sample_order_index": 93,
+      "sample_id": "estg_000247",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 280,
+      "sample_order_index": 93,
+      "sample_id": "estg_000247",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 281,
+      "sample_order_index": 93,
+      "sample_id": "estg_000247",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 282,
+      "sample_order_index": 94,
+      "sample_id": "estg_000271",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 283,
+      "sample_order_index": 94,
+      "sample_id": "estg_000271",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 284,
+      "sample_order_index": 94,
+      "sample_id": "estg_000271",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 285,
+      "sample_order_index": 95,
+      "sample_id": "estg_000273",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 286,
+      "sample_order_index": 95,
+      "sample_id": "estg_000273",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 287,
+      "sample_order_index": 95,
+      "sample_id": "estg_000273",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 288,
+      "sample_order_index": 96,
+      "sample_id": "estg_000277",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 289,
+      "sample_order_index": 96,
+      "sample_id": "estg_000277",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 290,
+      "sample_order_index": 96,
+      "sample_id": "estg_000277",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 291,
+      "sample_order_index": 97,
+      "sample_id": "estg_000283",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 292,
+      "sample_order_index": 97,
+      "sample_id": "estg_000283",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 293,
+      "sample_order_index": 97,
+      "sample_id": "estg_000283",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 294,
+      "sample_order_index": 98,
+      "sample_id": "estg_000285",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 295,
+      "sample_order_index": 98,
+      "sample_id": "estg_000285",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 296,
+      "sample_order_index": 98,
+      "sample_id": "estg_000285",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 297,
+      "sample_order_index": 99,
+      "sample_id": "estg_000286",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 298,
+      "sample_order_index": 99,
+      "sample_id": "estg_000286",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 299,
+      "sample_order_index": 99,
+      "sample_id": "estg_000286",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 300,
+      "sample_order_index": 100,
+      "sample_id": "estg_000293",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 301,
+      "sample_order_index": 100,
+      "sample_id": "estg_000293",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 302,
+      "sample_order_index": 100,
+      "sample_id": "estg_000293",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 303,
+      "sample_order_index": 101,
+      "sample_id": "estg_000302",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 304,
+      "sample_order_index": 101,
+      "sample_id": "estg_000302",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 305,
+      "sample_order_index": 101,
+      "sample_id": "estg_000302",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 306,
+      "sample_order_index": 102,
+      "sample_id": "estg_000306",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 307,
+      "sample_order_index": 102,
+      "sample_id": "estg_000306",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 308,
+      "sample_order_index": 102,
+      "sample_id": "estg_000306",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 309,
+      "sample_order_index": 103,
+      "sample_id": "estg_000308",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 310,
+      "sample_order_index": 103,
+      "sample_id": "estg_000308",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 311,
+      "sample_order_index": 103,
+      "sample_id": "estg_000308",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 312,
+      "sample_order_index": 104,
+      "sample_id": "estg_000313",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 313,
+      "sample_order_index": 104,
+      "sample_id": "estg_000313",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 314,
+      "sample_order_index": 104,
+      "sample_id": "estg_000313",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 315,
+      "sample_order_index": 105,
+      "sample_id": "estg_000326",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 316,
+      "sample_order_index": 105,
+      "sample_id": "estg_000326",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 317,
+      "sample_order_index": 105,
+      "sample_id": "estg_000326",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 318,
+      "sample_order_index": 106,
+      "sample_id": "estg_000347",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 319,
+      "sample_order_index": 106,
+      "sample_id": "estg_000347",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 320,
+      "sample_order_index": 106,
+      "sample_id": "estg_000347",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 321,
+      "sample_order_index": 107,
+      "sample_id": "estg_000366",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 322,
+      "sample_order_index": 107,
+      "sample_id": "estg_000366",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 323,
+      "sample_order_index": 107,
+      "sample_id": "estg_000366",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 324,
+      "sample_order_index": 108,
+      "sample_id": "estg_000375",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 325,
+      "sample_order_index": 108,
+      "sample_id": "estg_000375",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 326,
+      "sample_order_index": 108,
+      "sample_id": "estg_000375",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 327,
+      "sample_order_index": 109,
+      "sample_id": "estg_000393",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 328,
+      "sample_order_index": 109,
+      "sample_id": "estg_000393",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 329,
+      "sample_order_index": 109,
+      "sample_id": "estg_000393",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 330,
+      "sample_order_index": 110,
+      "sample_id": "estg_000396",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 331,
+      "sample_order_index": 110,
+      "sample_id": "estg_000396",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 332,
+      "sample_order_index": 110,
+      "sample_id": "estg_000396",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 333,
+      "sample_order_index": 111,
+      "sample_id": "estg_000399",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 334,
+      "sample_order_index": 111,
+      "sample_id": "estg_000399",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 335,
+      "sample_order_index": 111,
+      "sample_id": "estg_000399",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 336,
+      "sample_order_index": 112,
+      "sample_id": "estg_000414",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 337,
+      "sample_order_index": 112,
+      "sample_id": "estg_000414",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 338,
+      "sample_order_index": 112,
+      "sample_id": "estg_000414",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 339,
+      "sample_order_index": 113,
+      "sample_id": "estg_000417",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 340,
+      "sample_order_index": 113,
+      "sample_id": "estg_000417",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 341,
+      "sample_order_index": 113,
+      "sample_id": "estg_000417",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 342,
+      "sample_order_index": 114,
+      "sample_id": "estg_000433",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 343,
+      "sample_order_index": 114,
+      "sample_id": "estg_000433",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 344,
+      "sample_order_index": 114,
+      "sample_id": "estg_000433",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 345,
+      "sample_order_index": 115,
+      "sample_id": "estg_000452",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 346,
+      "sample_order_index": 115,
+      "sample_id": "estg_000452",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 347,
+      "sample_order_index": 115,
+      "sample_id": "estg_000452",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 348,
+      "sample_order_index": 116,
+      "sample_id": "estg_000457",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 349,
+      "sample_order_index": 116,
+      "sample_id": "estg_000457",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 350,
+      "sample_order_index": 116,
+      "sample_id": "estg_000457",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 351,
+      "sample_order_index": 117,
+      "sample_id": "estg_000458",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 352,
+      "sample_order_index": 117,
+      "sample_id": "estg_000458",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 353,
+      "sample_order_index": 117,
+      "sample_id": "estg_000458",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 354,
+      "sample_order_index": 118,
+      "sample_id": "estg_000465",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 355,
+      "sample_order_index": 118,
+      "sample_id": "estg_000465",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 356,
+      "sample_order_index": 118,
+      "sample_id": "estg_000465",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 357,
+      "sample_order_index": 119,
+      "sample_id": "estg_000504",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 358,
+      "sample_order_index": 119,
+      "sample_id": "estg_000504",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 359,
+      "sample_order_index": 119,
+      "sample_id": "estg_000504",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 360,
+      "sample_order_index": 120,
+      "sample_id": "estg_000505",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 361,
+      "sample_order_index": 120,
+      "sample_id": "estg_000505",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 362,
+      "sample_order_index": 120,
+      "sample_id": "estg_000505",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 363,
+      "sample_order_index": 121,
+      "sample_id": "estg_000507",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 364,
+      "sample_order_index": 121,
+      "sample_id": "estg_000507",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 365,
+      "sample_order_index": 121,
+      "sample_id": "estg_000507",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 366,
+      "sample_order_index": 122,
+      "sample_id": "estg_000509",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 367,
+      "sample_order_index": 122,
+      "sample_id": "estg_000509",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 368,
+      "sample_order_index": 122,
+      "sample_id": "estg_000509",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 369,
+      "sample_order_index": 123,
+      "sample_id": "estg_000522",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 370,
+      "sample_order_index": 123,
+      "sample_id": "estg_000522",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 371,
+      "sample_order_index": 123,
+      "sample_id": "estg_000522",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 372,
+      "sample_order_index": 124,
+      "sample_id": "estg_000525",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 373,
+      "sample_order_index": 124,
+      "sample_id": "estg_000525",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 374,
+      "sample_order_index": 124,
+      "sample_id": "estg_000525",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 375,
+      "sample_order_index": 125,
+      "sample_id": "estg_000539",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 376,
+      "sample_order_index": 125,
+      "sample_id": "estg_000539",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 377,
+      "sample_order_index": 125,
+      "sample_id": "estg_000539",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 378,
+      "sample_order_index": 126,
+      "sample_id": "estg_000546",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 379,
+      "sample_order_index": 126,
+      "sample_id": "estg_000546",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 380,
+      "sample_order_index": 126,
+      "sample_id": "estg_000546",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 381,
+      "sample_order_index": 127,
+      "sample_id": "estg_000555",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 382,
+      "sample_order_index": 127,
+      "sample_id": "estg_000555",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 383,
+      "sample_order_index": 127,
+      "sample_id": "estg_000555",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 384,
+      "sample_order_index": 128,
+      "sample_id": "estg_000560",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 385,
+      "sample_order_index": 128,
+      "sample_id": "estg_000560",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 386,
+      "sample_order_index": 128,
+      "sample_id": "estg_000560",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 387,
+      "sample_order_index": 129,
+      "sample_id": "estg_000569",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 388,
+      "sample_order_index": 129,
+      "sample_id": "estg_000569",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 389,
+      "sample_order_index": 129,
+      "sample_id": "estg_000569",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 390,
+      "sample_order_index": 130,
+      "sample_id": "estg_000572",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 391,
+      "sample_order_index": 130,
+      "sample_id": "estg_000572",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 392,
+      "sample_order_index": 130,
+      "sample_id": "estg_000572",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 393,
+      "sample_order_index": 131,
+      "sample_id": "estg_000578",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 394,
+      "sample_order_index": 131,
+      "sample_id": "estg_000578",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 395,
+      "sample_order_index": 131,
+      "sample_id": "estg_000578",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 396,
+      "sample_order_index": 132,
+      "sample_id": "estg_000599",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 397,
+      "sample_order_index": 132,
+      "sample_id": "estg_000599",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 398,
+      "sample_order_index": 132,
+      "sample_id": "estg_000599",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 399,
+      "sample_order_index": 133,
+      "sample_id": "estg_000601",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 400,
+      "sample_order_index": 133,
+      "sample_id": "estg_000601",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 401,
+      "sample_order_index": 133,
+      "sample_id": "estg_000601",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 402,
+      "sample_order_index": 134,
+      "sample_id": "estg_000635",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 403,
+      "sample_order_index": 134,
+      "sample_id": "estg_000635",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 404,
+      "sample_order_index": 134,
+      "sample_id": "estg_000635",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 405,
+      "sample_order_index": 135,
+      "sample_id": "estg_000659",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 406,
+      "sample_order_index": 135,
+      "sample_id": "estg_000659",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 407,
+      "sample_order_index": 135,
+      "sample_id": "estg_000659",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 408,
+      "sample_order_index": 136,
+      "sample_id": "estg_000664",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 409,
+      "sample_order_index": 136,
+      "sample_id": "estg_000664",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 410,
+      "sample_order_index": 136,
+      "sample_id": "estg_000664",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 411,
+      "sample_order_index": 137,
+      "sample_id": "estg_000704",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 412,
+      "sample_order_index": 137,
+      "sample_id": "estg_000704",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 413,
+      "sample_order_index": 137,
+      "sample_id": "estg_000704",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 414,
+      "sample_order_index": 138,
+      "sample_id": "estg_000713",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 415,
+      "sample_order_index": 138,
+      "sample_id": "estg_000713",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 416,
+      "sample_order_index": 138,
+      "sample_id": "estg_000713",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 417,
+      "sample_order_index": 139,
+      "sample_id": "estg_000716",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 418,
+      "sample_order_index": 139,
+      "sample_id": "estg_000716",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 419,
+      "sample_order_index": 139,
+      "sample_id": "estg_000716",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 420,
+      "sample_order_index": 140,
+      "sample_id": "estg_000720",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 421,
+      "sample_order_index": 140,
+      "sample_id": "estg_000720",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 422,
+      "sample_order_index": 140,
+      "sample_id": "estg_000720",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 423,
+      "sample_order_index": 141,
+      "sample_id": "estg_000773",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 424,
+      "sample_order_index": 141,
+      "sample_id": "estg_000773",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 425,
+      "sample_order_index": 141,
+      "sample_id": "estg_000773",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 426,
+      "sample_order_index": 142,
+      "sample_id": "estg_000776",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 427,
+      "sample_order_index": 142,
+      "sample_id": "estg_000776",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 428,
+      "sample_order_index": 142,
+      "sample_id": "estg_000776",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC1>RC_KEEP"
+    },
+    {
+      "execution_index": 429,
+      "sample_order_index": 143,
+      "sample_id": "estg_000785",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 430,
+      "sample_order_index": 143,
+      "sample_id": "estg_000785",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 431,
+      "sample_order_index": 143,
+      "sample_id": "estg_000785",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>BASE>RC_KEEP"
+    },
+    {
+      "execution_index": 432,
+      "sample_order_index": 144,
+      "sample_id": "estg_000786",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 433,
+      "sample_order_index": 144,
+      "sample_id": "estg_000786",
+      "arm": "RC1",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 434,
+      "sample_order_index": 144,
+      "sample_id": "estg_000786",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>RC1>BASE"
+    },
+    {
+      "execution_index": 435,
+      "sample_order_index": 145,
+      "sample_id": "estg_000800",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 436,
+      "sample_order_index": 145,
+      "sample_id": "estg_000800",
+      "arm": "BASE",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 437,
+      "sample_order_index": 145,
+      "sample_id": "estg_000800",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC_KEEP>BASE>RC1"
+    },
+    {
+      "execution_index": 438,
+      "sample_order_index": 146,
+      "sample_id": "estg_000812",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 439,
+      "sample_order_index": 146,
+      "sample_id": "estg_000812",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 440,
+      "sample_order_index": 146,
+      "sample_id": "estg_000812",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 441,
+      "sample_order_index": 147,
+      "sample_id": "estg_000816",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 442,
+      "sample_order_index": 147,
+      "sample_id": "estg_000816",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 443,
+      "sample_order_index": 147,
+      "sample_id": "estg_000816",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 444,
+      "sample_order_index": 148,
+      "sample_id": "estg_000854",
+      "arm": "RC1",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 445,
+      "sample_order_index": 148,
+      "sample_id": "estg_000854",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 446,
+      "sample_order_index": 148,
+      "sample_id": "estg_000854",
+      "arm": "BASE",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "RC1>RC_KEEP>BASE"
+    },
+    {
+      "execution_index": 447,
+      "sample_order_index": 149,
+      "sample_id": "estg_000861",
+      "arm": "BASE",
+      "arm_order_within_sample": 0,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 448,
+      "sample_order_index": 149,
+      "sample_id": "estg_000861",
+      "arm": "RC_KEEP",
+      "arm_order_within_sample": 1,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    },
+    {
+      "execution_index": 449,
+      "sample_order_index": 149,
+      "sample_id": "estg_000861",
+      "arm": "RC1",
+      "arm_order_within_sample": 2,
+      "sample_permutation": "BASE>RC_KEEP>RC1"
+    }
+  ],
+  "schedule_sha256": "c25656fb1621812266298c76449b0ceefd1fa07b0359198806ce03f39923625a",
+  "generated_at_utc": "2026-09-19T12:16:02.967351+00:00"
+}

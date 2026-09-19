@@ -1,0 +1,119 @@
+{
+  "schema_version": "sep_c3_condition_preservation_rules@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "primary_comparisons": [
+    {
+      "id": "RC_KEEP_vs_RC1",
+      "question": "Does the added sentence improve condition extraction?",
+      "primary_metric": "condition_f1",
+      "paired_bootstrap": true
+    },
+    {
+      "id": "RC_KEEP_vs_BASE",
+      "question": "After adding constraint guidance, is the overall gain worth keeping?",
+      "primary_metric": "coarse_five_field_mean_f1",
+      "paired_bootstrap": true
+    }
+  ],
+  "reference_comparison": {
+    "id": "RC1_vs_BASE",
+    "reported_in_same_batch_only": true
+  },
+  "bootstrap": {
+    "resamples": 10000,
+    "seed": 20260919,
+    "interval": "95% percentile",
+    "pairing": "same sampled sample_id multiset for all three arms",
+    "metric_recompute": "recompute aggregate evaluator counts, never average single-sample F1",
+    "zero_in_interval_decision": "uncertain_no_clear_improvement"
+  },
+  "retention_criteria": [
+    {
+      "id": "condition_f1_improves_vs_RC1",
+      "comparison": "RC_KEEP - RC1",
+      "metric": "condition_f1",
+      "operator": "> 0"
+    },
+    {
+      "id": "condition_missed_decreases_vs_RC1",
+      "comparison": "RC_KEEP - RC1",
+      "metric": "condition_missed",
+      "operator": "< 0"
+    },
+    {
+      "id": "five_field_mean_f1_improves_vs_BASE",
+      "comparison": "RC_KEEP - BASE",
+      "metric": "coarse_five_field_mean_f1",
+      "operator": "> 0"
+    },
+    {
+      "id": "micro_f1_improves_vs_BASE",
+      "comparison": "RC_KEEP - BASE",
+      "metric": "coarse_five_field_micro_f1",
+      "operator": "> 0"
+    },
+    {
+      "id": "actor_f1_not_below_BASE",
+      "comparison": "RC_KEEP - BASE",
+      "metric": "actor_f1",
+      "operator": ">= 0"
+    },
+    {
+      "id": "actor_fp_not_above_BASE",
+      "comparison": "RC_KEEP - BASE",
+      "metric": "actor_fp",
+      "operator": "<= 0"
+    },
+    {
+      "id": "condition_fp_not_above_BASE",
+      "comparison": "RC_KEEP - BASE",
+      "metric": "condition_fp",
+      "operator": "<= 0"
+    },
+    {
+      "id": "constraint_recall_not_below_RC1",
+      "comparison": "RC_KEEP - RC1",
+      "metric": "constraint_recall",
+      "operator": ">= 0"
+    },
+    {
+      "id": "constraint_fp_not_above_RC1",
+      "comparison": "RC_KEEP - RC1",
+      "metric": "constraint_fp",
+      "operator": "<= 0"
+    },
+    {
+      "id": "output_processing_failures_not_above_each_control",
+      "comparison": "RC_KEEP <= min(BASE, RC1)",
+      "metric": "output_processing_failures",
+      "operator": "<= 0"
+    }
+  ],
+  "required_bootstrap_intervals": [
+    "RC_KEEP - RC1 condition F1",
+    "RC_KEEP - BASE coarse five-field mean F1"
+  ],
+  "reporting_requirements": {
+    "separate_status_blocks": [
+      "transport",
+      "output_parse",
+      "input_binding",
+      "canonical_validation"
+    ],
+    "failed_rows_remain_in_denominator": true,
+    "no_success_only_subset": true
+  },
+  "additional_calls_forbidden": {
+    "calibration": true,
+    "replacement_sends": true,
+    "exploratory_test_calls": true
+  },
+  "decision_rule": "List RC_KEEP as worth keeping only if every retention criterion passes and both required intervals exclude zero. Otherwise keep BASE and do not auto-change the prompt or rerun.",
+  "scope_warning": "Exploratory development-set comparison only; not an independent blind test or stability validation. The percentile interval reflects sample composition sensitivity only, not server or repeat-run variance.",
+  "automatic_actions_forbidden": [
+    "prompt_update",
+    "rerun",
+    "budget_expansion",
+    "formal_v6_replacement"
+  ]
+}

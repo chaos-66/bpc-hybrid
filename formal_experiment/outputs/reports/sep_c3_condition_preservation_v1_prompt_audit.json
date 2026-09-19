@@ -1,0 +1,32 @@
+{
+  "schema_version": "sep_c3_condition_preservation_prompt_audit@1.0.0",
+  "status": "pass",
+  "errors": [],
+  "checks": {
+    "three_arms_rendered": true,
+    "BASE_system_equals_old_B": true,
+    "BASE_user_equals_old_B": true,
+    "BASE_sent_composition_equals_old_B": true,
+    "RC1_system_equals_old_D": true,
+    "RC1_user_equals_old_D": true,
+    "RC1_sent_composition_equals_old_D": true,
+    "RC_KEEP_user_unchanged_from_RC1": true,
+    "RC_KEEP_is_exactly_RC1_plus_one_sentence": true,
+    "one_sentence_occurrence": true,
+    "RC1_vs_RC_KEEP_diff_only_one_sentence": true,
+    "BASE_no_S_marker": true,
+    "BASE_no_J_marker": true,
+    "RC1_no_S_marker": true,
+    "RC1_no_J_marker": true,
+    "RC_KEEP_no_S_marker": true,
+    "RC_KEEP_no_J_marker": true,
+    "BASE_R_A_source_hash_unchanged": true,
+    "RC1_old_R_C_source_hash_unchanged": true
+  },
+  "base_vs_rc1_diff": "--- BASE_sent_prompt.txt\n+++ RC1_sent_prompt.txt\n@@ -21,4 +21,6 @@\n \n Actor: extract only an explicitly stated entity that bears responsibility for performing, refraining from, or being subject to the regulated action. Do not label objects, resources, amounts, or other mentioned noun phrases as actors merely because they are salient in the sentence. If no responsible entity is explicitly stated, return no actor.\n+\n+Constraint: extract an explicit phrase when it directly restricts when, how, how much, for what purpose, under what legal reference, or with what exclusivity the regulated action applies. Extract the complete restrictive phrase rather than an isolated cue word such as ‘only’.\n \n <!--USER-->\n",
+  "rc1_vs_rc_keep_diff": "--- RC1_sent_prompt.txt\n+++ RC_KEEP_sent_prompt.txt\n@@ -23,4 +23,6 @@\n \n Constraint: extract an explicit phrase when it directly restricts when, how, how much, for what purpose, under what legal reference, or with what exclusivity the regulated action applies. Extract the complete restrictive phrase rather than an isolated cue word such as ‘only’.\n+\n+Keep each applicability condition as a complete proposition in conditions; extracting an overlapping or nested constraint must not replace or remove that condition.\n \n <!--USER-->\n",
+  "old_R_C_text": "Constraint: extract an explicit phrase when it directly restricts when, how, how much, for what purpose, under what legal reference, or with what exclusivity the regulated action applies. Extract the complete restrictive phrase rather than an isolated cue word such as ‘only’.",
+  "old_R_C_text_sha256": "cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae",
+  "new_sentence_text": "Keep each applicability condition as a complete proposition in conditions; extracting an overlapping or nested constraint must not replace or remove that condition.",
+  "new_sentence_sha256": "a6bf6c30e6f2495def1e377d11aa1a64f8f4c6f9838fbd39c651181ef96c8ef4"
+}

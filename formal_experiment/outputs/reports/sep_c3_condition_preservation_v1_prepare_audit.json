@@ -1,0 +1,17 @@
+{
+  "schema_version": "sep_c3_condition_preservation_prepare_audit@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "status": "pass",
+  "real_api_calls": 0,
+  "prompt_audit_path": "outputs/reports/sep_c3_condition_preservation_v1_prompt_audit.json",
+  "offline_render_audit_path": "outputs/reports/sep_c3_condition_preservation_v1_offline_render_audit.json",
+  "preflight_path": "outputs/reports/sep_c3_condition_preservation_v1_preflight.json",
+  "schedule_path": "configs/sep_c3_condition_preservation_schedule_v1.json",
+  "schedule_sha256": "c25656fb1621812266298c76449b0ceefd1fa07b0359198806ce03f39923625a",
+  "budget_path": "configs/sep_c3_condition_preservation_budget_v1.json",
+  "generated_prompt_manifest": "prompts/sun_compat/modular_condition_preservation_v1/generated/manifest.json",
+  "generated_prompt_manifest_sha256": "cc2c175dafbd4858fe47828ae98584ef6a53ba43ac9b838c223e5c36817e5482",
+  "offline_requests_path": "outputs/evidence/sep_c3_condition_preservation_v1/offline_requests.jsonl",
+  "offline_requests_sha256": "a1b73b4636c20e3de9cc487116e53e47943e9770f06f27c90e1427632cb459a6",
+  "generated_at_utc": "2026-09-19T12:16:04.979579+00:00"
+}

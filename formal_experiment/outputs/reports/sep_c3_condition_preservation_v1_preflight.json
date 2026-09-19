@@ -1,0 +1,78 @@
+{
+  "schema_version": "sep_c3_condition_preservation_preflight@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "overall_status": "FAIL_NOT_READY_FOR_RUN",
+  "preparation_status": "pass",
+  "real_api_calls": 0,
+  "authorization_status": "not_authorized",
+  "ready_to_run": false,
+  "items": [
+    {
+      "id": "prompt_identity_and_unique_difference",
+      "status": "pass",
+      "detail": "BASE == old B, RC1 == old D, RC_KEEP == RC1 plus exactly one sentence."
+    },
+    {
+      "id": "offline_render_450_hashes",
+      "status": "pass",
+      "detail": "All 450 scheduled request bodies rendered and hashed offline."
+    },
+    {
+      "id": "fixed_schedule",
+      "status": "pass",
+      "detail": "150 sample blocks x 3 arms, six permutations each 25 times, seed=20260919, frozen before run."
+    },
+    {
+      "id": "input_gold_binding",
+      "status": "pass",
+      "detail": "Frozen EStG-150 input and formal Gold hashes are recorded in the budget."
+    },
+    {
+      "id": "processing_validator_binding",
+      "status": "pass",
+      "detail": "Adapter, canonicalizer, validator, schema, and lightweight backend are bound; runtime dependency switching is forbidden."
+    },
+    {
+      "id": "evaluator_binding",
+      "status": "pass",
+      "detail": "Frozen coarse five-field evaluator and shared literal-overlap backend are hash-recorded."
+    },
+    {
+      "id": "failure_and_denominator_policy",
+      "status": "pass",
+      "detail": "Failures remain in the 150-sample denominator; retry=0; no result-dependent prompt change or resend."
+    },
+    {
+      "id": "judgment_rules_and_bootstrap",
+      "status": "pass",
+      "detail": "Retention criteria, stop rules, paired bootstrap seed/resamples, and zero-in-interval rule are fixed."
+    },
+    {
+      "id": "real_api_calls_zero",
+      "status": "pass",
+      "detail": "No transport was constructed and no .env was read in this preparation."
+    },
+    {
+      "id": "authorization",
+      "status": "fail",
+      "detail": "authorization status is not_authorized; a new explicit user authorization is required."
+    },
+    {
+      "id": "channel_unit_price",
+      "status": "fail",
+      "detail": "The actual channel unit price has not been verified; no confirmed USD cost or hard USD cap exists yet."
+    },
+    {
+      "id": "execution_entrypoint",
+      "status": "fail",
+      "detail": "No new execution runner/transport was implemented in this zero-API round; the old runner execute path must not be reused."
+    }
+  ],
+  "blocking_items": [
+    "authorization",
+    "channel_unit_price",
+    "execution_entrypoint"
+  ],
+  "note": "Materials are generated for review; this is not a declaration that the experiment can be run yet.",
+  "generated_at_utc": "2026-09-19T12:16:04.979041+00:00"
+}

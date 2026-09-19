@@ -1,0 +1,33 @@
+{
+  "schema_version": "sep_c3_condition_preservation_offline_render@1.0.0",
+  "status": "pass",
+  "errors": [],
+  "attempt_count": 450,
+  "expected_attempts": 450,
+  "sample_count": 150,
+  "arm_attempt_counts": {
+    "BASE": 150,
+    "RC1": 150,
+    "RC_KEEP": 150
+  },
+  "permutation_counts": {
+    "BASE>RC1>RC_KEEP": 25,
+    "BASE>RC_KEEP>RC1": 25,
+    "RC1>BASE>RC_KEEP": 25,
+    "RC1>RC_KEEP>BASE": 25,
+    "RC_KEEP>BASE>RC1": 25,
+    "RC_KEEP>RC1>BASE": 25
+  },
+  "unique_request_body_sha256_count": 450,
+  "estimated_input_tokens_per_arm_bytes_div_3": {
+    "BASE": 263290,
+    "RC1": 277495,
+    "RC_KEEP": 285895
+  },
+  "estimated_input_tokens_total_bytes_div_3": 826680,
+  "max_tokens_per_call": 4096,
+  "output_token_ceiling": 1843200,
+  "total_token_ceiling": 2669880,
+  "request_bodies_path": "outputs/evidence/sep_c3_condition_preservation_v1/offline_requests.jsonl",
+  "request_bodies_sha256": "a1b73b4636c20e3de9cc487116e53e47943e9770f06f27c90e1427632cb459a6"
+}

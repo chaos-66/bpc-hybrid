@@ -1,0 +1,74 @@
+{
+  "schema_version": "sep_c3_condition_preservation_config_diff@1.0.0",
+  "status": "pass",
+  "baseline_reference": {
+    "BASE": "old B actual sent prompt",
+    "RC1": "old D actual sent prompt"
+  },
+  "only_prompt_difference": {
+    "from": "RC1",
+    "to": "RC_KEEP",
+    "added_sentence": "Keep each applicability condition as a complete proposition in conditions; extracting an overlapping or nested constraint must not replace or remove that condition.",
+    "added_sentence_sha256": "a6bf6c30e6f2495def1e377d11aa1a64f8f4c6f9838fbd39c651181ef96c8ef4",
+    "all_other_prompt_sources_unchanged": true
+  },
+  "non_prompt_bindings": {
+    "model": {
+      "id": "deepseek-v4-pro",
+      "documented_release": "DeepSeek-V4-Pro-0813",
+      "provider": "openai_compatible"
+    },
+    "inference": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 4096,
+      "retry": 0,
+      "stream": false,
+      "thinking": {
+        "type": "disabled"
+      },
+      "response_format": null
+    },
+    "data_binding": {
+      "input_path": "data/input/estg150_formal_inference_input_v2.json",
+      "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+      "input_dataset_id": "independently_reconstructed_estg_150_v1",
+      "input_record_count": 150,
+      "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+      "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+      "gold_dataset_id": "independently_reconstructed_estg_150_v1",
+      "gold_record_count": 150
+    },
+    "parser_binding": {
+      "schema_adapter_module": "src/bpc_hybrid/d1_schema_adapter.py",
+      "schema_adapter_sha256": "457d01cfcc663e8594a163db603c2e1d31cbffce4523d3ed7cdfaf16328edbf3",
+      "span_canonicalizer_module": "src/bpc_hybrid/d1_span_canonicalizer.py",
+      "span_canonicalizer_sha256": "e29672deabb7b2aabd535c5d8552b4d2c4b49699e2582f31fbe394d26da65dce"
+    },
+    "validator_binding": {
+      "module": "src/bpc_hybrid/stage2_canonical.py",
+      "module_sha256": "39bd93ef30f5744fc977a382ecd484d4802fc8074aec312034625e0398fd4e70",
+      "schema": "configs/schemas/stage2_prediction.schema.json",
+      "schema_sha256": "d94941c1f7ea90f768d7244bdb72ac3c588b727e0f1fcb4e4732ef8b239259ea",
+      "locked_backend": "lightweight",
+      "detected_backend": "lightweight",
+      "jsonschema_available": false,
+      "locked_matches_detected": true,
+      "runtime_switch_forbidden": true
+    },
+    "evaluator_binding": {
+      "coarse_metric_module": "src/bpc_hybrid/sep_c3_modular_evaluation.py",
+      "coarse_metric_sha256": "31363c2e0bad27ebbe2b9e1fa56b5aae3cbe2e1e5c12204627e173a8db8b5330",
+      "frozen_evaluator_module": "src/bpc_hybrid/stage2_sun_literal_overlap.py",
+      "frozen_evaluator_sha256": "a6df234611ef63ab9d47a3d5e886c3a711ccce8c6e5d8e164e42826bef978de7",
+      "coarse_view_module": "src/bpc_hybrid/g04_coarse_view.py",
+      "coarse_view_sha256": "a8a867964036e77d5fa83f9f430b0ea7dced9fd3ba2a170131fb09183a49ae7d",
+      "primary_metric": "coarse_five_field_mean_f1",
+      "micro_metric": "coarse_five_field_micro.f1",
+      "method_id_prefix": "direct_llm_condition_preservation_"
+    },
+    "schedule_sha256": "c25656fb1621812266298c76449b0ceefd1fa07b0359198806ce03f39923625a"
+  },
+  "checked_non_prompt_differences": [],
+  "note": "No existing default v6 prompt, old runner contract, Gold, prediction, manifest, or historical score was modified."
+}

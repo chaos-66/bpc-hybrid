@@ -1,0 +1,9 @@
+--- BASE_sent_prompt.txt
++++ RC1_sent_prompt.txt
+@@ -21,4 +21,6 @@
+ 
+ Actor: extract only an explicitly stated entity that bears responsibility for performing, refraining from, or being subject to the regulated action. Do not label objects, resources, amounts, or other mentioned noun phrases as actors merely because they are salient in the sentence. If no responsible entity is explicitly stated, return no actor.
++
++Constraint: extract an explicit phrase when it directly restricts when, how, how much, for what purpose, under what legal reference, or with what exclusivity the regulated action applies. Extract the complete restrictive phrase rather than an isolated cue word such as ‘only’.
+ 
+ <!--USER-->

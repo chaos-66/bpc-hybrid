@@ -1,0 +1,80 @@
+{
+  "schema_version": "sep_c3_condition_preservation_prompt_manifest@1.0.0",
+  "prompt_family": "direct_llm_condition_preservation_v1",
+  "arms": [
+    "BASE",
+    "RC1",
+    "RC_KEEP"
+  ],
+  "old_arm_equivalence": {
+    "BASE": "frozen old B actual sent prompt",
+    "RC1": "frozen old D actual sent prompt",
+    "RC_KEEP": "RC1 plus exactly one appended sentence"
+  },
+  "frozen_sources": {
+    "old_R_A_text_sha256": "0d1a0b131c88394304ac22d510740694fed5069f9cc8b4b9612fd33285e789c9",
+    "old_R_C_text_sha256": "cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae",
+    "old_B_system_sha256": "f6de5c4fe6115d5073f44e59d98443ccec5dd55bc3356ce445b6304a82aab778",
+    "old_B_user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+    "old_B_composition_sha256": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1",
+    "old_D_system_sha256": "af33cf308c98ae2bb03572d0669913b1dcb58310a4c08050e21f853d171e29b4",
+    "old_D_user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+    "old_D_composition_sha256": "7901ebe541abe25fe2753db514b284a82c4d37c54535ad54824eac597fff15c9"
+  },
+  "new_design_sentence": {
+    "text": "Keep each applicability condition as a complete proposition in conditions; extracting an overlapping or nested constraint must not replace or remove that condition.",
+    "sha256": "a6bf6c30e6f2495def1e377d11aa1a64f8f4c6f9838fbd39c651181ef96c8ef4",
+    "appended_after": "frozen old R_C, as a separate system-prompt paragraph"
+  },
+  "prompts": {
+    "BASE": {
+      "path": "prompts/sun_compat/modular_condition_preservation_v1/generated/direct_llm_condition_preservation_BASE_v1.md",
+      "markdown_sha256": "2351304b369194f7e13c0b97ade996cc43f05f7d3fc88baba0726c0c39c7c70a",
+      "system_sha256": "f6de5c4fe6115d5073f44e59d98443ccec5dd55bc3356ce445b6304a82aab778",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1",
+      "source_hashes": {
+        "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "R_A": "0d1a0b131c88394304ac22d510740694fed5069f9cc8b4b9612fd33285e789c9",
+        "R_C": "cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae",
+        "old_B_composition_sha256": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1",
+        "old_D_composition_sha256": "7901ebe541abe25fe2753db514b284a82c4d37c54535ad54824eac597fff15c9"
+      },
+      "appended_sentence": null
+    },
+    "RC1": {
+      "path": "prompts/sun_compat/modular_condition_preservation_v1/generated/direct_llm_condition_preservation_RC1_v1.md",
+      "markdown_sha256": "2dc428ac3e59d7ef68de5a0a6d8a0778782ec292ff18bf9654fbf3af5260b32c",
+      "system_sha256": "af33cf308c98ae2bb03572d0669913b1dcb58310a4c08050e21f853d171e29b4",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "7901ebe541abe25fe2753db514b284a82c4d37c54535ad54824eac597fff15c9",
+      "source_hashes": {
+        "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "R_A": "0d1a0b131c88394304ac22d510740694fed5069f9cc8b4b9612fd33285e789c9",
+        "R_C": "cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae",
+        "old_B_composition_sha256": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1",
+        "old_D_composition_sha256": "7901ebe541abe25fe2753db514b284a82c4d37c54535ad54824eac597fff15c9"
+      },
+      "appended_sentence": null
+    },
+    "RC_KEEP": {
+      "path": "prompts/sun_compat/modular_condition_preservation_v1/generated/direct_llm_condition_preservation_RC_KEEP_v1.md",
+      "markdown_sha256": "55bcc4fefd4adf3c94714024c3e01ea1dca7d8b5718dbd4c6f52bfea7987b34d",
+      "system_sha256": "3fcc87cfe7ea07b421e1520c87f74f3529b0caadb14244b7555a35614d7e1dec",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "e3caceb77836934d3237c22a7bbf25287d7a7f278a7ab7931237e812364121a6",
+      "source_hashes": {
+        "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+        "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+        "R_A": "0d1a0b131c88394304ac22d510740694fed5069f9cc8b4b9612fd33285e789c9",
+        "R_C": "cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae",
+        "old_B_composition_sha256": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1",
+        "old_D_composition_sha256": "7901ebe541abe25fe2753db514b284a82c4d37c54535ad54824eac597fff15c9",
+        "condition_preservation_sentence": "a6bf6c30e6f2495def1e377d11aa1a64f8f4c6f9838fbd39c651181ef96c8ef4"
+      },
+      "appended_sentence": "Keep each applicability condition as a complete proposition in conditions; extracting an overlapping or nested constraint must not replace or remove that condition."
+    }
+  }
+}
