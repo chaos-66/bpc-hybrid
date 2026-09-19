@@ -1,0 +1,315 @@
+{
+  "schema_version": "sep_c3_condition_preservation_execution@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "planned_calls": 450,
+  "call_cap": 450,
+  "actual_calls": 450,
+  "completed_samples": 450,
+  "aborted": false,
+  "complete": true,
+  "runs": [
+    {
+      "arm": "BASE",
+      "actual_call_count": 118,
+      "resumed_completed_count": 32,
+      "resumed_terminal_count": 0,
+      "attempt_count": 150,
+      "raw_response_count": 150,
+      "terminal_unknown_count": 0,
+      "failed_count": 13,
+      "output_validation_path_version": "sep_c3_condition_preservation_validation_path_v1",
+      "validation_backend": "lightweight",
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.7330134313635933,
+      "coarse_five_field_micro_f1": 0.7871922035197941,
+      "modality_label_macro_f1": 0.7183853418030633
+    },
+    {
+      "arm": "RC1",
+      "actual_call_count": 118,
+      "resumed_completed_count": 31,
+      "resumed_terminal_count": 1,
+      "attempt_count": 150,
+      "raw_response_count": 149,
+      "terminal_unknown_count": 1,
+      "failed_count": 9,
+      "output_validation_path_version": "sep_c3_condition_preservation_validation_path_v1",
+      "validation_backend": "lightweight",
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.7679479907695941,
+      "coarse_five_field_micro_f1": 0.8034303768900926,
+      "modality_label_macro_f1": 0.7310477462916487
+    },
+    {
+      "arm": "RC_KEEP",
+      "actual_call_count": 118,
+      "resumed_completed_count": 32,
+      "resumed_terminal_count": 0,
+      "attempt_count": 150,
+      "raw_response_count": 150,
+      "terminal_unknown_count": 0,
+      "failed_count": 10,
+      "output_validation_path_version": "sep_c3_condition_preservation_validation_path_v1",
+      "validation_backend": "lightweight",
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.7282272954206368,
+      "coarse_five_field_micro_f1": 0.7987948874811702,
+      "modality_label_macro_f1": 0.718649032219102
+    }
+  ],
+  "arms": [
+    "BASE",
+    "RC1",
+    "RC_KEEP"
+  ],
+  "output_validation_path": {
+    "version": "sep_c3_condition_preservation_validation_path_v1",
+    "validation_backend": "lightweight",
+    "validation_backend_detail": "stage2_canonical.validate_canonical() using the existing in-process structural + cross-field checks; jsonschema is not installed",
+    "jsonschema_available": false,
+    "processing_order": [
+      "raw_response_saved",
+      "json_parse",
+      "input_identity_check",
+      "existing_schema_adapter",
+      "existing_span_canonicalizer",
+      "runtime_structural_cross_field_validation",
+      "persist_attempt_and_audit"
+    ],
+    "input_identity_source": "data/input/estg150_formal_inference_input_v2.json",
+    "required_source_id_rule": "payload.source_id must equal the request protocol source_id (condition-preservation composer renders source_id == sample_id)"
+  },
+  "schedule_sha256": "c25656fb1621812266298c76449b0ceefd1fa07b0359198806ce03f39923625a",
+  "contract_validation": {
+    "schema_version": "sep_c3_condition_preservation_contract_validation@1.0.0",
+    "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+    "status": "pass",
+    "errors": [],
+    "checks": [
+      {
+        "id": "authorization_event",
+        "status": "pass",
+        "detail": "configs/sep_c3_condition_preservation_authorization_event_v1.json"
+      },
+      {
+        "id": "execution_contract",
+        "status": "pass",
+        "detail": "configs/sep_c3_condition_preservation_execution_contract_v1.json"
+      },
+      {
+        "id": "prepared_budget",
+        "status": "pass",
+        "detail": "configs/sep_c3_condition_preservation_budget_v1.json"
+      },
+      {
+        "id": "schedule",
+        "status": "pass",
+        "detail": "configs/sep_c3_condition_preservation_schedule_v1.json"
+      },
+      {
+        "id": "offline_render_binding",
+        "status": "pass",
+        "detail": "outputs/evidence/sep_c3_condition_preservation_v1/offline_requests.jsonl"
+      },
+      {
+        "id": "input_rows",
+        "status": "pass",
+        "detail": "data/input/estg150_formal_inference_input_v2.json"
+      },
+      {
+        "id": "authorization_binding",
+        "status": "pass",
+        "detail": "configs/sep_c3_condition_preservation_authorization_event_v1.json"
+      },
+      {
+        "id": "prepared_budget_binding",
+        "status": "pass",
+        "detail": "configs/sep_c3_condition_preservation_budget_v1.json"
+      },
+      {
+        "id": "token_cap_binding",
+        "status": "pass",
+        "detail": "input/output caps inherited from prepared budget"
+      },
+      {
+        "id": "usd_cap",
+        "status": "pass",
+        "detail": "10.0 USD"
+      },
+      {
+        "id": "price_snapshot",
+        "status": "pass",
+        "detail": "official DeepSeek peak/off-peak values recorded"
+      },
+      {
+        "id": "input_binding",
+        "status": "pass",
+        "detail": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2"
+      },
+      {
+        "id": "gold_binding",
+        "status": "pass",
+        "detail": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100"
+      },
+      {
+        "id": "prompt_manifest_binding",
+        "status": "pass",
+        "detail": "prompts/sun_compat/modular_condition_preservation_v1/generated/manifest.json"
+      },
+      {
+        "id": "prompt_arm_binding_BASE",
+        "status": "pass",
+        "detail": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1"
+      },
+      {
+        "id": "prompt_arm_binding_RC1",
+        "status": "pass",
+        "detail": "7901ebe541abe25fe2753db514b284a82c4d37c54535ad54824eac597fff15c9"
+      },
+      {
+        "id": "prompt_arm_binding_RC_KEEP",
+        "status": "pass",
+        "detail": "e3caceb77836934d3237c22a7bbf25287d7a7f278a7ab7931237e812364121a6"
+      },
+      {
+        "id": "validator_backend_binding",
+        "status": "pass",
+        "detail": "lightweight backend"
+      },
+      {
+        "id": "schedule_membership",
+        "status": "pass",
+        "detail": "150 samples x 3 arms"
+      },
+      {
+        "id": "offline_body_binding",
+        "status": "pass",
+        "detail": "450 scheduled request bodies match"
+      }
+    ],
+    "authorization_path": "configs/sep_c3_condition_preservation_authorization_event_v1.json",
+    "execution_contract_path": "configs/sep_c3_condition_preservation_execution_contract_v1.json",
+    "prepared_budget_path": "configs/sep_c3_condition_preservation_budget_v1.json",
+    "schedule_path": "configs/sep_c3_condition_preservation_schedule_v1.json",
+    "offline_requests_path": "outputs/evidence/sep_c3_condition_preservation_v1/offline_requests.jsonl"
+  },
+  "recovery_validation": {
+    "schema_version": "sep_c3_condition_preservation_recovery_validation@1.0.0",
+    "status": "pass",
+    "errors": [],
+    "checks": [
+      {
+        "id": "recovery_contract",
+        "status": "pass",
+        "detail": "configs/sep_c3_condition_preservation_recovery_contract_v1.json"
+      },
+      {
+        "id": "recovery_ledger",
+        "status": "pass",
+        "detail": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/recovery_ledger_v1.jsonl"
+      },
+      {
+        "id": "recovery_schedule_binding",
+        "status": "pass",
+        "detail": "c25656fb1621812266298c76449b0ceefd1fa07b0359198806ce03f39923625a"
+      },
+      {
+        "id": "recovery_binding_original_authorization",
+        "status": "pass",
+        "detail": "75a29956d91e049570a30e66528d5653d8c8418dcf9e9ac22a356511c889e29d"
+      },
+      {
+        "id": "recovery_binding_recovery_authorization",
+        "status": "pass",
+        "detail": "1aecd2256c0b9626c1970dc268c0673a7e34fabf4e685cf4ac5ba1fb424d766b"
+      },
+      {
+        "id": "recovery_binding_base_execution_contract",
+        "status": "pass",
+        "detail": "281b17ac1d1af20e2ffb160227faeb34e336b89db98a333e1375fac72fb3e460"
+      },
+      {
+        "id": "recovery_binding_prepared_budget",
+        "status": "pass",
+        "detail": "52c927482e8f33ed91c8cac63b162cbefae92e78c89f4586b636544d230691d7"
+      },
+      {
+        "id": "recovery_binding_recovery_ledger",
+        "status": "pass",
+        "detail": "43d6bd55bedfadabaf2bb5514e35e3469194aa23e000d722d296d6e59e687514"
+      },
+      {
+        "id": "recovery_authorization_content",
+        "status": "pass",
+        "detail": "3e8342200d25f97b60bc0aede987ea654ff99d1cec2f53dd6217c1f9fc7d1b62"
+      },
+      {
+        "id": "recovery_unknown_entry",
+        "status": "pass",
+        "detail": "('RC1', 'estg_000074')"
+      }
+    ],
+    "recovery_contract_path": "configs/sep_c3_condition_preservation_recovery_contract_v1.json",
+    "recovery_ledger_path": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/recovery_ledger_v1.jsonl"
+  },
+  "completion_state": "completed_with_unresolved_response",
+  "unknown_response_count": 1,
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "known_responses": 449,
+  "budget_gate": {
+    "calls_attempted": 450,
+    "reserved_input_tokens": 826680,
+    "reserved_output_tokens": 1843200,
+    "reserved_cost_usd_peak_all_input_cache_miss": 8.3902896,
+    "actual_input_tokens": 545389,
+    "actual_output_tokens": 378497,
+    "actual_cache_hit_tokens": 415360,
+    "actual_cache_miss_tokens": 130029,
+    "actual_cost_usd": 0.84437985,
+    "missing_usage_calls": 0,
+    "call_cap": 450,
+    "input_token_cap": 909349,
+    "output_token_cap": 1843200,
+    "usd_cost_cap": 10.0,
+    "aborted": false,
+    "abort_reason": null
+  },
+  "runtime_seconds": 2555.223,
+  "attempt_counts_per_arm": {
+    "BASE": 150,
+    "RC1": 150,
+    "RC_KEEP": 150
+  },
+  "raw_counts_per_arm": {
+    "BASE": 150,
+    "RC1": 149,
+    "RC_KEEP": 150
+  },
+  "terminal_counts_per_arm": {
+    "BASE": 0,
+    "RC1": 1,
+    "RC_KEEP": 0
+  },
+  "new_sends_per_arm": {
+    "BASE": 118,
+    "RC1": 118,
+    "RC_KEEP": 118
+  },
+  "recovery_contract": {
+    "path": "configs/sep_c3_condition_preservation_recovery_contract_v1.json",
+    "unknown_cost_reserve_usd": 0.03056592,
+    "unknown_cost_reserve_basis": "conservative management reserve: 2 * UTF-8 request-body bytes as a package-level input-token allowance; not a verified DeepSeek tokenizer count and not an invoice",
+    "expected_completion_state": "completed_with_unresolved_response"
+  }
+}
