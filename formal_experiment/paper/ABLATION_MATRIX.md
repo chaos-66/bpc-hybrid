@@ -24,8 +24,8 @@
 > 详细预检见 `outputs/reports/barrientos_paper_ablation_preflight_v1.md`；下文历史
 > 结果保留，新消融真实数值仍为TODO，不继续为了凑齐AB编号追加实验。
 
-**版本**：v4（2026-09-14）；v3 的 2026-08-30 批量状态保留在下方历史段。
-本轮 SEP-C1-B 只增加完整 E/S/J 组合、分析协议与预算准备，未改变既有 AB 数字。
+**版本**：v5（2026-09-19）；v4/v3 历史段保留。
+本轮 SEP-C3 增加 targeted refinement A/B/C/D 收口与 v2 taxonomy 校正；未改变既有 AB 数字、prompt、runner、Gold 或正式默认配置。
 **状态**：Barrientos A/B/C 离线套件、D/E 1140-call 固定计划、Direct-LLM 后处理
 三模块离线单因素与三个 Prompt 单因素 450-call 批次均已运行。Prompt 批次失败0，
 实际成本 $3.3650。结论按正、负与字段权衡如实报告。
@@ -183,6 +183,54 @@ BARRIENTOS_BORROWING_AUDIT_2026-07-12.md`；`docs/EVAL_3DIM_SPEC.md`；
   600 次也不得复用；主推荐方案本身不依赖旧结果，调用上限不变。
 - **所有 000-111 真实运行/评价保持待运行**；未取得真实 arm manifest 前，不得
   在论文中写任何组合的消融结果。
+
+## SEP-C3 targeted refinement A/B/C/D 设计取舍与收口（2026-09-19，零 API，已有 600-call 证据）
+
+**状态**：targeted refinement 探索已收口；A/B/C/D 的 600-call 结果是**一次运行的开发/探索证据**，不是新的正式性能结论。B 仅为本轮研究参照，正式默认 Direct-LLM prompt 未替换；完整 E/S/J 八组合、已有原始响应的后处理归因和重复运行不确定性仍未完成。本节不新增 API，不修改 prompt、runner、正式默认配置或模型参数。
+
+### 四臂定义与设计取舍
+
+- **A = common + E**：冻结公共接口与语义示例，作为本批同批基线。
+- **B = common + E + R_A**：在 A 上只加入 R_A（actor 最小性修补）。
+- **C = common + E + R_C**：在 A 上只加入旧 R_C（constraint 召回修补）。
+- **D = common + E + R_A + R_C**：同时加入两个修补。
+
+1. **B 是本轮保留的研究参照候选，不等于已经取代正式默认版本。** 当前正式默认仍是 v6；B 没有被写入 `configs/models/estg150_d1_active_registry_v1.json`，也没有进入正式默认 runner。
+2. **R_A 有本轮方向性收益，暂时保持原文。** 它针对 actor 过度抽取；A→B 的 actor F1 由 0.6314 升到 0.7672，A 中 36 个空-Gold fields 有非空预测，B 降到 19。收益是单次开发面板上的方向性证据，不证明跨运行稳定。
+3. **旧 R_C 有 recall 收益，也有 FP 和其他字段副作用，暂不纳入 B。** A→C 的 constraint recall 0.5556→0.7185，但 precision 0.8015→0.7525；B→D 的 recall 0.6074→0.7778，但 precision 0.8102→0.7553，且 B→D 出现 6 个空-Gold actor regression。不能只引用 recall 收益。
+4. **temporal-only / T/G/TG 的依据不足，不继续派发这轮新候选实验。** 旧 time=33、legal-reference=0 的前提取自存在系统性歧义的 taxonomy；校正后 time 只是多标签之一，R_C 收益分散在 legal_reference、quantity、purpose、manner 等类别。750-call 五臂计划未启动，也不自动改成 300/450 次。
+5. **不宣称 common+E 已证明全局最优，也不宣称 S/J 永久无用。** 本批只说明：在现有单次开发面板、模型版本和 coarse overlap 口径下，B 比 D 更适合作为保守研究参照；S/J 的单因素作用仍属于未冻结的未来问题。
+
+### 版本身份与用途
+
+| 版本 | 版本/路径 | 当前用途 | 已验证事项 | 未验证/边界 |
+|---|---|---|---|---|
+| 正式默认 v6 | `prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md`，文件 SHA-256 `3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895`；`configs/models/estg150_d1_active_registry_v1.json` 和 `scripts/run_direct_llm.py` 指向该版本 | 正式默认 Direct-LLM 路径和既有正式/开发证据来源 | 磁盘、活跃 registry、runner 常量三方一致；既有正式三方法比较使用该路径 | 本批未替换、未重跑、未改参数 |
+| 研究参照 B | `prompts/sun_compat/modular_refinement_v1/generated/direct_llm_refinement_B_v1.md`，文件 `c468c631b6e454522994d6839f6a4021a259daedea7f3a2852b7b4343cd22849`，composition `207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1`；R_A 源 `R_A_actor_minimality.md` 哈希 `0d1a0b13...` | 本轮设计取舍的研究参照；论文设计/结果段 | 600-call 单次运行、same-batch schedule、同模型/输入/Gold/evaluator；B 的 prompt 文件与 manifest hash 一致 | 不是正式默认；正式替换未完成；没有重复运行和跨模型稳定性证据 |
+| 旧 R_C | `prompts/sun_compat/modular_refinement_v1/R_C_constraint_recall.md`，源哈希 `cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae`；生成 C/D 两臂 | 保留为已实测修补模块和混合结果来源 | constraint recall 提升；FP/actor/其他字段副作用均已记录 | 不纳入 B 研究参照；不是默认；不能只写 recall 收益 |
+| 未执行 v2 | 五臂 `BASE + RC1 + T + G + TG` 计划；原计划 750 calls | 已判定 NO-GO，未执行 | 已完成离线调用价值审查和完整 recovery 语义复核 | 无新 suite、无新 prompt、无预算挪用；不得写成已运行 |
+
+### A/B/C/D 同批结果（每臂 150 条，共 600 calls）
+
+| Arm | 五字段 mean F1 | actor F1 | constraint P | constraint R | constraint F1 |
+|---|---:|---:|---:|---:|---:|
+| A | 0.7246 | 0.6314 | 0.8015 | 0.5556 | 0.6562 |
+| B | 0.7806 | 0.7672 | 0.8102 | 0.6074 | 0.6943 |
+| C | 0.7558 | 0.6807 | 0.7525 | 0.7185 | 0.7351 |
+| D | 0.7858 | 0.7284 | 0.7553 | 0.7778 | 0.7664 |
+
+数字来源：`outputs/reports/sep_c3_targeted_refinement_v1_phase2_summary.json`、`..._phase2_analysis.json`、`..._execution.json` 和 `outputs/development/sep_c3_targeted_refinement_v1/*/repeat-01/evaluation.json`；模型为 `deepseek-v4-pro` / `DeepSeek-V4-Pro-0813`，temperature=0、top_p=1、max_tokens=4096、retry=0、stream=false、thinking disabled。每臂 150 条、四臂共 600 calls，成功 600、失败 0。
+
+### 为什么保留 B 而不是 D
+
+D 的五字段 mean F1=0.7858，高于 B 的 0.7806；因此不能写"B 总分最高"或"B 已证明整体更优"。保留 B 的理由是：B 只用 R_A，composition 更简单；B 的 actor F1 0.7672 明显高于 D 的 0.7284，而 B→D 的 6 个 actor regression 均为 Gold actor 空、B actor 空、D 新增 actor；旧 R_C 的 recall 收益同时伴随更低的 precision 和更大 FP 净增加。这个取舍基于现有副作用观察和保守研究目标，不是因为运行前存在某个事后创造的验收阈值。它也不意味着 D 的 mean F1 优势是虚假的；D 是真实观察结果，只是不作为本轮研究参照。
+
+### 证据、归因与边界
+
+- Recovery/FP 校正：52 条 recovery 比较记录 / 37 个独立 sample_id / 52 个恢复 Gold span；A→C 27、B→D 25；跨方向 15 个样本重合；原 taxonomy 40 条 / 28 个样本，漏掉 12 条 / 9 个样本。旧 time=33 和 legal-reference=0 结论撤回；完整可解释 21、部分内容 29、仅 overlap 2。详见 `outputs/reports/sep_c3_constraint_refinement_v2_semantic_review.{md,json}`。
+- AI 多标签语义复核不是人工 Gold，也不改变冻结评价器；coarse overlap 分数不等于完整语义恢复。
+- 本面板已参与错误分析和 prompt 选择，EStG-150 不是新方案的独立盲测；每臂只有一次运行；旧 E/S/J 组合来自不同批次，不能把不同批次最高分拼成连续提升故事。
+- 未完成：完整 8 组合真实运行、原始响应后处理归因、重复运行不确定性；整个 SEP-C3 不能因本轮收口标记完成。
 
 ## Barrientos 消融套件 v2（2026-08-22，零 API）——离线完成 + D/E wired
 

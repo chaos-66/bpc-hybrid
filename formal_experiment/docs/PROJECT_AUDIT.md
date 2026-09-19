@@ -20,6 +20,16 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - 产出：`outputs/reports/sep_c3_constraint_refinement_v2_semantic_review.json` 与 `.md`；原审查报告 `sep_c3_constraint_refinement_v2_go_no_go_review.md` 保留。本批仅分析与文档；API=0，Gold/prompt/评价器/历史结果未改，不运行项目审计或测试。
 - 历史证据提交 `fb96071` 的分支未配置 upstream；本轮交付提交与 push 结果在 handoff 中单独报告。
 
+## SEP-C3 targeted refinement A/B/C/D 设计收口与论文接入（2026-09-19，零 API）
+
+- **状态**：targeted refinement 探索已收口；A/B/C/D 是一次 600-call 开发/探索运行。B 仅为本轮研究参照，正式默认仍是 v6，B 的正式替换未完成；五臂 v2 750-call 计划 NO-GO/未执行；完整 E/S/J 八组合、原始响应后处理归因和重复运行仍未完成。整个 SEP-C3 不能因本轮收口标记完成。
+- **同批结果**：A/B/C/D 五字段 mean F1 为 0.7246/0.7806/0.7558/0.7858；actor F1 为 0.6314/0.7672/0.6807/0.7284；constraint P/R/F1 为 A 0.8015/0.5556/0.6562、B 0.8102/0.6074/0.6943、C 0.7525/0.7185/0.7351、D 0.7553/0.7778/0.7664。每臂 150 条，共 600 calls，成功 600、失败 0；模型/采样/输入/Gold/evaluator 与既有 targeted refinement 合同一致。
+- **取舍**：D 的 mean F1 高于 B，不能写 B 总分最高。保留 B 是因为 B 的 actor F1（0.7672）高于 D（0.7284），B 只用 R_A、composition 更简单，而旧 R_C 的 recall 收益伴随 precision 下降、FP 净增加和 B→D 六个空-Gold actor regression；这是考虑简洁性、actor 表现和副作用后的保守研究取舍，不是事后创造的验收阈值。
+- **taxonomy 校正**：原 40 条/28 样本改为 52 条 recovery 比较记录/37 个独立 sample_id/52 个恢复 Gold span（A→C 27、B→D 25；15 个样本重合）；旧 time=33 与 legal-reference=0 撤回；校正标签为 AI 多标签复核，不是人工 Gold；完整可解释 21、部分内容 29、仅 overlap 2。
+- **论文接入**：`paper/THESIS_DRAFT.md` §4.2 写入设计过程，§6.6 写入 A/B/C/D 结果、taxonomy 校正和局限；`paper/ABLATION_MATRIX.md` 增加 SEP-C3 targeted refinement 设计取舍与版本身份；`paper/CLAIM_EVIDENCE_MATRIX.md` 新增 C50-C52；`docs/MASTER_PIPELINE.md` 修订 3.7.16。
+- **产物**：`outputs/reports/sep_c3_targeted_refinement_v1_execution.json`、`..._phase2_analysis.json`、`..._phase2_summary.json`；B prompt 文件 `prompts/sun_compat/modular_refinement_v1/generated/direct_llm_refinement_B_v1.md`，文件 SHA-256 `c468c631b6e454522994d6839f6a4021a259daedea7f3a2852b7b4343cd22849`，composition `207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1`。
+- **边界**：本批整理已有证据并写作，新增 API=0；未修改 Gold、prompt、runner、评价器或正式默认配置。缺失来源仍包括被 gitignore 的 `outputs/development/sep_c3_targeted_refinement_v1/` 原始预测/raw/manifest、未提交的 `..._phase2_evidence.md` 与分析脚本 `scripts/analyze_sep_c3_targeted_refinement_v1.py`，以及未纳入当前分支的历史证据分支 `fb96071`；本次 push 不等于这些本地来源已全部远端备份。
+
 ## CSCWD 2027 投稿定位与核验（2026-09-17，文档范围）
 
 - 用户补充当届通知：2026-10-31 截稿，2027-01-31 通知结果，2027-05-26 至 28
@@ -672,7 +682,7 @@ python formal_experiment/scripts/audit_project.py
 | S3-C36-TARGET-PAIRED | 冻结 C36 与 v5 预测已有 | verified（v2 门禁，已推送） | 验收护栏与依赖绑定通过；见 outputs/reports/s3_c36_target_paired_v2.*；SEP-C1-A/B 已完成，下一项 SEP-C2。 |
 | SEP-C1 写作与比较口径 | 已有方法和案例可整理 | verified：SEP-C1-A+B | SEP-C1-A 已完成：论文 §3.4/§3.5 写入三阶段 I/O 与 SIM r10 成功链/r8 失败链，C42/C43 入主张矩阵；无新实验/API。SEP-C1-B 已完成：前人比较范围、通用题名、八组合消融与预算准备（C44-C46）；八组合真实结果仍待运行。 |
 | SEP-C2 必要对照与剩余 Direct 批次 | 两方法合同已适配；运行仍需实际证据与适用权限 | 修复组取消；Direct 结果待执行 | v10 衔接报告中 Rules-Only 36 条已验证，Direct 缺完整预测/评价；保留 Direct 36 + GDPR 74 = 110 次既有计划。执行任务按真实账本和现有授权检查，本轮不重验凭据或外部发送状态；不恢复修复组。 |
-| SEP-C3 prompt 组合与后处理归因 | 诊断已有；新运行仍需适用授权 | 四臂真实验证已完成并拒绝新版；完整八组合未完成 | 2026-09-15 111/011/101/110 共 600 次调用，验收失败，旧 v6 保留默认；详见文首与 sep_c3_modular_ablation_analysis_v1.md。不能把四臂写成完整八组合，不因稿件需要自动追加运行。 |
+| SEP-C3 prompt 组合与后处理归因 | 诊断已有；新运行仍需适用授权 | targeted refinement 已收口；完整八组合/后处理归因/重复运行未完成 | 2026-09-19 完成 A/B/C/D 一次 600-call 开发运行；B 仅研究参照，正式默认仍为 v6；旧 R_C 保留混合结果；五臂 v2 未执行；详见文首与 sep_c3_constraint_refinement_v2_semantic_review。 |
 | SEP-C4 下游与四类边界 | 案例/开发诊断已有证据；正式运行需上游门禁 | 诊断可推进 / 正式运行 blocked | 正式 Oracle/端到端仍依赖实质门禁；案例与范围诊断及时写入正文，新问题进入对应修复项，不等待日历截点。 |
 | SEP-C5 全文 v1 | 已有章节和证据可持续整合 | ready | 现有正文从现在逐段完善，尽早形成可通读全文；必要结果缺口具名列出，后续补证和修复及时回写。 |
 | SEP-C6 导师初稿 | 全文 v1 可审阅 | blocked（待全文） | 完成即交付给用户，最晚 9 月 30 日前提供完整初稿，由用户送导师。 |

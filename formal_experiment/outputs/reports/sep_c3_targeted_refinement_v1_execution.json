@@ -1,0 +1,97 @@
+{
+  "schema_version": "sep_c3_targeted_refinement_execution@1.0.0",
+  "suite_id": "SEP-C3-TARGETED-REFINEMENT-001",
+  "planned_calls": 600,
+  "call_cap": 750,
+  "actual_calls": 600,
+  "completed_samples": 600,
+  "aborted": false,
+  "complete": true,
+  "runs": [
+    {
+      "arm": "A",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.7245765761849047,
+      "coarse_five_field_micro_f1": 0.7910714439850501,
+      "modality_label_macro_f1": 0.7451057197007672
+    },
+    {
+      "arm": "B",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.7806397667812546,
+      "coarse_five_field_micro_f1": 0.82636499707152,
+      "modality_label_macro_f1": 0.735872755800292
+    },
+    {
+      "arm": "C",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.75584913010459,
+      "coarse_five_field_micro_f1": 0.8107141546403943,
+      "modality_label_macro_f1": 0.7500186128234909
+    },
+    {
+      "arm": "D",
+      "actual_call_count": 150,
+      "resumed_completed_count": 0,
+      "failed_count": 0,
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.7858022395604415,
+      "coarse_five_field_micro_f1": 0.8231287016237345,
+      "modality_label_macro_f1": 0.7656028961264751
+    }
+  ],
+  "arms": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "schedule_sha256": "63cd957f9ff4d3261dfcf407fac207fad910ca67b521f9b0b549737b80ac94ca",
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "budget_gate": {
+    "calls_made": 600,
+    "input_tokens": 699676,
+    "output_tokens": 504589,
+    "cost_usd": 2.92174476,
+    "missing_usage_calls": 0,
+    "call_cap": 750,
+    "input_token_cap": 2800000.0,
+    "output_token_cap": 2500000.0,
+    "usd_cost_cap": 16.0,
+    "aborted": false,
+    "abort_reason": null
+  },
+  "runtime_seconds": 4231.693,
+  "raw_counts_per_arm": {
+    "A": 150,
+    "B": 150,
+    "C": 150,
+    "D": 150
+  },
+  "new_sends_per_arm": {
+    "A": 150,
+    "B": 150,
+    "C": 150,
+    "D": 150
+  }
+}

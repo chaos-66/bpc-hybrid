@@ -539,6 +539,17 @@ macro-F1 0.7695。字段级结论：Direct-LLM 在 action/condition/constraint �
 modality label accuracy 领先；actor 字段落后 Rules-Only。禁止显著性推断，仅描述
 性字段级比较。
 
+#### 4.2.1 从模块组合探索到 actor/constraint 定向修补（SEP-C3 设计过程）
+
+v6 正式比较之后，SEP-C3 先按 E（语义示例）、S（详细语义规则）、J（JSON/结构纪律）拆分 Direct-LLM prompt，并用 common + E/S/J 组合检验模块化候选。2026-09-15 的真实四臂批次（111/011/101/110，各 150 条，共 600 calls）显示完整模块化新版相对 v6 明显退步，actor precision 下降，因此 `modular_v1` 未成为正式默认。该结果说明继续叠加模块不是当前最小问题；观察到的错误更集中在 actor 过度抽取和 constraint 的召回、作用范围与短语边界，而不是缺少更多总则。
+
+随后 SEP-C3 进入 targeted refinement，采用 common + E 作为 A，并只测试两个窄修补：
+
+- **R_A（Actor minimality）**：要求 actor 必须是明确承担 regulated action 的责任实体；不能仅因名词短语显著，或因为它是对象、资源、金额等，就标为 actor；没有明确责任实体时返回空 actor。它要解决的是 actor 过度抽取和在空 Gold 上的 FP。
+- **R_C（Constraint recall）**：要求抽取直接限定 when、how、how much、for what purpose、under what legal reference 或 with what exclusivity 的完整限制短语，而不是 `only` 等孤立 cue。它要解决的是 constraint 漏抽和短 cue overlap。
+
+A/B/C/D 四臂为 A = common + E，B = common + E + R_A，C = common + E + R_C，D = common + E + R_A + R_C；同一批 150 条、每臂一次、共 600 calls。这里只把 R_A、R_C 当作 prompt 级行为约束来叙述，不把它们写成已经证明的模型内部机制或可跨运行推广的功能模块。A/B/C/D 数字、取舍和局限见 §6.6。
+
 ### 4.3 历史探索记录：Rules+LLM-Repair（已退出后续实验）
 
 **2026-09-14 用户决定**：下述结果和机制仅保留为历史溯源，不属于当前方法设计或
@@ -824,6 +835,38 @@ Barrientos 优势 / 综合结论 / 可比较性限制”的结构化结论；(2)
 后处理批次（D/E 1140 calls，2026-08-29；450-call 严格 Prompt 单因素与后处理离线
 单因素，2026-08-30）已执行，各项 AB 状态以 `paper/ABLATION_MATRIX.md`（v3）为准；
 AB-4（dual-view adapter）/AB-10（style-equivalent）仍待实现/待授权。
+
+#### 6.6.1 SEP-C3 targeted refinement A/B/C/D 同批结果（开发/探索，一次运行）
+
+为在不增加歧义的前提下检验 actor 与 constraint 两个窄修补，SEP-C3 在固定 EStG-150、冻结 Gold、同一 evaluator 和同一模型发布批次上执行 A/B/C/D 四臂，每臂 150 条，共 600 calls；成功 600、失败 0。A = common + E，B = common + E + R_A，C = common + E + R_C，D = common + E + R_A + R_C。模型为 `deepseek-v4-pro`（登记 release `DeepSeek-V4-Pro-0813`），temperature=0、top_p=1、max_tokens=4096、retry=0、stream=false、thinking.type=disabled。
+
+**表 6-6-1：A/B/C/D 的粗 Gold 五字段平均 F1、actor F1 与 constraint P/R/F1**
+
+| Arm | 五字段 mean F1 | actor F1 | constraint P | constraint R | constraint F1 |
+|---|---:|---:|---:|---:|---:|
+| A | 0.7246 | 0.6314 | 0.8015 | 0.5556 | 0.6562 |
+| B | 0.7806 | 0.7672 | 0.8102 | 0.6074 | 0.6943 |
+| C | 0.7558 | 0.6807 | 0.7525 | 0.7185 | 0.7351 |
+| D | 0.7858 | 0.7284 | 0.7553 | 0.7778 | 0.7664 |
+
+数字来自既有评价和 manifest 的机器结果：`outputs/reports/sep_c3_targeted_refinement_v1_phase2_summary.json`、`sep_c3_targeted_refinement_v1_phase2_analysis.json`、`sep_c3_targeted_refinement_v1_execution.json`，以及 `outputs/development/sep_c3_targeted_refinement_v1/<arm>/repeat-01/evaluation.json`。B 的完整渲染 prompt 为 `prompts/sun_compat/modular_refinement_v1/generated/direct_llm_refinement_B_v1.md`（文件 SHA-256 `c468c631b6e454522994d6839f6a4021a259daedea7f3a2852b7b4343cd22849`，composition SHA-256 `207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1`）。每臂 150 条、四臂共 600 calls；这里报告的是单次开发/探索运行，不是新候选的独立盲测。
+
+**结果解释。** R_A 有方向性收益：A→B 的 actor F1 由 0.6314 升到 0.7672，A 中 36 个空-Gold fields 有非空 actor 预测，B 降到 19。R_C 呈明显权衡：A→C 的 constraint recall 0.5556→0.7185，但 precision 0.8015→0.7525；B→D 的 recall 0.6074→0.7778，但 precision 0.8102→0.7553。B→D 另有 6 个空-Gold actor regression，均为 Gold actor 空、B actor 空、D 新增 actor，这是可观察表型，不足以单独判定模型内部原因。D 的五字段 mean F1=0.7858，高于 B 的 0.7806；但 B 的 actor F1=0.7672 高于 D 的 0.7284，且 B 只用 R_A、副作用更少。因此本轮保留 B 作为研究参照，是在简洁性、actor 表现和副作用之间做出的保守取舍，不是运行前既有的验收阈值，也不能写成"B 总分最高"或"B 已证明整体更优"。D 的较高平均分是真实观察，但同样只有一次运行，不作为本轮正式替换依据。
+
+#### 6.6.2 Constraint recovery taxonomy 校正（AI 离线复核，不是人工 Gold）
+
+原 recovery taxonomy 只登记 40 条比较记录 / 28 个独立样本；按冻结 Gold span 的覆盖变化重新枚举后为 **52 条比较记录 / 37 个独立 sample_id / 52 个恢复 Gold span**，其中 A→C 27 条、B→D 25 条，两个方向有 15 个样本重合，不能把跨方向重复样本当作独立证据。原 taxonomy 漏掉 12 条 / 9 个样本。原 `time=33`（A→C 17 + B→D 16，23 个独立样本）和"legal reference=0"的结论均已撤回；旧 time 正则会把数量上限中的 `to`、法律引用中的 `within`、情态动词 `may` 和年份等误归为时间。
+
+校正后按实际新增命中片段进行多标签复核：time 14、legal_reference 12、purpose 10、quantity 8、manner 8、other 25、exclusivity 2、undetermined 1（多标签合计大于 52）。恢复完整度分为完整可解释 21 条、部分内容 29 条、仅 overlap 命中 2 条。可见 R_C 的 recall 收益分散在多个语义类型，legal reference recovery 确实存在；但很多恢复来自长 Gold 的局部 overlap，不能等同于完整语义恢复。FP 侧同样真实：A→C 未匹配预测 27→50，新出现未匹配 span 36 个、删除 13 个，净 +23；B→D 26→58，新出现 43 个、删除 11 个，净 +32，并伴随孤立 `only`、其他字段内容被重抽为 constraint 等情况。以上标签均为 **AI 离线语义复核，不是 human-approved，也不是人工 adjudication**；原人工复核标记保持不变。
+
+#### 6.6.3 局限与未完成项
+
+- **每臂只有一次运行。** 本表只能支持描述性/方向性判断，不能估计 run-to-run 或服务端方差，也不能据此宣布稳定优势。
+- **EStG-150 已参与设计选择。** 该面板用于错误分析和 prompt 选择，不是新候选的独立盲测；仓库内部的 formal Gold 名称也不会自动赋予独立盲测资格。
+- **coarse overlap 不等于完整语义正确。** 冻结评价器按同字段任意非空字符交集计算，长 Gold 可被短片段命中；完整短语质量、边界和语义类型必须与主指标分列。
+- **旧 E/S/J 组合来自不同批次。** 已有 2026-08-30 Prompt 单因素和 2026-09-15 modular_v1 等分批运行；不能忽略批次效应，也不能把不同批次的最高分拼成连续提升故事。
+- **B 的正式替换尚未完成。** 当前正式默认仍是 v6；B 只是本轮研究参照。R_A 的方向性收益、R_C 的 recall/FP 权衡都需要未来独立运行才能支持更强结论。
+- **SEP-C3 仍未整体完成。** 完整 E/S/J 八组合、已有原始响应的后处理归因、重复运行不确定性都还是缺口。
 
 ## 7. 结果
 
