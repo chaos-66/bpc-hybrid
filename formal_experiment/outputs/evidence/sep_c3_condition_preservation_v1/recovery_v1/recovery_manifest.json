@@ -1,0 +1,35 @@
+{
+  "schema_version": "sep_c3_condition_preservation_recovery_manifest@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "created_at_utc": "2026-09-19T13:35:09.115108+00:00",
+  "files": {
+    "original_authorization": {
+      "path": "configs/sep_c3_condition_preservation_authorization_event_v1.json",
+      "sha256": "75a29956d91e049570a30e66528d5653d8c8418dcf9e9ac22a356511c889e29d"
+    },
+    "base_execution_contract": {
+      "path": "configs/sep_c3_condition_preservation_execution_contract_v1.json",
+      "sha256": "281b17ac1d1af20e2ffb160227faeb34e336b89db98a333e1375fac72fb3e460"
+    },
+    "prepared_budget": {
+      "path": "configs/sep_c3_condition_preservation_budget_v1.json",
+      "sha256": "52c927482e8f33ed91c8cac63b162cbefae92e78c89f4586b636544d230691d7"
+    },
+    "schedule": {
+      "path": "configs/sep_c3_condition_preservation_schedule_v1.json",
+      "sha256": "7a2a68bb80dfd5f1a3bfdd47a33267ca433b099c7faed618711c69e30596cbab"
+    },
+    "recovery_ledger": {
+      "path": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/recovery_ledger_v1.jsonl",
+      "sha256": "43d6bd55bedfadabaf2bb5514e35e3469194aa23e000d722d296d6e59e687514"
+    },
+    "recovery_authorization": {
+      "path": "configs/sep_c3_condition_preservation_recovery_authorization_event_v1.json",
+      "sha256": "1aecd2256c0b9626c1970dc268c0673a7e34fabf4e685cf4ac5ba1fb424d766b"
+    },
+    "recovery_contract": {
+      "path": "configs/sep_c3_condition_preservation_recovery_contract_v1.json",
+      "sha256": "8067d4d166ecae2bec14272add056a07047ea28ee7a59bbb366512782f0450bd"
+    }
+  }
+}

@@ -688,6 +688,105 @@ def analyze(
     return result
 
 
+def analyze_missing_sensitivity(
+    *,
+    base_path: Path,
+    rc1_path: Path,
+    rc_keep_path: Path,
+    excluded_sample_id: str,
+    input_path: Path = DEFAULT_INPUT,
+    gold_path: Path = DEFAULT_GOLD,
+    output_path: Path = DEFAULT_OUTPUT,
+    resamples: int = BOOTSTRAP_RESAMPLES,
+    seed: int = BOOTSTRAP_SEED,
+) -> dict[str, Any]:
+    """Run the fixed paired bootstrap on all samples except one.
+
+    This is a sensitivity check only.  It does not rewrite the 150-sample main
+    analysis and deliberately uses the same evaluator, counts, seed, and
+    paired-sample bootstrap.
+    """
+    if resamples != BOOTSTRAP_RESAMPLES or seed != BOOTSTRAP_SEED:
+        raise BootstrapError(
+            "this round fixes resamples=10000 and seed=20260919"
+        )
+    input_doc = _read_json(input_path)
+    input_records = input_doc.get("records")
+    if not isinstance(input_records, list):
+        raise BootstrapError("frozen input records must be a list")
+    expected_ids = [str(record.get("sample_id") or "") for record in input_records]
+    rows_by_arm, sample_order = _load_arm_predictions(
+        {
+            "BASE": base_path,
+            "RC1": rc1_path,
+            "RC_KEEP": rc_keep_path,
+        },
+        expected_ids,
+    )
+    excluded = str(excluded_sample_id)
+    if excluded not in sample_order:
+        raise BootstrapError(
+            f"excluded sample is not in the frozen 150: {excluded}"
+        )
+    subset_order = [sid for sid in sample_order if sid != excluded]
+    if len(subset_order) != 149:
+        raise BootstrapError(
+            f"sensitivity subset must have 149 samples, got {len(subset_order)}"
+        )
+    gold_doc = _read_json(gold_path)
+    coarse_gold = {
+        str(rec["sample_id"]): rec for rec in build_coarse_view(gold_doc)
+    }
+    counts_by_arm: dict[str, dict[str, dict[str, dict[str, int]]]] = {}
+    for arm in ARMS:
+        counts_by_arm[arm] = {}
+        for row in rows_by_arm[arm]:
+            sid = str(row["sample_id"])
+            if sid not in coarse_gold:
+                raise BootstrapError(f"{arm}: unknown sample_id {sid}")
+            counts_by_arm[arm][sid] = _per_sample_counts(
+                coarse_gold[sid], row
+            )
+    bootstrap = paired_bootstrap(
+        subset_order,
+        counts_by_arm,
+        resamples=resamples,
+        seed=seed,
+    )
+    result = {
+        "schema_version": (
+            "sep_c3_condition_preservation_missing_response_sensitivity@1.0.0"
+        ),
+        "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+        "real_api_calls": 0,
+        "analysis_type": "missing_response_sensitivity",
+        "excluded_sample_id": excluded,
+        "denominator_per_arm": {
+            arm: len(subset_order) for arm in ARMS
+        },
+        "sample_order": subset_order,
+        "bootstrap": bootstrap,
+        "input_paths": {
+            "BASE": str(base_path),
+            "RC1": str(rc1_path),
+            "RC_KEEP": str(rc_keep_path),
+            "frozen_input": str(input_path),
+            "gold": str(gold_path),
+        },
+        "limitations": (
+            "Sensitivity only: this 149-sample paired analysis is not a "
+            "replacement for the pre-registered 150-sample main analysis."
+        ),
+    }
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(
+        json.dumps(result, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    return result
+
+
 def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(

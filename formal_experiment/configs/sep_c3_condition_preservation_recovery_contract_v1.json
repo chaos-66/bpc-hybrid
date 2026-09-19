@@ -1,0 +1,59 @@
+{
+  "schema_version": "sep_c3_condition_preservation_recovery_contract@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "status": "authorized_for_recovery",
+  "original_authorization_path": "configs/sep_c3_condition_preservation_authorization_event_v1.json",
+  "original_authorization_sha256": "75a29956d91e049570a30e66528d5653d8c8418dcf9e9ac22a356511c889e29d",
+  "recovery_authorization_path": "configs/sep_c3_condition_preservation_recovery_authorization_event_v1.json",
+  "recovery_authorization_sha256": "1aecd2256c0b9626c1970dc268c0673a7e34fabf4e685cf4ac5ba1fb424d766b",
+  "base_execution_contract_path": "configs/sep_c3_condition_preservation_execution_contract_v1.json",
+  "base_execution_contract_sha256": "281b17ac1d1af20e2ffb160227faeb34e336b89db98a333e1375fac72fb3e460",
+  "prepared_budget_path": "configs/sep_c3_condition_preservation_budget_v1.json",
+  "prepared_budget_sha256": "52c927482e8f33ed91c8cac63b162cbefae92e78c89f4586b636544d230691d7",
+  "schedule_sha256": "c25656fb1621812266298c76449b0ceefd1fa07b0359198806ce03f39923625a",
+  "recovery_ledger_path": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/recovery_ledger_v1.jsonl",
+  "recovery_ledger_sha256": "43d6bd55bedfadabaf2bb5514e35e3469194aa23e000d722d296d6e59e687514",
+  "existing_attempts": 96,
+  "existing_responses": 95,
+  "existing_unknown": 1,
+  "planned_new_attempts_cap": 354,
+  "cumulative_attempt_cap": 450,
+  "input_token_cap": 909349,
+  "output_token_cap": 1843200,
+  "usd_cost_cap": 10.0,
+  "unknown_entry": {
+    "arm": "RC1",
+    "sample_id": "estg_000074",
+    "terminal_for_schedule": true,
+    "no_resend": true,
+    "reason": "interrupted_response_missing"
+  },
+  "unknown_cost_reserve_usd": 0.03056592,
+  "unknown_cost_reserve_basis": "conservative management reserve: 2 * UTF-8 request-body bytes as a package-level input-token allowance; not a verified DeepSeek tokenizer count and not an invoice",
+  "expected_completion_state": "completed_with_unresolved_response",
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "provider": "openai_compatible",
+    "service": "DeepSeek official API",
+    "base_url_host": "api.deepseek.com"
+  },
+  "price_snapshot": {
+    "schema_version": "sep_c3_condition_preservation_price_snapshot@1.0.0",
+    "currency": "USD",
+    "source_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "peak": {
+      "input_cache_miss_per_million": 1.32,
+      "input_cache_hit_per_million": 0.044,
+      "output_per_million": 3.96
+    },
+    "off_peak": {
+      "input_cache_miss_per_million": 0.66,
+      "input_cache_hit_per_million": 0.022,
+      "output_per_million": 1.98
+    }
+  },
+  "created_at_utc": "2026-09-19T13:35:09.115108+00:00",
+  "retry": 0,
+  "max_tokens": 4096
+}

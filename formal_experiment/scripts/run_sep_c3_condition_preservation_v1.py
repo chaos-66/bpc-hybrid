@@ -80,6 +80,24 @@ AUTHORIZATION_PATH = (
 EXECUTION_CONTRACT_PATH = (
     ROOT / "configs" / "sep_c3_condition_preservation_execution_contract_v1.json"
 )
+RECOVERY_AUTHORIZATION_PATH = (
+    ROOT
+    / "configs"
+    / "sep_c3_condition_preservation_recovery_authorization_event_v1.json"
+)
+RECOVERY_CONTRACT_PATH = (
+    ROOT
+    / "configs"
+    / "sep_c3_condition_preservation_recovery_contract_v1.json"
+)
+RECOVERY_LEDGER_PATH = (
+    ROOT
+    / "outputs"
+    / "evidence"
+    / "sep_c3_condition_preservation_v1"
+    / "recovery_v1"
+    / "recovery_ledger_v1.jsonl"
+)
 OFFLINE_REQUESTS_PATH = (
     ROOT
     / "outputs"
@@ -115,6 +133,28 @@ class ConditionPreservationRunError(RuntimeError):
     """A fail-closed precondition or runtime budget/identity check failed."""
 
 
+def _pid_exists(pid: int) -> bool:
+    """Return True only when a process with *pid* is currently alive."""
+    if not isinstance(pid, int) or pid <= 0:
+        return False
+    if os.name == "nt":
+        import ctypes
+
+        process_query_limited_information = 0x1000
+        handle = ctypes.windll.kernel32.OpenProcess(
+            process_query_limited_information, False, pid
+        )
+        if handle:
+            ctypes.windll.kernel32.CloseHandle(handle)
+            return True
+        return False
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    return True
+
+
 class RunLock:
     """Atomic same-directory lock preventing concurrent duplicate batches."""
 
@@ -124,19 +164,33 @@ class RunLock:
 
     def __enter__(self) -> "RunLock":
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        try:
-            fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-        except FileExistsError as exc:
-            existing = ""
+        for attempt in range(2):
             try:
-                existing = self.path.read_text(encoding="utf-8").strip()
-            except OSError:
-                pass
-            raise ConditionPreservationRunError(
-                f"run lock already exists: {_relative(self.path)}; "
-                f"another batch may be running or the lock is stale. "
-                f"Lock content: {existing!r}"
-            ) from exc
+                fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                break
+            except FileExistsError as exc:
+                existing = ""
+                existing_pid = None
+                try:
+                    existing = self.path.read_text(encoding="utf-8").strip()
+                    existing_pid = int(json.loads(existing).get("pid"))
+                except Exception:  # noqa: BLE001 - stale/corrupt lock handling.
+                    existing_pid = None
+                if existing_pid and _pid_exists(existing_pid):
+                    raise ConditionPreservationRunError(
+                        f"run lock is held by live PID {existing_pid}: "
+                        f"{_relative(self.path)}; Lock content: {existing!r}"
+                    ) from exc
+                if attempt == 0:
+                    try:
+                        self.path.unlink()
+                    except FileNotFoundError:
+                        pass
+                    continue
+                raise ConditionPreservationRunError(
+                    f"could not clear stale run lock: {_relative(self.path)}; "
+                    f"Lock content: {existing!r}"
+                ) from exc
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
             handle.write(json.dumps({
                 "suite_id": SUITE_ID,
@@ -144,6 +198,7 @@ class RunLock:
                 "started_at_utc": _utc_now(),
                 "planned_calls": PLANNED_CALLS,
                 "arms": list(ARMS),
+                "run_identity": "sep-c3-condition-preservation-recovery-v1",
             }, ensure_ascii=False) + "\n")
         self.acquired = True
         return self
@@ -434,6 +489,224 @@ def _load_offline_rows(path: Path) -> list[dict[str, Any]]:
     if any(not value for value in hashes) or len(set(hashes)) != len(hashes):
         raise ConditionPreservationRunError("offline request body hashes invalid")
     return rows
+
+
+def _load_recovery_authorization(path: Path) -> dict[str, Any]:
+    auth = _read_json(path)
+    if auth.get("status") != "authorized_for_recovery":
+        raise ConditionPreservationRunError(
+            "recovery authorization event is not authorized_for_recovery"
+        )
+    text = auth.get("authorization_text")
+    if not isinstance(text, str) or not text.strip():
+        raise ConditionPreservationRunError(
+            "recovery authorization text missing"
+        )
+    if auth.get("authorization_text_sha256") != _sha256_text(text):
+        raise ConditionPreservationRunError(
+            "recovery authorization text hash mismatch"
+        )
+    if auth.get("model") != MODEL_ALIAS:
+        raise ConditionPreservationRunError(
+            "recovery authorization model mismatch"
+        )
+    if auth.get("provider") != "openai_compatible":
+        raise ConditionPreservationRunError(
+            "recovery authorization provider mismatch"
+        )
+    if auth.get("service") != "DeepSeek official API":
+        raise ConditionPreservationRunError(
+            "recovery authorization service mismatch"
+        )
+    if int(auth.get("planned_new_attempts_cap", -1)) > 354:
+        raise ConditionPreservationRunError(
+            "recovery authorization new-attempt cap exceeds 354"
+        )
+    if int(auth.get("cumulative_attempt_cap", -1)) > 450:
+        raise ConditionPreservationRunError(
+            "recovery authorization cumulative cap exceeds 450"
+        )
+    if float(auth.get("usd_cost_cap", -1.0)) > 10.0:
+        raise ConditionPreservationRunError(
+            "recovery authorization USD cap exceeds 10 USD"
+        )
+    return auth
+
+
+def _load_recovery_contract(path: Path) -> dict[str, Any]:
+    contract = _read_json(path)
+    if contract.get("status") != "authorized_for_recovery":
+        raise ConditionPreservationRunError(
+            "recovery contract is not authorized_for_recovery"
+        )
+    if int(contract.get("planned_new_attempts_cap", -1)) > 354:
+        raise ConditionPreservationRunError(
+            "recovery contract new-attempt cap exceeds 354"
+        )
+    if int(contract.get("cumulative_attempt_cap", -1)) > 450:
+        raise ConditionPreservationRunError(
+            "recovery contract cumulative cap exceeds 450"
+        )
+    if float(contract.get("usd_cost_cap", -1.0)) > 10.0:
+        raise ConditionPreservationRunError(
+            "recovery contract USD cap exceeds 10 USD"
+        )
+    if int(contract.get("retry", -1)) != 0:
+        raise ConditionPreservationRunError("recovery contract retry must be 0")
+    return contract
+
+
+def _load_recovery_ledger(path: Path) -> dict[tuple[str, str], dict[str, Any]]:
+    rows = _read_jsonl(path)
+    entries: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in rows:
+        arm = str(row.get("arm") or "")
+        sid = str(row.get("sample_id") or "")
+        if arm not in ARMS or not sid:
+            raise ConditionPreservationRunError(
+                f"invalid recovery ledger entry: {arm}/{sid}"
+            )
+        key = (arm, sid)
+        if key in entries:
+            raise ConditionPreservationRunError(
+                f"duplicate recovery ledger entry: {arm}/{sid}"
+            )
+        if row.get("terminal_for_schedule") is not True:
+            raise ConditionPreservationRunError(
+                f"recovery ledger entry not terminal: {arm}/{sid}"
+            )
+        if row.get("no_resend") is not True:
+            raise ConditionPreservationRunError(
+                f"recovery ledger entry allows resend: {arm}/{sid}"
+            )
+        if str(row.get("reason") or "") != "interrupted_response_missing":
+            raise ConditionPreservationRunError(
+                f"unexpected recovery reason for {arm}/{sid}"
+            )
+        entries[key] = row
+    return entries
+
+
+def validate_recovery_contract(
+    *,
+    recovery_contract_path: Path,
+    recovery_ledger_path: Path,
+    schedule: Mapping[str, Any],
+) -> dict[str, Any]:
+    errors: list[str] = []
+    checks: list[dict[str, Any]] = []
+
+    def fail(item_id: str, detail: str) -> None:
+        errors.append(f"{item_id}: {detail}")
+        checks.append({"id": item_id, "status": "fail", "detail": detail})
+
+    def pass_check(item_id: str, detail: str) -> None:
+        checks.append({"id": item_id, "status": "pass", "detail": detail})
+
+    try:
+        contract = _load_recovery_contract(recovery_contract_path)
+        pass_check("recovery_contract", _relative(recovery_contract_path))
+    except Exception as exc:  # noqa: BLE001
+        return {
+            "schema_version": (
+                "sep_c3_condition_preservation_recovery_validation@1.0.0"
+            ),
+            "status": "fail",
+            "errors": [f"recovery_contract: {type(exc).__name__}: {exc}"],
+            "checks": checks,
+        }
+
+    try:
+        ledger = _load_recovery_ledger(recovery_ledger_path)
+        pass_check("recovery_ledger", _relative(recovery_ledger_path))
+    except Exception as exc:  # noqa: BLE001
+        ledger = {}
+        fail("recovery_ledger", f"{type(exc).__name__}: {exc}")
+
+    if contract.get("schedule_sha256") != schedule.get("schedule_sha256"):
+        fail("recovery_schedule_binding", "schedule hash mismatch")
+    else:
+        pass_check("recovery_schedule_binding", schedule["schedule_sha256"])
+
+    hash_bindings = (
+        (
+            "original_authorization_sha256",
+            contract.get("original_authorization_path"),
+            "original_authorization",
+        ),
+        (
+            "recovery_authorization_sha256",
+            contract.get("recovery_authorization_path"),
+            "recovery_authorization",
+        ),
+        (
+            "base_execution_contract_sha256",
+            contract.get("base_execution_contract_path"),
+            "base_execution_contract",
+        ),
+        (
+            "prepared_budget_sha256",
+            contract.get("prepared_budget_path"),
+            "prepared_budget",
+        ),
+        (
+            "recovery_ledger_sha256",
+            contract.get("recovery_ledger_path"),
+            "recovery_ledger",
+        ),
+    )
+    for field, rel, item_id in hash_bindings:
+        path = (
+            recovery_ledger_path
+            if item_id == "recovery_ledger"
+            else ROOT / str(rel or "")
+        )
+        if not path.is_file():
+            fail(f"recovery_binding_{item_id}", f"missing {rel}")
+            continue
+        actual_sha = _sha256_file(path)
+        if str(contract.get(field) or "") != actual_sha:
+            fail(
+                f"recovery_binding_{item_id}",
+                f"hash mismatch for {rel}: {actual_sha} != {contract.get(field)}",
+            )
+        else:
+            pass_check(f"recovery_binding_{item_id}", actual_sha)
+
+    try:
+        auth = _load_recovery_authorization(
+            ROOT / str(contract.get("recovery_authorization_path") or "")
+        )
+        pass_check("recovery_authorization_content", auth["authorization_text_sha256"])
+    except Exception as exc:  # noqa: BLE001
+        fail("recovery_authorization_content", f"{type(exc).__name__}: {exc}")
+
+    unknown = contract.get("unknown_entry") or {}
+    unknown_key = (str(unknown.get("arm") or ""), str(unknown.get("sample_id") or ""))
+    if unknown_key not in ledger:
+        fail("recovery_unknown_entry", f"ledger missing {unknown_key}")
+    else:
+        row = ledger[unknown_key]
+        if (
+            row.get("terminal_for_schedule") is not True
+            or row.get("no_resend") is not True
+            or str(row.get("reason") or "") != "interrupted_response_missing"
+        ):
+            fail("recovery_unknown_entry", f"ledger entry invalid {unknown_key}")
+        else:
+            pass_check("recovery_unknown_entry", str(unknown_key))
+
+    status = "pass" if not errors else "fail"
+    return {
+        "schema_version": (
+            "sep_c3_condition_preservation_recovery_validation@1.0.0"
+        ),
+        "status": status,
+        "errors": errors,
+        "checks": checks,
+        "recovery_contract_path": _relative(recovery_contract_path),
+        "recovery_ledger_path": _relative(recovery_ledger_path),
+    }
 
 
 def _check_module_hash(
@@ -1250,9 +1523,57 @@ def _processing_status_counts(
     return counts
 
 
+def _terminal_unknown_prediction(
+    terminal_row: Mapping[str, Any],
+    *,
+    arm: str,
+    sample_id: str,
+) -> dict[str, Any]:
+    row = _prediction_base({}, sample_id)
+    row.update({
+        "arm": arm,
+        "request_status": "failed",
+        "api_call_status": "unknown",
+        "transport_status": "unknown",
+        "decode_status": None,
+        "transport_error": "interrupted_response_missing",
+        "error": "interrupted_response_missing",
+        "failure_stage": "transport_unknown",
+        "failure_reason": "interrupted_response_missing",
+        "record": {},
+        "canonical_output": None,
+        "response_unknown": True,
+        "terminal_for_schedule": True,
+        "no_resend": True,
+        "recovery_ledger_reason": str(
+            terminal_row.get("reason") or "interrupted_response_missing"
+        ),
+        "recovery_ledger_attempt_index": terminal_row.get("attempt_index"),
+        "recovery_ledger_execution_index": terminal_row.get("execution_index"),
+        "usage": {},
+        "cost": {
+            "cost_usd": "unknown",
+            "basis": "usage_unverifiable_after_interruption",
+        },
+        "raw_model_output": None,
+        "raw_output_sha256": None,
+        "provenance": {
+            "response_sha256": None,
+            "request_id": None,
+            "output_validation_path_version": OUTPUT_VALIDATION_PATH_VERSION,
+            "validation_backend": row.get("validation_backend"),
+            "recovery_ledger_reason": str(
+                terminal_row.get("reason") or "interrupted_response_missing"
+            ),
+        },
+    })
+    return row
+
+
 def _build_arm_outputs(
     arm: str,
     raw_by_sid: Mapping[str, Mapping[str, Any]],
+    terminal_by_sid: Mapping[str, Mapping[str, Any]],
     input_rows: Sequence[Mapping[str, str]],
     gold_doc: Mapping[str, Any],
     out_dir: Path,
@@ -1260,42 +1581,55 @@ def _build_arm_outputs(
     *,
     actual_call_count: int,
     resumed_completed_count: int,
+    resumed_terminal_count: int,
 ) -> dict[str, Any]:
     run_dir = _arm_dir(arm, out_dir)
     predictions: list[dict[str, Any]] = []
     input_text = {str(row["sample_id"]): str(row["text"]) for row in input_rows}
     for row in input_rows:
         sid = str(row["sample_id"])
-        if sid not in raw_by_sid:
-            raise ConditionPreservationRunError(f"arm {arm} missing raw sample {sid}")
-        call = raw_by_sid[sid]
-        prediction = _convert_call_to_prediction(
-            call,
-            arm=arm,
-            expected_sample_id=sid,
-            expected_source_id=sid,
-            expected_source_text=input_text[sid],
-        )
-        prediction.update({
-            "execution_index": call.get("execution_index"),
-            "arm_order_within_sample": call.get("arm_order_within_sample"),
-            "timestamp_utc": call.get("timestamp_utc"),
-            "rendered_prompt_version_hash": call.get("rendered_prompt_version_hash"),
-            "model": call.get("model"),
-            "documented_release": call.get("documented_release"),
-            "sampling_parameters": call.get("sampling_parameters"),
-            "raw_model_output": call.get("raw_model_output"),
-            "raw_output_sha256": call.get("raw_output_sha256") or prediction.get(
-                "response_sha256"
-            ),
-            "bare_json_status": call.get("bare_json_status"),
-            "provenance": {
-                "response_sha256": prediction.get("response_sha256"),
-                "request_id": prediction.get("request_id"),
-                "output_validation_path_version": OUTPUT_VALIDATION_PATH_VERSION,
-                "validation_backend": prediction.get("validation_backend"),
-            },
-        })
+        if sid in raw_by_sid:
+            call = raw_by_sid[sid]
+            prediction = _convert_call_to_prediction(
+                call,
+                arm=arm,
+                expected_sample_id=sid,
+                expected_source_id=sid,
+                expected_source_text=input_text[sid],
+            )
+            prediction.update({
+                "execution_index": call.get("execution_index"),
+                "arm_order_within_sample": call.get("arm_order_within_sample"),
+                "timestamp_utc": call.get("timestamp_utc"),
+                "rendered_prompt_version_hash": call.get(
+                    "rendered_prompt_version_hash"
+                ),
+                "model": call.get("model"),
+                "documented_release": call.get("documented_release"),
+                "sampling_parameters": call.get("sampling_parameters"),
+                "raw_model_output": call.get("raw_model_output"),
+                "raw_output_sha256": call.get("raw_output_sha256")
+                or prediction.get("response_sha256"),
+                "bare_json_status": call.get("bare_json_status"),
+                "provenance": {
+                    "response_sha256": prediction.get("response_sha256"),
+                    "request_id": prediction.get("request_id"),
+                    "output_validation_path_version": (
+                        OUTPUT_VALIDATION_PATH_VERSION
+                    ),
+                    "validation_backend": prediction.get("validation_backend"),
+                },
+            })
+        else:
+            terminal = terminal_by_sid.get(sid)
+            if terminal is None:
+                raise ConditionPreservationRunError(
+                    f"arm {arm} has no raw response or terminal recovery row "
+                    f"for sample {sid}"
+                )
+            prediction = _terminal_unknown_prediction(
+                terminal, arm=arm, sample_id=sid
+            )
         predictions.append(prediction)
 
     failed = [row for row in predictions if row.get("request_status") != "ok"]
@@ -1340,7 +1674,17 @@ def _build_arm_outputs(
         encoding="utf-8",
         newline="\n",
     )
-    raw_rows = [raw_by_sid[str(row["sample_id"])] for row in input_rows]
+    raw_rows = [
+        raw_by_sid[str(row["sample_id"])]
+        for row in input_rows
+        if str(row["sample_id"]) in raw_by_sid
+    ]
+    same_response_binding = all(
+        raw_by_sid[str(row["sample_id"])].get("response_sha256")
+        == predictions[index].get("response_sha256")
+        for index, row in enumerate(input_rows)
+        if str(row["sample_id"]) in raw_by_sid
+    )
     manifest = {
         "schema_version": "sep_c3_condition_preservation_manifest@1.0.0",
         "suite_id": SUITE_ID,
@@ -1359,6 +1703,9 @@ def _build_arm_outputs(
         "sample_count": len(input_rows),
         "actual_call_count": actual_call_count,
         "resumed_completed_count": resumed_completed_count,
+        "resumed_terminal_count": resumed_terminal_count,
+        "terminal_unknown_count": len(terminal_by_sid),
+        "terminal_unknown_samples": sorted(terminal_by_sid),
         "failed_count": len(failed),
         "evaluation_denominator": len(predictions),
         "output_validation_path": output_validation_path,
@@ -1376,10 +1723,7 @@ def _build_arm_outputs(
         "canonical_predictions_aggregate_sha256": shared.base.aggregate_hash(
             predictions
         ),
-        "same_response_binding": all(
-            raw.get("response_sha256") == pred.get("response_sha256")
-            for raw, pred in zip(raw_rows, predictions)
-        ),
+        "same_response_binding": same_response_binding,
     }
     _write_json(run_dir / "manifest.json", manifest)
     return {
@@ -1389,8 +1733,6 @@ def _build_arm_outputs(
         "failed": failed,
         "predictions": predictions,
     }
-
-
 def _validate_runtime_config(config: LLMConfig, contract: Mapping[str, Any]) -> None:
     if not config.enabled or config.provider != "openai_compatible":
         raise ConditionPreservationRunError("real provider is not enabled")
@@ -1618,6 +1960,8 @@ def execute(
     prepared_budget_path: Path | None = None,
     schedule_path: Path | None = None,
     offline_path: Path | None = None,
+    recovery_contract_path: Path | None = None,
+    recovery_ledger_path: Path | None = None,
     result_writer: Any = None,
     project_env: bool = False,
     enforce_off_peak: bool = False,
@@ -1635,6 +1979,36 @@ def execute(
         )
     contract = _load_execution_contract(Path(contract_path or EXECUTION_CONTRACT_PATH))
     schedule = _load_schedule(Path(schedule_path or SCHEDULE_PATH))
+    if recovery_contract_path is not None or recovery_ledger_path is not None:
+        recovery_contract_path = Path(
+            recovery_contract_path or RECOVERY_CONTRACT_PATH
+        )
+        recovery_ledger_path = Path(
+            recovery_ledger_path or RECOVERY_LEDGER_PATH
+        )
+        recovery_validation = validate_recovery_contract(
+            recovery_contract_path=recovery_contract_path,
+            recovery_ledger_path=recovery_ledger_path,
+            schedule=schedule,
+        )
+        if recovery_validation["status"] != "pass":
+            raise ConditionPreservationRunError(
+                "recovery contract validation failed: "
+                + "; ".join(recovery_validation["errors"])
+            )
+        recovery_contract = _load_recovery_contract(recovery_contract_path)
+        terminal_entries = _load_recovery_ledger(recovery_ledger_path)
+    else:
+        recovery_validation = {
+            "schema_version": (
+                "sep_c3_condition_preservation_recovery_validation@1.0.0"
+            ),
+            "status": "not_requested",
+            "errors": [],
+            "checks": [],
+        }
+        recovery_contract = None
+        terminal_entries = {}
     input_rows = _input_rows()
     sample_by_id = {str(row["sample_id"]): row for row in input_rows}
     gold_doc = _read_json(core.FORMAL_GOLD)
@@ -1655,6 +2029,9 @@ def execute(
         "output_validation_path": _output_validation_path_metadata(),
         "schedule_sha256": schedule["schedule_sha256"],
         "contract_validation": validation,
+        "recovery_validation": recovery_validation,
+        "completion_state": "not_complete",
+        "unknown_response_count": 0,
         "model": {
             "id": MODEL_ALIAS,
             "documented_release": MODEL_RELEASE,
@@ -1669,7 +2046,25 @@ def execute(
     started = time.time()
     with RunLock(run_out_dir / ".run.lock"):
         state = _load_persisted_state(run_out_dir)
-        _check_in_doubt(state)
+        for arm in ARMS:
+            for sid in state[arm]["attempts_by_sid"]:
+                if sid in state[arm]["raw_by_sid"]:
+                    continue
+                if (arm, sid) not in terminal_entries:
+                    raise ConditionPreservationRunError(
+                        "in_doubt sample requires explicit terminal recovery "
+                        f"registration and must not be resent: {arm}/{sid}"
+                    )
+        for (arm, sid), terminal_row in terminal_entries.items():
+            if sid not in state[arm]["attempts_by_sid"]:
+                raise ConditionPreservationRunError(
+                    f"terminal recovery row has no persisted attempt: {arm}/{sid}"
+                )
+            if sid in state[arm]["raw_by_sid"]:
+                raise ConditionPreservationRunError(
+                    f"terminal recovery row has a real response; contradictory: "
+                    f"{arm}/{sid}"
+                )
         gate = ReservationBudgetGate(contract)
         _restore_gate(gate, state)
 
@@ -1696,6 +2091,10 @@ def execute(
         initial_raw_counts = {
             arm: len(state[arm]["raw_by_sid"]) for arm in ARMS
         }
+        initial_terminal_counts = {
+            arm: sum(1 for (a, _sid) in terminal_entries if a == arm)
+            for arm in ARMS
+        }
         new_sends = {arm: 0 for arm in ARMS}
         try:
             for entry in entries:
@@ -1704,9 +2103,11 @@ def execute(
                 if sid in state[arm]["raw_by_sid"]:
                     continue
                 if sid in state[arm]["attempts_by_sid"]:
+                    if (arm, sid) in terminal_entries:
+                        continue
                     raise ConditionPreservationRunError(
-                        f"in_doubt sample requires manual resolution and must "
-                        f"not be resent: {arm}/{sid}"
+                        f"in_doubt sample requires explicit terminal recovery "
+                        f"registration and must not be resent: {arm}/{sid}"
                     )
                 sample = sample_by_id.get(sid)
                 if sample is None:
@@ -1741,28 +2142,43 @@ def execute(
                         f"arm {arm} stopped after sample {sid}: "
                         f"{call.get('gate_error') or gate.abort_reason}"
                     )
-            if any(
-                len(state[arm]["raw_by_sid"]) != SAMPLES_PER_ARM for arm in ARMS
-            ):
-                raise ConditionPreservationRunError(
-                    "schedule completed without 150 persisted responses per arm"
-                )
             for arm in ARMS:
+                scheduled_ids = [
+                    str(entry["sample_id"])
+                    for entry in entries
+                    if str(entry["arm"]) == arm
+                ]
+                arm_terminal = {
+                    sid: row
+                    for (a, sid), row in terminal_entries.items()
+                    if a == arm
+                }
+                for sid in scheduled_ids:
+                    if sid not in state[arm]["raw_by_sid"] and sid not in arm_terminal:
+                        raise ConditionPreservationRunError(
+                            f"arm {arm} sample {sid} has no raw response "
+                            "or terminal recovery row"
+                        )
                 run = _build_arm_outputs(
                     arm,
                     state[arm]["raw_by_sid"],
+                    arm_terminal,
                     input_rows,
                     gold_doc,
                     run_out_dir,
                     schedule["schedule_sha256"],
                     actual_call_count=new_sends[arm],
                     resumed_completed_count=initial_raw_counts[arm],
+                    resumed_terminal_count=initial_terminal_counts[arm],
                 )
                 result["runs"].append({
                     "arm": arm,
                     "actual_call_count": new_sends[arm],
                     "resumed_completed_count": initial_raw_counts[arm],
+                    "resumed_terminal_count": initial_terminal_counts[arm],
                     "attempt_count": len(state[arm]["attempts_by_sid"]),
+                    "raw_response_count": len(state[arm]["raw_by_sid"]),
+                    "terminal_unknown_count": len(arm_terminal),
                     "failed_count": run["manifest"]["failed_count"],
                     "output_validation_path_version": OUTPUT_VALIDATION_PATH_VERSION,
                     "validation_backend": run["manifest"]["output_validation_path"][
@@ -1782,8 +2198,14 @@ def execute(
             result["actual_calls"] = sum(
                 len(state[arm]["attempts_by_sid"]) for arm in ARMS
             )
-            result["completed_samples"] = sum(
+            result["known_responses"] = sum(
                 len(state[arm]["raw_by_sid"]) for arm in ARMS
+            )
+            result["unknown_response_count"] = sum(
+                1 for _key in terminal_entries
+            )
+            result["completed_samples"] = (
+                result["known_responses"] + result["unknown_response_count"]
             )
             result["complete"] = (
                 result["aborted"] is False
@@ -1792,15 +2214,27 @@ def execute(
                 and not gate.aborted
                 and len(result["runs"]) == len(ARMS)
             )
+            result["completion_state"] = (
+                "completed_with_unresolved_response"
+                if result["unknown_response_count"]
+                else "complete"
+            )
         except Exception as exc:  # noqa: BLE001 - persist partial state.
             result["aborted"] = True
             result["abort_reason"] = f"{type(exc).__name__}: {exc}"
             result["actual_calls"] = sum(
                 len(state[arm]["attempts_by_sid"]) for arm in ARMS
             )
-            result["completed_samples"] = sum(
+            result["known_responses"] = sum(
                 len(state[arm]["raw_by_sid"]) for arm in ARMS
             )
+            result["unknown_response_count"] = sum(
+                1 for _key in terminal_entries
+            )
+            result["completed_samples"] = (
+                result["known_responses"] + result["unknown_response_count"]
+            )
+            result["completion_state"] = "incomplete"
         result["budget_gate"] = gate.snapshot()
         result["runtime_seconds"] = round(time.time() - started, 3)
         result["attempt_counts_per_arm"] = {
@@ -1809,7 +2243,26 @@ def execute(
         result["raw_counts_per_arm"] = {
             arm: len(state[arm]["raw_by_sid"]) for arm in ARMS
         }
+        result["terminal_counts_per_arm"] = {
+            arm: sum(1 for (a, _sid) in terminal_entries if a == arm)
+            for arm in ARMS
+        }
         result["new_sends_per_arm"] = dict(new_sends)
+        if recovery_contract is not None:
+            result["recovery_contract"] = {
+                "path": _relative(
+                    Path(recovery_contract_path or RECOVERY_CONTRACT_PATH)
+                ),
+                "unknown_cost_reserve_usd": recovery_contract.get(
+                    "unknown_cost_reserve_usd"
+                ),
+                "unknown_cost_reserve_basis": recovery_contract.get(
+                    "unknown_cost_reserve_basis"
+                ),
+                "expected_completion_state": recovery_contract.get(
+                    "expected_completion_state"
+                ),
+            }
 
     run_out_dir.mkdir(parents=True, exist_ok=True)
     _write_json(run_out_dir / "execution_summary.json", result)
@@ -1839,6 +2292,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--budget", type=Path, default=PREPARED_BUDGET_PATH)
     parser.add_argument("--schedule", type=Path, default=SCHEDULE_PATH)
     parser.add_argument("--offline", type=Path, default=OFFLINE_REQUESTS_PATH)
+    parser.add_argument("--recovery", action="store_true")
+    parser.add_argument(
+        "--recovery-contract", type=Path, default=RECOVERY_CONTRACT_PATH
+    )
+    parser.add_argument(
+        "--recovery-ledger", type=Path, default=RECOVERY_LEDGER_PATH
+    )
     parser.add_argument("--out-dir", type=Path)
     args = parser.parse_args(argv)
 
@@ -1850,6 +2310,22 @@ def main(argv: Sequence[str] | None = None) -> int:
             schedule_path=args.schedule,
             offline_path=args.offline,
         )
+        if args.recovery and report["status"] == "pass":
+            schedule = _load_schedule(args.schedule)
+            recovery_report = validate_recovery_contract(
+                recovery_contract_path=args.recovery_contract,
+                recovery_ledger_path=args.recovery_ledger,
+                schedule=schedule,
+            )
+            report = {
+                "base_validation": report,
+                "recovery_validation": recovery_report,
+                "status": (
+                    "pass"
+                    if recovery_report["status"] == "pass"
+                    else "fail"
+                ),
+            }
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0 if report["status"] == "pass" else 1
     if args.execute:
@@ -1866,12 +2342,23 @@ def main(argv: Sequence[str] | None = None) -> int:
             prepared_budget_path=args.budget,
             schedule_path=args.schedule,
             offline_path=args.offline,
+            recovery_contract_path=(
+                args.recovery_contract if args.recovery else None
+            ),
+            recovery_ledger_path=(
+                args.recovery_ledger if args.recovery else None
+            ),
             project_env=args.project_env,
             enforce_off_peak=args.enforce_off_peak,
         )
         summary = {
-            "status": "complete" if result.get("complete") else "incomplete",
+            "status": (
+                result.get("completion_state")
+                or ("complete" if result.get("complete") else "incomplete")
+            ),
             "actual_calls": result.get("actual_calls"),
+            "known_responses": result.get("known_responses"),
+            "unknown_response_count": result.get("unknown_response_count"),
             "completed_samples": result.get("completed_samples"),
             "abort_reason": result.get("abort_reason"),
             "summary_path": _relative(

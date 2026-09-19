@@ -1,0 +1,19 @@
+{
+  "schema_version": "sep_c3_condition_preservation_recovery_authorization_event@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "status": "authorized_for_recovery",
+  "authorization_text": "恢复授权补充：允许在登记 RC1/estg_000074 为 terminal_for_schedule=true、no_resend=true、reason=interrupted_response_missing 后，继续原 schedule 中尚未尝试的请求。 累计 attempt 不超过 450，累计费用不超过 10 USD；原 token 限制、模型、Prompt、样本、Gold、采样参数、评价口径和保留标准不变；retry=0；不新增校准或替补调用；不重发已完成请求和 RC1/estg_000074。 已知实际费用与未知请求预留分开；bytes/3 不是严格上界；未知请求使用 UTF-8 请求体字节数的 package-level 保守管理预留，不当作实际账单。 进程管理使用隐藏窗口后台进程、stdout/stderr、PID 和短轮询，轮询结束不得终止执行器；清理失效锁前确认 PID 不存在。",
+  "authorization_text_sha256": "3e8342200d25f97b60bc0aede987ea654ff99d1cec2f53dd6217c1f9fc7d1b62",
+  "original_authorization_path": "configs/sep_c3_condition_preservation_authorization_event_v1.json",
+  "original_authorization_file_sha256": "75a29956d91e049570a30e66528d5653d8c8418dcf9e9ac22a356511c889e29d",
+  "original_authorization_text_sha256": "a04ea8b7740f9128f5a00672a316bba3d2af5fe0e0776a6cdfba69e8f319fd47",
+  "model": "deepseek-v4-pro",
+  "provider": "openai_compatible",
+  "service": "DeepSeek official API",
+  "planned_new_attempts_cap": 354,
+  "cumulative_attempt_cap": 450,
+  "usd_cost_cap": 10.0,
+  "retry": 0,
+  "max_tokens": 4096,
+  "created_at_utc": "2026-09-19T13:35:09.115108+00:00"
+}
