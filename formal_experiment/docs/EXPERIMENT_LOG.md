@@ -4947,3 +4947,17 @@
 - 仍存在 blocker：无
 - 备注：Frozen Gold is read read-only by the existing deterministic evaluator/offline check; no Gold content was modified. No real API call was made.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-19T11:34:01.049504+00:00 - SEP-C3 targeted refinement 运行时输入绑定与 canonical 校验修复
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：20 passed in 1.92s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`a15c4984d968c98138d96ee37f0e93d703936d4b`；相关未提交路径：22 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：未创建或覆盖（`not_created_or_overwritten`）
+- 仍存在 blocker：无
+- 备注：路径版本 sep_c3_targeted_refinement_runtime_validation_v1；backend=lightweight；旧600 canonical只读复核 source_text 2/0/2/0、结构 10/9/6/7、并集 12/9/8/7 共36条；未改历史文件/分数，API=0；provenance仅在输出envelope
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

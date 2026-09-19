@@ -40,6 +40,7 @@ import bpc_hybrid.modular_refinement_prompt as rp  # noqa: E402
 import prepare_sep_c3_targeted_refinement_v1 as prep  # noqa: E402
 from bpc_hybrid.h1_transport import H1RequestPolicy  # noqa: E402
 from bpc_hybrid.llm_client import LLMRequest, RealAPITransport  # noqa: E402
+from bpc_hybrid.stage2_canonical import validate_canonical  # noqa: E402
 from bpc_hybrid.sep_c3_modular_evaluation import (  # noqa: E402
     attempt_rows,
     evaluate_coarse,
@@ -364,36 +365,363 @@ def _strip_json_content(raw: str) -> str:
     return content
 
 
-def _best_effort_audits(
-    raw: str, source_text: str
-) -> tuple[Any, Any, Any]:
+OUTPUT_VALIDATION_PATH_VERSION = "sep_c3_targeted_refinement_runtime_validation_v1"
+_VALIDATION_BACKEND_METADATA: dict[str, Any] | None = None
+
+
+def _validation_backend_metadata() -> dict[str, Any]:
+    """Return an honest label for the validator actually available here."""
+    global _VALIDATION_BACKEND_METADATA
+    if _VALIDATION_BACKEND_METADATA is None:
+        try:
+            import jsonschema  # type: ignore  # noqa: F401
+        except ImportError:
+            _VALIDATION_BACKEND_METADATA = {
+                "backend": "lightweight",
+                "jsonschema_available": False,
+                "detail": (
+                    "stage2_canonical.validate_canonical() using the existing "
+                    "in-process structural + cross-field checks; jsonschema "
+                    "is not installed"
+                ),
+            }
+        else:
+            _VALIDATION_BACKEND_METADATA = {
+                "backend": "jsonschema",
+                "jsonschema_available": True,
+                "detail": (
+                    "stage2_canonical.validate_canonical() with the installed "
+                    "jsonschema Draft202012 validator plus cross-field checks"
+                ),
+            }
+    return dict(_VALIDATION_BACKEND_METADATA)
+
+
+def _output_validation_path_metadata() -> dict[str, Any]:
+    """Version and backend metadata for the fixed post-processing path."""
+    backend = _validation_backend_metadata()
+    return {
+        "version": OUTPUT_VALIDATION_PATH_VERSION,
+        "validation_backend": backend["backend"],
+        "validation_backend_detail": backend["detail"],
+        "jsonschema_available": backend["jsonschema_available"],
+        "processing_order": [
+            "raw_response_saved",
+            "json_parse",
+            "input_identity_check",
+            "existing_adapter",
+            "existing_canonicalizer",
+            "runtime_structural_cross_field_validation",
+            "persist_result_and_audit",
+        ],
+        "input_identity_source": (
+            "data/input/estg150_formal_inference_input_v2.json"
+        ),
+        "required_source_id_rule": (
+            "payload.source_id must equal the request protocol source_id "
+            "(targeted refinement renders source_id == sample_id)"
+        ),
+    }
+
+
+def check_input_binding(
+    payload: Any,
+    *,
+    expected_sample_id: str,
+    expected_source_id: str,
+    expected_source_text: str,
+) -> dict[str, Any]:
+    """Check model payload identity against frozen input before adaptation.
+
+    The expected values come from the actual frozen input row and the request
+    protocol, never from the model output or Gold.  Any missing, changed, or
+    non-exact text is a failed binding; the caller must not repair it.
+    """
+    result: dict[str, Any] = {
+        "status": "failed",
+        "errors": [],
+        "expected": {
+            "sample_id": expected_sample_id,
+            "source_id": expected_source_id,
+            "source_text_sha256": core._sha256_text(expected_source_text),
+            "source_text_length": len(expected_source_text),
+        },
+        "observed": {
+            "payload_type": type(payload).__name__,
+            "sample_id": None,
+            "source_id": None,
+            "source_text_sha256": None,
+            "source_text_length": None,
+        },
+    }
+    if not isinstance(payload, dict):
+        result["errors"].append("payload_not_json_object")
+        return result
+
+    observed = result["observed"]
+    for field, expected in (
+        ("sample_id", expected_sample_id),
+        ("source_id", expected_source_id),
+    ):
+        if field not in payload:
+            result["errors"].append(f"{field}_missing")
+            continue
+        actual = payload.get(field)
+        observed[field] = actual
+        if actual != expected:
+            result["errors"].append(f"{field}_mismatch")
+
+    if "source_text" not in payload:
+        result["errors"].append("source_text_missing")
+    else:
+        actual_text = payload.get("source_text")
+        if not isinstance(actual_text, str):
+            result["errors"].append("source_text_not_string")
+        else:
+            observed["source_text_sha256"] = core._sha256_text(actual_text)
+            observed["source_text_length"] = len(actual_text)
+            if actual_text != expected_source_text:
+                result["errors"].append("source_text_mismatch")
+
+    if not result["errors"]:
+        result["status"] = "passed"
+    return result
+
+
+def _adapt_and_canonicalize_payload(
+    payload: Any,
+    source_text: str,
+) -> tuple[
+    Any,
+    Mapping[str, Any] | None,
+    Mapping[str, Any] | None,
+    str | None,
+    str | None,
+]:
+    """Run the existing adapter and canonicalizer on an isolated deep copy."""
     from bpc_hybrid.d1_schema_adapter import adapt_relay_record
     from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates
 
-    content = _strip_json_content(raw)
+    working = copy.deepcopy(payload)
     try:
-        payload = json.loads(content)
-    except Exception:  # noqa: BLE001 - audit metadata only.
-        return None, None, None
-    adapt_audit = None
-    span_audit = None
+        adapted, adapt_audit = adapt_relay_record(working, source_text)
+    except Exception as exc:  # noqa: BLE001 - persist conversion failures.
+        return (
+            None,
+            None,
+            None,
+            "adapter",
+            f"adapter_exception: {type(exc).__name__}: {exc}",
+        )
+    if adapt_audit.get("status") == "failed":
+        reason = "; ".join(adapt_audit.get("failed_reasons") or [])
+        return (
+            None,
+            adapt_audit,
+            None,
+            "adapter",
+            f"relay_schema_adaptation_failed: {reason}",
+        )
+
     try:
-        adapted, adapt_audit = adapt_relay_record(payload, source_text)
-        if adapt_audit.get("status") != "failed":
-            _, span_audit = canonicalize_record_coordinates(adapted, source_text)
-    except Exception:  # noqa: BLE001 - audit metadata only.
-        pass
-    return payload, adapt_audit, span_audit
+        canonical, span_audit = canonicalize_record_coordinates(
+            adapted, source_text)
+    except Exception as exc:  # noqa: BLE001 - persist conversion failures.
+        return (
+            None,
+            adapt_audit,
+            None,
+            "canonicalizer",
+            f"canonicalizer_exception: {type(exc).__name__}: {exc}",
+        )
+    if span_audit.get("status") == "failed":
+        reason = "; ".join(span_audit.get("failed_reasons") or [])
+        return (
+            None,
+            adapt_audit,
+            span_audit,
+            "canonicalizer",
+            f"span_canonicalization_failed: {reason}",
+        )
+    return canonical, adapt_audit, span_audit, None, None
+
+
+def _runtime_validate_canonical(canonical: Any) -> tuple[Any, str | None]:
+    """Call the shared validator and return its program-computed report."""
+    try:
+        return validate_canonical(canonical), None
+    except Exception as exc:  # noqa: BLE001 - validation exceptions fail closed.
+        return None, (
+            f"canonical_validation_exception: {type(exc).__name__}: {exc}"
+        )
+
+
+def _prediction_base(
+    call: Mapping[str, Any], *, sample_id: str
+) -> dict[str, Any]:
+    backend = _validation_backend_metadata()
+    raw_content = str(call.get("raw_response_content") or "")
+    return {
+        "sample_id": sample_id,
+        "request_id": call.get("request_id"),
+        "response_sha256": (
+            call.get("response_sha256") or core._sha256_text(raw_content)
+        ),
+        "api_call_status": str(call.get("request_status") or "unknown"),
+        "transport_error": call.get("error"),
+        "output_parse_status": "passed",
+        "input_binding_status": "not_attempted",
+        "canonical_validation_status": "not_attempted",
+        "validation_backend": backend["backend"],
+        "validation_backend_detail": backend["detail"],
+        "validation_backend_jsonschema_available": backend[
+            "jsonschema_available"
+        ],
+        "output_validation_path_version": OUTPUT_VALIDATION_PATH_VERSION,
+    }
+
+
+def _failed_prediction(
+    row: dict[str, Any],
+    *,
+    stage: str,
+    message: str,
+) -> dict[str, Any]:
+    row.update({
+        "request_status": "failed",
+        "error": message,
+        "failure_stage": stage,
+        "failure_reason": message,
+        "record": {},
+    })
+    return row
+
+
+def convert_response_payload(
+    payload: Any,
+    *,
+    arm: str,
+    expected_sample_id: str,
+    expected_source_id: str,
+    expected_source_text: str,
+    call: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Convert one parsed model payload into a prediction/audit envelope.
+
+    This is the single fixed path used after JSON parsing.  Input binding is
+    checked before the adapter/canonicalizer; validation is recomputed by the
+    shared runtime validator; a validation failure yields an empty prediction
+    while retaining trace/audit information.
+    """
+    call = call or {}
+    row = _prediction_base(call, sample_id=expected_sample_id)
+    row["arm"] = arm
+    row["parsed_output"] = copy.deepcopy(payload)
+
+    binding = check_input_binding(
+        payload,
+        expected_sample_id=expected_sample_id,
+        expected_source_id=expected_source_id,
+        expected_source_text=expected_source_text,
+    )
+    row["input_binding"] = binding
+    if binding["status"] != "passed":
+        row["input_binding_status"] = "failed"
+        return _failed_prediction(
+            row,
+            stage="input_binding",
+            message="input_binding_failed: " + "; ".join(binding["errors"]),
+        )
+    row["input_binding_status"] = "passed"
+
+    canonical, adapt_audit, span_audit, failure_stage, failure_reason = (
+        _adapt_and_canonicalize_payload(payload, expected_source_text)
+    )
+    row["parser_audit"] = adapt_audit
+    row["canonicalizer_audit"] = span_audit
+    if failure_stage is not None:
+        return _failed_prediction(
+            row,
+            stage=failure_stage,
+            message=failure_reason or "conversion_failed",
+        )
+
+    report, validation_error = _runtime_validate_canonical(canonical)
+    row["runtime_validation"] = (
+        report.to_dict() if report is not None else None
+    )
+    if validation_error is not None:
+        row["canonical_validation_status"] = "failed"
+        return _failed_prediction(
+            row,
+            stage="canonical_validation",
+            message=validation_error,
+        )
+    if not (report.schema_valid and report.cross_field_valid):
+        row["canonical_validation_status"] = "failed"
+        return _failed_prediction(
+            row,
+            stage="canonical_validation",
+            message=(
+                "canonical_validation_failed: "
+                + "; ".join(report.errors)
+            ),
+        )
+
+    row["canonical_validation_status"] = "passed"
+    row.update({
+        "request_status": "ok",
+        "error": None,
+        "failure_stage": None,
+        "failure_reason": None,
+        "record": canonical,
+    })
+    return row
+
+
+def _parse_failure_prediction(
+    call: Mapping[str, Any], arm: str, *, message: str
+) -> dict[str, Any]:
+    row = _prediction_base(
+        call, sample_id=str(call.get("sample_id") or "")
+    )
+    row["arm"] = arm
+    row["output_parse_status"] = "failed"
+    row["parsed_output"] = None
+    return _failed_prediction(row, stage="output_parse", message=message)
+
+
+def convert_refinement_response(
+    call: Mapping[str, Any], arm: str, source_text: str
+) -> dict[str, Any]:
+    """Parse raw response content and run the fixed conversion path."""
+    raw = str(
+        call.get("raw_response_content")
+        or call.get("raw_model_output")
+        or ""
+    )
+    try:
+        payload = json.loads(_strip_json_content(raw))
+    except Exception as exc:  # noqa: BLE001 - output parse failure is distinct.
+        return _parse_failure_prediction(
+            call,
+            arm,
+            message=f"output_parse_failed: {type(exc).__name__}: {exc}",
+        )
+    return convert_response_payload(
+        payload,
+        arm=arm,
+        expected_sample_id=str(call.get("sample_id") or ""),
+        expected_source_id=str(call.get("sample_id") or ""),
+        expected_source_text=source_text,
+        call=call,
+    )
 
 
 def _prediction_with_provenance(
     call: Mapping[str, Any], arm: str, source_text: str
 ) -> dict[str, Any]:
-    parsed = base.parse_same_response(call, arm, source_text)
-    prediction = base._prediction_row(parsed, arm)
-    payload, adapt_audit, span_audit = _best_effort_audits(
-        str(call.get("raw_response_content") or ""), source_text
-    )
+    prediction = convert_refinement_response(call, arm, source_text)
     prediction.update({
         "suite_id": SUITE_ID,
         "arm": arm,
@@ -407,16 +735,41 @@ def _prediction_with_provenance(
         "documented_release": call.get("documented_release"),
         "sampling_parameters": call.get("sampling_parameters"),
         "raw_model_output": call.get("raw_model_output"),
+        "raw_output_sha256": (
+            call.get("raw_output_sha256") or prediction.get("response_sha256")
+        ),
         "bare_json_status": call.get("bare_json_status"),
-        "parsed_output": payload,
         "canonical_output": (
-            prediction.get("record") if prediction.get("request_status") == "ok"
+            prediction.get("record")
+            if prediction.get("request_status") == "ok"
             else None
         ),
-        "parser_audit": adapt_audit,
-        "canonicalizer_audit": span_audit,
+        "provenance": {
+            "response_sha256": prediction.get("response_sha256"),
+            "request_id": prediction.get("request_id"),
+            "output_validation_path_version": OUTPUT_VALIDATION_PATH_VERSION,
+            "validation_backend": prediction.get("validation_backend"),
+        },
     })
     return prediction
+
+
+def _processing_status_counts(
+    predictions: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    """Summarise the separated call/parse/binding/validation statuses."""
+    counts: dict[str, dict[str, int]] = {
+        "api_call_status": {},
+        "output_parse_status": {},
+        "input_binding_status": {},
+        "canonical_validation_status": {},
+        "request_status": {},
+    }
+    for prediction in predictions:
+        for field in counts:
+            value = str(prediction.get(field) or "missing")
+            counts[field][value] = counts[field].get(value, 0) + 1
+    return counts
 
 
 def _build_arm_outputs(
@@ -461,11 +814,15 @@ def _build_arm_outputs(
         prediction["evaluation_artifact"] = evaluation_rel
         prediction["evaluation_result"] = dict(evaluation_result)
 
+    output_validation_path = _output_validation_path_metadata()
+    status_counts = _processing_status_counts(predictions)
     _write_json(run_dir / "evaluation.json", {
         "suite_id": SUITE_ID,
         "arm": arm,
         "repeat_id": REPEAT_ID,
         "denominator": len(predictions),
+        "output_validation_path": output_validation_path,
+        "processing_status_counts": status_counts,
         "evaluation": evaluation,
     })
     (run_dir / "canonical_predictions.jsonl").write_text(
@@ -497,6 +854,8 @@ def _build_arm_outputs(
         "resumed_completed_count": resumed_completed_count,
         "failed_count": len(failed),
         "evaluation_denominator": len(predictions),
+        "output_validation_path": output_validation_path,
+        "processing_status_counts": status_counts,
         "schedule_sha256": schedule_sha256,
         "source_hashes": dict(rp.render_refinement_prompt(arm).source_hashes),
         "prompt_hashes": {
@@ -636,6 +995,7 @@ def execute(
         "complete": False,
         "runs": [],
         "arms": list(ARMS),
+        "output_validation_path": _output_validation_path_metadata(),
         "schedule_sha256": schedule["schedule_sha256"],
         "model": {
             "id": MODEL_ALIAS,
@@ -739,6 +1099,12 @@ def execute(
                     "actual_call_count": new_sends[arm],
                     "resumed_completed_count": initial_raw_counts[arm],
                     "failed_count": run["manifest"]["failed_count"],
+                    "output_validation_path_version": (
+                        OUTPUT_VALIDATION_PATH_VERSION
+                    ),
+                    "validation_backend": run["manifest"][
+                        "output_validation_path"
+                    ]["validation_backend"],
                     "primary_metric": run["evaluation"]["primary_metric"],
                     "coarse_five_field_mean_f1": run["evaluation"][
                         "coarse_five_field_mean_f1"

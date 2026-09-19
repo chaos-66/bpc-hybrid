@@ -9,6 +9,17 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## SEP-C3 targeted refinement 运行时校验修复（2026-09-19，零 API）
+
+- **修复入口**：`scripts/run_sep_c3_targeted_refinement_v1.py` 的实际响应转换入口 `_prediction_with_provenance`，内部固定顺序为 `convert_refinement_response` → `convert_response_payload`：原始响应已先持久化 → JSON 解析 → 输入身份检查 → 现有 `d1_schema_adapter` → 现有 `d1_span_canonicalizer` → `stage2_canonical.validate_canonical()` → 保存预测与审计。
+- **路径版本**：`sep_c3_targeted_refinement_runtime_validation_v1`。manifest、evaluation 和逐条 prediction envelope 记录该版本及 processing status。
+- **历史“调用成功”与“接口校验通过”的区别**：旧 A/B/C/D 600-call 运行的 `request_status=ok` / 600 成功只证明 API/transport 调用返回，不证明 payload 与冻结输入绑定、也不证明 adapter/canonicalizer 后的 canonical 校验通过；旧 runner 未把输入身份检查和运行时 `validate_canonical()` 保存为独立状态。不得用旧的 `validation=true` 或“调用成功”替代 `input_binding_pass` 与 `canonical_validation_pass`。
+- **输入身份检查**：仅依据冻结 `data/input/estg150_formal_inference_input_v2.json`，要求 payload 为 JSON object、`sample_id ==` 本次输入、`source_id ==` 请求协议要求的 source_id、`source_text` 与实际输入正文逐字相同；检查在 adapter/canonicalizer 前执行。缺失、追加、截断、空白差异均记为 `input_binding_failed`，不自动修正、不截断追加示例、不调用模型修复、不覆盖错误正文。
+- **运行时校验**：实际调用现有 `stage2_canonical.validate_canonical()`，保存程序计算结果，模型自报的 `validation` 不决定通过。当前环境没有 `jsonschema`，backend 如实记为 `lightweight`（现有轻量结构检查 + 跨字段检查），不写“完整 JSON Schema 校验通过”。runner provenance 放在输出 envelope，不放进模型 schema 字段，也不删除模型其他未知字段。
+- **失败处理**：校验不通过或异常时输出 `request_status=failed`、明确 `failure_stage` / `error` 和空 `record`；保留 `sample_id`、`request_id`、`response_sha256`、`raw_model_output` 及审计信息。失败样本继续保留在每臂 150 条完整分母中，不猜测修正非法 modality，不删除非法关系后宣称合格。
+- **旧 600 canonical 只读复核**（内存副本；不重写历史文件、不重新评分）：source_text 不一致 A/B/C/D = 2/0/2/0；现有轻量结构/跨字段校验失败 = 10/9/6/7；两者并集 = 12/9/8/7，共 36 条；与参考计数一致。结构检查仅排除旧 runner 注入的顶层 `provenance`，未删除模型其他字段。
+- **边界**：Prompt、候选新增句、R_A、Gold、评价器、默认模型配置均未修改；历史 raw/canonical/manifest/evaluation/分数未覆盖；本轮新增 API=0，不生成新的效果分数。修复路径与旧路径存在关键差异，未来修复路径分数不能与旧路径分数直接作同口径因果比较。
+
 ## SEP-C3 R_C 字段边界与 recovery 口径补充复核（2026-09-19，零 API）
 
 - **新增证据**：A→C/B→D 全量 condition Gold 覆盖丢失为 9/10 条，共 19 条比较记录、13 个独立样本；其中 8 条/5 样本出现 condition-only 整段移入 constraint，3 条为已有 Gold 嵌套覆盖，4 条为 condition/constraint 范围合并，4 条没有新增重叠 constraint。19 条覆盖丢失与旧 18 条“字段全对→非全对”口径不同，已逐案对账。
