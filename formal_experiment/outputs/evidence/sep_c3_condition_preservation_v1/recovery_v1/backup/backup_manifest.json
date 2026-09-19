@@ -1,0 +1,100 @@
+{
+  "schema_version": "sep_c3_condition_preservation_recovery_backup@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "created_at_utc": "2026-09-19T13:33:01.830027+00:00",
+  "source_run_dir": "outputs/development/sep_c3_condition_preservation_v1",
+  "backup_dir": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup",
+  "entries": [
+    {
+      "role": "BASE_attempts",
+      "source": "outputs/development/sep_c3_condition_preservation_v1/BASE/repeat-01/attempts.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/BASE/repeat-01/attempts.jsonl",
+      "sha256": "6c5b9e2b30e9353baaedbbc380b45b8dfdf74c68f76ba29b95f957f9535bfb85",
+      "bytes": 28538
+    },
+    {
+      "role": "BASE_raw_responses",
+      "source": "outputs/development/sep_c3_condition_preservation_v1/BASE/repeat-01/raw_responses.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/BASE/repeat-01/raw_responses.jsonl",
+      "sha256": "18e36cefb79504995a6c7eecc11826989fab2c63d2270ab09a429f647d0ab4dc",
+      "bytes": 278042
+    },
+    {
+      "role": "RC1_attempts",
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC1/repeat-01/attempts.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/RC1/repeat-01/attempts.jsonl",
+      "sha256": "24e593087d92aaedd5c80c25209a941ba5f2b0d417ffad2ad37f9cbff4f1e151",
+      "bytes": 28505
+    },
+    {
+      "role": "RC1_raw_responses",
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC1/repeat-01/raw_responses.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/RC1/repeat-01/raw_responses.jsonl",
+      "sha256": "1226cfc73c52d68c203eec8f3330de8db62cd40719e1c4ee92d20ddb106492df",
+      "bytes": 281115
+    },
+    {
+      "role": "RC_KEEP_attempts",
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC_KEEP/repeat-01/attempts.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/RC_KEEP/repeat-01/attempts.jsonl",
+      "sha256": "290a5bd17e76cfc8b8954197fcefdc5d27fff10d1b98def1e42c69cc73327012",
+      "bytes": 28634
+    },
+    {
+      "role": "RC_KEEP_raw_responses",
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC_KEEP/repeat-01/raw_responses.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/RC_KEEP/repeat-01/raw_responses.jsonl",
+      "sha256": "da2cc0f3e9a9652ae0cce0e72d21e8d61523febec2caf2c347786d0c7fe2ef12",
+      "bytes": 289908
+    },
+    {
+      "role": "global_attempts.jsonl",
+      "source": "outputs/development/sep_c3_condition_preservation_v1/attempts.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/global/attempts.jsonl",
+      "sha256": "948064d4e85a8eb9067b344cde2ca9ba7e8de8607bc0d063d5f28a75c70ff65d",
+      "bytes": 85677
+    },
+    {
+      "role": "global_raw_responses.jsonl",
+      "source": "outputs/development/sep_c3_condition_preservation_v1/raw_responses.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/global/raw_responses.jsonl",
+      "sha256": "b35b3a4259f6fc574860e10afb9821f88f1cea49ba44843016b6c7015b76fd51",
+      "bytes": 849065
+    },
+    {
+      "role": "global_partial_execution_summary.json",
+      "source": "outputs/development/sep_c3_condition_preservation_v1/partial_execution_summary.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/global/partial_execution_summary.json",
+      "sha256": "e6ec5da5bf4020e4af383b3b5d4358860bd7abd2f124882b17464dfdb61e979d",
+      "bytes": 4273
+    },
+    {
+      "role": "authorization_event",
+      "source": "configs/sep_c3_condition_preservation_authorization_event_v1.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/contracts/sep_c3_condition_preservation_authorization_event_v1.json",
+      "sha256": "75a29956d91e049570a30e66528d5653d8c8418dcf9e9ac22a356511c889e29d",
+      "bytes": 3786
+    },
+    {
+      "role": "execution_contract",
+      "source": "configs/sep_c3_condition_preservation_execution_contract_v1.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/contracts/sep_c3_condition_preservation_execution_contract_v1.json",
+      "sha256": "281b17ac1d1af20e2ffb160227faeb34e336b89db98a333e1375fac72fb3e460",
+      "bytes": 1656
+    },
+    {
+      "role": "prepared_budget",
+      "source": "configs/sep_c3_condition_preservation_budget_v1.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/contracts/sep_c3_condition_preservation_budget_v1.json",
+      "sha256": "52c927482e8f33ed91c8cac63b162cbefae92e78c89f4586b636544d230691d7",
+      "bytes": 9525
+    },
+    {
+      "role": "schedule",
+      "source": "configs/sep_c3_condition_preservation_schedule_v1.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/contracts/sep_c3_condition_preservation_schedule_v1.json",
+      "sha256": "7a2a68bb80dfd5f1a3bfdd47a33267ca433b099c7faed618711c69e30596cbab",
+      "bytes": 97402
+    }
+  ]
+}

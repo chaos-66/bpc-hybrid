@@ -1,0 +1,41 @@
+{
+  "schema_version": "sep_c3_condition_preservation_execution_contract@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "status": "authorized_not_run",
+  "authorization_path": "configs/sep_c3_condition_preservation_authorization_event_v1.json",
+  "authorization_sha256": "75a29956d91e049570a30e66528d5653d8c8418dcf9e9ac22a356511c889e29d",
+  "prepared_budget_path": "configs/sep_c3_condition_preservation_budget_v1.json",
+  "prepared_budget_sha256": "52c927482e8f33ed91c8cac63b162cbefae92e78c89f4586b636544d230691d7",
+  "schedule_sha256": "c25656fb1621812266298c76449b0ceefd1fa07b0359198806ce03f39923625a",
+  "planned_calls": 450,
+  "call_cap": 450,
+  "retry": 0,
+  "max_tokens": 4096,
+  "input_token_cap": 909349,
+  "output_token_cap": 1843200,
+  "usd_cost_cap": 10.0,
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "provider": "openai_compatible",
+    "service": "DeepSeek official API",
+    "base_url_host": "api.deepseek.com"
+  },
+  "price_snapshot": {
+    "schema_version": "sep_c3_condition_preservation_price_snapshot@1.0.0",
+    "currency": "USD",
+    "source_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "peak": {
+      "input_cache_miss_per_million": 1.32,
+      "input_cache_hit_per_million": 0.044,
+      "output_per_million": 3.96
+    },
+    "off_peak": {
+      "input_cache_miss_per_million": 0.66,
+      "input_cache_hit_per_million": 0.022,
+      "output_per_million": 1.98
+    },
+    "reservation_basis": "peak price, all input tokens treated as cache miss, every call reserves max_tokens output"
+  },
+  "created_at_utc": "2026-09-19T12:45:46.828621+00:00"
+}
