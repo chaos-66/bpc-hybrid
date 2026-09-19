@@ -9,22 +9,16 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
-## SEP-C3 Constraint Refinement v2 调用价值审查（2026-09-19，零 API）
+## SEP-C3 Constraint Refinement v2 调用价值审查与完整语义复核（2026-09-19，零 API）
 
-- 当前结论：**5 arms × 150 = 750 calls 不启动**。用户要求严格校对、确认有用才跑；
-  本轮发现 temporal-only 的关键依据存在 taxonomy 错分，未满足运行条件。
-- 审查依据为本地提交 `fb96071` 的 600-call A/B/C/D 证据；独立核对 600 条 canonical
-  的 3,000 个样本×arm×字段计数，全部一致。R_A 收益、R_C recall/FP 权衡和 B→D
-  六个 empty-Gold actor regression 的计数保留；不把语义分类错误当成预测数据损坏。
-- 原 time 33 条实际为两组比较相加、23 个独立样本。分类器把 `to`、`within`、`may`
-  和法律年份当作时间，数量上限/法律引用等被误分；“主要 time、legal reference=0”
-  不能用作设计结论。taxonomy 还漏掉了全部 52 次 recovery 中仍有 FP 的 12 次。
-- 全部 7 条 manual-review 记录（6 个样本）已有 AI 离线复核意见，但未冒充人工裁决，
-  原标记保持不变。未标记的 recovery 同样存在明显误分，下一步先校准完整语义归因，
-  再确定是否值得运行、需要哪些 arms；不自动把五臂换成另一批调用。
-- 审查报告：`outputs/reports/sep_c3_constraint_refinement_v2_go_no_go_review.md`。
-  本批仅分析与文档；API=0，Gold/prompt/评价器/历史结果未改，不运行项目审计或测试。
-  历史 `fb96071` 的分支未配置 upstream，仍不能标为远端已备份。
+- 当前结论：**5 arms × 150 = 750 calls 不启动**。完整 recovery 语义复核后，校正依据不支持 temporal-only，也不能识别单一最小候选；本轮以 B 为研究参照收口，保留旧 R_C 的混合结果，不强造新模块。
+- 审查依据为本地证据提交 `fb96071` 的 600-call A/B/C/D 结果，以及当前 `outputs/development/sep_c3_targeted_refinement_v1` 的 600 条 canonical 预测；独立重算 150×4×5 字段计数共 18,000 项，0 mismatch，recovery/FP 枚举逐案一致。R_A 收益、R_C recall/FP 权衡和 B→D 六个 empty-Gold actor regression 的计数保留。
+- 全量 Gold constraint 覆盖变化枚举得到 **52 条 recovery 比较记录 / 37 个独立 sample_id / 52 个恢复 Gold span**：A→C 27、B→D 25，跨方向 15 个样本重合。原 taxonomy 只有 40 条 / 28 个样本，漏掉 12 条 / 9 个样本。
+- 校正后按实际新增命中片段做多标签语义复核：time 14、legal_reference 12、purpose 10、quantity 8、manner 8、other 25、exclusivity 2、undetermined 1；完整可解释 21 条、部分内容 29 条、仅 overlap 2 条。旧 time 33 条 = A→C 17 + B→D 16、23 个独立样本，其中大量为数量上限、法律引用、方式、范围或仅 overlap；旧 legal reference=0 结论撤回。
+- 失败侧复核：A→C 未匹配预测 27→50，新出现未匹配 span 36 个、删除 13 个，净 +23；B→D 26→58，新出现 43 个、删除 11 个，净 +32。出现孤立 `only`、其他字段内容重抽为 constraint、时间短语 FP，以及 span 替换与净增加并存。
+- 全部 7 条 manual-review 记录（6 个样本）保留 AI 离线复核意见，但不冒充人工裁决，原标记保持不变。B→D 的 6 个 actor regression 均为 Gold actor 空、B actor 空、D 新增 actor，属于可观察表型而非已证明的内部机制。
+- 产出：`outputs/reports/sep_c3_constraint_refinement_v2_semantic_review.json` 与 `.md`；原审查报告 `sep_c3_constraint_refinement_v2_go_no_go_review.md` 保留。本批仅分析与文档；API=0，Gold/prompt/评价器/历史结果未改，不运行项目审计或测试。
+- 历史证据提交 `fb96071` 的分支未配置 upstream；本轮交付提交与 push 结果在 handoff 中单独报告。
 
 ## CSCWD 2027 投稿定位与核验（2026-09-17，文档范围）
 
