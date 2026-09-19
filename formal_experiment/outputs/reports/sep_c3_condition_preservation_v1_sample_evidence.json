@@ -1,0 +1,2672 @@
+{
+  "schema_version": "sep_c3_condition_preservation_sample_evidence@1.0.0",
+  "summary": {
+    "actor": {},
+    "action": {},
+    "condition": {},
+    "constraint": {},
+    "exception": {},
+    "RC_KEEP-RC1:actor": {
+      "improved_samples": 0,
+      "regressed_samples": 3,
+      "mean_diff": -0.015555555555555557,
+      "top_improved": [
+        [
+          "estg_000207",
+          -0.333333,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000800",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000283",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000283",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000800",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000207",
+          -0.333333,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ]
+    },
+    "RC_KEEP-RC1:action": {
+      "improved_samples": 5,
+      "regressed_samples": 5,
+      "mean_diff": -0.005333333333333333,
+      "top_improved": [
+        [
+          "estg_000209",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 2,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000074",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000046",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000222",
+          0.333333,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        ],
+        [
+          "estg_000021",
+          0.2,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 3,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000062",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 3,
+            "matched_pred": 3,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000283",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000800",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 6,
+            "matched_pred": 6,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000218",
+          -0.666667,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        ],
+        [
+          "estg_000716",
+          -0.666667,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 1,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 4,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 2,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        ]
+      ]
+    },
+    "RC_KEEP-RC1:condition": {
+      "improved_samples": 10,
+      "regressed_samples": 5,
+      "mean_diff": 0.035555555555555556,
+      "top_improved": [
+        [
+          "estg_000133",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000124",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000121",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000106",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000074",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000060",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000062",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000218",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000800",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 5,
+            "matched_pred": 5,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000079",
+          -0.333333,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ]
+    },
+    "RC_KEEP-RC1:constraint": {
+      "improved_samples": 10,
+      "regressed_samples": 14,
+      "mean_diff": -0.0212991822991823,
+      "top_improved": [
+        [
+          "estg_000293",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000074",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000046",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000030",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000057",
+          0.5,
+          {
+            "gold": 1,
+            "pred": 3,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 2,
+            "missed": 0,
+            "precision": 0.3333333333333333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000031",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000075",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000131",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 1,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000206",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000283",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 3,
+            "matched_pred": 3,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ]
+    },
+    "RC_KEEP-RC1:exception": {
+      "improved_samples": 0,
+      "regressed_samples": 2,
+      "mean_diff": -0.013333333333333334,
+      "top_improved": [
+        [
+          "estg_000293",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000210",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000210",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000293",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ]
+    },
+    "RC_KEEP-BASE:actor": {
+      "improved_samples": 1,
+      "regressed_samples": 3,
+      "mean_diff": -0.007555555555555555,
+      "top_improved": [
+        [
+          "estg_000525",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000207",
+          -0.333333,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000800",
+          -0.8,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 3,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8
+          }
+        ],
+        [
+          "estg_000283",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000283",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000800",
+          -0.8,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 3,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8
+          }
+        ],
+        [
+          "estg_000207",
+          -0.333333,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000525",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ]
+      ]
+    },
+    "RC_KEEP-BASE:action": {
+      "improved_samples": 7,
+      "regressed_samples": 6,
+      "mean_diff": 0.0011111111111111115,
+      "top_improved": [
+        [
+          "estg_000664",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 4,
+            "matched_pred": 4,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000525",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000209",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 2,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000083",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 3,
+            "matched_pred": 3,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000052",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000082",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000087",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000128",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000283",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000800",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 7,
+            "matched_pred": 7,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ]
+    },
+    "RC_KEEP-BASE:condition": {
+      "improved_samples": 8,
+      "regressed_samples": 10,
+      "mean_diff": -0.014222222222222221,
+      "top_improved": [
+        [
+          "estg_000134",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 1,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000133",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000121",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000109",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000052",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000028",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000060",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000082",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000108",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000210",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ]
+    },
+    "RC_KEEP-BASE:constraint": {
+      "improved_samples": 25,
+      "regressed_samples": 6,
+      "mean_diff": 0.12307118807118807,
+      "top_improved": [
+        [
+          "estg_000776",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000664",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 3,
+            "matched_pred": 3,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000572",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000546",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ],
+        [
+          "estg_000525",
+          1.0,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 2,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000131",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 1,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000800",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000027",
+          -0.333333,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000038",
+          -0.333333,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ],
+        [
+          "estg_000231",
+          -0.333333,
+          {
+            "gold": 1,
+            "pred": 2,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 1,
+            "missed": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ]
+    },
+    "RC_KEEP-BASE:exception": {
+      "improved_samples": 0,
+      "regressed_samples": 1,
+      "mean_diff": -0.006666666666666667,
+      "top_improved": [
+        [
+          "estg_000293",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ],
+      "top_regressed": [
+        [
+          "estg_000293",
+          -1.0,
+          {
+            "gold": 1,
+            "pred": 0,
+            "matched_pred": 0,
+            "matched_gold": 0,
+            "fp": 0,
+            "missed": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "gold": 1,
+            "pred": 1,
+            "matched_pred": 1,
+            "matched_gold": 1,
+            "fp": 0,
+            "missed": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        ]
+      ]
+    }
+  },
+  "condition_recovery_vs_rc1": [
+    {
+      "sample_id": "estg_000020",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 1.0
+    },
+    {
+      "sample_id": "estg_000039",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 1.0
+    },
+    {
+      "sample_id": "estg_000046",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 2,
+        "matched_pred": 2,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 1.0
+    },
+    {
+      "sample_id": "estg_000052",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 1.0
+    },
+    {
+      "sample_id": "estg_000074",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 1.0
+    },
+    {
+      "sample_id": "estg_000083",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 2,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 1,
+        "missed": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 1,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 0.666667
+    },
+    {
+      "sample_id": "estg_000106",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 1.0
+    },
+    {
+      "sample_id": "estg_000121",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 1.0
+    },
+    {
+      "sample_id": "estg_000124",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 1.0
+    },
+    {
+      "sample_id": "estg_000133",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_matched_gold": 1,
+      "delta_f1": 1.0
+    }
+  ],
+  "condition_loss_vs_rc1": [
+    {
+      "sample_id": "estg_000060",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "delta_matched_gold": -1,
+      "delta_f1": -1.0
+    },
+    {
+      "sample_id": "estg_000062",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 2,
+        "matched_pred": 2,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "delta_matched_gold": -1,
+      "delta_f1": -1.0
+    },
+    {
+      "sample_id": "estg_000218",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 2,
+        "matched_pred": 2,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "delta_matched_gold": -1,
+      "delta_f1": -1.0
+    },
+    {
+      "sample_id": "estg_000800",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 5,
+        "matched_pred": 5,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "delta_matched_gold": -1,
+      "delta_f1": -1.0
+    }
+  ],
+  "new_condition_fp_vs_rc1": [
+    {
+      "sample_id": "estg_000059",
+      "rc_keep": {
+        "gold": 0,
+        "pred": 1,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 1,
+        "missed": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "rc1": {
+        "gold": 0,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_fp": 1,
+      "delta_f1": 0.0
+    },
+    {
+      "sample_id": "estg_000079",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 2,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 1,
+        "missed": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 1,
+        "matched_gold": 1,
+        "fp": 0,
+        "missed": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "delta_fp": 1,
+      "delta_f1": -0.333333
+    },
+    {
+      "sample_id": "estg_000161",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 1,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_fp": 1,
+      "delta_f1": 0.0
+    },
+    {
+      "sample_id": "estg_000507",
+      "rc_keep": {
+        "gold": 1,
+        "pred": 1,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 1,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "rc1": {
+        "gold": 1,
+        "pred": 0,
+        "matched_pred": 0,
+        "matched_gold": 0,
+        "fp": 0,
+        "missed": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "delta_fp": 1,
+      "delta_f1": 0.0
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "sep_c3_condition_preservation_recovery_monitor@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "run_identity": "sep-c3-condition-preservation-recovery-v1",
+  "pid": 47892,
+  "started_at_utc": "2026-09-19T13:49:20.8068844Z",
+  "command": "python scripts\\run_sep_c3_condition_preservation_v1.py --execute --allow-llm --project-env --recovery",
+  "working_directory": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment",
+  "stdout_log": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\evidence\\sep_c3_condition_preservation_v1\\recovery_v1\\monitor\\recovery_run_stdout.log",
+  "stderr_log": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\evidence\\sep_c3_condition_preservation_v1\\recovery_v1\\monitor\\recovery_run_stderr.log",
+  "expected_new_attempts": 354,
+  "cumulative_attempt_cap": 450,
+  "expected_completion_state": "completed_with_unresolved_response",
+  "status": "completed_with_unresolved_response",
+  "completed_at_utc": "2026-09-19T14:34:55.958135+00:00",
+  "result": {
+    "actual_calls": 450,
+    "known_responses": 449,
+    "unknown_response_count": 1,
+    "new_attempts_this_run": 354,
+    "completion_state": "completed_with_unresolved_response"
+  }
+}

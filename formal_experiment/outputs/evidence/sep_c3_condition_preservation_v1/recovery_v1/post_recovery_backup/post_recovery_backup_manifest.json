@@ -1,0 +1,143 @@
+{
+  "schema_version": "sep_c3_condition_preservation_post_recovery_backup@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "created_at_utc": "2026-09-19T14:37:07.624774+00:00",
+  "source_run_dir": "outputs/development/sep_c3_condition_preservation_v1",
+  "backup_dir": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup",
+  "file_count": 22,
+  "total_bytes": 15488421,
+  "entries": [
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/BASE/repeat-01/attempts.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/attempts.jsonl",
+      "sha256": "3edb55dfd604272f844fbf197b283f47feb68d28e2fff31f1da38cdd28329339",
+      "bytes": 134028
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/BASE/repeat-01/raw_responses.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/raw_responses.jsonl",
+      "sha256": "0e00bb78a9d0ac20189bf45cb5342a1c8defb903f707d65127e798cee93d3c8b",
+      "bytes": 1335164
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/BASE/repeat-01/canonical_predictions.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/canonical_predictions.jsonl",
+      "sha256": "401a7eab3af5d215534af65669028cfd525c2812241ae60d00535f74760cc28f",
+      "bytes": 2019604
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/BASE/repeat-01/failed_samples.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/failed_samples.jsonl",
+      "sha256": "40b697914df135620a9b0e2930f6861cef4c15f936cc240ee85f5b67ab6e3022",
+      "bytes": 141051
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/BASE/repeat-01/evaluation.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/evaluation.json",
+      "sha256": "075a6a3a80b55589389772384b32cd2c57ca9d5d3bde2f45d2f94497055f1721",
+      "bytes": 7368
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/BASE/repeat-01/manifest.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/manifest.json",
+      "sha256": "a1ba9ef939b2382bd0275da991ca7f94cc22f11f91c432b0d13afdf571b9cb36",
+      "bytes": 3380
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC1/repeat-01/attempts.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/attempts.jsonl",
+      "sha256": "0566f7fb2fb88fff966f85586c63768438f50b138219251626e31abaa642fbaf",
+      "bytes": 133877
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC1/repeat-01/raw_responses.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/raw_responses.jsonl",
+      "sha256": "c41e24d2fe9139fba7b22846aea5c4f277792a5852215070e719d54ff9a8919e",
+      "bytes": 1357715
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC1/repeat-01/canonical_predictions.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/canonical_predictions.jsonl",
+      "sha256": "5883fc8435e87186905193fac5168786cd4987028cefb7dd08e83f78b4be65a2",
+      "bytes": 2078291
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC1/repeat-01/failed_samples.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/failed_samples.jsonl",
+      "sha256": "5e8cbad1ef801576fed559883490ab06220cbfe7eb2378fc26780542bdd92b0f",
+      "bytes": 87371
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC1/repeat-01/evaluation.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/evaluation.json",
+      "sha256": "3bf00f996ae0f06ccbe9a37c8f7ec76b87077acd16c125f2702cb6165bc21ddd",
+      "bytes": 7424
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC1/repeat-01/manifest.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/manifest.json",
+      "sha256": "52836a3b7b0eb1ab9b70a965db91192613a6a10dc21491b61b636c3ba4d3d083",
+      "bytes": 3466
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC_KEEP/repeat-01/attempts.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/attempts.jsonl",
+      "sha256": "10881568e674b41c74e223e3b39ae9a639155b8b85669f9ed62cbecd6b9938e8",
+      "bytes": 134477
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC_KEEP/repeat-01/raw_responses.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/raw_responses.jsonl",
+      "sha256": "362a4b3159e21782bb86755115c015af36103ef21062c6b4faff11f8122c3b02",
+      "bytes": 1366849
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC_KEEP/repeat-01/canonical_predictions.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/canonical_predictions.jsonl",
+      "sha256": "0e93b12f53f1aefb8d9fc4f803076d0010c07c81e2ebd476be6ddf17dea6e0cc",
+      "bytes": 2072572
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC_KEEP/repeat-01/failed_samples.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/failed_samples.jsonl",
+      "sha256": "9bab5deda4915a9cefe39fe6f8e2753d51069dc970489b3a29d796c32c30a69e",
+      "bytes": 117858
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC_KEEP/repeat-01/evaluation.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/evaluation.json",
+      "sha256": "eaa6ec662623223cf83ce7cc09a3b812b73a2ae718fc077545b170b838a57dd2",
+      "bytes": 7365
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/RC_KEEP/repeat-01/manifest.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/manifest.json",
+      "sha256": "ad53d59c4414f84b71f05e2b3eb6f68c71e6f78cee532a0d3e8016f9e79b2a50",
+      "bytes": 3513
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/attempts.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/attempts.jsonl",
+      "sha256": "551c2fe6891fcb2cc40d2773f9ed8e4282ba846e0753ff2fe5f24982a93b2234",
+      "bytes": 402382
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/raw_responses.jsonl",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/raw_responses.jsonl",
+      "sha256": "cd428a28bff078d01823e2cb6e13ac5d112c8462d220111b82f39417d2cdc5a8",
+      "bytes": 4059728
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/execution_summary.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/execution_summary.json",
+      "sha256": "649f954c8cd994f488f6f17043d57f7cffc4e51a6ded5caca7e3f6b5c6046b8b",
+      "bytes": 10665
+    },
+    {
+      "source": "outputs/development/sep_c3_condition_preservation_v1/partial_execution_summary.json",
+      "backup": "outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/partial_execution_summary.json",
+      "sha256": "e6ec5da5bf4020e4af383b3b5d4358860bd7abd2f124882b17464dfdb61e979d",
+      "bytes": 4273
+    }
+  ]
+}

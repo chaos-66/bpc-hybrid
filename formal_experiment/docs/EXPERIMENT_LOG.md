@@ -5007,3 +5007,21 @@
 - 仍存在 blocker：无
 - 备注：Agent-side polling timeout terminated the background executor after the pre-send attempt record for RC1/estg_000074. No resend or replacement call.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-19T14:36:54.182391+00:00 - SEP-C3 condition-preservation recovered real run and fixed analyses
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=sep-c3-condition-preservation-recovery-20260919；阶段=SEP-C3-CONDITION-PRESERVATION-001；方法=BASE+RC1+RC_KEEP interleaved; 450 terminal schedule entries；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_sep_c3_condition_preservation_v1.py --execute --allow-llm --project-env --recovery`
+- manifest：outputs/development/sep_c3_condition_preservation_v1/execution_summary.json
+- 结果摘要：completed_with_unresolved_response: 354 new attempts, 450 cumulative, 449 real responses, 1 unknown terminal response (RC1/estg_000074) not resent; main analysis and 149-sample sensitivity completed; candidate not retained.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：4 passed in 89.85s (0:01:29)
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`a49041f1dbcc59be46c3cf8e8b263d15e63b09c1`；相关未提交路径：28 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Recovery resumed only the 354 untried schedule entries. Known actual cost 0.84437985 USD; unknown response reserve 0.03056592 USD; cumulative budget still under 10 USD.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

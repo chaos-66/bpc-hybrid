@@ -1,0 +1,84 @@
+{
+  "schema_version": "sep_c3_condition_preservation_manifest@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "arm": "BASE",
+  "arm_definition": "BASE = common + E + frozen R_A",
+  "repeat_id": "repeat-01",
+  "prompt_family": "direct_llm_condition_preservation_v1",
+  "sample_count": 150,
+  "actual_call_count": 118,
+  "resumed_completed_count": 32,
+  "resumed_terminal_count": 0,
+  "terminal_unknown_count": 0,
+  "terminal_unknown_samples": [],
+  "failed_count": 13,
+  "evaluation_denominator": 150,
+  "output_validation_path": {
+    "version": "sep_c3_condition_preservation_validation_path_v1",
+    "validation_backend": "lightweight",
+    "validation_backend_detail": "stage2_canonical.validate_canonical() using the existing in-process structural + cross-field checks; jsonschema is not installed",
+    "jsonschema_available": false,
+    "processing_order": [
+      "raw_response_saved",
+      "json_parse",
+      "input_identity_check",
+      "existing_schema_adapter",
+      "existing_span_canonicalizer",
+      "runtime_structural_cross_field_validation",
+      "persist_attempt_and_audit"
+    ],
+    "input_identity_source": "data/input/estg150_formal_inference_input_v2.json",
+    "required_source_id_rule": "payload.source_id must equal the request protocol source_id (condition-preservation composer renders source_id == sample_id)"
+  },
+  "processing_status_counts": {
+    "transport_status": {
+      "ok": 150
+    },
+    "api_call_status": {
+      "ok": 150
+    },
+    "output_parse_status": {
+      "passed": 150
+    },
+    "input_binding_status": {
+      "passed": 149,
+      "failed": 1
+    },
+    "adapter_status": {
+      "passed": 149,
+      "not_attempted": 1
+    },
+    "canonicalizer_status": {
+      "passed": 149,
+      "not_attempted": 1
+    },
+    "canonical_validation_status": {
+      "passed": 137,
+      "failed": 12,
+      "not_attempted": 1
+    },
+    "request_status": {
+      "ok": 137,
+      "failed": 13
+    }
+  },
+  "schedule_sha256": "c25656fb1621812266298c76449b0ceefd1fa07b0359198806ce03f39923625a",
+  "source_hashes": {
+    "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+    "E": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db",
+    "R_A": "0d1a0b131c88394304ac22d510740694fed5069f9cc8b4b9612fd33285e789c9",
+    "R_C": "cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae",
+    "old_B_composition_sha256": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1",
+    "old_D_composition_sha256": "7901ebe541abe25fe2753db514b284a82c4d37c54535ad54824eac597fff15c9"
+  },
+  "prompt_hashes": {
+    "system_sha256": "f6de5c4fe6115d5073f44e59d98443ccec5dd55bc3356ce445b6304a82aab778",
+    "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+    "composition_sha256": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1",
+    "generated_prompt_path": "prompts/sun_compat/modular_condition_preservation_v1/generated/direct_llm_condition_preservation_BASE_v1.md",
+    "generated_prompt_sha256": "2351304b369194f7e13c0b97ade996cc43f05f7d3fc88baba0726c0c39c7c70a"
+  },
+  "raw_responses_aggregate_sha256": "ab67f774b356871695e4327282c7ed6c654702ddbb5df7370f146c8d1872aa81",
+  "canonical_predictions_aggregate_sha256": "4a4d27b93161f42a0bd4b63ee3fff9f13be50577f84fba85c007c50320eeabdb",
+  "same_response_binding": true
+}
