@@ -4989,3 +4989,21 @@
 - 仍存在 blocker：无
 - 备注：Adds dedicated 450-call executor, new authorization event/execution contract, lightweight validator binding, pre-send attempt ledger, cache-aware usage fields, full-150 analysis completeness check, and actual point-difference vs bootstrap-mean distinction. No real API call.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-19T13:09:05.196748+00:00 - SEP-C3 condition-preservation real run interrupted and left incomplete
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=sep-c3-condition-preservation-20260919；阶段=SEP-C3-CONDITION-PRESERVATION-001；方法=BASE+RC1+RC_KEEP interleaved；状态=部分完成（`partial`）
+- 实际运行命令：`python scripts/run_sep_c3_condition_preservation_v1.py --execute --allow-llm --project-env`
+- manifest：outputs/development/sep_c3_condition_preservation_v1/partial_execution_summary.json
+- 结果摘要：INCOMPLETE: 96 attempts persisted, 95 completed responses, 1 in-doubt (RC1/estg_000074), 354 unsent; known cost 0.17664568 USD; stopped because uncertain usage cannot be verified. No candidate conclusion.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：8 passed in 66.17s (0:01:06)
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`b9a5ba2b32a775ef5d158e1c9d58d5bb6ac28a99`；相关未提交路径：21 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Agent-side polling timeout terminated the background executor after the pre-send attempt record for RC1/estg_000074. No resend or replacement call.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

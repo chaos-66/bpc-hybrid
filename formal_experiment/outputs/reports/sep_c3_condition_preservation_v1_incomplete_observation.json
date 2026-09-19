@@ -1,0 +1,122 @@
+{
+  "schema_version": "sep_c3_condition_preservation_incomplete_observation@1.0.0",
+  "suite_id": "SEP-C3-CONDITION-PRESERVATION-001",
+  "status": "incomplete_engineering_interruption",
+  "run_started_utc": "2026-09-19T12:54:39.740710+00:00",
+  "last_persisted_attempt_utc": "2026-09-19T13:05:48.458071+00:00",
+  "run_interrupted_by": "agent tool polling command exceeded its timeout and reset the persistent shell, terminating the child executor process; not an API/model decision.",
+  "planned_calls": 450,
+  "attempts_persisted": 96,
+  "completed_responses": 95,
+  "in_doubt": 1,
+  "unsent": 354,
+  "all_in_doubt_samples": [
+    [
+      "RC1",
+      "estg_000074"
+    ]
+  ],
+  "real_api_calls_authorized": 450,
+  "known_usage_calls": 95,
+  "unknown_usage_calls": 1,
+  "known_cost_usd": 0.17664568,
+  "known_prompt_tokens": 114835,
+  "known_completion_tokens": 78983,
+  "known_cache_hit_tokens": 87040,
+  "known_cache_miss_tokens": 27795,
+  "rate_window_counts": {
+    "off_peak": 95
+  },
+  "known_cost_by_rate_window_usd": {
+    "off_peak": 0.17664568
+  },
+  "uncertain_attempt_peak_all_miss_max_output_reserve_usd": 0.018612,
+  "known_plus_uncertain_conservative_usd": 0.19525768,
+  "arms": {
+    "BASE": {
+      "attempts": 32,
+      "completed_responses": 32,
+      "in_doubt": 0,
+      "in_doubt_samples": [],
+      "not_sent": 118,
+      "transport_status_counts": {
+        "ok": 32
+      },
+      "conversion_success_among_completed": 30,
+      "conversion_failure_among_completed": 2,
+      "conversion_failure_stage_counts": {
+        "canonical_validation_status": 2
+      },
+      "known_prompt_tokens": 37300,
+      "known_completion_tokens": 25758,
+      "known_cache_hit_tokens": 34816,
+      "known_cache_miss_tokens": 2484,
+      "known_cost_usd": 0.05340622,
+      "cost_basis_counts": {
+        "provider_cache_hit_miss_split": 32
+      }
+    },
+    "RC1": {
+      "attempts": 32,
+      "completed_responses": 31,
+      "in_doubt": 1,
+      "in_doubt_samples": [
+        "estg_000074"
+      ],
+      "not_sent": 118,
+      "transport_status_counts": {
+        "ok": 31
+      },
+      "conversion_success_among_completed": 30,
+      "conversion_failure_among_completed": 1,
+      "conversion_failure_stage_counts": {
+        "canonical_validation_status": 1
+      },
+      "known_prompt_tokens": 37771,
+      "known_completion_tokens": 26227,
+      "known_cache_hit_tokens": 36096,
+      "known_cache_miss_tokens": 1675,
+      "known_cost_usd": 0.05382896,
+      "cost_basis_counts": {
+        "provider_cache_hit_miss_split": 31
+      }
+    },
+    "RC_KEEP": {
+      "attempts": 32,
+      "completed_responses": 32,
+      "in_doubt": 0,
+      "in_doubt_samples": [],
+      "not_sent": 118,
+      "transport_status_counts": {
+        "ok": 32
+      },
+      "conversion_success_among_completed": 31,
+      "conversion_failure_among_completed": 1,
+      "conversion_failure_stage_counts": {
+        "canonical_validation_status": 1
+      },
+      "known_prompt_tokens": 39764,
+      "known_completion_tokens": 26998,
+      "known_cache_hit_tokens": 16128,
+      "known_cache_miss_tokens": 23636,
+      "known_cost_usd": 0.0694105,
+      "cost_basis_counts": {
+        "provider_cache_hit_miss_split": 32
+      }
+    }
+  },
+  "candidate_decision": "incomplete_no_candidate_conclusion",
+  "paired_bootstrap_run": false,
+  "paired_bootstrap_reason": "not run: each arm is below the frozen 150-sample denominator; the fixed analyzer rejects incomplete membership by design.",
+  "notes": [
+    "All 96 attempts were persisted before sending; 95 have a saved response row and verifiable usage.",
+    "The uncertain RC1/estg_000074 attempt must not be resent and no usage can be verified for it; per the user instruction all later sends were stopped.",
+    "No result-dependent retry, prompt edit, or replacement send was performed.",
+    "Known costs use provider cache hit/miss token counts and the applicable off-peak rate at request time."
+  ],
+  "artifact_paths": {
+    "run_dir": "outputs/development/sep_c3_condition_preservation_v1",
+    "execution_report_json": "outputs/reports/sep_c3_condition_preservation_v1_incomplete_observation.json",
+    "execution_report_md": "outputs/reports/sep_c3_condition_preservation_v1_incomplete_observation.md"
+  }
+}
