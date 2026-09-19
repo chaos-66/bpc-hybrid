@@ -17,7 +17,7 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - **附带接口异常**：4/600 canonical records 的 source_text 追加 E 示例（A/000044、A/000720、C/000035、C/000044），不能把 saved validation=true 当成正文复制正确的充分证据。全部 600 条的五字段 spans 均在原正文内且切片一致；condition/constraint 48 项整数计数 0 mismatch，本次未修写旧预测或重新评分。
 - **产物与范围**：`outputs/reports/sep_c3_rc_boundary_attribution_v1.{json,md}`，包含逐案坐标、来源哈希、原文/细粒度 Gold 快照及 AI 待复核队列。API=0，未改活动 Prompt、Gold、程序或原评价结果；只做报告核验，不跑项目审计/测试。历史 750-call 方案仍 NO-GO，未证明新 wording 有效，也未完成 actor 机制或运行方差归因。
 
-- **局部边界候选离线审查（2026-09-19，零 API）**：本轮结论为 **A：形成 R_C condition/constraint 边界最小候选，状态未验证/未冻结**。候选把旧 R_C 的 `when ... action applies` 改为「仅抽已适用 action 的局部参数」，明确适用条件整段不迁移、condition/constraint 双向嵌套与 overlap 允许、不拆 condition predicate/threshold，并保留完整短语且兼容 `in particular`。已逐案审查 000052/000104、000028、000106、000039/000108/000161/000210、000776、000103/000104/000222/000569/000816、000247/000293、isolated `only` 和 actor regression。报告：`outputs/reports/sep_c3_rc_constraint_boundary_candidate_v1.md`。未改活动 Prompt、Gold、评价器、历史预测或默认配置；API=0；未运行审计/测试。下一项唯一任务：若获未来适用授权，才做候选与 B/旧 R_C 的同口径预注册验证；本轮不安排调用数量、不启动 API。
+- 旧长候选停止推进；新增一个仅在旧 R_C 后追加 condition 保留句的离线草案。目标限于 condition 丢失，不声称解决 constraint FP 或 actor 副作用。未验证、未冻结，活动 Prompt 与正式默认配置未改，新增 API=0。
 
 ## SEP-C3 Constraint Refinement v2 调用价值审查与完整语义复核（2026-09-19，零 API）
 

@@ -1,3 +1,5 @@
+停止推进：该候选包含尚未得到充分解释的 predicate/threshold、distinct head 和短限定语分类规则，不进入活动 Prompt 或实验。
+
 # SEP-C3 R_C 边界候选设计报告
 
 - 状态：未验证、未冻结
