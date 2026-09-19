@@ -9,9 +9,17 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## SEP-C3 R_C 字段边界与 recovery 口径补充复核（2026-09-19，零 API）
+
+- **新增证据**：A→C/B→D 全量 condition Gold 覆盖丢失为 9/10 条，共 19 条比较记录、13 个独立样本；其中 8 条/5 样本出现 condition-only 整段移入 constraint，3 条为已有 Gold 嵌套覆盖，4 条为 condition/constraint 范围合并，4 条没有新增重叠 constraint。19 条覆盖丢失与旧 18 条“字段全对→非全对”口径不同，已逐案对账。
+- **recovery 解释再校正**：52 条既有 coarse recovery 中，49 条命中真实细粒度 constraint，37 条至少精确恢复一个细粒度 constraint，3 条仅命中合并空隙（000247 双方向、000293 A→C）。原 partial/overlap-only 中 21 条已有精确短语恢复；旧 `21/29/2` 不能直接作为单个短语完整性或新 Prompt 边界设计依据。旧计分与历史报告保留，不改 Gold 或评价器。
+- **设计推进**：识别出“防止适用条件整体改标，同时保留合法嵌套限制”的局部目标；排除 temporal-only、字段绝对互斥、扩展至整个 coarse 区间和笼统短词删除。E5 已有嵌套示例，不能把重复该规则视为已证明有效的新干预。下一步只做一个局部候选的离线正反例审查，先澄清 000052/000104、000106、000776；不启动或自动缩编 API。B 仍为研究参照，正式默认仍为 v6。
+- **附带接口异常**：4/600 canonical records 的 source_text 追加 E 示例（A/000044、A/000720、C/000035、C/000044），不能把 saved validation=true 当成正文复制正确的充分证据。全部 600 条的五字段 spans 均在原正文内且切片一致；condition/constraint 48 项整数计数 0 mismatch，本次未修写旧预测或重新评分。
+- **产物与范围**：`outputs/reports/sep_c3_rc_boundary_attribution_v1.{json,md}`，包含逐案坐标、来源哈希、原文/细粒度 Gold 快照及 AI 待复核队列。API=0，未改活动 Prompt、Gold、程序或原评价结果；只做报告核验，不跑项目审计/测试。历史 750-call 方案仍 NO-GO，未证明新 wording 有效，也未完成 actor 机制或运行方差归因。
+
 ## SEP-C3 Constraint Refinement v2 调用价值审查与完整语义复核（2026-09-19，零 API）
 
-- 当前结论：**5 arms × 150 = 750 calls 不启动**。完整 recovery 语义复核后，校正依据不支持 temporal-only，也不能识别单一最小候选；本轮以 B 为研究参照收口，保留旧 R_C 的混合结果，不强造新模块。
+- 该轮结论：**5 arms × 150 = 750 calls 不启动**。当时完整 recovery 语义复核后，校正依据不支持 temporal-only，也未识别单一最小候选；以 B 为研究参照收口，保留旧 R_C 的混合结果。上方补充复核进一步定位局部字段边界目标，尚不构成新 wording 或 API 的验证依据。
 - 审查依据为本地证据提交 `fb96071` 的 600-call A/B/C/D 结果，以及当前 `outputs/development/sep_c3_targeted_refinement_v1` 的 600 条 canonical 预测；独立重算 150×4×5 字段计数共 18,000 项，0 mismatch，recovery/FP 枚举逐案一致。R_A 收益、R_C recall/FP 权衡和 B→D 六个 empty-Gold actor regression 的计数保留。
 - 全量 Gold constraint 覆盖变化枚举得到 **52 条 recovery 比较记录 / 37 个独立 sample_id / 52 个恢复 Gold span**：A→C 27、B→D 25，跨方向 15 个样本重合。原 taxonomy 只有 40 条 / 28 个样本，漏掉 12 条 / 9 个样本。
 - 校正后按实际新增命中片段做多标签语义复核：time 14、legal_reference 12、purpose 10、quantity 8、manner 8、other 25、exclusivity 2、undetermined 1；完整可解释 21 条、部分内容 29 条、仅 overlap 2 条。旧 time 33 条 = A→C 17 + B→D 16、23 个独立样本，其中大量为数量上限、法律引用、方式、范围或仅 overlap；旧 legal reference=0 结论撤回。
