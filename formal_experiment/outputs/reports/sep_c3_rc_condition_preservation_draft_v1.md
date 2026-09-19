@@ -444,3 +444,71 @@ Actor 漏检 Gold 完整清单：
 - 本轮真实 LLM/API 调用 = 0；只做内存计算和报告。
 - 未覆盖原预测、未写入真实实验输出目录、未创建实验运行 manifest；未修改活动 Prompt、Gold、评价器或默认配置；未新增活动脚本或配置；未运行项目审计或代码测试。
 - 是否值得进一步验证由用户根据结果决定；本节不设定验收阈值，也不提出后续调用数量。
+
+
+---
+
+## 8. 运行前接口问题定位（source_text 追加 E 示例）
+
+### 8.1 固定结论
+
+四条固定对象的异常首次均出现在 **原始模型响应层**：模型返回的 JSON 顶层 `source_text` 不是冻结目标正文，而是 `冻结目标正文 + "\n\n" + examples_E.md`。实际请求中的 `source_text` 位置只有冻结正文；E 示例是同一 user message 中位于 `source_text` 之后的独立段落。现有证据支持归类为「原始响应已经把示例复制进 source_text」，不支持后处理追加。解析结果和 canonical record 均逐字保留原始响应中的 `source_text`。
+
+### 8.2 请求重建与边界
+
+- 实际请求 body 没有单独落盘，只保存了 `request_body_sha256` 和 `rendered_prompt_user_sha256`。本轮用冻结输入 `approved_text_en` 加对应 arm 的冻结 generated prompt 重建请求；重建后的 user/body SHA-256 与每条 `raw_responses.jsonl` 保存值完全一致，因此下列请求层边界可按重建结果核对；未调用 API。
+- E 模块来源：`formal_experiment/prompts/sun_compat/modular_v1/examples_E.md`，规范化后 2349 字符，SHA-256 `8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db`；追加到 user prompt 时由 `modular_prompt.py:170-174` 以 `"\n\n".join(...)` 放入，位于 `source_text` 之后。
+- 相关代码位置：
+  - 请求构造：`scripts/run_sep_c3_targeted_refinement_v1.py:110-132`、`:146-150`；落盘 request body hash：`:196`。
+  - user prompt 渲染：`src/bpc_hybrid/modular_refinement_prompt.py:106-113`；E 模块组合：`src/bpc_hybrid/modular_prompt.py:170-174`。
+  - 原始响应落盘：`scripts/run_sep_c3_targeted_refinement_v1.py:201-204`。
+  - 解析链：`scripts/run_sep_c3_targeted_refinement_v1.py:389-413`；`scripts/run_barrientos_ablation_suite_v2.py:675-746`；adapter `src/bpc_hybrid/d1_schema_adapter.py:120-170`；span canonicalizer `src/bpc_hybrid/d1_span_canonicalizer.py:86-205`。
+
+### 8.3 逐条证据链
+
+#### A / estg_000044
+
+- 冻结目标正文：`formal_experiment/data/input/estg150_formal_inference_input_v2.json:297`（`approved_text_en`；`sample_id` 在第 306 行）。161 字符，SHA-256 `5d4a0dd8ad47c776d56fc950364e56e34cbd3b33909080da231dd1746b7556ee`；不含 E。
+- 实际请求：`formal_experiment/outputs/development/sep_c3_targeted_refinement_v1/A/repeat-01/raw_responses.jsonl:18` 保存 `request_body_sha256=ef0ae062a5ba77d36e1f741a83a229e690220b3189c30373f55e5cb0135cdbef`、`rendered_prompt_user_sha256=e7a2f42bfc4144d85ceeee1e19bfb5227acc69520d8eb09dffc74b750b0843d9`。重建 user prompt 中 `source_text` 范围为 `[88,249)`，只含冻结正文；E 标题从 `251` 开始。
+- 原始模型响应：`A/repeat-01/raw_responses.jsonl:18` 的 `raw_response_content` 内 JSON `source_text`。长度 2512，SHA-256 `4edca77d64b078d5745cc2b163ba538cc6cb473776c7226f17e0e94fdd606795`，`response_sha256=da72951630fe9ceed1d2e2712bfa95102fec52461992da9f8434bc7dbdca8464`。与冻结正文不完全一致；包含 E；精确等于 `冻结正文 + "\n\n" + examples_E.md`。**异常首次出现层。**
+- 解析结果：`formal_experiment/outputs/development/sep_c3_targeted_refinement_v1/A/repeat-01/canonical_predictions.jsonl:18` 的 `parsed_output.source_text`，长度 2512、SHA-256 `4edca77d...`，与原始响应相同；包含 E。
+- canonical record：同文件 `record.source_text`，长度 2512、SHA-256 `4edca77d...`，与原始响应相同；包含 E。`parser_audit` 未记录 source_text 改写，`canonicalizer_audit` 也未记录 source_text 改写。
+
+#### A / estg_000720
+
+- 冻结目标正文：`formal_experiment/data/input/estg150_formal_inference_input_v2.json:2388`（`sample_id` 在第 2397 行）。215 字符，SHA-256 `cdfacc8ff49a5bab7850458bc88f6e4174e1a1bcbeaf085fe6b2e88bd9b6abb5`；不含 E。
+- 实际请求：`formal_experiment/outputs/development/sep_c3_targeted_refinement_v1/A/repeat-01/raw_responses.jsonl:141` 保存 `request_body_sha256=ede4071fc5f989d072b734b05177229790d15d60f119f7e6a724557110a2adc1`、`rendered_prompt_user_sha256=3527f3b5baf3a95f4ec4e0841715262ba825dacc714429a5006df1d114f1a71e`。重建 user prompt 中 `source_text` 范围为 `[88,303)`，只含冻结正文；E 标题从 `305` 开始。
+- 原始模型响应：`A/repeat-01/raw_responses.jsonl:141`。JSON `source_text` 长度 2566，SHA-256 `3284b4c528550b3e8771fe959dc96859e8c85f9ecc332b84d6a9c913997ce58f`，`response_sha256=a67aaf0fe87608c15315f3b78c3632b4522388b4f9dd27d5bea48a3630c59f84`。与冻结正文不完全一致；包含 E；精确等于 `冻结正文 + "\n\n" + examples_E.md`。**异常首次出现层。**
+- 解析结果：`formal_experiment/outputs/development/sep_c3_targeted_refinement_v1/A/repeat-01/canonical_predictions.jsonl:141` 的 `parsed_output.source_text`，长度 2566、SHA-256 `3284b4c5...`，与原始响应相同；包含 E。
+- canonical record：同文件 `record.source_text`，长度 2566、SHA-256 `3284b4c5...`，与原始响应相同；包含 E。解析与 canonicalizer 审计均未记录 `source_text` 改写。
+
+#### C / estg_000035
+
+- 冻结目标正文：`formal_experiment/data/input/estg150_formal_inference_input_v2.json:178`（`sample_id` 在第 187 行）。172 字符，SHA-256 `94906e35bea12352e3809e57ae95c16c8b18a832034e7d127685d679c4d8ef52`；不含 E。
+- 实际请求：`formal_experiment/outputs/development/sep_c3_targeted_refinement_v1/C/repeat-01/raw_responses.jsonl:11` 保存 `request_body_sha256=1917bc4adacc07bff2df23c6b3d958e3d2f14d679596240ec2e300b3701f7611`、`rendered_prompt_user_sha256=bcb745fc95a147d430839aa08e6248a1c9937856e50a03c65a92fdb815b1c346`。重建 user prompt 中 `source_text` 范围为 `[88,260)`，只含冻结正文；E 标题从 `262` 开始。
+- 原始模型响应：`C/repeat-01/raw_responses.jsonl:11`。JSON `source_text` 长度 2523，SHA-256 `e07d40fe58a5ee3bdf7fbec2a5fb3efb9033ffeec1aa0d71f5a2ade427f6a4f6`，`response_sha256=ce8358e9927aba2845caf19f7e2bfef8ffa2d3afe220708c63d8fa92b876a1d0`。与冻结正文不完全一致；包含 E；精确等于 `冻结正文 + "\n\n" + examples_E.md`。**异常首次出现层。**
+- 解析结果：`formal_experiment/outputs/development/sep_c3_targeted_refinement_v1/C/repeat-01/canonical_predictions.jsonl:11` 的 `parsed_output.source_text`，长度 2523、SHA-256 `e07d40fe...`，与原始响应相同；包含 E。
+- canonical record：同文件 `record.source_text`，长度 2523、SHA-256 `e07d40fe...`，与原始响应相同；包含 E。解析与 canonicalizer 审计均未记录 `source_text` 改写。
+
+#### C / estg_000044
+
+- 冻结目标正文：`formal_experiment/data/input/estg150_formal_inference_input_v2.json:297`（`sample_id` 在第 306 行）。161 字符，SHA-256 `5d4a0dd8ad47c776d56fc950364e56e34cbd3b33909080da231dd1746b7556ee`；不含 E。
+- 实际请求：`formal_experiment/outputs/development/sep_c3_targeted_refinement_v1/C/repeat-01/raw_responses.jsonl:18` 保存 `request_body_sha256=c09f37cec957859e444213f49c641ceaedee1f4ae26ef45925786323d001aa8a`、`rendered_prompt_user_sha256=e7a2f42bfc4144d85ceeee1e19bfb5227acc69520d8eb09dffc74b750b0843d9`。重建 user prompt 中 `source_text` 范围为 `[88,249)`，只含冻结正文；E 标题从 `251` 开始。
+- 原始模型响应：`C/repeat-01/raw_responses.jsonl:18`。JSON `source_text` 长度 2512，SHA-256 `4edca77d64b078d5745cc2b163ba538cc6cb473776c7226f17e0e94fdd606795`，`response_sha256=2f95d2505f2d8a2172c6b03c5f944b1004e35a8b556ab076d7c5143da5b95e44`。与冻结正文不完全一致；包含 E；精确等于 `冻结正文 + "\n\n" + examples_E.md`。**异常首次出现层。**
+- 解析结果：`formal_experiment/outputs/development/sep_c3_targeted_refinement_v1/C/repeat-01/canonical_predictions.jsonl:18` 的 `parsed_output.source_text`，长度 2512、SHA-256 `4edca77d...`，与原始响应相同；包含 E。
+- canonical record：同文件 `record.source_text`，长度 2512、SHA-256 `4edca77d...`，与原始响应相同；包含 E。解析与 canonicalizer 审计均未记录 `source_text` 改写。
+
+### 8.4 validation=true 的来源与覆盖范围
+
+- 四条原始模型响应中的顶层 `validation` 均为：`{"schema_valid": true, "cross_field_valid": true, "errors": []}`。canonical record 保存的同一对象来自模型，不是运行时校验生成。
+- 实际执行路径没有执行逐 record 的 schema/cross-field 校验，也没有用 runtime validation 覆盖模型 validation 的调用：`scripts/run_sep_c3_targeted_refinement_v1.py:389-413` 只调用 `base.parse_same_response` 并保存 `parsed_output`/`canonical_output`；`scripts/run_barrientos_ablation_suite_v2.py:675-746` 只做 `adapt_relay_record` 和 `canonicalize_record_coordinates`；两者均深拷贝原始 payload，未修改顶层 `validation`。
+- 现有 adapter/canonicalizer 只检查 span 文本是否出现在传入的 `source_text` 中（`d1_schema_adapter.py:106`）或重锚定 span 坐标（`d1_span_canonicalizer.py:66-84`），不校验顶层 `record.source_text` 是否等于输入正文。运行入口附近的 `validate_contracts`（`run_sep_c3_targeted_refinement_v1.py:537-594`）只检查预算、schedule、prompt 绑定、input/Gold 文件哈希等运行契约，不检查每条输出记录。
+- Prompt 中「runtime validator overwrites validation and is authoritative」的说明位于 `formal_experiment/prompts/sun_compat/modular_v1/common_system.md:16`；在本次 A/C 实际执行路径中没有对应实现。因此现有校验无法拦住该异常，`validation=true` 不能视为运行时校验通过。
+
+### 8.5 缺失证据与边界
+
+- 实际 HTTP request body 原文没有单独落盘，只有 `request_body_sha256` 和 `rendered_prompt_user_sha256`；本轮通过冻结输入与冻结 prompt 重建后哈希完全匹配，但没有独立原始 body 文件。
+- 没有保存任何 per-record 运行时校验结果或校验器调用日志；因此只能确认该路径未执行逐记录校验，不能把模型字段当作校验证据。
+- 原始响应之前的 transport 解码中间产物未单独保存；但异常已经在最早的已保存模型输出层出现，且请求中的 `source_text` 字段边界可由冻结输入和 prompt 确定，后处理追加的假设与原始响应证据冲突。
+- 四条对象为什么促使模型把 E 段落并入 `source_text`，不属于本轮证据可判定的问题；本轮不提出措辞、代码或实验修复。
+- 新增 API=0；未修改活动 Prompt、代码、Gold、评价器或历史预测；未运行项目审计或代码测试。
