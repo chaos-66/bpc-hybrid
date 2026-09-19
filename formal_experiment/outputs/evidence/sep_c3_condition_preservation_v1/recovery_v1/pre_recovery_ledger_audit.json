@@ -1,0 +1,31 @@
+{
+  "schema_version": "sep_c3_condition_preservation_pre_recovery_audit@1.0.0",
+  "created_at_utc": "2026-09-19T13:49:01.483089+00:00",
+  "per_arm": {
+    "BASE": {
+      "attempts": 32,
+      "raw_responses": 32,
+      "in_doubt": []
+    },
+    "RC1": {
+      "attempts": 32,
+      "raw_responses": 31,
+      "in_doubt": [
+        "estg_000074"
+      ]
+    },
+    "RC_KEEP": {
+      "attempts": 32,
+      "raw_responses": 32,
+      "in_doubt": []
+    }
+  },
+  "errors": [],
+  "ready_for_resume": true,
+  "attempt_keys_unique": true,
+  "raw_keys_unique": true,
+  "uncertain_entry": [
+    "estg_000074"
+  ],
+  "schedule_prefix_matches_attempts": true
+}
