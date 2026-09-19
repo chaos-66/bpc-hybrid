@@ -1,0 +1,91 @@
+As a business process compliance expert, you are tasked with characterizing changes in legal provisions to understand their impact on business process compliance (BPC). This involves identifying the nature of each legal change and determining its relevance to BPC.
+
+A legal change is relevant to BPC if it requires checking whether the existing business process needs to be updated or new parts need to be added to reflect the updated legal provision.
+
+A change should be marked as not relevant for BPC if it only affects the regulatory or interpretive framework, such as modifying legislative competence, jurisdictional references, or making clarificatory or structural edits without altering operational duties.
+
+You will be given two versions of a legal provision, one before and one after a legal change. Each version may contain multiple legal statements.
+
+Your task is to analyze the changes and provide one or more entries that each represent a single change at the statement level.
+
+For each change, provide the following fields using snake_case keys:
+1. evolution_id: A unique ID for the change
+2. old_statement: The statement before the change (if applicable)
+3. new_statement: The statement after the change (if applicable)
+4. type_of_statement: The type of statement (i.e., obligation, prohibition, permission, or definition)
+5. type_of_statement_change: The type of change (i.e., added, deleted, modified)
+6. concepts_modified: If the statement is modified, indicate the type of concept that has changed (i.e., actor, action, action_object, condition, constraint, exception)
+7. is_potentially_relevant_for_bpc: Yes or No
+8. justification_of_relevance: A short justification
+9. example_bpmn_elements: Example of the process elements affected (e.g., tasks, roles, decisions)
+10. example_business_process: A concrete example of a business process impacted by this change
+11. cross_references_added: A list of cross-references (e.g., citations of laws, articles, sections) that were introduced in the new version of the statement but were not present in the old version.
+12. cross_references_deleted: A list of cross-references that were present in the old version of the statement but were removed in the new version.
+13. cross_references_unchanged: A list of cross-references that are present in both the old and new versions of the statement and remained unchanged.
+
+A statement is a semantically complete legal clause that falls into one of the following types:
+- Obligation: Prescribes an action that must be carried out.
+- Prohibition: Indicates an action that must be avoided.
+- Permission: Indicates an action that is allowed.
+- Definition: Explains the meaning of a concept in the legal domain.
+
+Each statement contains concepts, which describe the semantics of the regulation. Only the following six concept types are allowed:
+- actor: The role responsible for executing the action.
+- action: The activity that is mandatory, prohibited, or permitted.
+- action_object: The item being acted upon.
+- condition: Specifies when the statement applies.
+- constraint: A restriction limiting how or when the regulation is applicable.
+- exception: Conditions under which the regulation does not apply.
+
+Legal changes to statements and concepts fall into three categories:
+- Added: The element did not exist in the previous version.
+- Deleted: The element no longer exists in the new version.
+- Modified: The element exists in both versions but has changed.
+
+### Output format:
+Return only a JSON array of objects using the field names above. No prose, no markdown, no explanation.
+
+### Example Input:
+legal_provision_before_changes:
+A product may be labeled 'gluten-free' (see FDA 21 CFR §101.91) if it contains less than 20 parts per million (ppm) gluten.
+
+legal_provision_after_changes:
+A product may be labeled 'gluten-free' (see FDA 21 CFR §101.91) only if it contains less than 10ppm gluten and discloses potential cross-contact with allergens (e.g., nuts) when manufactured in shared facilities.
+It is prohibited to use 'gluten-free' claims if product contains wheat starch (even if <10ppm gluten).
+
+### Example Output:
+[
+  {
+    "evolution_id": "E1",
+    "old_statement": "A product may be labeled 'gluten-free' (see FDA 21 CFR §101.91) if it contains less than 20 parts per million (ppm) gluten.",
+    "new_statement": "A product may be labeled 'gluten-free' (see FDA 21 CFR §101.91) only if it contains less than 10ppm gluten and discloses potential cross-contact with allergens (e.g., nuts) when manufactured in shared facilities.",
+    "type_of_statement": "Permission",
+    "type_of_statement_change": "Modified",
+    "concepts_modified": "constraint, condition, action_object",
+    "is_potentially_relevant_for_bpc": "Yes",
+    "justification_of_relevance": "The threshold for gluten content was tightened and a new disclosure condition was added, affecting compliance and documentation.",
+    "example_bpmn_elements": "Tasks (label review, quality control check), Decisions (approval for labeling), Data (product test reports)",
+    "example_business_process": "Food product labeling approval process in a food manufacturing company",
+    "cross_references_added": [],
+    "cross_references_deleted": [],
+    "cross_references_unchanged": ["FDA 21 CFR §101.91"]
+  },
+  {
+    "evolution_id": "E2",
+    "old_statement": "None",
+    "new_statement": "It is prohibited to use 'gluten-free' claims if product contains wheat starch (even if <10ppm gluten).",
+    "type_of_statement": "Prohibition",
+    "type_of_statement_change": "Added",
+    "concepts_modified": "action_object, condition",
+    "is_potentially_relevant_for_bpc": "Yes",
+    "justification_of_relevance": "A new prohibition requires checking ingredients to validate gluten-free claims.",
+    "example_bpmn_elements": "Tasks (ingredient verification), Roles (regulatory compliance officer), Decisions (label claim validation)",
+    "example_business_process": "Product formulation and labeling verification process in a food manufacturing company",
+    "cross_references_added": [],
+    "cross_references_deleted": [],
+    "cross_references_unchanged": []
+
+  }
+]
+
+Do it for the following legal provisions, and only return the json I asked you. 

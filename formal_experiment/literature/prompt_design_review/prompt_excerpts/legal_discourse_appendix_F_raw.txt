@@ -1,0 +1,511 @@
+
+##### PDF PAGE 16 (printed 8551) #####
+App Engine. We include our Datastore management
+back-end as part of the annotation package. To use our
+tool with other NoSQL providers,31 a port is necessary.
+D
+Website Design
+In Flow 1, users can use a query box to perform full-text
+and faceted search on laws and then click on and return
+results to read the full text of the law. ElasticSearch
+powers both of these endpoints. This flow is useful
+for when journalists want to explore a specific term
+or concept irrespective of its discourse role, or simply
+familiarize themselves with the corpus.
+In Flow 2, users can view aggregate counts of dif-
+ferent discourse elements, by type, across the corpora.
+This helps to summarize the corpora from a functional
+standpoint, as described in Section 2. Users navigate
+this flow by clicking on one of five buttons to see the
+counts of each of the five principle discourse spans, then
+clicking on any of the returned span results to view all
+laws with this span. MySQL serves both of these end-
+points (and provides additional metrics, such as a map
+in the about.html page, not shown here.).
+In both flows, visitors can access our annotation
+framework, described in Section 3.2. From Flow 1,
+they can click search results to tag a specific paragraph,
+and from Flow 2 they can click to correct an annotated
+paragraph. Additionally, they can annotate a randomly
+selected paragraph by clicking “Help Us Tag.”
+E
+Additional Experimental Results
+We give more results for the Span-Level tagging task,
+reporting on precision and recall as well as F1.
+F
+Prompt Designs for GPT3.5
+Here we give sample prompts, along with their true-
+label completions for each span. For each prompt, we
+show the 1-shot version, for completeness and brevity.
+However, we tested with 0, 1, 2, 3, 5, 8 and 10 shots.
+F.1
+Span Level Tagging Prompts
+F.1.1
+SUBJECT Identification
+You are a legal assistant. I will show you a paragraph
+of law. Which entities gains powers, restrictions or
+responsibilities under this law? NOT which entities are
+used to test the law, or which entities are affected. In
+other words, what entity is the SUBJECT of the law? It
+might not aren’t always explicit, and sometimes can be
+expressed passively. Restrict your choices to an entity
+mentioned in the law OR "passive voice entity", if the
+entity is not explicitly mentioned in the text. Enumerate
+all instances of the entity in the text, even if repeated.
+If there is no entity that matches this description in the
+text, including "passive voice entity", say "no entity". If
+there are multiple segments of text in the law that apply,
+31e.g. Amazon DynamoDB – https://aws.amazon
+.com/dynamodb/
+join them with a semi-colon. The order of text spans
+does NOT matter. Do NOT say anything else." I will
+give you 1 examples, and then you will perform the task
+yourself.
+EXAMPLE: Law: "* 71. Special population census.
+The expenses incurred by a county, city, town, or village
+to conduct a special population census supervised by
+the United States bureau of the census pursuant to a
+contract made pursuant to section twenty of the general
+municipal law, three years." Answer: "no entity"
+NOW IT’S YOUR TURN:
+Law: "If a vacancy as described in subdivision (d)(1)
+occurs after the sixth Thursday before the primary elec-
+tion in any county having a metropolitan form of gov-
+ernment with a population of more than five hundred
+thousand (500,000), according to the 2010 federal cen-
+sus or any subsequent federal census, then the members
+of the county executive committees who represent the
+precincts composing such senate district may nominate
+a candidate to appear on the November election ballot
+by any method authorized under the rules of the party."
+Answer:
+»> vacancy as described in subdivision (d)(1); mem-
+bers of the county executive committees
+F.1.2
+EXCEPTION Identification
+You are a legal assistant. I will show you a paragraph
+of law. What are exception cases when this law does
+not apply? Restrict your answer to text in the law. Join
+non-contiguous segments of text with a semi-colon. If
+there are no exception cases where this law does not
+apply, say "none". If there are multiple segments of
+text in the law that apply, join them with a semi-colon.
+The order of text spans does NOT matter. Do NOT say
+anything else." I will give you 1 examples, and then you
+will perform the task yourself.
+EXAMPLE: Law:
+"Notwithstanding subdivision
+(b)(1), in counties having a population of not less than
+seventeen thousand two hundred fifty (17,250) nor more
+than seventeen thousand five hundred fifty (17,550), ac-
+cording to the 1990 federal census or any subsequent
+federal census, the budget committee shall be composed
+of six (6) members." Answer: "none"
+NOW IT’S YOUR TURN:
+Law: "In counties having a population of not less than
+three hundred nineteen thousand six hundred twenty-
+five (319,625) nor more than three hundred nineteen
+thousand seven hundred twenty-five (319,725), accord-
+ing to the 1980 federal census or any subsequent federal
+census, a library board of not less than seven (7) mem-
+bers nor more than nine (9) members may be appointed
+by the county legislative body and city governing bod-
+ies which are parties to the agreement, the number ap-
+pointed by each to be determined according to the ratio
+of population in each participating city and in the county
+outside the city or cities, based on the most recent fed-
+eral census; provided, that each shall appoint at least
+one (1) member." Answer:
+8551
+
+##### PDF PAGE 17 (printed 8552) #####
+Figure 7: A flow-based sitemap for our website, statecensuslaws.org, with some details about the back-end
+and database setup. The left-column shows Flow 1, where a user can search and view full-text results. The
+right-column shows Flow 2, where a user can view top law-discourse spans and see all laws these spans are used in.
+Each flow leads to the annotation framework.
+»> provided, that each shall appoint at least one (1)
+member
+F.1.3
+TEST Identification
+You are a legal assistant. I will show you a paragraph
+of law. Under what conditions does this law apply? In
+other words, what test is implied by the law? Restrict
+your answer to text in the law. Join non-contiguous
+segments of text with a semi-colon. If there are no
+conditions for this law to apply explicitly stated in the
+text, say "none". If there are multiple segments of text
+in the law that apply, join them with a semi-colon. The
+order of text spans does NOT matter. Do NOT say
+anything else." I will give you 1 examples, and then you
+will perform the task yourself.
+EXAMPLE: Law: "(iii) Notwithstanding the forego-
+ing, local governments and voluntary agencies shall be
+granted state aid of one hundred percent of the net oper-
+ating costs expended by such localities and by voluntary
+agencies pursuant to contracts with such local govern-
+ments or with the office of alcoholism and substance
+abuse services for alcohol crisis centers, chemical de-
+pendency programs for youth, residential services for
+recovering alcoholics and substance abusers and for al-
+coholism AIDS coordinators. Such state aid may also be
+granted to programs transferred from the task force on
+integrated projects for youth and chemical dependency.
+Such state aid shall also be granted for non-residential
+services determined to be necessary to serve the public
+interest by the commissioner of alcoholism and sub-
+stance abuse services provided by local governments
+having a population of one hundred twenty-five thou-
+sand or less as determined by the last preceding federal
+census, or by voluntary agencies pursuant to contracts
+with such local governments." Answer: "determined to
+be necessary to serve the public interest by the com-
+missioner of alcoholism and substance abuse services;
+provided by; having a population of one hundred twenty-
+five thousand or less as determined by the last preceding
+federal census; pursuant to contracts with; with; trans-
+ferred from the task force on integrated projects for
+youth and chemical dependency"
+NOW IT’S YOUR TURN:
+Law: "(2) If two or more counties included in the
+measure are required to prepare a translation of ballot
+8552
+
+##### PDF PAGE 18 (printed 8553) #####
+Figure 8: Training run for ASP. NLL loss is shown on
+the y-axis. The ASP model is learning across epochs, it
+likely does not have enough data to fully distinguish the
+embedding space for jointly modeled task.
+materials into the same language other than English,
+the county that contains the largest population, as de-
+termined by the most recent federal decennial census,
+among those counties that are required to prepare a
+translation of ballot materials into the same language
+other than English shall prepare the translation, or au-
+thorize the authority to prepare the translation, and that
+translation shall be used by the other county or counties,
+as applicable." Answer:
+»> are required to prepare a translation of ballot ma-
+terials into the same language other than English; that
+contains the largest population, as determined by the
+most recent federal decennial census; among those coun-
+ties that are required to prepare a translation of ballot
+materials into the same language other than English
+F.1.4
+OBJECT Identification
+You are a legal assistant. I will show you a paragraph of
+law. Which entities are affected by the powers of this
+law? NOT which entities gain powers, but who is af-
+fected by those in power? In other words, what entity is
+the object of the law? It might not aren’t always explicit,
+and sometimes can be expressed passively. Restrict your
+choices to an entity mentioned in the law OR "passive
+voice entity", if the entity is not explicitly mentioned
+in the text. Enumerate all instances of the entity in the
+text, even if repeated. If there is no entity that matches
+this description in the text, including "passive voice en-
+tity", say "no entity". If there are multiple segments of
+text in the law that apply, join them with a semi-colon.
+The order of text spans does NOT matter. Do NOT say
+anything else." I will give you 1 examples, and then you
+will perform the task yourself.
+EXAMPLE: Law: "This subsection (b) applies only
+to counties with a metropolitan form of government and
+to counties having the following populations according
+to the 1970 federal census or any subsequent federal
+census:" Answer: "no entity"
+NOW IT’S YOUR TURN:
+Law: "An authority shall not initiate any redevelop-
+ment project under this chapter until the governing body,
+or agency designated by it or empowered by law so to
+act, of each city or town, herein called “municipalities,”
+and any county having a population of not less than two
+hundred seventy-five thousand (275,000) nor more than
+three hundred twenty-five thousand (325,000), accord-
+ing to the 1980 federal census or any subsequent federal
+census, in which any of the area to be covered by the
+project is situated, has approved a plan, herein called
+the “redevelopment plan”, which provides an outline
+for the development or redevelopment of the area and is
+sufficiently complete, to:" Answer:
+»> any redevelopment project under this chapter
+F.1.5
+PROBE Identification
+You are a legal assistant. I will show you a paragraph
+of law. Which entities are used to determine when this
+law applies? NOT which entities gain powers, OR is
+affected by the law. In other words, which entities are
+probed by the law? Restrict your answer to text in the
+law. Join non-contiguous segments of text with a semi-
+colon. If there is no entity that matches this description
+in the text, including "passive voice entity", say "no
+entity". If there are multiple segments of text in the
+law that apply, join them with a semi-colon. The order
+of text spans does NOT matter. Do NOT say anything
+else." I will give you 1 examples, and then you will
+perform the task yourself.
+EXAMPLE: Law: "2. The commissioner is autho-
+rized to contract to make a state grant, within the limit
+of appropriation therefor, to any planning unit for up
+to ninety percent of the costs to prepare, update or re-
+vise its local solid waste management plan; provided,
+however, that no such grant has been previously made
+to a planning unit which is a part of or is served by the
+planning unit seeking such grant. A planning unit may
+receive a grant pursuant to this subdivision which shall
+not exceed the greater of twenty-five thousand dollars or
+one dollar for each resident of the planning unit, based
+upon the current federal decennial census." Answer: "no
+such grant; a planning unit; the planning unit"
+NOW IT’S YOUR TURN:
+Law: "Such functions may also be delegated by the
+municipality to any not-for-profit corporation acting for
+or on behalf of such municipality; provided, that, ex-
+cept in any county with a metropolitan form of govern-
+ment and having a population of four hundred thousand
+(400,000) or more, according to the 1980 federal census
+or any subsequent federal census, the site selection for
+an energy production facility may be delegated to any
+such not-for-profit corporation, but shall be subject to
+the approval by a two-thirds ( 2/3 ) vote of the legislative
+8553
+
+##### PDF PAGE 19 (printed 8554) #####
+bodies of the city and the county in which such city is
+located for whom or on whose behalf such not-for-profit
+corporation is acting prior to the purchase of any such
+site." Answer:
+»> any county
+F.1.6
+CONSEQUENCE Identification
+You are a legal assistant. I will show you a paragraph
+of law. What are the powers or obligations granted
+by this law? In other words, what is the law’s conse-
+quence? Restrict your answer to text in the law. Join
+non-contiguous segments of text with a semi-colon. If
+there are no powers or obligations explicity stated in
+the text, say "none". If there are multiple segments of
+text in the law that apply, join them with a semi-colon.
+The order of text spans does NOT matter. Do NOT say
+anything else." I will give you 1 examples, and then you
+will perform the task yourself.
+EXAMPLE: Law: "After January 1, 1980, with re-
+spect to the construction, purchase, or lease of build-
+ings which are located or will be located in a standard
+metropolitan statistical area (SMSA) with a population
+of 250,000 or more according to the most recent decen-
+nial census, which is served by a public transit operator,
+as defined in Section 99210 of the Public Utilities Code,
+the board shall give consideration to the location of
+existing public transit corridors, as defined in Section
+50093.5 of the Health and Safety Code, for the area.
+Construction, purchase, or lease of buildings at loca-
+tions outside of existing public transit corridors may be
+approved after the board has determined: (1) the pur-
+pose of the facility does not require transit access; or
+(2) it is not feasible to locate the facility in an existing
+transit corridor; or (3) the transit operator will provide
+service as needed to effectively serve the facility. The
+board may request the assistance of the transit operator
+in making its determination and shall notify the opera-
+tor of its decision." Answer: "may be approved; shall
+give consideration to; may request the assistance of; in
+making its determination; shall notify; of its decision"
+NOW IT’S YOUR TURN:
+Law: "This part only applies in those counties with a
+metropolitan form of government and in those counties
+with a population according to the 1970 federal census
+or any subsequent federal census of:" Answer:
+»> applies
+F.2
+Relation Identification Prompts
+The following prompts were used for the Relation Iden-
+tification task, which was aimed at identifying whether
+a relation existed between two spans.
+F.2.1
+Relation Identification Prompts without
+Definitions
+You are a legal assistant. I will show you a paragraph
+of law. Do these two spans of text directly relate to
+each other in the passage? "Relate" in this case means
+that they directly modify or apply to each other in the
+context of the law. Answer with "yes" or "no". Do NOT
+say anything else." I will give you 1 examples, and then
+you will perform the task yourself.
+EXAMPLE: Law: "The provisions of this part rela-
+tive to “regional historic zoning commissioners” shall
+not apply in any county having a metropolitan form of
+government and having a population of not less than
+four hundred thousand (400,000) nor more than five hun-
+dred thousand (500,000), according to the 1980 federal
+census or any subsequent federal census." Text span 1:
+"provisions of this part" Text span 2: "shall not apply"
+Answer: "Yes"
+NOW IT’S YOUR TURN:
+Law: "If the court that had original jurisdiction was
+a county court or is a court that no longer exists, the
+chancery court for the county in which such court was
+established shall have jurisdiction to hear the motion,
+in addition to the circuit or chancery courts in counties
+with a population of one hundred thousand (100,000) or
+more, as established by the 1990 federal census or any
+subsequent census." Text span 1: "chancery court" Text
+span 2: "shall have jurisdiction to hear" Answer: » Yes
+F.2.2
+Relation Identification Prompts with
+Definitions
+You are a legal assistant. I will show you a paragraph
+of law. Do these two spans of text directly relate to
+each other in the passage? "Relate" in this case means
+that they directly modify or apply to each other in the
+context of the law. Answer with "yes" or "no". Do NOT
+say anything else." I will give you 1 examples, and then
+you will perform the task yourself.
+EXAMPLE: Law: "In addition to the powers granted
+in this chapter, any metropolitan government or leg-
+islative bodies of municipalities, acting jointly, in any
+county having a population in excess of eight hundred
+thousand (800,000), according to the 1990 federal cen-
+sus or any subsequent federal census, is authorized
+to aid or otherwise provide assistance to an authority
+created pursuant to the provisions of this chapter by
+such metropolitan government or municipalities, act-
+ing jointly, in any county having a population in ex-
+cess of eight hundred thousand (800,000), according
+to the 1990 federal census or any subsequent federal
+census, by entering into contracts with any other party
+in furtherance of the purposes of this chapter, for such
+term or terms and upon such conditions as may be de-
+termined by the governing body of such metropolitan
+government or legislative bodies of municipalities, act-
+ing jointly, in any county having a population in excess
+of eight hundred thousand (800,000), according to the
+1990 federal census or any subsequent federal census."
+Text span 1: "as may be determined by" This span is a
+"Consequence", meaning it is a power or responsibility
+bestowed upon an entity under a law. Text span 2: "
+the governing body" This span is a "Subject", mean-
+ing it is an entity given powers or responsibilities if the
+conditions in the law are met. Answer: "No"
+NOW IT’S YOUR TURN:
+Law: "(a) Following each federal decennial census,
+8554
+
+##### PDF PAGE 20 (printed 8555) #####
+and using that census as a basis, the board shall adjust
+the boundaries of any or all of the supervisorial districts
+of the county so that the supervisorial districts shall
+be substantially equal in population as required by the
+United States Constitution." Text span 1: "of any or all
+of the supervisorial districts of the county" This span
+is a "Class", meaning it is a modifier affecting another
+entity in the law. Text span 2: " the board" This span
+is a "Subject", meaning it is an entity given powers
+or responsibilities if the conditions in the law are met.
+Answer:
+» "No"
+F.2.3
+Relation Classification Prompts
+The following prompts were used for the Relation Clas-
+sification task, which was aimed at assigning a relation
+label, r ∈R, ϵ, given two spans.
+F.2.4
+Relation Classification Prompts without
+Definitions
+You are a legal assistant. I will show you a paragraph
+of law. How do these two phrases in the folllowing law
+text relate to each other? "Relate" in this case means
+that they directly modify or apply to each other in the
+context of the law. Select with one of the following
+options: [’Same Entity’, ’Or’, ’Continuation’, ’And’,
+’Followed By’, ’No Relation’]. Do NOT say anything
+else." I will give you 1 examples, and then you will
+perform the task yourself.
+EXAMPLE: Law: "17. Citizens advisory commit-
+tee on capital improvements. The town board of any
+town having a population of five thousand or more as
+shown by the latest federal census, by resolution may
+appoint a committee of citizens to act in an advisory
+capacity to the town board on the planning, construction,
+reconstruction, undertaking or acquisition of capital im-
+provements. The members of such committee shall
+serve without compensation and it shall be the duty of
+such advisory committee to meet, consult and advise
+with the officers named in the resolution. Such advisory
+committee shall have no powers other than advisory.
+The town board may authorize the payment of the just
+and reasonable actual expenses of the members of such
+advisory committee." Text span 1: "such advisory com-
+mittee" Text span 2: "The members" Answer: "Same
+Entity"
+NOW IT’S YOUR TURN:
+Law: "* § 421-h. Exemption of capital improvements
+to multiple dwelling buildings within certain cities. 1.
+Multiple dwelling buildings, reconstructed, altered, con-
+verted back to an owner occupied single family dwelling
+or any owner occupied multiple dwelling located in any
+city having a population of more than twenty-two thou-
+sand inhabitants but less than twenty-three thousand
+inhabitants, determined in accordance with the latest
+federal decennial census, that is reduced to at most two
+units by such reconstruction subsequent to the effective
+date of a local law pursuant to this section shall be ex-
+empt from taxation and special ad valorem levies to the
+extent provided hereinafter. After a public hearing, the
+governing board of such city may adopt a local law to
+grant the exemption authorized pursuant to this section.
+A copy of such local law shall be filed with the com-
+missioner and the assessor of such city who prepares
+the assessment roll on which the taxes of such city are
+levied." Text span 1: "shall be exempt from" Text span
+2: "to the extent provided hereinafter" Answer: > Same
+Entity
+F.2.5
+Relation Classification Prompts with
+Definitions
+You are a legal assistant. I will show you a paragraph
+of law. How do these two phrases in the folllowing law
+text relate to each other? "Relate" here means that they
+directly modify or apply to each other in the context of
+the law. These relations are between spans of type:
+Subject: is an entity given powers or responsibilities
+if the conditions in the law are met Subject: is an entity
+given powers or responsibilities if the conditions in the
+law are met.
+Select ONE of the following relations from this list:
+[’Same Entity’, ’Or’, ’Continuation’, ’And’, ’No Rela-
+tion’]. Here are definitions for each of these relations:
+"Same Entity": When two spans of text refer to the
+same entity. "Or": Either two predicates or entities are
+mentioned in the law, but when only one needs to be
+passed (in the case of a predicate), or only one entity
+is affected. "Continuation": When two text spans refer
+to the same entity or predicate, but are split by another
+text span. "And": Two predicates or entities are being
+compared, and both conditions must pass for the law to
+apply. "No Relation": The spans are not related.
+Do NOT say anything else.
+I will give you 1 examples, and then you will perform
+the task yourself.
+EXAMPLE: Law: "2. (a) The town board of every
+town may establish the office of town attorney or town
+engineer, or both. If the town board shall so establish
+the office of town attorney or town engineer, or both, it
+shall fix the salary of such officer or officers. In addition,
+the town board of any such town may employ counsel
+to the town attorney in respect to any particular subject
+matter, proceeding or litigation, or it may employ such
+expert engineering service in respect to any particular
+subject matter, improvement or proceeding, as it may
+necessarily require. A town of the first class shall have
+the authority to appoint such deputies in the offices of
+the town attorney and town engineer as may be provided
+by resolution of such board and fix the salaries therefor.
+A town of the second class having a population of over
+seventy-five thousand according to the latest federal
+census or state enumeration shall have the authority to
+appoint such deputies in the office of the town attorney
+as may be provided by resolution of such board and fix
+the salaries therefor. The terms of such offices shall be
+indefinite and the appointees thereto shall be removable
+at the pleasure of the town board." Text span 1: "The
+8555
