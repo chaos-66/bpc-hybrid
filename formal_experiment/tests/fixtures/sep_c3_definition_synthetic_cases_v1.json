@@ -1,0 +1,104 @@
+[
+  {
+    "case_id": "A_explicit_means_definition",
+    "category": "explicit_means_definition",
+    "sentence": "A service unit means a facility open to the public.",
+    "expected_modality": "definition",
+    "expected_evidence_text": "means",
+    "expected_actor_text": null,
+    "expected_action_text": "means a facility open to the public",
+    "expected_empty_fields": [
+      "actors",
+      "conditions",
+      "constraints",
+      "exceptions"
+    ],
+    "ambiguous": false,
+    "note": "Prompt-contract fixture only; not a model prediction."
+  },
+  {
+    "case_id": "B_synthetic_shall_definition",
+    "category": "synthetic_shall_definition",
+    "sentence": "A digitally signed copy shall be treated as an original document.",
+    "expected_modality": "definition",
+    "expected_evidence_text": "shall",
+    "expected_actor_text": null,
+    "expected_action_text": "be treated as an original document",
+    "expected_empty_fields": [
+      "actors",
+      "conditions",
+      "constraints",
+      "exceptions"
+    ],
+    "ambiguous": false,
+    "note": "Approved E4 v2 contract fixture; test only, not a prediction."
+  },
+  {
+    "case_id": "C_actor_directed_shall_obligation",
+    "category": "ordinary_actor_directed_shall_obligation",
+    "sentence": "The controller shall notify the authority.",
+    "expected_modality": "obligation",
+    "expected_evidence_text": "shall",
+    "expected_actor_text": "The controller",
+    "expected_action_text": "notify the authority",
+    "expected_empty_fields": [
+      "conditions",
+      "constraints",
+      "exceptions"
+    ],
+    "ambiguous": false,
+    "note": "Prompt-contract fixture only; not a model prediction."
+  },
+  {
+    "case_id": "D_may_permission",
+    "category": "may_permission",
+    "sentence": "The controller may disclose the data.",
+    "expected_modality": "permission",
+    "expected_evidence_text": "may",
+    "expected_actor_text": "The controller",
+    "expected_action_text": "disclose the data",
+    "expected_empty_fields": [
+      "conditions",
+      "constraints",
+      "exceptions"
+    ],
+    "ambiguous": false,
+    "note": "Prompt-contract fixture only; not a model prediction."
+  },
+  {
+    "case_id": "E_may_not_prohibition",
+    "category": "may_not_prohibition",
+    "sentence": "The controller may not disclose the data.",
+    "expected_modality": "prohibition",
+    "expected_evidence_text": "may not",
+    "expected_actor_text": "The controller",
+    "expected_action_text": "disclose the data",
+    "expected_empty_fields": [
+      "conditions",
+      "constraints",
+      "exceptions"
+    ],
+    "ambiguous": false,
+    "note": "Prompt-contract fixture only; not a model prediction."
+  },
+  {
+    "case_id": "F_ambiguous_applicability_statement",
+    "category": "ambiguous_applicability_statement",
+    "sentence": "The following applies to taxable persons.",
+    "expected_modality": [
+      "definition",
+      "obligation"
+    ],
+    "expected_evidence_text": "applies",
+    "expected_actor_text": null,
+    "expected_action_text": "applies to taxable persons",
+    "expected_empty_fields": [
+      "actors",
+      "conditions",
+      "constraints",
+      "exceptions"
+    ],
+    "ambiguous": true,
+    "note": "Ambiguous apply-family case; test only, must be reported separately and must not justify a lexical rule."
+  }
+]

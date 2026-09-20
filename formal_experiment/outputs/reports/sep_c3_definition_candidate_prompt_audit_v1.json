@@ -1,0 +1,86 @@
+{
+  "schema_version": "sep_c3_definition_candidate_prompt_audit@1.0.0",
+  "status": "pass",
+  "api_calls": 0,
+  "active_prompt_family": "direct_llm_refinement_v1",
+  "candidate_family": "direct_llm_definition_refinement_candidate_v1",
+  "checks": {
+    "active_E4_removed_from_candidate": true,
+    "candidate_E4_v2_exactly_once": true,
+    "R_DEF_exactly_once_in_R_DEF_arm": true,
+    "R_DEF_absent_from_BASE": true,
+    "lexical_shortcuts_absent_from_R_DEF": true,
+    "common_system_identical_to_active_A": true,
+    "R_DEF_arm_is_base_plus_R_DEF": true
+  },
+  "lexical_shortcuts_present": [],
+  "active_prompt_hashes": {
+    "A": {
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418",
+      "markdown_sha256": "d24c0c0d5150dd6382260f91614cc6d475ecdb68efb2cfe8d48347272d74a580"
+    },
+    "B": {
+      "system_sha256": "f6de5c4fe6115d5073f44e59d98443ccec5dd55bc3356ce445b6304a82aab778",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "207b54cc2f1123c7511451d7ead478654e550d438fe19d1031a13149b41917f1",
+      "markdown_sha256": "c468c631b6e454522994d6839f6a4021a259daedea7f3a2852b7b4343cd22849"
+    },
+    "C": {
+      "system_sha256": "19af79caa77ea3e600b7894603da59a278a059b0c2a6bd5f1c5038fb704445fc",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "a015da8e3f08c561050b0de1604163a6aba5a0a8d1a60e4fe8c56bd3e2eb2266",
+      "markdown_sha256": "d58163b677c6a7bda06f4de3ea8de743d8568e0d5e2c740bdea8af48ccfa4479"
+    },
+    "D": {
+      "system_sha256": "af33cf308c98ae2bb03572d0669913b1dcb58310a4c08050e21f853d171e29b4",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "7901ebe541abe25fe2753db514b284a82c4d37c54535ad54824eac597fff15c9",
+      "markdown_sha256": "b241126dcb04001872e3bfd60deb330ed884ccad50537cc2031017a66835c091"
+    }
+  },
+  "candidate_hashes": {
+    "BASE": {
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "3100c8521f3ad4a0a313293d4facdd37c92dccf8661e6021875750c58926da11",
+      "markdown_sha256": "a82d7370ee8d26ad81326fadef987a9f25c7ca79a3ff88e7f35e5b3c2f262124"
+    },
+    "R_DEF": {
+      "system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+      "markdown_sha256": "202189d5fadcf25c14ede8f12d810e11d5bfbd9fff0697b01f200bbdbe558669"
+    }
+  },
+  "compatibility": {
+    "COMPAT_R_A_R_DEF": {
+      "old_arm_equivalence": "B",
+      "system_is_old_arm_plus_R_DEF": true,
+      "user_is_candidate_E4_v2": true,
+      "system_sha256": "f0f10d0b8298d63fca8cc3c3e3044c9f65d212558c28b12a6eb1dd4ae33dd495",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "2720051ae328e668cf092df0ebcad2cf7ded405bca8dfa1637466d2ac850c2bb",
+      "markdown_sha256": "2d27f59d3d8766a741be68d35e45544fce2b2044431efbd2e6e7f787c7ee3fcf"
+    },
+    "COMPAT_R_C_R_DEF": {
+      "old_arm_equivalence": "C",
+      "system_is_old_arm_plus_R_DEF": true,
+      "user_is_candidate_E4_v2": true,
+      "system_sha256": "06b1ba52b9119cdd82e60199a4c6e30d9a70198ba4d18f820a7d42a57d2fd6d8",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "b405b2b90af43d4cafa771f4802f663cec110e491b85360360e87b56a1b06f2d",
+      "markdown_sha256": "8ce959c39f364021dc43915d23b03e84de8e3fe6a23c843a82997630af5c4b61"
+    },
+    "COMPAT_R_A_R_C_R_DEF": {
+      "old_arm_equivalence": "D",
+      "system_is_old_arm_plus_R_DEF": true,
+      "user_is_candidate_E4_v2": true,
+      "system_sha256": "88422ce5878b9c1dd5b8c44b98a9265e09547b52f5e28220554cc2e3eee51a59",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "2c79befaf78803bfee08405c30ae87e576cb134f208209845c85cc3d4bd55fa3",
+      "markdown_sha256": "abbfad83c1c6695209f489cd18a143c89ae81d9b69388b58e5c9936583e7ec81"
+    }
+  }
+}

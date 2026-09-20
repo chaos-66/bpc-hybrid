@@ -1,0 +1,83 @@
+{
+  "schema_version": "sep_c3_definition_candidate_e4@2.0.0",
+  "status": "DESIGN_CANDIDATE_NOT_APPLIED",
+  "candidate_id": "definition_shall_definition_e4_v2",
+  "replaces_component": {
+    "file": "prompts/sun_compat/modular_v1/examples_E.md",
+    "example_id": "E4",
+    "current_heading": "Example E4 — definition clause followed by an obligation clause"
+  },
+  "synthetic_sentence": "A digitally signed copy shall be treated as an original document.",
+  "example_block_markdown": "Example E4 — synthetic shall-definition (one clause):\nInput: \"A digitally signed copy shall be treated as an original document.\"\n- clause span [0,64): definition; evidence \"shall\" [24,29); actors empty; action \"be treated as an original document\" [30,64); no other field populated",
+  "expected_rule_record": {
+    "schema_version": "1.0.0",
+    "sample_id": "synthetic_definition_e4_v2",
+    "source_id": "synthetic_definition_e4_v2",
+    "source_text": "A digitally signed copy shall be treated as an original document.",
+    "clauses": [
+      {
+        "clause_id": "c1",
+        "clause_span": {
+          "text": "A digitally signed copy shall be treated as an original document",
+          "start": 0,
+          "end": 64
+        },
+        "modality": {
+          "label": "definition",
+          "evidence": [
+            {
+              "text": "shall",
+              "start": 24,
+              "end": 29
+            }
+          ]
+        },
+        "actors": [],
+        "actions": [
+          {
+            "id": "c1_action_1",
+            "text": "be treated as an original document",
+            "start": 30,
+            "end": 64,
+            "normalized": "be treated as an original document"
+          }
+        ],
+        "conditions": [],
+        "constraints": [],
+        "exceptions": [],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    ],
+    "method": {
+      "name": "direct_llm",
+      "schema_source": "stage2_prediction.schema.json@1.0.0"
+    },
+    "validation": {
+      "schema_valid": true,
+      "cross_field_valid": true,
+      "errors": []
+    },
+    "unsupported_or_ambiguous": []
+  },
+  "required_semantic_intent": {
+    "modality": "definition",
+    "actor": "empty",
+    "action": "non-empty definitional predicate",
+    "condition": "empty",
+    "constraint": "empty",
+    "exception": "empty"
+  },
+  "teaches_only": [
+    "\"shall\" can occur in a definition",
+    "a definition can have no actor",
+    "a definition still receives an action"
+  ],
+  "does_not_teach": [
+    "No lexical shortcut such as shall be deemed => definition",
+    "No lexical shortcut such as shall apply => definition",
+    "No lexical shortcut such as shall be treated => definition",
+    "No condition, constraint, or exception supervision",
+    "No exact universal action-span rule"
+  ]
+}

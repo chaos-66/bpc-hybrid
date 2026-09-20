@@ -1,0 +1,194 @@
+{
+  "schema_version": "sep_c3_definition_refinement_candidate_manifest@1.0.0",
+  "candidate_family": "direct_llm_definition_refinement_candidate_v1",
+  "status": "candidate_only_not_active",
+  "active_prompt_family": "direct_llm_refinement_v1",
+  "active_registry_unchanged": true,
+  "candidate_arms": [
+    "BASE",
+    "R_DEF"
+  ],
+  "compatibility_arms": [
+    "COMPAT_R_A_R_DEF",
+    "COMPAT_R_C_R_DEF",
+    "COMPAT_R_A_R_C_R_DEF"
+  ],
+  "e4_revision": "v2",
+  "e4_replacement": {
+    "old_text": "Example E4 — definition clause followed by an obligation clause:\nInput: \"'Personal data' means information about a person; the controller must protect it.\"\n- clause 1 span [0,48): definition; evidence \"means\" [16,21); actors and actions empty\n- clause 2 span [50,81): obligation; evidence \"must\" [65,69); actor \"the controller\" [50,64), normalized \"controller\"; action \"protect it\" [70,80)\n- conditions, constraints, exceptions: empty in both clauses",
+    "new_text": "Example E4 — synthetic shall-definition (one clause):\nInput: \"A digitally signed copy shall be treated as an original document.\"\n- clause span [0,64): definition; evidence \"shall\" [24,29); actors empty; action \"be treated as an original document\" [30,64); no other field populated",
+    "new_text_sha256": "b46314fcd3305f61822467c0af70acd2c93952f21fe83e0e6abb4ea33b5e87a5",
+    "synthetic_sentence": "A digitally signed copy shall be treated as an original document.",
+    "expected_rule_record": {
+      "schema_version": "1.0.0",
+      "sample_id": "synthetic_definition_e4_v2",
+      "source_id": "synthetic_definition_e4_v2",
+      "source_text": "A digitally signed copy shall be treated as an original document.",
+      "clauses": [
+        {
+          "clause_id": "c1",
+          "clause_span": {
+            "text": "A digitally signed copy shall be treated as an original document",
+            "start": 0,
+            "end": 64
+          },
+          "modality": {
+            "label": "definition",
+            "evidence": [
+              {
+                "text": "shall",
+                "start": 24,
+                "end": 29
+              }
+            ]
+          },
+          "actors": [],
+          "actions": [
+            {
+              "id": "c1_action_1",
+              "text": "be treated as an original document",
+              "start": 30,
+              "end": 64,
+              "normalized": "be treated as an original document"
+            }
+          ],
+          "conditions": [],
+          "constraints": [],
+          "exceptions": [],
+          "actor_action_map": [],
+          "order_relations": []
+        }
+      ],
+      "method": {
+        "name": "direct_llm",
+        "schema_source": "stage2_prediction.schema.json@1.0.0"
+      },
+      "validation": {
+        "schema_valid": true,
+        "cross_field_valid": true,
+        "errors": []
+      },
+      "unsupported_or_ambiguous": []
+    }
+  },
+  "source_files": {
+    "common_system": {
+      "path": "prompts/sun_compat/modular_v1/common_system.md",
+      "sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f"
+    },
+    "common_user": {
+      "path": "prompts/sun_compat/modular_v1/user_envelope.md",
+      "sha256": "3a9f97cc9edd8393be5fece0cba1ac975678339525e6ab2f1fc93d9c5eceb338"
+    },
+    "examples_E_active": {
+      "path": "prompts/sun_compat/modular_v1/examples_E.md",
+      "sha256": "8f7ab57d337966eedf0f2955d5592c57d668623591d6d7720a1bd2169a6a61db"
+    },
+    "candidate_E_v2": {
+      "path": "prompts/sun_compat/modular_definition_refinement_v1/E_examples_E4_v2.md",
+      "sha256": "33fcbf9f69eddc1a0645bb4ef4f8cee85070fc6ed8bfe1e8c028b8bc8265d340"
+    },
+    "R_DEF": {
+      "path": "prompts/sun_compat/modular_refinement_v1/R_DEF_definition_guidance.md",
+      "sha256": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344"
+    }
+  },
+  "active_baseline": {
+    "arm_A_system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+    "arm_A_user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+    "arm_A_composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418"
+  },
+  "prompts": {
+    "BASE": {
+      "path": "prompts/sun_compat/modular_definition_refinement_v1/generated/direct_llm_definition_BASE_v1.md",
+      "markdown_sha256": "a82d7370ee8d26ad81326fadef987a9f25c7ca79a3ff88e7f35e5b3c2f262124",
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "3100c8521f3ad4a0a313293d4facdd37c92dccf8661e6021875750c58926da11",
+      "flags": {
+        "R_A": false,
+        "R_C": false,
+        "R_DEF": false
+      },
+      "source_hashes": {
+        "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+        "E_v2": "33fcbf9f69eddc1a0645bb4ef4f8cee85070fc6ed8bfe1e8c028b8bc8265d340",
+        "R_DEF": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344"
+      }
+    },
+    "R_DEF": {
+      "path": "prompts/sun_compat/modular_definition_refinement_v1/generated/direct_llm_definition_R_DEF_v1.md",
+      "markdown_sha256": "202189d5fadcf25c14ede8f12d810e11d5bfbd9fff0697b01f200bbdbe558669",
+      "system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+      "flags": {
+        "R_A": false,
+        "R_C": false,
+        "R_DEF": true
+      },
+      "source_hashes": {
+        "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+        "E_v2": "33fcbf9f69eddc1a0645bb4ef4f8cee85070fc6ed8bfe1e8c028b8bc8265d340",
+        "R_DEF": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344"
+      }
+    },
+    "COMPAT_R_A_R_DEF": {
+      "path": "prompts/sun_compat/modular_definition_refinement_v1/generated/compatibility/direct_llm_definition_COMPAT_R_A_R_DEF_v1.md",
+      "markdown_sha256": "2d27f59d3d8766a741be68d35e45544fce2b2044431efbd2e6e7f787c7ee3fcf",
+      "system_sha256": "f0f10d0b8298d63fca8cc3c3e3044c9f65d212558c28b12a6eb1dd4ae33dd495",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "2720051ae328e668cf092df0ebcad2cf7ded405bca8dfa1637466d2ac850c2bb",
+      "flags": {
+        "R_A": true,
+        "R_C": false,
+        "R_DEF": true
+      },
+      "source_hashes": {
+        "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+        "E_v2": "33fcbf9f69eddc1a0645bb4ef4f8cee85070fc6ed8bfe1e8c028b8bc8265d340",
+        "R_DEF": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344",
+        "R_A": "0d1a0b131c88394304ac22d510740694fed5069f9cc8b4b9612fd33285e789c9",
+        "R_C": "cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae"
+      }
+    },
+    "COMPAT_R_C_R_DEF": {
+      "path": "prompts/sun_compat/modular_definition_refinement_v1/generated/compatibility/direct_llm_definition_COMPAT_R_C_R_DEF_v1.md",
+      "markdown_sha256": "8ce959c39f364021dc43915d23b03e84de8e3fe6a23c843a82997630af5c4b61",
+      "system_sha256": "06b1ba52b9119cdd82e60199a4c6e30d9a70198ba4d18f820a7d42a57d2fd6d8",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "b405b2b90af43d4cafa771f4802f663cec110e491b85360360e87b56a1b06f2d",
+      "flags": {
+        "R_A": false,
+        "R_C": true,
+        "R_DEF": true
+      },
+      "source_hashes": {
+        "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+        "E_v2": "33fcbf9f69eddc1a0645bb4ef4f8cee85070fc6ed8bfe1e8c028b8bc8265d340",
+        "R_DEF": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344",
+        "R_A": "0d1a0b131c88394304ac22d510740694fed5069f9cc8b4b9612fd33285e789c9",
+        "R_C": "cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae"
+      }
+    },
+    "COMPAT_R_A_R_C_R_DEF": {
+      "path": "prompts/sun_compat/modular_definition_refinement_v1/generated/compatibility/direct_llm_definition_COMPAT_R_A_R_C_R_DEF_v1.md",
+      "markdown_sha256": "abbfad83c1c6695209f489cd18a143c89ae81d9b69388b58e5c9936583e7ec81",
+      "system_sha256": "88422ce5878b9c1dd5b8c44b98a9265e09547b52f5e28220554cc2e3eee51a59",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "2c79befaf78803bfee08405c30ae87e576cb134f208209845c85cc3d4bd55fa3",
+      "flags": {
+        "R_A": true,
+        "R_C": true,
+        "R_DEF": true
+      },
+      "source_hashes": {
+        "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+        "E_v2": "33fcbf9f69eddc1a0645bb4ef4f8cee85070fc6ed8bfe1e8c028b8bc8265d340",
+        "R_DEF": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344",
+        "R_A": "0d1a0b131c88394304ac22d510740694fed5069f9cc8b4b9612fd33285e789c9",
+        "R_C": "cfcbbc45e278ab3ad4fad8784c5a6bcc551c0b51a2e1833ac2c4e56d0571fcae"
+      }
+    }
+  }
+}
