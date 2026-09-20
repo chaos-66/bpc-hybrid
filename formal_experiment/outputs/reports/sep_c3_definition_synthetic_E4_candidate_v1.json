@@ -1,0 +1,194 @@
+{
+  "schema_version": "sep_c3_definition_synthetic_e4_candidate@1.0.0",
+  "status": "DESIGN_CANDIDATE_NOT_APPLIED",
+  "candidate_id": "definition_classification_plus_means_v1",
+  "replaces_component": {
+    "file": "prompts/sun_compat/modular_v1/examples_E.md",
+    "example_id": "E4",
+    "current_heading": "Example E4 — definition clause followed by an obligation clause"
+  },
+  "synthetic_sentence": "A jointly operated community library is classified as a single service unit for the purposes of this bylaw; 'service unit' means a facility open to the public.",
+  "example_block_markdown": "Example E4 — classification definition and explicit means definition:\nInput: \"A jointly operated community library is classified as a single service unit for the purposes of this bylaw; 'service unit' means a facility open to the public.\"\n- clause 1 span [0,106): definition; evidence \"classified as\" [40,53); actors empty; action \"is classified as a single service unit\" [37,75); constraint \"for the purposes of this bylaw\" [76,106); exceptions empty\n- clause 2 span [108,159): definition; evidence \"means\" [123,128); actors empty; action \"means a facility open to the public\" [123,158); conditions, constraints, exceptions empty",
+  "expected_rule_record": {
+    "schema_version": "1.0.0",
+    "sample_id": "synthetic_definition_e4_candidate",
+    "source_id": "synthetic_definition_e4_candidate",
+    "source_text": "A jointly operated community library is classified as a single service unit for the purposes of this bylaw; 'service unit' means a facility open to the public.",
+    "clauses": [
+      {
+        "clause_id": "c1",
+        "clause_span": {
+          "text": "A jointly operated community library is classified as a single service unit for the purposes of this bylaw",
+          "start": 0,
+          "end": 106
+        },
+        "modality": {
+          "label": "definition",
+          "evidence": [
+            {
+              "text": "classified as",
+              "start": 40,
+              "end": 53
+            }
+          ]
+        },
+        "actors": [],
+        "actions": [
+          {
+            "id": "c1_action_1",
+            "text": "is classified as a single service unit",
+            "start": 37,
+            "end": 75,
+            "normalized": "is classified as a single service unit"
+          }
+        ],
+        "conditions": [],
+        "constraints": [
+          {
+            "id": "c1_constraint_1",
+            "text": "for the purposes of this bylaw",
+            "start": 76,
+            "end": 106,
+            "normalized": "for the purposes of this bylaw"
+          }
+        ],
+        "exceptions": [],
+        "actor_action_map": [],
+        "order_relations": []
+      },
+      {
+        "clause_id": "c2",
+        "clause_span": {
+          "text": "'service unit' means a facility open to the public.",
+          "start": 108,
+          "end": 159
+        },
+        "modality": {
+          "label": "definition",
+          "evidence": [
+            {
+              "text": "means",
+              "start": 123,
+              "end": 128
+            }
+          ]
+        },
+        "actors": [],
+        "actions": [
+          {
+            "id": "c2_action_1",
+            "text": "means a facility open to the public",
+            "start": 123,
+            "end": 158,
+            "normalized": "means a facility open to the public"
+          }
+        ],
+        "conditions": [],
+        "constraints": [],
+        "exceptions": [],
+        "actor_action_map": [],
+        "order_relations": []
+      }
+    ],
+    "method": {
+      "name": "direct_llm",
+      "schema_source": "stage2_prediction.schema.json@1.0.0"
+    },
+    "validation": {
+      "schema_valid": true,
+      "cross_field_valid": true,
+      "errors": []
+    },
+    "unsupported_or_ambiguous": []
+  },
+  "field_by_field_justification": [
+    {
+      "field": "c1 modality",
+      "value": "definition",
+      "reason": "The first clause establishes a classification/characterization, not required conduct."
+    },
+    {
+      "field": "c1 evidence",
+      "value": "classified as [40,53)",
+      "reason": "Smallest sufficient definitional-classification predicate; illustrative, not a deterministic trigger."
+    },
+    {
+      "field": "c1 actors",
+      "value": [],
+      "reason": "No duty bearer or performer is asserted; the classified library is the topic, not an actor. This aligns with 37/39 Gold definition clauses having empty actors."
+    },
+    {
+      "field": "c1 actions",
+      "value": "is classified as a single service unit [37,75)",
+      "reason": "Non-empty definitional predicate, directly repairing the old E4 empty action. Presence is supported by 39/39 Gold definition clauses."
+    },
+    {
+      "field": "c1 conditions",
+      "value": [],
+      "reason": "No antecedent event/state activates the classification."
+    },
+    {
+      "field": "c1 constraints",
+      "value": "for the purposes of this bylaw [76,106)",
+      "reason": "A natural purpose/scope limit on the definitional predicate; included because it is semantic, not to fill a quota."
+    },
+    {
+      "field": "c1 exceptions",
+      "value": [],
+      "reason": "No case is removed from the classification."
+    },
+    {
+      "field": "c2 modality",
+      "value": "definition",
+      "reason": "The second clause explicitly equates a term with its meaning."
+    },
+    {
+      "field": "c2 evidence",
+      "value": "means [123,128)",
+      "reason": "Explicit definition marker; retained to keep the narrow but valid old-E4 evidence coverage."
+    },
+    {
+      "field": "c2 actors",
+      "value": [],
+      "reason": "No duty bearer; term being defined is not an actor."
+    },
+    {
+      "field": "c2 actions",
+      "value": "means a facility open to the public [123,158)",
+      "reason": "Non-empty definitional predicate including necessary complement."
+    },
+    {
+      "field": "c2 conditions/constraints/exceptions",
+      "value": [],
+      "reason": "None are present; not all fields are filled artificially."
+    }
+  ],
+  "improvement_over_old_e4": [
+    "The old E4 taught an empty definition action; every definition clause in this candidate has a non-empty action.",
+    "The old E4 demonstrated only explicit 'means'; the candidate adds a non-'means' classification definition.",
+    "The candidate retains one explicit 'means' clause, so the valid narrow means evidence is not lost.",
+    "The candidate adds a natural purpose/scope constraint, improving representativeness without making every field non-empty.",
+    "The candidate remains synthetic and contains no EStG wording or sample ID."
+  ],
+  "does_not_teach": [
+    "No deterministic rule that 'classified as', 'means', or any other phrase always signals definition.",
+    "No resolution of the ambiguous apply/applies family or the shall-be-assumed / shall-be-determined pairs.",
+    "No rule that all stative, copular, or relational clauses are definitions.",
+    "No exact universal action-complement or condition/constraint boundary rule; the constraint boundary is only this sentence's evidence.",
+    "No actor-action-map or order-relation generalization.",
+    "No condition or exception pattern.",
+    "No deontic obligation example; other E examples already cover obligation, permission, and prohibition."
+  ],
+  "invariants": {
+    "synthetic_sentence_contains_estg_id": false,
+    "all_definition_clauses_have_nonempty_action": true,
+    "all_spans_match_source_text": true,
+    "all_child_spans_within_clause_span": true,
+    "action_count_total": 2,
+    "clause_count": 2,
+    "modality_labels": [
+      "definition",
+      "definition"
+    ]
+  }
+}
