@@ -1,0 +1,77 @@
+{
+  "schema_version": "sep_c3_definition_targeted_authorization_request@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-TARGETED-REFINEMENT-001",
+  "scope": "SEP-C3-DEFINITION-TARGETED-REFINEMENT-001",
+  "provider": "openai_compatible",
+  "model": "deepseek-v4-pro",
+  "documented_release": "DeepSeek-V4-Pro-0813",
+  "arms": {
+    "A": {
+      "new_calls": 0,
+      "source": "historical predictions reused read-only"
+    },
+    "BASE": {
+      "new_calls": 42
+    },
+    "R_DEF": {
+      "new_calls": 42
+    }
+  },
+  "unique_panel_samples_N": 42,
+  "new_calls": 84,
+  "retry": 0,
+  "off_peak_only": false,
+  "model_sampling": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null
+  },
+  "expected_input_tokens": 148341,
+  "max_input_tokens_estimate_per_call": 2175,
+  "input_token_cap": 296682,
+  "max_output_tokens_per_call": 4096,
+  "total_output_token_cap": 344064,
+  "peak_estimated_usd": 1.55830356,
+  "usd_cap": 1.75411368,
+  "rmb_cap_at_7_2": 12.63,
+  "price_snapshot": {
+    "currency": "USD",
+    "mode_used_for_gate": "peak_conservative",
+    "input_cache_miss_per_million": 1.32,
+    "output_per_million": 3.96,
+    "source_url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "verified_at_utc": "2026-08-30T00:00:00Z",
+    "note": "Reuses the frozen SEP-C3 project price snapshot; no online re-check."
+  },
+  "panel_sha256": "8ba4517f21402566d61364e86a5516e0ea89f1f82a32781b303eb7a53d97ec61",
+  "schedule_sha256": "ed4b12fe5de27ae9611759e0aedb292cfa633bc853b07df867e3fb4291aa355a",
+  "budget_sha256": "d135873ea3446a6093525ed0168f9e815f5435baeffec5417ccc38a31a58d909",
+  "evaluation_contract_sha256": "f7a21dccdfffbe7fe6141f520be93ba834b177489334a63d6bd7aeb8a416f2f2",
+  "request_set_sha256": "07be211b338764280daabfcc6189d236d31ebefa0bf846c065895f91443c8d39",
+  "prompt_hashes": {
+    "BASE": {
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "3100c8521f3ad4a0a313293d4facdd37c92dccf8661e6021875750c58926da11"
+    },
+    "R_DEF": {
+      "system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07"
+    }
+  },
+  "leakage_audit_status": "BLOCKED_STRICT_LEAKAGE_CHECK",
+  "leakage_blocking_checks": [
+    "strict_no_concrete_sample_id_in_rendered_model_prompt"
+  ],
+  "suggested_authorization_sentence": "I authorize exactly 84 real API calls for SEP-C3-DEFINITION-TARGETED-REFINEMENT-001, using openai_compatible/deepseek-v4-pro with retry=0, on the 42 frozen panel samples for BASE=42 and R_DEF=42, with input cap 296682, output cap 344064, USD cap 1.75411368, panel SHA-256 8ba4517f21402566d61364e86a5516e0ea89f1f82a32781b303eb7a53d97ec61, schedule SHA-256 ed4b12fe5de27ae9611759e0aedb292cfa633bc853b07df867e3fb4291aa355a, and request-set SHA-256 07be211b338764280daabfcc6189d236d31ebefa0bf846c065895f91443c8d39.",
+  "execution_command": "cd formal_experiment && python scripts/run_sep_c3_definition_targeted_refinement_v1.py --execute --allow-llm --authorization outputs/reports/sep_c3_definition_targeted_authorization_request_v1.json",
+  "decision": "BLOCKED_NO_MATCHING_AUTHORIZATION",
+  "authorization_status": "NOT_AUTHORIZED",
+  "leakage_residual_note": "The frozen active user envelope echoes the input sample_id and source_id because the Stage-2 output schema requires them.  This does not add Gold labels or spans, but it is a strict reading residual relative to a literal no-sample-id-in-prompt statement.  Resolve explicitly before execution if that strict reading controls."
+}

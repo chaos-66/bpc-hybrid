@@ -1,0 +1,133 @@
+{
+  "schema_version": "sep_c3_definition_targeted_evaluation_contract@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-TARGETED-REFINEMENT-001",
+  "status": "FROZEN_BEFORE_NEW_API",
+  "panel_path": "configs/sep_c3_definition_targeted_panel_v1.json",
+  "panel_sha256": "8ba4517f21402566d61364e86a5516e0ea89f1f82a32781b303eb7a53d97ec61",
+  "api_input_unit": "sample_id",
+  "gold_read_timing": "after_predictions_are_frozen_and_hashed",
+  "evaluation_units": {
+    "primary_targeted_clause_set": {
+      "rule": "unique union of A/B/C/D selected clauses",
+      "clause_count": 45,
+      "definition_count": 25,
+      "non_definition_count": 20
+    },
+    "definition_action_presence_set": {
+      "rule": "unique targeted clauses whose Gold modality is definition",
+      "clause_count": 25
+    },
+    "all_clauses_in_selected_samples_diagnostic": {
+      "rule": "all Gold clauses belonging to the 42 selected samples",
+      "clause_count": 83
+    }
+  },
+  "slice_metrics": {
+    "A_shall_definition": {
+      "clause_count": 15,
+      "metrics": [
+        "accuracy",
+        "definition_recall",
+        "corrected_relative_to_A_count",
+        "regressed_relative_to_A_count"
+      ]
+    },
+    "B_non_definition_shall_controls": {
+      "clause_count": 15,
+      "metrics": [
+        "modality_accuracy",
+        "false_definition_count",
+        "false_definition_rate",
+        "per_gold_label_breakdown"
+      ]
+    },
+    "C_apply_applies_stress": {
+      "clause_count": 12,
+      "metrics": [
+        "per_case_A_BASE_R_DEF_prediction",
+        "aggregate_descriptive_counts_only",
+        "NEEDS_GOLD_ADJUDICATION_retained"
+      ]
+    },
+    "D_non_shall_definition_controls": {
+      "clause_count": 6,
+      "metrics": [
+        "modality_accuracy",
+        "definition_recall",
+        "action_presence"
+      ]
+    }
+  },
+  "primary_targeted_metrics": {
+    "modality": [
+      "modality_accuracy_on_targeted_clause_set",
+      "definition_precision",
+      "definition_recall",
+      "definition_f1",
+      "confusion_definition_to_obligation_count",
+      "confusion_obligation_to_definition_count",
+      "confusion_prohibition_to_definition_count",
+      "confusion_permission_to_definition_count"
+    ],
+    "shall_definition": [
+      "accuracy_on_all_15_shall_definition_clauses",
+      "definition_recall_on_all_15_shall_definition_clauses",
+      "numbered_corrected_relative_to_A",
+      "numbered_regressed_relative_to_A"
+    ],
+    "non_definition_shall_controls": [
+      "modality_accuracy_on_15_controls",
+      "false_definition_count",
+      "false_definition_rate",
+      "per_label_breakdown"
+    ],
+    "apply_applies_stress": [
+      "per_case_A_BASE_R_DEF_predictions",
+      "aggregate_descriptive_counts_only"
+    ],
+    "definition_action_presence": [
+      "fraction_of_Gold_definition_clauses_with_at_least_one_predicted_action",
+      "empty_action_count",
+      "diagnostic_action_span_f1"
+    ]
+  },
+  "secondary_diagnostics": [
+    "actor/action/condition/constraint/exception field F1",
+    "five-field micro-F1 if supported by frozen evaluator",
+    "parse/schema validity",
+    "prediction_count",
+    "output_validation_failures"
+  ],
+  "arithmetic_rules": [
+    "Do not average modality accuracy and span-field F1.",
+    "Do not make significance claims from this targeted development run."
+  ],
+  "ambiguity_policy": {
+    "apply_applies_family_status": "NEEDS_GOLD_ADJUDICATION",
+    "no_lexical_apply_to_definition_rule": true,
+    "gold_inconsistency_cases": [
+      {
+        "sample_id": "estg_000505",
+        "clause_id": "c2",
+        "text": "in this respect, a monthly wage payment period shall be assumed",
+        "modality": "obligation",
+        "in_panel": false,
+        "status": "POTENTIAL_GOLD_INCONSISTENCY"
+      },
+      {
+        "sample_id": "estg_000509",
+        "clause_id": "c2",
+        "text": "for this purpose, a monthly wage payment period shall be assumed.",
+        "modality": "definition",
+        "in_panel": true,
+        "status": "POTENTIAL_GOLD_INCONSISTENCY"
+      }
+    ],
+    "case_handling": "Keep frozen Gold exactly as annotated; report cases in the main frozen evaluation and in a separate ambiguity diagnostic; do not tune the prompt to these cases."
+  },
+  "leakage_policy": {
+    "gold_labels_or_spans_in_inference_requests": false,
+    "panel_membership_frozen_before_outputs": true,
+    "evaluation_reads_gold_only_after_predictions_fixed": true
+  }
+}

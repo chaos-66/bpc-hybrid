@@ -1,0 +1,22 @@
+{
+  "schema_version": "sep_c3_definition_targeted_request_manifest@1.0.0",
+  "status": "FROZEN_OFFLINE_CAPSULE_NOT_SENT",
+  "suite_id": "SEP-C3-DEFINITION-TARGETED-REFINEMENT-001",
+  "panel_path": "configs/sep_c3_definition_targeted_panel_v1.json",
+  "panel_sha256": "8ba4517f21402566d61364e86a5516e0ea89f1f82a32781b303eb7a53d97ec61",
+  "schedule_path": "configs/sep_c3_definition_targeted_schedule_v1.json",
+  "schedule_sha256": "ed4b12fe5de27ae9611759e0aedb292cfa633bc853b07df867e3fb4291aa355a",
+  "offline_requests_path": "outputs/evidence/sep_c3_definition_targeted_refinement_v1/offline_requests.jsonl",
+  "offline_requests_sha256": "8f4c016eb84fb780c5128b5c7bf7ba13e21033dd275c8c443cc50812d63a8c55",
+  "request_count": 84,
+  "requests_per_arm": {
+    "BASE": 42,
+    "R_DEF": 42
+  },
+  "estimated_input_tokens": 148341,
+  "estimated_input_tokens_per_arm": {
+    "BASE": 67549,
+    "R_DEF": 80792
+  },
+  "max_input_tokens_estimate_per_call": 2175
+}

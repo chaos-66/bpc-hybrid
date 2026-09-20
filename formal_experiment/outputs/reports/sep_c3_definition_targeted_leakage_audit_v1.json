@@ -1,0 +1,102 @@
+{
+  "schema_version": "sep_c3_definition_targeted_leakage_audit@1.0.0",
+  "status": "BLOCKED_STRICT_LEAKAGE_CHECK",
+  "api_calls": 0,
+  "panel_status": "FROZEN_BEFORE_NEW_API",
+  "checked_assets": {
+    "panel_path": "configs/sep_c3_definition_targeted_panel_v1.json",
+    "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "input_path": "data/input/estg150_formal_inference_input_v2.json",
+    "offline_requests_path": "outputs/evidence/sep_c3_definition_targeted_refinement_v1/offline_requests.jsonl",
+    "r_def_sha256": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344",
+    "candidate_e4_v2_sentence": "A digitally signed copy shall be treated as an original document."
+  },
+  "checks": {
+    "r_def_no_full_estg_sample_or_clause_text": {
+      "status": "pass",
+      "hit_count": 0,
+      "hits": []
+    },
+    "r_def_no_long_estg_shingles": {
+      "status": "pass",
+      "clause_10gram_overlap": {
+        "shingle_size_words": 10,
+        "shared_shingle_count": 0,
+        "sample_id": null,
+        "status": "pass"
+      },
+      "sample_12gram_overlap": {
+        "shingle_size_words": 12,
+        "shared_shingle_count": 0,
+        "sample_id": null,
+        "status": "pass"
+      }
+    },
+    "synthetic_e4_not_copied_from_estg": {
+      "status": "pass",
+      "exact_sample_hits": [],
+      "clause_8gram_overlap": {
+        "shingle_size_words": 8,
+        "shared_shingle_count": 0,
+        "sample_id": null,
+        "status": "pass"
+      }
+    },
+    "no_concrete_sample_id_in_prompt_templates": {
+      "status": "pass",
+      "matches": []
+    },
+    "offline_requests_no_gold_ids_or_annotations": {
+      "status": "pass",
+      "request_count": 84,
+      "concrete_sample_id_match_count": 42,
+      "concrete_sample_id_examples": [
+        "estg_000037",
+        "estg_000056",
+        "estg_000059",
+        "estg_000071",
+        "estg_000075",
+        "estg_000080",
+        "estg_000083",
+        "estg_000087",
+        "estg_000103",
+        "estg_000128"
+      ],
+      "gold_clause_id_match_count": 0,
+      "gold_span_id_match_count": 0,
+      "request_schema_errors": [],
+      "note": "The request bodies necessarily contain the frozen input source_text; this check looks for Gold annotation identifiers and schema escapes, not for the input text itself."
+    },
+    "strict_no_concrete_sample_id_in_rendered_model_prompt": {
+      "status": "fail",
+      "detail": "The frozen active user envelope renders the input sample_id and source_id because the output schema requires them to be echoed.  This is a contract-required input identifier, not a Gold label or span, but it does not satisfy a literal no-sample-id-in-prompt reading.",
+      "sample_id_match_count": 42,
+      "sample_id_examples": [
+        "estg_000037",
+        "estg_000056",
+        "estg_000059",
+        "estg_000071",
+        "estg_000075",
+        "estg_000080",
+        "estg_000083",
+        "estg_000087",
+        "estg_000103",
+        "estg_000128"
+      ]
+    },
+    "panel_frozen_before_model_output": {
+      "status": "pass",
+      "panel_status": "FROZEN_BEFORE_NEW_API",
+      "existing_prediction_files": []
+    },
+    "evaluation_reads_gold_after_predictions_frozen": {
+      "status": "pass",
+      "detail": "declared"
+    }
+  },
+  "blocking_checks": [
+    "strict_no_concrete_sample_id_in_rendered_model_prompt"
+  ],
+  "warnings": [],
+  "authorization_implication": "Do not authorize real calls while any check has status fail. The only strict fail expected from the frozen active envelope is the input sample_id echo required by the output schema; resolve that contract question before treating this panel as fully leakage-cleared."
+}

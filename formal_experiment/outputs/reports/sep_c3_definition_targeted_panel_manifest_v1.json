@@ -1,0 +1,71 @@
+{
+  "schema_version": "sep_c3_definition_targeted_panel_manifest@1.0.0",
+  "status": "FROZEN_BEFORE_NEW_API",
+  "panel_path": "configs/sep_c3_definition_targeted_panel_v1.json",
+  "panel_sha256": "8ba4517f21402566d61364e86a5516e0ea89f1f82a32781b303eb7a53d97ec61",
+  "panel_canonical_payload_sha256": "9d48561880eb73de17976487a71cb1db817a1b2cd69694e2a870043ce77d0752",
+  "panel_manifest_path": "outputs/reports/sep_c3_definition_targeted_panel_manifest_v1.json",
+  "api_calls": 0,
+  "new_api_authorized": false,
+  "source_bindings": {
+    "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+    "input_path": "data/input/estg150_formal_inference_input_v2.json",
+    "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "input_record_count": 150,
+    "gold_record_count": 150,
+    "active_registry_path": "configs/models/estg150_d1_active_registry_v1.json",
+    "active_registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+    "active_prompt_manifest_path": "prompts/sun_compat/modular_refinement_v1/generated/manifest.json",
+    "active_prompt_manifest_sha256": "3d9ceb897b0582bf862a7d4c9ca130b07533a37c272e59b37c7323bededc9414"
+  },
+  "prompt_hashes": {
+    "A": {
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418",
+      "markdown_sha256": "d24c0c0d5150dd6382260f91614cc6d475ecdb68efb2cfe8d48347272d74a580"
+    },
+    "BASE": {
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "3100c8521f3ad4a0a313293d4facdd37c92dccf8661e6021875750c58926da11",
+      "markdown_sha256": "a82d7370ee8d26ad81326fadef987a9f25c7ca79a3ff88e7f35e5b3c2f262124"
+    },
+    "R_DEF": {
+      "system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+      "markdown_sha256": "202189d5fadcf25c14ede8f12d810e11d5bfbd9fff0697b01f200bbdbe558669"
+    }
+  },
+  "panel_accounting": {
+    "unique_sample_count_N": 42,
+    "unique_selected_clause_count": 45,
+    "sum_of_slice_clause_counts_before_dedup": 48,
+    "definition_case_count": 25,
+    "non_definition_case_count": 20,
+    "unique_selected_modality_distribution": {
+      "definition": 25,
+      "obligation": 10,
+      "permission": 4,
+      "prohibition": 6
+    },
+    "all_clauses_in_selected_samples": 83,
+    "all_clauses_in_selected_samples_modality_distribution": {
+      "definition": 28,
+      "obligation": 34,
+      "permission": 13,
+      "prohibition": 8
+    },
+    "expected_api_calls": {
+      "A_existing_read_only": 0,
+      "BASE": 42,
+      "R_DEF": 42,
+      "total_new": 84
+    }
+  },
+  "selection_rules_sha256": "33b3b13e35a74a55ccc6107864c810fa95a156e50ac38d515fdbfbb93488c0c0",
+  "selected_sample_ids_sha256": "0b738223a2e171660a231aaf468fa4affd13c7b90fb0f960f3eb3a611aba73ed",
+  "selected_clauses_sha256": "729eb5b0f67f392a515b42b9cb9fdeafe826566292859289f640e9956c87095b"
+}

@@ -1,0 +1,903 @@
+{
+  "schema_version": "sep_c3_definition_targeted_panel@1.0.0",
+  "status": "FROZEN_BEFORE_NEW_API",
+  "freeze_scope": "targeted_prompt_development_panel_not_formal_test_set",
+  "purpose": [
+    "Does replacing the conflicting E4 improve definition handling?",
+    "Does R_DEF provide additional improvement beyond E4 replacement?",
+    "Do either changes incorrectly convert ordinary deontic shall clauses into definitions?",
+    "Does the refinement improve action presence for definition clauses?",
+    "What happens on ambiguous apply/applies cases?"
+  ],
+  "source_bindings": {
+    "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+    "input_path": "data/input/estg150_formal_inference_input_v2.json",
+    "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "input_record_count": 150,
+    "gold_record_count": 150,
+    "active_registry_path": "configs/models/estg150_d1_active_registry_v1.json",
+    "active_registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+    "active_prompt_manifest_path": "prompts/sun_compat/modular_refinement_v1/generated/manifest.json",
+    "active_prompt_manifest_sha256": "3d9ceb897b0582bf862a7d4c9ca130b07533a37c272e59b37c7323bededc9414"
+  },
+  "api_input_unit": "sample_id",
+  "deduplication": {
+    "unit": "sample_id",
+    "rule": "A sample is included once if any selected target clause lies in it.  Slice tags are retained per unique clause.  The API request unit is the whole frozen input sample."
+  },
+  "selection_rules": {
+    "A_shall_definition": "ALL Gold clauses with modality=definition and clause_span.text matching the case-insensitive word-boundary regex \\\\bshall\\\\b.",
+    "B_non_definition_shall_controls": "Start from all Gold clauses with modality in {obligation,prohibition,permission} whose clause_span.text matches \\bshall\\b. Include ALL prohibition and permission controls. Fill the remaining 6 slots with obligation controls sorted by SHA-256 of the UTF-8 string '<sample_id>|<clause_id>' ascending, taking the first 6. Finally sort the selected controls by sample_id, clause_id.",
+    "C_apply_applies_stress": "ALL Gold clauses with clause_span.text matching the case-insensitive regex \\bapply\\b|\\bapplies\\b.",
+    "D_non_shall_definition_controls": "Start from all Gold definition clauses whose clause_span.text does not match \\bshall\\b. Sort by SHA-256 of the UTF-8 string '<sample_id>|<clause_id>' ascending; take the first 6."
+  },
+  "gold_total_counts": {
+    "clauses": 231,
+    "samples": 150,
+    "modality_counts": {
+      "definition": 39,
+      "obligation": 97,
+      "permission": 62,
+      "prohibition": 33
+    },
+    "definition_clauses": 39,
+    "shall_definition_clauses": 15,
+    "non_definition_shall_clauses": 73
+  },
+  "slice_summary": {
+    "A_shall_definition": {
+      "clause_count": 15,
+      "unique_clause_count": 15,
+      "sample_count": 15,
+      "modality_counts": {
+        "definition": 15
+      }
+    },
+    "B_non_definition_shall_controls": {
+      "clause_count": 15,
+      "unique_clause_count": 15,
+      "sample_count": 14,
+      "modality_counts": {
+        "obligation": 6,
+        "permission": 3,
+        "prohibition": 6
+      }
+    },
+    "C_apply_applies_stress": {
+      "clause_count": 12,
+      "unique_clause_count": 12,
+      "sample_count": 12,
+      "modality_counts": {
+        "definition": 7,
+        "obligation": 4,
+        "permission": 1
+      }
+    },
+    "D_non_shall_definition_controls": {
+      "clause_count": 6,
+      "unique_clause_count": 6,
+      "sample_count": 6,
+      "modality_counts": {
+        "definition": 6
+      }
+    }
+  },
+  "pairwise_sample_overlap": {
+    "A&B": 0,
+    "A&B&C&D": 0,
+    "A&C": 2,
+    "A&D": 0,
+    "B&C": 0,
+    "B&D": 0,
+    "C&D": 3
+  },
+  "pairwise_unique_clause_overlap": {
+    "A&B": 0,
+    "A&B&C&D": 0,
+    "A&C": 1,
+    "A&D": 0,
+    "B&C": 0,
+    "B&D": 0,
+    "C&D": 2
+  },
+  "clause_keys_in_multiple_slices": [
+    {
+      "sample_id": "estg_000209",
+      "clause_id": "c2",
+      "slices": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "sample_id": "estg_000218",
+      "clause_id": "c1",
+      "slices": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "sample_id": "estg_000664",
+      "clause_id": "c1",
+      "slices": [
+        "A",
+        "C"
+      ]
+    }
+  ],
+  "panel_accounting": {
+    "unique_sample_count_N": 42,
+    "unique_selected_clause_count": 45,
+    "sum_of_slice_clause_counts_before_dedup": 48,
+    "definition_case_count": 25,
+    "non_definition_case_count": 20,
+    "unique_selected_modality_distribution": {
+      "definition": 25,
+      "obligation": 10,
+      "permission": 4,
+      "prohibition": 6
+    },
+    "all_clauses_in_selected_samples": 83,
+    "all_clauses_in_selected_samples_modality_distribution": {
+      "definition": 28,
+      "obligation": 34,
+      "permission": 13,
+      "prohibition": 8
+    },
+    "expected_api_calls": {
+      "A_existing_read_only": 0,
+      "BASE": 42,
+      "R_DEF": 42,
+      "total_new": 84
+    }
+  },
+  "prompt_hashes": {
+    "A": {
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "fb92bd110d33c22208f36816139871b6ec4f0f818e6fd731c60c5c321510abfb",
+      "composition_sha256": "f41d903bb86f8199499f3eb95d19042a5c321a5a06be3c38a0a04a8bfd8d2418",
+      "markdown_sha256": "d24c0c0d5150dd6382260f91614cc6d475ecdb68efb2cfe8d48347272d74a580"
+    },
+    "BASE": {
+      "system_sha256": "9db8893c75af4c306f5f5142ea77b6c93b6a2bae79a72ba8dd0f2b3ca1985d4f",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "3100c8521f3ad4a0a313293d4facdd37c92dccf8661e6021875750c58926da11",
+      "markdown_sha256": "a82d7370ee8d26ad81326fadef987a9f25c7ca79a3ff88e7f35e5b3c2f262124"
+    },
+    "R_DEF": {
+      "system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+      "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+      "composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+      "markdown_sha256": "202189d5fadcf25c14ede8f12d810e11d5bfbd9fff0697b01f200bbdbe558669"
+    }
+  },
+  "selected_sample_ids": [
+    "estg_000037",
+    "estg_000056",
+    "estg_000059",
+    "estg_000071",
+    "estg_000075",
+    "estg_000080",
+    "estg_000083",
+    "estg_000087",
+    "estg_000103",
+    "estg_000128",
+    "estg_000130",
+    "estg_000131",
+    "estg_000136",
+    "estg_000145",
+    "estg_000164",
+    "estg_000195",
+    "estg_000206",
+    "estg_000208",
+    "estg_000209",
+    "estg_000218",
+    "estg_000222",
+    "estg_000223",
+    "estg_000245",
+    "estg_000273",
+    "estg_000293",
+    "estg_000302",
+    "estg_000306",
+    "estg_000414",
+    "estg_000417",
+    "estg_000509",
+    "estg_000522",
+    "estg_000546",
+    "estg_000572",
+    "estg_000599",
+    "estg_000635",
+    "estg_000659",
+    "estg_000664",
+    "estg_000716",
+    "estg_000773",
+    "estg_000776",
+    "estg_000800",
+    "estg_000854"
+  ],
+  "selected_clauses": [
+    {
+      "sample_id": "estg_000037",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "In any event, business expenses shall include:\n1. a) contributions by the insured person to compulsory insurance in the statutory health, accident and pension insurance, and\nb) compulsory contributions to welfare and support institutions of the chambers of self-employed persons, to the extent that these institutions serve health, old-age, invalidity and survivors’ provision.\n2. a) contributions to pension funds subject to the following conditions:\naa) the fund must be subject to state supervision;\nbb) the fund must grant a legal entitlement to benefits for the purpose of old-age and survivors’ provision",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000056",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "(7) For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise, the following shall apply with regard to repair expenses:",
+      "slices": [
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000059",
+      "clause_id": "c1",
+      "modality": "permission",
+      "text": "(9) Contributions for voluntary membership in professional and trade associations shall be deductible only under the following conditions:",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000071",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "For registered traders, Item 13 applies",
+      "slices": [
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000075",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "If business assets of a business (permanent establishment) located in Austria are transferred abroad to another business (permanent establishment), the business assets transferred abroad shall be measured at the values that would have been applied in the case of a supply or other service to a business entirely independent of the taxpayer, if\n\n— the foreign business belongs to the same taxpayer,\n— the taxpayer is a co-entrepreneur of the foreign business,\n— the taxpayer holds a substantial interest, i.e. more than 25%, in the foreign corporation, or\n— the same persons exercise management or control over both businesses or have influence on them.",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000080",
+      "clause_id": "c4",
+      "modality": "definition",
+      "text": "If, for business reasons, individual assets are transferred free of charge into the business assets of another taxpayer, the amount that the recipient would have had to pay for the individual asset at the time of receipt shall be deemed as the acquisition cost (deemed acquisition cost).",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000083",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972",
+      "slices": [
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000083",
+      "clause_id": "c2",
+      "modality": "definition",
+      "text": "in this case, the additional amounts shall be treated as business income and the reduced amounts as business expenses.",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000087",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "In the exchange of shares in a company or cooperative, no exchange shall be deemed to exist if the exchange takes place on the basis of a merger that does not result in liquidation taxation.",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000103",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "If this list was not submitted to the tax office with the tax return, but it appears from the return or the annexes attached thereto that the taxpayer is forming a tax-exempt amount, the tax office shall set the taxpayer a grace period of two weeks for submission of the list",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000128",
+      "clause_id": "c2",
+      "modality": "obligation",
+      "text": "Section 10(2) last sentence shall apply.",
+      "slices": [
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000130",
+      "clause_id": "c1",
+      "modality": "permission",
+      "text": "(3) A transfer to tangible assets shall only be permissible if the hidden reserves also originate from the sale of tangible assets",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000131",
+      "clause_id": "c1",
+      "modality": "permission",
+      "text": "In the case of participations, a transfer shall only be permissible to participations in corporations, acquisition and economic cooperatives, or as a silent partner, and, furthermore, only if the management or the registered office is located in the domestic territory",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000136",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "The assets to which the reserves (tax-free amounts) may be transferred shall be determined by the assets in respect of which the hidden reserves were disclosed (paragraph 3)",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000145",
+      "clause_id": "c1",
+      "modality": "permission",
+      "text": "(6) Taxpayers who determine their profit in accordance with Section 4(3) may apply in the tax return for an amount to be left tax-free for the notional severance pay claims existing at the end of the business year",
+      "slices": [
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000164",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "For the consideration of these expenses, the following applies:",
+      "slices": [
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000195",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "Likewise, it is irrelevant whether the housing applicant has a claim to full reimbursement of the amount in the event of his withdrawal by the end of the eight-year commitment period or not",
+      "slices": [
+        "D"
+      ]
+    },
+    {
+      "sample_id": "estg_000206",
+      "clause_id": "c3",
+      "modality": "prohibition",
+      "text": "If the taxpayer has claimed the increased amount for a child for special expenses within the meaning of paragraph 1 items 2 to 4, with the exception of contributions for voluntary continued insurance in the statutory pension insurance and comparable contributions to pension and support institutions of the chambers of self-employed persons, the spouse shall not be entitled to an increased amount for that child",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000208",
+      "clause_id": "c2",
+      "modality": "obligation",
+      "text": "Subsection (1)(3) shall also apply if, within the group of persons referred to in point 1, the lender or loan debtor on the one hand and the developer (owner) or housing applicant (beneficiary, tenant) on the other hand are not identical",
+      "slices": [
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000208",
+      "clause_id": "c4",
+      "modality": "definition",
+      "text": "which are newly issued in the course of a capital increase for cash payment with immediate full payment of the issue amount (par value and premium) and which, in the course of an ordinary or authorised capital increase, are acquired within three months of the entry of the implementation of the increase of the share capital in the commercial register, or where, in the course of a contingent capital increase, the exercise of the irrevocable subscription right is declared",
+      "slices": [
+        "D"
+      ]
+    },
+    {
+      "sample_id": "estg_000209",
+      "clause_id": "c2",
+      "modality": "definition",
+      "text": "this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette)",
+      "slices": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "sample_id": "estg_000218",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "In the case of a reduction in deductible insurance premiums (Section 1(2), last sentence), the notification obligation does not apply if the refunded amounts are offset against future insurance premiums",
+      "slices": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "sample_id": "estg_000222",
+      "clause_id": "c1",
+      "modality": "prohibition",
+      "text": "No subsequent taxation shall take place if the taxpayer has died in the meantime",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000223",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "A recapture of tax on expenses for the acquisition of participation certificates and new shares (paragraph (1) subparagraph 4) shall be effected if the participation certificates or shares are removed from the deposit or withdrawn, transferred for consideration or gratuitously, or transferred to business assets before the expiry of ten years from their deposit",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000245",
+      "clause_id": "c1",
+      "modality": "prohibition",
+      "text": "(2) Furthermore, in determining income, expenses and expenditures shall not be deducted to the extent that they are directly economically connected with non-taxable receipts",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000273",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "(1) Income from employment (wages) is: \n1. a) emoluments and benefits from an existing or former employment relationship. \nb) emoluments and benefits of persons who are not substantially interested in corporations within the meaning of Section 22 no. 2, even if, in the case of an employment which otherwise exhibits all the characteristics of an employment relationship (Section 47(2)), the obligation to follow the instructions of another is absent on the basis of a special provision in the articles of association. \nc) emoluments from a statutory sickness or accident insurance. \nd) emoluments from a foreign statutory sickness or accident insurance which corresponds to a domestic sickness or accident insurance. \ne) sickness benefits from the welfare and support institutions of the chambers of self-employed persons.",
+      "slices": [
+        "D"
+      ]
+    },
+    {
+      "sample_id": "estg_000293",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "(1) The following income shall constitute income from capital, to the extent that it does not fall within the income categories referred to in Section 2(1) to (4): 1. a) profit shares (dividends), interest and other distributions from shares or interests in limited liability companies; b) similar distributions and patronage refunds from interests in commercial and industrial cooperatives, excluding those under Section 13 of the Corporate Income Tax Act 1988; c) similar distributions from profit participation rights and from participation capital within the meaning of the Banking Act or the Insurance Supervision Act.",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000302",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "(1) The following income shall, to the extent it does not constitute income within the meaning of Section 2(3) items 1 to 5, be income from letting and leasing:",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000306",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "For buildings serving residential purposes, the following applies with respect to repair and maintenance expenses",
+      "slices": [
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000414",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "(3) If neither an assessment under Section 39 nor under Section 41 takes place, the income tax attributable to income subject to withholding tax shall be deemed discharged for the taxpayer if he can neither be held liable under Section 83(2) nor under Section 95(2), nor is an annual adjustment under Section 72 to be carried out.",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000417",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "This is the case when the person performing the activity, in the exercise of their business will, is subject to the direction of the employer or is obligated to follow the employer's instructions within the business organization of the employer.",
+      "slices": [
+        "D"
+      ]
+    },
+    {
+      "sample_id": "estg_000509",
+      "clause_id": "c2",
+      "modality": "definition",
+      "text": "for this purpose, a monthly wage payment period shall be assumed.",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000522",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "(7) Pursuant to paragraphs 1 to 5, the following shall also be treated as such — allowances and supplementary payments included in the remuneration continued to be paid to released members of the works council, — similar allowances and supplementary payments to staff representatives within the meaning of the Federal Staff Representation Act (Bundes-Personalvertretungsgesetz) and similar state legislation, — allowances and supplementary payments included in wages continued to be paid to the employee in the event of illness.",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000546",
+      "clause_id": "c1",
+      "modality": "prohibition",
+      "text": "(4) An annual adjustment pursuant to subsection 2 or 3 shall not take place if the income from employment is assessed for income tax pursuant to Section 41",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000572",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "If, due to the special nature of the remuneration, a period for which the wage is paid cannot exceptionally be determined, the wage payment period shall be deemed to be at least the actually expended working time.",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000599",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "(3) Upon request, employers shall also provide the audit body of the tax office with any requested information for the purpose of determining the tax circumstances of other persons working for the business for whom it is doubtful whether they are employees of the business.",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000635",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "(4) The person required to make the deduction shall issue to the recipient a certificate indicating the amount of the capital yields and the tax amount, the payment date, and the period for which the capital yields have been paid, and shall state therein the tax office to which the tax amount has been remitted",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000659",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "(1) Persons with limited tax liability shall be assessed for income tax on their income from which no withholding of tax on wages, on capital yield, or under Sections 99 to 101 is to be made",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000664",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "The following shall apply to this provision:",
+      "slices": [
+        "A",
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000716",
+      "clause_id": "c1",
+      "modality": "prohibition",
+      "text": "However, recovery shall not take place if: 1. the building society transfers the amount to be recovered, with the consent of the taxpayer, to the competent Regional Finance Directorate; 2. in the cases of paragraph (6), the repaid contributions or the security serve for favored measures within the meaning of Section 18(1) item 3",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000716",
+      "clause_id": "c2",
+      "modality": "prohibition",
+      "text": "in which case recovery shall also not take place if the measures are implemented by or for the persons referred to in paragraph (2)",
+      "slices": [
+        "B"
+      ]
+    },
+    {
+      "sample_id": "estg_000773",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "If the legal person under private law is held exclusively, directly or indirectly, by corporations under public law, activities conducted in a separate set of accounts within the meaning of subsection (3) shall be deemed a single activity, even if the individual activities lack the intention of making a profit",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000776",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "An exercise of public authority shall be assumed in particular where services are involved the acceptance of which the recipient is obliged to accept by virtue of a statutory or official order",
+      "slices": [
+        "A"
+      ]
+    },
+    {
+      "sample_id": "estg_000800",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "This does not apply as long as the sponsoring undertaking suspends the contribution payments (Section 4(4) no. 2 of the Income Tax Act 1988)",
+      "slices": [
+        "C"
+      ]
+    },
+    {
+      "sample_id": "estg_000854",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "The exclusive use of the provisions for premium refunds (profit participations) in the life, health or accident insurance business with return of premium shall also be deemed secure to the extent that, in exceptional cases, amounts may be withdrawn from these provisions in accordance with the business plan and with the approval of the insurance supervisory authority in order to ensure the permanent ability to meet the obligations arising from the insurance contracts.",
+      "slices": [
+        "A"
+      ]
+    }
+  ],
+  "selected_sample_clause_ids": {
+    "estg_000037": [
+      "c1",
+      "c2",
+      "c3"
+    ],
+    "estg_000056": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+    ],
+    "estg_000059": [
+      "c1",
+      "c2",
+      "c3"
+    ],
+    "estg_000071": [
+      "c1",
+      "c2",
+      "c3"
+    ],
+    "estg_000075": [
+      "c1"
+    ],
+    "estg_000080": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+    ],
+    "estg_000083": [
+      "c1",
+      "c2"
+    ],
+    "estg_000087": [
+      "c1"
+    ],
+    "estg_000103": [
+      "c1"
+    ],
+    "estg_000128": [
+      "c1",
+      "c2"
+    ],
+    "estg_000130": [
+      "c1"
+    ],
+    "estg_000131": [
+      "c1"
+    ],
+    "estg_000136": [
+      "c1",
+      "c2"
+    ],
+    "estg_000145": [
+      "c1"
+    ],
+    "estg_000164": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+    ],
+    "estg_000195": [
+      "c1"
+    ],
+    "estg_000206": [
+      "c1",
+      "c2",
+      "c3"
+    ],
+    "estg_000208": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+    ],
+    "estg_000209": [
+      "c1",
+      "c2"
+    ],
+    "estg_000218": [
+      "c1",
+      "c2"
+    ],
+    "estg_000222": [
+      "c1",
+      "c2"
+    ],
+    "estg_000223": [
+      "c1"
+    ],
+    "estg_000245": [
+      "c1"
+    ],
+    "estg_000273": [
+      "c1"
+    ],
+    "estg_000293": [
+      "c1"
+    ],
+    "estg_000302": [
+      "c1"
+    ],
+    "estg_000306": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+    ],
+    "estg_000414": [
+      "c1"
+    ],
+    "estg_000417": [
+      "c1"
+    ],
+    "estg_000509": [
+      "c1",
+      "c2"
+    ],
+    "estg_000522": [
+      "c1"
+    ],
+    "estg_000546": [
+      "c1"
+    ],
+    "estg_000572": [
+      "c1"
+    ],
+    "estg_000599": [
+      "c1"
+    ],
+    "estg_000635": [
+      "c1"
+    ],
+    "estg_000659": [
+      "c1"
+    ],
+    "estg_000664": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+    ],
+    "estg_000716": [
+      "c1",
+      "c2"
+    ],
+    "estg_000773": [
+      "c1"
+    ],
+    "estg_000776": [
+      "c1",
+      "c2"
+    ],
+    "estg_000800": [
+      "c1",
+      "c2",
+      "c3",
+      "c4",
+      "c5",
+      "c6"
+    ],
+    "estg_000854": [
+      "c1",
+      "c2"
+    ]
+  },
+  "apply_applies_stress_cases": [
+    {
+      "sample_id": "estg_000056",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "(7) For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise, the following shall apply with regard to repair expenses:",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000071",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "For registered traders, Item 13 applies",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000083",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000128",
+      "clause_id": "c2",
+      "modality": "obligation",
+      "text": "Section 10(2) last sentence shall apply.",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000145",
+      "clause_id": "c1",
+      "modality": "permission",
+      "text": "(6) Taxpayers who determine their profit in accordance with Section 4(3) may apply in the tax return for an amount to be left tax-free for the notional severance pay claims existing at the end of the business year",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000164",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "For the consideration of these expenses, the following applies:",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000208",
+      "clause_id": "c2",
+      "modality": "obligation",
+      "text": "Subsection (1)(3) shall also apply if, within the group of persons referred to in point 1, the lender or loan debtor on the one hand and the developer (owner) or housing applicant (beneficiary, tenant) on the other hand are not identical",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000209",
+      "clause_id": "c2",
+      "modality": "definition",
+      "text": "this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette)",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000218",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "In the case of a reduction in deductible insurance premiums (Section 1(2), last sentence), the notification obligation does not apply if the refunded amounts are offset against future insurance premiums",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000306",
+      "clause_id": "c1",
+      "modality": "obligation",
+      "text": "For buildings serving residential purposes, the following applies with respect to repair and maintenance expenses",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000664",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "The following shall apply to this provision:",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    },
+    {
+      "sample_id": "estg_000800",
+      "clause_id": "c1",
+      "modality": "definition",
+      "text": "This does not apply as long as the sponsoring undertaking suspends the contribution payments (Section 4(4) no. 2 of the Income Tax Act 1988)",
+      "status": "NEEDS_GOLD_ADJUDICATION"
+    }
+  ],
+  "gold_inconsistency_cases": [
+    {
+      "sample_id": "estg_000505",
+      "clause_id": "c2",
+      "text": "in this respect, a monthly wage payment period shall be assumed",
+      "modality": "obligation",
+      "in_panel": false,
+      "status": "POTENTIAL_GOLD_INCONSISTENCY"
+    },
+    {
+      "sample_id": "estg_000509",
+      "clause_id": "c2",
+      "text": "for this purpose, a monthly wage payment period shall be assumed.",
+      "modality": "definition",
+      "in_panel": true,
+      "status": "POTENTIAL_GOLD_INCONSISTENCY"
+    }
+  ]
+}
