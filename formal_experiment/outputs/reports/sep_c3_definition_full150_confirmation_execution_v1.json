@@ -1,0 +1,147 @@
+{
+  "schema_version": "sep_c3_definition_full150_execution@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "arm": "R_DEF",
+  "treatment_package": "E4 v2 replacement + R_DEF guidance",
+  "planned_calls": 150,
+  "call_cap": 150,
+  "actual_calls": 150,
+  "complete": true,
+  "aborted": false,
+  "started_at_utc": "2026-09-20T07:29:54.993101+00:00",
+  "schedule_sha256": "a7e2b818f773738854657cce887a848fd129d998a18ae8fd4e5f9f2bd1369e95",
+  "budget_sha256": "d7fbb02ee1a0176f4c0cf3d3f067e697ca140876e475c254cb6b6242348eea65",
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null,
+    "stream": false,
+    "retry": 0
+  },
+  "output_validation_path_version": "sep_c3_targeted_refinement_runtime_validation_v1",
+  "official_evaluation": {
+    "primary_metric": "coarse_five_field_mean_f1",
+    "coarse_five_field_mean_f1": 0.7246613248193036,
+    "coarse_five_field_micro_f1": 0.7596635043443554,
+    "five_fields": {
+      "actor": {
+        "ground_truth": 41,
+        "extracted": 66,
+        "matched_predictions": 35,
+        "matched_ground_truth": 32,
+        "misclassified": 31,
+        "missed": 9,
+        "precision": 0.5303030303030303,
+        "recall": 0.7804878048780488,
+        "f1": 0.6315195940231181
+      },
+      "action": {
+        "ground_truth": 150,
+        "extracted": 232,
+        "matched_predictions": 197,
+        "matched_ground_truth": 131,
+        "misclassified": 35,
+        "missed": 19,
+        "precision": 0.8491379310344828,
+        "recall": 0.8733333333333333,
+        "f1": 0.8610656968402788
+      },
+      "condition": {
+        "ground_truth": 122,
+        "extracted": 140,
+        "matched_predictions": 123,
+        "matched_ground_truth": 90,
+        "misclassified": 17,
+        "missed": 32,
+        "precision": 0.8785714285714286,
+        "recall": 0.7377049180327869,
+        "f1": 0.8019995653118887
+      },
+      "constraint": {
+        "ground_truth": 135,
+        "extracted": 114,
+        "matched_predictions": 93,
+        "matched_ground_truth": 68,
+        "misclassified": 21,
+        "missed": 67,
+        "precision": 0.8157894736842105,
+        "recall": 0.5037037037037037,
+        "f1": 0.622839414980056
+      },
+      "exception": {
+        "ground_truth": 11,
+        "extracted": 6,
+        "matched_predictions": 6,
+        "matched_ground_truth": 6,
+        "misclassified": 0,
+        "missed": 5,
+        "precision": 1.0,
+        "recall": 0.5454545454545454,
+        "f1": 0.7058823529411764
+      }
+    },
+    "modality_labels": {
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "records": 150,
+      "accuracy": 0.8066666666666666,
+      "macro_f1": 0.822410029306581,
+      "per_class": [
+        {
+          "class": "obligation",
+          "precision": 0.9122807017543859,
+          "recall": 0.8813559322033898,
+          "f1": 0.8965517241379309
+        },
+        {
+          "class": "permission",
+          "precision": 0.9714285714285714,
+          "recall": 0.8095238095238095,
+          "f1": 0.8831168831168832
+        },
+        {
+          "class": "prohibition",
+          "precision": 0.7894736842105263,
+          "recall": 0.75,
+          "f1": 0.7692307692307692
+        },
+        {
+          "class": "definition",
+          "precision": 0.8,
+          "recall": 0.6896551724137931,
+          "f1": 0.7407407407407408
+        }
+      ],
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 14
+    },
+    "denominator": 150,
+    "failed_count": 14
+  },
+  "budget_gate": {
+    "calls_made": 150,
+    "input_tokens": 185194,
+    "output_tokens": 127853,
+    "cost_usd": 0.75075396,
+    "missing_usage_calls": 0,
+    "call_cap": 150,
+    "input_token_cap": 568490.0,
+    "output_token_cap": 614400.0,
+    "usd_cost_cap": 3.1834308,
+    "aborted": false,
+    "abort_reason": null
+  },
+  "runtime_seconds": 1229.831,
+  "finished_at_utc": "2026-09-20T07:50:24.824185+00:00"
+}

@@ -1,0 +1,134 @@
+{
+  "schema_version": "sep_c3_definition_full150_budget@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "status": "FROZEN_BEFORE_NEW_API",
+  "purpose": "Full-corpus confirmation of the frozen R_DEF package against historical A_current_contract.",
+  "arms": [
+    "R_DEF"
+  ],
+  "arm_definition": {
+    "R_DEF": "complete frozen treatment package: E4 v2 replacement + R_DEF guidance"
+  },
+  "A_policy": "reuse frozen historical Arm A raw responses; 0 new A calls; current-contract rescore only",
+  "BASE_policy": "not executed in this full-150 confirmation",
+  "schedule_binding": {
+    "path": "configs/sep_c3_definition_full150_schedule_v1.json",
+    "sha256": "a7e2b818f773738854657cce887a848fd129d998a18ae8fd4e5f9f2bd1369e95",
+    "entries_sha256": "ca91ae9796712d57ca70df128a1ab4d6bd8fb707877b4b407e0b53e2bf474f62",
+    "level": "sample_level"
+  },
+  "planned_calls": 150,
+  "call_cap": 150,
+  "calls_per_arm": {
+    "R_DEF": 150
+  },
+  "estimated_input_tokens": 284245,
+  "max_input_tokens_estimate_per_call": 2184,
+  "max_output_tokens_per_call": 4096,
+  "total_max_output_tokens": 614400,
+  "input_token_cap": 568490,
+  "output_token_cap": 614400,
+  "peak_estimated_usd": 2.8082274,
+  "usd_cost_cap": 3.1834308,
+  "repeat_strategy": {
+    "repeat_id": "repeat-01",
+    "repeats_per_arm": 1,
+    "retry": 0,
+    "failure_policy": "One recorded send per scheduled sample; transport, parse, binding, and canonical-validation failures persist in the denominator; no result-dependent retry; no regeneration."
+  },
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "provider": "openai_compatible"
+  },
+  "inference": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null
+  },
+  "data_binding": {
+    "input_path": "data/input/estg150_formal_inference_input_v2.json",
+    "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+    "gold_record_count": 150
+  },
+  "prompt_binding": {
+    "candidate_family": "direct_llm_definition_refinement_candidate_v1",
+    "package_name": "E4_v2_replacement_plus_R_DEF_guidance",
+    "r_def_text_sha256": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344",
+    "system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+    "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+    "composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+    "generated_prompt_path": "prompts/sun_compat/modular_definition_refinement_v1/generated/direct_llm_definition_R_DEF_v1.md",
+    "generated_prompt_sha256": "202189d5fadcf25c14ede8f12d810e11d5bfbd9fff0697b01f200bbdbe558669",
+    "generated_manifest_path": "prompts/sun_compat/modular_definition_refinement_v1/generated/manifest.json",
+    "generated_manifest_sha256": "78a2e880fde91e9bc2d127e5cdb57b5370a5cb74ce3a96facf5b8eee4a1ebb27",
+    "source_hashes": {
+      "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+      "E_v2": "33fcbf9f69eddc1a0645bb4ef4f8cee85070fc6ed8bfe1e8c028b8bc8265d340",
+      "R_DEF": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344"
+    }
+  },
+  "parser_binding": {
+    "schema_adapter": {
+      "path": "src/bpc_hybrid/d1_schema_adapter.py",
+      "sha256": "457d01cfcc663e8594a163db603c2e1d31cbffce4523d3ed7cdfaf16328edbf3"
+    },
+    "span_canonicalizer": {
+      "path": "src/bpc_hybrid/d1_span_canonicalizer.py",
+      "sha256": "e29672deabb7b2aabd535c5d8552b4d2c4b49699e2582f31fbe394d26da65dce"
+    },
+    "canonical_validator": {
+      "path": "src/bpc_hybrid/stage2_canonical.py",
+      "sha256": "39bd93ef30f5744fc977a382ecd484d4802fc8074aec312034625e0398fd4e70"
+    }
+  },
+  "evaluator_binding": {
+    "coarse_view": {
+      "path": "src/bpc_hybrid/g04_coarse_view.py",
+      "sha256": "a8a867964036e77d5fa83f9f430b0ea7dced9fd3ba2a170131fb09183a49ae7d"
+    },
+    "coarse_evaluator": {
+      "path": "src/bpc_hybrid/sep_c3_modular_evaluation.py",
+      "sha256": "31363c2e0bad27ebbe2b9e1fa56b5aae3cbe2e1e5c12204627e173a8db8b5330"
+    },
+    "frozen_span_evaluator": {
+      "path": "src/bpc_hybrid/stage2_sun_literal_overlap.py",
+      "sha256": "a6df234611ef63ab9d47a3d5e886c3a711ccce8c6e5d8e164e42826bef978de7"
+    },
+    "formal_stage2_evaluator": {
+      "path": "src/bpc_hybrid/formal_stage2_evaluation.py",
+      "sha256": "8bf99113b1f4dc85ff9a10b80a533f9dd5ecfc8102b3dfdabfbe5712da14e910"
+    },
+    "maximal_overlap_evaluator": {
+      "path": "src/bpc_hybrid/stage2_maximal_overlap.py",
+      "sha256": null,
+      "present": false
+    },
+    "official_metric": "coarse_five_field_mean_f1",
+    "official_view": "coarse_sentence_level",
+    "dataset_id": "independently_reconstructed_estg_150_v1"
+  },
+  "price_snapshot": {
+    "currency": "USD",
+    "mode_used_for_gate": "peak_conservative",
+    "input_cache_miss_per_million": 1.32,
+    "output_per_million": 3.96,
+    "source_url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "verified_at_utc": "2026-08-30T00:00:00Z",
+    "note": "Reuses the frozen SEP-C3 project price snapshot; no online re-check."
+  },
+  "actuals": null,
+  "authorization": {
+    "required": true,
+    "status": "AUTHORIZED_FOR_EXECUTION",
+    "event_path": "configs/sep_c3_definition_full150_authorization_event_v1.json"
+  }
+}

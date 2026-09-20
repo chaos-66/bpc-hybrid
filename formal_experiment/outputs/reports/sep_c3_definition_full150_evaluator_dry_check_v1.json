@@ -1,0 +1,24 @@
+{
+  "schema_version": "sep_c3_definition_full150_evaluator_dry_check@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "status": "PASS",
+  "api_calls_made": 0,
+  "gold_record_count": 150,
+  "prediction_envelope_count": 150,
+  "unique_sample_ids": 150,
+  "A_current_contract": {
+    "denominator": 150,
+    "five_field_mean_f1": 0.7080951816362215,
+    "matches_frozen_expected": true
+  },
+  "empty_attempts": {
+    "denominator": 150,
+    "five_field_mean_f1": 0.0
+  },
+  "membership_check": {
+    "status": "pass",
+    "note": "All 150 frozen sample_ids were supplied to the full-150 evaluator wrapper; the prior 42-subset membership failure cannot recur."
+  },
+  "a_manifest_sha256": "fdda29facaf6ee52ba539df8886048e91704f0a6bf8c5c343f2a1d412966483f",
+  "a_manifest_status": "FROZEN_BEFORE_R_DEF_EVALUATION_INSPECTION"
+}

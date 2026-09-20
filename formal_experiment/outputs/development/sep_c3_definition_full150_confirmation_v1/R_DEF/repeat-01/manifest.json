@@ -1,0 +1,67 @@
+{
+  "schema_version": "sep_c3_targeted_refinement_manifest@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "arm": "R_DEF",
+  "arm_definition": "candidate E4 v2 + R_DEF definition guidance",
+  "repeat_id": "repeat-01",
+  "prompt_family": "direct_llm_refinement_v1",
+  "sample_count": 150,
+  "actual_call_count": 150,
+  "resumed_completed_count": 0,
+  "failed_count": 14,
+  "evaluation_denominator": 150,
+  "output_validation_path": {
+    "version": "sep_c3_targeted_refinement_runtime_validation_v1",
+    "validation_backend": "lightweight",
+    "validation_backend_detail": "stage2_canonical.validate_canonical() using the existing in-process structural + cross-field checks; jsonschema is not installed",
+    "jsonschema_available": false,
+    "processing_order": [
+      "raw_response_saved",
+      "json_parse",
+      "input_identity_check",
+      "existing_adapter",
+      "existing_canonicalizer",
+      "runtime_structural_cross_field_validation",
+      "persist_result_and_audit"
+    ],
+    "input_identity_source": "data/input/estg150_formal_inference_input_v2.json",
+    "required_source_id_rule": "payload.source_id must equal the request protocol source_id (targeted refinement renders source_id == sample_id)"
+  },
+  "processing_status_counts": {
+    "api_call_status": {
+      "ok": 150
+    },
+    "output_parse_status": {
+      "passed": 150
+    },
+    "input_binding_status": {
+      "passed": 147,
+      "failed": 3
+    },
+    "canonical_validation_status": {
+      "failed": 11,
+      "passed": 136,
+      "not_attempted": 3
+    },
+    "request_status": {
+      "failed": 14,
+      "ok": 136
+    }
+  },
+  "schedule_sha256": "a7e2b818f773738854657cce887a848fd129d998a18ae8fd4e5f9f2bd1369e95",
+  "source_hashes": {
+    "common": "a38d08f29d37aa6fb1c446bd63c8ea19dc2b8e0a6d12ea0404c1404a9c39cbd6",
+    "E_v2": "33fcbf9f69eddc1a0645bb4ef4f8cee85070fc6ed8bfe1e8c028b8bc8265d340",
+    "R_DEF": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344"
+  },
+  "prompt_hashes": {
+    "system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+    "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+    "composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+    "generated_prompt_path": "prompts/sun_compat/modular_definition_refinement_v1/generated/direct_llm_definition_R_DEF_v1.md",
+    "generated_prompt_sha256": "202189d5fadcf25c14ede8f12d810e11d5bfbd9fff0697b01f200bbdbe558669"
+  },
+  "raw_responses_aggregate_sha256": "58f9421ae2167ec4921b3413922ad4c56c063a3c6c08a71f6ff0fc13e2b7a79d",
+  "canonical_predictions_aggregate_sha256": "d56859c55f9399eec37a958022a7dc2665016a9e070fb0d0317859c7522fd5a0",
+  "same_response_binding": true
+}

@@ -1,0 +1,1282 @@
+{
+  "schema_version": "sep_c3_definition_full150_confirmation_analysis@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "status": "analysis_complete",
+  "scope": "full-corpus confirmation; not independent held-out generalization test",
+  "api_calls": 0,
+  "execution": {
+    "schema_version": "sep_c3_definition_full150_execution@1.0.0",
+    "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+    "arm": "R_DEF",
+    "treatment_package": "E4 v2 replacement + R_DEF guidance",
+    "planned_calls": 150,
+    "call_cap": 150,
+    "actual_calls": 150,
+    "complete": true,
+    "aborted": false,
+    "started_at_utc": "2026-09-20T07:29:54.993101+00:00",
+    "schedule_sha256": "a7e2b818f773738854657cce887a848fd129d998a18ae8fd4e5f9f2bd1369e95",
+    "budget_sha256": "d7fbb02ee1a0176f4c0cf3d3f067e697ca140876e475c254cb6b6242348eea65",
+    "model": {
+      "id": "deepseek-v4-pro",
+      "documented_release": "DeepSeek-V4-Pro-0813",
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 4096,
+      "thinking": {
+        "type": "disabled"
+      },
+      "response_format": null,
+      "stream": false,
+      "retry": 0
+    },
+    "output_validation_path_version": "sep_c3_targeted_refinement_runtime_validation_v1",
+    "official_evaluation": {
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.7246613248193036,
+      "coarse_five_field_micro_f1": 0.7596635043443554,
+      "five_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 66,
+          "matched_predictions": 35,
+          "matched_ground_truth": 32,
+          "misclassified": 31,
+          "missed": 9,
+          "precision": 0.5303030303030303,
+          "recall": 0.7804878048780488,
+          "f1": 0.6315195940231181
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 232,
+          "matched_predictions": 197,
+          "matched_ground_truth": 131,
+          "misclassified": 35,
+          "missed": 19,
+          "precision": 0.8491379310344828,
+          "recall": 0.8733333333333333,
+          "f1": 0.8610656968402788
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 140,
+          "matched_predictions": 123,
+          "matched_ground_truth": 90,
+          "misclassified": 17,
+          "missed": 32,
+          "precision": 0.8785714285714286,
+          "recall": 0.7377049180327869,
+          "f1": 0.8019995653118887
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 114,
+          "matched_predictions": 93,
+          "matched_ground_truth": 68,
+          "misclassified": 21,
+          "missed": 67,
+          "precision": 0.8157894736842105,
+          "recall": 0.5037037037037037,
+          "f1": 0.622839414980056
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 6,
+          "matched_predictions": 6,
+          "matched_ground_truth": 6,
+          "misclassified": 0,
+          "missed": 5,
+          "precision": 1.0,
+          "recall": 0.5454545454545454,
+          "f1": 0.7058823529411764
+        }
+      },
+      "modality_labels": {
+        "schema_version": "formal_stage2_modality_labels@1.0.0",
+        "classes": [
+          "obligation",
+          "permission",
+          "prohibition",
+          "definition"
+        ],
+        "records": 150,
+        "accuracy": 0.8066666666666666,
+        "macro_f1": 0.822410029306581,
+        "per_class": [
+          {
+            "class": "obligation",
+            "precision": 0.9122807017543859,
+            "recall": 0.8813559322033898,
+            "f1": 0.8965517241379309
+          },
+          {
+            "class": "permission",
+            "precision": 0.9714285714285714,
+            "recall": 0.8095238095238095,
+            "f1": 0.8831168831168832
+          },
+          {
+            "class": "prohibition",
+            "precision": 0.7894736842105263,
+            "recall": 0.75,
+            "f1": 0.7692307692307692
+          },
+          {
+            "class": "definition",
+            "precision": 0.8,
+            "recall": 0.6896551724137931,
+            "f1": 0.7407407407407408
+          }
+        ],
+        "separate_from_span_metrics": true,
+        "unlabeled_predictions": 14
+      },
+      "denominator": 150,
+      "failed_count": 14
+    },
+    "budget_gate": {
+      "calls_made": 150,
+      "input_tokens": 185194,
+      "output_tokens": 127853,
+      "cost_usd": 0.75075396,
+      "missing_usage_calls": 0,
+      "call_cap": 150,
+      "input_token_cap": 568490.0,
+      "output_token_cap": 614400.0,
+      "usd_cost_cap": 3.1834308,
+      "aborted": false,
+      "abort_reason": null
+    },
+    "runtime_seconds": 1229.831,
+    "finished_at_utc": "2026-09-20T07:50:24.824185+00:00"
+  },
+  "sample_count": 150,
+  "gold_clause_count": 231,
+  "official_metrics": {
+    "actor": {
+      "A_precision": 0.47674418604651164,
+      "R_DEF_precision": 0.5303030303030303,
+      "delta_precision_R_DEF_minus_A": 0.053558844256518634,
+      "A_recall": 0.9024390243902439,
+      "R_DEF_recall": 0.7804878048780488,
+      "delta_recall_R_DEF_minus_A": -0.12195121951219512,
+      "A_f1": 0.6238947151963808,
+      "R_DEF_f1": 0.6315195940231181,
+      "delta_f1_R_DEF_minus_A": 0.007624878826737236,
+      "A_ground_truth": 41,
+      "R_DEF_ground_truth": 41,
+      "A_extracted": 86,
+      "R_DEF_extracted": 66
+    },
+    "action": {
+      "A_precision": 0.8963963963963963,
+      "R_DEF_precision": 0.8491379310344828,
+      "delta_precision_R_DEF_minus_A": -0.04725846536191358,
+      "A_recall": 0.86,
+      "R_DEF_recall": 0.8733333333333333,
+      "delta_recall_R_DEF_minus_A": 0.013333333333333308,
+      "A_f1": 0.8778210915059499,
+      "R_DEF_f1": 0.8610656968402788,
+      "delta_f1_R_DEF_minus_A": -0.01675539466567111,
+      "A_ground_truth": 150,
+      "R_DEF_ground_truth": 150,
+      "A_extracted": 222,
+      "R_DEF_extracted": 232
+    },
+    "condition": {
+      "A_precision": 0.875,
+      "R_DEF_precision": 0.8785714285714286,
+      "delta_precision_R_DEF_minus_A": 0.0035714285714285587,
+      "A_recall": 0.7540983606557377,
+      "R_DEF_recall": 0.7377049180327869,
+      "delta_recall_R_DEF_minus_A": -0.016393442622950727,
+      "A_f1": 0.810062893081761,
+      "R_DEF_f1": 0.8019995653118887,
+      "delta_f1_R_DEF_minus_A": -0.008063327769872397,
+      "A_ground_truth": 122,
+      "R_DEF_ground_truth": 122,
+      "A_extracted": 144,
+      "R_DEF_extracted": 140
+    },
+    "constraint": {
+      "A_precision": 0.8373983739837398,
+      "R_DEF_precision": 0.8157894736842105,
+      "delta_precision_R_DEF_minus_A": -0.021608900299529332,
+      "A_recall": 0.5185185185185185,
+      "R_DEF_recall": 0.5037037037037037,
+      "delta_recall_R_DEF_minus_A": -0.014814814814814836,
+      "A_f1": 0.6404619142793693,
+      "R_DEF_f1": 0.622839414980056,
+      "delta_f1_R_DEF_minus_A": -0.017622499299313255,
+      "A_ground_truth": 135,
+      "R_DEF_ground_truth": 135,
+      "A_extracted": 123,
+      "R_DEF_extracted": 114
+    },
+    "exception": {
+      "A_precision": 0.8333333333333334,
+      "R_DEF_precision": 1.0,
+      "delta_precision_R_DEF_minus_A": 0.16666666666666663,
+      "A_recall": 0.45454545454545453,
+      "R_DEF_recall": 0.5454545454545454,
+      "delta_recall_R_DEF_minus_A": 0.09090909090909088,
+      "A_f1": 0.5882352941176471,
+      "R_DEF_f1": 0.7058823529411764,
+      "delta_f1_R_DEF_minus_A": 0.11764705882352933,
+      "A_ground_truth": 11,
+      "R_DEF_ground_truth": 11,
+      "A_extracted": 6,
+      "R_DEF_extracted": 6
+    },
+    "coarse_five_field_mean_f1": {
+      "A": 0.7080951816362215,
+      "R_DEF": 0.7246613248193036,
+      "delta_R_DEF_minus_A": 0.016566143183082027
+    },
+    "coarse_five_field_micro_f1": {
+      "A": 0.7680147139322546,
+      "R_DEF": 0.7596635043443554,
+      "delta_R_DEF_minus_A": -0.008351209587899255
+    },
+    "modality_accuracy": {
+      "A": 0.7466666666666667,
+      "R_DEF": 0.8066666666666666,
+      "delta_R_DEF_minus_A": 0.05999999999999994
+    },
+    "modality_macro_f1": {
+      "A": 0.7133893077207031,
+      "R_DEF": 0.822410029306581,
+      "delta_R_DEF_minus_A": 0.10902072158587794
+    }
+  },
+  "definition_diagnostics": {
+    "A_current_contract": {
+      "n_gold_clauses": 231,
+      "modality_accuracy": 0.7575757575757576,
+      "definition_precision": 0.9230769230769231,
+      "definition_recall": 0.3076923076923077,
+      "definition_f1": 0.4615384615384615,
+      "definition_tp": 12,
+      "definition_fp": 1,
+      "definition_fn": 27,
+      "definition_to_obligation_count": 17,
+      "obligation_to_definition_count": 1,
+      "prohibition_to_definition_count": 0,
+      "permission_to_definition_count": 0,
+      "confusion": {
+        "definition->MISSING": 2,
+        "definition->definition": 12,
+        "definition->obligation": 17,
+        "definition->prohibition": 8,
+        "obligation->MISSING": 8,
+        "obligation->definition": 1,
+        "obligation->obligation": 83,
+        "obligation->permission": 3,
+        "obligation->prohibition": 2,
+        "permission->MISSING": 5,
+        "permission->obligation": 5,
+        "permission->permission": 50,
+        "permission->prohibition": 2,
+        "prohibition->MISSING": 2,
+        "prohibition->permission": 1,
+        "prohibition->prohibition": 30
+      },
+      "definition_action_present_count": 27,
+      "definition_empty_action_count": 12,
+      "definition_action_presence_fraction": 0.6923076923076923,
+      "definition_empty_action_keys": [
+        [
+          "estg_000031",
+          "c1"
+        ],
+        [
+          "estg_000040",
+          "c1"
+        ],
+        [
+          "estg_000057",
+          "c1"
+        ],
+        [
+          "estg_000112",
+          "c1"
+        ],
+        [
+          "estg_000164",
+          "c1"
+        ],
+        [
+          "estg_000195",
+          "c1"
+        ],
+        [
+          "estg_000208",
+          "c3"
+        ],
+        [
+          "estg_000208",
+          "c4"
+        ],
+        [
+          "estg_000210",
+          "c2"
+        ],
+        [
+          "estg_000218",
+          "c1"
+        ],
+        [
+          "estg_000273",
+          "c1"
+        ],
+        [
+          "estg_000664",
+          "c1"
+        ]
+      ],
+      "non_definition_false_definition_count": 1,
+      "non_definition_false_definition_rate": 0.005208333333333333,
+      "non_definition_false_definition_keys": [
+        [
+          "estg_000306",
+          "c2"
+        ]
+      ],
+      "non_definition_shall_false_definition_count": 0,
+      "non_definition_shall_false_definition_rate": 0.0,
+      "non_definition_shall_false_definition_keys": [],
+      "non_definition_count": 192,
+      "non_definition_shall_count": 73
+    },
+    "R_DEF": {
+      "n_gold_clauses": 231,
+      "modality_accuracy": 0.7532467532467533,
+      "definition_precision": 0.75,
+      "definition_recall": 0.6923076923076923,
+      "definition_f1": 0.7199999999999999,
+      "definition_tp": 27,
+      "definition_fp": 9,
+      "definition_fn": 12,
+      "definition_to_obligation_count": 4,
+      "obligation_to_definition_count": 6,
+      "prohibition_to_definition_count": 0,
+      "permission_to_definition_count": 3,
+      "confusion": {
+        "definition->MISSING": 3,
+        "definition->definition": 27,
+        "definition->obligation": 4,
+        "definition->prohibition": 5,
+        "obligation->MISSING": 11,
+        "obligation->definition": 6,
+        "obligation->obligation": 77,
+        "obligation->permission": 2,
+        "obligation->prohibition": 1,
+        "permission->MISSING": 6,
+        "permission->definition": 3,
+        "permission->obligation": 6,
+        "permission->permission": 45,
+        "permission->prohibition": 2,
+        "prohibition->MISSING": 5,
+        "prohibition->obligation": 1,
+        "prohibition->permission": 2,
+        "prohibition->prohibition": 25
+      },
+      "definition_action_present_count": 36,
+      "definition_empty_action_count": 3,
+      "definition_action_presence_fraction": 0.9230769230769231,
+      "definition_empty_action_keys": [
+        [
+          "estg_000040",
+          "c1"
+        ],
+        [
+          "estg_000218",
+          "c1"
+        ],
+        [
+          "estg_000800",
+          "c1"
+        ]
+      ],
+      "non_definition_false_definition_count": 9,
+      "non_definition_false_definition_rate": 0.046875,
+      "non_definition_false_definition_keys": [
+        [
+          "estg_000037",
+          "c2"
+        ],
+        [
+          "estg_000037",
+          "c3"
+        ],
+        [
+          "estg_000039",
+          "c3"
+        ],
+        [
+          "estg_000056",
+          "c1"
+        ],
+        [
+          "estg_000082",
+          "c2"
+        ],
+        [
+          "estg_000161",
+          "c1"
+        ],
+        [
+          "estg_000306",
+          "c2"
+        ],
+        [
+          "estg_000776",
+          "c2"
+        ],
+        [
+          "estg_000854",
+          "c2"
+        ]
+      ],
+      "non_definition_shall_false_definition_count": 2,
+      "non_definition_shall_false_definition_rate": 0.0273972602739726,
+      "non_definition_shall_false_definition_keys": [
+        [
+          "estg_000056",
+          "c1"
+        ],
+        [
+          "estg_000082",
+          "c2"
+        ]
+      ],
+      "non_definition_count": 192,
+      "non_definition_shall_count": 73
+    },
+    "delta_R_DEF_minus_A": {
+      "modality_accuracy": -0.0043290043290042934,
+      "definition_precision": -0.17307692307692313,
+      "definition_recall": 0.3846153846153846,
+      "definition_f1": 0.25846153846153835,
+      "definition_to_obligation_count": -13.0,
+      "obligation_to_definition_count": 5.0,
+      "prohibition_to_definition_count": 0.0,
+      "permission_to_definition_count": 3.0,
+      "definition_action_presence_fraction": 0.23076923076923084,
+      "definition_empty_action_count": -9.0,
+      "non_definition_false_definition_rate": 0.041666666666666664
+    }
+  },
+  "processing": {
+    "A_current_contract": {
+      "sample_count": 150,
+      "status_counts": {
+        "request_status": {
+          "ok": 138,
+          "failed": 12
+        },
+        "api_call_status": {
+          "ok": 150
+        },
+        "output_parse_status": {
+          "passed": 150
+        },
+        "input_binding_status": {
+          "passed": 148,
+          "failed": 2
+        },
+        "canonical_validation_status": {
+          "passed": 138,
+          "not_attempted": 2,
+          "failed": 10
+        },
+        "failure_stage": {
+          "missing": 138,
+          "input_binding": 2,
+          "canonical_validation": 10
+        }
+      },
+      "transport_provider_failure_count": 0,
+      "transport_provider_failure_samples": [],
+      "structural_failure_count": 12,
+      "structural_failure_samples": [
+        {
+          "sample_id": "estg_000044",
+          "reasons": [
+            "input_binding"
+          ]
+        },
+        {
+          "sample_id": "estg_000052",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000062",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000112",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000218",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000286",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000393",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000457",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000525",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000635",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000720",
+          "reasons": [
+            "input_binding"
+          ]
+        },
+        {
+          "sample_id": "estg_000861",
+          "reasons": [
+            "canonical_validation"
+          ]
+        }
+      ]
+    },
+    "R_DEF": {
+      "sample_count": 150,
+      "status_counts": {
+        "request_status": {
+          "failed": 14,
+          "ok": 136
+        },
+        "api_call_status": {
+          "ok": 150
+        },
+        "output_parse_status": {
+          "passed": 150
+        },
+        "input_binding_status": {
+          "passed": 147,
+          "failed": 3
+        },
+        "canonical_validation_status": {
+          "failed": 11,
+          "passed": 136,
+          "not_attempted": 3
+        },
+        "failure_stage": {
+          "canonical_validation": 11,
+          "missing": 136,
+          "input_binding": 3
+        }
+      },
+      "transport_provider_failure_count": 0,
+      "transport_provider_failure_samples": [],
+      "structural_failure_count": 14,
+      "structural_failure_samples": [
+        {
+          "sample_id": "estg_000002",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000040",
+          "reasons": [
+            "input_binding"
+          ]
+        },
+        {
+          "sample_id": "estg_000044",
+          "reasons": [
+            "input_binding"
+          ]
+        },
+        {
+          "sample_id": "estg_000052",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000062",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000218",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000375",
+          "reasons": [
+            "input_binding"
+          ]
+        },
+        {
+          "sample_id": "estg_000525",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000539",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000635",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000716",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000800",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000816",
+          "reasons": [
+            "canonical_validation"
+          ]
+        },
+        {
+          "sample_id": "estg_000861",
+          "reasons": [
+            "canonical_validation"
+          ]
+        }
+      ]
+    }
+  },
+  "field_change_counts": {
+    "sample_count": 150,
+    "per_field": {
+      "actor": {
+        "sample_change_count": 31,
+        "sample_change_rate": 0.20666666666666667,
+        "changed_sample_ids": [
+          "estg_000002",
+          "estg_000004",
+          "estg_000028",
+          "estg_000039",
+          "estg_000040",
+          "estg_000046",
+          "estg_000074",
+          "estg_000075",
+          "estg_000077",
+          "estg_000083",
+          "estg_000105",
+          "estg_000108",
+          "estg_000115",
+          "estg_000123",
+          "estg_000134",
+          "estg_000146",
+          "estg_000195",
+          "estg_000207",
+          "estg_000208",
+          "estg_000210",
+          "estg_000232",
+          "estg_000285",
+          "estg_000293",
+          "estg_000302",
+          "estg_000505",
+          "estg_000539",
+          "estg_000664",
+          "estg_000720",
+          "estg_000776",
+          "estg_000800",
+          "estg_000816"
+        ]
+      },
+      "action": {
+        "sample_change_count": 85,
+        "sample_change_rate": 0.5666666666666667,
+        "changed_sample_ids": [
+          "estg_000002",
+          "estg_000004",
+          "estg_000021",
+          "estg_000028",
+          "estg_000031",
+          "estg_000035",
+          "estg_000036",
+          "estg_000037",
+          "estg_000038",
+          "estg_000039",
+          "estg_000040",
+          "estg_000043",
+          "estg_000046",
+          "estg_000051",
+          "estg_000055",
+          "estg_000057",
+          "estg_000060",
+          "estg_000061",
+          "estg_000075",
+          "estg_000077",
+          "estg_000079",
+          "estg_000080",
+          "estg_000083",
+          "estg_000087",
+          "estg_000092",
+          "estg_000106",
+          "estg_000109",
+          "estg_000112",
+          "estg_000113",
+          "estg_000114",
+          "estg_000118",
+          "estg_000119",
+          "estg_000124",
+          "estg_000125",
+          "estg_000127",
+          "estg_000134",
+          "estg_000135",
+          "estg_000136",
+          "estg_000139",
+          "estg_000146",
+          "estg_000161",
+          "estg_000164",
+          "estg_000173",
+          "estg_000195",
+          "estg_000208",
+          "estg_000210",
+          "estg_000214",
+          "estg_000220",
+          "estg_000223",
+          "estg_000230",
+          "estg_000245",
+          "estg_000273",
+          "estg_000277",
+          "estg_000285",
+          "estg_000286",
+          "estg_000306",
+          "estg_000308",
+          "estg_000326",
+          "estg_000366",
+          "estg_000375",
+          "estg_000393",
+          "estg_000396",
+          "estg_000414",
+          "estg_000417",
+          "estg_000433",
+          "estg_000457",
+          "estg_000465",
+          "estg_000505",
+          "estg_000507",
+          "estg_000522",
+          "estg_000539",
+          "estg_000546",
+          "estg_000555",
+          "estg_000659",
+          "estg_000664",
+          "estg_000716",
+          "estg_000720",
+          "estg_000773",
+          "estg_000776",
+          "estg_000785",
+          "estg_000786",
+          "estg_000800",
+          "estg_000812",
+          "estg_000816",
+          "estg_000854"
+        ]
+      },
+      "condition": {
+        "sample_change_count": 28,
+        "sample_change_rate": 0.18666666666666668,
+        "changed_sample_ids": [
+          "estg_000002",
+          "estg_000003",
+          "estg_000004",
+          "estg_000027",
+          "estg_000028",
+          "estg_000037",
+          "estg_000056",
+          "estg_000061",
+          "estg_000070",
+          "estg_000083",
+          "estg_000105",
+          "estg_000106",
+          "estg_000134",
+          "estg_000161",
+          "estg_000195",
+          "estg_000210",
+          "estg_000231",
+          "estg_000273",
+          "estg_000286",
+          "estg_000306",
+          "estg_000393",
+          "estg_000457",
+          "estg_000509",
+          "estg_000539",
+          "estg_000601",
+          "estg_000716",
+          "estg_000800",
+          "estg_000816"
+        ]
+      },
+      "constraint": {
+        "sample_change_count": 47,
+        "sample_change_rate": 0.31333333333333335,
+        "changed_sample_ids": [
+          "estg_000028",
+          "estg_000037",
+          "estg_000038",
+          "estg_000046",
+          "estg_000051",
+          "estg_000056",
+          "estg_000060",
+          "estg_000061",
+          "estg_000070",
+          "estg_000077",
+          "estg_000079",
+          "estg_000080",
+          "estg_000092",
+          "estg_000094",
+          "estg_000103",
+          "estg_000105",
+          "estg_000106",
+          "estg_000112",
+          "estg_000113",
+          "estg_000115",
+          "estg_000118",
+          "estg_000119",
+          "estg_000124",
+          "estg_000127",
+          "estg_000130",
+          "estg_000131",
+          "estg_000134",
+          "estg_000135",
+          "estg_000136",
+          "estg_000143",
+          "estg_000146",
+          "estg_000285",
+          "estg_000286",
+          "estg_000306",
+          "estg_000375",
+          "estg_000396",
+          "estg_000414",
+          "estg_000417",
+          "estg_000433",
+          "estg_000457",
+          "estg_000505",
+          "estg_000507",
+          "estg_000509",
+          "estg_000569",
+          "estg_000659",
+          "estg_000776",
+          "estg_000854"
+        ]
+      },
+      "exception": {
+        "sample_change_count": 4,
+        "sample_change_rate": 0.02666666666666667,
+        "changed_sample_ids": [
+          "estg_000134",
+          "estg_000293",
+          "estg_000457",
+          "estg_000507"
+        ]
+      }
+    }
+  },
+  "bootstrap": {
+    "span": {
+      "seed": 20260919,
+      "resamples": 10000,
+      "interval": "95% percentile",
+      "pairing": "same resampled sample_id multiset for A and R_DEF",
+      "metric_recompute": "sum per-sample frozen-evaluator counts, then recompute F1; never average per-sample F1",
+      "point_metrics": {
+        "A_current_contract": {
+          "actor": {
+            "ground_truth": 41,
+            "extracted": 86,
+            "matched_predictions": 41,
+            "matched_ground_truth": 37,
+            "precision": 0.47674418604651164,
+            "recall": 0.9024390243902439,
+            "f1": 0.6238947151963808,
+            "fp": 45,
+            "missed": 4
+          },
+          "action": {
+            "ground_truth": 150,
+            "extracted": 222,
+            "matched_predictions": 199,
+            "matched_ground_truth": 129,
+            "precision": 0.8963963963963963,
+            "recall": 0.86,
+            "f1": 0.8778210915059499,
+            "fp": 23,
+            "missed": 21
+          },
+          "condition": {
+            "ground_truth": 122,
+            "extracted": 144,
+            "matched_predictions": 126,
+            "matched_ground_truth": 92,
+            "precision": 0.875,
+            "recall": 0.7540983606557377,
+            "f1": 0.810062893081761,
+            "fp": 18,
+            "missed": 30
+          },
+          "constraint": {
+            "ground_truth": 135,
+            "extracted": 123,
+            "matched_predictions": 103,
+            "matched_ground_truth": 70,
+            "precision": 0.8373983739837398,
+            "recall": 0.5185185185185185,
+            "f1": 0.6404619142793693,
+            "fp": 20,
+            "missed": 65
+          },
+          "exception": {
+            "ground_truth": 11,
+            "extracted": 6,
+            "matched_predictions": 5,
+            "matched_ground_truth": 5,
+            "precision": 0.8333333333333334,
+            "recall": 0.45454545454545453,
+            "f1": 0.5882352941176471,
+            "fp": 1,
+            "missed": 6
+          },
+          "condition_f1": 0.810062893081761,
+          "condition_fp": 18,
+          "condition_missed": 30,
+          "actor_f1": 0.6238947151963808,
+          "actor_fp": 45,
+          "constraint_recall": 0.5185185185185185,
+          "constraint_fp": 20,
+          "coarse_five_field_mean_f1": 0.7080951816362215,
+          "coarse_five_field_micro_f1": 0.7680147139322546,
+          "micro_counts": {
+            "ground_truth": 459,
+            "extracted": 581,
+            "matched_predictions": 474,
+            "matched_ground_truth": 333,
+            "precision": 0.8158347676419966,
+            "recall": 0.7254901960784313,
+            "f1": 0.7680147139322546,
+            "fp": 107,
+            "missed": 126
+          }
+        },
+        "R_DEF": {
+          "actor": {
+            "ground_truth": 41,
+            "extracted": 66,
+            "matched_predictions": 35,
+            "matched_ground_truth": 32,
+            "precision": 0.5303030303030303,
+            "recall": 0.7804878048780488,
+            "f1": 0.6315195940231181,
+            "fp": 31,
+            "missed": 9
+          },
+          "action": {
+            "ground_truth": 150,
+            "extracted": 232,
+            "matched_predictions": 197,
+            "matched_ground_truth": 131,
+            "precision": 0.8491379310344828,
+            "recall": 0.8733333333333333,
+            "f1": 0.8610656968402788,
+            "fp": 35,
+            "missed": 19
+          },
+          "condition": {
+            "ground_truth": 122,
+            "extracted": 140,
+            "matched_predictions": 123,
+            "matched_ground_truth": 90,
+            "precision": 0.8785714285714286,
+            "recall": 0.7377049180327869,
+            "f1": 0.8019995653118887,
+            "fp": 17,
+            "missed": 32
+          },
+          "constraint": {
+            "ground_truth": 135,
+            "extracted": 114,
+            "matched_predictions": 93,
+            "matched_ground_truth": 68,
+            "precision": 0.8157894736842105,
+            "recall": 0.5037037037037037,
+            "f1": 0.622839414980056,
+            "fp": 21,
+            "missed": 67
+          },
+          "exception": {
+            "ground_truth": 11,
+            "extracted": 6,
+            "matched_predictions": 6,
+            "matched_ground_truth": 6,
+            "precision": 1.0,
+            "recall": 0.5454545454545454,
+            "f1": 0.7058823529411764,
+            "fp": 0,
+            "missed": 5
+          },
+          "condition_f1": 0.8019995653118887,
+          "condition_fp": 17,
+          "condition_missed": 32,
+          "actor_f1": 0.6315195940231181,
+          "actor_fp": 31,
+          "constraint_recall": 0.5037037037037037,
+          "constraint_fp": 21,
+          "coarse_five_field_mean_f1": 0.7246613248193036,
+          "coarse_five_field_micro_f1": 0.7596635043443554,
+          "micro_counts": {
+            "ground_truth": 459,
+            "extracted": 558,
+            "matched_predictions": 454,
+            "matched_ground_truth": 327,
+            "precision": 0.8136200716845878,
+            "recall": 0.7124183006535948,
+            "f1": 0.7596635043443554,
+            "fp": 104,
+            "missed": 132
+          }
+        }
+      },
+      "comparisons": {
+        "coarse_five_field_mean_f1": {
+          "A": 0.7080951816362215,
+          "R_DEF": 0.7246613248193036,
+          "observed_delta_R_DEF_minus_A": 0.016566143183082027,
+          "bootstrap_mean_delta": 0.017715989917633224,
+          "ci95_percentile": [
+            -0.04893225767810346,
+            0.09134699204965495
+          ],
+          "contains_zero": true
+        },
+        "coarse_five_field_micro_f1": {
+          "A": 0.7680147139322546,
+          "R_DEF": 0.7596635043443554,
+          "observed_delta_R_DEF_minus_A": -0.008351209587899255,
+          "bootstrap_mean_delta": -0.008132475367549815,
+          "ci95_percentile": [
+            -0.04254092074739151,
+            0.02671680225438157
+          ],
+          "contains_zero": true
+        },
+        "actor_f1": {
+          "A": 0.6238947151963808,
+          "R_DEF": 0.6315195940231181,
+          "observed_delta_R_DEF_minus_A": 0.007624878826737236,
+          "bootstrap_mean_delta": 0.008476162806214582,
+          "ci95_percentile": [
+            -0.07001210301393428,
+            0.08808983161961272
+          ],
+          "contains_zero": true
+        },
+        "action_f1": {
+          "A": 0.8778210915059499,
+          "R_DEF": 0.8610656968402788,
+          "observed_delta_R_DEF_minus_A": -0.01675539466567111,
+          "bootstrap_mean_delta": -0.01639334045517855,
+          "ci95_percentile": [
+            -0.06870267696302534,
+            0.035788882081489455
+          ],
+          "contains_zero": true
+        },
+        "condition_f1": {
+          "A": 0.810062893081761,
+          "R_DEF": 0.8019995653118887,
+          "observed_delta_R_DEF_minus_A": -0.008063327769872397,
+          "bootstrap_mean_delta": -0.008266207064347185,
+          "ci95_percentile": [
+            -0.04940785813088181,
+            0.032635070001041315
+          ],
+          "contains_zero": true
+        },
+        "constraint_f1": {
+          "A": 0.6404619142793693,
+          "R_DEF": 0.622839414980056,
+          "observed_delta_R_DEF_minus_A": -0.017622499299313255,
+          "bootstrap_mean_delta": -0.017244947593391846,
+          "ci95_percentile": [
+            -0.08413368083356658,
+            0.04919557532445532
+          ],
+          "contains_zero": true
+        },
+        "exception_f1": {
+          "A": 0.5882352941176471,
+          "R_DEF": 0.7058823529411764,
+          "observed_delta_R_DEF_minus_A": 0.11764705882352933,
+          "bootstrap_mean_delta": 0.12200828189486913,
+          "ci95_percentile": [
+            -0.16666666666666663,
+            0.43609706083390276
+          ],
+          "contains_zero": true
+        }
+      }
+    },
+    "clause": {
+      "seed": 20260919,
+      "resamples": 10000,
+      "interval": "95% percentile",
+      "pairing": "same resampled sample_id multiset for A and R_DEF",
+      "metric_recompute": "sum clause-level confusion counts over resampled samples, then recompute metric",
+      "point_metrics_from_full_150": {
+        "A": {
+          "modality_accuracy": 0.7575757575757576,
+          "definition_precision": 0.9230769230769231,
+          "definition_recall": 0.3076923076923077,
+          "definition_f1": 0.4615384615384615,
+          "definition_to_obligation_count": 17,
+          "obligation_to_definition_count": 1,
+          "prohibition_to_definition_count": 0,
+          "permission_to_definition_count": 0,
+          "definition_action_presence_fraction": 0.6923076923076923,
+          "non_definition_false_definition_rate": 0.005208333333333333
+        },
+        "R_DEF": {
+          "modality_accuracy": 0.7532467532467533,
+          "definition_precision": 0.75,
+          "definition_recall": 0.6923076923076923,
+          "definition_f1": 0.7199999999999999,
+          "definition_to_obligation_count": 4,
+          "obligation_to_definition_count": 6,
+          "prohibition_to_definition_count": 0,
+          "permission_to_definition_count": 3,
+          "definition_action_presence_fraction": 0.9230769230769231,
+          "non_definition_false_definition_rate": 0.046875
+        }
+      },
+      "comparisons": {
+        "modality_accuracy": {
+          "A": 0.7575757575757576,
+          "R_DEF": 0.7532467532467533,
+          "observed_delta_R_DEF_minus_A": -0.0043290043290042934,
+          "bootstrap_mean_delta": -0.004446792658099265,
+          "ci95_percentile": [
+            -0.07659617364447495,
+            0.06550218340611347
+          ],
+          "contains_zero": true
+        },
+        "definition_precision": {
+          "A": 0.9230769230769231,
+          "R_DEF": 0.75,
+          "observed_delta_R_DEF_minus_A": -0.17307692307692313,
+          "bootstrap_mean_delta": -0.16898144396896264,
+          "ci95_percentile": [
+            -0.33333333333333337,
+            0.0
+          ],
+          "contains_zero": true
+        },
+        "definition_recall": {
+          "A": 0.3076923076923077,
+          "R_DEF": 0.6923076923076923,
+          "observed_delta_R_DEF_minus_A": 0.3846153846153846,
+          "bootstrap_mean_delta": 0.3855925136896285,
+          "ci95_percentile": [
+            0.20000000000000007,
+            0.574468085106383
+          ],
+          "contains_zero": false
+        },
+        "definition_f1": {
+          "A": 0.4615384615384615,
+          "R_DEF": 0.7199999999999999,
+          "observed_delta_R_DEF_minus_A": 0.25846153846153835,
+          "bootstrap_mean_delta": 0.26321246111395347,
+          "ci95_percentile": [
+            0.09506220973076736,
+            0.447827959768258
+          ],
+          "contains_zero": false
+        },
+        "definition_action_presence_fraction": {
+          "A": 0.6923076923076923,
+          "R_DEF": 0.9230769230769231,
+          "observed_delta_R_DEF_minus_A": 0.23076923076923084,
+          "bootstrap_mean_delta": 0.2289221756325198,
+          "ci95_percentile": [
+            0.0714285714285714,
+            0.39024390243902435
+          ],
+          "contains_zero": false
+        },
+        "non_definition_false_definition_rate": {
+          "A": 0.005208333333333333,
+          "R_DEF": 0.046875,
+          "observed_delta_R_DEF_minus_A": 0.041666666666666664,
+          "bootstrap_mean_delta": 0.04159817348285575,
+          "ci95_percentile": [
+            0.01485148514851485,
+            0.07547444054409824
+          ],
+          "contains_zero": false
+        }
+      }
+    }
+  },
+  "decision_rule_declared_before_observation": {
+    "promote_if": [
+      "official coarse_five_field_mean_f1 delta >= 0",
+      "definition F1 delta >= 0",
+      "structural failure count delta <= 0"
+    ],
+    "note": "This is a transparent decision aid for the report, not a new aggregate metric or significance test."
+  },
+  "decision": "DO NOT PROMOTE R_DEF AT THIS TIME: the full-150 full-corpus confirmation shows an aggregate regression, a definition-F1 regression, or an increase in structural failures. Historical A remains the final Stage-2 Prompt candidate pending separate stronger external evidence.",
+  "methodological_statement": "Targeted A->BASE and BASE->R_DEF evidence decomposes the mechanism; the full-150 A->R_DEF evaluation estimates the effect of the final frozen package. The full-150 evaluation does not independently establish generalization because the targeted development samples are contained within EStG-150. It is described as a full-corpus confirmation or full-set evaluation."
+}

@@ -5025,3 +5025,21 @@
 - 仍存在 blocker：无
 - 备注：Recovery resumed only the 354 untried schedule entries. Known actual cost 0.84437985 USD; unknown response reserve 0.03056592 USD; cumulative budget still under 10 USD.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-20T07:54:05.969487+00:00 - SEP-C3 frozen R_DEF full-150 confirmation run and analysis
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=sep-c3-definition-full150-confirmation-20260920；阶段=SEP-C3-DEFINITION-FULL150-CONFIRMATION-001；方法=E4_v2_plus_R_DEF vs historical_A_current_contract；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_sep_c3_definition_full150_confirmation_v1.py --execute --allow-llm --project-env`
+- manifest：outputs/development/sep_c3_definition_full150_confirmation_v1/execution_summary.json
+- 结果摘要：150/150 calls; R_DEF five-field mean F1 0.7246613248 vs A_current_contract 0.7080951816; definition F1 0.7200 vs 0.4615; 14 R_DEF structural failures vs 12 A; no transport failures; decision no-promote due structural-failure increase and mixed field regressions.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：6 passed in 0.13s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`daeab280ec71b8ea2e089e4e0a5f85fc8847ac8d`；相关未提交路径：54 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

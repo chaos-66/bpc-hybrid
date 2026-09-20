@@ -1,0 +1,19 @@
+{
+  "schema_version": "sep_c3_definition_full150_confirmation_preflight@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "status": "PASS_FROZEN_BEFORE_NEW_API",
+  "api_calls_made": 0,
+  "arm": "R_DEF",
+  "treatment_package": "E4 v2 replacement + R_DEF guidance",
+  "planned_calls": 150,
+  "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+  "schedule_sha256": "a7e2b818f773738854657cce887a848fd129d998a18ae8fd4e5f9f2bd1369e95",
+  "sample_membership_order_sha256": "95b6ae7a206dec3b01985cdcdcbca09147f470b6988a209d7b5cd65bab413c6c",
+  "prompt_composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+  "A_current_contract_five_field_mean_f1": 0.7080951816362215,
+  "A_current_contract_manifest_path": "outputs/development/sep_c3_definition_full150_confirmation_v1/A_current_contract/repeat-01/manifest.json",
+  "dry_check_status": "PASS",
+  "dry_check_denominator": 150,
+  "execution_command": "cd formal_experiment && python scripts/run_sep_c3_definition_full150_confirmation_v1.py --execute --allow-llm --project-env",
+  "authorization_event_path": "configs/sep_c3_definition_full150_authorization_event_v1.json"
+}

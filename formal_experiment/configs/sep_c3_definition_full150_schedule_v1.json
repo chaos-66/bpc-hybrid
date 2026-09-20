@@ -1,0 +1,1219 @@
+{
+  "schema_version": "sep_c3_definition_full150_schedule@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "status": "FROZEN_BEFORE_NEW_API",
+  "arm": "R_DEF",
+  "treatment_package": "E4 v2 replacement + R_DEF guidance",
+  "repeat_id": "repeat-01",
+  "scheme": "frozen_input_order_single_arm",
+  "input_path": "data/input/estg150_formal_inference_input_v2.json",
+  "input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+  "sample_count": 150,
+  "sample_membership_order": [
+    "estg_000002",
+    "estg_000003",
+    "estg_000004",
+    "estg_000020",
+    "estg_000021",
+    "estg_000027",
+    "estg_000028",
+    "estg_000030",
+    "estg_000031",
+    "estg_000033",
+    "estg_000035",
+    "estg_000036",
+    "estg_000037",
+    "estg_000038",
+    "estg_000039",
+    "estg_000040",
+    "estg_000043",
+    "estg_000044",
+    "estg_000046",
+    "estg_000051",
+    "estg_000052",
+    "estg_000055",
+    "estg_000056",
+    "estg_000057",
+    "estg_000059",
+    "estg_000060",
+    "estg_000061",
+    "estg_000062",
+    "estg_000068",
+    "estg_000070",
+    "estg_000071",
+    "estg_000074",
+    "estg_000075",
+    "estg_000077",
+    "estg_000079",
+    "estg_000080",
+    "estg_000082",
+    "estg_000083",
+    "estg_000087",
+    "estg_000091",
+    "estg_000092",
+    "estg_000094",
+    "estg_000095",
+    "estg_000098",
+    "estg_000103",
+    "estg_000104",
+    "estg_000105",
+    "estg_000106",
+    "estg_000108",
+    "estg_000109",
+    "estg_000111",
+    "estg_000112",
+    "estg_000113",
+    "estg_000114",
+    "estg_000115",
+    "estg_000118",
+    "estg_000119",
+    "estg_000121",
+    "estg_000123",
+    "estg_000124",
+    "estg_000125",
+    "estg_000127",
+    "estg_000128",
+    "estg_000130",
+    "estg_000131",
+    "estg_000133",
+    "estg_000134",
+    "estg_000135",
+    "estg_000136",
+    "estg_000139",
+    "estg_000143",
+    "estg_000145",
+    "estg_000146",
+    "estg_000148",
+    "estg_000161",
+    "estg_000164",
+    "estg_000173",
+    "estg_000183",
+    "estg_000195",
+    "estg_000206",
+    "estg_000207",
+    "estg_000208",
+    "estg_000209",
+    "estg_000210",
+    "estg_000214",
+    "estg_000218",
+    "estg_000220",
+    "estg_000222",
+    "estg_000223",
+    "estg_000230",
+    "estg_000231",
+    "estg_000232",
+    "estg_000245",
+    "estg_000247",
+    "estg_000271",
+    "estg_000273",
+    "estg_000277",
+    "estg_000283",
+    "estg_000285",
+    "estg_000286",
+    "estg_000293",
+    "estg_000302",
+    "estg_000306",
+    "estg_000308",
+    "estg_000313",
+    "estg_000326",
+    "estg_000347",
+    "estg_000366",
+    "estg_000375",
+    "estg_000393",
+    "estg_000396",
+    "estg_000399",
+    "estg_000414",
+    "estg_000417",
+    "estg_000433",
+    "estg_000452",
+    "estg_000457",
+    "estg_000458",
+    "estg_000465",
+    "estg_000504",
+    "estg_000505",
+    "estg_000507",
+    "estg_000509",
+    "estg_000522",
+    "estg_000525",
+    "estg_000539",
+    "estg_000546",
+    "estg_000555",
+    "estg_000560",
+    "estg_000569",
+    "estg_000572",
+    "estg_000578",
+    "estg_000599",
+    "estg_000601",
+    "estg_000635",
+    "estg_000659",
+    "estg_000664",
+    "estg_000704",
+    "estg_000713",
+    "estg_000716",
+    "estg_000720",
+    "estg_000773",
+    "estg_000776",
+    "estg_000785",
+    "estg_000786",
+    "estg_000800",
+    "estg_000812",
+    "estg_000816",
+    "estg_000854",
+    "estg_000861"
+  ],
+  "sample_membership_order_sha256": "95b6ae7a206dec3b01985cdcdcbca09147f470b6988a209d7b5cd65bab413c6c",
+  "planned_calls": 150,
+  "entries": [
+    {
+      "execution_index": 1,
+      "sample_id": "estg_000002",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 2,
+      "sample_id": "estg_000003",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 3,
+      "sample_id": "estg_000004",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 4,
+      "sample_id": "estg_000020",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 5,
+      "sample_id": "estg_000021",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 6,
+      "sample_id": "estg_000027",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 7,
+      "sample_id": "estg_000028",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 8,
+      "sample_id": "estg_000030",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 9,
+      "sample_id": "estg_000031",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 10,
+      "sample_id": "estg_000033",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 11,
+      "sample_id": "estg_000035",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 12,
+      "sample_id": "estg_000036",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 13,
+      "sample_id": "estg_000037",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 14,
+      "sample_id": "estg_000038",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 15,
+      "sample_id": "estg_000039",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 16,
+      "sample_id": "estg_000040",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 17,
+      "sample_id": "estg_000043",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 18,
+      "sample_id": "estg_000044",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 19,
+      "sample_id": "estg_000046",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 20,
+      "sample_id": "estg_000051",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 21,
+      "sample_id": "estg_000052",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 22,
+      "sample_id": "estg_000055",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 23,
+      "sample_id": "estg_000056",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 24,
+      "sample_id": "estg_000057",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 25,
+      "sample_id": "estg_000059",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 26,
+      "sample_id": "estg_000060",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 27,
+      "sample_id": "estg_000061",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 28,
+      "sample_id": "estg_000062",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 29,
+      "sample_id": "estg_000068",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 30,
+      "sample_id": "estg_000070",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 31,
+      "sample_id": "estg_000071",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 32,
+      "sample_id": "estg_000074",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 33,
+      "sample_id": "estg_000075",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 34,
+      "sample_id": "estg_000077",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 35,
+      "sample_id": "estg_000079",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 36,
+      "sample_id": "estg_000080",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 37,
+      "sample_id": "estg_000082",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 38,
+      "sample_id": "estg_000083",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 39,
+      "sample_id": "estg_000087",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 40,
+      "sample_id": "estg_000091",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 41,
+      "sample_id": "estg_000092",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 42,
+      "sample_id": "estg_000094",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 43,
+      "sample_id": "estg_000095",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 44,
+      "sample_id": "estg_000098",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 45,
+      "sample_id": "estg_000103",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 46,
+      "sample_id": "estg_000104",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 47,
+      "sample_id": "estg_000105",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 48,
+      "sample_id": "estg_000106",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 49,
+      "sample_id": "estg_000108",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 50,
+      "sample_id": "estg_000109",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 51,
+      "sample_id": "estg_000111",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 52,
+      "sample_id": "estg_000112",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 53,
+      "sample_id": "estg_000113",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 54,
+      "sample_id": "estg_000114",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 55,
+      "sample_id": "estg_000115",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 56,
+      "sample_id": "estg_000118",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 57,
+      "sample_id": "estg_000119",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 58,
+      "sample_id": "estg_000121",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 59,
+      "sample_id": "estg_000123",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 60,
+      "sample_id": "estg_000124",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 61,
+      "sample_id": "estg_000125",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 62,
+      "sample_id": "estg_000127",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 63,
+      "sample_id": "estg_000128",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 64,
+      "sample_id": "estg_000130",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 65,
+      "sample_id": "estg_000131",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 66,
+      "sample_id": "estg_000133",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 67,
+      "sample_id": "estg_000134",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 68,
+      "sample_id": "estg_000135",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 69,
+      "sample_id": "estg_000136",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 70,
+      "sample_id": "estg_000139",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 71,
+      "sample_id": "estg_000143",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 72,
+      "sample_id": "estg_000145",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 73,
+      "sample_id": "estg_000146",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 74,
+      "sample_id": "estg_000148",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 75,
+      "sample_id": "estg_000161",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 76,
+      "sample_id": "estg_000164",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 77,
+      "sample_id": "estg_000173",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 78,
+      "sample_id": "estg_000183",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 79,
+      "sample_id": "estg_000195",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 80,
+      "sample_id": "estg_000206",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 81,
+      "sample_id": "estg_000207",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 82,
+      "sample_id": "estg_000208",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 83,
+      "sample_id": "estg_000209",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 84,
+      "sample_id": "estg_000210",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 85,
+      "sample_id": "estg_000214",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 86,
+      "sample_id": "estg_000218",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 87,
+      "sample_id": "estg_000220",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 88,
+      "sample_id": "estg_000222",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 89,
+      "sample_id": "estg_000223",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 90,
+      "sample_id": "estg_000230",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 91,
+      "sample_id": "estg_000231",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 92,
+      "sample_id": "estg_000232",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 93,
+      "sample_id": "estg_000245",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 94,
+      "sample_id": "estg_000247",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 95,
+      "sample_id": "estg_000271",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 96,
+      "sample_id": "estg_000273",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 97,
+      "sample_id": "estg_000277",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 98,
+      "sample_id": "estg_000283",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 99,
+      "sample_id": "estg_000285",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 100,
+      "sample_id": "estg_000286",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 101,
+      "sample_id": "estg_000293",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 102,
+      "sample_id": "estg_000302",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 103,
+      "sample_id": "estg_000306",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 104,
+      "sample_id": "estg_000308",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 105,
+      "sample_id": "estg_000313",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 106,
+      "sample_id": "estg_000326",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 107,
+      "sample_id": "estg_000347",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 108,
+      "sample_id": "estg_000366",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 109,
+      "sample_id": "estg_000375",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 110,
+      "sample_id": "estg_000393",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 111,
+      "sample_id": "estg_000396",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 112,
+      "sample_id": "estg_000399",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 113,
+      "sample_id": "estg_000414",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 114,
+      "sample_id": "estg_000417",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 115,
+      "sample_id": "estg_000433",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 116,
+      "sample_id": "estg_000452",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 117,
+      "sample_id": "estg_000457",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 118,
+      "sample_id": "estg_000458",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 119,
+      "sample_id": "estg_000465",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 120,
+      "sample_id": "estg_000504",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 121,
+      "sample_id": "estg_000505",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 122,
+      "sample_id": "estg_000507",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 123,
+      "sample_id": "estg_000509",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 124,
+      "sample_id": "estg_000522",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 125,
+      "sample_id": "estg_000525",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 126,
+      "sample_id": "estg_000539",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 127,
+      "sample_id": "estg_000546",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 128,
+      "sample_id": "estg_000555",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 129,
+      "sample_id": "estg_000560",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 130,
+      "sample_id": "estg_000569",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 131,
+      "sample_id": "estg_000572",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 132,
+      "sample_id": "estg_000578",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 133,
+      "sample_id": "estg_000599",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 134,
+      "sample_id": "estg_000601",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 135,
+      "sample_id": "estg_000635",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 136,
+      "sample_id": "estg_000659",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 137,
+      "sample_id": "estg_000664",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 138,
+      "sample_id": "estg_000704",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 139,
+      "sample_id": "estg_000713",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 140,
+      "sample_id": "estg_000716",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 141,
+      "sample_id": "estg_000720",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 142,
+      "sample_id": "estg_000773",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 143,
+      "sample_id": "estg_000776",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 144,
+      "sample_id": "estg_000785",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 145,
+      "sample_id": "estg_000786",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 146,
+      "sample_id": "estg_000800",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 147,
+      "sample_id": "estg_000812",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 148,
+      "sample_id": "estg_000816",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 149,
+      "sample_id": "estg_000854",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    },
+    {
+      "execution_index": 150,
+      "sample_id": "estg_000861",
+      "arm": "R_DEF",
+      "arm_order_within_sample": 1,
+      "repeat_id": "repeat-01"
+    }
+  ],
+  "entries_sha256": "ca91ae9796712d57ca70df128a1ab4d6bd8fb707877b4b407e0b53e2bf474f62"
+}

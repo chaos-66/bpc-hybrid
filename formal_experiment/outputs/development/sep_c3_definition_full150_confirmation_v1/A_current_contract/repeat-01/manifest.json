@@ -1,0 +1,88 @@
+{
+  "schema_version": "sep_c3_definition_full150_A_current_contract_manifest@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "arm": "A_current_contract",
+  "status": "FROZEN_BEFORE_R_DEF_EVALUATION_INSPECTION",
+  "sample_count": 150,
+  "failure_count": 12,
+  "failure_stage_counts": {
+    "input_binding": 2,
+    "canonical_validation": 10
+  },
+  "status_counts": {
+    "request_status": {
+      "ok": 138,
+      "failed": 12
+    },
+    "api_call_status": {
+      "ok": 150
+    },
+    "output_parse_status": {
+      "passed": 150
+    },
+    "input_binding_status": {
+      "passed": 148,
+      "failed": 2
+    },
+    "canonical_validation_status": {
+      "passed": 138,
+      "not_attempted": 2,
+      "failed": 10
+    }
+  },
+  "raw_source_path": "outputs/development/sep_c3_targeted_refinement_v1/A/repeat-01/raw_responses.jsonl",
+  "raw_source_sha256": "0fb23d6d6d0e9b16207a14483d333eb20b8ec524a5afea6aabd6e925c100eed6",
+  "canonical_predictions_sha256": "b75f86ca444e8d95ed5ab9af529089222add8c78aa87a3d0e6a72b5503ae351c",
+  "output_validation_path_version": "sep_c3_targeted_refinement_runtime_validation_v1",
+  "parser_canonicalizer_validator_binding": {
+    "schema_adapter": {
+      "path": "src/bpc_hybrid/d1_schema_adapter.py",
+      "sha256": "457d01cfcc663e8594a163db603c2e1d31cbffce4523d3ed7cdfaf16328edbf3"
+    },
+    "span_canonicalizer": {
+      "path": "src/bpc_hybrid/d1_span_canonicalizer.py",
+      "sha256": "e29672deabb7b2aabd535c5d8552b4d2c4b49699e2582f31fbe394d26da65dce"
+    },
+    "canonical_validator": {
+      "path": "src/bpc_hybrid/stage2_canonical.py",
+      "sha256": "39bd93ef30f5744fc977a382ecd484d4802fc8074aec312034625e0398fd4e70"
+    }
+  },
+  "evaluator_binding": {
+    "coarse_view": {
+      "path": "src/bpc_hybrid/g04_coarse_view.py",
+      "sha256": "a8a867964036e77d5fa83f9f430b0ea7dced9fd3ba2a170131fb09183a49ae7d"
+    },
+    "coarse_evaluator": {
+      "path": "src/bpc_hybrid/sep_c3_modular_evaluation.py",
+      "sha256": "31363c2e0bad27ebbe2b9e1fa56b5aae3cbe2e1e5c12204627e173a8db8b5330"
+    },
+    "frozen_span_evaluator": {
+      "path": "src/bpc_hybrid/stage2_sun_literal_overlap.py",
+      "sha256": "a6df234611ef63ab9d47a3d5e886c3a711ccce8c6e5d8e164e42826bef978de7"
+    },
+    "formal_stage2_evaluator": {
+      "path": "src/bpc_hybrid/formal_stage2_evaluation.py",
+      "sha256": "8bf99113b1f4dc85ff9a10b80a533f9dd5ecfc8102b3dfdabfbe5712da14e910"
+    },
+    "maximal_overlap_evaluator": {
+      "path": "src/bpc_hybrid/stage2_maximal_overlap.py",
+      "sha256": null,
+      "present": false
+    },
+    "official_metric": "coarse_five_field_mean_f1",
+    "official_view": "coarse_sentence_level",
+    "dataset_id": "independently_reconstructed_estg_150_v1"
+  },
+  "legacy_label": {
+    "legacy_official_five_field_mean_f1": 0.7245765761849047,
+    "must_not_be_directly_compared_to_r_def": true
+  },
+  "current_contract": {
+    "five_field_mean_f1": 0.7080951816362215,
+    "five_field_micro_f1": 0.7680147139322546,
+    "modality_accuracy": 0.7466666666666667,
+    "modality_macro_f1": 0.7133893077207031
+  },
+  "empty_on_failure_policy": true
+}

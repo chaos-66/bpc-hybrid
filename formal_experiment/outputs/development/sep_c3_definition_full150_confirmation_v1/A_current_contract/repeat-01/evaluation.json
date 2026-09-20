@@ -1,0 +1,192 @@
+{
+  "schema_version": "sep_c3_definition_full150_A_current_contract_evaluation@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "arm": "A_current_contract",
+  "denominator": 150,
+  "failed_count": 12,
+  "evaluation": {
+    "schema_version": "sep_c3_coarse_five_field_evaluation@1.0.0",
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "method_id": "A_current_contract_full150",
+    "view": "coarse_sentence_level",
+    "primary_metric": "coarse_five_field_mean_f1",
+    "primary_metric_note": "arithmetic mean of the five coarse span-field F1 values; the modality label is reported separately and is never mixed into this score",
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+    "five_fields": {
+      "actor": {
+        "ground_truth": 41,
+        "extracted": 86,
+        "matched_predictions": 41,
+        "matched_ground_truth": 37,
+        "misclassified": 45,
+        "missed": 4,
+        "precision": 0.47674418604651164,
+        "recall": 0.9024390243902439,
+        "f1": 0.6238947151963808
+      },
+      "action": {
+        "ground_truth": 150,
+        "extracted": 222,
+        "matched_predictions": 199,
+        "matched_ground_truth": 129,
+        "misclassified": 23,
+        "missed": 21,
+        "precision": 0.8963963963963963,
+        "recall": 0.86,
+        "f1": 0.8778210915059499
+      },
+      "condition": {
+        "ground_truth": 122,
+        "extracted": 144,
+        "matched_predictions": 126,
+        "matched_ground_truth": 92,
+        "misclassified": 18,
+        "missed": 30,
+        "precision": 0.875,
+        "recall": 0.7540983606557377,
+        "f1": 0.810062893081761
+      },
+      "constraint": {
+        "ground_truth": 135,
+        "extracted": 123,
+        "matched_predictions": 103,
+        "matched_ground_truth": 70,
+        "misclassified": 20,
+        "missed": 65,
+        "precision": 0.8373983739837398,
+        "recall": 0.5185185185185185,
+        "f1": 0.6404619142793693
+      },
+      "exception": {
+        "ground_truth": 11,
+        "extracted": 6,
+        "matched_predictions": 5,
+        "matched_ground_truth": 5,
+        "misclassified": 1,
+        "missed": 6,
+        "precision": 0.8333333333333334,
+        "recall": 0.45454545454545453,
+        "f1": 0.5882352941176471
+      }
+    },
+    "coarse_five_field_mean_f1": 0.7080951816362215,
+    "coarse_five_field_micro": {
+      "ground_truth": 459,
+      "extracted": 581,
+      "matched_predictions": 474,
+      "matched_ground_truth": 333,
+      "precision": 0.8158347676419966,
+      "recall": 0.7254901960784313,
+      "f1": 0.7680147139322546
+    },
+    "modality_labels": {
+      "schema_version": "formal_stage2_modality_labels@1.0.0",
+      "classes": [
+        "obligation",
+        "permission",
+        "prohibition",
+        "definition"
+      ],
+      "records": 150,
+      "accuracy": 0.7466666666666667,
+      "macro_f1": 0.7133893077207031,
+      "per_class": [
+        {
+          "class": "obligation",
+          "precision": 0.7761194029850746,
+          "recall": 0.8813559322033898,
+          "f1": 0.8253968253968255
+        },
+        {
+          "class": "permission",
+          "precision": 0.9736842105263158,
+          "recall": 0.8809523809523809,
+          "f1": 0.925
+        },
+        {
+          "class": "prohibition",
+          "precision": 0.6956521739130435,
+          "recall": 0.8,
+          "f1": 0.7441860465116279
+        },
+        {
+          "class": "definition",
+          "precision": 0.7,
+          "recall": 0.2413793103448276,
+          "f1": 0.358974358974359
+        }
+      ],
+      "separate_from_span_metrics": true,
+      "unlabeled_predictions": 12
+    },
+    "modality_evidence_span": {
+      "available": false,
+      "policy": "published decision-only Gold has no local modality evidence spans; never zeroed or aggregated into span F1"
+    },
+    "official_formal_view": {
+      "schema_version": "formal_stage2_span_metrics@1.0.0",
+      "view": "coarse_sentence_level",
+      "dataset_id": "independently_reconstructed_estg_150_v1",
+      "method_id": "A_current_contract_full150",
+      "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+      "overall": {
+        "ground_truth": 609,
+        "extracted": 776,
+        "matched_predictions": 667,
+        "matched_ground_truth": 469,
+        "misclassified": 109,
+        "missed": 140,
+        "precision": 0.8595360824742269,
+        "recall": 0.7701149425287356,
+        "f1": 0.8123721834922424
+      },
+      "span_fields": {
+        "actor": {
+          "ground_truth": 41,
+          "extracted": 86,
+          "precision": 0.47674418604651164,
+          "recall": 0.9024390243902439,
+          "f1": 0.6238947151963808
+        },
+        "action": {
+          "ground_truth": 150,
+          "extracted": 222,
+          "precision": 0.8963963963963963,
+          "recall": 0.86,
+          "f1": 0.8778210915059499
+        },
+        "condition": {
+          "ground_truth": 122,
+          "extracted": 144,
+          "precision": 0.875,
+          "recall": 0.7540983606557377,
+          "f1": 0.810062893081761
+        },
+        "constraint": {
+          "ground_truth": 135,
+          "extracted": 123,
+          "precision": 0.8373983739837398,
+          "recall": 0.5185185185185185,
+          "f1": 0.6404619142793693
+        },
+        "exception": {
+          "ground_truth": 11,
+          "extracted": 6,
+          "precision": 0.8333333333333334,
+          "recall": 0.45454545454545453,
+          "f1": 0.5882352941176471
+        }
+      },
+      "modality_span": {
+        "available": false,
+        "reason": "published formal Gold stores modality as a plain string; local modality evidence spans are not carried by the decision-only Gold",
+        "ground_truth": 150,
+        "extracted": 195
+      },
+      "no_cross_view_mixing": true
+    },
+    "denominator": 150,
+    "failed_count": 12
+  },
+  "manifest_sha_source": "A_current_contract"
+}

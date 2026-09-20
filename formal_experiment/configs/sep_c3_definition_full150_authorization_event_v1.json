@@ -1,0 +1,33 @@
+{
+  "schema_version": "sep_c3_definition_full150_authorization_event@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-FULL150-CONFIRMATION-001",
+  "scope": "full-150 R_DEF confirmation on frozen EStG-150 input",
+  "authorized_by_user": true,
+  "decision": "AUTHORIZED_FOR_EXECUTION",
+  "new_calls": 150,
+  "arm": "R_DEF",
+  "treatment_package": "E4 v2 replacement + R_DEF guidance",
+  "model": "deepseek-v4-pro",
+  "documented_release": "DeepSeek-V4-Pro-0813",
+  "retry": 0,
+  "temperature": 0.0,
+  "top_p": 1.0,
+  "max_tokens": 4096,
+  "thinking": {
+    "type": "disabled"
+  },
+  "response_format": null,
+  "stream": false,
+  "budget_sha256": "d7fbb02ee1a0176f4c0cf3d3f067e697ca140876e475c254cb6b6242348eea65",
+  "schedule_sha256": "a7e2b818f773738854657cce887a848fd129d998a18ae8fd4e5f9f2bd1369e95",
+  "execution_contract_sha256": "de5f73f70276941a5b53c1d67f5dced98634ce99f57242e977514404342fdf33",
+  "request_manifest_sha256": "001dfb9ebaeb477091efdb289b16c56c348c90d9c8aaf668c4638a301ebd8ea4",
+  "prompt_composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+  "user_authorization_quote": "Proceed with the frozen R_DEF full-150 confirmation experiment.",
+  "constraints": {
+    "no_A_regeneration": true,
+    "no_BASE_full_150": true,
+    "no_R_DEF2": true,
+    "no_repair_or_regeneration_after_observation": true
+  }
+}
