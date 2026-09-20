@@ -1,0 +1,953 @@
+{
+  "schema_version": "sep_c3_gold_semantic_boundary_derived@1.0.0",
+  "gold_path": "data\\gold\\stage2\\estg150_formal_gold_v1.json",
+  "case_count": 223,
+  "case_type_counts": {
+    "A": 152,
+    "C": 182,
+    "B": 10,
+    "D": 14,
+    "E": 6
+  },
+  "manual_review_required_cases": 133,
+  "actual_overlap": {
+    "clause_level_pair_counts": {
+      "action::condition": 2,
+      "action::constraint": 9,
+      "actor::condition": 1,
+      "condition::constraint": 11,
+      "condition::exception": 1
+    },
+    "clause_level_pair_samples": {
+      "action::condition": [
+        "estg_000020"
+      ],
+      "action::constraint": [
+        "estg_000028",
+        "estg_000103",
+        "estg_000123",
+        "estg_000130",
+        "estg_000161",
+        "estg_000285",
+        "estg_000286",
+        "estg_000800"
+      ],
+      "actor::condition": [
+        "estg_000206"
+      ],
+      "condition::constraint": [
+        "estg_000028",
+        "estg_000037",
+        "estg_000057",
+        "estg_000061",
+        "estg_000077",
+        "estg_000106",
+        "estg_000214",
+        "estg_000218",
+        "estg_000223",
+        "estg_000716"
+      ],
+      "condition::exception": [
+        "estg_000210"
+      ]
+    },
+    "sample_level_pair_counts": {
+      "action::actor": 1,
+      "action::condition": 8,
+      "action::constraint": 12,
+      "actor::condition": 3,
+      "condition::constraint": 21,
+      "condition::exception": 1
+    },
+    "sample_level_pair_samples": {
+      "action::actor": [
+        "estg_000020"
+      ],
+      "action::condition": [
+        "estg_000020",
+        "estg_000077",
+        "estg_000776",
+        "estg_000854"
+      ],
+      "action::constraint": [
+        "estg_000020",
+        "estg_000028",
+        "estg_000039",
+        "estg_000103",
+        "estg_000123",
+        "estg_000130",
+        "estg_000161",
+        "estg_000285",
+        "estg_000286",
+        "estg_000800"
+      ],
+      "actor::condition": [
+        "estg_000020",
+        "estg_000206",
+        "estg_000776"
+      ],
+      "condition::constraint": [
+        "estg_000020",
+        "estg_000028",
+        "estg_000037",
+        "estg_000039",
+        "estg_000057",
+        "estg_000061",
+        "estg_000077",
+        "estg_000106",
+        "estg_000214",
+        "estg_000218",
+        "estg_000223",
+        "estg_000716",
+        "estg_000776",
+        "estg_000854"
+      ],
+      "condition::exception": [
+        "estg_000210"
+      ]
+    },
+    "clause_level_condition_constraint_pairs": 11,
+    "clause_level_condition_constraint_samples": [
+      "estg_000028",
+      "estg_000037",
+      "estg_000057",
+      "estg_000061",
+      "estg_000077",
+      "estg_000106",
+      "estg_000214",
+      "estg_000218",
+      "estg_000223",
+      "estg_000716"
+    ],
+    "sample_level_condition_constraint_pairs": 21,
+    "sample_level_condition_constraint_samples": [
+      "estg_000020",
+      "estg_000028",
+      "estg_000037",
+      "estg_000039",
+      "estg_000057",
+      "estg_000061",
+      "estg_000077",
+      "estg_000106",
+      "estg_000214",
+      "estg_000218",
+      "estg_000223",
+      "estg_000716",
+      "estg_000776",
+      "estg_000854"
+    ],
+    "same_field_overlap_counts": {},
+    "exact_cross_field_overlap_counts": {}
+  },
+  "merged_span_overlap": {
+    "counts": {
+      "condition_only_sample": 15,
+      "constraint_only_sample": 28,
+      "hull_overlap": 43,
+      "hull_contains": 14,
+      "hull_contained_by": 17,
+      "both_present_no_hull_overlap": 64,
+      "hull_partial_overlap": 12
+    },
+    "overlap_samples": [
+      "estg_000020",
+      "estg_000028",
+      "estg_000037",
+      "estg_000039",
+      "estg_000046",
+      "estg_000056",
+      "estg_000057",
+      "estg_000060",
+      "estg_000061",
+      "estg_000062",
+      "estg_000070",
+      "estg_000075",
+      "estg_000077",
+      "estg_000079",
+      "estg_000080",
+      "estg_000094",
+      "estg_000106",
+      "estg_000124",
+      "estg_000131",
+      "estg_000133",
+      "estg_000143",
+      "estg_000164",
+      "estg_000173",
+      "estg_000206",
+      "estg_000207",
+      "estg_000208",
+      "estg_000210",
+      "estg_000214",
+      "estg_000218",
+      "estg_000222",
+      "estg_000223",
+      "estg_000232",
+      "estg_000247",
+      "estg_000283",
+      "estg_000306",
+      "estg_000375",
+      "estg_000414",
+      "estg_000507",
+      "estg_000509",
+      "estg_000716",
+      "estg_000776",
+      "estg_000800",
+      "estg_000854"
+    ]
+  },
+  "matrix_rows": [
+    {
+      "semantic_situation": "factual applicability trigger",
+      "feature_key": "factual_applicability_trigger",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 86,
+      "constraint_samples": 11,
+      "nested_constraint_samples": 3,
+      "condition_only_samples": 83,
+      "constraint_outside_samples": 10,
+      "example_supporting_cases": "estg_000037;estg_000061;estg_000077",
+      "example_counterexamples": "estg_000004;estg_000038;estg_000039;estg_000046;estg_000052",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "threshold on eligibility",
+      "feature_key": "threshold_eligibility",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 13,
+      "constraint_samples": 15,
+      "nested_constraint_samples": 1,
+      "condition_only_samples": 12,
+      "constraint_outside_samples": 14,
+      "example_supporting_cases": "estg_000106",
+      "example_counterexamples": "estg_000046;estg_000052;estg_000070;estg_000075;estg_000077",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "threshold on regulated action",
+      "feature_key": "threshold_regulated_action",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 12,
+      "constraint_samples": 15,
+      "nested_constraint_samples": 1,
+      "condition_only_samples": 11,
+      "constraint_outside_samples": 14,
+      "example_supporting_cases": "estg_000106",
+      "example_counterexamples": "estg_000046;estg_000052;estg_000070;estg_000075;estg_000077",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "duration",
+      "feature_key": "duration",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 19,
+      "constraint_samples": 34,
+      "nested_constraint_samples": 4,
+      "condition_only_samples": 15,
+      "constraint_outside_samples": 30,
+      "example_supporting_cases": "estg_000106;estg_000214;estg_000218;estg_000223",
+      "example_counterexamples": "estg_000002;estg_000027;estg_000031;estg_000044;estg_000051",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "deadline",
+      "feature_key": "deadline",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 23,
+      "constraint_samples": 24,
+      "nested_constraint_samples": 4,
+      "condition_only_samples": 18,
+      "constraint_outside_samples": 20,
+      "example_supporting_cases": "estg_000106;estg_000214;estg_000218;estg_000223",
+      "example_counterexamples": "estg_000027;estg_000030;estg_000040;estg_000052;estg_000056",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "frequency",
+      "feature_key": "frequency",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 2,
+      "constraint_samples": 8,
+      "nested_constraint_samples": 0,
+      "condition_only_samples": 2,
+      "constraint_outside_samples": 8,
+      "example_supporting_cases": "",
+      "example_counterexamples": "estg_000051;estg_000056;estg_000092;estg_000143;estg_000283",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "quantity threshold",
+      "feature_key": "quantity",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 45,
+      "constraint_samples": 49,
+      "nested_constraint_samples": 2,
+      "condition_only_samples": 44,
+      "constraint_outside_samples": 47,
+      "example_supporting_cases": "estg_000061;estg_000106",
+      "example_counterexamples": "estg_000027;estg_000030;estg_000037;estg_000040;estg_000046",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "percentage",
+      "feature_key": "percentage",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 3,
+      "constraint_samples": 10,
+      "nested_constraint_samples": 0,
+      "condition_only_samples": 3,
+      "constraint_outside_samples": 10,
+      "example_supporting_cases": "",
+      "example_counterexamples": "estg_000040;estg_000046;estg_000052;estg_000070;estg_000075",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "purpose limitation",
+      "feature_key": "purpose",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 10,
+      "constraint_samples": 5,
+      "nested_constraint_samples": 1,
+      "condition_only_samples": 7,
+      "constraint_outside_samples": 4,
+      "example_supporting_cases": "estg_000037",
+      "example_counterexamples": "estg_000027;estg_000077;estg_000106;estg_000108;estg_000109",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "legal reference",
+      "feature_key": "legal_reference",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 34,
+      "constraint_samples": 34,
+      "nested_constraint_samples": 2,
+      "condition_only_samples": 33,
+      "constraint_outside_samples": 32,
+      "example_supporting_cases": "estg_000061;estg_000106",
+      "example_counterexamples": "estg_000027;estg_000030;estg_000040;estg_000043;estg_000056",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "manner restriction",
+      "feature_key": "manner_restriction",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 25,
+      "constraint_samples": 33,
+      "nested_constraint_samples": 0,
+      "condition_only_samples": 25,
+      "constraint_outside_samples": 33,
+      "example_supporting_cases": "",
+      "example_counterexamples": "estg_000004;estg_000020;estg_000031;estg_000037;estg_000038",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "exception-like condition",
+      "feature_key": "exception_like",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 1,
+      "constraint_samples": 1,
+      "nested_constraint_samples": 0,
+      "condition_only_samples": 1,
+      "constraint_outside_samples": 1,
+      "example_supporting_cases": "",
+      "example_counterexamples": "estg_000070;estg_000210",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "exclusivity / exemplification",
+      "feature_key": "exclusivity",
+      "gold_pattern": "descriptive feature present in Gold spans; role is not fixed by the feature",
+      "condition_samples": 5,
+      "constraint_samples": 8,
+      "nested_constraint_samples": 0,
+      "condition_only_samples": 5,
+      "constraint_outside_samples": 8,
+      "example_supporting_cases": "",
+      "example_counterexamples": "estg_000020;estg_000039;estg_000059;estg_000131;estg_000133",
+      "stable_principle": "no_stable_lexical_or_topic_rule_identified",
+      "manual_review_required": true
+    },
+    {
+      "semantic_situation": "nested condition + constraint restriction",
+      "feature_key": "nested_restriction",
+      "gold_pattern": "Gold condition and Gold constraint spans overlap in the same clause; both relations occur",
+      "condition_samples": 10,
+      "constraint_samples": 10,
+      "nested_constraint_samples": 10,
+      "condition_only_samples": 116,
+      "constraint_outside_samples": 132,
+      "example_supporting_cases": "estg_000028;estg_000037;estg_000057;estg_000061;estg_000077;estg_000106;estg_000214;estg_000218",
+      "example_counterexamples": "",
+      "stable_principle": "condition_and_constraint_may_overlap",
+      "manual_review_required": true
+    }
+  ],
+  "source_text_anomaly": {
+    "targeted_arm_anomaly_count": 4,
+    "targeted_arm_anomalies": [
+      {
+        "arm": "A",
+        "sample_id": "estg_000044",
+        "line_no": 18,
+        "expected_length": 161,
+        "actual_length": 2512,
+        "appended_length": 2351,
+        "appended_prefix": "\n\n### E — Synthetic worked examples\n\nThese examples are synthetic and are not members of the formal evaluation set. They",
+        "spans_beyond_original_source": 0,
+        "original_slice_check_passed": true
+      },
+      {
+        "arm": "A",
+        "sample_id": "estg_000720",
+        "line_no": 141,
+        "expected_length": 215,
+        "actual_length": 2566,
+        "appended_length": 2351,
+        "appended_prefix": "\n\n### E — Synthetic worked examples\n\nThese examples are synthetic and are not members of the formal evaluation set. They",
+        "spans_beyond_original_source": 0,
+        "original_slice_check_passed": true
+      },
+      {
+        "arm": "C",
+        "sample_id": "estg_000035",
+        "line_no": 11,
+        "expected_length": 172,
+        "actual_length": 2523,
+        "appended_length": 2351,
+        "appended_prefix": "\n\n### E — Synthetic worked examples\n\nThese examples are synthetic and are not members of the formal evaluation set. They",
+        "spans_beyond_original_source": 0,
+        "original_slice_check_passed": true
+      },
+      {
+        "arm": "C",
+        "sample_id": "estg_000044",
+        "line_no": 18,
+        "expected_length": 161,
+        "actual_length": 2512,
+        "appended_length": 2351,
+        "appended_prefix": "\n\n### E — Synthetic worked examples\n\nThese examples are synthetic and are not members of the formal evaluation set. They",
+        "spans_beyond_original_source": 0,
+        "original_slice_check_passed": true
+      }
+    ],
+    "additional_same_pattern": []
+  },
+  "prediction_summary": {
+    "arms": {
+      "A": {
+        "fields": {
+          "actor": {
+            "gold_count": 41,
+            "pred_count": 91,
+            "matched_pred": 43,
+            "matched_gold": 39,
+            "unmatched_pred": 48,
+            "missed_gold": 2,
+            "hallucinated_field": 36,
+            "missed_field": 2,
+            "duplicate_overlap_pairs": 0,
+            "boundary_expansion": 5,
+            "boundary_exact": 30,
+            "boundary_unmatched": 48,
+            "boundary_contraction": 8
+          },
+          "action": {
+            "gold_count": 150,
+            "pred_count": 249,
+            "matched_pred": 218,
+            "matched_gold": 140,
+            "unmatched_pred": 31,
+            "missed_gold": 10,
+            "hallucinated_field": 0,
+            "missed_field": 5,
+            "duplicate_overlap_pairs": 0,
+            "boundary_unmatched": 31,
+            "boundary_contraction": 144,
+            "boundary_expansion": 22,
+            "boundary_exact": 29,
+            "boundary_shifted_partial": 23
+          },
+          "condition": {
+            "gold_count": 122,
+            "pred_count": 156,
+            "matched_pred": 137,
+            "matched_gold": 99,
+            "unmatched_pred": 19,
+            "missed_gold": 23,
+            "hallucinated_field": 7,
+            "missed_field": 17,
+            "duplicate_overlap_pairs": 0,
+            "boundary_unmatched": 19,
+            "boundary_contraction": 66,
+            "boundary_expansion": 9,
+            "boundary_exact": 56,
+            "boundary_shifted_partial": 6
+          },
+          "constraint": {
+            "gold_count": 135,
+            "pred_count": 136,
+            "matched_pred": 109,
+            "matched_gold": 75,
+            "unmatched_pred": 27,
+            "missed_gold": 60,
+            "hallucinated_field": 4,
+            "missed_field": 50,
+            "duplicate_overlap_pairs": 0,
+            "boundary_exact": 23,
+            "boundary_expansion": 2,
+            "boundary_contraction": 82,
+            "boundary_unmatched": 27,
+            "boundary_shifted_partial": 2
+          },
+          "exception": {
+            "gold_count": 11,
+            "pred_count": 6,
+            "matched_pred": 5,
+            "matched_gold": 5,
+            "unmatched_pred": 1,
+            "missed_gold": 6,
+            "hallucinated_field": 1,
+            "missed_field": 6,
+            "duplicate_overlap_pairs": 0,
+            "boundary_exact": 4,
+            "boundary_unmatched": 1,
+            "boundary_contraction": 1
+          }
+        },
+        "modality_confusion": {
+          "definition->definition": 7,
+          "definition->non_obligation": 1,
+          "definition->none": 1,
+          "definition->obligation": 14,
+          "definition->prohibition": 6,
+          "obligation->definition": 1,
+          "obligation->obligation": 57,
+          "obligation->permission": 1,
+          "permission->limitation": 1,
+          "permission->obligation": 1,
+          "permission->permission": 39,
+          "permission->prohibition": 1,
+          "prohibition->definition": 2,
+          "prohibition->prohibition": 18
+        }
+      },
+      "B": {
+        "fields": {
+          "actor": {
+            "gold_count": 41,
+            "pred_count": 70,
+            "matched_pred": 45,
+            "matched_gold": 39,
+            "unmatched_pred": 25,
+            "missed_gold": 2,
+            "hallucinated_field": 19,
+            "missed_field": 2,
+            "duplicate_overlap_pairs": 0,
+            "boundary_expansion": 5,
+            "boundary_exact": 28,
+            "boundary_unmatched": 25,
+            "boundary_contraction": 12
+          },
+          "action": {
+            "gold_count": 150,
+            "pred_count": 238,
+            "matched_pred": 221,
+            "matched_gold": 143,
+            "unmatched_pred": 17,
+            "missed_gold": 7,
+            "hallucinated_field": 0,
+            "missed_field": 6,
+            "duplicate_overlap_pairs": 0,
+            "boundary_unmatched": 17,
+            "boundary_contraction": 144,
+            "boundary_expansion": 23,
+            "boundary_shifted_partial": 25,
+            "boundary_exact": 29
+          },
+          "condition": {
+            "gold_count": 122,
+            "pred_count": 155,
+            "matched_pred": 136,
+            "matched_gold": 97,
+            "unmatched_pred": 19,
+            "missed_gold": 25,
+            "hallucinated_field": 7,
+            "missed_field": 20,
+            "duplicate_overlap_pairs": 1,
+            "boundary_unmatched": 19,
+            "boundary_exact": 56,
+            "boundary_expansion": 9,
+            "boundary_contraction": 65,
+            "boundary_shifted_partial": 6
+          },
+          "constraint": {
+            "gold_count": 135,
+            "pred_count": 137,
+            "matched_pred": 111,
+            "matched_gold": 82,
+            "unmatched_pred": 26,
+            "missed_gold": 53,
+            "hallucinated_field": 5,
+            "missed_field": 46,
+            "duplicate_overlap_pairs": 0,
+            "boundary_exact": 28,
+            "boundary_expansion": 3,
+            "boundary_contraction": 79,
+            "boundary_unmatched": 26,
+            "boundary_shifted_partial": 1
+          },
+          "exception": {
+            "gold_count": 11,
+            "pred_count": 7,
+            "matched_pred": 6,
+            "matched_gold": 6,
+            "unmatched_pred": 1,
+            "missed_gold": 5,
+            "hallucinated_field": 1,
+            "missed_field": 5,
+            "duplicate_overlap_pairs": 0,
+            "boundary_exact": 5,
+            "boundary_unmatched": 1,
+            "boundary_contraction": 1
+          }
+        },
+        "modality_confusion": {
+          "definition->None": 1,
+          "definition->definition": 7,
+          "definition->obligation": 14,
+          "definition->prohibition": 7,
+          "obligation->definition": 1,
+          "obligation->obligation": 57,
+          "obligation->permission": 1,
+          "permission->limitation": 1,
+          "permission->obligation": 2,
+          "permission->permission": 38,
+          "permission->prohibition": 1,
+          "prohibition->definition": 2,
+          "prohibition->prohibition": 18
+        }
+      },
+      "C": {
+        "fields": {
+          "actor": {
+            "gold_count": 41,
+            "pred_count": 88,
+            "matched_pred": 46,
+            "matched_gold": 40,
+            "unmatched_pred": 42,
+            "missed_gold": 1,
+            "hallucinated_field": 33,
+            "missed_field": 1,
+            "duplicate_overlap_pairs": 0,
+            "boundary_expansion": 5,
+            "boundary_exact": 29,
+            "boundary_unmatched": 42,
+            "boundary_contraction": 12
+          },
+          "action": {
+            "gold_count": 150,
+            "pred_count": 233,
+            "matched_pred": 211,
+            "matched_gold": 140,
+            "unmatched_pred": 22,
+            "missed_gold": 10,
+            "hallucinated_field": 0,
+            "missed_field": 6,
+            "duplicate_overlap_pairs": 0,
+            "boundary_unmatched": 22,
+            "boundary_contraction": 130,
+            "boundary_expansion": 24,
+            "boundary_exact": 35,
+            "boundary_shifted_partial": 22
+          },
+          "condition": {
+            "gold_count": 122,
+            "pred_count": 131,
+            "matched_pred": 119,
+            "matched_gold": 91,
+            "unmatched_pred": 12,
+            "missed_gold": 31,
+            "hallucinated_field": 6,
+            "missed_field": 30,
+            "duplicate_overlap_pairs": 1,
+            "boundary_unmatched": 12,
+            "boundary_exact": 52,
+            "boundary_expansion": 8,
+            "boundary_contraction": 52,
+            "boundary_shifted_partial": 7
+          },
+          "constraint": {
+            "gold_count": 135,
+            "pred_count": 202,
+            "matched_pred": 152,
+            "matched_gold": 97,
+            "unmatched_pred": 50,
+            "missed_gold": 38,
+            "hallucinated_field": 7,
+            "missed_field": 26,
+            "duplicate_overlap_pairs": 0,
+            "boundary_unmatched": 50,
+            "boundary_expansion": 7,
+            "boundary_contraction": 110,
+            "boundary_exact": 29,
+            "boundary_shifted_partial": 6
+          },
+          "exception": {
+            "gold_count": 11,
+            "pred_count": 5,
+            "matched_pred": 5,
+            "matched_gold": 5,
+            "unmatched_pred": 0,
+            "missed_gold": 6,
+            "hallucinated_field": 0,
+            "missed_field": 6,
+            "duplicate_overlap_pairs": 0,
+            "boundary_exact": 5
+          }
+        },
+        "modality_confusion": {
+          "definition->definition": 9,
+          "definition->obligation": 12,
+          "definition->permission": 1,
+          "definition->prohibition": 7,
+          "obligation->definition": 1,
+          "obligation->obligation": 57,
+          "obligation->permission": 1,
+          "permission->obligation": 2,
+          "permission->permission": 39,
+          "permission->prohibition": 1,
+          "prohibition->definition": 2,
+          "prohibition->permission": 1,
+          "prohibition->prohibition": 17
+        }
+      },
+      "D": {
+        "fields": {
+          "actor": {
+            "gold_count": 41,
+            "pred_count": 70,
+            "matched_pred": 42,
+            "matched_gold": 38,
+            "unmatched_pred": 28,
+            "missed_gold": 3,
+            "hallucinated_field": 23,
+            "missed_field": 2,
+            "duplicate_overlap_pairs": 0,
+            "boundary_expansion": 5,
+            "boundary_exact": 29,
+            "boundary_unmatched": 28,
+            "boundary_contraction": 8
+          },
+          "action": {
+            "gold_count": 150,
+            "pred_count": 230,
+            "matched_pred": 211,
+            "matched_gold": 139,
+            "unmatched_pred": 19,
+            "missed_gold": 11,
+            "hallucinated_field": 0,
+            "missed_field": 7,
+            "duplicate_overlap_pairs": 0,
+            "boundary_unmatched": 19,
+            "boundary_contraction": 137,
+            "boundary_expansion": 23,
+            "boundary_shifted_partial": 23,
+            "boundary_exact": 28
+          },
+          "condition": {
+            "gold_count": 122,
+            "pred_count": 128,
+            "matched_pred": 117,
+            "matched_gold": 88,
+            "unmatched_pred": 11,
+            "missed_gold": 34,
+            "hallucinated_field": 5,
+            "missed_field": 32,
+            "duplicate_overlap_pairs": 1,
+            "boundary_unmatched": 11,
+            "boundary_exact": 52,
+            "boundary_expansion": 7,
+            "boundary_contraction": 52,
+            "boundary_shifted_partial": 6
+          },
+          "constraint": {
+            "gold_count": 135,
+            "pred_count": 237,
+            "matched_pred": 179,
+            "matched_gold": 105,
+            "unmatched_pred": 58,
+            "missed_gold": 30,
+            "hallucinated_field": 8,
+            "missed_field": 21,
+            "duplicate_overlap_pairs": 2,
+            "boundary_unmatched": 58,
+            "boundary_expansion": 7,
+            "boundary_contraction": 134,
+            "boundary_exact": 32,
+            "boundary_shifted_partial": 6
+          },
+          "exception": {
+            "gold_count": 11,
+            "pred_count": 6,
+            "matched_pred": 6,
+            "matched_gold": 6,
+            "unmatched_pred": 0,
+            "missed_gold": 5,
+            "hallucinated_field": 0,
+            "missed_field": 5,
+            "duplicate_overlap_pairs": 0,
+            "boundary_exact": 6
+          }
+        },
+        "modality_confusion": {
+          "definition->definition": 9,
+          "definition->obligation": 13,
+          "definition->prohibition": 7,
+          "obligation->definition": 1,
+          "obligation->obligation": 57,
+          "obligation->permission": 1,
+          "permission->obligation": 1,
+          "permission->permission": 40,
+          "permission->prohibition": 1,
+          "prohibition->definition": 2,
+          "prohibition->prohibition": 18
+        }
+      }
+    },
+    "modality_patterns": {
+      "permission|permission|permission|permission": 39,
+      "prohibition|prohibition|prohibition|prohibition": 24,
+      "prohibition|prohibition|permission|prohibition": 1,
+      "obligation|obligation|obligation|obligation": 70,
+      "definition|definition|definition|definition": 10,
+      "limitation|limitation|permission|permission": 1,
+      "permission|obligation|obligation|permission": 1,
+      "none|None|definition|definition": 1,
+      "non_obligation|prohibition|prohibition|prohibition": 1,
+      "obligation|obligation|definition|definition": 1,
+      "obligation|obligation|permission|obligation": 1
+    },
+    "empty_gold_actor_false_positive": {
+      "A": 36,
+      "B": 19,
+      "C": 33,
+      "D": 23
+    },
+    "exception_samples": [
+      {
+        "sample_id": "estg_000055",
+        "status": {
+          "A": true,
+          "B": true,
+          "C": true,
+          "D": true
+        }
+      },
+      {
+        "sample_id": "estg_000083",
+        "status": {
+          "A": false,
+          "B": false,
+          "C": false,
+          "D": false
+        }
+      },
+      {
+        "sample_id": "estg_000109",
+        "status": {
+          "A": false,
+          "B": false,
+          "C": true,
+          "D": false
+        }
+      },
+      {
+        "sample_id": "estg_000111",
+        "status": {
+          "A": true,
+          "B": true,
+          "C": true,
+          "D": true
+        }
+      },
+      {
+        "sample_id": "estg_000206",
+        "status": {
+          "A": true,
+          "B": true,
+          "C": true,
+          "D": true
+        }
+      },
+      {
+        "sample_id": "estg_000210",
+        "status": {
+          "A": false,
+          "B": false,
+          "C": false,
+          "D": true
+        }
+      },
+      {
+        "sample_id": "estg_000273",
+        "status": {
+          "A": false,
+          "B": false,
+          "C": false,
+          "D": false
+        }
+      },
+      {
+        "sample_id": "estg_000293",
+        "status": {
+          "A": false,
+          "B": true,
+          "C": false,
+          "D": true
+        }
+      },
+      {
+        "sample_id": "estg_000457",
+        "status": {
+          "A": false,
+          "B": false,
+          "C": false,
+          "D": false
+        }
+      },
+      {
+        "sample_id": "estg_000507",
+        "status": {
+          "A": true,
+          "B": true,
+          "C": false,
+          "D": false
+        }
+      },
+      {
+        "sample_id": "estg_000773",
+        "status": {
+          "A": true,
+          "B": true,
+          "C": true,
+          "D": true
+        }
+      }
+    ],
+    "gold_condition_only_clauses": 152,
+    "gold_nested_condition_constraint_pairs": 11,
+    "gold_nested_condition_constraint_clauses": 10,
+    "gold_constraint_outside_condition_units": 291
+  }
+}
