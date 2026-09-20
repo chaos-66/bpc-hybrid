@@ -5043,3 +5043,17 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-20T09:07:59.654251+00:00 - GDPR Direct-74: accept and version non-semantic h1_transport usage-accounting binding update; create v2 preflight/contract/authorization artifacts
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：29 passed in 8.86s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`20549e6a89de1c9e6772fc79489f97f74b3b203b`；相关未提交路径：40 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Old h1_transport f9ef... -> new 5e54...; only _extract_usage cache-token accounting changed; 74/74 request bodies byte-identical; historical v1 artifacts preserved; v2 preflight/contract/auth event generated and validated by executor validators; no API call.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
