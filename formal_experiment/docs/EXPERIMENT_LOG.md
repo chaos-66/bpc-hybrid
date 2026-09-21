@@ -5113,3 +5113,17 @@
 - 仍存在 blocker：无
 - 备注：Read-only audit over published Gold + frozen arm predictions. Structure: 150 records/231 clauses/824 five-field spans, 0 malformed (every span text equals approved_text_en[start:end]). Provenance: 0/150 records accepted verbatim; action and condition edited 150/150, constraint 148 edited + 1 rejected. Boundary: only 6/302 constraints start with a condition marker, 11 overlapping condition/constraint pairs are the documented nested-constraint rule. Definitional breadth: 55.0% of our 302 constraints carry NO Sun marker class and only 37.7% carry one. Fairness: the overall Direct-LLM advantage stays positive in every matched view (+5.74 and +6.65 pp vs +7.47 pp on the published definition), but the constraint-field advantage is definition-sensitive (+2.14 / +7.98 vs +12.45 pp), so the paper must report constraint as a range and must not present the baseline as Sun's own reported numbers.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-21T07:43:30.651572+00:00 - CORRECTION: Stage 3 mutation panel is structurally sound (30/30 detectable); the degenerate per-type scores come from the detector's similarity grounding, not the benchmark (zero API, read-only)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：14 passed in 14.52s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`d034ecc3d959909877dc61437f1f477c8c34925f`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Corrects the earlier Table 3 verdict. The first probe compared the manifest's f_first_id/f_last_id (which are SEQUENCE-FLOW ids) against a node-level reachability relation, and additionally iterated control_flow.reachable_pairs as if they were tuples when they are objects ({source_ref,target_ref}) - both mistakes produced a false 'no change' result for out_of_order. The corrected probe compares each mutated BPMN against its unmutated original using direct edges, reachability and the manifest node pair, with no detector and no lexical similarity: missing_action 10/10 detectable (target activity removed, none added), incorrect_actor 10/10 (lane membership changes), out_of_order 10/10 (direct edges and reachability change and the manifest node pair's ordering reverses). Total 30/30. So the benchmark is sound and the earlier 0/30 scorer-separability result is a DETECTOR defect (similarity grounding below gamma), not a data defect. Remaining gap is the Gold evidence for order_relations (0/92 non-empty), which is one field of annotation rather than new BPMN construction.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

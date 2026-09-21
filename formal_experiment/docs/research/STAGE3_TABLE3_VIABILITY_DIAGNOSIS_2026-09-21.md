@@ -1,11 +1,17 @@
 # Stage 3 Table 3 viability diagnosis (2026-09-21)
 
 **Status:** read-only diagnostic. Zero LLM/API calls. Zero writes to Gold,
-panels, predictions or results. Both probes are scratch scripts under
-`formal_experiment/.tmp/`.
+panels, predictions or results. All three probes are tracked under
+`formal_experiment/scripts/`.
 
 **Purpose:** decide whether the paper's Table 3 can be built from the artifacts
 that already exist, before spending any further effort on it.
+
+**Bottom line:** the mutation benchmark is **sound** (30/30 mutations are
+structurally detectable), the 33-item gold is **not a benchmark**, and the
+reason current per-type scores are degenerate is the **detector's similarity
+grounding**, not the data. See §5 for the layer separation and §8 for the
+options.
 
 ---
 
@@ -105,58 +111,88 @@ pre-registered or transferable operating point.
   precondition with reason `action_mapping_below_gamma`; the 2 that are
   observable are already violations on the original.
 
-## 5. The deeper blocker: the relation annotations are empty
+## 5. The two failure layers must be separated (corrected finding)
 
-The published Gold Stage 3 Rule Records
+An earlier reading of this diagnosis concluded the mutation panel itself was
+defective. **That was wrong, and the correction matters.** The panel mutations
+are genuine and every one of them is detectable from the BPMN alone:
+
+`scripts/diagnose_stage3_mutation_detectability_v1.py` compares each mutated
+BPMN against its unmutated original using the canonical Stage 1 Process Record,
+with **no detector and no lexical similarity involved**:
+
+| target type | structurally detectable |
+|---|---|
+| missing_action | **10/10** (target activity removed, no activity added) |
+| incorrect_actor | **10/10** (target activity's lane membership changes) |
+| out_of_order | **10/10** (direct edges and reachability change; the manifest node pair's ordering genuinely reverses) |
+
+So the correct decomposition of the "0/30 separable" result in §3 is:
+
+| Layer | Question | Verdict |
+|---|---|---|
+| **Structural** | does the mutation actually change the process? | **yes, 30/30** |
+| **Lexical grounding** | can a similarity baseline map the rule's actions onto the process activities? | **no** — similarity falls below gamma |
+| **Measurability with the frozen scorer** | therefore, is the benchmark usable *with that scorer*? | **no, 0/30** |
+
+The defect is in the **detector's grounding path**, not in the benchmark. This
+is a materially better position for the paper: the benchmark can be used as
+soon as a correctly grounded detector exists.
+
+## 6. Why the grounding fails, in one sentence
+
+The frozen Sun reconstruction grounds rule actions onto BPMN activities by
+embedding similarity with a high threshold. GDPR article wording ("notify the
+supervisory authority without undue delay") and BPMN activity labels ("Send
+notification") share almost no surface vocabulary, so the mapping never clears
+gamma — which is why the originals scored as violating and why out_of_order
+had a zero denominator. A detector that consumes the Stage 2 Rule Record's
+already-extracted `actor_action_map` / `order_relations` **by identity**
+instead of re-deriving them by similarity does not have this failure mode.
+
+
+
+## 7. The relation annotations are still incomplete (separate issue)
+
+Independently of the above, the published Gold Stage 3 Rule Records
 (`data/gold/stage3/gdpr7_gold_rule_records_v1.json`, 9 rules / 74 sentences /
-92 normative items) carry both relation fields, but:
+92 normative items) carry both relation fields but:
 
 - `actor_action_map`: non-empty on only **38 of 92** nodes;
 - `order_relations`: non-empty on **0 of 92** nodes.
 
-The paper's central mechanism is that a better Stage 2 Rule Record carries
+The project's central mechanism is that a better Stage 2 Rule Record carries
 `actor_action_map` and `order_relations` that improve Stage 3 compliance
-checking. For `out_of_order` the Gold *evidence for that mechanism does not
-exist*: there is no ordering annotation anywhere to compare against. This also
-explains the recorded formal Oracle result, where out_of_order is
-"aggregate-observable but item denominator 0" and incorrect_actor is
-unobservable on 11/11 items.
+checking. For `out_of_order` the Gold currently holds **no ordering
+annotation at all** to compare against, and the development adapter that does
+extract relations produces 200 of them that never ground. This matches the
+recorded formal Oracle result (out_of_order item denominator 0;
+incorrect_actor unobservable on 11/11).
 
-## 6. What this means for the paper
+Note the distinction: this is a **Gold evidence gap for one field**, not a
+defect in the mutation panel.
 
-1. Table 3 as specified (three-type F1, predecessors vs ours, real mutations
-   plus compliant controls) **cannot be produced from existing artifacts.**
-2. The obstruction is not method quality. It is that the rule-to-process
-   grounding path — lexical/embedding similarity between rule text and BPMN
-   activity labels — does not establish the relations the three types need on
-   this corpus.
-3. Fixing it requires either (a) annotating order relations and actor-action
-   bindings in the Stage 3 Gold, which is a new human-annotation task, or
-   (b) changing the grounding so that relations are consumed by identity from
-   the Rule Record instead of being re-derived by similarity. Option (b) is
-   also the only version in which "our Stage 2 Rule Record improves Stage 3"
-   is a genuine mechanism rather than a correlation.
-
-## 7. Recommended options (decision required)
+## 8. Options (decision required)
 
 | # | Option | Cost | What the paper may claim |
 |---|---|---|---|
-| A | Build a gold-referenced grounding layer: consume `actor_action_map` / `order_relations` by identity from the Rule Record, then detect the three types; re-annotate the missing order relations. | Highest (new annotation + new detector) | "Our method outperforms predecessors on three-type compliance checking." Requires the benchmark to first pass the separability test above. |
-| B | Keep Table 3 as a **framework + feasibility** table: report that predecessors' per-type F1 is degenerate on this corpus, present the separability diagnostic as the explanation, and report the three-type results as exploratory. | Low | "We show why existing detection is degenerate here and what a measurable benchmark requires." Honest, publishable, no superiority claim. |
+| A | Build a correctly grounded three-type detector that consumes `actor_action_map` / `order_relations` by identity from the Stage 2 Rule Record, and add the missing order-relation annotation. The benchmark itself is already sound (30/30 structurally detectable), so no new BPMN work is needed. | Medium-high (new detector + one field of annotation) | "Our method outperforms predecessors on three-type compliance checking." |
+| B | Keep Table 3 as a **framework + feasibility** table: report that the similarity-based predecessors' per-type F1 is degenerate on this corpus, present the two-layer diagnostic as the explanation, and report the three-type results as exploratory. | Low | "We show why existing detection is degenerate here and what a measurable benchmark requires." Honest, publishable, no superiority claim. |
 | C | Drop three-type detection from the paper's claims; report Stage 3 only as a linkage/feasibility study and point to future work. | Lowest | Stage 1 + Stage 2 contributions only. |
 
 **Do not** select a threshold or a backend in order to make one method look
 better; the sweep above shows no such setting exists anyway, and choosing one
 post hoc would be result-driven selection.
 
-## 8. Reproduction
+## 9. Reproduction
 
 ```powershell
 cd formal_experiment
-python -W ignore scripts/diagnose_stage3_table3_viability_v1.py      # separability
+python -W ignore scripts/diagnose_stage3_table3_viability_v1.py        # scorer separability
 python -W ignore scripts/diagnose_stage3_table3_threshold_rootcause_v1.py  # sweep + root cause
+python -W ignore scripts/diagnose_stage3_mutation_detectability_v1.py  # structural detectability
 ```
 
-Both read only `data/development/stage3_synth/`,
+All three read only `data/development/stage3_synth/`,
 `data/development/human_review/stage3_gold_inference_v1.json`,
 `configs/sun_stage3_development_v1.json` and the frozen GDPR7 BPMN files.
