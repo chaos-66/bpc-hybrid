@@ -89,6 +89,31 @@ annotation**, not writing more detector code. Any attempt to fill it in
 automatically would be the agent authoring its own Ground Truth — exactly what
 the objective forbids ("no fabricated results").
 
+## 5b. The mechanism itself works — measured (added 2026-09-21, round 5)
+
+To make sure the conclusion above is not dodging solvable work, the detector
+mechanism was tested directly
+(`scripts/diagnose_stage3_binding_selfcheck_v1.py`, read-only):
+
+| Check | Result |
+|---|---|
+| `out_of_order` pairs whose **control** is forward-ordered only | **10/10** |
+| `out_of_order` pairs whose **variant** is the inversion | **10/10** |
+| order relations available from the **Gold** Rule Records | **0** (0 of 92 clauses) |
+| order relations available from the **real Direct-LLM capsule** | **0** (0 of 78 clauses) |
+
+So `out_of_order` is decidable **from the process side alone** — the control is
+ordered one way and the variant is its exact inversion. What is missing is
+purely the **rule-side endpoint binding**: the rules carry no ordering
+information anywhere, in either the Gold or the promoted Direct-LLM arm.
+
+This is the tightest form of the argument. The detector needs exactly one
+input that no artifact currently supplies, and the annotation surface for that
+input is built and blank
+(`data/development/stage3_synth/stage3_binding_annotation_blank_v1.json`,
+30 pairs, `review_state=unreviewed`). Once it is filled, the detector is
+mechanical work — no new method research is required.
+
 ## 6. The three honest paths
 
 | # | Path | What it needs | What the paper may claim |

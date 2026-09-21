@@ -5173,3 +5173,17 @@
 - 仍存在 blocker：无
 - 备注：New blank surface only; no decision value was inferred, copied or defaulted, and a guard test asserts every decision field stays None with review_state=unreviewed. Emitted at PAIR level (30 pairs, not 60 item rows) because a control and its variant describe the same rule action and target activity, so per-item rows would double the human work for no information gain. Each pair carries immutable read-only context (process, rule, target activity id AND human-readable name, the rule's action/actor spans with ids, the control and variant BPMN paths+hashes, the order pair, the structural observation) plus empty decision fields. The two limits an annotator must know are recorded in the artifact: the Gold carries zero order relations across 92 clauses, and only 38 of 92 clauses carry an actor_action_map.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-21T07:57:34.236559+00:00 - Stage 3 binding self-check: out_of_order mechanism works (control ordered 10/10, variant inverted 10/10) but the rule side carries zero ordering info in both Gold and Direct-LLM (zero API, read-only)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：5 passed in 0.05s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`c12badeeee5f07264e331992457246bd0121c049`；相关未提交路径：11 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Read-only. Confirms the detector mechanism is sound and isolates the single missing input. (1) For all 10 out_of_order pairs the CONTROL BPMN is forward-ordered only and the VARIANT is its exact inversion, so the type is decidable from the process side alone. (2) The rule side supplies no ordering information anywhere: the Gold Rule Records have 0 order relations across 92 clauses, and the promoted real Direct-LLM capsule has 0 across 78 clauses. Together these show the only missing input is the rule-side endpoint binding, whose annotation surface is built and blank at data/development/stage3_synth/stage3_binding_annotation_blank_v1.json. Once filled, the detector is mechanical work with no new method research.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
