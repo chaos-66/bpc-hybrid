@@ -1,0 +1,307 @@
+{
+  "boundary": {
+    "condition_constraint_overlapping_pairs": 11,
+    "condition_strictly_inside_constraint": 4,
+    "constraint_spans": 302,
+    "constraint_strictly_inside_condition": 7,
+    "constraints_starting_with_condition_marker": 6,
+    "identical_text_used_as_both_fields": [
+      "only under the following conditions"
+    ],
+    "nested_examples": [
+      {
+        "condition": "which, alone or together with construction expenditure, substantially increases the value in use of the building or subs",
+        "constraint": "alone or together with construction expenditure",
+        "sample_id": "estg_000057"
+      },
+      {
+        "condition": "have a normal useful life in the business of at least four years",
+        "constraint": "at least four years",
+        "sample_id": "estg_000106"
+      },
+      {
+        "condition": "are used in a domestic permanent establishment that serves to generate income within the meaning of Section 2(3) items 1",
+        "constraint": "within the meaning of Section 2(3) items 1 to 3",
+        "sample_id": "estg_000106"
+      },
+      {
+        "condition": "surrendered within twenty years from the conclusion of the contract",
+        "constraint": "within twenty years from the conclusion of the contract",
+        "sample_id": "estg_000214"
+      },
+      {
+        "condition": "to the extent that the amounts paid are refunded, in whole or in part, before the expiry of eight years from the conclus",
+        "constraint": "before the expiry of eight years from the conclusion of the contract",
+        "sample_id": "estg_000218"
+      }
+    ],
+    "verdict": "boundary applied consistently; the few overlaps are the documented nested-constraint rule, not label confusion"
+  },
+  "clauses": 231,
+  "fairness": {
+    "conclusion": "the Direct-LLM advantage over the rules baseline is NOT an artifact of the broader constraint definition: it stays positive in every matched view, while the constraint-field advantage shrinks as the definition is narrowed",
+    "direct_llm_advantage_survives_matched_view": true,
+    "matched_view_deltas_pp": [
+      5.737624345355197,
+      6.6479023009256455
+    ],
+    "new_llm_calls": 0,
+    "views": {
+      "full_gold_definition": {
+        "arms": {
+          "direct_llm": {
+            "constraint": {
+              "extracted": 175,
+              "f1": 0.7426621160409557,
+              "ground_truth": 135,
+              "matched_ground_truth": 96,
+              "matched_predictions": 136,
+              "misclassified": 39,
+              "missed": 39,
+              "precision": 0.7771428571428571,
+              "recall": 0.7111111111111111
+            },
+            "display_name": "Ours (Direct-LLM)",
+            "extracted": 590,
+            "f1": 0.8377685388362014,
+            "ground_truth": 459,
+            "matched_ground_truth": 371,
+            "matched_predictions": 513,
+            "per_field": {
+              "action": 0.9437163978494625,
+              "actor": 0.7578947368421053,
+              "condition": 0.8380185491408441,
+              "constraint": 0.7426621160409557,
+              "exception": 0.761904761904762
+            },
+            "precision": 0.8694915254237288,
+            "recall": 0.8082788671023965
+          },
+          "sun_rule_only": {
+            "constraint": {
+              "extracted": 330,
+              "f1": 0.6181622204257612,
+              "ground_truth": 135,
+              "matched_ground_truth": 93,
+              "matched_predictions": 185,
+              "misclassified": 145,
+              "missed": 42,
+              "precision": 0.5606060606060606,
+              "recall": 0.6888888888888889
+            },
+            "display_name": "Sun et al. (rules-only)",
+            "extracted": 892,
+            "f1": 0.7630963921754044,
+            "ground_truth": 459,
+            "matched_ground_truth": 386,
+            "matched_predictions": 623,
+            "per_field": {
+              "action": 0.8926856128973049,
+              "actor": 0.8203299152920196,
+              "condition": 0.7738369415016121,
+              "constraint": 0.6181622204257612,
+              "exception": 0.88
+            },
+            "precision": 0.6984304932735426,
+            "recall": 0.840958605664488
+          }
+        },
+        "constraint_gt_spans": 135,
+        "constraint_view": "all published constraints",
+        "delta_constraint_f1_pp": 12.449989561519448,
+        "delta_overall_f1_pp": 7.467214666079702
+      },
+      "matched_sun_marker_phrases": {
+        "arms": {
+          "direct_llm": {
+            "constraint": {
+              "extracted": 175,
+              "f1": 0.5613827744127641,
+              "ground_truth": 63,
+              "matched_ground_truth": 50,
+              "matched_predictions": 76,
+              "misclassified": 99,
+              "missed": 13,
+              "precision": 0.4342857142857143,
+              "recall": 0.7936507936507936
+            },
+            "display_name": "Ours (Direct-LLM)",
+            "extracted": 590,
+            "f1": 0.802182743467707,
+            "ground_truth": 387,
+            "matched_ground_truth": 325,
+            "matched_predictions": 453,
+            "per_field": {
+              "action": 0.9437163978494625,
+              "actor": 0.7578947368421053,
+              "condition": 0.8380185491408441,
+              "constraint": 0.5613827744127641,
+              "exception": 0.761904761904762
+            },
+            "precision": 0.7677966101694915,
+            "recall": 0.8397932816537468
+          },
+          "sun_rule_only": {
+            "constraint": {
+              "extracted": 330,
+              "f1": 0.5400159835597671,
+              "ground_truth": 63,
+              "matched_ground_truth": 55,
+              "matched_predictions": 129,
+              "misclassified": 201,
+              "missed": 8,
+              "precision": 0.39090909090909093,
+              "recall": 0.873015873015873
+            },
+            "display_name": "Sun et al. (rules-only)",
+            "extracted": 892,
+            "f1": 0.744806500014155,
+            "ground_truth": 387,
+            "matched_ground_truth": 348,
+            "matched_predictions": 567,
+            "per_field": {
+              "action": 0.8926856128973049,
+              "actor": 0.8203299152920196,
+              "condition": 0.7738369415016121,
+              "constraint": 0.5400159835597671,
+              "exception": 0.88
+            },
+            "precision": 0.6356502242152466,
+            "recall": 0.8992248062015504
+          }
+        },
+        "constraint_gt_spans": 63,
+        "constraint_view": "constraint restricted to Sun marker spans",
+        "delta_constraint_f1_pp": 2.1366790852996975,
+        "delta_overall_f1_pp": 5.737624345355197
+      },
+      "matched_sun_marker_phrases_and_numerals": {
+        "arms": {
+          "direct_llm": {
+            "constraint": {
+              "extracted": 175,
+              "f1": 0.6625463535228676,
+              "ground_truth": 85,
+              "matched_ground_truth": 67,
+              "matched_predictions": 100,
+              "misclassified": 75,
+              "missed": 18,
+              "precision": 0.5714285714285714,
+              "recall": 0.788235294117647
+            },
+            "display_name": "Ours (Direct-LLM)",
+            "extracted": 590,
+            "f1": 0.8220967412749167,
+            "ground_truth": 409,
+            "matched_ground_truth": 342,
+            "matched_predictions": 477,
+            "per_field": {
+              "action": 0.9437163978494625,
+              "actor": 0.7578947368421053,
+              "condition": 0.8380185491408441,
+              "constraint": 0.6625463535228676,
+              "exception": 0.761904761904762
+            },
+            "precision": 0.8084745762711865,
+            "recall": 0.8361858190709046
+          },
+          "sun_rule_only": {
+            "constraint": {
+              "extracted": 330,
+              "f1": 0.5827702702702702,
+              "ground_truth": 85,
+              "matched_ground_truth": 69,
+              "matched_predictions": 150,
+              "misclassified": 180,
+              "missed": 16,
+              "precision": 0.45454545454545453,
+              "recall": 0.8117647058823529
+            },
+            "display_name": "Sun et al. (rules-only)",
+            "extracted": 892,
+            "f1": 0.7556177182656603,
+            "ground_truth": 409,
+            "matched_ground_truth": 362,
+            "matched_predictions": 588,
+            "per_field": {
+              "action": 0.8926856128973049,
+              "actor": 0.8203299152920196,
+              "condition": 0.7738369415016121,
+              "constraint": 0.5827702702702702,
+              "exception": 0.88
+            },
+            "precision": 0.6591928251121076,
+            "recall": 0.8850855745721271
+          }
+        },
+        "constraint_gt_spans": 85,
+        "constraint_view": "constraint restricted to Sun marker spans",
+        "delta_constraint_f1_pp": 7.9776083252597445,
+        "delta_overall_f1_pp": 6.6479023009256455
+      }
+    }
+  },
+  "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+  "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+  "marker_coverage": {
+    "condition": {
+      "distinct": 210,
+      "no_marker_class_share": 0.3130841121495327,
+      "no_marker_class_spans": 67,
+      "spans": 214,
+      "sun_marker_share": 0.40654205607476634,
+      "sun_marker_spans": 87
+    },
+    "constraint": {
+      "distinct": 293,
+      "no_marker_class_share": 0.5496688741721855,
+      "no_marker_class_spans": 166,
+      "spans": 302,
+      "sun_marker_share": 0.37748344370860926,
+      "sun_marker_spans": 114
+    },
+    "note": "Sun Table 4 marker sets are published as INITIAL sets that Sun extends, so every count here is a lower bound",
+    "sun_marker_patterns": {
+      "comparison": "\\b(equal to|equivalent|same as|not less than|not greater than|at least|at most)\\b",
+      "numeral": "\\b\\d+\\b",
+      "quantity": "\\b(at least|at most|not more than|no more than|maximum|minimum|up to|more than|less than|exceed|exceeds|percent|%)\\b",
+      "time": "\\b(before|after|within|no later than|not later than|prior to|by the end of|deadline|period|day|days|week|weeks|month|months|year|years|hour|hours)\\b"
+    }
+  },
+  "provenance": {
+    "decision_counts": {
+      "action=edited": 150,
+      "actor=accepted": 1,
+      "actor=edited": 148,
+      "actor=rejected": 1,
+      "condition=edited": 150,
+      "constraint=accepted": 1,
+      "constraint=edited": 148,
+      "constraint=rejected": 1,
+      "exception=accepted": 3,
+      "exception=edited": 147,
+      "modality=accepted": 2,
+      "modality=edited": 148,
+      "translation=accepted": 139,
+      "translation=edited": 11
+    },
+    "records_with_all_six_decisions_accepted": 0,
+    "verdict": "human-adjudicated: every element decision was edited or rejected, not accepted verbatim"
+  },
+  "records": 150,
+  "report_id": "stage2_gold_definition_audit_v1",
+  "schema_version": "stage2_gold_definition_audit@1.0.0",
+  "structure": {
+    "all_span_texts_match_source_slice": true,
+    "malformed_count": 0,
+    "malformed_spans": [],
+    "per_field_spans": {
+      "action": 247,
+      "actor": 48,
+      "condition": 214,
+      "constraint": 302,
+      "exception": 13
+    },
+    "total_five_field_spans": 824
+  }
+}
