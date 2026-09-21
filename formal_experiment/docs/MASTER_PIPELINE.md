@@ -1152,28 +1152,32 @@ pending；**正式 S3.7 Oracle 主表未声明完成**（本轮为冻结评测�
 
 ### 论文 Table 3 可行性判定（PAPER-FINAL-REPAIR，2026-09-21，零 API，只读）
 
-**结论：现有产物无法支撑论文 Table 3 所需的「三类 per-type F1 + 前人 vs 本文」比较。**
+**结论：变异 benchmark 本身是健全的（30/30 结构性可检测），33 条 gold 不是 benchmark，
+而当前 per-type 分数退化的根因是**检测器的相似度 grounding**，不是数据。**
 完整诊断见 `docs/research/STAGE3_TABLE3_VIABILITY_DIAGNOSIS_2026-09-21.md`；复现脚本
 `scripts/diagnose_stage3_table3_viability_v1.py`、
-`scripts/diagnose_stage3_table3_threshold_rootcause_v1.py`。
+`scripts/diagnose_stage3_table3_threshold_rootcause_v1.py`、
+`scripts/diagnose_stage3_mutation_detectability_v1.py`。
 
 1. **33 条 violation gold 不是 benchmark**：33/33 条 `decision_violation_type` 逐字等于
    `check_type`，`decision_evidence` 为模板问句，无任何 BPMN 变异记录。它是
    check-point 决策集，保留为 provenance，**不得再作为 Table 3 的 F1 分母**。
-2. **30 条真变异面板不可测（结构性）**：用冻结 Sun 重建（τ/γ/ϑ=0.8）对**变异体与其
-   未变异原始体两侧**同时打分，**0/30 条目可分离**——原始体本已被判违规
-   （missing_action 10/10 落在 0.833–1.000）；`out_of_order` 在 10/10 变异体上**分母为 0**
-   （适配器在 25 个匹配对上确实抽出 200 条 order relations，但无一条映射到流程动作对）；
-   `incorrect_actor` 8/10 因 `action_mapping_below_gamma` 不可观察。按 config 自带 gamma
-   网格 {0.2,0.4,0.6,0.8,0.9} 扫描最多 1/30 → 缺陷是结构性的，**不是阈值问题**。
+2. **30 条真变异面板结构上完全可检测（30/30）**：用 Stage 1 Process Record 把每个变异体
+   与其未变异原始体对比，**不涉及任何检测器与相似度**——missing_action 10/10（目标活动被删、
+   无新增）、incorrect_actor 10/10（目标活动 lane 归属改变）、out_of_order 10/10
+   （direct edges 与 reachability 改变，且 manifest 节点对顺序确实反转）。
+3. **真正的分层**：结构性 = 健全（30/30）；**词面 grounding = 失败**（冻结 Sun 重建用
+   embedding 相似度 + 高阈值把规则动作映射到流程活动，GDPR 法条措辞与 BPMN 活动标签几乎无
+   共同词汇，映射始终低于 gamma）；**用该冻结 scorer 的可测性 = 0/30**。因此缺陷在
+   **检测器的 grounding 路径**，benchmark 可在一个正确 grounded 的检测器出现后立即使用。
    ⚠️ 不得把项目既有的 γ=0.6 → Macro-F1 0.8733 当作本面板可测的证据：该数字测于
    **33 条** 集合，两者不可混用。
-3. **更深阻塞**：已发布 Gold Rule Records 中 `actor_action_map` 仅 38/92 非空、
-   `order_relations` **0/92** 非空（与上文 §S3.7 根因诊断一致）。因此论文的
-   out_of_order 机制**没有可对照的 Gold 证据**。
+4. **仍存在的独立缺口（较窄）**：已发布 Gold Rule Records 中 `actor_action_map` 仅 38/92
+   非空、`order_relations` **0/92** 非空（与上文 §S3.7 根因诊断一致），因此 out_of_order
+   机制尚无 Gold 标注可对照。这是**一个字段的标注缺口**，不是需要重建 BPMN。
 
 **边界**：禁止为了让某方法显得更好而事后挑选阈值、后端或面板；上述扫描已表明不存在
-这样的设置。Table 3 取 A/B/C 哪一方案须由用户决定（见诊断文档 §7）。
+这样的设置。Table 3 取 A/B/C 哪一方案须由用户决定（见诊断文档 §8）。
 
 **过渡核账 successor v9**：`outputs/reports/s2_13_s3_7_transition_readiness_v9.json`
 （builder/verifier/schema/tests 齐备，verifier 全过）。v8 的 Gold-Rule-Record 三态
