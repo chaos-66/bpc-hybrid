@@ -1150,6 +1150,31 @@ absent）。Direct-LLM 胶囊不存在，故下游 LLM 臂保持 blocked。
 pending；**正式 S3.7 Oracle 主表未声明完成**（本轮为冻结评测面上的 Oracle 隔离运行，
 `formal_s3_7_authorization` 仍未授予）。真实 API 调用 = 0。
 
+### 论文 Table 3 可行性判定（PAPER-FINAL-REPAIR，2026-09-21，零 API，只读）
+
+**结论：现有产物无法支撑论文 Table 3 所需的「三类 per-type F1 + 前人 vs 本文」比较。**
+完整诊断见 `docs/research/STAGE3_TABLE3_VIABILITY_DIAGNOSIS_2026-09-21.md`；复现脚本
+`scripts/diagnose_stage3_table3_viability_v1.py`、
+`scripts/diagnose_stage3_table3_threshold_rootcause_v1.py`。
+
+1. **33 条 violation gold 不是 benchmark**：33/33 条 `decision_violation_type` 逐字等于
+   `check_type`，`decision_evidence` 为模板问句，无任何 BPMN 变异记录。它是
+   check-point 决策集，保留为 provenance，**不得再作为 Table 3 的 F1 分母**。
+2. **30 条真变异面板不可测（结构性）**：用冻结 Sun 重建（τ/γ/ϑ=0.8）对**变异体与其
+   未变异原始体两侧**同时打分，**0/30 条目可分离**——原始体本已被判违规
+   （missing_action 10/10 落在 0.833–1.000）；`out_of_order` 在 10/10 变异体上**分母为 0**
+   （适配器在 25 个匹配对上确实抽出 200 条 order relations，但无一条映射到流程动作对）；
+   `incorrect_actor` 8/10 因 `action_mapping_below_gamma` 不可观察。按 config 自带 gamma
+   网格 {0.2,0.4,0.6,0.8,0.9} 扫描最多 1/30 → 缺陷是结构性的，**不是阈值问题**。
+   ⚠️ 不得把项目既有的 γ=0.6 → Macro-F1 0.8733 当作本面板可测的证据：该数字测于
+   **33 条** 集合，两者不可混用。
+3. **更深阻塞**：已发布 Gold Rule Records 中 `actor_action_map` 仅 38/92 非空、
+   `order_relations` **0/92** 非空（与上文 §S3.7 根因诊断一致）。因此论文的
+   out_of_order 机制**没有可对照的 Gold 证据**。
+
+**边界**：禁止为了让某方法显得更好而事后挑选阈值、后端或面板；上述扫描已表明不存在
+这样的设置。Table 3 取 A/B/C 哪一方案须由用户决定（见诊断文档 §7）。
+
 **过渡核账 successor v9**：`outputs/reports/s2_13_s3_7_transition_readiness_v9.json`
 （builder/verifier/schema/tests 齐备，verifier 全过）。v8 的 Gold-Rule-Record 三态
 探测按设计 fail closed——候选一出现即拒绝；该候选的独立验证已完成，故 v9 用
@@ -1554,6 +1579,50 @@ label 另表。**迭代规则**：候选允许字段间 P/R trade-off；Agent �
 每批纪律：prompt/代码变更 + focused tests → 预算内真实 pilot（**逐批用户授权**）
 → 同口径重评 → delta 与原因记录 → keep/reject → `record_change.py` → 独立 commit
 + push。禁止读 Gold 反向调 prompt。
+
+### 8.7.2 论文 Table 1 / Table 2 最终口径（PAPER-FINAL-REPAIR，2026-09-21，零 API）
+
+**Table 1（Stage 2 六要素抽取，EStG-150 coarse sentence view）**
+`formal_experiment/outputs/reports/stage2_table1_paper_final_v1.{json,md}`
+（生成器 `scripts/build_stage2_table1_paper_final_v1.py`，只读冻结 Gold + 冻结两臂预测）。
+
+| Method | Modality macro-F1 | Actor | Action | Condition | Constraint | Exception | **Overall (pooled 5)** |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Sun et al.（rules-only） | 0.713 | **0.820** | 0.893 | 0.774 | 0.618 | **0.880** | 0.7631 |
+| Ours（Direct-LLM） | **0.769** | 0.758 | **0.944** | **0.838** | **0.743** | 0.762 | **0.8378** |
+
+Δ Overall = **+7.47 pp**（P 0.6984/R 0.8410 → P 0.8695/R 0.8083）。
+**口径修正（必须随表注写清）**：`evaluate_span_metrics` 原先的 `overall` 是**六字段**
+pooled 聚合，把 G0.4 合同声明不可用、且由 coarse transform 以 clause span 合成出来的
+modality span 计入（1 条/记录），既违约又混入近常数项；现以
+`pooled_five_span_fields`（仅 actor/action/condition/constraint/exception 的 micro pooled
+P/R/F1）为**唯一合同口径 overall**，旧六字段聚合降为显式 `NON_CANONICAL` provenance 字段。
+modality 一律以四类 **label** macro-F1 单列，绝不并入 overall。
+**同时必须承认**：Ours 并非全面领先——actor（−6.24 pp）与 exception（−11.81 pp）仍低于
+Sun，且 pooled F1 下 Sun 的 recall（0.8410）高于 Ours（0.8083）。论文只能写"多数要素更优
++ 总体更高 + 两项更低"，不得写全面胜出。
+
+**Table 2（Prompt Design 消融，同 prompt 家族同口径）**
+`formal_experiment/outputs/reports/stage2_table2_prompt_ablation_paper_final_v1.{json,md}`
+（生成器 `scripts/build_stage2_table2_prompt_ablation_v1.py`）。
+
+| Prompt arm | Overall (pooled 5) | Δ vs Full (pp) | 有效输出 |
+|---|---:|---:|---:|
+| Full (all modules) | 0.8224 | — | 150/150 |
+| Full − Examples (E) | 0.8142 | −0.83 | 150/150 |
+| Full − Guidance (S) | 0.8299 | +0.74 | 150/150 |
+| Full − JSON discipline (J) | 0.8268 | +0.43 | 150/150 |
+
+**这是"最后一次消融"，结论必须如实写**：三项删除在 pooled overall 上**都没有 95% CI
+排除 0**；可分离的字段效应**符号不一致**（−E 使 Condition F1 **+4.22 pp** [+1.33,+7.78]；
+−J 使 Action F1 **+3.47 pp** [+0.67,+6.80]）。因此**不能**声称"三个模块各自提升总体
+F1"。结构性限制同时写入报告：E 与 S 承载重叠信息，leave-one-out 只能测"移除另一载体后
+的残差"；coarse view 仅 459 个 Gold span，功效不足以分离小效应；每臂仅 1 次重复。
+**J 的处置**：四臂合法输出均 150/150，删除 J 不降低 overall，故 J 一律作为
+**Base Output Contract（接口/合法性保证）**呈现，**不得**再写成提升准确率的 prompt 模块。
+**禁止**：本轮之后不再为让某个模块变正而调 prompt、不再新增模块或消融臂。
+
+
 
 ## 8.8 导师汇报确认与方向锁定（2026-08-08）
 

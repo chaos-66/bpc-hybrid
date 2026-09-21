@@ -77,6 +77,18 @@ No threshold setting makes the panel separable. The user's own earlier note
 that Sun reaches Macro-F1 0.8733 at gamma=0.6 does not transfer to this panel:
 at gamma=0.6 the separable count here is still 0/30.
 
+**Important distinction.** The 0.8733 figure comes from
+`outputs/reports/s35_sun_stage3_threshold_sensitivity_v1` and was measured on
+the **33-item human violation gold**, not on the 30-item mutation panel. At
+gamma=0.6 the best-observed setting there gives Missing 1.0 /
+Incorrect-actor 0.7778 / Out-of-order 0.8421 with 4 unobservable. That result
+therefore shows the *scorer* can discriminate on the 33-item set at a tuned
+threshold; it does **not** show that the mutation panel is measurable. On the
+mutation panel the same scorer yields 0/30 separable at every gamma in the
+grid. The two panels must not be conflated, and the gamma=0.6 setting is
+recorded in the project's own config as a *tested value*, not as a
+pre-registered or transferable operating point.
+
 **Root causes, measured:**
 
 - **out_of_order is structurally unobservable.** The detector's denominator on
