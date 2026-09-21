@@ -32,6 +32,8 @@ from bpc_hybrid.g04_coarse_view import (  # noqa: E402
     semantic_hash_json,
 )
 from bpc_hybrid.formal_stage2_evaluation import (  # noqa: E402
+    LEGACY_SIX_FIELD_METRIC_ID,
+    POOLED_METRIC_ID,
     evaluate_modality_labels,
     evaluate_span_metrics,
     predictions_to_evaluator,
@@ -167,6 +169,57 @@ def test_coarse_span_metrics_match_historical_per_field() -> None:
     for field, want in expected.items():
         got = round(metrics["span_fields"][field]["f1"], 4)
         assert abs(got - want) < 0.0002, f"{field}: {got} vs {want}"
+
+
+def test_overall_metric_pools_exactly_the_five_span_fields() -> None:
+    """G0.4 contract alignment: the overall score MUST pool exactly the five
+    span-bearing fields.  Modality evidence spans are unavailable in the
+    published decision-only Gold and must never be aggregated (and never
+    zeroed) into the overall metric.
+
+    The two frozen formal arms are evaluated here so the recorded paper
+    numbers are asserted, not just the shape of the report.
+    """
+    coarse = build_coarse_view(GOLD)
+    expected = {
+        # arm -> (pooled P, pooled R, pooled F1)
+        "b0_formal_arm_v1": (0.6984, 0.8410, 0.7631),
+        "direct_llm_formal_arm_v1": (0.8695, 0.8083, 0.8378),
+    }
+    for arm, (want_p, want_r, want_f1) in expected.items():
+        path = (ROOT / "data" / "predictions" / arm / "predictions.json")
+        if not path.exists():
+            pytest.skip(f"{arm} predictions unavailable")
+        attempts = predictions_to_evaluator(
+            json.loads(path.read_text(encoding="utf-8"))["records"])
+        metrics = evaluate_span_metrics(
+            coarse, attempts,
+            dataset_id="independently_reconstructed_estg_150_v1",
+            method_id=arm, view="coarse_sentence_level")
+
+        assert metrics["pooled_metric_id"] == POOLED_METRIC_ID
+        assert metrics["pooled_aggregation"] == (
+            "micro_pooled_over_five_span_bearing_fields")
+        pooled = metrics["pooled_five_span_fields"]
+        assert abs(pooled["precision"] - want_p) < 0.0002
+        assert abs(pooled["recall"] - want_r) < 0.0002
+        assert abs(pooled["f1"] - want_f1) < 0.0002
+
+        # the pooled counters are exactly the sum over the five span fields
+        assert set(metrics["span_fields"]) == {
+            "actor", "action", "condition", "constraint", "exception"}
+        assert pooled["ground_truth"] == 459
+        assert metrics["modality_span"]["available"] is False
+        assert metrics["modality_span"]["aggregated_into_any_main_metric"] is False
+
+        # the legacy six-field aggregate is retained but flagged non-canonical
+        legacy = metrics[LEGACY_SIX_FIELD_METRIC_ID]
+        assert legacy["canonical"] is False
+        assert legacy["f1"] != pooled["f1"], (
+            "legacy aggregate must be distinguishable from the pooled metric")
+        # legacy = pooled + the modality span counters, which the coarse
+        # transform synthesizes; it must have strictly more ground truth.
+        assert legacy["ground_truth"] > pooled["ground_truth"]
 
 
 def test_modality_labels_separate() -> None:

@@ -1,0 +1,257 @@
+{
+  "arms": {
+    "direct_llm": {
+      "arm_directory": "direct_llm_formal_arm_v1",
+      "display_name": "Ours (Direct-LLM)",
+      "modality_labels": {
+        "accuracy": 0.8333333333333334,
+        "classes": [
+          "obligation",
+          "permission",
+          "prohibition",
+          "definition"
+        ],
+        "macro_f1": 0.7694506979014613,
+        "per_class": [
+          {
+            "class": "obligation",
+            "f1": 0.9206349206349207,
+            "precision": 0.8656716417910447,
+            "recall": 0.9830508474576272
+          },
+          {
+            "class": "permission",
+            "f1": 0.9302325581395349,
+            "precision": 0.9090909090909091,
+            "recall": 0.9523809523809523
+          },
+          {
+            "class": "prohibition",
+            "f1": 0.7391304347826088,
+            "precision": 0.6538461538461539,
+            "recall": 0.85
+          },
+          {
+            "class": "definition",
+            "f1": 0.4878048780487806,
+            "precision": 0.8333333333333334,
+            "recall": 0.3448275862068966
+          }
+        ],
+        "records": 150,
+        "unlabeled_predictions": 1
+      },
+      "overall_pooled_five_span_fields": {
+        "extracted": 590,
+        "f1": 0.8377685388362014,
+        "ground_truth": 459,
+        "matched_ground_truth": 371,
+        "matched_predictions": 513,
+        "misclassified": 77,
+        "missed": 88,
+        "precision": 0.8694915254237288,
+        "recall": 0.8082788671023965
+      },
+      "pooled_metric_id": "pooled_five_span_fields",
+      "predictions_path": "data/predictions/direct_llm_formal_arm_v1/predictions.json",
+      "predictions_sha256": "bbadb6834572e58fb8321204b3bc975c887d23d9ae60bd804bf91137bb46072b",
+      "span_fields": {
+        "action": {
+          "extracted": 210,
+          "f1": 0.9437163978494625,
+          "ground_truth": 150,
+          "precision": 0.9761904761904762,
+          "recall": 0.9133333333333333
+        },
+        "actor": {
+          "extracted": 60,
+          "f1": 0.7578947368421053,
+          "ground_truth": 41,
+          "precision": 0.6666666666666666,
+          "recall": 0.8780487804878049
+        },
+        "condition": {
+          "extracted": 135,
+          "f1": 0.8380185491408441,
+          "ground_truth": 122,
+          "precision": 0.9185185185185185,
+          "recall": 0.7704918032786885
+        },
+        "constraint": {
+          "extracted": 175,
+          "f1": 0.7426621160409557,
+          "ground_truth": 135,
+          "precision": 0.7771428571428571,
+          "recall": 0.7111111111111111
+        },
+        "exception": {
+          "extracted": 10,
+          "f1": 0.761904761904762,
+          "ground_truth": 11,
+          "precision": 0.8,
+          "recall": 0.7272727272727273
+        }
+      },
+      "view": "coarse_sentence_level"
+    },
+    "sun_rule_only": {
+      "arm_directory": "b0_formal_arm_v1",
+      "display_name": "Sun et al. (rules-only)",
+      "modality_labels": {
+        "accuracy": 0.74,
+        "classes": [
+          "obligation",
+          "permission",
+          "prohibition",
+          "definition"
+        ],
+        "macro_f1": 0.712845542257307,
+        "per_class": [
+          {
+            "class": "obligation",
+            "f1": 0.8,
+            "precision": 0.7105263157894737,
+            "recall": 0.9152542372881356
+          },
+          {
+            "class": "permission",
+            "f1": 0.8051948051948051,
+            "precision": 0.8857142857142857,
+            "recall": 0.7380952380952381
+          },
+          {
+            "class": "prohibition",
+            "f1": 0.7647058823529412,
+            "precision": 0.9285714285714286,
+            "recall": 0.65
+          },
+          {
+            "class": "definition",
+            "f1": 0.48148148148148145,
+            "precision": 0.52,
+            "recall": 0.4482758620689655
+          }
+        ],
+        "records": 150,
+        "unlabeled_predictions": 0
+      },
+      "overall_pooled_five_span_fields": {
+        "extracted": 892,
+        "f1": 0.7630963921754044,
+        "ground_truth": 459,
+        "matched_ground_truth": 386,
+        "matched_predictions": 623,
+        "misclassified": 269,
+        "missed": 73,
+        "precision": 0.6984304932735426,
+        "recall": 0.840958605664488
+      },
+      "pooled_metric_id": "pooled_five_span_fields",
+      "predictions_path": "data/predictions/b0_formal_arm_v1/predictions.json",
+      "predictions_sha256": "fa94991d246db9876b55d6a473644a4a1b93404bc35d3e314d3dba4768d9278d",
+      "span_fields": {
+        "action": {
+          "extracted": 244,
+          "f1": 0.8926856128973049,
+          "ground_truth": 150,
+          "precision": 0.8729508196721312,
+          "recall": 0.9133333333333333
+        },
+        "actor": {
+          "extracted": 65,
+          "f1": 0.8203299152920196,
+          "ground_truth": 41,
+          "precision": 0.7076923076923077,
+          "recall": 0.975609756097561
+        },
+        "condition": {
+          "extracted": 239,
+          "f1": 0.7738369415016121,
+          "ground_truth": 122,
+          "precision": 0.702928870292887,
+          "recall": 0.860655737704918
+        },
+        "constraint": {
+          "extracted": 330,
+          "f1": 0.6181622204257612,
+          "ground_truth": 135,
+          "precision": 0.5606060606060606,
+          "recall": 0.6888888888888889
+        },
+        "exception": {
+          "extracted": 14,
+          "f1": 0.88,
+          "ground_truth": 11,
+          "precision": 0.7857142857142857,
+          "recall": 1.0
+        }
+      },
+      "view": "coarse_sentence_level"
+    }
+  },
+  "dataset_id": "independently_reconstructed_estg_150_v1",
+  "evaluation_contract": {
+    "contract": "g04_evaluation_views_contract@1.0.0",
+    "match_rule": "independent same-field any-nonempty-character-span intersection (Sun literal-overlap contract)",
+    "modality_policy": "four-class label macro-F1 reported separately; modality evidence spans are unavailable in the published decision-only Gold and are never aggregated into the overall score",
+    "overall_aggregation": "micro_pooled_over_five_span_bearing_fields",
+    "overall_fields": [
+      "actor",
+      "action",
+      "condition",
+      "constraint",
+      "exception"
+    ],
+    "overall_metric_id": "pooled_five_span_fields"
+  },
+  "field_deltas_ours_minus_baseline": {
+    "action": {
+      "baseline_f1": 0.8926856128973049,
+      "delta_f1": 0.051030784952157626,
+      "delta_f1_pp": 5.103078495215763,
+      "ours_f1": 0.9437163978494625,
+      "winner": "ours"
+    },
+    "actor": {
+      "baseline_f1": 0.8203299152920196,
+      "delta_f1": -0.06243517844991431,
+      "delta_f1_pp": -6.24351784499143,
+      "ours_f1": 0.7578947368421053,
+      "winner": "baseline"
+    },
+    "condition": {
+      "baseline_f1": 0.7738369415016121,
+      "delta_f1": 0.06418160763923197,
+      "delta_f1_pp": 6.418160763923197,
+      "ours_f1": 0.8380185491408441,
+      "winner": "ours"
+    },
+    "constraint": {
+      "baseline_f1": 0.6181622204257612,
+      "delta_f1": 0.12449989561519448,
+      "delta_f1_pp": 12.449989561519448,
+      "ours_f1": 0.7426621160409557,
+      "winner": "ours"
+    },
+    "exception": {
+      "baseline_f1": 0.88,
+      "delta_f1": -0.11809523809523803,
+      "delta_f1_pp": -11.809523809523803,
+      "ours_f1": 0.761904761904762,
+      "winner": "baseline"
+    }
+  },
+  "fields_won_by_baseline": 2,
+  "fields_won_by_ours": 3,
+  "overall_pooled_delta_pp": 7.467214666079702,
+  "report_id": "stage2_table1_paper_final_v1",
+  "sample_count": 150,
+  "schema_version": "stage2_table1_paper_final@1.0.0",
+  "source_artifacts": {
+    "evaluator": "bpc_hybrid.formal_stage2_evaluation + bpc_hybrid.stage2_sun_literal_overlap + bpc_hybrid.g04_coarse_view",
+    "gold_path": "data/gold/stage2/estg150_formal_gold_v1.json",
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+    "llm_calls_performed": 0
+  },
+  "view": "coarse_sentence_level"
+}

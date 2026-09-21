@@ -5057,3 +5057,17 @@
 - 仍存在 blocker：无
 - 备注：Old h1_transport f9ef... -> new 5e54...; only _extract_usage cache-token accounting changed; 74/74 request bodies byte-identical; historical v1 artifacts preserved; v2 preflight/contract/auth event generated and validated by executor validators; no API call.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-21T07:24:25.647150+00:00 - Stage 2 evaluator: contract-aligned pooled_five_span_fields overall metric + paper Table 1 capsule (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：14 passed in 15.46s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`5e2767ab4c8130b86fb913e907707baf3a2136d5`；相关未提交路径：14 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：G0.4 contract alignment: the overall score now pools exactly actor/action/condition/constraint/exception; the legacy six-field aggregate (which folded in the contract-forbidden synthetic modality clause-span fallback) is retained only as a non-canonical provenance field. New builder scripts/build_stage2_table1_paper_final_v1.py regenerates Table 1 from frozen Gold + frozen arm predictions (0 LLM calls).
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
