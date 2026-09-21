@@ -1,0 +1,188 @@
+{
+  "schema_version": "sep_c3_definition_full150_confirmation_precheck@1.0.0",
+  "status": "BLOCKED_HISTORICAL_A_INCOMPATIBLE",
+  "api_calls_made": 0,
+  "real_confirmation_run_launched": false,
+  "input_freeze": {
+    "path": "data/input/estg150_formal_inference_input_v2.json",
+    "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "record_count": 150,
+    "unique_sample_ids": 150,
+    "panel_input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "targeted_budget_input_sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "matches_panel": true,
+    "matches_targeted_budget": true,
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+    "gold_matches_panel": true
+  },
+  "r_def_prompt_freeze": {
+    "system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+    "user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+    "composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+    "candidate_manifest_system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+    "targeted_panel_system_sha256": "95c234ab44357411fb493f7b3ed46a29e76ada91f02ce3d2c1cd6b7af0496843",
+    "candidate_manifest_user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+    "targeted_panel_user_sha256": "ff181879858f08641b40a3e8799fa32e16235f70544b809cac7fddf9962797f5",
+    "candidate_manifest_composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+    "targeted_panel_composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07",
+    "matches_candidate_manifest": true,
+    "matches_targeted_panel": true,
+    "r_def_text_sha256": "dd76bb3cf6ef4f845c2c19bb7911707a988154da6d9817901a426a3e55f85344",
+    "r_def_text_matches_approved_constant": true
+  },
+  "historical_a": {
+    "path": "outputs/development/sep_c3_targeted_refinement_v1/A/repeat-01/canonical_predictions.jsonl",
+    "sha256": "79a5ee8fcbf1e2a0b9e5ed4494cd68caa8fc886903cf5c67286cb1746b5e2072",
+    "raw_path": "outputs/development/sep_c3_targeted_refinement_v1/A/repeat-01/raw_responses.jsonl",
+    "row_count": 150,
+    "unique_sample_ids": 150,
+    "membership_matches_frozen_150": true,
+    "order_matches_frozen_input": true,
+    "prompt_hashes_match_active_A_and_panel": true,
+    "recorded_official_five_field_mean_f1": 0.7245765761849047,
+    "recomputed_official_five_field_mean_f1": 0.7245765761849047,
+    "official_recompute_matches_recorded": true,
+    "legacy_request_status_ok": 150,
+    "legacy_transport_or_provider_errors": 0,
+    "current_contract_recheck": {
+      "input_binding_pass": 148,
+      "input_binding_fail": 2,
+      "input_binding_fail_samples": [
+        {
+          "sample_id": "estg_000044",
+          "errors": [
+            "source_text_mismatch"
+          ]
+        },
+        {
+          "sample_id": "estg_000720",
+          "errors": [
+            "source_text_mismatch"
+          ]
+        }
+      ],
+      "canonical_validation_pass": 140,
+      "canonical_validation_fail": 10,
+      "canonical_validation_fail_samples": [
+        {
+          "sample_id": "estg_000052",
+          "errors": [
+            "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'limitation'"
+          ]
+        },
+        {
+          "sample_id": "estg_000062",
+          "errors": [
+            "clauses[1].order_relations[0].evidence[0] span text 'and' does not match source_text[268:271]='ess'"
+          ]
+        },
+        {
+          "sample_id": "estg_000112",
+          "errors": [
+            "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'none'",
+            "clauses[1].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'none'",
+            "clauses[2].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'none'",
+            "clauses[3].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'none'",
+            "clauses[4].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'none'"
+          ]
+        },
+        {
+          "sample_id": "estg_000218",
+          "errors": [
+            "clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'non_obligation'"
+          ]
+        },
+        {
+          "sample_id": "estg_000286",
+          "errors": [
+            "clauses[3].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'unsupported'"
+          ]
+        },
+        {
+          "sample_id": "estg_000393",
+          "errors": [
+            "clauses[0].order_relations[0].evidence must be an array"
+          ]
+        },
+        {
+          "sample_id": "estg_000457",
+          "errors": [
+            "clauses[0].order_relations[0].evidence must be an array"
+          ]
+        },
+        {
+          "sample_id": "estg_000525",
+          "errors": [
+            "clauses[0].order_relations[0].evidence must be an array"
+          ]
+        },
+        {
+          "sample_id": "estg_000635",
+          "errors": [
+            "clauses[0].order_relations[0].evidence must be an array"
+          ]
+        },
+        {
+          "sample_id": "estg_000861",
+          "errors": [
+            "clauses[0].order_relations[0].evidence must be an array"
+          ]
+        }
+      ],
+      "union_fail_count": 12,
+      "union_fail_samples": [
+        "estg_000044",
+        "estg_000052",
+        "estg_000062",
+        "estg_000112",
+        "estg_000218",
+        "estg_000286",
+        "estg_000393",
+        "estg_000457",
+        "estg_000525",
+        "estg_000635",
+        "estg_000720",
+        "estg_000861"
+      ],
+      "rescored_five_field_mean_f1_failures_empty": 0.7080951816362215,
+      "rescored_five_field_micro_f1_failures_empty": 0.7680147139322546,
+      "rescored_modality_accuracy_failures_empty": 0.7466666666666667,
+      "delta_from_legacy_rescore": -0.016481394548683137
+    },
+    "directly_comparable_to_current_validation_contract": false,
+    "incompatibility_reasons": [
+      "Historical A canonical predictions were produced before the current runner recorded input-binding and canonical-validation status; the stored rows therefore lack those status fields.",
+      "Under the current validation path, 2/150 A rows fail frozen-input source_text binding and 10/150 fail canonical schema/cross-field validation; 12 unique rows fail at least one gate.",
+      "A current-contract re-score that treats those 12 failures as empty (the current failure policy) changes the official coarse five-field mean F1 from 0.7245765762 to 0.7080951816, a material -0.016481 point difference.",
+      "Running R_DEF under the current validation path and comparing it to the legacy A record view would not be a same-contract comparison; re-scoring A would alter the historical arm, which the task forbids."
+    ]
+  },
+  "evaluator_dry_check": {
+    "full_150_A_attempts": {
+      "status": "pass",
+      "denominator": 150,
+      "failed_count": 0,
+      "five_field_mean_f1": 0.7245765761849047
+    },
+    "full_150_empty_attempts": {
+      "status": "pass",
+      "denominator": 150,
+      "failed_count": 150,
+      "five_field_mean_f1": 0.0
+    },
+    "targeted_42_subset_attempts": {
+      "status": "SunLiteralOverlapError: attempt membership differs from Gold: missing=['estg_000002', 'estg_000003', 'estg_000004', 'estg_000020', 'estg_000021'], extra=[]",
+      "note": "Documentation only; not used for the full-150 confirmation. The targeted run had to use a panel-slice evaluator because the full evaluator requires the complete 150-record Gold envelope."
+    },
+    "conclusion": "Full-150 evaluator dry check passes with 150 prediction envelopes; subset membership failure is avoided by supplying all 150 frozen samples."
+  },
+  "gold_inaccessibility": {
+    "api_calls_made": 0,
+    "generation_launched": false,
+    "r_def_prompt_contains_no_gold_fields": true,
+    "targeted_leakage_audit_status": "PASS",
+    "note": "No model call was made. R_DEF prompt hash is frozen; the prompt does not contain Gold labels/spans, and the targeted leakage audit remains the applicable prompt-level leak check. Gold is read only for offline scoring dry checks in this precheck."
+  },
+  "decision": "STOP before API: historical A is not directly comparable under the current input-binding/canonical-validation contract. No R_DEF full-150 calls were sent and no arm was modified.",
+  "required_next_step": "Obtain a current-pipeline re-run/validation of Arm A on the same frozen 150 samples, or obtain separate authorization to redefine the comparison contract, before launching the R_DEF confirmation run."
+}

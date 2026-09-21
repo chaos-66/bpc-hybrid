@@ -8,7 +8,7 @@
 - USD cap: `0.18`; RMB cap (at 7.2): `1.3`
 - Request set hash: `1ac203ec1b2bc4e4a4ac3b057788abe79b9fbf143b981ea635dc238925bdaf04`
 - Candidate pack hash: `512b06b8f847caac98e53059570e5473017cb8da2a9620ae394fd9fd02d5102e`
-- Execution command: `python formal_experiment/scripts/run_s3_semantic_grounding_llm_v1.py --real --authorization outputs/reports/s3_semantic_grounding_v2_llm_authorization.json`
+- Execution command: `cd formal_experiment && python scripts/run_s3_semantic_grounding_llm_v1.py --real --authorization outputs/reports/s3_semantic_grounding_v2_llm_authorization.json`
 
 ## Exact one-sentence authorization
 

@@ -1,0 +1,31 @@
+{
+  "schema_version": "sep_c3_definition_targeted_authorization_event@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-TARGETED-REFINEMENT-001",
+  "status": "authorized",
+  "decision": "AUTHORIZED_FOR_EXECUTION",
+  "authorized_by_user": true,
+  "authorization_text": "I authorize execution of exactly the already frozen suite: historical Arm A: reuse read-only, 0 new calls; BASE: 42 new calls; R_DEF: 42 new calls; total planned new calls: 84. The user also decided that schema-required sample_id and source_id fields are non-semantic opaque interface identifiers and exempt from the strict no-concrete-sample-ID rendered-prompt rule; substantive leakage checks remain enforced.",
+  "authorization_text_sha256": "3677c0df357e9adb9c3ba5fc4739d318659c8b43c23f5f04f69e2d3e29e2503d",
+  "model": "deepseek-v4-pro",
+  "provider": "openai_compatible",
+  "new_calls": 84,
+  "planned_calls": 84,
+  "call_cap": 84,
+  "retry": 0,
+  "arms": {
+    "A": 0,
+    "BASE": 42,
+    "R_DEF": 42
+  },
+  "interface_identifier_exemption": {
+    "name": "schema_required_interface_identifier_echo",
+    "fields": [
+      "sample_id",
+      "source_id"
+    ],
+    "scope": "existing schema-required identity echo only",
+    "gold_labels_spans_modalities_exposed": false,
+    "surrogate_or_remapping_added": false
+  },
+  "created_at_utc": "2026-09-20T06:20:49.641340+00:00"
+}

@@ -1,0 +1,2341 @@
+{
+  "schema_version": "sep_c3_definition_targeted_refinement_analysis@1.0.0",
+  "suite_id": "SEP-C3-DEFINITION-TARGETED-REFINEMENT-001",
+  "status": "post_execution_analysis_complete",
+  "scope": "targeted development diagnostic; not an unbiased estimate of overall EStG performance",
+  "api_calls": {
+    "A": 0,
+    "BASE": 42,
+    "R_DEF": 42,
+    "total": 84
+  },
+  "retry_protocol": {
+    "policy": "retry=0, unchanged",
+    "attempts_per_scheduled_request": 1,
+    "rationale": "Changing the frozen zero-retry runner would require separate attempt accounting and retryable-status classification; the real transport redacts HTTP status.  The frozen protocol was therefore left unchanged, and any infrastructure failures are reported separately from semantic model failures."
+  },
+  "targeted_clause_set": {
+    "n_clauses": 45,
+    "modality_counts": {
+      "definition": 25,
+      "obligation": 10,
+      "permission": 4,
+      "prohibition": 6
+    },
+    "non_definition_count": 20,
+    "slice_counts": {
+      "A": 15,
+      "C": 12,
+      "B": 15,
+      "D": 6
+    }
+  },
+  "arm_metrics": {
+    "A": {
+      "arm": "A",
+      "n_clauses": 45,
+      "modality_accuracy": 0.4666666666666667,
+      "definition_precision": 1.0,
+      "definition_recall": 0.16,
+      "definition_f1": 0.2758620689655173,
+      "confusion": {
+        "definition->definition": 4,
+        "definition->non_obligation": 1,
+        "definition->obligation": 15,
+        "definition->prohibition": 5,
+        "obligation->MISSING": 1,
+        "obligation->obligation": 8,
+        "obligation->permission": 1,
+        "permission->obligation": 1,
+        "permission->permission": 3,
+        "prohibition->prohibition": 6
+      },
+      "definition_to_obligation_count": 15,
+      "obligation_to_definition_count": 0,
+      "prohibition_to_definition_count": 0,
+      "permission_to_definition_count": 0,
+      "definition_action_present_count": 20,
+      "definition_empty_action_count": 5,
+      "definition_action_presence_fraction": 0.8,
+      "definition_missing_count": 0,
+      "definition_empty_action_keys": [
+        [
+          "estg_000164",
+          "c1"
+        ],
+        [
+          "estg_000195",
+          "c1"
+        ],
+        [
+          "estg_000208",
+          "c4"
+        ],
+        [
+          "estg_000273",
+          "c1"
+        ],
+        [
+          "estg_000664",
+          "c1"
+        ]
+      ],
+      "definition_missing_keys": [],
+      "b_controls": {
+        "n": 15,
+        "modality_accuracy": 0.9333333333333333,
+        "false_definition_count": 0,
+        "false_definition_rate": 0.0,
+        "false_definition_keys": [],
+        "per_gold_label": {
+          "obligation": {
+            "n": 6,
+            "correct": 6,
+            "false_definition": 0,
+            "missing": 0
+          },
+          "prohibition": {
+            "n": 6,
+            "correct": 6,
+            "false_definition": 0,
+            "missing": 0
+          },
+          "permission": {
+            "n": 3,
+            "correct": 2,
+            "false_definition": 0,
+            "missing": 0
+          }
+        }
+      },
+      "non_definition_shall": {
+        "n": 18,
+        "false_definition_count": 0,
+        "false_definition_rate": 0.0,
+        "false_definition_keys": []
+      },
+      "all_non_definition": {
+        "n": 20,
+        "false_definition_count": 0,
+        "false_definition_rate": 0.0,
+        "false_definition_keys": []
+      },
+      "by_slice": {
+        "A": {
+          "n": 15,
+          "modality_accuracy": 0.0,
+          "definition_n": 15,
+          "definition_recall": 0.0
+        },
+        "B": {
+          "n": 15,
+          "modality_accuracy": 0.9333333333333333,
+          "definition_n": 0,
+          "definition_recall": null
+        },
+        "C": {
+          "n": 12,
+          "modality_accuracy": 0.3333333333333333,
+          "definition_n": 7,
+          "definition_recall": 0.14285714285714285
+        },
+        "D": {
+          "n": 6,
+          "modality_accuracy": 0.5,
+          "definition_n": 6,
+          "definition_recall": 0.5
+        }
+      }
+    },
+    "BASE": {
+      "arm": "BASE",
+      "n_clauses": 45,
+      "modality_accuracy": 0.5111111111111111,
+      "definition_precision": 1.0,
+      "definition_recall": 0.36,
+      "definition_f1": 0.5294117647058824,
+      "confusion": {
+        "definition->MISSING": 3,
+        "definition->definition": 9,
+        "definition->obligation": 7,
+        "definition->prohibition": 6,
+        "obligation->MISSING": 4,
+        "obligation->obligation": 5,
+        "obligation->permission": 1,
+        "permission->obligation": 1,
+        "permission->permission": 3,
+        "prohibition->prohibition": 6
+      },
+      "definition_to_obligation_count": 7,
+      "obligation_to_definition_count": 0,
+      "prohibition_to_definition_count": 0,
+      "permission_to_definition_count": 0,
+      "definition_action_present_count": 22,
+      "definition_empty_action_count": 3,
+      "definition_action_presence_fraction": 0.88,
+      "definition_missing_count": 3,
+      "definition_empty_action_keys": [
+        [
+          "estg_000164",
+          "c1"
+        ],
+        [
+          "estg_000417",
+          "c1"
+        ],
+        [
+          "estg_000854",
+          "c1"
+        ]
+      ],
+      "definition_missing_keys": [
+        [
+          "estg_000164",
+          "c1"
+        ],
+        [
+          "estg_000417",
+          "c1"
+        ],
+        [
+          "estg_000854",
+          "c1"
+        ]
+      ],
+      "b_controls": {
+        "n": 15,
+        "modality_accuracy": 0.8,
+        "false_definition_count": 0,
+        "false_definition_rate": 0.0,
+        "false_definition_keys": [],
+        "per_gold_label": {
+          "obligation": {
+            "n": 6,
+            "correct": 4,
+            "false_definition": 0,
+            "missing": 2
+          },
+          "prohibition": {
+            "n": 6,
+            "correct": 6,
+            "false_definition": 0,
+            "missing": 0
+          },
+          "permission": {
+            "n": 3,
+            "correct": 2,
+            "false_definition": 0,
+            "missing": 0
+          }
+        }
+      },
+      "non_definition_shall": {
+        "n": 18,
+        "false_definition_count": 0,
+        "false_definition_rate": 0.0,
+        "false_definition_keys": []
+      },
+      "all_non_definition": {
+        "n": 20,
+        "false_definition_count": 0,
+        "false_definition_rate": 0.0,
+        "false_definition_keys": []
+      },
+      "by_slice": {
+        "A": {
+          "n": 15,
+          "modality_accuracy": 0.4,
+          "definition_n": 15,
+          "definition_recall": 0.4
+        },
+        "B": {
+          "n": 15,
+          "modality_accuracy": 0.8,
+          "definition_n": 0,
+          "definition_recall": null
+        },
+        "C": {
+          "n": 12,
+          "modality_accuracy": 0.16666666666666666,
+          "definition_n": 7,
+          "definition_recall": 0.0
+        },
+        "D": {
+          "n": 6,
+          "modality_accuracy": 0.5,
+          "definition_n": 6,
+          "definition_recall": 0.5
+        }
+      }
+    },
+    "R_DEF": {
+      "arm": "R_DEF",
+      "n_clauses": 45,
+      "modality_accuracy": 0.7333333333333333,
+      "definition_precision": 0.95,
+      "definition_recall": 0.76,
+      "definition_f1": 0.8444444444444444,
+      "confusion": {
+        "definition->MISSING": 3,
+        "definition->definition": 19,
+        "definition->obligation": 2,
+        "definition->prohibition": 1,
+        "obligation->MISSING": 1,
+        "obligation->definition": 1,
+        "obligation->obligation": 7,
+        "obligation->permission": 1,
+        "permission->obligation": 1,
+        "permission->permission": 3,
+        "prohibition->MISSING": 2,
+        "prohibition->prohibition": 4
+      },
+      "definition_to_obligation_count": 2,
+      "obligation_to_definition_count": 1,
+      "prohibition_to_definition_count": 0,
+      "permission_to_definition_count": 0,
+      "definition_action_present_count": 22,
+      "definition_empty_action_count": 3,
+      "definition_action_presence_fraction": 0.88,
+      "definition_missing_count": 3,
+      "definition_empty_action_keys": [
+        [
+          "estg_000218",
+          "c1"
+        ],
+        [
+          "estg_000509",
+          "c2"
+        ],
+        [
+          "estg_000800",
+          "c1"
+        ]
+      ],
+      "definition_missing_keys": [
+        [
+          "estg_000218",
+          "c1"
+        ],
+        [
+          "estg_000509",
+          "c2"
+        ],
+        [
+          "estg_000800",
+          "c1"
+        ]
+      ],
+      "b_controls": {
+        "n": 15,
+        "modality_accuracy": 0.7333333333333333,
+        "false_definition_count": 0,
+        "false_definition_rate": 0.0,
+        "false_definition_keys": [],
+        "per_gold_label": {
+          "obligation": {
+            "n": 6,
+            "correct": 5,
+            "false_definition": 0,
+            "missing": 1
+          },
+          "prohibition": {
+            "n": 6,
+            "correct": 4,
+            "false_definition": 0,
+            "missing": 2
+          },
+          "permission": {
+            "n": 3,
+            "correct": 2,
+            "false_definition": 0,
+            "missing": 0
+          }
+        }
+      },
+      "non_definition_shall": {
+        "n": 18,
+        "false_definition_count": 0,
+        "false_definition_rate": 0.0,
+        "false_definition_keys": []
+      },
+      "all_non_definition": {
+        "n": 20,
+        "false_definition_count": 1,
+        "false_definition_rate": 0.05,
+        "false_definition_keys": [
+          [
+            "estg_000306",
+            "c1"
+          ]
+        ]
+      },
+      "by_slice": {
+        "A": {
+          "n": 15,
+          "modality_accuracy": 0.8,
+          "definition_n": 15,
+          "definition_recall": 0.8
+        },
+        "B": {
+          "n": 15,
+          "modality_accuracy": 0.7333333333333333,
+          "definition_n": 0,
+          "definition_recall": null
+        },
+        "C": {
+          "n": 12,
+          "modality_accuracy": 0.5,
+          "definition_n": 7,
+          "definition_recall": 0.42857142857142855
+        },
+        "D": {
+          "n": 6,
+          "modality_accuracy": 0.6666666666666666,
+          "definition_n": 6,
+          "definition_recall": 0.6666666666666666
+        }
+      }
+    }
+  },
+  "comparisons": {
+    "A_to_BASE": {
+      "from": "A",
+      "to": "BASE",
+      "corrected_count": 6,
+      "regressed_count": 4,
+      "corrected_cases": [
+        {
+          "sample_id": "estg_000293",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000302",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000522",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000572",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000773",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000776",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        }
+      ],
+      "regressed_cases": [
+        {
+          "sample_id": "estg_000056",
+          "clause_id": "c1",
+          "gold_modality": "obligation",
+          "from_prediction": "obligation",
+          "to_prediction": null,
+          "slices": [
+            "C"
+          ]
+        },
+        {
+          "sample_id": "estg_000075",
+          "clause_id": "c1",
+          "gold_modality": "obligation",
+          "from_prediction": "obligation",
+          "to_prediction": null,
+          "slices": [
+            "B"
+          ]
+        },
+        {
+          "sample_id": "estg_000164",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "definition",
+          "to_prediction": null,
+          "slices": [
+            "C"
+          ]
+        },
+        {
+          "sample_id": "estg_000635",
+          "clause_id": "c1",
+          "gold_modality": "obligation",
+          "from_prediction": "obligation",
+          "to_prediction": null,
+          "slices": [
+            "B"
+          ]
+        }
+      ],
+      "arm_metrics": {
+        "A": {
+          "arm": "A",
+          "n_clauses": 45,
+          "modality_accuracy": 0.4666666666666667,
+          "definition_precision": 1.0,
+          "definition_recall": 0.16,
+          "definition_f1": 0.2758620689655173,
+          "confusion": {
+            "definition->definition": 4,
+            "definition->non_obligation": 1,
+            "definition->obligation": 15,
+            "definition->prohibition": 5,
+            "obligation->MISSING": 1,
+            "obligation->obligation": 8,
+            "obligation->permission": 1,
+            "permission->obligation": 1,
+            "permission->permission": 3,
+            "prohibition->prohibition": 6
+          },
+          "definition_to_obligation_count": 15,
+          "obligation_to_definition_count": 0,
+          "prohibition_to_definition_count": 0,
+          "permission_to_definition_count": 0,
+          "definition_action_present_count": 20,
+          "definition_empty_action_count": 5,
+          "definition_action_presence_fraction": 0.8,
+          "definition_missing_count": 0,
+          "definition_empty_action_keys": [
+            [
+              "estg_000164",
+              "c1"
+            ],
+            [
+              "estg_000195",
+              "c1"
+            ],
+            [
+              "estg_000208",
+              "c4"
+            ],
+            [
+              "estg_000273",
+              "c1"
+            ],
+            [
+              "estg_000664",
+              "c1"
+            ]
+          ],
+          "definition_missing_keys": [],
+          "b_controls": {
+            "n": 15,
+            "modality_accuracy": 0.9333333333333333,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": [],
+            "per_gold_label": {
+              "obligation": {
+                "n": 6,
+                "correct": 6,
+                "false_definition": 0,
+                "missing": 0
+              },
+              "prohibition": {
+                "n": 6,
+                "correct": 6,
+                "false_definition": 0,
+                "missing": 0
+              },
+              "permission": {
+                "n": 3,
+                "correct": 2,
+                "false_definition": 0,
+                "missing": 0
+              }
+            }
+          },
+          "non_definition_shall": {
+            "n": 18,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "all_non_definition": {
+            "n": 20,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "by_slice": {
+            "A": {
+              "n": 15,
+              "modality_accuracy": 0.0,
+              "definition_n": 15,
+              "definition_recall": 0.0
+            },
+            "B": {
+              "n": 15,
+              "modality_accuracy": 0.9333333333333333,
+              "definition_n": 0,
+              "definition_recall": null
+            },
+            "C": {
+              "n": 12,
+              "modality_accuracy": 0.3333333333333333,
+              "definition_n": 7,
+              "definition_recall": 0.14285714285714285
+            },
+            "D": {
+              "n": 6,
+              "modality_accuracy": 0.5,
+              "definition_n": 6,
+              "definition_recall": 0.5
+            }
+          }
+        },
+        "BASE": {
+          "arm": "BASE",
+          "n_clauses": 45,
+          "modality_accuracy": 0.5111111111111111,
+          "definition_precision": 1.0,
+          "definition_recall": 0.36,
+          "definition_f1": 0.5294117647058824,
+          "confusion": {
+            "definition->MISSING": 3,
+            "definition->definition": 9,
+            "definition->obligation": 7,
+            "definition->prohibition": 6,
+            "obligation->MISSING": 4,
+            "obligation->obligation": 5,
+            "obligation->permission": 1,
+            "permission->obligation": 1,
+            "permission->permission": 3,
+            "prohibition->prohibition": 6
+          },
+          "definition_to_obligation_count": 7,
+          "obligation_to_definition_count": 0,
+          "prohibition_to_definition_count": 0,
+          "permission_to_definition_count": 0,
+          "definition_action_present_count": 22,
+          "definition_empty_action_count": 3,
+          "definition_action_presence_fraction": 0.88,
+          "definition_missing_count": 3,
+          "definition_empty_action_keys": [
+            [
+              "estg_000164",
+              "c1"
+            ],
+            [
+              "estg_000417",
+              "c1"
+            ],
+            [
+              "estg_000854",
+              "c1"
+            ]
+          ],
+          "definition_missing_keys": [
+            [
+              "estg_000164",
+              "c1"
+            ],
+            [
+              "estg_000417",
+              "c1"
+            ],
+            [
+              "estg_000854",
+              "c1"
+            ]
+          ],
+          "b_controls": {
+            "n": 15,
+            "modality_accuracy": 0.8,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": [],
+            "per_gold_label": {
+              "obligation": {
+                "n": 6,
+                "correct": 4,
+                "false_definition": 0,
+                "missing": 2
+              },
+              "prohibition": {
+                "n": 6,
+                "correct": 6,
+                "false_definition": 0,
+                "missing": 0
+              },
+              "permission": {
+                "n": 3,
+                "correct": 2,
+                "false_definition": 0,
+                "missing": 0
+              }
+            }
+          },
+          "non_definition_shall": {
+            "n": 18,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "all_non_definition": {
+            "n": 20,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "by_slice": {
+            "A": {
+              "n": 15,
+              "modality_accuracy": 0.4,
+              "definition_n": 15,
+              "definition_recall": 0.4
+            },
+            "B": {
+              "n": 15,
+              "modality_accuracy": 0.8,
+              "definition_n": 0,
+              "definition_recall": null
+            },
+            "C": {
+              "n": 12,
+              "modality_accuracy": 0.16666666666666666,
+              "definition_n": 7,
+              "definition_recall": 0.0
+            },
+            "D": {
+              "n": 6,
+              "modality_accuracy": 0.5,
+              "definition_n": 6,
+              "definition_recall": 0.5
+            }
+          }
+        }
+      }
+    },
+    "A_to_R_DEF": {
+      "from": "A",
+      "to": "R_DEF",
+      "corrected_count": 15,
+      "regressed_count": 3,
+      "corrected_cases": [
+        {
+          "sample_id": "estg_000037",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000071",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "C"
+          ]
+        },
+        {
+          "sample_id": "estg_000080",
+          "clause_id": "c4",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000083",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "prohibition",
+          "to_prediction": "definition",
+          "slices": [
+            "C"
+          ]
+        },
+        {
+          "sample_id": "estg_000083",
+          "clause_id": "c2",
+          "gold_modality": "definition",
+          "from_prediction": "prohibition",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000087",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "prohibition",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000293",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000302",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000414",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000417",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "D"
+          ]
+        },
+        {
+          "sample_id": "estg_000522",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000572",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000773",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000776",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000854",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        }
+      ],
+      "regressed_cases": [
+        {
+          "sample_id": "estg_000635",
+          "clause_id": "c1",
+          "gold_modality": "obligation",
+          "from_prediction": "obligation",
+          "to_prediction": null,
+          "slices": [
+            "B"
+          ]
+        },
+        {
+          "sample_id": "estg_000716",
+          "clause_id": "c1",
+          "gold_modality": "prohibition",
+          "from_prediction": "prohibition",
+          "to_prediction": null,
+          "slices": [
+            "B"
+          ]
+        },
+        {
+          "sample_id": "estg_000716",
+          "clause_id": "c2",
+          "gold_modality": "prohibition",
+          "from_prediction": "prohibition",
+          "to_prediction": null,
+          "slices": [
+            "B"
+          ]
+        }
+      ],
+      "arm_metrics": {
+        "A": {
+          "arm": "A",
+          "n_clauses": 45,
+          "modality_accuracy": 0.4666666666666667,
+          "definition_precision": 1.0,
+          "definition_recall": 0.16,
+          "definition_f1": 0.2758620689655173,
+          "confusion": {
+            "definition->definition": 4,
+            "definition->non_obligation": 1,
+            "definition->obligation": 15,
+            "definition->prohibition": 5,
+            "obligation->MISSING": 1,
+            "obligation->obligation": 8,
+            "obligation->permission": 1,
+            "permission->obligation": 1,
+            "permission->permission": 3,
+            "prohibition->prohibition": 6
+          },
+          "definition_to_obligation_count": 15,
+          "obligation_to_definition_count": 0,
+          "prohibition_to_definition_count": 0,
+          "permission_to_definition_count": 0,
+          "definition_action_present_count": 20,
+          "definition_empty_action_count": 5,
+          "definition_action_presence_fraction": 0.8,
+          "definition_missing_count": 0,
+          "definition_empty_action_keys": [
+            [
+              "estg_000164",
+              "c1"
+            ],
+            [
+              "estg_000195",
+              "c1"
+            ],
+            [
+              "estg_000208",
+              "c4"
+            ],
+            [
+              "estg_000273",
+              "c1"
+            ],
+            [
+              "estg_000664",
+              "c1"
+            ]
+          ],
+          "definition_missing_keys": [],
+          "b_controls": {
+            "n": 15,
+            "modality_accuracy": 0.9333333333333333,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": [],
+            "per_gold_label": {
+              "obligation": {
+                "n": 6,
+                "correct": 6,
+                "false_definition": 0,
+                "missing": 0
+              },
+              "prohibition": {
+                "n": 6,
+                "correct": 6,
+                "false_definition": 0,
+                "missing": 0
+              },
+              "permission": {
+                "n": 3,
+                "correct": 2,
+                "false_definition": 0,
+                "missing": 0
+              }
+            }
+          },
+          "non_definition_shall": {
+            "n": 18,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "all_non_definition": {
+            "n": 20,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "by_slice": {
+            "A": {
+              "n": 15,
+              "modality_accuracy": 0.0,
+              "definition_n": 15,
+              "definition_recall": 0.0
+            },
+            "B": {
+              "n": 15,
+              "modality_accuracy": 0.9333333333333333,
+              "definition_n": 0,
+              "definition_recall": null
+            },
+            "C": {
+              "n": 12,
+              "modality_accuracy": 0.3333333333333333,
+              "definition_n": 7,
+              "definition_recall": 0.14285714285714285
+            },
+            "D": {
+              "n": 6,
+              "modality_accuracy": 0.5,
+              "definition_n": 6,
+              "definition_recall": 0.5
+            }
+          }
+        },
+        "R_DEF": {
+          "arm": "R_DEF",
+          "n_clauses": 45,
+          "modality_accuracy": 0.7333333333333333,
+          "definition_precision": 0.95,
+          "definition_recall": 0.76,
+          "definition_f1": 0.8444444444444444,
+          "confusion": {
+            "definition->MISSING": 3,
+            "definition->definition": 19,
+            "definition->obligation": 2,
+            "definition->prohibition": 1,
+            "obligation->MISSING": 1,
+            "obligation->definition": 1,
+            "obligation->obligation": 7,
+            "obligation->permission": 1,
+            "permission->obligation": 1,
+            "permission->permission": 3,
+            "prohibition->MISSING": 2,
+            "prohibition->prohibition": 4
+          },
+          "definition_to_obligation_count": 2,
+          "obligation_to_definition_count": 1,
+          "prohibition_to_definition_count": 0,
+          "permission_to_definition_count": 0,
+          "definition_action_present_count": 22,
+          "definition_empty_action_count": 3,
+          "definition_action_presence_fraction": 0.88,
+          "definition_missing_count": 3,
+          "definition_empty_action_keys": [
+            [
+              "estg_000218",
+              "c1"
+            ],
+            [
+              "estg_000509",
+              "c2"
+            ],
+            [
+              "estg_000800",
+              "c1"
+            ]
+          ],
+          "definition_missing_keys": [
+            [
+              "estg_000218",
+              "c1"
+            ],
+            [
+              "estg_000509",
+              "c2"
+            ],
+            [
+              "estg_000800",
+              "c1"
+            ]
+          ],
+          "b_controls": {
+            "n": 15,
+            "modality_accuracy": 0.7333333333333333,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": [],
+            "per_gold_label": {
+              "obligation": {
+                "n": 6,
+                "correct": 5,
+                "false_definition": 0,
+                "missing": 1
+              },
+              "prohibition": {
+                "n": 6,
+                "correct": 4,
+                "false_definition": 0,
+                "missing": 2
+              },
+              "permission": {
+                "n": 3,
+                "correct": 2,
+                "false_definition": 0,
+                "missing": 0
+              }
+            }
+          },
+          "non_definition_shall": {
+            "n": 18,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "all_non_definition": {
+            "n": 20,
+            "false_definition_count": 1,
+            "false_definition_rate": 0.05,
+            "false_definition_keys": [
+              [
+                "estg_000306",
+                "c1"
+              ]
+            ]
+          },
+          "by_slice": {
+            "A": {
+              "n": 15,
+              "modality_accuracy": 0.8,
+              "definition_n": 15,
+              "definition_recall": 0.8
+            },
+            "B": {
+              "n": 15,
+              "modality_accuracy": 0.7333333333333333,
+              "definition_n": 0,
+              "definition_recall": null
+            },
+            "C": {
+              "n": 12,
+              "modality_accuracy": 0.5,
+              "definition_n": 7,
+              "definition_recall": 0.42857142857142855
+            },
+            "D": {
+              "n": 6,
+              "modality_accuracy": 0.6666666666666666,
+              "definition_n": 6,
+              "definition_recall": 0.6666666666666666
+            }
+          }
+        }
+      }
+    },
+    "BASE_to_R_DEF": {
+      "from": "BASE",
+      "to": "R_DEF",
+      "corrected_count": 12,
+      "regressed_count": 2,
+      "corrected_cases": [
+        {
+          "sample_id": "estg_000037",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000056",
+          "clause_id": "c1",
+          "gold_modality": "obligation",
+          "from_prediction": null,
+          "to_prediction": "obligation",
+          "slices": [
+            "C"
+          ]
+        },
+        {
+          "sample_id": "estg_000071",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "C"
+          ]
+        },
+        {
+          "sample_id": "estg_000075",
+          "clause_id": "c1",
+          "gold_modality": "obligation",
+          "from_prediction": null,
+          "to_prediction": "obligation",
+          "slices": [
+            "B"
+          ]
+        },
+        {
+          "sample_id": "estg_000080",
+          "clause_id": "c4",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000083",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "prohibition",
+          "to_prediction": "definition",
+          "slices": [
+            "C"
+          ]
+        },
+        {
+          "sample_id": "estg_000083",
+          "clause_id": "c2",
+          "gold_modality": "definition",
+          "from_prediction": "prohibition",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000087",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "prohibition",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000164",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": null,
+          "to_prediction": "definition",
+          "slices": [
+            "C"
+          ]
+        },
+        {
+          "sample_id": "estg_000414",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": "obligation",
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        },
+        {
+          "sample_id": "estg_000417",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": null,
+          "to_prediction": "definition",
+          "slices": [
+            "D"
+          ]
+        },
+        {
+          "sample_id": "estg_000854",
+          "clause_id": "c1",
+          "gold_modality": "definition",
+          "from_prediction": null,
+          "to_prediction": "definition",
+          "slices": [
+            "A"
+          ]
+        }
+      ],
+      "regressed_cases": [
+        {
+          "sample_id": "estg_000716",
+          "clause_id": "c1",
+          "gold_modality": "prohibition",
+          "from_prediction": "prohibition",
+          "to_prediction": null,
+          "slices": [
+            "B"
+          ]
+        },
+        {
+          "sample_id": "estg_000716",
+          "clause_id": "c2",
+          "gold_modality": "prohibition",
+          "from_prediction": "prohibition",
+          "to_prediction": null,
+          "slices": [
+            "B"
+          ]
+        }
+      ],
+      "arm_metrics": {
+        "BASE": {
+          "arm": "BASE",
+          "n_clauses": 45,
+          "modality_accuracy": 0.5111111111111111,
+          "definition_precision": 1.0,
+          "definition_recall": 0.36,
+          "definition_f1": 0.5294117647058824,
+          "confusion": {
+            "definition->MISSING": 3,
+            "definition->definition": 9,
+            "definition->obligation": 7,
+            "definition->prohibition": 6,
+            "obligation->MISSING": 4,
+            "obligation->obligation": 5,
+            "obligation->permission": 1,
+            "permission->obligation": 1,
+            "permission->permission": 3,
+            "prohibition->prohibition": 6
+          },
+          "definition_to_obligation_count": 7,
+          "obligation_to_definition_count": 0,
+          "prohibition_to_definition_count": 0,
+          "permission_to_definition_count": 0,
+          "definition_action_present_count": 22,
+          "definition_empty_action_count": 3,
+          "definition_action_presence_fraction": 0.88,
+          "definition_missing_count": 3,
+          "definition_empty_action_keys": [
+            [
+              "estg_000164",
+              "c1"
+            ],
+            [
+              "estg_000417",
+              "c1"
+            ],
+            [
+              "estg_000854",
+              "c1"
+            ]
+          ],
+          "definition_missing_keys": [
+            [
+              "estg_000164",
+              "c1"
+            ],
+            [
+              "estg_000417",
+              "c1"
+            ],
+            [
+              "estg_000854",
+              "c1"
+            ]
+          ],
+          "b_controls": {
+            "n": 15,
+            "modality_accuracy": 0.8,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": [],
+            "per_gold_label": {
+              "obligation": {
+                "n": 6,
+                "correct": 4,
+                "false_definition": 0,
+                "missing": 2
+              },
+              "prohibition": {
+                "n": 6,
+                "correct": 6,
+                "false_definition": 0,
+                "missing": 0
+              },
+              "permission": {
+                "n": 3,
+                "correct": 2,
+                "false_definition": 0,
+                "missing": 0
+              }
+            }
+          },
+          "non_definition_shall": {
+            "n": 18,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "all_non_definition": {
+            "n": 20,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "by_slice": {
+            "A": {
+              "n": 15,
+              "modality_accuracy": 0.4,
+              "definition_n": 15,
+              "definition_recall": 0.4
+            },
+            "B": {
+              "n": 15,
+              "modality_accuracy": 0.8,
+              "definition_n": 0,
+              "definition_recall": null
+            },
+            "C": {
+              "n": 12,
+              "modality_accuracy": 0.16666666666666666,
+              "definition_n": 7,
+              "definition_recall": 0.0
+            },
+            "D": {
+              "n": 6,
+              "modality_accuracy": 0.5,
+              "definition_n": 6,
+              "definition_recall": 0.5
+            }
+          }
+        },
+        "R_DEF": {
+          "arm": "R_DEF",
+          "n_clauses": 45,
+          "modality_accuracy": 0.7333333333333333,
+          "definition_precision": 0.95,
+          "definition_recall": 0.76,
+          "definition_f1": 0.8444444444444444,
+          "confusion": {
+            "definition->MISSING": 3,
+            "definition->definition": 19,
+            "definition->obligation": 2,
+            "definition->prohibition": 1,
+            "obligation->MISSING": 1,
+            "obligation->definition": 1,
+            "obligation->obligation": 7,
+            "obligation->permission": 1,
+            "permission->obligation": 1,
+            "permission->permission": 3,
+            "prohibition->MISSING": 2,
+            "prohibition->prohibition": 4
+          },
+          "definition_to_obligation_count": 2,
+          "obligation_to_definition_count": 1,
+          "prohibition_to_definition_count": 0,
+          "permission_to_definition_count": 0,
+          "definition_action_present_count": 22,
+          "definition_empty_action_count": 3,
+          "definition_action_presence_fraction": 0.88,
+          "definition_missing_count": 3,
+          "definition_empty_action_keys": [
+            [
+              "estg_000218",
+              "c1"
+            ],
+            [
+              "estg_000509",
+              "c2"
+            ],
+            [
+              "estg_000800",
+              "c1"
+            ]
+          ],
+          "definition_missing_keys": [
+            [
+              "estg_000218",
+              "c1"
+            ],
+            [
+              "estg_000509",
+              "c2"
+            ],
+            [
+              "estg_000800",
+              "c1"
+            ]
+          ],
+          "b_controls": {
+            "n": 15,
+            "modality_accuracy": 0.7333333333333333,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": [],
+            "per_gold_label": {
+              "obligation": {
+                "n": 6,
+                "correct": 5,
+                "false_definition": 0,
+                "missing": 1
+              },
+              "prohibition": {
+                "n": 6,
+                "correct": 4,
+                "false_definition": 0,
+                "missing": 2
+              },
+              "permission": {
+                "n": 3,
+                "correct": 2,
+                "false_definition": 0,
+                "missing": 0
+              }
+            }
+          },
+          "non_definition_shall": {
+            "n": 18,
+            "false_definition_count": 0,
+            "false_definition_rate": 0.0,
+            "false_definition_keys": []
+          },
+          "all_non_definition": {
+            "n": 20,
+            "false_definition_count": 1,
+            "false_definition_rate": 0.05,
+            "false_definition_keys": [
+              [
+                "estg_000306",
+                "c1"
+              ]
+            ]
+          },
+          "by_slice": {
+            "A": {
+              "n": 15,
+              "modality_accuracy": 0.8,
+              "definition_n": 15,
+              "definition_recall": 0.8
+            },
+            "B": {
+              "n": 15,
+              "modality_accuracy": 0.7333333333333333,
+              "definition_n": 0,
+              "definition_recall": null
+            },
+            "C": {
+              "n": 12,
+              "modality_accuracy": 0.5,
+              "definition_n": 7,
+              "definition_recall": 0.42857142857142855
+            },
+            "D": {
+              "n": 6,
+              "modality_accuracy": 0.6666666666666666,
+              "definition_n": 6,
+              "definition_recall": 0.6666666666666666
+            }
+          }
+        }
+      }
+    }
+  },
+  "side_effects": {
+    "transport_provider_failures_total": 0,
+    "transport": {
+      "BASE": {
+        "raw_response_count": 42,
+        "request_status_counts": {
+          "ok": 42
+        },
+        "transport_error_count": 0,
+        "transport_errors": []
+      },
+      "R_DEF": {
+        "raw_response_count": 42,
+        "request_status_counts": {
+          "ok": 42
+        },
+        "transport_error_count": 0,
+        "transport_errors": []
+      }
+    },
+    "processing_validity": {
+      "BASE": {
+        "sample_count": 42,
+        "status_counts": {
+          "request_status": {
+            "ok": 38,
+            "failed": 4
+          },
+          "api_call_status": {
+            "ok": 42
+          },
+          "output_parse_status": {
+            "passed": 42
+          },
+          "input_binding_status": {
+            "passed": 42
+          },
+          "canonical_validation_status": {
+            "passed": 38,
+            "failed": 4
+          }
+        },
+        "failed_samples": [
+          {
+            "sample_id": "estg_000075",
+            "failure_stage": "canonical_validation",
+            "failure_reason": "canonical_validation_failed: clauses[0].order_relations[0].evidence must be an array"
+          },
+          {
+            "sample_id": "estg_000417",
+            "failure_stage": "canonical_validation",
+            "failure_reason": "canonical_validation_failed: clauses[0].order_relations[0].evidence must be an array"
+          },
+          {
+            "sample_id": "estg_000635",
+            "failure_stage": "canonical_validation",
+            "failure_reason": "canonical_validation_failed: clauses[0].order_relations[0].evidence must be an array"
+          },
+          {
+            "sample_id": "estg_000854",
+            "failure_stage": "canonical_validation",
+            "failure_reason": "canonical_validation_failed: clauses[0].order_relations[0].evidence must be an array"
+          }
+        ]
+      },
+      "R_DEF": {
+        "sample_count": 42,
+        "status_counts": {
+          "request_status": {
+            "ok": 37,
+            "failed": 5
+          },
+          "api_call_status": {
+            "ok": 42
+          },
+          "output_parse_status": {
+            "passed": 42
+          },
+          "input_binding_status": {
+            "passed": 42
+          },
+          "canonical_validation_status": {
+            "passed": 37,
+            "failed": 5
+          }
+        },
+        "failed_samples": [
+          {
+            "sample_id": "estg_000218",
+            "failure_stage": "canonical_validation",
+            "failure_reason": "canonical_validation_failed: clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'exemption'"
+          },
+          {
+            "sample_id": "estg_000509",
+            "failure_stage": "canonical_validation",
+            "failure_reason": "canonical_validation_failed: clauses[0].order_relations[0].evidence must be an array"
+          },
+          {
+            "sample_id": "estg_000635",
+            "failure_stage": "canonical_validation",
+            "failure_reason": "canonical_validation_failed: clauses[0].order_relations[0].evidence must be an array"
+          },
+          {
+            "sample_id": "estg_000716",
+            "failure_stage": "canonical_validation",
+            "failure_reason": "canonical_validation_failed: clauses[0].order_relations[0].evidence must be an array; clauses[0].order_relations[1].evidence must be an array"
+          },
+          {
+            "sample_id": "estg_000800",
+            "failure_stage": "canonical_validation",
+            "failure_reason": "canonical_validation_failed: clauses[0].modality.label must be one of ('obligation', 'prohibition', 'permission', 'definition'), got 'exemption'"
+          }
+        ]
+      }
+    },
+    "secondary_panel_slice": {
+      "A": {
+        "coarse_five_field_mean_f1": 0.6697212438167341,
+        "five_fields": {
+          "actor": {
+            "ground_truth": 11,
+            "extracted": 25,
+            "matched_predictions": 10,
+            "matched_ground_truth": 9,
+            "misclassified": 15,
+            "missed": 2,
+            "precision": 0.4,
+            "recall": 0.8181818181818182,
+            "f1": 0.537313432835821
+          },
+          "action": {
+            "ground_truth": 42,
+            "extracted": 81,
+            "matched_predictions": 73,
+            "matched_ground_truth": 37,
+            "misclassified": 8,
+            "missed": 5,
+            "precision": 0.9012345679012346,
+            "recall": 0.8809523809523809,
+            "f1": 0.8909780636648523
+          },
+          "condition": {
+            "ground_truth": 35,
+            "extracted": 52,
+            "matched_predictions": 46,
+            "matched_ground_truth": 29,
+            "misclassified": 6,
+            "missed": 6,
+            "precision": 0.8846153846153846,
+            "recall": 0.8285714285714286,
+            "f1": 0.8556767158434895
+          },
+          "constraint": {
+            "ground_truth": 38,
+            "extracted": 35,
+            "matched_predictions": 23,
+            "matched_ground_truth": 15,
+            "misclassified": 12,
+            "missed": 23,
+            "precision": 0.6571428571428571,
+            "recall": 0.39473684210526316,
+            "f1": 0.4932094353109364
+          },
+          "exception": {
+            "ground_truth": 5,
+            "extracted": 2,
+            "matched_predictions": 2,
+            "matched_ground_truth": 2,
+            "misclassified": 0,
+            "missed": 3,
+            "precision": 1.0,
+            "recall": 0.4,
+            "f1": 0.5714285714285715
+          }
+        },
+        "coarse_five_field_micro": {
+          "ground_truth": 131,
+          "extracted": 195,
+          "matched_predictions": 154,
+          "matched_ground_truth": 92,
+          "precision": 0.7897435897435897,
+          "recall": 0.7022900763358778,
+          "f1": 0.7434538489793777
+        },
+        "modality_labels": {
+          "schema_version": "formal_stage2_modality_labels@1.0.0",
+          "classes": [
+            "obligation",
+            "permission",
+            "prohibition",
+            "definition"
+          ],
+          "records": 42,
+          "accuracy": 0.5238095238095238,
+          "macro_f1": 0.6036507936507937,
+          "per_class": [
+            {
+              "class": "obligation",
+              "precision": 0.4166666666666667,
+              "recall": 0.9090909090909091,
+              "f1": 0.5714285714285715
+            },
+            {
+              "class": "permission",
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.888888888888889
+            },
+            {
+              "class": "prohibition",
+              "precision": 0.5555555555555556,
+              "recall": 1.0,
+              "f1": 0.7142857142857143
+            },
+            {
+              "class": "definition",
+              "precision": 0.75,
+              "recall": 0.14285714285714285,
+              "f1": 0.24
+            }
+          ],
+          "separate_from_span_metrics": true,
+          "unlabeled_predictions": 0
+        },
+        "failed_count": 0,
+        "gold_scope": {
+          "sample_count": 42,
+          "clause_count": 83,
+          "description": "all clauses in the frozen 42 panel samples",
+          "full_150_evaluator_wrapper_used": false,
+          "reason_full_wrapper_not_used": "the frozen full-150 coarse wrapper hard-requires 150 Gold records; this targeted suite sent only the 42 panel samples"
+        }
+      },
+      "BASE": {
+        "coarse_five_field_mean_f1": 0.6875942538947051,
+        "five_fields": {
+          "actor": {
+            "ground_truth": 11,
+            "extracted": 22,
+            "matched_predictions": 10,
+            "matched_ground_truth": 7,
+            "misclassified": 12,
+            "missed": 4,
+            "precision": 0.45454545454545453,
+            "recall": 0.6363636363636364,
+            "f1": 0.5303030303030303
+          },
+          "action": {
+            "ground_truth": 42,
+            "extracted": 86,
+            "matched_predictions": 76,
+            "matched_ground_truth": 34,
+            "misclassified": 10,
+            "missed": 8,
+            "precision": 0.8837209302325582,
+            "recall": 0.8095238095238095,
+            "f1": 0.8449967298888162
+          },
+          "condition": {
+            "ground_truth": 35,
+            "extracted": 50,
+            "matched_predictions": 44,
+            "matched_ground_truth": 28,
+            "misclassified": 6,
+            "missed": 7,
+            "precision": 0.88,
+            "recall": 0.8,
+            "f1": 0.8380952380952381
+          },
+          "constraint": {
+            "ground_truth": 38,
+            "extracted": 30,
+            "matched_predictions": 20,
+            "matched_ground_truth": 14,
+            "misclassified": 10,
+            "missed": 24,
+            "precision": 0.6666666666666666,
+            "recall": 0.3684210526315789,
+            "f1": 0.4745762711864407
+          },
+          "exception": {
+            "ground_truth": 5,
+            "extracted": 3,
+            "matched_predictions": 3,
+            "matched_ground_truth": 3,
+            "misclassified": 0,
+            "missed": 2,
+            "precision": 1.0,
+            "recall": 0.6,
+            "f1": 0.7499999999999999
+          }
+        },
+        "coarse_five_field_micro": {
+          "ground_truth": 131,
+          "extracted": 191,
+          "matched_predictions": 153,
+          "matched_ground_truth": 86,
+          "precision": 0.8010471204188482,
+          "recall": 0.6564885496183206,
+          "f1": 0.7215991664153115
+        },
+        "modality_labels": {
+          "schema_version": "formal_stage2_modality_labels@1.0.0",
+          "classes": [
+            "obligation",
+            "permission",
+            "prohibition",
+            "definition"
+          ],
+          "records": 42,
+          "accuracy": 0.6190476190476191,
+          "macro_f1": 0.6940501792114695,
+          "per_class": [
+            {
+              "class": "obligation",
+              "precision": 0.5714285714285714,
+              "recall": 0.7272727272727273,
+              "f1": 0.64
+            },
+            {
+              "class": "permission",
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.888888888888889
+            },
+            {
+              "class": "prohibition",
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666
+            },
+            {
+              "class": "definition",
+              "precision": 0.9,
+              "recall": 0.42857142857142855,
+              "f1": 0.5806451612903225
+            }
+          ],
+          "separate_from_span_metrics": true,
+          "unlabeled_predictions": 4
+        },
+        "failed_count": 4,
+        "gold_scope": {
+          "sample_count": 42,
+          "clause_count": 83,
+          "description": "all clauses in the frozen 42 panel samples",
+          "full_150_evaluator_wrapper_used": false,
+          "reason_full_wrapper_not_used": "the frozen full-150 coarse wrapper hard-requires 150 Gold records; this targeted suite sent only the 42 panel samples"
+        }
+      },
+      "R_DEF": {
+        "coarse_five_field_mean_f1": 0.6616995073891625,
+        "five_fields": {
+          "actor": {
+            "ground_truth": 11,
+            "extracted": 17,
+            "matched_predictions": 6,
+            "matched_ground_truth": 6,
+            "misclassified": 11,
+            "missed": 5,
+            "precision": 0.35294117647058826,
+            "recall": 0.5454545454545454,
+            "f1": 0.42857142857142855
+          },
+          "action": {
+            "ground_truth": 42,
+            "extracted": 70,
+            "matched_predictions": 61,
+            "matched_ground_truth": 33,
+            "misclassified": 9,
+            "missed": 9,
+            "precision": 0.8714285714285714,
+            "recall": 0.7857142857142857,
+            "f1": 0.8263546798029557
+          },
+          "condition": {
+            "ground_truth": 35,
+            "extracted": 49,
+            "matched_predictions": 45,
+            "matched_ground_truth": 25,
+            "misclassified": 4,
+            "missed": 10,
+            "precision": 0.9183673469387755,
+            "recall": 0.7142857142857143,
+            "f1": 0.8035714285714286
+          },
+          "constraint": {
+            "ground_truth": 38,
+            "extracted": 27,
+            "matched_predictions": 21,
+            "matched_ground_truth": 14,
+            "misclassified": 6,
+            "missed": 24,
+            "precision": 0.7777777777777778,
+            "recall": 0.3684210526315789,
+            "f1": 0.5
+          },
+          "exception": {
+            "ground_truth": 5,
+            "extracted": 3,
+            "matched_predictions": 3,
+            "matched_ground_truth": 3,
+            "misclassified": 0,
+            "missed": 2,
+            "precision": 1.0,
+            "recall": 0.6,
+            "f1": 0.7499999999999999
+          }
+        },
+        "coarse_five_field_micro": {
+          "ground_truth": 131,
+          "extracted": 166,
+          "matched_predictions": 136,
+          "matched_ground_truth": 81,
+          "precision": 0.8192771084337349,
+          "recall": 0.6183206106870229,
+          "f1": 0.7047533747041137
+        },
+        "modality_labels": {
+          "schema_version": "formal_stage2_modality_labels@1.0.0",
+          "classes": [
+            "obligation",
+            "permission",
+            "prohibition",
+            "definition"
+          ],
+          "records": 42,
+          "accuracy": 0.7619047619047619,
+          "macro_f1": 0.8145667198298778,
+          "per_class": [
+            {
+              "class": "obligation",
+              "precision": 0.7272727272727273,
+              "recall": 0.7272727272727273,
+              "f1": 0.7272727272727273
+            },
+            {
+              "class": "permission",
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.888888888888889
+            },
+            {
+              "class": "prohibition",
+              "precision": 0.8,
+              "recall": 0.8,
+              "f1": 0.8000000000000002
+            },
+            {
+              "class": "definition",
+              "precision": 0.9411764705882353,
+              "recall": 0.7619047619047619,
+              "f1": 0.8421052631578947
+            }
+          ],
+          "separate_from_span_metrics": true,
+          "unlabeled_predictions": 5
+        },
+        "failed_count": 5,
+        "gold_scope": {
+          "sample_count": 42,
+          "clause_count": 83,
+          "description": "all clauses in the frozen 42 panel samples",
+          "full_150_evaluator_wrapper_used": false,
+          "reason_full_wrapper_not_used": "the frozen full-150 coarse wrapper hard-requires 150 Gold records; this targeted suite sent only the 42 panel samples"
+        }
+      }
+    }
+  },
+  "apply_applies_cases": [
+    {
+      "sample_id": "estg_000056",
+      "clause_id": "c1",
+      "gold_modality": "obligation",
+      "text": "(7) For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise, the following shall apply with regard to repair expenses:",
+      "predictions": {
+        "A": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "BASE": {
+          "modality": null,
+          "alignment_quality": "no_overlapping_clause",
+          "action_count": 0
+        },
+        "R_DEF": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000071",
+      "clause_id": "c1",
+      "gold_modality": "definition",
+      "text": "For registered traders, Item 13 applies",
+      "predictions": {
+        "A": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "BASE": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "R_DEF": {
+          "modality": "definition",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000083",
+      "clause_id": "c1",
+      "gold_modality": "definition",
+      "text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972",
+      "predictions": {
+        "A": {
+          "modality": "prohibition",
+          "alignment_quality": "low_overlap",
+          "action_count": 1
+        },
+        "BASE": {
+          "modality": "prohibition",
+          "alignment_quality": "low_overlap",
+          "action_count": 1
+        },
+        "R_DEF": {
+          "modality": "definition",
+          "alignment_quality": "low_overlap",
+          "action_count": 2
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000128",
+      "clause_id": "c2",
+      "gold_modality": "obligation",
+      "text": "Section 10(2) last sentence shall apply.",
+      "predictions": {
+        "A": {
+          "modality": "permission",
+          "alignment_quality": "low_overlap",
+          "action_count": 0
+        },
+        "BASE": {
+          "modality": "permission",
+          "alignment_quality": "low_overlap",
+          "action_count": 0
+        },
+        "R_DEF": {
+          "modality": "permission",
+          "alignment_quality": "low_overlap",
+          "action_count": 0
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000145",
+      "clause_id": "c1",
+      "gold_modality": "permission",
+      "text": "(6) Taxpayers who determine their profit in accordance with Section 4(3) may apply in the tax return for an amount to be left tax-free for the notional severance pay claims existing at the end of the business year",
+      "predictions": {
+        "A": {
+          "modality": "permission",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "BASE": {
+          "modality": "permission",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "R_DEF": {
+          "modality": "permission",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000164",
+      "clause_id": "c1",
+      "gold_modality": "definition",
+      "text": "For the consideration of these expenses, the following applies:",
+      "predictions": {
+        "A": {
+          "modality": "definition",
+          "alignment_quality": "aligned",
+          "action_count": 0
+        },
+        "BASE": {
+          "modality": null,
+          "alignment_quality": "no_overlapping_clause",
+          "action_count": 0
+        },
+        "R_DEF": {
+          "modality": "definition",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000208",
+      "clause_id": "c2",
+      "gold_modality": "obligation",
+      "text": "Subsection (1)(3) shall also apply if, within the group of persons referred to in point 1, the lender or loan debtor on the one hand and the developer (owner) or housing applicant (beneficiary, tenant) on the other hand are not identical",
+      "predictions": {
+        "A": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "BASE": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "R_DEF": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000209",
+      "clause_id": "c2",
+      "gold_modality": "definition",
+      "text": "this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette)",
+      "predictions": {
+        "A": {
+          "modality": "prohibition",
+          "alignment_quality": "low_overlap",
+          "action_count": 1
+        },
+        "BASE": {
+          "modality": "prohibition",
+          "alignment_quality": "low_overlap",
+          "action_count": 1
+        },
+        "R_DEF": {
+          "modality": "prohibition",
+          "alignment_quality": "low_overlap",
+          "action_count": 1
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000218",
+      "clause_id": "c1",
+      "gold_modality": "definition",
+      "text": "In the case of a reduction in deductible insurance premiums (Section 1(2), last sentence), the notification obligation does not apply if the refunded amounts are offset against future insurance premiums",
+      "predictions": {
+        "A": {
+          "modality": "non_obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "BASE": {
+          "modality": "prohibition",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "R_DEF": {
+          "modality": null,
+          "alignment_quality": "no_overlapping_clause",
+          "action_count": 0
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000306",
+      "clause_id": "c1",
+      "gold_modality": "obligation",
+      "text": "For buildings serving residential purposes, the following applies with respect to repair and maintenance expenses",
+      "predictions": {
+        "A": {
+          "modality": null,
+          "alignment_quality": "no_overlapping_clause",
+          "action_count": 0
+        },
+        "BASE": {
+          "modality": null,
+          "alignment_quality": "no_overlapping_clause",
+          "action_count": 0
+        },
+        "R_DEF": {
+          "modality": "definition",
+          "alignment_quality": "low_overlap",
+          "action_count": 1
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000664",
+      "clause_id": "c1",
+      "gold_modality": "definition",
+      "text": "The following shall apply to this provision:",
+      "predictions": {
+        "A": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 0
+        },
+        "BASE": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "R_DEF": {
+          "modality": "obligation",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        }
+      }
+    },
+    {
+      "sample_id": "estg_000800",
+      "clause_id": "c1",
+      "gold_modality": "definition",
+      "text": "This does not apply as long as the sponsoring undertaking suspends the contribution payments (Section 4(4) no. 2 of the Income Tax Act 1988)",
+      "predictions": {
+        "A": {
+          "modality": "prohibition",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "BASE": {
+          "modality": "prohibition",
+          "alignment_quality": "aligned",
+          "action_count": 1
+        },
+        "R_DEF": {
+          "modality": null,
+          "alignment_quality": "no_overlapping_clause",
+          "action_count": 0
+        }
+      }
+    }
+  ],
+  "interpretation_constraints": [
+    "No significance claims are made.",
+    "No general improvement claim from this panel alone.",
+    "R_DEF is not automatically promoted.",
+    "The full-150 confirmation run is not launched."
+  ]
+}

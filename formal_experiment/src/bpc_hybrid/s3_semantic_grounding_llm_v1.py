@@ -313,7 +313,7 @@ def build_authorization_request(request_set: Mapping[str, Any],
         "suggested_authorization_sentence_sha256": hashlib.sha256(
             sentence.encode("utf-8")).hexdigest(),
         "execution_command": (
-            "python formal_experiment/scripts/run_s3_semantic_grounding_llm_v1.py "
+            "cd formal_experiment && python scripts/run_s3_semantic_grounding_llm_v1.py "
             "--real --authorization outputs/reports/s3_semantic_grounding_v2_llm_authorization.json"
         ),
         "decision": "BLOCKED_NO_MATCHING_AUTHORIZATION" if count else "NOT_APPLICABLE_NO_CANDIDATES",
