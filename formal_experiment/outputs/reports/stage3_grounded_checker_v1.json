@@ -1,0 +1,1114 @@
+{
+  "benchmark_id": "stage3_paired_benchmark_v1",
+  "benchmark_sha256": "8205371ee71af75ae9179481fe87e972e2e70650c0985661bbff8d183f1a3fc5",
+  "claim_scope": "dev_only_benchmark_not_human_gold",
+  "compliant_false_positive_rate": 0.0,
+  "compliant_specificity": 1.0,
+  "controls": 30,
+  "controls_correct": 30,
+  "items": 60,
+  "llm_calls": 0,
+  "macro_f1": 1.0,
+  "method_id": "grounded_structural_checker_v1",
+  "micro_f1": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "tp": 30
+  },
+  "per_type": {
+    "incorrect_actor": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 10
+    },
+    "missing_action": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 10
+    },
+    "out_of_order": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 10
+    }
+  },
+  "predictions": [
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_01__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_01",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_01__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_01",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_02__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_02",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_02__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_02",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_03__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_03",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_03__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_03",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_04__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_04",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_04__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_04",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_05__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_05",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_05__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_05",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_06__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_06",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_06__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_06",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_07__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_07",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_07__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_07",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_08__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_08",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_08__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_08",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_09__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_09",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_09__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_09",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_10__control",
+      "observability": {
+        "missing_action": {
+          "target_present": true
+        }
+      },
+      "pair_id": "syn_missing_action_10",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "missing_action": 0.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_10__variant",
+      "observability": {
+        "missing_action": {
+          "target_present": false
+        }
+      },
+      "pair_id": "syn_missing_action_10",
+      "predicted": "missing_action",
+      "role": "variant",
+      "scores": {
+        "missing_action": 1.0
+      },
+      "target_violation_type": "missing_action",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_01__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-4035AA0F-2D62-46AC-A369-4151026920A3"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_01__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data subject"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_02__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-4035AA0F-2D62-46AC-A369-4151026920A3"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_02__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data subject"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_03__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_03",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_03__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data Controller"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_03",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_04__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_04__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data Controller"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_05__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_05__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data Subject"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_06__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_06",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_06__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data Subject"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_06",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_07__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_07",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_07__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data Subject"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_07",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_08__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_08__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data subject"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_09__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_09",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_09__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data subject"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_09",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_10__control",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 0,
+          "target_lane": "sid-95D07626-A357-422E-830F-B1E57917DB74"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_10",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "incorrect_actor": 0.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_10__variant",
+      "observability": {
+        "incorrect_actor": {
+          "named_lane_count": 1,
+          "target_lane": "Data Subject"
+        }
+      },
+      "pair_id": "syn_incorrect_actor_10",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "scores": {
+        "incorrect_actor": 1.0
+      },
+      "target_violation_type": "incorrect_actor",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_01__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_01",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_01__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_01",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_02__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_02",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_02__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_02",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_03__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_03",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_03__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_03",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_04__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_04",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_04__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_04",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_05__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_05",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_05__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_05",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_06__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_06",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_06__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_06",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_07__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_07",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_07__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_07",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_08__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_08",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_08__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_08",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_09__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_09",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_09__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_09",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_out_of_order_10__control",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": false,
+          "forward_holds": true
+        }
+      },
+      "pair_id": "syn_out_of_order_10",
+      "predicted": "compliant",
+      "role": "control",
+      "scores": {
+        "out_of_order": 0.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    },
+    {
+      "gold": "out_of_order",
+      "item_id": "syn_out_of_order_10__variant",
+      "observability": {
+        "out_of_order": {
+          "backward_holds": true,
+          "forward_holds": false
+        }
+      },
+      "pair_id": "syn_out_of_order_10",
+      "predicted": "out_of_order",
+      "role": "variant",
+      "scores": {
+        "out_of_order": 1.0
+      },
+      "target_violation_type": "out_of_order",
+      "unobservable": false
+    }
+  ],
+  "schema_version": "stage3_grounded_checker_run@1.0.0",
+  "unobservable": 0,
+  "variant_exact_type_accuracy": 1.0,
+  "variant_exact_type_correct": 30,
+  "variants": 30
+}

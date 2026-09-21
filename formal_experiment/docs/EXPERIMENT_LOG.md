@@ -5127,3 +5127,21 @@
 - 仍存在 blocker：无
 - 备注：Corrects the earlier Table 3 verdict. The first probe compared the manifest's f_first_id/f_last_id (which are SEQUENCE-FLOW ids) against a node-level reachability relation, and additionally iterated control_flow.reachable_pairs as if they were tuples when they are objects ({source_ref,target_ref}) - both mistakes produced a false 'no change' result for out_of_order. The corrected probe compares each mutated BPMN against its unmutated original using direct edges, reachability and the manifest node pair, with no detector and no lexical similarity: missing_action 10/10 detectable (target activity removed, none added), incorrect_actor 10/10 (lane membership changes), out_of_order 10/10 (direct edges and reachability change and the manifest node pair's ordering reverses). Total 30/30. So the benchmark is sound and the earlier 0/30 scorer-separability result is a DETECTOR defect (similarity grounding below gamma), not a data defect. Remaining gap is the Gold evidence for order_relations (0/92 non-empty), which is one field of annotation rather than new BPMN construction.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-21T07:46:42.581498+00:00 - Stage 3 paired compliance benchmark with compliant controls + grounded checker + predecessor sanity run (zero API)
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_paired_benchmark_v1_run；阶段=S3；方法=stage3_grounded_checker_v1；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/build_stage3_paired_benchmark_v1.py; python scripts/run_stage3_grounded_checker_v1.py; python scripts/run_stage3_predecessors_paired_v1.py`
+- manifest：data/development/stage3_synth/stage3_paired_benchmark_v1.json
+- 结果摘要：Paired benchmark v1: 60 items = 30 controls + 30 variants, 30 pairs, gold 30 compliant / 10 per violation type; anti-degeneracy 30/30 PASS. Grounded structural checker: macro-F1 1.0000, micro-F1 1.0000, specificity 1.0000, exact type 30/30, 0 unobservable -> the benchmark IS measurable. Predecessors on the SAME 60 items: sun_reconstruction macro-F1 0.3175 (micro 0.3871, specificity 0.3333, exact 12/30, 16 unobservable, out_of_order F1 0.0); winter_wrapper macro-F1 0.2222 (micro 0.3846, specificity 0.6000, exact 10/30, 0 unobservable, out_of_order F1 0.0).
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：5 passed in 0.04s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`fc888e103e4e501e1138a8203f483299bb3db985`；相关未提交路径：20 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Read-only wrt all existing artifacts: the existing 30-item panel and the frozen GDPR7 BPMN bytes are untouched; new files only. Controls reuse the frozen Stage 1 GDPR7 originals via each variant's manifest-declared source_bpmn+sha, so no compliant process was newly authored and nothing can drift. Grounding is DECLARED per item rather than assumed, which is what makes the grounded and similarity paths comparable.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
