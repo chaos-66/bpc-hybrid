@@ -1,0 +1,905 @@
+{
+  "schema_version": "gold_conflict_audit_readonly@1.0.0",
+  "status": "read_only_audit_zero_api",
+  "network_calls": 0,
+  "llm_calls": 0,
+  "artifacts_modified": 0,
+  "meta": {
+    "gold_path": "formal_experiment\\data\\gold\\stage2\\estg150_formal_gold_v1.json",
+    "gold_sha256": "c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100",
+    "panel_path": "formal_experiment\\data\\gold\\stage3\\stage3_violation_gold_v1.json",
+    "panel_sha256": "54245ef0d102ae5e7a44e8c45424ecd9e86e1e0d9ed43ac1a9cd43641c981550",
+    "n_records": 150,
+    "n_clauses": 231
+  },
+  "L1_cue_field_conflicts": [
+    {
+      "cue": "only",
+      "distribution": {
+        "SENTENCE_ONLY": 21,
+        "constraint": 5,
+        "action": 4,
+        "condition": 2,
+        "MULTI:action+condition": 1,
+        "exception": 1
+      },
+      "conflicting_fields": [
+        "action",
+        "condition",
+        "constraint",
+        "exception"
+      ],
+      "examples": {
+        "only|action": [
+          {
+            "sample_id": "estg_000020",
+            "clause_id": "c3",
+            "span_text": "is only granted"
+          },
+          {
+            "sample_id": "estg_000021",
+            "clause_id": "c2",
+            "span_text": "are granted only"
+          },
+          {
+            "sample_id": "estg_000071",
+            "clause_id": "c2",
+            "span_text": "is claimed only"
+          }
+        ],
+        "only|condition": [
+          {
+            "sample_id": "estg_000131",
+            "clause_id": "c1",
+            "span_text": "only if the management or the registered office is located in the domestic territory"
+          },
+          {
+            "sample_id": "estg_000161",
+            "clause_id": "c1",
+            "span_text": "only under the following conditions"
+          }
+        ],
+        "only|constraint": [
+          {
+            "sample_id": "estg_000039",
+            "clause_id": "c1",
+            "span_text": "that the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council"
+          },
+          {
+            "sample_id": "estg_000039",
+            "clause_id": "c2",
+            "span_text": "only after consultation with the works council"
+          },
+          {
+            "sample_id": "estg_000059",
+            "clause_id": "c1",
+            "span_text": "only under the following conditions"
+          }
+        ],
+        "only|exception": [
+          {
+            "sample_id": "estg_000055",
+            "clause_id": "c1",
+            "span_text": "unless they relate only to the current and the following year"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "pursuant_to",
+      "distribution": {
+        "condition": 13,
+        "SENTENCE_ONLY": 8,
+        "constraint": 4,
+        "exception": 1,
+        "MULTI:condition+constraint": 1,
+        "action": 1
+      },
+      "conflicting_fields": [
+        "action",
+        "condition",
+        "constraint",
+        "exception"
+      ],
+      "examples": {
+        "pursuant_to|action": [
+          {
+            "sample_id": "estg_000569",
+            "clause_id": "c1",
+            "span_text": "permit that the tax-exempt income components pursuant to Section 3 and the income referred to in Section 26 are not recorded in the wage account"
+          }
+        ],
+        "pursuant_to|condition": [
+          {
+            "sample_id": "estg_000061",
+            "clause_id": "c2",
+            "span_text": "When transitioning to profit determination pursuant to Section 5"
+          },
+          {
+            "sample_id": "estg_000062",
+            "clause_id": "c2",
+            "span_text": "Upon transition from the profit determination method pursuant to Section 5 to another profit determination method"
+          },
+          {
+            "sample_id": "estg_000068",
+            "clause_id": "c1",
+            "span_text": "In the case of profit determination pursuant to Section 4(1)"
+          }
+        ],
+        "pursuant_to|constraint": [
+          {
+            "sample_id": "estg_000061",
+            "clause_id": "c1",
+            "span_text": "that other changes in the profit determination principles (e.g., regarding the commercial law principles of orderly bookkeeping when transitioning from profit determination pursuant to Section 4(1) or (3) to Section 5, or regarding the consideration of diminutions in the value of business assets when transitioning to bookkeeping) are taken into account upon the change in the profit determination method"
+          },
+          {
+            "sample_id": "estg_000183",
+            "clause_id": "c1",
+            "span_text": "in addition to the flat-rate amount for income-related expenses pursuant to Section 16(3)"
+          },
+          {
+            "sample_id": "estg_000208",
+            "clause_id": "c1",
+            "span_text": "pursuant to Section 108(7)(2)"
+          }
+        ],
+        "pursuant_to|exception": [
+          {
+            "sample_id": "estg_000507",
+            "clause_id": "c1",
+            "span_text": "to the extent that they are not to be taxed pursuant to subsection (6) at the tax rates of subsection (1)"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "that_rel",
+      "distribution": {
+        "SENTENCE_ONLY": 41,
+        "condition": 27,
+        "constraint": 15,
+        "action": 6,
+        "MULTI:condition+constraint": 4,
+        "MULTI:action+constraint": 2,
+        "exception": 1
+      },
+      "conflicting_fields": [
+        "action",
+        "condition",
+        "constraint",
+        "exception"
+      ],
+      "examples": {
+        "that_rel|action": [
+          {
+            "sample_id": "estg_000002",
+            "clause_id": "estg_000002_c01",
+            "span_text": "the profit shall be taken into account in determining the income for that calendar year in which the business year ends"
+          },
+          {
+            "sample_id": "estg_000020",
+            "clause_id": "c1",
+            "span_text": "is that the free drink allowance may not be sold by the employee and that it is only granted in such quantity as to actually preclude a sale"
+          },
+          {
+            "sample_id": "estg_000206",
+            "clause_id": "c3",
+            "span_text": "be entitled to an increased amount for that child"
+          }
+        ],
+        "that_rel|condition": [
+          {
+            "sample_id": "estg_000039",
+            "clause_id": "c3",
+            "span_text": "to the extent that they are required under the articles of association for benefit entitlements of current and former members of the taxpayer’s enterprises"
+          },
+          {
+            "sample_id": "estg_000056",
+            "clause_id": "c1",
+            "span_text": "For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise"
+          },
+          {
+            "sample_id": "estg_000056",
+            "clause_id": "c4",
+            "span_text": "that were not covered by tax-free subsidies and were not to be offset against tax-free reserves"
+          }
+        ],
+        "that_rel|constraint": [
+          {
+            "sample_id": "estg_000021",
+            "clause_id": "c2",
+            "span_text": "in such a quantity that actually precludes a sale"
+          },
+          {
+            "sample_id": "estg_000028",
+            "clause_id": "c1",
+            "span_text": "at the tax rate that results when taking into account the converted income"
+          },
+          {
+            "sample_id": "estg_000033",
+            "clause_id": "c1",
+            "span_text": "that is part of the fixed assets"
+          }
+        ],
+        "that_rel|exception": [
+          {
+            "sample_id": "estg_000507",
+            "clause_id": "c1",
+            "span_text": "to the extent that they are not to be taxed pursuant to subsection (6) at the tax rates of subsection (1)"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "if",
+      "distribution": {
+        "condition": 64,
+        "SENTENCE_ONLY": 46,
+        "exception": 2,
+        "constraint": 1,
+        "MULTI:condition+constraint": 1,
+        "MULTI:condition+exception": 1
+      },
+      "conflicting_fields": [
+        "condition",
+        "constraint",
+        "exception"
+      ],
+      "examples": {
+        "if|condition": [
+          {
+            "sample_id": "estg_000004",
+            "clause_id": "estg_000004_c01",
+            "span_text": "if there are substantial business reasons and the tax office has given prior consent by official notice"
+          },
+          {
+            "sample_id": "estg_000038",
+            "clause_id": "c1",
+            "span_text": "If an additional disability pension is granted"
+          },
+          {
+            "sample_id": "estg_000046",
+            "clause_id": "c1",
+            "span_text": "if the invention is already protected by patent law"
+          }
+        ],
+        "if|constraint": [
+          {
+            "sample_id": "estg_000070",
+            "clause_id": "c1",
+            "span_text": "even if that value is higher than the last book value"
+          }
+        ],
+        "if|exception": [
+          {
+            "sample_id": "estg_000083",
+            "clause_id": "c1",
+            "span_text": "if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972"
+          },
+          {
+            "sample_id": "estg_000273",
+            "clause_id": "c1",
+            "span_text": "even if, in the case of an employment which otherwise exhibits all the characteristics of an employment relationship (Section 47(2)), the obligation to follow the instructions of another is absent on the basis of a special provision in the articles of association"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "to_the_extent",
+      "distribution": {
+        "condition": 13,
+        "SENTENCE_ONLY": 11,
+        "constraint": 2,
+        "MULTI:condition+constraint": 1,
+        "exception": 1
+      },
+      "conflicting_fields": [
+        "condition",
+        "constraint",
+        "exception"
+      ],
+      "examples": {
+        "to_the_extent|condition": [
+          {
+            "sample_id": "estg_000039",
+            "clause_id": "c3",
+            "span_text": "to the extent that they are required under the articles of association for benefit entitlements of current and former members of the taxpayer’s enterprises"
+          },
+          {
+            "sample_id": "estg_000082",
+            "clause_id": "c1",
+            "span_text": "To the extent that the input tax can be deducted"
+          },
+          {
+            "sample_id": "estg_000082",
+            "clause_id": "c2",
+            "span_text": "To the extent that the input tax can be deducted"
+          }
+        ],
+        "to_the_extent|constraint": [
+          {
+            "sample_id": "estg_000071",
+            "clause_id": "c2",
+            "span_text": "to the extent that no partial write-down under subparagraph a was claimed for the receivables"
+          },
+          {
+            "sample_id": "estg_000578",
+            "clause_id": "c1",
+            "span_text": "to the extent that it is not covered by the cash wage"
+          }
+        ],
+        "to_the_extent|exception": [
+          {
+            "sample_id": "estg_000507",
+            "clause_id": "c1",
+            "span_text": "to the extent that they are not to be taxed pursuant to subsection (6) at the tax rates of subsection (1)"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "which_rel",
+      "distribution": {
+        "SENTENCE_ONLY": 17,
+        "condition": 16,
+        "constraint": 4,
+        "MULTI:action+constraint": 2,
+        "action": 1,
+        "MULTI:constraint+exception": 1,
+        "MULTI:condition+constraint": 1
+      },
+      "conflicting_fields": [
+        "action",
+        "condition",
+        "constraint"
+      ],
+      "examples": {
+        "which_rel|action": [
+          {
+            "sample_id": "estg_000002",
+            "clause_id": "estg_000002_c01",
+            "span_text": "the profit shall be taken into account in determining the income for that calendar year in which the business year ends"
+          }
+        ],
+        "which_rel|condition": [
+          {
+            "sample_id": "estg_000051",
+            "clause_id": "c1",
+            "span_text": "All institutions to which such a notice has been issued"
+          },
+          {
+            "sample_id": "estg_000057",
+            "clause_id": "c1",
+            "span_text": "which, alone or together with construction expenditure, substantially increases the value in use of the building or substantially extends its useful life"
+          },
+          {
+            "sample_id": "estg_000070",
+            "clause_id": "c4",
+            "span_text": "The flat-rate write-down is reported for the first time in the balance sheet of the fiscal year in which the receivables arose"
+          }
+        ],
+        "which_rel|constraint": [
+          {
+            "sample_id": "estg_000082",
+            "clause_id": "c1",
+            "span_text": "of the acquisition or production costs of the asset on the acquisition or production of which it is incurred"
+          },
+          {
+            "sample_id": "estg_000136",
+            "clause_id": "c1",
+            "span_text": "by the assets in respect of which the hidden reserves were disclosed (paragraph 3)"
+          },
+          {
+            "sample_id": "estg_000504",
+            "clause_id": "c2",
+            "span_text": "up to which point in time back employment relationships are to be proven"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "who_rel",
+      "distribution": {
+        "SENTENCE_ONLY": 8,
+        "condition": 6,
+        "constraint": 2,
+        "actor": 1
+      },
+      "conflicting_fields": [
+        "actor",
+        "condition",
+        "constraint"
+      ],
+      "examples": {
+        "who_rel|actor": [
+          {
+            "sample_id": "estg_000816",
+            "clause_id": "c1",
+            "span_text": "Taxpayers who are required to keep books under commercial law provisions"
+          }
+        ],
+        "who_rel|condition": [
+          {
+            "sample_id": "estg_000056",
+            "clause_id": "c1",
+            "span_text": "For buildings that form part of the fixed assets and are let for consideration for residential purposes to persons who are not employees of the enterprise"
+          },
+          {
+            "sample_id": "estg_000080",
+            "clause_id": "c3",
+            "span_text": "If a business, a part of a business or the interest of a partner who is considered as an entrepreneur (co-entrepreneur) of a business is taken over free of charge"
+          },
+          {
+            "sample_id": "estg_000091",
+            "clause_id": "c1",
+            "span_text": "who determine profit in accordance with Section 4(3)"
+          }
+        ],
+        "who_rel|constraint": [
+          {
+            "sample_id": "estg_000273",
+            "clause_id": "c1",
+            "span_text": "emoluments and benefits of persons who are not substantially interested in corporations within the meaning of Section 22 no. 2"
+          },
+          {
+            "sample_id": "estg_000525",
+            "clause_id": "c1",
+            "span_text": "employees who carry out statistical surveys for regional authorities"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "at_least",
+      "distribution": {
+        "SENTENCE_ONLY": 4,
+        "condition": 2,
+        "constraint": 2,
+        "MULTI:condition+constraint": 1
+      },
+      "conflicting_fields": [
+        "condition",
+        "constraint"
+      ],
+      "examples": {
+        "at_least|condition": [
+          {
+            "sample_id": "estg_000128",
+            "clause_id": "c1",
+            "span_text": "the disposed-of asset at the time of disposal has belonged to the fixed assets of this business for at least seven years"
+          },
+          {
+            "sample_id": "estg_000164",
+            "clause_id": "c4",
+            "span_text": "If, during the pay period, the use of public transport between the residence and the place of work is predominantly not reasonable for the employee at least with regard to half of the distance"
+          }
+        ],
+        "at_least|constraint": [
+          {
+            "sample_id": "estg_000143",
+            "clause_id": "c1",
+            "span_text": "with a nominal amount of at least 50% of the provision amount shown in the balance sheet at the end of the preceding financial year"
+          },
+          {
+            "sample_id": "estg_000572",
+            "clause_id": "c1",
+            "span_text": "at least the actually expended working time"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "in_accordance_with",
+      "distribution": {
+        "constraint": 10,
+        "SENTENCE_ONLY": 8,
+        "condition": 5
+      },
+      "conflicting_fields": [
+        "condition",
+        "constraint"
+      ],
+      "examples": {
+        "in_accordance_with|condition": [
+          {
+            "sample_id": "estg_000091",
+            "clause_id": "c1",
+            "span_text": "who determine profit in accordance with Section 4(3)"
+          },
+          {
+            "sample_id": "estg_000113",
+            "clause_id": "c1",
+            "span_text": "To the extent that an investment reserve (a tax-free amount) is to be used in accordance with its designated purpose"
+          },
+          {
+            "sample_id": "estg_000118",
+            "clause_id": "c1",
+            "span_text": "If the profit is determined in accordance with Section 4(3)"
+          }
+        ],
+        "in_accordance_with|constraint": [
+          {
+            "sample_id": "estg_000043",
+            "clause_id": "c1",
+            "span_text": "in accordance with the Annex to this Federal Act"
+          },
+          {
+            "sample_id": "estg_000080",
+            "clause_id": "c1",
+            "span_text": "in accordance with item 5"
+          },
+          {
+            "sample_id": "estg_000125",
+            "clause_id": "c1",
+            "span_text": "in accordance with the provisions of paragraph (1)"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "in_the_event_of",
+      "distribution": {
+        "condition": 2,
+        "constraint": 1,
+        "SENTENCE_ONLY": 1
+      },
+      "conflicting_fields": [
+        "condition",
+        "constraint"
+      ],
+      "examples": {
+        "in_the_event_of|condition": [
+          {
+            "sample_id": "estg_000195",
+            "clause_id": "c1",
+            "span_text": "whether the housing applicant has a claim to full reimbursement of the amount in the event of his withdrawal by the end of the eight-year commitment period or not"
+          },
+          {
+            "sample_id": "estg_000786",
+            "clause_id": "c1",
+            "span_text": "In the event of the dissolution of the bank"
+          }
+        ],
+        "in_the_event_of|constraint": [
+          {
+            "sample_id": "estg_000522",
+            "clause_id": "c1",
+            "span_text": "allowances and supplementary payments included in wages continued to be paid to the employee in the event of illness"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "when",
+      "distribution": {
+        "SENTENCE_ONLY": 4,
+        "condition": 2,
+        "constraint": 2,
+        "MULTI:condition+constraint": 1
+      },
+      "conflicting_fields": [
+        "condition",
+        "constraint"
+      ],
+      "examples": {
+        "when|condition": [
+          {
+            "sample_id": "estg_000030",
+            "clause_id": "c1",
+            "span_text": "when determining the tax for the employee's other income"
+          },
+          {
+            "sample_id": "estg_000061",
+            "clause_id": "c2",
+            "span_text": "When transitioning to profit determination pursuant to Section 5"
+          }
+        ],
+        "when|constraint": [
+          {
+            "sample_id": "estg_000061",
+            "clause_id": "c1",
+            "span_text": "that other changes in the profit determination principles (e.g., regarding the commercial law principles of orderly bookkeeping when transitioning from profit determination pursuant to Section 4(1) or (3) to Section 5, or regarding the consideration of diminutions in the value of business assets when transitioning to bookkeeping) are taken into account upon the change in the profit determination method"
+          },
+          {
+            "sample_id": "estg_000816",
+            "clause_id": "c2",
+            "span_text": "when determining income for the calendar year in which the business year ends"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "where",
+      "distribution": {
+        "SENTENCE_ONLY": 5,
+        "condition": 2,
+        "exception": 1
+      },
+      "conflicting_fields": [
+        "condition",
+        "exception"
+      ],
+      "examples": {
+        "where|condition": [
+          {
+            "sample_id": "estg_000114",
+            "clause_id": "c1",
+            "span_text": "Where the acquisition or construction of fixed assets extends beyond a balance sheet date"
+          },
+          {
+            "sample_id": "estg_000776",
+            "clause_id": "c1",
+            "span_text": "where services are involved the acceptance of which the recipient is obliged to accept by virtue of a statutory or official order"
+          }
+        ],
+        "where|exception": [
+          {
+            "sample_id": "estg_000507",
+            "clause_id": "c1",
+            "span_text": "also in cases where they are not granted alongside current wages from the same employer"
+          }
+        ]
+      }
+    },
+    {
+      "cue": "within_N",
+      "distribution": {
+        "SENTENCE_ONLY": 23,
+        "constraint": 17,
+        "condition": 14,
+        "MULTI:condition+constraint": 3
+      },
+      "conflicting_fields": [
+        "condition",
+        "constraint"
+      ],
+      "examples": {
+        "within_N|condition": [
+          {
+            "sample_id": "estg_000052",
+            "clause_id": "c1",
+            "span_text": "insofar as they, together with contributions within the meaning of item 6, do not exceed a total of 10% of the profit of the immediately preceding business year"
+          },
+          {
+            "sample_id": "estg_000056",
+            "clause_id": "c3",
+            "span_text": "If, after offsetting the losses within the meaning of Section 11(1) item 3 determined without taking into account the repair expenses, tax-free reserves under Section 11 still exist"
+          },
+          {
+            "sample_id": "estg_000062",
+            "clause_id": "c1",
+            "span_text": "If the land was acquired within the last ten years"
+          }
+        ],
+        "within_N|constraint": [
+          {
+            "sample_id": "estg_000030",
+            "clause_id": "c1",
+            "span_text": "within the meaning of paragraph 1 items 10 and 11"
+          },
+          {
+            "sample_id": "estg_000040",
+            "clause_id": "c2",
+            "span_text": "together with direct benefits within the meaning of Section 3(1) item 15"
+          },
+          {
+            "sample_id": "estg_000077",
+            "clause_id": "c3",
+            "span_text": "significant participations within the meaning of letter (b) acquired upon formation or a considerable expansion of the company"
+          }
+        ]
+      }
+    }
+  ],
+  "L2_consensus_disagreements": [
+    {
+      "item_id": "v006",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v009",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v012",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v015",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v017",
+      "gold_type": "incorrect_actor",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v018",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v020",
+      "gold_type": "incorrect_actor",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v021",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v023",
+      "gold_type": "incorrect_actor",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v024",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v026",
+      "gold_type": "incorrect_actor",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v027",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v029",
+      "gold_type": "incorrect_actor",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v030",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v032",
+      "gold_type": "incorrect_actor",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    },
+    {
+      "item_id": "v033",
+      "gold_type": "out_of_order",
+      "method_predictions": {
+        "s34_winter_stage3_development_v3_clean": null,
+        "s35_sun_stage3_development_v2": null,
+        "s36_bm25_stage3_development_v3": null,
+        "s36_tfidf_svd_stage3_development_v2": null
+      },
+      "all_methods_agree_on": "abstain(none)"
+    }
+  ],
+  "L3_near_duplicate_modality_conflicts": [
+    {
+      "similarity": 0.9194,
+      "a": {
+        "sample_id": "estg_000082",
+        "clause_id": "c1",
+        "modality": "definition",
+        "text": "To the extent that the input tax can be deducted (Section 12(1) of the Value Added Tax Act 1972), it does not form part of the acquisition or production costs of the asset on the acquisition or production of which it is incurred"
+      },
+      "b": {
+        "sample_id": "estg_000082",
+        "clause_id": "c2",
+        "modality": "obligation",
+        "text": "To the extent that the input tax can be deducted (Section 12(1) of the Value Added Tax Act 1972), it does not form part of the acquisition or production costs of the asset on the acquisition or production of which it is incurred, and shall be reported as a receivable."
+      }
+    },
+    {
+      "similarity": 0.9081,
+      "a": {
+        "sample_id": "estg_000039",
+        "clause_id": "c1",
+        "modality": "obligation",
+        "text": "The agreement must provide that the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council."
+      },
+      "b": {
+        "sample_id": "estg_000039",
+        "clause_id": "c2",
+        "modality": "permission",
+        "text": "the taxpayer’s ongoing contribution payments may only be suspended or restricted for compelling economic reasons and only after consultation with the works council"
+      }
+    }
+  ],
+  "boundary": "Findings are review candidates, not proven annotation errors. No Gold/prediction/prompt/evaluator was modified. Any correction requires human adjudication against the source text and a new versioned Gold; original results must remain reported."
+}
