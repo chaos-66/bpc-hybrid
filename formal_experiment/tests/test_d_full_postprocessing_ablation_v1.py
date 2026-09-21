@@ -106,9 +106,81 @@ def test_checked_in_report_is_zero_api_and_baseline_matches_locked_result():
     assert report["scope"]["model_generation_effect_claim_allowed"] is False
 
 
-def test_markdown_keeps_safety_and_generation_boundaries():
+def test_full_factorial_enumerates_all_eight_boolean_combinations():
+    combos = {
+        (condition["adapter"], condition["canonicalizer"],
+         condition["validator"])
+        for condition in ablation.CONDITIONS.values()
+    }
+    expected = {
+        (adapter, canonicalizer, validator)
+        for adapter in (False, True)
+        for canonicalizer in (False, True)
+        for validator in (False, True)
+    }
+    assert combos == expected
+    assert len(ablation.CONDITIONS) == 8
+
+
+def test_all_disabled_condition_preserves_raw_output_and_denominator():
+    row, text = _raw_row()
+    payload = json.loads(row["raw_response_content"])
+    payload["clauses"][0]["actors"][0]["span"]["start"] = 10
+    payload["clauses"][0]["actors"][0]["span"]["end"] = 5
+    row["raw_response_content"] = json.dumps(payload)
+    rows, stats = ablation.process_condition(
+        [row], {"s1": text},
+        ablation.CONDITIONS["no_adapter_no_canonicalizer_no_validator"])
+    assert len(rows) == 1
+    assert rows[0]["request_status"] == "ok"
+    assert rows[0]["record"] == payload
+    assert stats["validator_invalid_records_observed"] == 1
+    assert stats["validator_rejected_records"] == 0
+    assert stats["failed_records"] == 0
+
+
+def test_mark_evaluator_shape_failures_keeps_failed_rows_in_denominator():
+    row, text = _raw_row()
+    bad = json.loads(row["raw_response_content"])
+    bad["clauses"] = "not-an-array"
+    bad_row = {
+        "sample_id": "s1",
+        "request_status": "ok",
+        "record": bad,
+    }
+
+    def shape_evaluator(rows):
+        for candidate in rows:
+            if (candidate.get("request_status") == "ok"
+                    and candidate.get("record", {}).get("clauses")
+                    == "not-an-array"):
+                raise ValueError("record shape rejected")
+        return {"metrics": {"overall": {
+            "precision": 0.0, "recall": 0.0, "f1": 0.0}}}
+
+    telemetry = {
+        "failure_examples": [],
+        "failed_records": 0,
+        "successful_records": 1,
+        "nonempty_output_records": 0,
+        "output_clause_count": 0,
+    }
+    marked, marked_telemetry, changed = ablation._mark_evaluator_shape_failures(
+        [bad_row], telemetry, shape_evaluator)
+    assert changed is True
+    assert marked[0]["request_status"] == "failed"
+    assert marked[0]["error"].startswith("evaluator_shape:")
+    assert marked_telemetry["failed_records"] == 1
+    assert marked_telemetry["successful_records"] == 0
+    assert len(marked) == 1
+
+
+def test_markdown_keeps_full_factorial_and_safety_boundaries():
     report = json.loads(ablation.REPORT_JSON.read_text(encoding="utf-8"))
     text = ablation.to_markdown(report)
-    assert "每个条件只关闭一个后处理模块" in text
-    assert "不能说明validator没有安全价值" in text
+    assert "2^3 全组合" in text
+    assert "adapter 没有独立的 F1 增量" in text
+    assert "不能说明 validator 没有安全价值" in text
     assert "不评价模块说明是否改变模型生成" in text
+    assert "有效性层" in text
+    assert "安全网层" in text

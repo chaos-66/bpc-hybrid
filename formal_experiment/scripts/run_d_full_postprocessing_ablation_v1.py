@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Run one-factor Direct-LLM post-processing ablations on persisted raw output.
+"""Run the full 2^3 Direct-LLM post-processing ablation on persisted raw output.
 
 All conditions reuse the exact D-full-0813 responses from the completed
 1140-call run.  No model request is made.  The baseline is the production
 post-processing chain: relay adapter -> span canonicalizer -> canonical
-validator.  Each removal arm disables exactly one of those modules while all
-other inputs and the evaluator remain fixed.
+validator.  The eight conditions enumerate all boolean combinations of those
+three modules while all other inputs and the evaluator remain fixed.
 
 The result is retrospective development evidence.  It measures the modules'
 contribution to *post-processing the fixed model responses*, not their effect
@@ -15,6 +15,7 @@ on what the model itself generated.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import sys
@@ -43,9 +44,9 @@ SOURCE_DIR = (
 )
 RAW_PATH = SOURCE_DIR / "raw_responses.jsonl"
 LOCKED_EVALUATION_PATH = SOURCE_DIR / "evaluation.json"
-LOCAL_OUTPUT_DIR = ROOT / "outputs/development/d_full_postprocessing_ablation_v1"
-REPORT_JSON = ROOT / "outputs/reports/d_full_postprocessing_ablation_v1.json"
-REPORT_MD = ROOT / "outputs/reports/d_full_postprocessing_ablation_v1.md"
+LOCAL_OUTPUT_DIR = ROOT / "outputs/development/d_full_postprocessing_ablation_v2"
+REPORT_JSON = ROOT / "outputs/reports/d_full_postprocessing_ablation_v2.json"
+REPORT_MD = ROOT / "outputs/reports/d_full_postprocessing_ablation_v2.md"
 
 CONDITIONS = {
     "full_postprocessing": {
@@ -75,6 +76,41 @@ CONDITIONS = {
         "canonicalizer": True,
         "validator": False,
         "removed_module": "canonical_schema_and_cross_field_validator",
+    },
+    "no_adapter_no_canonicalizer": {
+        "display_name": "去掉输出适配器+坐标重锚器",
+        "adapter": False,
+        "canonicalizer": False,
+        "validator": True,
+        "removed_module": (
+            "relay_schema_adapter+span_coordinate_canonicalizer"),
+    },
+    "no_canonicalizer_no_validator": {
+        "display_name": "去掉坐标重锚器+validator",
+        "adapter": True,
+        "canonicalizer": False,
+        "validator": False,
+        "removed_module": (
+            "span_coordinate_canonicalizer+"
+            "canonical_schema_and_cross_field_validator"),
+    },
+    "no_adapter_no_validator": {
+        "display_name": "去掉输出适配器+validator",
+        "adapter": False,
+        "canonicalizer": True,
+        "validator": False,
+        "removed_module": (
+            "relay_schema_adapter+"
+            "canonical_schema_and_cross_field_validator"),
+    },
+    "no_adapter_no_canonicalizer_no_validator": {
+        "display_name": "三模块全关（原始输出直面评价器）",
+        "adapter": False,
+        "canonicalizer": False,
+        "validator": False,
+        "removed_module": (
+            "relay_schema_adapter+span_coordinate_canonicalizer+"
+            "canonical_schema_and_cross_field_validator"),
     },
 }
 
@@ -182,7 +218,10 @@ def process_condition(
                 if len(telemetry["failure_examples"]) < 10:
                     telemetry["failure_examples"].append(row)
                 continue
-        validation = validate_canonical(record)
+        all_disabled = not any(
+            condition[key] for key in ("adapter", "canonicalizer", "validator"))
+        validation_input = copy.deepcopy(record) if all_disabled else record
+        validation = validate_canonical(validation_input)
         valid = validation.schema_valid and validation.cross_field_valid
         if not valid:
             telemetry["validator_invalid_records_observed"] += 1
@@ -216,6 +255,74 @@ def process_condition(
         1 for row in predictions if row["request_status"] != "ok")
     telemetry["successful_records"] = len(predictions) - telemetry["failed_records"]
     return predictions, telemetry
+
+
+def _refresh_row_telemetry(
+    rows: Sequence[Mapping[str, Any]],
+    telemetry: dict[str, Any],
+) -> dict[str, Any]:
+    """Recompute row-derived telemetry after an evaluator-shape failure."""
+    telemetry["failed_records"] = sum(
+        1 for row in rows if row.get("request_status") != "ok")
+    telemetry["successful_records"] = len(rows) - telemetry["failed_records"]
+    nonempty = 0
+    clause_count = 0
+    for row in rows:
+        if row.get("request_status") != "ok":
+            continue
+        record = row.get("record")
+        clauses = record.get("clauses") if isinstance(record, Mapping) else []
+        if isinstance(clauses, list) and clauses:
+            nonempty += 1
+            clause_count += len(clauses)
+    telemetry["nonempty_output_records"] = nonempty
+    telemetry["output_clause_count"] = clause_count
+    return telemetry
+
+
+def _mark_evaluator_shape_failures(
+    rows: list[dict[str, Any]],
+    telemetry: dict[str, Any],
+    evaluator: Callable[[Sequence[Mapping[str, Any]]], dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, Any], bool]:
+    """Mark only rows that make the evaluator reject the raw output shape.
+
+    The function is used only for the all-modules-disabled condition, where the
+    raw model record is handed to the evaluator without repair.  It probes each
+    candidate row in a full-membership batch with every other row marked as a
+    failure, so any evaluator exception remains attributable to the probed row.
+    The raw record itself is never rewritten.
+    """
+    marked: list[dict[str, Any]] = []
+    changed = False
+    for index, row in enumerate(rows):
+        if row.get("request_status") != "ok":
+            marked.append(row)
+            continue
+        probe: list[dict[str, Any]] = []
+        for probe_index, probe_row in enumerate(rows):
+            if probe_index == index:
+                probe.append(probe_row)
+            else:
+                probe.append(_failure(
+                    str(probe_row.get("sample_id", "")),
+                    "evaluator_probe",
+                    "shape isolation placeholder",
+                ))
+        try:
+            evaluator(probe)
+        except Exception as exc:  # noqa: BLE001 - report the evaluator failure
+            failed = _failure(
+                str(row.get("sample_id", "")), "evaluator_shape", str(exc))
+            marked.append(failed)
+            changed = True
+            if len(telemetry["failure_examples"]) < 10:
+                telemetry["failure_examples"].append(failed)
+        else:
+            marked.append(row)
+    if changed:
+        telemetry = _refresh_row_telemetry(marked, telemetry)
+    return marked, telemetry, changed
 
 
 def _overall(evaluation: Mapping[str, Any]) -> dict[str, float]:
@@ -252,7 +359,18 @@ def build_report(
     summaries: dict[str, dict[str, Any]] = {}
     for condition_id, condition in CONDITIONS.items():
         rows, telemetry = process_condition(raw_rows, source_by_id, condition)
-        evaluation = evaluator(rows)
+        try:
+            evaluation = evaluator(rows)
+        except Exception:
+            all_disabled = not any(
+                condition[key] for key in ("adapter", "canonicalizer", "validator"))
+            if not all_disabled:
+                raise
+            rows, telemetry, changed = _mark_evaluator_shape_failures(
+                rows, telemetry, evaluator)
+            if not changed:
+                raise
+            evaluation = evaluator(rows)
         condition_rows[condition_id] = rows
         evaluations[condition_id] = evaluation
         summaries[condition_id] = {
@@ -277,8 +395,8 @@ def build_report(
             for key in ("precision", "recall", "f1")
         }
     report = {
-        "schema_version": "d_full_postprocessing_ablation@1.0.0",
-        "status": "retrospective_development_one_factor_ablation",
+        "schema_version": "d_full_postprocessing_ablation@2.0.0",
+        "status": "retrospective_development_full_factorial_ablation",
         "scope": {
             "source_arm": "D-full-0813",
             "source_run": "barrientos-de-0813-1140-v1",
@@ -299,14 +417,26 @@ def build_report(
             "locked_evaluation_sha256": _sha256(locked_evaluation_path),
             "baseline_exactly_reproduces_locked_evaluation": True,
         },
-        "one_factor_contract": {
+        "full_factorial_contract": {
+            "factors": {
+                "adapter": "relay_schema_adapter",
+                "canonicalizer": "span_coordinate_canonicalizer",
+                "validator": (
+                    "canonical_schema_and_cross_field_validator"),
+            },
             "full_chain": [
                 "relay_schema_adapter",
                 "span_coordinate_canonicalizer",
                 "canonical_schema_and_cross_field_validator",
             ],
-            "rule": "each removal arm disables exactly one module",
-            "denominator_policy": "all 150 samples; rejected/failed records are empty predictions",
+            "design": "full 2^3 factorial",
+            "condition_count": 8,
+            "rule": "each condition is one boolean combination of the three modules",
+            "denominator_policy": (
+                "all 150 samples; rejected/failed records are empty predictions; "
+                "the all-disabled condition passes raw output to the evaluator "
+                "without repair and records evaluator-shape failures in the "
+                "same denominator"),
         },
         "conditions": summaries,
         "scientific_interpretation": {
@@ -331,52 +461,111 @@ def build_report(
 
 def to_markdown(report: Mapping[str, Any]) -> str:
     rows = report["conditions"]
-    lines = [
-        "# Direct-LLM 后处理模块单因素消融 v1",
-        "",
-        "> 同一批 D-full-0813 原始响应离线重放；新增 API 调用为0。每个条件"
-        "只关闭一个后处理模块，所有150条样本均进入分母。结果属于回顾性开发证据。",
-        "",
-        "## 结果",
-        "",
-        "| 条件 | 移除模块 | P | R | F1 | ΔF1 | 成功记录 | 非空记录 | validator观察到无效 |",
-        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
-    ]
     order = (
-        "full_postprocessing", "no_output_adapter",
-        "no_span_canonicalizer", "no_canonical_validator")
+        "full_postprocessing",
+        "no_output_adapter",
+        "no_span_canonicalizer",
+        "no_canonical_validator",
+        "no_adapter_no_canonicalizer",
+        "no_canonicalizer_no_validator",
+        "no_adapter_no_validator",
+        "no_adapter_no_canonicalizer_no_validator",
+    )
+    full = rows["full_postprocessing"]
+    no_adapter = rows["no_output_adapter"]
+    no_canonicalizer = rows["no_span_canonicalizer"]
+    no_validator = rows["no_canonical_validator"]
+    no_adapter_no_canonicalizer = rows["no_adapter_no_canonicalizer"]
+    no_canonicalizer_no_validator = rows["no_canonicalizer_no_validator"]
+    no_adapter_no_validator = rows["no_adapter_no_validator"]
+    all_disabled = rows["no_adapter_no_canonicalizer_no_validator"]
+    lines = [
+        "# Direct-LLM 后处理模块 2^3 全组合消融 v2",
+        "",
+        "> 同一批 D-full-0813 原始响应离线重放；新增 API 调用为0。8 个条件"
+        "枚举 output adapter、span canonicalizer、canonical validator 的全部"
+        "开关组合；所有150条样本均进入分母。结果属于回顾性开发证据。",
+        "",
+        "## 8 格全组合结果",
+        "",
+        "| 条件 | adapter | canonicalizer | validator | P | R | F1 | "
+        "ΔF1(vs full) | 成功记录 | 非空记录 | validator观察到无效数 | "
+        "validator拒收数 |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
+    ]
     for condition_id in order:
         row = rows[condition_id]
         telemetry = row["telemetry"]
-        removed = row["removed_module"] or "—"
+        checks = (
+            "✅" if row["adapter"] else "❌",
+            "✅" if row["canonicalizer"] else "❌",
+            "✅" if row["validator"] else "❌",
+        )
         lines.append(
-            f"| {row['display_name']} | {removed} | "
-            f"{row['overall']['precision']:.3f} | "
-            f"{row['overall']['recall']:.3f} | "
-            f"{row['overall']['f1']:.3f} | "
-            f"{row['delta_vs_full']['f1']:+.3f} | "
+            f"| `{condition_id}` | {checks[0]} | {checks[1]} | {checks[2]} | "
+            f"{row['overall']['precision']:.4f} | "
+            f"{row['overall']['recall']:.4f} | "
+            f"{row['overall']['f1']:.4f} | "
+            f"{row['delta_vs_full']['f1']:+.4f} | "
             f"{telemetry['successful_records']}/150 | "
             f"{telemetry['nonempty_output_records']}/150 | "
-            f"{telemetry['validator_invalid_records_observed']} |")
-    adapter = rows["no_output_adapter"]
-    canonicalizer = rows["no_span_canonicalizer"]
-    validator = rows["no_canonical_validator"]
+            f"{telemetry['validator_invalid_records_observed']} | "
+            f"{telemetry['validator_rejected_records']} |")
     lines += [
         "",
-        "## 可以怎样解释",
+        "## 分层读法：有效性层 / 安全网层",
         "",
-        f"- 输出适配器移除后的 ΔF1 为 {adapter['delta_vs_full']['f1']:+.3f}；"
-        "这反映它对当前完整 Prompt 原始响应的实际增量。",
-        f"- 坐标重锚器移除后的 ΔF1 为 {canonicalizer['delta_vs_full']['f1']:+.3f}；"
-        "validator仍保持开启，因此坐标错误导致的无效记录会作为失败进入分母。",
-        f"- validator移除后的 ΔF1 为 {validator['delta_vs_full']['f1']:+.3f}；"
-        f"有 {validator['telemetry']['validator_invalid_records_observed']} 条无效记录被"
-        "观察到。若分数不变，只能说明上游在这批响应上已产生合法记录，不能说明"
-        "validator没有安全价值。",
+        "**有效性层（adapter + canonicalizer；canonicalizer 是主责模块）**",
+        "",
+        f"- `full_postprocessing` 的 F1 为 {full['overall']['f1']:.4f}，"
+        "成功记录与非空记录分别为 "
+        f"{full['telemetry']['successful_records']}/150、"
+        f"{full['telemetry']['nonempty_output_records']}/150。",
+        f"- 只去掉输出适配器时，F1 为 "
+        f"{no_adapter['overall']['f1']:.4f}（ΔF1 "
+        f"{no_adapter['delta_vs_full']['f1']:+.4f}）；说明在这批固定响应上"
+        "adapter 没有独立的 F1 增量，不能与 canonicalizer 并列成等价贡献。",
+        f"- 去掉坐标重锚器但仍保留 validator 时，F1 为 "
+        f"{no_canonicalizer['overall']['f1']:.4f}（ΔF1 "
+        f"{no_canonicalizer['delta_vs_full']['f1']:+.4f}）；validator 观察到 "
+        f"{no_canonicalizer['telemetry']['validator_invalid_records_observed']} "
+        "条无效记录并拒收 "
+        f"{no_canonicalizer['telemetry']['validator_rejected_records']} 条。"
+        "坐标有效性是这批完整后处理分数的决定性上游条件。",
+        f"- 在 validator 关闭的情况下，只去掉坐标重锚器时 F1 为 "
+        f"{no_canonicalizer_no_validator['overall']['f1']:.4f}；它高于"
+        "validator 开启时的 0，但低于完整链，说明原始/未重锚记录仍可被"
+        "评价器部分读出，却不能替代 canonicalizer 的确定性坐标恢复。",
+        "",
+        "**安全网层（validator）**",
+        "",
+        f"- 在 canonicalizer 开启时，去掉 validator 的 F1 仍为 "
+        f"{no_validator['overall']['f1']:.4f}，batch 内观察到的无效记录为 "
+        f"{no_validator['telemetry']['validator_invalid_records_observed']}；"
+        "分数不变只说明上游在这批响应上已产生合法记录，不能说明 validator "
+        "没有安全价值。",
+        f"- 在 canonicalizer 关闭时，validator 开启的 "
+        f"`no_adapter_no_canonicalizer` 拒收 "
+        f"{no_adapter_no_canonicalizer['telemetry']['validator_rejected_records']} "
+        "条记录并把 F1 压到 "
+        f"{no_adapter_no_canonicalizer['overall']['f1']:.4f}；validator 关闭的 "
+        f"`no_canonicalizer_no_validator` 保留原始记录并得到 "
+        f"{no_canonicalizer_no_validator['overall']['f1']:.4f}。"
+        "这说明 validator 与 canonicalizer 的角色不同：前者是拒收安全网，"
+        "后者是坐标有效性层。",
+        f"- 三模块全关时，原始模型输出直接交给评价器：F1 为 "
+        f"{all_disabled['overall']['f1']:.4f}，成功记录 "
+        f"{all_disabled['telemetry']['successful_records']}/150，非空记录 "
+        f"{all_disabled['telemetry']['nonempty_output_records']}/150，"
+        f"validator 观察到 "
+        f"{all_disabled['telemetry']['validator_invalid_records_observed']} "
+        "条无效记录；本批评价器未因形状抛错，若抛错则仅把对应样本记为"
+        "失败并保留在同一分母，不对原始记录做修补或回填。",
         "",
         "## 边界",
         "",
-        "这些实验只评价固定模型响应之后的模块贡献，不评价模块说明是否改变模型生成。"
+        "这些实验只评价固定模型响应之后的模块贡献，不评价模块说明是否改变"
+        "模型生成。完整链仍作为唯一对照，且必须逐位复现锁定结果。"
         "原始响应仍为本地受限证据，报告仅绑定其SHA-256。",
         "",
     ]
@@ -393,7 +582,7 @@ def main() -> int:
         targets.extend((out / "predictions.jsonl", out / "evaluation.json"))
     targets.append(LOCAL_OUTPUT_DIR / "manifest.json")
     if not args.overwrite and any(path.exists() for path in targets):
-        print("refusing to overwrite existing post-processing ablation v1")
+        print("refusing to overwrite existing post-processing ablation v2")
         return 2
     try:
         report, rows_by_condition, evaluations = build_report()
@@ -414,7 +603,7 @@ def main() -> int:
             }
         (LOCAL_OUTPUT_DIR / "manifest.json").write_text(
             json.dumps({
-                "schema_version": "d_full_postprocessing_ablation_manifest@1.0.0",
+                "schema_version": "d_full_postprocessing_ablation_manifest@2.0.0",
                 "status": report["status"],
                 "new_api_calls": 0,
                 "source_raw_sha256": report["provenance"]["raw_responses_sha256"],
