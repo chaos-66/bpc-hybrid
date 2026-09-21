@@ -144,6 +144,23 @@ baseline` 都是本项目重建/扩展，不能写成 Winter 原论文原生能�
 只比较 Winter（Table 12：Winter 0.58/0.89/0.70，作者方法 0.77/0.83/0.80）。
 最终版是否保留同一比较集合、表号和数字，必须按 `TODO-SOURCE:SUN2024VOR` 复核。
 
+**表 2-0 Winter Stage 2B 前人基线（已回填，零 API）**
+
+| 方法 | P | R | F1 |
+|---|---:|---:|---:|
+| Winter et al. (2020) 原生 clause regions | 1.0000 | 0.8312 | 0.9078 |
+| Rules-Only | 0.9398 | 1.0000 | 0.9689 |
+| Direct-LLM | 0.9476 | 0.9740 | 0.9606 |
+
+来源：`outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.json` 与同名 `.md`
+（run status `completed_zero_api_predecessor_clause_region_run`；Winter 使用本地原型
+转写，Rules-Only 与 Direct-LLM 复用历史正式 arm 预测，未新增 API）。
+
+**边界（原样保留）。** 共同任务为 `estg150_clause_region_detection_v1`，只评
+clause 区域交集，不是六要素抽取。Sun 作者稿 Table 12（Winter 0.58/0.89/0.70 vs
+Sun 0.77/0.83/0.80）是私有 BPMN 违规任务，不可与本表直接比较。Sun 自己没有六要素
+抽取的前人基线（Table 8 仅自评），Winter 不做六要素抽取。
+
 **表 2-1 情态分类（Stage 2A）比较注册**
 
 | 方法/版本 | 原生任务与输入→输出 | 本项目当前实现 | 可比较的共同任务与适配 | 已有结果/状态 |
@@ -159,7 +176,7 @@ baseline` 都是本项目重建/扩展，不能写成 Winter 原论文原生能�
 | 方法/版本 | 原生任务与输入→输出 | 本项目当前实现 | 可比较的共同任务与适配 | 已有结果/状态 |
 |---|---|---|---|---|
 | Sun 原方法与作者稿 | CoreNLP + Tregex/Tsurgeon + marker 抽六概念；句子→phrase spans/Rule Record | Rules-Only 的方法级独立重建；公开 marker 重建；Tsurgeon 为诚实非实现并有 fail-closed 守卫 | 同一 EStG-150 六字段 Gold；原 150 IDs、443 spans、完整规则/词典不可得；本项目 clause 结构为扩展 | 项目内正式三方法比较完成；不能把该重建写成 Sun Table 8 的 C1 复现；作者稿 Table 8 是自评而非前人对照 |
-| Winter et al. (2020) 原方法 | 从句切分与 signal-word 义务从句；不做 condition/constraint/exception 六要素抽取 | `winter_clause` 已有从句/义务子句能力，但未接到 EStG-150 Gold | 可比较的最窄共同任务是 obligation-action 集合，而不是六字段 F1；需单独 adapter 和指标 | 未运行；为最小零 API 补证候选；`TODO-SOURCE:WINTER2020` |
+| Winter et al. (2020) 原方法 | 从句切分与 signal-word 义务从句；不做 condition/constraint/exception 六要素抽取 | `winter_clause` 已有从句/义务子句能力，但未接到 EStG-150 Gold | 已运行 `estg150_clause_region_detection_v1` clause-region 子任务（P/R/F1 1.0000/0.8312/0.9078）；这不是六要素抽取，Winter 原生也不做六要素抽取 | 已运行；来源 `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.json`；仍不构成六字段 F1 基线 |
 | Sleimi et al. (2018) 谱系 | phrase-level 法律语义元数据与 marker/Tregex 祖先规则 | 项目只用其公开见刊例项重建 marker lexicon，未重建完整抽取器 | 需原文数据/类别映射；否则只能作 C4 定性来源 | 未运行；`TODO-SOURCE:SLEIMI2018` |
 | Michel et al. (2022) | EStG 决策规则/句子级四分类语料 | 官方 modality 数据已登记/审计；不是六要素抽取方法 | 只共享 EStG 来源与句子粒度，不能替代 phrase-level 六要素基线 | 未作为抽取 baseline 运行；`TODO-SOURCE:MICHEL2022` |
 | Barrientos et al. (2026) | RC4PC：precondition/norm/change-impact；无 Sun 六字段 | 仅做模块借用与 adapter 对照；无六字段原生输出 | schema 不同；跨字段不可直接换算，禁止单 F1 总榜 | D/E 中直接替换到本文六字段接口的开发结果为 0，只能解释为接口不兼容，不能判其方法无效 |
@@ -180,9 +197,11 @@ baseline` 都是本项目重建/扩展，不能写成 Winter 原论文原生能�
 
 **完成、缺失与最小下一步。** 目前已完成的是：本文三种 Stage 2 方法的 formal C1
 比较（同冻结输入/Gold/evaluator）；Stage 3 四类方法的 development 重建/扩展比较；
-Barrientos 模块对照与稳定性套件。仍缺失的是：(1) Stage 2B 上与前人抽取方法的
-同条件 C1/C2 基线——Sun 原论文自己也没有抽取 baseline，Winter 原生不做六要素，
-Sleimi/Michel 尚未接入；(2) Sun 最终版表号/数字的 `TODO-SOURCE` 核验——本地只有
+Barrientos 模块对照与稳定性套件。仍缺失的是：(1) Stage 2B 上与 Sun 六要素抽取同条件的 C1/C2 基线——目前
+Winter 已完成的是 `estg150_clause_region_detection_v1` 的 clause-region 子任务，
+这只评 clause 区域交集，不构成六要素抽取基线；Sun 原论文自己也没有抽取 baseline，
+Winter 原生不做六要素，Sleimi/Michel 尚未接入；(2) Sun 最终版表号/数字的
+`TODO-SOURCE` 核验——本地只有
 较早作者稿；(3) Stage 2→Stage 3 的同法成对比较；(4) 正式 Oracle 与 end-to-end——
 受上游冻结、Gold Rule Records 与单独授权约束。最小下一步只做不依赖新 API 的
 适配：先把 Winter obligation-action 或公开 marker 抽取接到同一 EStG-150 Gold，
@@ -866,7 +885,57 @@ AB-4（dual-view adapter）/AB-10（style-equivalent）仍待实现/待授权。
 - **coarse overlap 不等于完整语义正确。** 冻结评价器按同字段任意非空字符交集计算，长 Gold 可被短片段命中；完整短语质量、边界和语义类型必须与主指标分列。
 - **旧 E/S/J 组合来自不同批次。** 已有 2026-08-30 Prompt 单因素和 2026-09-15 modular_v1 等分批运行；不能忽略批次效应，也不能把不同批次的最高分拼成连续提升故事。
 - **B 的正式替换尚未完成。** 当前正式默认仍是 v6；B 只是本轮研究参照。R_A 的方向性收益、R_C 的 recall/FP 权衡都需要未来独立运行才能支持更强结论。
-- **SEP-C3 仍未整体完成。** 完整 E/S/J 八格已执行（000-111 各一次，前批+增量批；commit `18f5cf9`），但非同批、每格一次，主效应/交互仍受批次混杂；已有原始响应的后处理归因目前只有本地分支 `9b50729` 对旧 v6 D-full-0813 与 modular 111 的局部分析，其余 arms 未覆盖，adapter/canonicalizer/validator 子步骤贡献不可独立分离；重复运行不确定性仍是缺口。
+- **SEP-C3 仍未整体完成。** 完整 E/S/J 八格已执行（000-111 各一次，前批+增量批；commit `18f5cf9`），但非同批、每格一次，主效应/交互仍受批次混杂；已有原始响应的后处理归因目前只有本地分支 `9b50729` 对旧 v6 D-full-0813 与 modular 111 的局部分析，其余 arms 未覆盖；本次新增的 D-full-0813 后处理 2^3 全组合（表 6-6-3）补上了该固定响应上的三开关组合，但重复运行不确定性与其它 arms 的后处理分离仍是缺口。
+
+#### 6.6.4 E/S/J 模块全组合提示词消融（描述性；前后两半非同批）
+
+**表 6-6-2：E/S/J prompt 模块消融（n=150/格、failed=0）**
+
+| E S J | mean F1 | micro F1 | modality acc | 批次 |
+|---|---:|---:|---:|---|
+| 1 0 0 | 0.7788 | 0.8153 | 0.8133 | 新 |
+| 1 0 1 | 0.7611 | 0.8144 | 0.8133 | 旧 |
+| 0 1 1 | 0.7470 | 0.8032 | 0.8267 | 旧 |
+| 1 1 0 | 0.7355 | 0.7970 | 0.8133 | 旧 |
+| 0 1 0 | 0.7278 | 0.7991 | 0.8200 | 新 |
+| 1 1 1 | 0.7262 | 0.7902 | 0.8200 | 旧 |
+| 0 0 0 | 0.6367 | 0.6473 | 0.7733 | 新 |
+| 0 0 1 | 0.6184 | 0.6617 | 0.7800 | 新 |
+| 参考：v6 完整版 | 0.7850 | 0.8224 | — | 历史 |
+
+来源：`outputs/reports/sep_c3_modular_ablation_v2.json`（机器指标与新旧来源绑定）、
+`outputs/reports/sep_c3_modular_paired_error_attribution_v1.json`（配对诊断）、
+`outputs/reports/sep_c3_modular_ablation_analysis_v1.json`（v6 历史参考）。
+
+**同批配对诊断。** 同一新批配对为 000→100 `+0.1420`、000→010 `+0.0910`、000→001 `-0.0184`；跨批对照 100→110 为 `-0.0432`。actor 侧配对诊断按报告为修正 6 / 回退 35；另一旧批同批对照 101→111 为修正 7 / 回退 38。跨批数值只作描述性对照，不升级为因果主效应。
+
+**必须写明的边界。**
+1. 前四格与后四格非同批，跨批排名仅描述性，不作因果主效应；八格主效应/交互数字来自一次运行且受批次混杂，正式措辞保持描述性。
+2. E 的全部 5 个示例与 S 规则功能重叠（来源 `outputs/reports/sep_c3_modular_prompt_overlap_audit_v1.json`）；J 仅 2 条指令，其中 1 条为公共骨架重述。
+3. 默认配方保持 v6 不变；六个候选（E/S/J/R_A/R_C/R_DEF）均未晋升。
+
+以上结果不写成「完整 prompt 更差」，不写成「E 和 S 冲突」，也不写成「JSON 约束没必要」；可支持的是：E/S/J 在同一批内呈方向性差异，且批次与功能重叠使跨批或强因果解释不成立。
+
+#### 6.6.5 D-full-0813 后处理 2^3 全组合消融（零 API，固定响应）
+
+**表 6-6-3：后处理 2^3 全组合（all 150 samples in denominator）**
+
+| 条件 | adapter | canonicalizer | validator | P | R | F1 | ΔF1 | 成功记录 | 非空记录 | 无效观察 | 拒收 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `full_postprocessing` | ✅ | ✅ | ✅ | 0.8203 | 0.7289 | 0.7719 | +0.0000 | 150/150 | 148/150 | 0 | 0 |
+| `no_output_adapter` | ❌ | ✅ | ✅ | 0.8203 | 0.7289 | 0.7719 | +0.0000 | 150/150 | 148/150 | 0 | 0 |
+| `no_span_canonicalizer` | ✅ | ❌ | ✅ | 0.0000 | 0.0000 | 0.0000 | -0.7719 | 1/150 | 0/150 | 149 | 149 |
+| `no_canonical_validator` | ✅ | ✅ | ❌ | 0.8203 | 0.7289 | 0.7719 | +0.0000 | 150/150 | 148/150 | 0 | 0 |
+| `no_adapter_no_canonicalizer` | ❌ | ❌ | ✅ | 0.0000 | 0.0000 | 0.0000 | -0.7719 | 1/150 | 0/150 | 149 | 149 |
+| `no_canonicalizer_no_validator` | ✅ | ❌ | ❌ | 0.6109 | 0.5820 | 0.5961 | -0.1758 | 150/150 | 149/150 | 149 | 0 |
+| `no_adapter_no_validator` | ❌ | ✅ | ❌ | 0.8203 | 0.7289 | 0.7719 | +0.0000 | 150/150 | 148/150 | 0 | 0 |
+| `no_adapter_no_canonicalizer_no_validator` | ❌ | ❌ | ❌ | 0.6107 | 0.5820 | 0.5960 | -0.1759 | 150/150 | 149/150 | 149 | 0 |
+
+来源：`outputs/reports/d_full_postprocessing_ablation_v2.json` / `.md`，脚本 `scripts/run_d_full_postprocessing_ablation_v1.py`；固定 D-full-0813 `raw_responses.jsonl`，零新增 API，完整链逐位复现锁定结果 0.7719。
+
+**分层读法。** 有效性层由 canonicalizer 主责：去掉重锚器且保留 validator 时 149/150 记录无效并被拒收，F1 从 0.7719 掉到 0.0000；validator 关闭时未重锚记录虽可被 evaluator 部分读出（0.5961），但仍显著低于完整链。输出 adapter 在这批固定响应上没有独立 F1 增量（full 与 `no_output_adapter` 均为 0.7719），不能与 canonicalizer 并列成等价贡献。
+
+安全网层由 validator 承担：canonicalizer 开启时去掉 validator 不改变 0.7719，是因为上游已产出合法记录；canonicalizer 关闭时 validator 拒收 149 条无效记录，把未校验原始输出挡在指标之外。因此二者是「有效性层」与「安全网层」的不同职责，不是三个模块的等价贡献。三模块全关时原始模型输出直接进入 evaluator：本批未因形状抛错；若抛错，只将对应记录记为失败并保留在同一分母，不做修补或回填。
 
 ## 7. 结果
 
@@ -988,19 +1057,30 @@ inference pack；生成器重复运行 byte-identical。**该 panel 不是人工
 **最小字段覆盖扩展，不是穷尽性的法律违规分类体系**；40 条结果保持 DEV_ONLY，
 不改变冻结的三类人工 Gold，也不把正式 Oracle 改称七类 benchmark。
 
-#### 7.4.2 表 A：原 33 条人工裁决 panel（已锁定开发结果）
+#### 7.4.2 表 3：原 33 条人工裁决 panel（主表，仅总体 F1 与检出数）
 
-| 方法 | Missing-action F1 | Incorrect-actor F1 | Out-of-order F1 | Macro-F1 | Exact type acc | Unobservable |
-|---|---:|---:|---:|---:|---:|---:|
-| Winter wrapper | 0.9524 | 0.0000 | 0.1667 | 0.3730 | 0.3333 | 0 |
-| Sun Stage 3 重建 | 1.0000 | 0.1667 | 0.0000 | 0.3889 | 0.3636 | 10 |
-| BM25 | 1.0000 | 0.0000 | 0.0000 | 0.3333 | 0.3333 | 11 |
-| TF-IDF/SVD | 1.0000 | 0.6250 | 0.0000 | 0.5417 | 0.4848 | 6 |
+| 方法 | 总体检测 F1 | 检出数 |
+|---|---:|---:|
+| Winter wrapper | 0.5000 | 11/33 |
+| Sun 重建 | 0.5333 | 12/33 |
+| BM25 | 0.5000 | 11/33 |
+| 本文（TF-IDF/SVD 后端） | 0.6531 | 16/33 |
 
-来源：`outputs/development/s34_winter_stage3_development_v3_clean/`、
+来源：`outputs/reports/s35_sun_stage3_development_v2/comparison_all_methods_dev.json` 以及
+`outputs/development/s34_winter_stage3_development_v3_clean/`、
 `s35_sun_stage3_development_v2/`、`s36_bm25_stage3_development_v3/`、
 `s36_tfidf_svd_stage3_development_v2/` 的 evaluation.json；同一
-`evaluate_stage3_common.py` 口径。
+`evaluate_stage3_common.py` 口径，固定 33 条人工裁决 panel。
+
+**边界。** 本 panel 只含违规正例（`none_gold_items: 0`），故只报总体 F1 与检出数，
+不报 precision/recall。该表与 Sun 论文 Table 12 口径不同，不可跨表比较。分类细目
+与不可判定原因放附录，其中必须区分两种 0：Winter/BM25 是「判定但全错」，Sun 是
+「不可判定（action_mapping_below_gamma）」。
+
+**Oracle 隔离结论。** 额外附 Oracle 隔离运行（`outputs/reports/s3_oracle_gold_rules_v1.json`）：
+人工 Gold 规则输入下 missing_action F1 = 1.0000，而 incorrect_actor/out_of_order
+仍 11/11 不可判定；该结果指向瓶颈在检测器输入端，而不是检测公式本身。
+
 
 #### 7.4.3 表 B：新增 30 条合成受控错误 panel（DEV，同一 evaluator）
 
