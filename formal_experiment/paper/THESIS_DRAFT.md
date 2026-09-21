@@ -1078,8 +1078,12 @@ inference pack；生成器重复运行 byte-identical。**该 panel 不是人工
 「不可判定（action_mapping_below_gamma）」。
 
 **Oracle 隔离结论。** 额外附 Oracle 隔离运行（`outputs/reports/s3_oracle_gold_rules_v1.json`）：
-人工 Gold 规则输入下 missing_action F1 = 1.0000，而 incorrect_actor/out_of_order
-仍 11/11 不可判定；该结果指向瓶颈在检测器输入端，而不是检测公式本身。
+人工 Gold 规则输入下 missing_action F1 = 1.0000；incorrect_actor 与 out_of_order 的
+F1 仍为 0.0000，但两者机制需分开陈述——**incorrect_actor 为 11/11 不可判定**
+（`per_type_observable = 0`，原因全部为 `action_mapping_below_gamma`）；**out_of_order
+在 aggregate 层记为可观察（11/11），其 item-level score denominator 为 0**，即没有
+规则侧顺序端点映射到阈值以上的流程动作。两种机制都在指向上游输入：**该结果指向
+瓶颈在检测器输入端，而不是检测公式本身。**
 
 
 #### 7.4.3 表 B：新增 30 条合成受控错误 panel（DEV，同一 evaluator）
