@@ -1219,6 +1219,39 @@ compliant specificity **1.0000**、variant exact-type **30/30**、unobservable *
 把它写成 "Ours" 之前，必须先建一个**从已发布 Stage 2 Rule Record 真实推导绑定**的检测器
 （即诊断文档的方案 A 剩余部分），否则就是把 benchmark 的答案喂给了检测器。
 
+### "Ours" 行的可行性结论：缺的是人工标注，不是代码（2026-09-21，零 API，只读）
+
+详见 `docs/research/STAGE3_OURS_ARM_FEASIBILITY_2026-09-21.md`。四步已核实的证据链：
+
+1. **benchmark 没有 rule-action → activity 标注**：每个 variant 只有
+   `target_activity_id`，**没有任何字段说明该活动实现的是哪一条 rule action**；
+   rule text 与 activity name 都是多词 span，该对应关系**按构造不可恢复**。
+2. **Gold Rule Records 的现状**（直接读，绕过不兼容的 converter）：92 clauses、
+   70 条带 actions、**38 条有非空 `actor_action_map`、0 条有任何 `order_relations`**。
+   （`gdpr_capsule_converter` 的允许 schema 只有三个 prediction schema，不接受
+   gold schema；强行传入时 9 条规则全部 `failed=True`。）
+3. **词面 grounding 正是失败环节**（已量化）：配对 benchmark 上
+   `sun_reconstruction` macro-F1 0.3175、`winter_wrapper` 0.2222，两者
+   `out_of_order` F1 均 **0.0**；而声明绑定下的参考上界为 1.0000。
+4. **项目自己的正式 Direct-LLM linkage 报告已记录同一堵墙**（原文）：
+   "order relations absent in capsule for rules: 全部九条 …（Definition-7 input
+   unavailable by contract; **never fabricated**）"；unobservable 11 条，其中
+   `action_mapping_below_gamma` **8** 条；`out_of_order` P/R/F1 = 0.0000。
+
+**因此**：真正的 "Ours" 检测器需要把「rule action → 履行它的 BPMN activity」这一绑定作为
+**输入**；而该绑定今天**无人标注**。剩余工作因此是**补这份人工标注**，不是再写检测器代码。
+**禁止**自动填这份绑定——那等于 agent 自己制造 Ground Truth，违反本文档"不伪造结果"。
+
+**三条诚实路径**（需用户决定）：
+
+| # | 路径 | 需要什么 | 可声称什么 |
+|---|---|---|---|
+| A1 | 为 30 个配对 item 标注 rule-action→activity 绑定与规则 order 关系，再建消费该绑定的 grounded 检测器 | 30 item × 3 类的人工标注 + 9 条规则的顺序关系 | "Ours 在三类合规检查上优于前人" |
+| A2 | 同上标注，但只覆盖今天真正可标的类型：`missing_action` 与 `incorrect_actor`（均 10/10 结构性可检测，绑定补齐后完全 grounded），`out_of_order` 明确排除 | 仅需 action 绑定标注 | "Ours 在 missing-action 与 incorrect-actor 检测上优于前人" |
+| B | Table 3 作为**框架+可行性**表发表：配对 benchmark、anti-degeneracy 保证、grounded 上界、前人结果，并把 grounding 要求本身写成发现 | 无需新增 | "我们说明现有检测在本语料上为何退化，以及一个可测 benchmark 究竟需要什么" |
+
+路径 B **完全由已提交的证据支撑**；A1/A2 是唯一能得出"优于前人"的路，且都卡在人工标注上。
+
 **过渡核账 successor v9**：`outputs/reports/s2_13_s3_7_transition_readiness_v9.json`
 （builder/verifier/schema/tests 齐备，verifier 全过）。v8 的 Gold-Rule-Record 三态
 探测按设计 fail closed——候选一出现即拒绝；该候选的独立验证已完成，故 v9 用

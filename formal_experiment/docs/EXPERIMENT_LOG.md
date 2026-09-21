@@ -5145,3 +5145,17 @@
 - 仍存在 blocker：无
 - 备注：Read-only wrt all existing artifacts: the existing 30-item panel and the frozen GDPR7 BPMN bytes are untouched; new files only. Controls reuse the frozen Stage 1 GDPR7 originals via each variant's manifest-declared source_bpmn+sha, so no compliant process was newly authored and nothing can drift. Grounding is DECLARED per item rather than assumed, which is what makes the grounded and similarity paths comparable.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-21T07:50:15.885445+00:00 - Stage 3 Ours-arm feasibility: the missing piece is a human rule-action to BPMN-activity annotation, not detector code (zero API, read-only)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：5 passed in 0.04s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`4c3fc432c28be6fda3e7ccf0b98c85578b355876`；相关未提交路径：10 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Read-only evidence chain. (1) The 30-item panel annotates target_activity_id but NOT the rule-side action that activity realizes, and both texts span several words, so the correspondence is not recoverable by construction. (2) A direct read of the published Gold Rule Records gives 92 clauses, 70 with actions, 38 with a non-empty actor_action_map, and 0 with any order_relations. (3) The existing gdpr_capsule_converter rejects the gold schema (allowed set is the three prediction schemas) and returns failed=True for all nine rules when forced, so the gold records must be consumed by direct clause read. (4) The project's own promoted Direct-LLM linkage report already records the same wall verbatim: order relations absent for all nine rules by contract and never fabricated, 11 unobservable including 8 action_mapping_below_gamma, out_of_order F1 0.0000. Consequence: a real Ours detector needs the rule-action to activity binding as INPUT, so the remaining Table 3 work is authoring that annotation, not more detector code; filling it in automatically would mean the agent authoring its own ground truth.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
