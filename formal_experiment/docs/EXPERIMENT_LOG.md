@@ -5071,3 +5071,17 @@
 - 仍存在 blocker：无
 - 备注：G0.4 contract alignment: the overall score now pools exactly actor/action/condition/constraint/exception; the legacy six-field aggregate (which folded in the contract-forbidden synthetic modality clause-span fallback) is retained only as a non-canonical provenance field. New builder scripts/build_stage2_table1_paper_final_v1.py regenerates Table 1 from frozen Gold + frozen arm predictions (0 LLM calls).
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-21T07:32:06.712454+00:00 - Table 2 final capsule: re-score the frozen v6 prompt ablation under the Table 1 five-field pooled metric + paired bootstrap (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：14 passed in 16.65s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`87b5280e7d6be3718270290a1b380180c432b289`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Re-scores the ALREADY-EXECUTED 450-call v6 prompt ablation from persisted canonical predictions, so Table 2 uses the same prompt family and the same overall metric family as Table 1. Adds paired per-sample and per-field percentile bootstrap (10k resamples) using only the frozen evaluator. Honest finding: no module deletion separates from Full on pooled overall F1 (all CIs contain 0); per-field effects are mixed in sign, so the ablation does not support a uniform each-module-is-necessary claim.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
