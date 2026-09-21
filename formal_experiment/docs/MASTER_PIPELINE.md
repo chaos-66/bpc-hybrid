@@ -1179,6 +1179,46 @@ pending；**正式 S3.7 Oracle 主表未声明完成**（本轮为冻结评测�
 **边界**：禁止为了让某方法显得更好而事后挑选阈值、后端或面板；上述扫描已表明不存在
 这样的设置。Table 3 取 A/B/C 哪一方案须由用户决定（见诊断文档 §8）。
 
+### 论文 Table 3 配对 benchmark（PAPER-FINAL-REPAIR，2026-09-21，零 API）
+
+**已完成"换掉 33 条 Gold + 跑前人 sanity check"两步**，产物均 tracked：
+
+- manifest：`data/development/stage3_synth/stage3_paired_benchmark_v1.json`
+- 生成器：`scripts/build_stage3_paired_benchmark_v1.py`
+- 报告：`outputs/reports/stage3_paired_benchmark_v1.{json,md}`、
+  `stage3_grounded_checker_v1.{json,md}`、`stage3_predecessors_paired_v1.{json,md}`
+- 测试：`tests/test_stage3_paired_benchmark_v1.py`（5 项）
+
+**benchmark 结构**：60 items = 30 pairs。每个变异 BPMN 与**同一流程的未变异 BPMN**
+配对成 compliant control；control 直接复用该 variant manifest 自己声明的
+`source_bpmn` + `source_bpmn_sha256`（即冻结 Stage 1 GDPR7 membership 字节），
+**没有新造任何"看起来合规"的流程**，因此不会漂移、也不需要新的人工标注。
+Gold 分布：30 compliant + 每类违规 10。每个 item **显式声明 grounding**
+（`rule_action_text` / `target_activity_id` / lane / `order_pair`），使"按声明消费绑定"
+与"按相似度重新推导绑定"两条路径可比，而不是被悄悄混为一谈。
+
+**anti-degeneracy 校验**：control 必须不违反、variant 必须违反 → **30/30 PASS，0 问题**。
+这是防止 benchmark 再次悄悄退化的守卫。
+
+**grounded checker（参考上界）**：macro-F1 **1.0000**、micro-F1 **1.0000**、
+compliant specificity **1.0000**、variant exact-type **30/30**、unobservable **0**。
+即 benchmark 可测且 Ground Truth 自洽——这正是"健康的 benchmark 必须让正确 grounded 的
+方法打出高分"的 sanity check；若它拿不到高分，说明 benchmark 仍然坏的。
+
+**前人 sanity run（同一 60 items、同一协议）**：每个 arm 对每对的 control 与 variant 都
+打分，沿用各自冻结的 `score > 0` 判定，unobservable 计入 miss、绝不置零。
+
+| Arm | missing | incorrect | out_of_order | Macro-F1 | Micro-F1 | Specificity | Exact | Unobs |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| sun_reconstruction | 0.6667 | 0.2857 | 0.0000 | 0.3175 | 0.3871 | 0.3333 | 12/30 | 16 |
+| winter_wrapper | 0.6667 | 0.0000 | 0.0000 | 0.2222 | 0.3846 | 0.6000 | 10/30 | 0 |
+| grounded_structural_checker_v1（参考） | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **30/30** | **0** |
+
+**报告内的强制措辞**：该差距是 **grounding 效应**，**不得**写成"前人算法弱"。
+`grounded_structural_checker_v1` 目前是**声明绑定下的参考上界**，不是完整论文方法：
+把它写成 "Ours" 之前，必须先建一个**从已发布 Stage 2 Rule Record 真实推导绑定**的检测器
+（即诊断文档的方案 A 剩余部分），否则就是把 benchmark 的答案喂给了检测器。
+
 **过渡核账 successor v9**：`outputs/reports/s2_13_s3_7_transition_readiness_v9.json`
 （builder/verifier/schema/tests 齐备，verifier 全过）。v8 的 Gold-Rule-Record 三态
 探测按设计 fail closed——候选一出现即拒绝；该候选的独立验证已完成，故 v9 用
