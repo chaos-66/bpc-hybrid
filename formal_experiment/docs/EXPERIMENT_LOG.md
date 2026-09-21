@@ -5085,3 +5085,17 @@
 - 仍存在 blocker：无
 - 备注：Re-scores the ALREADY-EXECUTED 450-call v6 prompt ablation from persisted canonical predictions, so Table 2 uses the same prompt family and the same overall metric family as Table 1. Adds paired per-sample and per-field percentile bootstrap (10k resamples) using only the frozen evaluator. Honest finding: no module deletion separates from Full on pooled overall F1 (all CIs contain 0); per-field effects are mixed in sign, so the ablation does not support a uniform each-module-is-necessary claim.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-21T07:35:33.374202+00:00 - Stage 3 Table 3 viability diagnosis: the 30-item mutation panel has 0/30 cleanly separable items; order_relations empty on all 92 Gold Rule Record nodes (zero API, read-only)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：14 passed in 16.95s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`0c1752baeb29423eb21e0d81c2d1aa1503854eff`；相关未提交路径：12 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Read-only diagnostic, no Gold/panel/prediction writes. Establishes that Table 3 cannot be built from existing artifacts: (1) the 33-item violation gold has decision_violation_type copied from check_type with no BPMN mutation; (2) the 30-item real-mutation panel scores the UNMUTATED originals as violations already (0/30 separable), out_of_order denominator is 0 on all 10 items, incorrect_actor unobservable on 8/10, and no gamma in the config sweep grid fixes it; (3) order_relations is non-empty on 0/92 published Gold Rule Record nodes, so the paper's out_of_order mechanism has no Gold evidence to compare against.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
