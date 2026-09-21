@@ -1,0 +1,150 @@
+{
+  "schema_version": "gdpr7_direct_llm_promotion@1.0.0",
+  "promotion_id": "gdpr7_direct_llm_arm_promotion_v1",
+  "status": "applied_verified",
+  "applied_utc": "2026-09-20T13:33:31.296608+00:00",
+  "source": {
+    "dev_capsule_dir": "outputs\\development\\gdpr7_direct_llm_v3_1",
+    "files": {
+      "predictions.json": {
+        "sha256": "b625692d1e4e85b22f0c2e428a46a7c6cd49a2cc4b77a10f6c8e8d25adec50a1",
+        "byte_size": 138599
+      },
+      "telemetry.json": {
+        "sha256": "e1897690cf666946f4b0b64da0a88212bad999d98a5e84259bd0700fefb8688d",
+        "byte_size": 1101
+      },
+      "cost.json": {
+        "sha256": "bbcade607ad7071e65f2eeba50bfd707d3c0d4196aa8db57f49420f7d3043713",
+        "byte_size": 757
+      },
+      "manifest.json": {
+        "sha256": "5ba71ff18344e25ce5cb74b5afacada32d6bc747abec417723f76162cc043bd8",
+        "byte_size": 3581
+      }
+    },
+    "dev_manifest_sha256": "5ba71ff18344e25ce5cb74b5afacada32d6bc747abec417723f76162cc043bd8"
+  },
+  "target": {
+    "dir": "data\\predictions\\gdpr7_direct_llm_v1",
+    "files": {
+      "predictions.json": {
+        "sha256": "b625692d1e4e85b22f0c2e428a46a7c6cd49a2cc4b77a10f6c8e8d25adec50a1",
+        "byte_size": 138599
+      },
+      "telemetry.json": {
+        "sha256": "e1897690cf666946f4b0b64da0a88212bad999d98a5e84259bd0700fefb8688d",
+        "byte_size": 1101
+      },
+      "cost.json": {
+        "sha256": "bbcade607ad7071e65f2eeba50bfd707d3c0d4196aa8db57f49420f7d3043713",
+        "byte_size": 757
+      },
+      "manifest.json": {
+        "sha256": "5ba71ff18344e25ce5cb74b5afacada32d6bc747abec417723f76162cc043bd8",
+        "byte_size": 3581
+      }
+    },
+    "verified": {
+      "predictions.json": {
+        "matches": true,
+        "sha256": "b625692d1e4e85b22f0c2e428a46a7c6cd49a2cc4b77a10f6c8e8d25adec50a1"
+      },
+      "telemetry.json": {
+        "matches": true,
+        "sha256": "e1897690cf666946f4b0b64da0a88212bad999d98a5e84259bd0700fefb8688d"
+      },
+      "cost.json": {
+        "matches": true,
+        "sha256": "bbcade607ad7071e65f2eeba50bfd707d3c0d4196aa8db57f49420f7d3043713"
+      },
+      "manifest.json": {
+        "matches": true,
+        "sha256": "5ba71ff18344e25ce5cb74b5afacada32d6bc747abec417723f76162cc043bd8"
+      }
+    }
+  },
+  "validation": {
+    "checklist": {
+      "capsule_dir": "outputs\\development\\gdpr7_direct_llm_v3_1",
+      "files": {
+        "predictions.json": {
+          "sha256": "b625692d1e4e85b22f0c2e428a46a7c6cd49a2cc4b77a10f6c8e8d25adec50a1",
+          "byte_size": 138599
+        },
+        "telemetry.json": {
+          "sha256": "e1897690cf666946f4b0b64da0a88212bad999d98a5e84259bd0700fefb8688d",
+          "byte_size": 1101
+        },
+        "cost.json": {
+          "sha256": "bbcade607ad7071e65f2eeba50bfd707d3c0d4196aa8db57f49420f7d3043713",
+          "byte_size": 757
+        },
+        "manifest.json": {
+          "sha256": "5ba71ff18344e25ce5cb74b5afacada32d6bc747abec417723f76162cc043bd8",
+          "byte_size": 3581
+        }
+      },
+      "telemetry_status": "complete",
+      "telemetry": {
+        "status": "complete",
+        "records_expected": 74,
+        "completed_calls": 74,
+        "in_doubt_calls": 0,
+        "failed_calls": 0,
+        "ok_prediction_rows": 74
+      },
+      "transport": {
+        "telemetry": "real_authorized",
+        "manifest": "real_authorized",
+        "cost": "real_authorized",
+        "fake_run_program_verification_only": false
+      },
+      "real_run": {
+        "llm_api_calls": 74,
+        "gold_rule_records_created": false,
+        "oracle_started": false
+      },
+      "predictions": {
+        "record_count_declared": 74,
+        "record_rows": 74,
+        "dataset_id": "gdpr7_stage2_sentences_v1",
+        "method_id": "direct_llm"
+      },
+      "containment": {
+        "clean": true,
+        "hits": {}
+      },
+      "binding": {
+        "input_path_declared": "data/input/gdpr7_stage2_input_v1.json",
+        "input_sha256_actual": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "input_sha256_declared": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "preflight_input_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "preflight_report_sha256_actual": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7",
+        "preflight_report_sha256_declared": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7",
+        "preflight_report_path_declared": "outputs\\reports\\gdpr7_direct_llm_preflight_v3.json"
+      }
+    },
+    "errors": [],
+    "reproduce_command_real": "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v3_1.json --authorization-file <gdpr7-direct-llm-authorization-event-file>"
+  },
+  "input_binding": {
+    "path": "data/input/gdpr7_stage2_input_v1.json",
+    "sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+    "preflight_report_sha256": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7"
+  },
+  "reproduce_command_real": "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v3_1.json --authorization-file <gdpr7-direct-llm-authorization-event-file>",
+  "rollback_command": "rm -rf data/predictions/gdpr7_direct_llm_v1   # only with full user awareness; the arm capsule is one-shot",
+  "next_steps": [
+    "python scripts/run_gdpr_3type_linkage_v1.py --arm direct_llm",
+    "python scripts/run_gdpr_s2_s3_linkage_v1.py --arm direct_llm",
+    "python scripts/reevaluate_s3_extended_unified_v1.py --source direct_llm",
+    "python scripts/run_s3_formula_repair_v2.py --sources reference,rules_only,direct_llm --output <NEW_OUTPUT_DIR> --report <NEW_REPORT_PATH>   # fresh dirs only; historical outputs/evidence/s3_formula_repair_v2 is preserved"
+  ],
+  "safety": {
+    "gold_rule_records_created": false,
+    "oracle_started": false,
+    "raw_text_committed": false,
+    "overwrote_existing_target": false
+  }
+}

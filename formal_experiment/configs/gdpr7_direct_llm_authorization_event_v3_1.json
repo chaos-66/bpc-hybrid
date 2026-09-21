@@ -1,0 +1,51 @@
+{
+  "schema_version": "gdpr7_direct_llm_authorization_event@1.0.0",
+  "artifact_version": "3.1",
+  "scope": "gdpr7_direct_llm_v3_1:74",
+  "authorization_sentence": "I explicitly authorize a NEW GDPR Direct-74 v3.1 run with scope: gdpr7_direct_llm_v3_1:74",
+  "authorization_sentence_utf8_sha256": "c7bc343033f77cbe81579d1c10aeb5e7f58478d159d4b67009df616e4d2b7505",
+  "model": "deepseek-v4-pro",
+  "published_alias": "DeepSeek-V4-Pro-0813",
+  "calls": 74,
+  "retry": 0,
+  "allowed_windows": "off_peak_only",
+  "price_snapshot": {
+    "schema_version": "gdpr7_direct_llm_price_snapshot@1.0.0",
+    "currency": "USD",
+    "input_cache_hit_per_million": 0.022,
+    "input_cache_miss_per_million": 0.66,
+    "output_per_million": 1.98
+  },
+  "official_price_reverified_at_utc": "2026-09-20T11:09:44.430103+00:00",
+  "price_snapshot_provenance": "approved v3.1 execution-contract pricing snapshot; this offline builder made no external network call and did not re-fetch live prices",
+  "caps": {
+    "max_calls": 74,
+    "global_input_token_cap": 74000000,
+    "global_output_token_cap": 303104,
+    "max_output_tokens_per_call": 4096,
+    "global_usd_cost_cap": 1.31
+  },
+  "hash_set": {
+    "data/input/gdpr7_stage2_input_v1.json": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+    "outputs/reports/gdpr7_direct_llm_preflight_v3.json": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7",
+    "configs/models/estg150_d1_active_registry_v1.json": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+    "scripts/run_gdpr7_direct_llm_v3_1.py": "a4d216b9e9a210f38360ec5a746a607d96ca99676236a96f9ec17306b2254b6e",
+    "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "contract_sha256": "f9000e47931dc4dcc34b2fcf627456cef86d5cf7e021ed858561b2bb1b670e6c"
+  },
+  "execution_contract": {
+    "path": "configs/ablations/gdpr7_direct_llm_execution_contract_v3_1.json",
+    "sha256": "f9000e47931dc4dcc34b2fcf627456cef86d5cf7e021ed858561b2bb1b670e6c"
+  },
+  "payload_freeze": {
+    "path": "outputs/reports/gdpr7_direct_llm_v3_1_payload_freeze.json",
+    "sha256": "9179dbb96d0f15b8a795c507d125a1a194818cb79d560f3341dc97a4e31ee7f3",
+    "call_count": 74,
+    "request_body_sha256_sequence_sha256": "c243108dbbeb29f0233640f752de7e65033581f8c738f0c63d31c2fe87a9ca62"
+  },
+  "gold_isolation": {
+    "api_arms_must_not_read_gold": true,
+    "evaluation_only_after_predictions_are_locked": true
+  },
+  "statement": "User-authorized NEW GDPR Stage-2 Direct-LLM v3.1 run (scope gdpr7_direct_llm_v3_1:74): exactly 74 frozen requests, one per frozen sample; model deepseek-v4-pro; temperature 0.0; top_p 1.0; max_tokens 4096; stream false; thinking {\"type\":\"disabled\"}; response_format null; retry 0; off-peak only. Planned/frozen and actual serialized wire-body SHA-256 are persisted; the actual hash must equal the frozen planned hash before response acceptance; any mismatch is an execution_contract_violation, aborts the batch, and is never retried. No Direct-36, BASE, R_DEF, prompt refinement, v2 retry/reuse, Stage-3 LLM calls, Gold access, repair, regeneration, manual editing, or fake substitution."
+}

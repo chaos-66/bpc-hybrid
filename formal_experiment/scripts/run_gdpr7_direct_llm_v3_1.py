@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Real-executor chain for the GDPR Stage-2 Direct-LLM (Stage-2 arm) batch.
 
-This runner executes the frozen 74-sentence ``direct_llm`` batch of
-``outputs/reports/gdpr7_direct_llm_preflight_v1.json`` with the S2.12-style
+This runner (v3.1 provenance instrumentation) executes the frozen
+74-sentence ``direct_llm`` batch of
+``outputs/reports/gdpr7_direct_llm_preflight_v3.json`` with the S2.12-style
 real-execution safety contract, fully offline by default:
 
 * the preflight builder's render path is REUSED (imported as
@@ -13,8 +14,16 @@ real-execution safety contract, fully offline by default:
   the run refuses BEFORE the first send (fail closed);
 * a per-call ``PayloadLock`` re-verifies the final body hash + sample id +
   execution order inside EVERY transport call (fake or real);
+* for EVERY real request the actual serialized/sent body SHA-256
+  (``RealAPITransport.last_request_body_sha256``) is compared against the
+  planned/frozen body SHA-256 independent of response semantic success; a
+  mismatch is recorded as an ``execution_contract_violation`` and the batch
+  stops immediately without retrying the mismatched request;
+* both the planned/frozen and actual wire-body SHA-256 values, plus the
+  equality flag and decode status, are durably persisted for each attempted
+  request; the planned hash is never replaced by the actual hash;
 * before EVERY real send the executor enforces: an authorization event file
-  (user sentence + exact scope ``gdpr7_direct_llm_v1:74`` + SHA bindings;
+  (user sentence + exact scope ``gdpr7_direct_llm_v3_1:74`` + SHA bindings;
   absent -> hard refuse), the model pin ``deepseek-v4-pro`` (published alias
   ``DeepSeek-V4-Pro-0813``), temperature 0 / top_p 1 / max_tokens 4096 /
   retry 0 / stream false / thinking disabled / response_format None (all
@@ -29,7 +38,7 @@ real-execution safety contract, fully offline by default:
   provider usage or non-``ok_message_content`` decode is recorded as an
   ``in_doubt`` ledger entry and NEVER auto-resent;
 * append-only hash-chained ledger + raw-response JSONL under
-  ``outputs/development/gdpr7_direct_llm_raw_v1/``; ``--resume`` re-sends
+  ``outputs/development/gdpr7_direct_llm_raw_real_v3_1/``; ``--resume`` re-sends
   ONLY never-attempted requests in the original (report) order; partial/
   aborted runs keep everything and exit non-zero without claiming complete;
 * after the batch, raw responses are converted to canonical prediction rows
@@ -44,17 +53,17 @@ real-execution safety contract, fully offline by default:
 CLI::
 
     # full 74-call fake verification (zero network, zero API)
-    python scripts/run_gdpr7_direct_llm_v1.py --fake-transport
+    python scripts/run_gdpr7_direct_llm_v3_1.py --fake-transport
 
     # real run AFTER user authorization (authorization event file required)
-    python scripts/run_gdpr7_direct_llm_v1.py --contract-file <path> \\
+    python scripts/run_gdpr7_direct_llm_v3_1.py --contract-file <path> \\
         --authorization-file <path>
 
     # resume a partial/aborted run (never re-sends completed or in_doubt)
-    python scripts/run_gdpr7_direct_llm_v1.py --fake-transport --resume
+    python scripts/run_gdpr7_direct_llm_v3_1.py --fake-transport --resume
 
     # resume a real run
-    python scripts/run_gdpr7_direct_llm_v1.py --contract-file <path> \\
+    python scripts/run_gdpr7_direct_llm_v3_1.py --contract-file <path> \\
         --authorization-file <path> --resume
 
 Zero LLM/API/network/.env unless the user has authorized a real batch: fake
@@ -133,14 +142,14 @@ PREDICTION_SCHEMA = "gdpr7_direct_llm_predictions@1.0.0"
 TELEMETRY_SCHEMA = "gdpr7_direct_llm_telemetry@1.0.0"
 COST_SCHEMA = "gdpr7_direct_llm_cost@1.0.0"
 MANIFEST_SCHEMA = "gdpr7_direct_llm_manifest@1.0.0"
-LEDGER_SCHEMA = "gdpr7_direct_llm_ledger@1.0.0"
+LEDGER_SCHEMA = "gdpr7_direct_llm_ledger@1.1.0"
 PRICE_SNAPSHOT_SCHEMA = "gdpr7_direct_llm_price_snapshot@1.0.0"
 AUTHORIZATION_EVENT_SCHEMA = "gdpr7_direct_llm_authorization_event@1.0.0"
 CONTRACT_SCHEMA = "gdpr7_direct_llm_execution_contract@1.0.0"
 
 DATASET_ID = "gdpr7_stage2_sentences_v1"
 METHOD_ID = "direct_llm"
-AUTHORIZATION_SCOPE = "gdpr7_direct_llm_v1:74"
+AUTHORIZATION_SCOPE = "gdpr7_direct_llm_v3_1:74"
 
 # Canonical arm capsule home referenced by the linkage runner
 # (``run_gdpr_s2_s3_linkage_v1.ARM_PATHS["direct_llm"]``).  This executor only
@@ -149,11 +158,11 @@ AUTHORIZATION_SCOPE = "gdpr7_direct_llm_v1:74"
 ARM_CAPSULE_PATH = ROOT / "data/predictions/gdpr7_direct_llm_v1"
 
 # Default development output locations (never formal capsule dirs).
-DEFAULT_RAW_DIR = ROOT / "outputs/development/gdpr7_direct_llm_raw_v1"
-DEFAULT_CAPSULE_DIR = ROOT / "outputs/development/gdpr7_direct_llm_v1"
+DEFAULT_RAW_DIR = ROOT / "outputs/development/gdpr7_direct_llm_raw_real_v3_1"
+DEFAULT_CAPSULE_DIR = ROOT / "outputs/development/gdpr7_direct_llm_v3_1"
 
 # Default locked preflight report (committed path).
-REPORT_DEFAULT = OUTPUT
+REPORT_DEFAULT = ROOT / "outputs/reports/gdpr7_direct_llm_preflight_v3.json"
 
 # In-code hard caps (mirrors preflight ``recommended_hard_limits``; implemented
 # here, not only documented).
@@ -193,35 +202,6 @@ _FORBIDDEN_DECISION_KEYS = (
 
 class Gdpr7ExecutionError(ValueError):
     """Fail-closed GDPR Direct-LLM execution error."""
-
-
-class WireBodyHashMismatch(Gdpr7ExecutionError):
-    """Execution-contract violation: the serialized wire request body does
-    not equal the planned/frozen request body.
-
-    The actual provider-facing body is the exact ``http_req.data`` bytes
-    hashed by ``RealAPITransport.last_request_body_sha256``.  A mismatch
-    aborts the batch immediately and the request is never retried.
-    """
-
-    def __init__(
-        self,
-        *,
-        call_index: int,
-        sample_id: str,
-        planned_request_body_sha256: str,
-        actual_request_body_sha256: str | None,
-    ) -> None:
-        self.call_index = int(call_index)
-        self.sample_id = sample_id
-        self.planned_request_body_sha256 = planned_request_body_sha256
-        self.actual_request_body_sha256 = actual_request_body_sha256
-        actual_text = actual_request_body_sha256 or "MISSING"
-        super().__init__(
-            f"wire-body SHA mismatch at ordinal {self.call_index} "
-            f"({self.sample_id}): actual {actual_text} != planned "
-            f"{planned_request_body_sha256}"
-        )
 
 
 # ---------------------------------------------------------------------------
@@ -661,13 +641,138 @@ def fake_canonical_content(sample_id: str, source_text: str) -> str:
     return json.dumps(record)
 
 
+class WireBodyHashMismatch(Gdpr7ExecutionError):
+    """Execution-contract violation raised when the actual serialized wire
+    request body SHA-256 does not equal the planned/frozen request-body
+    SHA-256.
+
+    A mismatch is independent of response semantic success and must abort the
+    batch immediately; the mismatched request is never retried.
+    """
+
+    def __init__(
+        self,
+        *,
+        call_index: int,
+        sample_id: str,
+        planned_request_body_sha256: str,
+        actual_request_body_sha256: str | None,
+        actual_body_hash_available: bool,
+        wire_hash_source: str | None,
+        response: LLMResponse | None = None,
+        decode: Mapping[str, Any] | None = None,
+        transport_error: Exception | None = None,
+    ) -> None:
+        self.call_index = int(call_index)
+        self.sample_id = sample_id
+        self.planned_request_body_sha256 = planned_request_body_sha256
+        self.actual_request_body_sha256 = actual_request_body_sha256
+        self.actual_body_hash_available = bool(actual_body_hash_available)
+        self.wire_hash_source = wire_hash_source
+        self.response = response
+        self.decode = dict(decode) if decode else None
+        self.transport_error = str(transport_error) if transport_error else None
+        actual_text = actual_request_body_sha256 or "MISSING"
+        super().__init__(
+            f"wire-body SHA mismatch at ordinal {self.call_index} "
+            f"({self.sample_id}): actual {actual_text} != planned "
+            f"{planned_request_body_sha256}"
+        )
+
+
+def _wire_provenance(active_transport: Any,
+                     planned_request_body_sha256: str) -> dict[str, Any]:
+    """Capture planned-vs-actual wire-body evidence from a transport.
+
+    ``actual_request_body_sha256`` is the value exposed by the real
+    ``RealAPITransport.last_request_body_sha256`` attribute (or an equivalent
+    actual-body hash source).  The planned hash is never overwritten.
+    """
+    raw_actual = getattr(active_transport, "last_request_body_sha256", None)
+    actual = str(raw_actual) if raw_actual is not None else None
+    source = getattr(active_transport, "last_wire_hash_source", None)
+    return {
+        "planned_request_body_sha256": planned_request_body_sha256,
+        "actual_request_body_sha256": actual,
+        "actual_body_hash_available": actual is not None,
+        "request_body_sha256_match": (
+            actual == planned_request_body_sha256 if actual is not None else None
+        ),
+        "wire_hash_source": source,
+    }
+
+
+def _record_wire_violation(
+    *,
+    raw_store: "RawResponseStore",
+    ledger: "ExecutionLedger",
+    row: Mapping[str, Any],
+    ordinal: int,
+    planned_sha256: str,
+    exc: WireBodyHashMismatch,
+) -> None:
+    """Durably persist a wire-body execution-contract violation.
+
+    The raw store line is written before the ledger append so a crash cannot
+    drop the mismatch evidence.  The ledger status is
+    ``execution_contract_violation`` and the record deliberately carries BOTH
+    hashes plus the equality flag.
+    """
+    decode = exc.decode or {}
+    decode_status = str(decode.get("status") or "wire_body_hash_mismatch")
+    usage = dict(decode.get("usage") or {})
+    response = exc.response
+    content = getattr(response, "content", "") or ""
+    returned = getattr(response, "model", None)
+    returned_model = str(returned) if returned else None
+    actual = exc.actual_request_body_sha256
+
+    raw_store.append({
+        "call_index": int(ordinal),
+        "sample_id": row["sample_id"],
+        "rule_id": row.get("rule_id"),
+        "request_body_sha256": planned_sha256,
+        "planned_request_body_sha256": planned_sha256,
+        "actual_request_body_sha256": actual,
+        "actual_body_hash_available": exc.actual_body_hash_available,
+        "request_body_sha256_match": False,
+        "wire_hash_source": exc.wire_hash_source,
+        "outcome": "execution_contract_violation",
+        "decode_status": decode_status,
+        "returned_model": returned_model,
+        "usage": usage,
+        "content": content,
+        "content_sha256": _sha_text(content) if content else None,
+        "transport_error": exc.transport_error,
+    })
+    ledger.append(ledger_record(
+        prev_hash=ledger.last_hash,
+        call_index=int(ordinal),
+        sample_id=row["sample_id"],
+        rule_id=row.get("rule_id"),
+        request_body_sha256=planned_sha256,
+        status="execution_contract_violation",
+        usage=usage,
+        returned_model=returned_model,
+        cost_usd=None,
+        error="wire_body_hash_mismatch",
+        request_time_utc=datetime.now(timezone.utc).isoformat(),
+        planned_request_body_sha256=planned_sha256,
+        actual_request_body_sha256=actual,
+        request_body_sha256_match=False,
+        wire_hash_source=exc.wire_hash_source,
+        decode_status=decode_status,
+    ))
+
+
 class PayloadLockedFakeTransport(LLMTransport):
     """Payload-locked deterministic fake transport (no network, no .env).
 
-    Exposes a synthetic ``last_decode`` so the runner's usage/cost/ledger
-    path is exercised identically to the real path.  Default usage is all
-    zeros so a fake run's ``cost_usd`` is exactly 0.00 (fixture data, no
-    billing).  Fault injection knobs are used ONLY by offline tests.
+    Exposes a synthetic ``last_decode`` plus explicit planned/actual wire-body
+    hash fields so the runner's provenance/cost/ledger path is exercised
+    identically to the real path.  Default usage is all zeros so a fake run's
+    ``cost_usd`` is exactly 0.00 (fixture data, no billing).  Fault injection
+    knobs are used ONLY by offline tests.
     """
 
     def __init__(
@@ -679,6 +784,7 @@ class PayloadLockedFakeTransport(LLMTransport):
         model: str = REQUIRED_MODEL,
         decode_status: str = "ok_message_content",
         transport_error_at: int | None = None,
+        actual_hash_mismatch_at: int | None = None,
     ) -> None:
         self._lock = payload_lock
         self._usage = dict(usage) if usage is not None else {
@@ -691,15 +797,27 @@ class PayloadLockedFakeTransport(LLMTransport):
         self._model = model
         self._decode_status = decode_status
         self._transport_error_at = transport_error_at
+        self._actual_hash_mismatch_at = actual_hash_mismatch_at
         self.last_decode: dict[str, Any] | None = None
         self.sent_ordinals: list[int] = []
+        self.last_request_body_sha256: str | None = None
+        self.last_request_body_utf8_bytes: int | None = None
+        self.last_wire_hash_source = "PayloadLock.rebuild_body_bytes"
+        self.last_wire_verified: bool | None = None
 
     def send(self, request: LLMRequest, *, ordinal: int = 1) -> LLMResponse:
         try:
-            self._lock.verify(request, ordinal)
+            verified = self._lock.verify(request, ordinal)
         except Gdpr7ExecutionError as exc:
             raise LLMClientError(str(exc)) from exc
         self.sent_ordinals.append(int(ordinal))
+        self.last_request_body_sha256 = str(verified["request_body_sha256"])
+        self.last_request_body_utf8_bytes = int(verified["request_body_utf8_bytes"])
+        self.last_wire_verified = True
+        if self._actual_hash_mismatch_at == int(ordinal):
+            # Simulated actual-wire mismatch for offline fail-closed tests.
+            self.last_request_body_sha256 = "0" * 64
+            self.last_wire_verified = False
         if self._transport_error_at == int(ordinal):
             raise LLMClientError(
                 f"simulated transport failure at ordinal {ordinal}"
@@ -725,50 +843,77 @@ class PayloadLockedFakeTransport(LLMTransport):
 
 
 class PayloadLockedRealTransport(LLMTransport):
-    """Real HTTP transport with a per-call payload lock.
+    """Real HTTP transport with a per-call payload lock and wire-hash gate.
 
     Before ANY network request the final body is rebuilt with the locked
     policy/model/sampling, hashed and verified against the locked per-request
-    hash, sample id, and execution order.  Only an exact match may reach
-    ``RealAPITransport.send``.  The real transport is created with
-    ``LLMConfig.from_env(project_root=ROOT, load_project_env=False)`` so a
-    project ``.env`` is never opened.
+    hash, sample id, and execution order.  After ``RealAPITransport.send`` the
+    actual serialized-body SHA-256 recorded by that transport is compared
+    against the planned hash.  A mismatch raises ``WireBodyHashMismatch``
+    before the response can be accepted; the caller records the violation and
+    aborts the batch without retrying.
     """
 
     def __init__(self, payload_lock: PayloadLock, config: Any,
                  timeout_seconds: float = 180.0) -> None:
         self._lock = payload_lock
-        # The SAME frozen H1RequestPolicy used by PayloadLock must be applied
-        # by RealAPITransport itself.  Without this argument the transport
-        # serializes the raw builder body (no stream/thinking/response_format)
-        # even though the payload lock passes.
         self._real = RealAPITransport(
             config,
             timeout_seconds=timeout_seconds,
             policy=self._lock._policy,
         )
         self.last_request_body_sha256: str | None = None
+        self.last_request_body_utf8_bytes: int | None = None
+        self.last_wire_hash_source = "RealAPITransport.last_request_body_sha256"
+        self.last_wire_verified: bool | None = None
 
     @property
     def last_decode(self) -> dict[str, Any] | None:
         return self._real.last_decode
 
     def send(self, request: LLMRequest, *, ordinal: int = 1) -> LLMResponse:
+        self.last_request_body_sha256 = None
+        self.last_request_body_utf8_bytes = None
+        self.last_wire_verified = None
         try:
             verified = self._lock.verify(request, ordinal)
         except Gdpr7ExecutionError as exc:
             raise LLMClientError(str(exc)) from exc
+
         planned_sha = str(verified["request_body_sha256"])
-        response = self._real.send(request)
+        response: LLMResponse | None = None
+        transport_error: LLMClientError | None = None
+        try:
+            response = self._real.send(request)
+        except LLMClientError as exc:
+            transport_error = exc
+
         actual_sha = self._real.last_request_body_sha256
-        self.last_request_body_sha256 = actual_sha
-        if actual_sha != planned_sha:
+        self.last_request_body_sha256 = (
+            str(actual_sha) if actual_sha is not None else None
+        )
+        self.last_request_body_utf8_bytes = getattr(
+            self._real, "last_request_body_utf8_bytes", None
+        )
+        self.last_wire_verified = (self.last_request_body_sha256 == planned_sha)
+        if self.last_request_body_sha256 != planned_sha:
             raise WireBodyHashMismatch(
                 call_index=ordinal,
                 sample_id=request.source_id,
                 planned_request_body_sha256=planned_sha,
-                actual_request_body_sha256=actual_sha,
-            )
+                actual_request_body_sha256=self.last_request_body_sha256,
+                actual_body_hash_available=(
+                    self.last_request_body_sha256 is not None
+                ),
+                wire_hash_source=self.last_wire_hash_source,
+                response=response,
+                decode=self._real.last_decode,
+                transport_error=transport_error,
+            ) from transport_error
+        if transport_error is not None:
+            raise transport_error
+        if response is None:  # pragma: no cover - guarded by transport contract
+            raise LLMClientError("Real transport returned no response")
         return response
 
 
@@ -784,22 +929,47 @@ def ledger_record(
     sample_id: str,
     rule_id: str | None,
     request_body_sha256: str,
-    status: str,                       # completed | in_doubt | failed
+    status: str,
     usage: Mapping[str, Any],
     returned_model: str | None,
     cost_usd: float | None,
     error: str | None,
     request_time_utc: str,
+    planned_request_body_sha256: str | None = None,
+    actual_request_body_sha256: str | None = None,
+    request_body_sha256_match: bool | None = None,
+    wire_hash_source: str | None = None,
+    decode_status: str | None = None,
 ) -> dict[str, Any]:
-    if status not in ("completed", "in_doubt", "failed"):
+    """Build one hash-chained ledger record.
+
+    ``request_body_sha256`` is retained as the planned/frozen hash alias for
+    backward compatibility; ``planned_request_body_sha256`` and
+    ``actual_request_body_sha256`` are stored separately so the planned hash
+    is never overwritten by actual wire evidence.
+    """
+    allowed_statuses = (
+        "completed",
+        "in_doubt",
+        "failed",
+        "execution_contract_violation",
+    )
+    if status not in allowed_statuses:
         raise Gdpr7ExecutionError(f"invalid ledger status {status!r}")
+    planned = planned_request_body_sha256 or request_body_sha256
     record = {
         "schema_version": LEDGER_SCHEMA,
         "prev_hash": prev_hash,
         "call_index": int(call_index),
         "sample_id": sample_id,
         "rule_id": rule_id,
-        "request_body_sha256": request_body_sha256,
+        # Legacy planned-hash key: preserved, never replaced by the actual hash.
+        "request_body_sha256": planned,
+        "planned_request_body_sha256": planned,
+        "actual_request_body_sha256": actual_request_body_sha256,
+        "request_body_sha256_match": request_body_sha256_match,
+        "wire_hash_source": wire_hash_source,
+        "decode_status": decode_status,
         "status": status,
         "usage": dict(usage),
         "returned_model": returned_model,
@@ -1014,9 +1184,9 @@ def _current_bindings(report_path: Path) -> dict[str, str]:
     prompt_path = ROOT / "prompts" / "sun_compat" / f"{PROMPT_NAME}.md"
     return {
         "data/input/gdpr7_stage2_input_v1.json": _sha(INPUT),
-        "outputs/reports/gdpr7_direct_llm_preflight_v1.json": _sha(report_path),
+        "outputs/reports/gdpr7_direct_llm_preflight_v3.json": _sha(report_path),
         "configs/models/estg150_d1_active_registry_v1.json": _sha(REGISTRY),
-        "scripts/run_gdpr7_direct_llm_v1.py": _sha(Path(__file__).resolve()),
+        "scripts/run_gdpr7_direct_llm_v3_1.py": _sha(Path(__file__).resolve()),
         "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md": _sha(prompt_path),
     }
 
@@ -1051,7 +1221,7 @@ def validate_contract(contract_path: Path, report_path: Path) -> dict[str, Any]:
     current = _current_bindings(report_path)
     contract_hashes = contract.get("hash_set") or {}
     if contract_hashes.get("executor_script_sha256") != current[
-            "scripts/run_gdpr7_direct_llm_v1.py"]:
+            "scripts/run_gdpr7_direct_llm_v3_1.py"]:
         raise Gdpr7ExecutionError(
             "executor script hash mismatch against execution contract"
         )
@@ -1063,6 +1233,68 @@ def validate_contract(contract_path: Path, report_path: Path) -> dict[str, Any]:
         raise Gdpr7ExecutionError("contract registry hash mismatch")
     if contract_hashes.get("prompt_sha256") != EXPECTED_PROMPT_SHA256:
         raise Gdpr7ExecutionError("contract prompt hash mismatch")
+
+    # The versioned payload freeze is bound into the execution contract.  The
+    # freeze's 74 request hashes must exactly match the contract call plan;
+    # this re-verifies, offline, that instrumentation did not alter any body.
+    payload_freeze = contract.get("payload_freeze")
+    if not isinstance(payload_freeze, Mapping):
+        raise Gdpr7ExecutionError(
+            "execution contract must bind a payload_freeze object"
+        )
+    freeze_rel = payload_freeze.get("path")
+    if not isinstance(freeze_rel, str) or not freeze_rel:
+        raise Gdpr7ExecutionError("contract payload_freeze.path missing")
+    freeze_path = (ROOT / freeze_rel).resolve()
+    try:
+        freeze_path.relative_to(ROOT.resolve())
+    except ValueError as exc:
+        raise Gdpr7ExecutionError(
+            "contract payload_freeze.path escapes project root"
+        ) from exc
+    if not freeze_path.is_file():
+        raise Gdpr7ExecutionError(
+            f"contract payload_freeze file not found: {freeze_rel}"
+        )
+    if _sha(freeze_path) != payload_freeze.get("sha256"):
+        raise Gdpr7ExecutionError(
+            "contract payload_freeze SHA-256 mismatch"
+        )
+    try:
+        freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise Gdpr7ExecutionError(
+            f"invalid payload_freeze file: {exc}"
+        ) from exc
+    if not isinstance(freeze, Mapping):
+        raise Gdpr7ExecutionError("payload_freeze must be a JSON object")
+    if freeze.get("call_count") != EXPECTED_SENTENCE_COUNT:
+        raise Gdpr7ExecutionError("payload_freeze call_count drift")
+    if freeze.get("preflight_report", {}).get("sha256") != _sha(report_path):
+        raise Gdpr7ExecutionError(
+            "payload_freeze preflight-report binding mismatch"
+        )
+    if freeze.get("executor_script", {}).get("sha256") != current[
+            "scripts/run_gdpr7_direct_llm_v3_1.py"]:
+        raise Gdpr7ExecutionError(
+            "payload_freeze executor-script binding mismatch"
+        )
+    freeze_rows = freeze.get("request_body_hashes")
+    contract_rows = contract.get("call_plan")
+    if not isinstance(freeze_rows, list) or not isinstance(contract_rows, list):
+        raise Gdpr7ExecutionError("payload_freeze request hash rows missing")
+    freeze_hashes = [row.get("request_body_sha256") for row in freeze_rows]
+    contract_hashes_list = [row.get("request_body_sha256") for row in contract_rows]
+    if freeze_hashes != contract_hashes_list:
+        raise Gdpr7ExecutionError(
+            "payload_freeze request-body SHA sequence != contract call_plan"
+        )
+    if len(freeze_hashes) != EXPECTED_SENTENCE_COUNT:
+        raise Gdpr7ExecutionError("payload_freeze request-body count drift")
+    if payload_freeze.get("first_request_body_sha256") != freeze_hashes[0]:
+        raise Gdpr7ExecutionError("payload_freeze first hash binding mismatch")
+    if payload_freeze.get("last_request_body_sha256") != freeze_hashes[-1]:
+        raise Gdpr7ExecutionError("payload_freeze last hash binding mismatch")
     return dict(contract)
 
 
@@ -1091,7 +1323,7 @@ def validate_authorization_event(event_path: Path | None,
     """Validate the user's authorization event file BEFORE any send.
 
     The event must carry the user's authorization sentence, the exact scope
-    ``gdpr7_direct_llm_v1:74``, the price snapshot with a re-verification
+    ``gdpr7_direct_llm_v3_1:74``, the price snapshot with a re-verification
     timestamp, the same hash bindings as the execution contract, and the
     hard caps.  Any missing/mismatched field -> hard refuse.
     """
@@ -1450,6 +1682,15 @@ def build_capsule_docs(
     completed = sum(1 for r in ledger.records if r["status"] == "completed")
     in_doubt = sum(1 for r in ledger.records if r["status"] == "in_doubt")
     failed = sum(1 for r in ledger.records if r["status"] == "failed")
+    wire_match_true = sum(
+        1 for r in ledger.records if r.get("request_body_sha256_match") is True
+    )
+    wire_match_false = sum(
+        1 for r in ledger.records if r.get("request_body_sha256_match") is False
+    )
+    wire_match_unknown = sum(
+        1 for r in ledger.records if r.get("request_body_sha256_match") is None
+    )
     ok_rows = sum(1 for p in ordered if p.get("request_status") == "ok"
                   and not p.get("error_category"))
 
@@ -1484,6 +1725,13 @@ def build_capsule_docs(
         "raw_responses_path": str(raw_dir / "raw_responses.jsonl"),
         "text_or_gold_payload_committed": False,
         "fake_run_program_verification_only": fake,
+        "wire_provenance": {
+            "planned_and_actual_hashes_persisted": True,
+            "request_body_sha256_match_true": wire_match_true,
+            "request_body_sha256_match_false": wire_match_false,
+            "request_body_sha256_match_unknown": wire_match_unknown,
+            "equality_required_before_accepting_response": True,
+        },
     }
     cost_doc = {
         "schema_version": COST_SCHEMA,
@@ -1501,7 +1749,7 @@ def build_capsule_docs(
     }
     manifest = {
         "schema_version": MANIFEST_SCHEMA,
-        "run_id": "gdpr7_direct_llm_v1",
+        "run_id": "gdpr7_direct_llm_v3_1",
         "arm": METHOD_ID,
         "status": status,
         "dataset_id": DATASET_ID,
@@ -1537,6 +1785,15 @@ def build_capsule_docs(
             "completed": completed,
             "in_doubt": in_doubt,
             "failed": failed,
+        },
+        "wire_provenance": {
+            "planned_and_actual_hashes_persisted": True,
+            "request_body_sha256_match_true": wire_match_true,
+            "request_body_sha256_match_false": wire_match_false,
+            "request_body_sha256_match_unknown": wire_match_unknown,
+            "equality_required_before_accepting_response": True,
+            "mismatch_ledger_status": "execution_contract_violation",
+            "mismatch_stops_batch_without_retry": True,
         },
         "cost_usd": round(float(state.get("cost_usd", 0.0)), 8),
         "runtime_seconds": round(runtime_seconds, 3),
@@ -1584,6 +1841,7 @@ def execute_batch(
     fake_model: str = REQUIRED_MODEL,
     fake_decode_status: str = "ok_message_content",
     fake_transport_error_at: int | None = None,
+    fake_wire_hash_mismatch_at: int | None = None,
     fake_usage: Mapping[str, Any] | None = None,
     now_provider: Any = None,
     timeout_seconds: float = 180.0,
@@ -1666,6 +1924,7 @@ def execute_batch(
                 model=fake_model,
                 decode_status=fake_decode_status,
                 transport_error_at=fake_transport_error_at,
+                actual_hash_mismatch_at=fake_wire_hash_mismatch_at,
             )
     else:
         if transport is not None:
@@ -1689,10 +1948,9 @@ def execute_batch(
             )
         # Use the frozen protocol config for every non-secret provider field
         # (model, temperature, top_p, max_tokens, seed policy) and inject only
-        # the real process-environment API key.  This guarantees the actual
-        # provider-facing body is built from the same frozen values as the
-        # plan/payload lock, regardless of environment-controlled sampling
-        # variables.
+        # the real process-environment API key.  The actual provider-facing
+        # body is therefore always the same frozen body that the payload lock
+        # and payload freeze hash, independent of sampling env overrides.
         provider_config = replace(
             _config(),
             enabled=True,
@@ -1725,6 +1983,17 @@ def execute_batch(
         if rec["status"] == "completed":
             state.add_usage(rec.get("usage") or {}, price)
 
+    # A prior execution-contract violation is never resumable: the batch must
+    # stop and stay stopped.  This also prevents a mismatched 74th attempt from
+    # being converted into a published capsule.
+    if any(rec.get("status") == "execution_contract_violation"
+           for rec in ledger.records):
+        raw_store.close()
+        raise Gdpr7ExecutionError(
+            "execution-contract violation already recorded in the ledger; "
+            "refusing to continue/resume or publish"
+        )
+
     plan_by_sha = {row["request_body_sha256"]: row for row in plan_rows}
     called = ledger.called_payloads()
     response_lines: list[dict[str, Any]] = []
@@ -1744,14 +2013,113 @@ def execute_batch(
             )
             check_pre_call(auth=auth, row=row, state=state,
                            now_utc=now_provider())
+
+            # Wire-body provenance gate: run for every attempted request and
+            # independently of response semantic success.  The real transport
+            # wrapper raises WireBodyHashMismatch when its actual serialized
+            # body differs from the planned/frozen body.
             try:
                 response = active_transport.send(request, ordinal=ordinal)
+                provenance = _wire_provenance(active_transport, payload_sha)
+                if not fake and provenance["actual_request_body_sha256"] is None:
+                    raise WireBodyHashMismatch(
+                        call_index=ordinal,
+                        sample_id=row["sample_id"],
+                        planned_request_body_sha256=payload_sha,
+                        actual_request_body_sha256=None,
+                        actual_body_hash_available=False,
+                        wire_hash_source=provenance["wire_hash_source"],
+                        response=response,
+                        decode=getattr(active_transport, "last_decode", None),
+                    )
+                if (provenance["actual_request_body_sha256"] is not None
+                        and not provenance["request_body_sha256_match"]):
+                    raise WireBodyHashMismatch(
+                        call_index=ordinal,
+                        sample_id=row["sample_id"],
+                        planned_request_body_sha256=payload_sha,
+                        actual_request_body_sha256=provenance[
+                            "actual_request_body_sha256"
+                        ],
+                        actual_body_hash_available=True,
+                        wire_hash_source=provenance["wire_hash_source"],
+                        response=response,
+                        decode=getattr(active_transport, "last_decode", None),
+                    )
+            except WireBodyHashMismatch as exc:
+                # Persist the mismatch evidence before aborting.  The request
+                # is never retried: its payload hash is added to ``called``.
+                _record_wire_violation(
+                    raw_store=raw_store,
+                    ledger=ledger,
+                    row=row,
+                    ordinal=ordinal,
+                    planned_sha256=payload_sha,
+                    exc=exc,
+                )
+                called.add(payload_sha)
+                actual_text = exc.actual_request_body_sha256 or "MISSING"
+                raise Gdpr7ExecutionError(
+                    f"execution-contract violation on {row['sample_id']} "
+                    f"(ordinal {ordinal}): actual wire-body SHA {actual_text} "
+                    f"!= planned {payload_sha}; batch stopped; request must "
+                    "not be retried"
+                ) from exc
             except LLMClientError as exc:
+                provenance = _wire_provenance(active_transport, payload_sha)
+                # A transport error after serialization can still expose an
+                # actual body-hash mismatch.  That takes precedence over a
+                # generic transport-failure classification.
+                if (provenance["actual_request_body_sha256"] is not None
+                        and not provenance["request_body_sha256_match"]):
+                    mismatch = WireBodyHashMismatch(
+                        call_index=ordinal,
+                        sample_id=row["sample_id"],
+                        planned_request_body_sha256=payload_sha,
+                        actual_request_body_sha256=provenance[
+                            "actual_request_body_sha256"
+                        ],
+                        actual_body_hash_available=True,
+                        wire_hash_source=provenance["wire_hash_source"],
+                        response=None,
+                        decode=getattr(active_transport, "last_decode", None),
+                        transport_error=exc,
+                    )
+                    _record_wire_violation(
+                        raw_store=raw_store,
+                        ledger=ledger,
+                        row=row,
+                        ordinal=ordinal,
+                        planned_sha256=payload_sha,
+                        exc=mismatch,
+                    )
+                    called.add(payload_sha)
+                    raise Gdpr7ExecutionError(
+                        f"execution-contract violation on {row['sample_id']} "
+                        f"(ordinal {ordinal}): actual wire-body SHA "
+                        f"{provenance['actual_request_body_sha256']} != planned "
+                        f"{payload_sha}; batch stopped; request must not be "
+                        "retried"
+                    ) from exc
+
                 raw_store.append({
                     "call_index": ordinal,
                     "sample_id": row["sample_id"],
+                    "rule_id": row.get("rule_id"),
                     "request_body_sha256": payload_sha,
+                    "planned_request_body_sha256": payload_sha,
+                    "actual_request_body_sha256": provenance[
+                        "actual_request_body_sha256"
+                    ],
+                    "actual_body_hash_available": provenance[
+                        "actual_body_hash_available"
+                    ],
+                    "request_body_sha256_match": provenance[
+                        "request_body_sha256_match"
+                    ],
+                    "wire_hash_source": provenance["wire_hash_source"],
                     "outcome": "transport_error",
+                    "decode_status": None,
                     "error": str(exc),
                 })
                 ledger.append(ledger_record(
@@ -1766,12 +2134,22 @@ def execute_batch(
                     cost_usd=None,
                     error=f"transport:{exc}",
                     request_time_utc=datetime.now(timezone.utc).isoformat(),
+                    planned_request_body_sha256=payload_sha,
+                    actual_request_body_sha256=provenance[
+                        "actual_request_body_sha256"
+                    ],
+                    request_body_sha256_match=provenance[
+                        "request_body_sha256_match"
+                    ],
+                    wire_hash_source=provenance["wire_hash_source"],
+                    decode_status=None,
                 ))
                 called.add(payload_sha)
                 raise Gdpr7ExecutionError(
                     f"transport failure on {row['sample_id']} (ordinal "
                     f"{ordinal}); recorded as failed, batch aborted: {exc}"
                 ) from exc
+
             returned = getattr(response, "model", None)
             returned_model = str(returned) if returned else None
             if returned and str(returned) != REQUIRED_MODEL:
@@ -1789,6 +2167,17 @@ def execute_batch(
                 "sample_id": row["sample_id"],
                 "rule_id": row.get("rule_id"),
                 "request_body_sha256": payload_sha,
+                "planned_request_body_sha256": payload_sha,
+                "actual_request_body_sha256": provenance[
+                    "actual_request_body_sha256"
+                ],
+                "actual_body_hash_available": provenance[
+                    "actual_body_hash_available"
+                ],
+                "request_body_sha256_match": provenance[
+                    "request_body_sha256_match"
+                ],
+                "wire_hash_source": provenance["wire_hash_source"],
                 "outcome": "response",
                 "decode_status": decode_status,
                 "returned_model": returned_model,
@@ -1813,6 +2202,15 @@ def execute_batch(
                     cost_usd=None,
                     error=reason,
                     request_time_utc=datetime.now(timezone.utc).isoformat(),
+                    planned_request_body_sha256=payload_sha,
+                    actual_request_body_sha256=provenance[
+                        "actual_request_body_sha256"
+                    ],
+                    request_body_sha256_match=provenance[
+                        "request_body_sha256_match"
+                    ],
+                    wire_hash_source=provenance["wire_hash_source"],
+                    decode_status=decode_status,
                 ))
                 called.add(payload_sha)
                 raise Gdpr7ExecutionError(
@@ -1832,12 +2230,28 @@ def execute_batch(
                 cost_usd=per_call["cost_usd"],
                 error=None,
                 request_time_utc=datetime.now(timezone.utc).isoformat(),
+                planned_request_body_sha256=payload_sha,
+                actual_request_body_sha256=provenance[
+                    "actual_request_body_sha256"
+                ],
+                request_body_sha256_match=provenance[
+                    "request_body_sha256_match"
+                ],
+                wire_hash_source=provenance["wire_hash_source"],
+                decode_status=decode_status,
             ))
             called.add(payload_sha)
             response_lines.append({
                 "call_index": ordinal,
                 "sample_id": row["sample_id"],
                 "request_body_sha256": payload_sha,
+                "planned_request_body_sha256": payload_sha,
+                "actual_request_body_sha256": provenance[
+                    "actual_request_body_sha256"
+                ],
+                "request_body_sha256_match": provenance[
+                    "request_body_sha256_match"
+                ],
                 "returned_model": returned_model,
                 "usage": dict(usage),
                 "cost_usd": per_call["cost_usd"],
@@ -1849,6 +2263,14 @@ def execute_batch(
         raise
     finally:
         raw_store.close()
+
+    # A violation can never be converted into a published capsule.
+    if any(rec.get("status") == "execution_contract_violation"
+           for rec in ledger.records):
+        raise Gdpr7ExecutionError(
+            "execution-contract violation recorded in ledger; refusing to "
+            "publish"
+        )
 
     all_attempted = len(ledger.records) == EXPECTED_SENTENCE_COUNT
     if not all_attempted:
@@ -1862,13 +2284,13 @@ def execute_batch(
     elapsed = time.perf_counter() - started
     doc_arm_capsule_rel = str(ARM_CAPSULE_PATH.relative_to(ROOT)).replace(os.sep, "/")
     reproduce_fake = (
-        "python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py "
+        "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py "
         "--fake-transport"
     )
     reproduce_real = (
-        "python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py "
+        "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py "
         "--contract-file formal_experiment/configs/ablations/"
-        "gdpr7_direct_llm_execution_contract_v1.json "
+        "gdpr7_direct_llm_execution_contract_v3_1.json "
         "--authorization-file <gdpr7-direct-llm-authorization-event-file>"
     )
     resume_fake = reproduce_fake + " --resume"
@@ -1956,7 +2378,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--report-file", type=Path, default=None,
         help="Path to the locked preflight report (default: "
-             "outputs/reports/gdpr7_direct_llm_preflight_v1.json).",
+             "outputs/reports/gdpr7_direct_llm_preflight_v3.json).",
     )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(

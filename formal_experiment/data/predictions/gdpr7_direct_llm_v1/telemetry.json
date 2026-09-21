@@ -1,0 +1,30 @@
+{
+  "schema_version": "gdpr7_direct_llm_telemetry@1.0.0",
+  "status": "complete",
+  "transport": "real_authorized",
+  "records_attempted": 74,
+  "records_expected": 74,
+  "completed_calls": 74,
+  "in_doubt_calls": 0,
+  "failed_calls": 0,
+  "ok_prediction_rows": 74,
+  "cumulative": {
+    "calls": 74,
+    "input_tokens": 322932,
+    "output_tokens": 48311,
+    "cache_hit_tokens": 95232,
+    "cache_miss_tokens": 227700,
+    "cost_usd": 0.24803288
+  },
+  "ledger_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\gdpr7_direct_llm_raw_real_v3_1\\ledger.jsonl",
+  "raw_responses_path": "D:\\Paper\\experiment\\bpc-hybrid\\formal_experiment\\outputs\\development\\gdpr7_direct_llm_raw_real_v3_1\\raw_responses.jsonl",
+  "text_or_gold_payload_committed": false,
+  "fake_run_program_verification_only": false,
+  "wire_provenance": {
+    "planned_and_actual_hashes_persisted": true,
+    "request_body_sha256_match_true": 74,
+    "request_body_sha256_match_false": 0,
+    "request_body_sha256_match_unknown": 0,
+    "equality_required_before_accepting_response": true
+  }
+}

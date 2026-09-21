@@ -1,0 +1,85 @@
+{
+  "schema_version": "gdpr7_direct_llm_manifest@1.0.0",
+  "run_id": "gdpr7_direct_llm_v3_1",
+  "arm": "direct_llm",
+  "status": "complete",
+  "dataset_id": "gdpr7_stage2_sentences_v1",
+  "arm_capsule": {
+    "path": "data/predictions/gdpr7_direct_llm_v1",
+    "schema": "gdpr7_direct_llm_predictions@1.0.0",
+    "note": "the canonical arm capsule home referenced by the linkage runner; this run publishes the development capsule only -- promotion to the arm capsule is a separate explicit step"
+  },
+  "schema": "gdpr7_direct_llm_predictions@1.0.0",
+  "input_binding": {
+    "path": "data/input/gdpr7_stage2_input_v1.json",
+    "sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+    "records": 74
+  },
+  "preflight_binding": {
+    "path": "outputs\\reports\\gdpr7_direct_llm_preflight_v3.json",
+    "sha256": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7"
+  },
+  "model": {
+    "id": "deepseek-v4-pro",
+    "published_alias": "DeepSeek-V4-Pro-0813",
+    "prompt_name": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+    "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749"
+  },
+  "caps": {
+    "max_calls": 74,
+    "global_input_token_cap": 74000000,
+    "global_output_token_cap": 303104,
+    "max_output_tokens_per_call": 4096,
+    "global_usd_cost_cap": 1.31
+  },
+  "pricing": {
+    "schema_version": "gdpr7_direct_llm_price_snapshot@1.0.0",
+    "currency": "USD",
+    "input_cache_hit_per_million": 0.022,
+    "input_cache_miss_per_million": 0.66,
+    "output_per_million": 1.98
+  },
+  "per_call_status_counts": {
+    "completed": 74,
+    "in_doubt": 0,
+    "failed": 0
+  },
+  "wire_provenance": {
+    "planned_and_actual_hashes_persisted": true,
+    "request_body_sha256_match_true": 74,
+    "request_body_sha256_match_false": 0,
+    "request_body_sha256_match_unknown": 0,
+    "equality_required_before_accepting_response": true,
+    "mismatch_ledger_status": "execution_contract_violation",
+    "mismatch_stops_batch_without_retry": true
+  },
+  "cost_usd": 0.24803288,
+  "runtime_seconds": 114.36,
+  "transport": "real_authorized",
+  "authorization": {
+    "required_event_scope": "gdpr7_direct_llm_v3_1:74",
+    "real_authorized": true
+  },
+  "gold_isolation": {
+    "gold_read_by_runner": false,
+    "predictions_locked_before_evaluation": true,
+    "post_result_tuning_forbidden": true
+  },
+  "outputs": {
+    "raw_dir": "outputs\\development\\gdpr7_direct_llm_raw_real_v3_1",
+    "capsule_dir": "outputs\\development\\gdpr7_direct_llm_v3_1"
+  },
+  "safety": {
+    "llm_api_calls": 74,
+    "network_calls": 74,
+    "cost_usd": 0.24803288,
+    "raw_text_committed": false,
+    "gold_rule_records_created": false,
+    "oracle_started": false
+  },
+  "reproduce_command_fake_verify": "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py --fake-transport",
+  "reproduce_command_real": "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v3_1.json --authorization-file <gdpr7-direct-llm-authorization-event-file>",
+  "resume_command_fake": "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py --fake-transport --resume",
+  "resume_command_real": "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v3_1.json --authorization-file <gdpr7-direct-llm-authorization-event-file> --resume"
+}

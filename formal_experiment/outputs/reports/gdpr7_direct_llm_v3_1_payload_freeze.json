@@ -1,0 +1,1470 @@
+{
+  "schema_version": "gdpr7_direct_llm_payload_freeze@1.1.0",
+  "status": "frozen_offline_before_execution",
+  "created_at_utc": "2026-09-20T11:09:44.430103+00:00",
+  "execution_version": "v3.1",
+  "purpose": "Recompute and freeze the 74 provider-facing request-body hashes for the v3.1 corrected GDPR Direct-74 execution contract, with planned-vs-actual wire-body SHA-256 provenance. No API call was made.",
+  "preflight_report": {
+    "path": "outputs/reports/gdpr7_direct_llm_preflight_v3.json",
+    "sha256": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7"
+  },
+  "executor_script": {
+    "path": "scripts/run_gdpr7_direct_llm_v3_1.py",
+    "sha256": "a4d216b9e9a210f38360ec5a746a607d96ca99676236a96f9ec17306b2254b6e"
+  },
+  "fixed_transport_policy": {
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null,
+    "tools_sent": false
+  },
+  "serialization_method": "OpenAICompatibleRequestBuilder.build_body + H1RequestPolicy.apply_to_body + json.dumps(body).encode(\"utf-8\")",
+  "actual_provider_facing_body_equals_locked_body": true,
+  "wire_body_provenance": {
+    "planned_request_body_sha256_persisted": true,
+    "actual_request_body_sha256_persisted": true,
+    "equality_enforced_before_response_acceptance": true,
+    "mismatch_status": "execution_contract_violation",
+    "mismatch_aborts_batch": true,
+    "mismatch_retry": false,
+    "actual_evidence_source": "RealAPITransport.last_request_body_sha256"
+  },
+  "new_raw_dir": "outputs/development/gdpr7_direct_llm_raw_real_v3_1",
+  "new_capsule_dir": "outputs/development/gdpr7_direct_llm_v3_1",
+  "provenance_note": "This freeze is for a NEW v3.1 run. It never merges with or overwrites the preserved v1/v2/v3 artifacts. The aborted v2 ledger remains documented as having recorded the planned/frozen request hash in place of actual wire evidence; it is not rewritten.",
+  "prior_artifacts_preserved": {
+    "v3_runner": {
+      "path": "scripts/run_gdpr7_direct_llm_v3.py",
+      "sha256": "5120a8a9df4ed77a45786b0500899ada0c662ed91faf39e98c2d55e276775d6a"
+    },
+    "v3_contract": {
+      "path": "configs/ablations/gdpr7_direct_llm_execution_contract_v3.json",
+      "sha256": "5aeaf33ef55a6bc05612ac38276f78ed19f36e6d5572674c7aa1a57d41bfa860"
+    },
+    "v3_payload_freeze": {
+      "path": "outputs/reports/gdpr7_direct_llm_v3_payload_freeze.json",
+      "sha256": "d1b71613708725c9baf25c37ca23d1599554d3854bb705f8b7ec6293df2d7ac0"
+    }
+  },
+  "v2_provenance_defect": {
+    "classification": "DOCUMENTED_NOT_REWRITTEN",
+    "aborted_ledger_path": "outputs/development/gdpr7_direct_llm_raw_real_v1/ledger.jsonl",
+    "aborted_raw_responses_path": "outputs/development/gdpr7_direct_llm_raw_real_v1/raw_responses.jsonl",
+    "defect": "The aborted v2 run ledger recorded the planned/frozen request_body_sha256 as though it were the actual serialized/sent body hash. The actual provider-facing body omitted the intended H1RequestPolicy and is not evidenced by that field.",
+    "preservation": "The aborted ledger and raw responses are preserved unchanged."
+  },
+  "call_count": 74,
+  "first_request_body_sha256": "6cac383a1c00042c37838638bac60de13a694b875a93cbace08f49f8729d1a2a",
+  "last_request_body_sha256": "fb210975a2097e3e1147c045399d1443b590f7bd915a16e92c79c827080af053",
+  "request_body_sha256_sequence_sha256": "c243108dbbeb29f0233640f752de7e65033581f8c738f0c63d31c2fe87a9ca62",
+  "request_body_hashes": [
+    {
+      "call_index": 1,
+      "sample_id": "gdpr_article15_s001",
+      "rule_id": "article15",
+      "sentence_idx": 0,
+      "request_body_sha256": "6cac383a1c00042c37838638bac60de13a694b875a93cbace08f49f8729d1a2a",
+      "request_body_utf8_bytes": 17568,
+      "actual_send_body_sha256_after_correction": "6cac383a1c00042c37838638bac60de13a694b875a93cbace08f49f8729d1a2a",
+      "actual_send_body_utf8_bytes_after_correction": 17568,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 2,
+      "sample_id": "gdpr_article15_s002",
+      "rule_id": "article15",
+      "sentence_idx": 1,
+      "request_body_sha256": "a2239fdf94baa97addecb54f658773bca006c49834fb1a7a707e9d579281d335",
+      "request_body_utf8_bytes": 17553,
+      "actual_send_body_sha256_after_correction": "a2239fdf94baa97addecb54f658773bca006c49834fb1a7a707e9d579281d335",
+      "actual_send_body_utf8_bytes_after_correction": 17553,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 3,
+      "sample_id": "gdpr_article15_s003",
+      "rule_id": "article15",
+      "sentence_idx": 2,
+      "request_body_sha256": "6ba58edfb9e2ff871ec0b8def3ac1435c4a675a2d4cd65832794830a18de955e",
+      "request_body_utf8_bytes": 17686,
+      "actual_send_body_sha256_after_correction": "6ba58edfb9e2ff871ec0b8def3ac1435c4a675a2d4cd65832794830a18de955e",
+      "actual_send_body_utf8_bytes_after_correction": 17686,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 4,
+      "sample_id": "gdpr_article15_s004",
+      "rule_id": "article15",
+      "sentence_idx": 3,
+      "request_body_sha256": "ae867fdd610c8c9eed2a967c344e5b7f471ba38445ded754f6ea7bd1f7fb0d0e",
+      "request_body_utf8_bytes": 17656,
+      "actual_send_body_sha256_after_correction": "ae867fdd610c8c9eed2a967c344e5b7f471ba38445ded754f6ea7bd1f7fb0d0e",
+      "actual_send_body_utf8_bytes_after_correction": 17656,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 5,
+      "sample_id": "gdpr_article15_s005",
+      "rule_id": "article15",
+      "sentence_idx": 4,
+      "request_body_sha256": "66bc0e5591e312feaacac51583e2d8dafec00ebae8db88dfa158d701b0e4c069",
+      "request_body_utf8_bytes": 17717,
+      "actual_send_body_sha256_after_correction": "66bc0e5591e312feaacac51583e2d8dafec00ebae8db88dfa158d701b0e4c069",
+      "actual_send_body_utf8_bytes_after_correction": 17717,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 6,
+      "sample_id": "gdpr_article15_s006",
+      "rule_id": "article15",
+      "sentence_idx": 5,
+      "request_body_sha256": "8962e63c79c32f67119c161736258ed6684f78a6610236ae8acf8db1e4e8752c",
+      "request_body_utf8_bytes": 17571,
+      "actual_send_body_sha256_after_correction": "8962e63c79c32f67119c161736258ed6684f78a6610236ae8acf8db1e4e8752c",
+      "actual_send_body_utf8_bytes_after_correction": 17571,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 7,
+      "sample_id": "gdpr_article15_s007",
+      "rule_id": "article15",
+      "sentence_idx": 6,
+      "request_body_sha256": "e943c57293b1973e92edfa687691d3c73c8f52c327f2ab20aacab52e8f27287b",
+      "request_body_utf8_bytes": 17621,
+      "actual_send_body_sha256_after_correction": "e943c57293b1973e92edfa687691d3c73c8f52c327f2ab20aacab52e8f27287b",
+      "actual_send_body_utf8_bytes_after_correction": 17621,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 8,
+      "sample_id": "gdpr_article15_s008",
+      "rule_id": "article15",
+      "sentence_idx": 7,
+      "request_body_sha256": "d8c575db5f6c3c12c8a932e98533976a5a8bd60e09a3f9ca5f538cc7c380982f",
+      "request_body_utf8_bytes": 17791,
+      "actual_send_body_sha256_after_correction": "d8c575db5f6c3c12c8a932e98533976a5a8bd60e09a3f9ca5f538cc7c380982f",
+      "actual_send_body_utf8_bytes_after_correction": 17791,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 9,
+      "sample_id": "gdpr_article15_s009",
+      "rule_id": "article15",
+      "sentence_idx": 8,
+      "request_body_sha256": "034ed72c217fd74a27281302d90ff9bebfe777aa55ef1a04adf2d403d8059275",
+      "request_body_utf8_bytes": 17514,
+      "actual_send_body_sha256_after_correction": "034ed72c217fd74a27281302d90ff9bebfe777aa55ef1a04adf2d403d8059275",
+      "actual_send_body_utf8_bytes_after_correction": 17514,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 10,
+      "sample_id": "gdpr_article15_s010",
+      "rule_id": "article15",
+      "sentence_idx": 9,
+      "request_body_sha256": "50cccd11c81d9c793a9d3f7a5789cedd8eced9fc07461d2896bf8028292d418b",
+      "request_body_utf8_bytes": 17370,
+      "actual_send_body_sha256_after_correction": "50cccd11c81d9c793a9d3f7a5789cedd8eced9fc07461d2896bf8028292d418b",
+      "actual_send_body_utf8_bytes_after_correction": 17370,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 11,
+      "sample_id": "gdpr_article15_s011",
+      "rule_id": "article15",
+      "sentence_idx": 10,
+      "request_body_sha256": "e57f4910207afcb8a6cf2e496040842637524659d24045fa833f6f18c07b91a0",
+      "request_body_utf8_bytes": 17418,
+      "actual_send_body_sha256_after_correction": "e57f4910207afcb8a6cf2e496040842637524659d24045fa833f6f18c07b91a0",
+      "actual_send_body_utf8_bytes_after_correction": 17418,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 12,
+      "sample_id": "gdpr_article15_s012",
+      "rule_id": "article15",
+      "sentence_idx": 11,
+      "request_body_sha256": "f01a864cc64d77ae2815adbe7c12274266ef3853fa9a0a110c12500ffba6675f",
+      "request_body_utf8_bytes": 17474,
+      "actual_send_body_sha256_after_correction": "f01a864cc64d77ae2815adbe7c12274266ef3853fa9a0a110c12500ffba6675f",
+      "actual_send_body_utf8_bytes_after_correction": 17474,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 13,
+      "sample_id": "gdpr_article15_s013",
+      "rule_id": "article15",
+      "sentence_idx": 12,
+      "request_body_sha256": "78f16f171dbb44f56cde03cd0930b4835e1a5d488b58c0b0f3f54cee98c7416a",
+      "request_body_utf8_bytes": 17406,
+      "actual_send_body_sha256_after_correction": "78f16f171dbb44f56cde03cd0930b4835e1a5d488b58c0b0f3f54cee98c7416a",
+      "actual_send_body_utf8_bytes_after_correction": 17406,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 14,
+      "sample_id": "gdpr_article16_s001",
+      "rule_id": "article16",
+      "sentence_idx": 0,
+      "request_body_sha256": "54e09b78298c1a7ab29f54752634f95f7eea6765ec0cc27de2ae237b7091463b",
+      "request_body_utf8_bytes": 17447,
+      "actual_send_body_sha256_after_correction": "54e09b78298c1a7ab29f54752634f95f7eea6765ec0cc27de2ae237b7091463b",
+      "actual_send_body_utf8_bytes_after_correction": 17447,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 15,
+      "sample_id": "gdpr_article16_s002",
+      "rule_id": "article16",
+      "sentence_idx": 1,
+      "request_body_sha256": "fe9de51026b0eb0cff08eb900308702a772881b646b16896b1f4e123d13f27f6",
+      "request_body_utf8_bytes": 17483,
+      "actual_send_body_sha256_after_correction": "fe9de51026b0eb0cff08eb900308702a772881b646b16896b1f4e123d13f27f6",
+      "actual_send_body_utf8_bytes_after_correction": 17483,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 16,
+      "sample_id": "gdpr_article17_s001",
+      "rule_id": "article17",
+      "sentence_idx": 0,
+      "request_body_sha256": "56f0f28e36d5f340a0ca3e314c9d38c65b2e71fd71daae3a9eedf769b534aaa6",
+      "request_body_utf8_bytes": 17561,
+      "actual_send_body_sha256_after_correction": "56f0f28e36d5f340a0ca3e314c9d38c65b2e71fd71daae3a9eedf769b534aaa6",
+      "actual_send_body_utf8_bytes_after_correction": 17561,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 17,
+      "sample_id": "gdpr_article17_s002",
+      "rule_id": "article17",
+      "sentence_idx": 1,
+      "request_body_sha256": "a00f8e0db91ff8ac177f4c5c185be7a68688768d19cbbd42426406f655bf9561",
+      "request_body_utf8_bytes": 17414,
+      "actual_send_body_sha256_after_correction": "a00f8e0db91ff8ac177f4c5c185be7a68688768d19cbbd42426406f655bf9561",
+      "actual_send_body_utf8_bytes_after_correction": 17414,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 18,
+      "sample_id": "gdpr_article17_s003",
+      "rule_id": "article17",
+      "sentence_idx": 2,
+      "request_body_sha256": "3d9b8f308ad95b29e67362590fce881d89905eed6a3093108d765673c686e6ef",
+      "request_body_utf8_bytes": 17489,
+      "actual_send_body_sha256_after_correction": "3d9b8f308ad95b29e67362590fce881d89905eed6a3093108d765673c686e6ef",
+      "actual_send_body_utf8_bytes_after_correction": 17489,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 19,
+      "sample_id": "gdpr_article17_s004",
+      "rule_id": "article17",
+      "sentence_idx": 3,
+      "request_body_sha256": "50e0d940421d3c6c77ef7cb6177eadfb0ca905daeffa1385a753505c5f211e6f",
+      "request_body_utf8_bytes": 17499,
+      "actual_send_body_sha256_after_correction": "50e0d940421d3c6c77ef7cb6177eadfb0ca905daeffa1385a753505c5f211e6f",
+      "actual_send_body_utf8_bytes_after_correction": 17499,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 20,
+      "sample_id": "gdpr_article17_s005",
+      "rule_id": "article17",
+      "sentence_idx": 4,
+      "request_body_sha256": "2e20c629477889d61935cd69c72a9ea49fb3ca12bf6a05e6f87dda5eb6026ed0",
+      "request_body_utf8_bytes": 17340,
+      "actual_send_body_sha256_after_correction": "2e20c629477889d61935cd69c72a9ea49fb3ca12bf6a05e6f87dda5eb6026ed0",
+      "actual_send_body_utf8_bytes_after_correction": 17340,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 21,
+      "sample_id": "gdpr_article17_s006",
+      "rule_id": "article17",
+      "sentence_idx": 5,
+      "request_body_sha256": "41845f61356ec6cf65e1e12061868e8173a664a311fdb3108cf89a7443ab1237",
+      "request_body_utf8_bytes": 17430,
+      "actual_send_body_sha256_after_correction": "41845f61356ec6cf65e1e12061868e8173a664a311fdb3108cf89a7443ab1237",
+      "actual_send_body_utf8_bytes_after_correction": 17430,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 22,
+      "sample_id": "gdpr_article17_s007",
+      "rule_id": "article17",
+      "sentence_idx": 6,
+      "request_body_sha256": "e99e9bd14b1f3353a4925d9bf5dd0edc0331e3d2151d0964304f65f021e4d03d",
+      "request_body_utf8_bytes": 17414,
+      "actual_send_body_sha256_after_correction": "e99e9bd14b1f3353a4925d9bf5dd0edc0331e3d2151d0964304f65f021e4d03d",
+      "actual_send_body_utf8_bytes_after_correction": 17414,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 23,
+      "sample_id": "gdpr_article17_s008",
+      "rule_id": "article17",
+      "sentence_idx": 7,
+      "request_body_sha256": "d65c6f78ac40203eb221c58ac1c6734e265a7d6f77a3877ccddf402402dfe941",
+      "request_body_utf8_bytes": 17752,
+      "actual_send_body_sha256_after_correction": "d65c6f78ac40203eb221c58ac1c6734e265a7d6f77a3877ccddf402402dfe941",
+      "actual_send_body_utf8_bytes_after_correction": 17752,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 24,
+      "sample_id": "gdpr_article17_s009",
+      "rule_id": "article17",
+      "sentence_idx": 8,
+      "request_body_sha256": "7c038d1c6c24e2023879f5984fd757bb2b0b15ee9486c2a3cfd7637be75d6ecd",
+      "request_body_utf8_bytes": 17435,
+      "actual_send_body_sha256_after_correction": "7c038d1c6c24e2023879f5984fd757bb2b0b15ee9486c2a3cfd7637be75d6ecd",
+      "actual_send_body_utf8_bytes_after_correction": 17435,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 25,
+      "sample_id": "gdpr_article17_s010",
+      "rule_id": "article17",
+      "sentence_idx": 9,
+      "request_body_sha256": "f804d396174782512a775c078c76309ca2a1840fe8d3a78f98efa0a530d498ac",
+      "request_body_utf8_bytes": 17632,
+      "actual_send_body_sha256_after_correction": "f804d396174782512a775c078c76309ca2a1840fe8d3a78f98efa0a530d498ac",
+      "actual_send_body_utf8_bytes_after_correction": 17632,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 26,
+      "sample_id": "gdpr_article17_s011",
+      "rule_id": "article17",
+      "sentence_idx": 10,
+      "request_body_sha256": "2a883aa2ffd288919fc8bc7b152c997ddc7882d7685f97ebc43cb453deae5b7e",
+      "request_body_utf8_bytes": 17507,
+      "actual_send_body_sha256_after_correction": "2a883aa2ffd288919fc8bc7b152c997ddc7882d7685f97ebc43cb453deae5b7e",
+      "actual_send_body_utf8_bytes_after_correction": 17507,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 27,
+      "sample_id": "gdpr_article17_s012",
+      "rule_id": "article17",
+      "sentence_idx": 11,
+      "request_body_sha256": "15127f5b80ebe5f314d0dc213780041d6acb3189367394be0fa4d77d13c43cc7",
+      "request_body_utf8_bytes": 17670,
+      "actual_send_body_sha256_after_correction": "15127f5b80ebe5f314d0dc213780041d6acb3189367394be0fa4d77d13c43cc7",
+      "actual_send_body_utf8_bytes_after_correction": 17670,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 28,
+      "sample_id": "gdpr_article17_s013",
+      "rule_id": "article17",
+      "sentence_idx": 12,
+      "request_body_sha256": "e890b1d391d0139180243edb09f60edd2dd895bb43e5c96e50255da116a484b9",
+      "request_body_utf8_bytes": 17428,
+      "actual_send_body_sha256_after_correction": "e890b1d391d0139180243edb09f60edd2dd895bb43e5c96e50255da116a484b9",
+      "actual_send_body_utf8_bytes_after_correction": 17428,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 29,
+      "sample_id": "gdpr_article20_s001",
+      "rule_id": "article20",
+      "sentence_idx": 0,
+      "request_body_sha256": "29c28015b61c5735aa173cc473b1b6c403c8fc4a72ed96dac87dd536d26810e1",
+      "request_body_utf8_bytes": 17852,
+      "actual_send_body_sha256_after_correction": "29c28015b61c5735aa173cc473b1b6c403c8fc4a72ed96dac87dd536d26810e1",
+      "actual_send_body_utf8_bytes_after_correction": 17852,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 30,
+      "sample_id": "gdpr_article20_s002",
+      "rule_id": "article20",
+      "sentence_idx": 1,
+      "request_body_sha256": "4439b0a9ff369858104e30508f8d80e9745138e0ecb3babe62aee5be3a26ed52",
+      "request_body_utf8_bytes": 17511,
+      "actual_send_body_sha256_after_correction": "4439b0a9ff369858104e30508f8d80e9745138e0ecb3babe62aee5be3a26ed52",
+      "actual_send_body_utf8_bytes_after_correction": 17511,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 31,
+      "sample_id": "gdpr_article20_s003",
+      "rule_id": "article20",
+      "sentence_idx": 2,
+      "request_body_sha256": "38baf9169ba96fc85e0daaa5c66a40e101c2ab6dfccc74567e558867887b72df",
+      "request_body_utf8_bytes": 17401,
+      "actual_send_body_sha256_after_correction": "38baf9169ba96fc85e0daaa5c66a40e101c2ab6dfccc74567e558867887b72df",
+      "actual_send_body_utf8_bytes_after_correction": 17401,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 32,
+      "sample_id": "gdpr_article20_s004",
+      "rule_id": "article20",
+      "sentence_idx": 3,
+      "request_body_sha256": "51eda36aa0d8e239041476d3eb6e0057eeb434603d9114f53427ffbaca997a98",
+      "request_body_utf8_bytes": 17473,
+      "actual_send_body_sha256_after_correction": "51eda36aa0d8e239041476d3eb6e0057eeb434603d9114f53427ffbaca997a98",
+      "actual_send_body_utf8_bytes_after_correction": 17473,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 33,
+      "sample_id": "gdpr_article20_s005",
+      "rule_id": "article20",
+      "sentence_idx": 4,
+      "request_body_sha256": "5367e8281fe16c421fc1332dbdf7a9653123ae6661d78b68fc72b1b96c26285d",
+      "request_body_utf8_bytes": 17389,
+      "actual_send_body_sha256_after_correction": "5367e8281fe16c421fc1332dbdf7a9653123ae6661d78b68fc72b1b96c26285d",
+      "actual_send_body_utf8_bytes_after_correction": 17389,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 34,
+      "sample_id": "gdpr_article22_s001",
+      "rule_id": "article22",
+      "sentence_idx": 0,
+      "request_body_sha256": "400fd41ce9a036348c2b1fad109dc1d83c8c95e28eb6f8e0570a250a968f8269",
+      "request_body_utf8_bytes": 17517,
+      "actual_send_body_sha256_after_correction": "400fd41ce9a036348c2b1fad109dc1d83c8c95e28eb6f8e0570a250a968f8269",
+      "actual_send_body_utf8_bytes_after_correction": 17517,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 35,
+      "sample_id": "gdpr_article22_s002",
+      "rule_id": "article22",
+      "sentence_idx": 1,
+      "request_body_sha256": "70388b03517f82c31eebe2ee04a7f9e24133acae678308b16b8c0fcf3bf61f16",
+      "request_body_utf8_bytes": 17444,
+      "actual_send_body_sha256_after_correction": "70388b03517f82c31eebe2ee04a7f9e24133acae678308b16b8c0fcf3bf61f16",
+      "actual_send_body_utf8_bytes_after_correction": 17444,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 36,
+      "sample_id": "gdpr_article22_s003",
+      "rule_id": "article22",
+      "sentence_idx": 2,
+      "request_body_sha256": "29db405ec47b821c1303d525ffc4830d32211468449ab6aeae68235941699953",
+      "request_body_utf8_bytes": 17533,
+      "actual_send_body_sha256_after_correction": "29db405ec47b821c1303d525ffc4830d32211468449ab6aeae68235941699953",
+      "actual_send_body_utf8_bytes_after_correction": 17533,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 37,
+      "sample_id": "gdpr_article22_s004",
+      "rule_id": "article22",
+      "sentence_idx": 3,
+      "request_body_sha256": "f59020b5f204ccc7b31e688d260f3e2765bae354b57f7a6bee221bb9ca8c7cc9",
+      "request_body_utf8_bytes": 17386,
+      "actual_send_body_sha256_after_correction": "f59020b5f204ccc7b31e688d260f3e2765bae354b57f7a6bee221bb9ca8c7cc9",
+      "actual_send_body_utf8_bytes_after_correction": 17386,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 38,
+      "sample_id": "gdpr_article22_s005",
+      "rule_id": "article22",
+      "sentence_idx": 4,
+      "request_body_sha256": "4a06d8e282322a6d2834280fdd860b43e678a9c0615a58488128445665ab1fba",
+      "request_body_utf8_bytes": 17629,
+      "actual_send_body_sha256_after_correction": "4a06d8e282322a6d2834280fdd860b43e678a9c0615a58488128445665ab1fba",
+      "actual_send_body_utf8_bytes_after_correction": 17629,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 39,
+      "sample_id": "gdpr_article22_s006",
+      "rule_id": "article22",
+      "sentence_idx": 5,
+      "request_body_sha256": "859e918b1e9d200bd16551e35dbbfb0f8dacbabb2117e9f0d04f8079b53df6e0",
+      "request_body_utf8_bytes": 17575,
+      "actual_send_body_sha256_after_correction": "859e918b1e9d200bd16551e35dbbfb0f8dacbabb2117e9f0d04f8079b53df6e0",
+      "actual_send_body_utf8_bytes_after_correction": 17575,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 40,
+      "sample_id": "gdpr_article33_s001",
+      "rule_id": "article33",
+      "sentence_idx": 0,
+      "request_body_sha256": "f92db14f0d5c11eb4568825cf320919112be940af78277b6cb15b6045ceb6e5d",
+      "request_body_utf8_bytes": 17661,
+      "actual_send_body_sha256_after_correction": "f92db14f0d5c11eb4568825cf320919112be940af78277b6cb15b6045ceb6e5d",
+      "actual_send_body_utf8_bytes_after_correction": 17661,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 41,
+      "sample_id": "gdpr_article33_s002",
+      "rule_id": "article33",
+      "sentence_idx": 1,
+      "request_body_sha256": "312018f992469f93edd9061740811afa398476694f7c0e9f63774a332e2fc19b",
+      "request_body_utf8_bytes": 17421,
+      "actual_send_body_sha256_after_correction": "312018f992469f93edd9061740811afa398476694f7c0e9f63774a332e2fc19b",
+      "actual_send_body_utf8_bytes_after_correction": 17421,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 42,
+      "sample_id": "gdpr_article33_s003",
+      "rule_id": "article33",
+      "sentence_idx": 2,
+      "request_body_sha256": "1eb49f093f237a2d07a8e1bf79ade38ba8a0161096e668b62c3788ecdbc4f762",
+      "request_body_utf8_bytes": 17400,
+      "actual_send_body_sha256_after_correction": "1eb49f093f237a2d07a8e1bf79ade38ba8a0161096e668b62c3788ecdbc4f762",
+      "actual_send_body_utf8_bytes_after_correction": 17400,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 43,
+      "sample_id": "gdpr_article33_s004",
+      "rule_id": "article33",
+      "sentence_idx": 3,
+      "request_body_sha256": "4c719dd9c9da1140fb4d145a57a7697520ae24e1aebe46d05f805a2402a243d5",
+      "request_body_utf8_bytes": 17566,
+      "actual_send_body_sha256_after_correction": "4c719dd9c9da1140fb4d145a57a7697520ae24e1aebe46d05f805a2402a243d5",
+      "actual_send_body_utf8_bytes_after_correction": 17566,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 44,
+      "sample_id": "gdpr_article33_s005",
+      "rule_id": "article33",
+      "sentence_idx": 4,
+      "request_body_sha256": "bd5dc5c1b82703f44451f649f6c67b1aefcc2540211607957b8c73b15d022009",
+      "request_body_utf8_bytes": 17484,
+      "actual_send_body_sha256_after_correction": "bd5dc5c1b82703f44451f649f6c67b1aefcc2540211607957b8c73b15d022009",
+      "actual_send_body_utf8_bytes_after_correction": 17484,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 45,
+      "sample_id": "gdpr_article33_s006",
+      "rule_id": "article33",
+      "sentence_idx": 5,
+      "request_body_sha256": "d47f6a57ccc59a980ccb655b5ce6eb081de185ab90f00b3807dffc73c61b7af1",
+      "request_body_utf8_bytes": 17411,
+      "actual_send_body_sha256_after_correction": "d47f6a57ccc59a980ccb655b5ce6eb081de185ab90f00b3807dffc73c61b7af1",
+      "actual_send_body_utf8_bytes_after_correction": 17411,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 46,
+      "sample_id": "gdpr_article33_s007",
+      "rule_id": "article33",
+      "sentence_idx": 6,
+      "request_body_sha256": "cab4524621d53fa7e32b4d4ea3001fad0afbb27d494e75f5e5af56cd630589dc",
+      "request_body_utf8_bytes": 17537,
+      "actual_send_body_sha256_after_correction": "cab4524621d53fa7e32b4d4ea3001fad0afbb27d494e75f5e5af56cd630589dc",
+      "actual_send_body_utf8_bytes_after_correction": 17537,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 47,
+      "sample_id": "gdpr_article33_s008",
+      "rule_id": "article33",
+      "sentence_idx": 7,
+      "request_body_sha256": "fbacd8e2aba26c2de234df99889b5fd313b49bfbb55384a7d59fecd8544eb590",
+      "request_body_utf8_bytes": 17450,
+      "actual_send_body_sha256_after_correction": "fbacd8e2aba26c2de234df99889b5fd313b49bfbb55384a7d59fecd8544eb590",
+      "actual_send_body_utf8_bytes_after_correction": 17450,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 48,
+      "sample_id": "gdpr_article33_s009",
+      "rule_id": "article33",
+      "sentence_idx": 8,
+      "request_body_sha256": "8048709be39dc3b1762aa4bac181cc66a265e95f571a9244e3e39c324fa38efb",
+      "request_body_utf8_bytes": 17450,
+      "actual_send_body_sha256_after_correction": "8048709be39dc3b1762aa4bac181cc66a265e95f571a9244e3e39c324fa38efb",
+      "actual_send_body_utf8_bytes_after_correction": 17450,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 49,
+      "sample_id": "gdpr_article33_s010",
+      "rule_id": "article33",
+      "sentence_idx": 9,
+      "request_body_sha256": "1bfa716e6c72bdf5e03525cd3926972195ca781b475f0ea04f3473ab7fa2744b",
+      "request_body_utf8_bytes": 17388,
+      "actual_send_body_sha256_after_correction": "1bfa716e6c72bdf5e03525cd3926972195ca781b475f0ea04f3473ab7fa2744b",
+      "actual_send_body_utf8_bytes_after_correction": 17388,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 50,
+      "sample_id": "gdpr_article34_s001",
+      "rule_id": "article34",
+      "sentence_idx": 0,
+      "request_body_sha256": "c315305c80e3977b4dc06bfe8307c28aeec19c8c58eacdfdf706d6eee120bd46",
+      "request_body_utf8_bytes": 17501,
+      "actual_send_body_sha256_after_correction": "c315305c80e3977b4dc06bfe8307c28aeec19c8c58eacdfdf706d6eee120bd46",
+      "actual_send_body_utf8_bytes_after_correction": 17501,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 51,
+      "sample_id": "gdpr_article34_s002",
+      "rule_id": "article34",
+      "sentence_idx": 1,
+      "request_body_sha256": "63bae2c905f3ce97efdc761a26b6d1c02f23c1ce31367ba8fdf877e61162f087",
+      "request_body_utf8_bytes": 17560,
+      "actual_send_body_sha256_after_correction": "63bae2c905f3ce97efdc761a26b6d1c02f23c1ce31367ba8fdf877e61162f087",
+      "actual_send_body_utf8_bytes_after_correction": 17560,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 52,
+      "sample_id": "gdpr_article34_s003",
+      "rule_id": "article34",
+      "sentence_idx": 2,
+      "request_body_sha256": "767589a237d8568d42dad795734a262d8b2fe458b72a6a8b53fcc282a272c1ab",
+      "request_body_utf8_bytes": 17699,
+      "actual_send_body_sha256_after_correction": "767589a237d8568d42dad795734a262d8b2fe458b72a6a8b53fcc282a272c1ab",
+      "actual_send_body_utf8_bytes_after_correction": 17699,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 53,
+      "sample_id": "gdpr_article34_s004",
+      "rule_id": "article34",
+      "sentence_idx": 3,
+      "request_body_sha256": "4763bad6e67b7712329f3ea5b30035883201228f54c62703f33292c99c17b6e0",
+      "request_body_utf8_bytes": 17564,
+      "actual_send_body_sha256_after_correction": "4763bad6e67b7712329f3ea5b30035883201228f54c62703f33292c99c17b6e0",
+      "actual_send_body_utf8_bytes_after_correction": 17564,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 54,
+      "sample_id": "gdpr_article34_s005",
+      "rule_id": "article34",
+      "sentence_idx": 4,
+      "request_body_sha256": "f875f4ce3fdd96679b7be453546df038d52bb6c1fe5749964a7a398a26e6d2ba",
+      "request_body_utf8_bytes": 17422,
+      "actual_send_body_sha256_after_correction": "f875f4ce3fdd96679b7be453546df038d52bb6c1fe5749964a7a398a26e6d2ba",
+      "actual_send_body_utf8_bytes_after_correction": 17422,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 55,
+      "sample_id": "gdpr_article34_s006",
+      "rule_id": "article34",
+      "sentence_idx": 5,
+      "request_body_sha256": "87cdb514b0a00510aba6c4305efaee9b92235055693e64bd23420a09c62de9f2",
+      "request_body_utf8_bytes": 17442,
+      "actual_send_body_sha256_after_correction": "87cdb514b0a00510aba6c4305efaee9b92235055693e64bd23420a09c62de9f2",
+      "actual_send_body_utf8_bytes_after_correction": 17442,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 56,
+      "sample_id": "gdpr_article34_s007",
+      "rule_id": "article34",
+      "sentence_idx": 6,
+      "request_body_sha256": "2c30a4334d305b43a273692d7b03eb53e65627bef9002a1a3556575f552264cf",
+      "request_body_utf8_bytes": 17598,
+      "actual_send_body_sha256_after_correction": "2c30a4334d305b43a273692d7b03eb53e65627bef9002a1a3556575f552264cf",
+      "actual_send_body_utf8_bytes_after_correction": 17598,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 57,
+      "sample_id": "gdpr_article6_s001",
+      "rule_id": "article6",
+      "sentence_idx": 0,
+      "request_body_sha256": "69244716ec73f216d0d7825c50ad8619c0b38c7f5e41442af1c0da55e6e4293a",
+      "request_body_utf8_bytes": 17462,
+      "actual_send_body_sha256_after_correction": "69244716ec73f216d0d7825c50ad8619c0b38c7f5e41442af1c0da55e6e4293a",
+      "actual_send_body_utf8_bytes_after_correction": 17462,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 58,
+      "sample_id": "gdpr_article6_s002",
+      "rule_id": "article6",
+      "sentence_idx": 1,
+      "request_body_sha256": "385963350b7a16628a1b48325f0ce513f17d4ceb5b28cfd9499f8cc34e3b9833",
+      "request_body_utf8_bytes": 18459,
+      "actual_send_body_sha256_after_correction": "385963350b7a16628a1b48325f0ce513f17d4ceb5b28cfd9499f8cc34e3b9833",
+      "actual_send_body_utf8_bytes_after_correction": 18459,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 59,
+      "sample_id": "gdpr_article6_s003",
+      "rule_id": "article6",
+      "sentence_idx": 2,
+      "request_body_sha256": "a55910470e1a57662464ef67c4aaa94f25104fb814e8f98d56ee534dc5bef884",
+      "request_body_utf8_bytes": 17423,
+      "actual_send_body_sha256_after_correction": "a55910470e1a57662464ef67c4aaa94f25104fb814e8f98d56ee534dc5bef884",
+      "actual_send_body_utf8_bytes_after_correction": 17423,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 60,
+      "sample_id": "gdpr_article6_s004",
+      "rule_id": "article6",
+      "sentence_idx": 3,
+      "request_body_sha256": "40d26683fa9c2bdf214dfb68783107c71a1a19dcc3cc4fdb70da1072172a3e2f",
+      "request_body_utf8_bytes": 17699,
+      "actual_send_body_sha256_after_correction": "40d26683fa9c2bdf214dfb68783107c71a1a19dcc3cc4fdb70da1072172a3e2f",
+      "actual_send_body_utf8_bytes_after_correction": 17699,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 61,
+      "sample_id": "gdpr_article6_s005",
+      "rule_id": "article6",
+      "sentence_idx": 4,
+      "request_body_sha256": "0973de5f727b8c21fab6d0289ebcb2562f4cf544c34d970772824695ce35313e",
+      "request_body_utf8_bytes": 17453,
+      "actual_send_body_sha256_after_correction": "0973de5f727b8c21fab6d0289ebcb2562f4cf544c34d970772824695ce35313e",
+      "actual_send_body_utf8_bytes_after_correction": 17453,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 62,
+      "sample_id": "gdpr_article6_s006",
+      "rule_id": "article6",
+      "sentence_idx": 5,
+      "request_body_sha256": "9ea71e871a895d95c7d8d7a43e4531d8a688ed8e8b60384aa29aa97eb9d6608c",
+      "request_body_utf8_bytes": 17580,
+      "actual_send_body_sha256_after_correction": "9ea71e871a895d95c7d8d7a43e4531d8a688ed8e8b60384aa29aa97eb9d6608c",
+      "actual_send_body_utf8_bytes_after_correction": 17580,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 63,
+      "sample_id": "gdpr_article6_s007",
+      "rule_id": "article6",
+      "sentence_idx": 6,
+      "request_body_sha256": "2346d3c143a812426aaa0fd44eec47faf862337d2d702adb72bb6327b58a9e82",
+      "request_body_utf8_bytes": 17885,
+      "actual_send_body_sha256_after_correction": "2346d3c143a812426aaa0fd44eec47faf862337d2d702adb72bb6327b58a9e82",
+      "actual_send_body_utf8_bytes_after_correction": 17885,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 64,
+      "sample_id": "gdpr_article6_s008",
+      "rule_id": "article6",
+      "sentence_idx": 7,
+      "request_body_sha256": "bf7a3eb61e7fe5b123a846548ee050542267a324eed725068f21cdc4b335247e",
+      "request_body_utf8_bytes": 17417,
+      "actual_send_body_sha256_after_correction": "bf7a3eb61e7fe5b123a846548ee050542267a324eed725068f21cdc4b335247e",
+      "actual_send_body_utf8_bytes_after_correction": 17417,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 65,
+      "sample_id": "gdpr_article6_s009",
+      "rule_id": "article6",
+      "sentence_idx": 8,
+      "request_body_sha256": "5a72767baddc98b11c88df29ed2dab2cf3786468f5b4406746b35776d314de6d",
+      "request_body_utf8_bytes": 17800,
+      "actual_send_body_sha256_after_correction": "5a72767baddc98b11c88df29ed2dab2cf3786468f5b4406746b35776d314de6d",
+      "actual_send_body_utf8_bytes_after_correction": 17800,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 66,
+      "sample_id": "gdpr_article6_s010",
+      "rule_id": "article6",
+      "sentence_idx": 9,
+      "request_body_sha256": "8f6f06196e4749750275b7105f0706bc93fb7663d318831d50a8c8baa06783bc",
+      "request_body_utf8_bytes": 17971,
+      "actual_send_body_sha256_after_correction": "8f6f06196e4749750275b7105f0706bc93fb7663d318831d50a8c8baa06783bc",
+      "actual_send_body_utf8_bytes_after_correction": 17971,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 67,
+      "sample_id": "gdpr_article7_s001",
+      "rule_id": "article7",
+      "sentence_idx": 0,
+      "request_body_sha256": "a2fd1de1f6b35d970bcbebdff5ace619f4f43f015dbca9e832f474a9951404da",
+      "request_body_utf8_bytes": 17449,
+      "actual_send_body_sha256_after_correction": "a2fd1de1f6b35d970bcbebdff5ace619f4f43f015dbca9e832f474a9951404da",
+      "actual_send_body_utf8_bytes_after_correction": 17449,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 68,
+      "sample_id": "gdpr_article7_s002",
+      "rule_id": "article7",
+      "sentence_idx": 1,
+      "request_body_sha256": "d62a2fc4ff5d2414a710838b1a4b2d7ae89c64188084b6cd272ae14b44f333b0",
+      "request_body_utf8_bytes": 17593,
+      "actual_send_body_sha256_after_correction": "d62a2fc4ff5d2414a710838b1a4b2d7ae89c64188084b6cd272ae14b44f333b0",
+      "actual_send_body_utf8_bytes_after_correction": 17593,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 69,
+      "sample_id": "gdpr_article7_s003",
+      "rule_id": "article7",
+      "sentence_idx": 2,
+      "request_body_sha256": "23687ce0bc1fc9e01664413e96c01aab6706441ad6213b4274a1556a43609ec4",
+      "request_body_utf8_bytes": 17394,
+      "actual_send_body_sha256_after_correction": "23687ce0bc1fc9e01664413e96c01aab6706441ad6213b4274a1556a43609ec4",
+      "actual_send_body_utf8_bytes_after_correction": 17394,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 70,
+      "sample_id": "gdpr_article7_s004",
+      "rule_id": "article7",
+      "sentence_idx": 3,
+      "request_body_sha256": "73c28887b089ee1b861c6f6ced32bfb3ce044e93e65469584465f9acc37d4e03",
+      "request_body_utf8_bytes": 17370,
+      "actual_send_body_sha256_after_correction": "73c28887b089ee1b861c6f6ced32bfb3ce044e93e65469584465f9acc37d4e03",
+      "actual_send_body_utf8_bytes_after_correction": 17370,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 71,
+      "sample_id": "gdpr_article7_s005",
+      "rule_id": "article7",
+      "sentence_idx": 4,
+      "request_body_sha256": "c015a048adde46ba0a5790a78bcdd3b436f44b2e0fbaa083bb6ab5500ed4cfe9",
+      "request_body_utf8_bytes": 17400,
+      "actual_send_body_sha256_after_correction": "c015a048adde46ba0a5790a78bcdd3b436f44b2e0fbaa083bb6ab5500ed4cfe9",
+      "actual_send_body_utf8_bytes_after_correction": 17400,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 72,
+      "sample_id": "gdpr_article7_s006",
+      "rule_id": "article7",
+      "sentence_idx": 5,
+      "request_body_sha256": "88fab2fae269bddd1cdb280ed0c058c5fc6d11caad5dc94e47c1f63fe666bf0b",
+      "request_body_utf8_bytes": 17357,
+      "actual_send_body_sha256_after_correction": "88fab2fae269bddd1cdb280ed0c058c5fc6d11caad5dc94e47c1f63fe666bf0b",
+      "actual_send_body_utf8_bytes_after_correction": 17357,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 73,
+      "sample_id": "gdpr_article7_s007",
+      "rule_id": "article7",
+      "sentence_idx": 6,
+      "request_body_sha256": "112d9892dd69229dc921d375a9b09673e8ec24cf1c0459d3f5a986cff3ed2b85",
+      "request_body_utf8_bytes": 17340,
+      "actual_send_body_sha256_after_correction": "112d9892dd69229dc921d375a9b09673e8ec24cf1c0459d3f5a986cff3ed2b85",
+      "actual_send_body_utf8_bytes_after_correction": 17340,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    },
+    {
+      "call_index": 74,
+      "sample_id": "gdpr_article7_s008",
+      "rule_id": "article7",
+      "sentence_idx": 7,
+      "request_body_sha256": "fb210975a2097e3e1147c045399d1443b590f7bd915a16e92c79c827080af053",
+      "request_body_utf8_bytes": 17580,
+      "actual_send_body_sha256_after_correction": "fb210975a2097e3e1147c045399d1443b590f7bd915a16e92c79c827080af053",
+      "actual_send_body_utf8_bytes_after_correction": 17580,
+      "request_body_sha256_match": true,
+      "thinking": {
+        "type": "disabled"
+      },
+      "stream": false,
+      "max_tokens": 4096,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "response_format": null
+    }
+  ]
+}

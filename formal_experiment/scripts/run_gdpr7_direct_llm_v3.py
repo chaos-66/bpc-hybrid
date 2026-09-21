@@ -2,7 +2,7 @@
 """Real-executor chain for the GDPR Stage-2 Direct-LLM (Stage-2 arm) batch.
 
 This runner executes the frozen 74-sentence ``direct_llm`` batch of
-``outputs/reports/gdpr7_direct_llm_preflight_v1.json`` with the S2.12-style
+``outputs/reports/gdpr7_direct_llm_preflight_v3.json`` with the S2.12-style
 real-execution safety contract, fully offline by default:
 
 * the preflight builder's render path is REUSED (imported as
@@ -14,7 +14,7 @@ real-execution safety contract, fully offline by default:
 * a per-call ``PayloadLock`` re-verifies the final body hash + sample id +
   execution order inside EVERY transport call (fake or real);
 * before EVERY real send the executor enforces: an authorization event file
-  (user sentence + exact scope ``gdpr7_direct_llm_v1:74`` + SHA bindings;
+  (user sentence + exact scope ``gdpr7_direct_llm_v3:74`` + SHA bindings;
   absent -> hard refuse), the model pin ``deepseek-v4-pro`` (published alias
   ``DeepSeek-V4-Pro-0813``), temperature 0 / top_p 1 / max_tokens 4096 /
   retry 0 / stream false / thinking disabled / response_format None (all
@@ -29,7 +29,7 @@ real-execution safety contract, fully offline by default:
   provider usage or non-``ok_message_content`` decode is recorded as an
   ``in_doubt`` ledger entry and NEVER auto-resent;
 * append-only hash-chained ledger + raw-response JSONL under
-  ``outputs/development/gdpr7_direct_llm_raw_v1/``; ``--resume`` re-sends
+  ``outputs/development/gdpr7_direct_llm_raw_real_v3/``; ``--resume`` re-sends
   ONLY never-attempted requests in the original (report) order; partial/
   aborted runs keep everything and exit non-zero without claiming complete;
 * after the batch, raw responses are converted to canonical prediction rows
@@ -44,17 +44,17 @@ real-execution safety contract, fully offline by default:
 CLI::
 
     # full 74-call fake verification (zero network, zero API)
-    python scripts/run_gdpr7_direct_llm_v1.py --fake-transport
+    python scripts/run_gdpr7_direct_llm_v3.py --fake-transport
 
     # real run AFTER user authorization (authorization event file required)
-    python scripts/run_gdpr7_direct_llm_v1.py --contract-file <path> \\
+    python scripts/run_gdpr7_direct_llm_v3.py --contract-file <path> \\
         --authorization-file <path>
 
     # resume a partial/aborted run (never re-sends completed or in_doubt)
-    python scripts/run_gdpr7_direct_llm_v1.py --fake-transport --resume
+    python scripts/run_gdpr7_direct_llm_v3.py --fake-transport --resume
 
     # resume a real run
-    python scripts/run_gdpr7_direct_llm_v1.py --contract-file <path> \\
+    python scripts/run_gdpr7_direct_llm_v3.py --contract-file <path> \\
         --authorization-file <path> --resume
 
 Zero LLM/API/network/.env unless the user has authorized a real batch: fake
@@ -74,7 +74,7 @@ import os
 import shutil
 import sys
 import time
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
@@ -140,7 +140,7 @@ CONTRACT_SCHEMA = "gdpr7_direct_llm_execution_contract@1.0.0"
 
 DATASET_ID = "gdpr7_stage2_sentences_v1"
 METHOD_ID = "direct_llm"
-AUTHORIZATION_SCOPE = "gdpr7_direct_llm_v1:74"
+AUTHORIZATION_SCOPE = "gdpr7_direct_llm_v3:74"
 
 # Canonical arm capsule home referenced by the linkage runner
 # (``run_gdpr_s2_s3_linkage_v1.ARM_PATHS["direct_llm"]``).  This executor only
@@ -149,11 +149,11 @@ AUTHORIZATION_SCOPE = "gdpr7_direct_llm_v1:74"
 ARM_CAPSULE_PATH = ROOT / "data/predictions/gdpr7_direct_llm_v1"
 
 # Default development output locations (never formal capsule dirs).
-DEFAULT_RAW_DIR = ROOT / "outputs/development/gdpr7_direct_llm_raw_v1"
-DEFAULT_CAPSULE_DIR = ROOT / "outputs/development/gdpr7_direct_llm_v1"
+DEFAULT_RAW_DIR = ROOT / "outputs/development/gdpr7_direct_llm_raw_real_v3"
+DEFAULT_CAPSULE_DIR = ROOT / "outputs/development/gdpr7_direct_llm_v3"
 
 # Default locked preflight report (committed path).
-REPORT_DEFAULT = OUTPUT
+REPORT_DEFAULT = ROOT / "outputs/reports/gdpr7_direct_llm_preflight_v3.json"
 
 # In-code hard caps (mirrors preflight ``recommended_hard_limits``; implemented
 # here, not only documented).
@@ -193,35 +193,6 @@ _FORBIDDEN_DECISION_KEYS = (
 
 class Gdpr7ExecutionError(ValueError):
     """Fail-closed GDPR Direct-LLM execution error."""
-
-
-class WireBodyHashMismatch(Gdpr7ExecutionError):
-    """Execution-contract violation: the serialized wire request body does
-    not equal the planned/frozen request body.
-
-    The actual provider-facing body is the exact ``http_req.data`` bytes
-    hashed by ``RealAPITransport.last_request_body_sha256``.  A mismatch
-    aborts the batch immediately and the request is never retried.
-    """
-
-    def __init__(
-        self,
-        *,
-        call_index: int,
-        sample_id: str,
-        planned_request_body_sha256: str,
-        actual_request_body_sha256: str | None,
-    ) -> None:
-        self.call_index = int(call_index)
-        self.sample_id = sample_id
-        self.planned_request_body_sha256 = planned_request_body_sha256
-        self.actual_request_body_sha256 = actual_request_body_sha256
-        actual_text = actual_request_body_sha256 or "MISSING"
-        super().__init__(
-            f"wire-body SHA mismatch at ordinal {self.call_index} "
-            f"({self.sample_id}): actual {actual_text} != planned "
-            f"{planned_request_body_sha256}"
-        )
 
 
 # ---------------------------------------------------------------------------
@@ -738,16 +709,7 @@ class PayloadLockedRealTransport(LLMTransport):
     def __init__(self, payload_lock: PayloadLock, config: Any,
                  timeout_seconds: float = 180.0) -> None:
         self._lock = payload_lock
-        # The SAME frozen H1RequestPolicy used by PayloadLock must be applied
-        # by RealAPITransport itself.  Without this argument the transport
-        # serializes the raw builder body (no stream/thinking/response_format)
-        # even though the payload lock passes.
-        self._real = RealAPITransport(
-            config,
-            timeout_seconds=timeout_seconds,
-            policy=self._lock._policy,
-        )
-        self.last_request_body_sha256: str | None = None
+        self._real = RealAPITransport(config, timeout_seconds=timeout_seconds, policy=self._lock._policy)
 
     @property
     def last_decode(self) -> dict[str, Any] | None:
@@ -755,21 +717,10 @@ class PayloadLockedRealTransport(LLMTransport):
 
     def send(self, request: LLMRequest, *, ordinal: int = 1) -> LLMResponse:
         try:
-            verified = self._lock.verify(request, ordinal)
+            self._lock.verify(request, ordinal)
         except Gdpr7ExecutionError as exc:
             raise LLMClientError(str(exc)) from exc
-        planned_sha = str(verified["request_body_sha256"])
-        response = self._real.send(request)
-        actual_sha = self._real.last_request_body_sha256
-        self.last_request_body_sha256 = actual_sha
-        if actual_sha != planned_sha:
-            raise WireBodyHashMismatch(
-                call_index=ordinal,
-                sample_id=request.source_id,
-                planned_request_body_sha256=planned_sha,
-                actual_request_body_sha256=actual_sha,
-            )
-        return response
+        return self._real.send(request)
 
 
 # ---------------------------------------------------------------------------
@@ -1014,9 +965,9 @@ def _current_bindings(report_path: Path) -> dict[str, str]:
     prompt_path = ROOT / "prompts" / "sun_compat" / f"{PROMPT_NAME}.md"
     return {
         "data/input/gdpr7_stage2_input_v1.json": _sha(INPUT),
-        "outputs/reports/gdpr7_direct_llm_preflight_v1.json": _sha(report_path),
+        "outputs/reports/gdpr7_direct_llm_preflight_v3.json": _sha(report_path),
         "configs/models/estg150_d1_active_registry_v1.json": _sha(REGISTRY),
-        "scripts/run_gdpr7_direct_llm_v1.py": _sha(Path(__file__).resolve()),
+        "scripts/run_gdpr7_direct_llm_v3.py": _sha(Path(__file__).resolve()),
         "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md": _sha(prompt_path),
     }
 
@@ -1051,7 +1002,7 @@ def validate_contract(contract_path: Path, report_path: Path) -> dict[str, Any]:
     current = _current_bindings(report_path)
     contract_hashes = contract.get("hash_set") or {}
     if contract_hashes.get("executor_script_sha256") != current[
-            "scripts/run_gdpr7_direct_llm_v1.py"]:
+            "scripts/run_gdpr7_direct_llm_v3.py"]:
         raise Gdpr7ExecutionError(
             "executor script hash mismatch against execution contract"
         )
@@ -1091,7 +1042,7 @@ def validate_authorization_event(event_path: Path | None,
     """Validate the user's authorization event file BEFORE any send.
 
     The event must carry the user's authorization sentence, the exact scope
-    ``gdpr7_direct_llm_v1:74``, the price snapshot with a re-verification
+    ``gdpr7_direct_llm_v3:74``, the price snapshot with a re-verification
     timestamp, the same hash bindings as the execution contract, and the
     hard caps.  Any missing/mismatched field -> hard refuse.
     """
@@ -1501,7 +1452,7 @@ def build_capsule_docs(
     }
     manifest = {
         "schema_version": MANIFEST_SCHEMA,
-        "run_id": "gdpr7_direct_llm_v1",
+        "run_id": "gdpr7_direct_llm_v3",
         "arm": METHOD_ID,
         "status": status,
         "dataset_id": DATASET_ID,
@@ -1687,19 +1638,8 @@ def execute_batch(
             raise Gdpr7ExecutionError(
                 "real provider base_url/api_key must match the locked endpoint"
             )
-        # Use the frozen protocol config for every non-secret provider field
-        # (model, temperature, top_p, max_tokens, seed policy) and inject only
-        # the real process-environment API key.  This guarantees the actual
-        # provider-facing body is built from the same frozen values as the
-        # plan/payload lock, regardless of environment-controlled sampling
-        # variables.
-        provider_config = replace(
-            _config(),
-            enabled=True,
-            api_key=real_config.api_key,
-        )
         real_transport = PayloadLockedRealTransport(
-            payload_lock, provider_config, timeout_seconds=timeout_seconds,
+            payload_lock, real_config, timeout_seconds=timeout_seconds,
         )
         active_transport = real_transport
 
@@ -1862,11 +1802,11 @@ def execute_batch(
     elapsed = time.perf_counter() - started
     doc_arm_capsule_rel = str(ARM_CAPSULE_PATH.relative_to(ROOT)).replace(os.sep, "/")
     reproduce_fake = (
-        "python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py "
+        "python formal_experiment/scripts/run_gdpr7_direct_llm_v3.py "
         "--fake-transport"
     )
     reproduce_real = (
-        "python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py "
+        "python formal_experiment/scripts/run_gdpr7_direct_llm_v3.py "
         "--contract-file formal_experiment/configs/ablations/"
         "gdpr7_direct_llm_execution_contract_v1.json "
         "--authorization-file <gdpr7-direct-llm-authorization-event-file>"
@@ -1956,7 +1896,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--report-file", type=Path, default=None,
         help="Path to the locked preflight report (default: "
-             "outputs/reports/gdpr7_direct_llm_preflight_v1.json).",
+             "outputs/reports/gdpr7_direct_llm_preflight_v3.json).",
     )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(

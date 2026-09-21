@@ -27,9 +27,9 @@
     "data/input/gdpr7_stage2_input_v1.json": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
     "outputs/reports/gdpr7_direct_llm_preflight_v1.json": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7",
     "configs/models/estg150_d1_active_registry_v1.json": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
-    "scripts/run_gdpr7_direct_llm_v1.py": "6052e90fcd784648c626ee38bdd54fb2e2963265df2ea803f966407fbcf3d0a9",
+    "scripts/run_gdpr7_direct_llm_v1.py": "663702e7ab0100338be24f2a9b7234693c4a72cc56089226a972d141f18feb8a",
     "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
-    "contract_sha256": "7c1b168d5d1a5a2223d3ce2c2ff9664b7c39c4c879e8501df77e2227568ab4a1",
+    "contract_sha256": "2cc47fd843be15ce776e8b88449a6d661b32906f8cd0b5c075c7c3a6bca14f22",
     "outputs/reports/gdpr7_direct_llm_preflight_v2.json": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7"
   },
   "gold_isolation": {
@@ -40,7 +40,7 @@
   "artifact_version": "v2",
   "supersedes": {
     "path": "configs/gdpr7_direct_llm_authorization_event_v1.json",
-    "sha256": "d6689c0ef2fcc6336a29a88b9d7bc172299a771a751b75de9af5d6e71df0bde5"
+    "sha256": "27a8bc3706d5e8c60088ac2d1620cee8bde61ad91a07552f65a56b4f48566f16"
   },
   "binding_update": {
     "classification": "ACCEPTED_NON_SEMANTIC_IMPLEMENTATION_BINDING_UPDATE",
@@ -58,6 +58,6 @@
     "model_decoding_configuration_unchanged": true,
     "scientific_contract_changed": false,
     "preflight_v2_sha256": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7",
-    "contract_v2_sha256": "7c1b168d5d1a5a2223d3ce2c2ff9664b7c39c4c879e8501df77e2227568ab4a1"
+    "contract_v2_sha256": "2cc47fd843be15ce776e8b88449a6d661b32906f8cd0b5c075c7c3a6bca14f22"
   }
 }

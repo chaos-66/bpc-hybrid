@@ -1,6 +1,6 @@
 {
   "schema_version": "gdpr7_direct_llm_execution_contract@1.0.0",
-  "suite_id": "gdpr7_direct_llm_execution_v1",
+  "suite_id": "gdpr7_direct_llm_execution_v3_1",
   "arm": "direct_llm",
   "status": "payloads_locked_real_execution_refuses_until_authorization",
   "bound_commit": {
@@ -16,8 +16,8 @@
     "gold_visible": false
   },
   "preflight_report": {
-    "path": "outputs/reports/gdpr7_direct_llm_preflight_v1.json",
-    "sha256": "602bfdfb4adbf7f2c401689ed25e3d4226bc0fdb82a7bc65b4fbc6baf8f8c56d",
+    "path": "outputs/reports/gdpr7_direct_llm_preflight_v3.json",
+    "sha256": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7",
     "schema_version": "gdpr7_direct_llm_preflight_report@1.0.0"
   },
   "planned_calls": 74,
@@ -811,23 +811,24 @@
   },
   "hash_set": {
     "input_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
-    "preflight_report_sha256": "602bfdfb4adbf7f2c401689ed25e3d4226bc0fdb82a7bc65b4fbc6baf8f8c56d",
+    "preflight_report_sha256": "f8e827aaac004fb363fbc905b7d51fc2f4d30c7bb93095ed9b187ed2a2329ef7",
     "registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
     "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
-    "executor_script_sha256": "663702e7ab0100338be24f2a9b7234693c4a72cc56089226a972d141f18feb8a"
+    "executor_script_sha256": "a4d216b9e9a210f38360ec5a746a607d96ca99676236a96f9ec17306b2254b6e",
+    "payload_freeze_sha256": "e1bbc3e4000652d2766d736a3cb9e07b357a4b809506925cb55a131484f046d3"
   },
   "authorization": null,
-  "authorization_scope": "gdpr7_direct_llm_v1:74",
+  "authorization_scope": "gdpr7_direct_llm_v3_1:74",
   "authorization_template_sentence_placeholder": {
     "is_placeholder_not_authorization": true,
     "authorized": false,
     "calls_made": 0,
-    "scope": "gdpr7_direct_llm_v1:74",
-    "note": "user must issue an authorization sentence verbatim (scope gdpr7_direct_llm_v1:74) and an authorization EVENT file (schema gdpr7_direct_llm_authorization_event@1.0.0) binding the input/preflight/registry/prompt/executor/contract hashes must be created separately before any real call",
-    "template_en": "I authorize running the GDPR Stage-2->Stage-3 linkage Direct-LLM arm (scope gdpr7_direct_llm_v1:74): 74 real deepseek-v4-pro API calls, one per approved_text_en sentence of gdpr7_stage2_input_v1.json (sha256 558b8013...), strictly using the 74 locked request bodies of gdpr7_direct_llm_preflight_v1.json; retry=0; off-peak only (Beijing 09:00-12:00 / 14:00-18:00 peak checked before every call); global input <=74,000,000, output <=303,104 (per call <=4,096), USD <=1.31 (off-peak half-price planning cap) and never above 2.61; official prices re-verified before the run; any drift/cap/window/Gold-isolation/model violation hard-stops before the call; no .env read, no Oracle."
+    "scope": "gdpr7_direct_llm_v3_1:74",
+    "note": "The user must issue an authorization sentence and an authorization EVENT file (schema gdpr7_direct_llm_authorization_event@1.0.0) binding the input/preflight/registry/prompt/executor/contract hashes for v3.1 before any real call.",
+    "template_en": "I authorize running the GDPR Stage-2->Stage-3 linkage Direct-LLM arm (scope gdpr7_direct_llm_v3_1:74): 74 real deepseek-v4-pro API calls, one per approved_text_en sentence of gdpr7_stage2_input_v1.json (sha256 558b8013...), strictly using the 74 locked request bodies of gdpr7_direct_llm_preflight_v3.json; retry=0; off-peak only; global input <=74,000,000, output <=303,104 (per call <=4,096), USD <=1.31 (off-peak half-price planning cap) and never above 2.61; official prices re-verified before the run; any drift/cap/window/Gold-isolation/model violation hard-stops before the call; every actual wire-body SHA-256 must equal its planned/frozen request-body SHA-256 before the response is accepted, otherwise the batch stops and the mismatched request is never retried; no .env read, no Oracle."
   },
   "real_execution_refuses_until": {
-    "condition": "an authorization event file (user authorization sentence + exact scope gdpr7_direct_llm_v1:74 + SHA bindings equal to this contract + off-peak price snapshot with re-verification timestamp + caps) exists and is validated by the executor",
+    "condition": "an authorization event file (user authorization sentence + exact scope gdpr7_direct_llm_v3_1:74 + SHA bindings equal to this v3.1 contract + off-peak price snapshot with re-verification timestamp + caps) exists and is validated by the corrected v3.1 executor",
     "absent_event": "hard refuse before the first send; nothing is published"
   },
   "gold_isolation": {
@@ -841,10 +842,11 @@
     "raw_payload_or_source_text_committed": false,
     "gold_rule_records_created": false,
     "oracle_started": false,
-    "project_dotenv_not_read": true
+    "project_dotenv_not_read": true,
+    "wire_body_hash_assertion_enabled": true
   },
-  "reproduce_command_real": "python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v1.json --authorization-file <gdpr7-direct-llm-authorization-event-file>",
-  "reproduce_command_fake_verify": "python formal_experiment/scripts/run_gdpr7_direct_llm_v1.py --fake-transport",
+  "reproduce_command_real": "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py --contract-file formal_experiment/configs/ablations/gdpr7_direct_llm_execution_contract_v3_1.json --report-file formal_experiment/outputs/reports/gdpr7_direct_llm_preflight_v3.json --raw-dir outputs/development/gdpr7_direct_llm_raw_real_v3_1 --capsule-dir outputs/development/gdpr7_direct_llm_v3_1 --authorization-file <gdpr7-direct-llm-authorization-event-v3_1-file>",
+  "reproduce_command_fake_verify": "python formal_experiment/scripts/run_gdpr7_direct_llm_v3_1.py --fake-transport --report-file formal_experiment/outputs/reports/gdpr7_direct_llm_preflight_v3.json --raw-dir outputs/development/gdpr7_direct_llm_raw_fake_v3_1 --capsule-dir outputs/development/gdpr7_direct_llm_fake_v3_1",
   "model_spec": {
     "id": "deepseek-v4-pro",
     "published_alias": "DeepSeek-V4-Pro-0813",
@@ -857,5 +859,67 @@
       "name": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
       "sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895"
     }
-  }
+  },
+  "supersedes": {
+    "path": "configs/ablations/gdpr7_direct_llm_execution_contract_v3.json",
+    "sha256": "5aeaf33ef55a6bc05612ac38276f78ed19f36e6d5572674c7aa1a57d41bfa860"
+  },
+  "binding_update": {
+    "classification": "PROVENANCE_INSTRUMENTATION_FAIL_CLOSED_UPDATE",
+    "updated_at_utc": "2026-09-20T11:09:44.430103+00:00",
+    "changed_binding": "scripts/run_gdpr7_direct_llm_v3_1.py",
+    "previous_executor_script_sha256": "5f9fb4f51c78daae0229d76a319ce97ece89d49e7d9fe6262ef32243ae89412e",
+    "current_executor_script_sha256": "a4d216b9e9a210f38360ec5a746a607d96ca99676236a96f9ec17306b2254b6e",
+    "reason": "Frozen-policy follow-up: RealAPITransport now receives the frozen H1RequestPolicy and the actual provider-facing body is guaranteed to equal the frozen payload body. Non-secret provider fields (model, temperature, top_p, max_tokens) are taken from the frozen contract config; only the process-environment API key is injected. No prompt, dataset, sampling value, or request-body hash changed.",
+    "request_bodies_recomputed": 74,
+    "request_body_sha256_unchanged_count": 74,
+    "request_body_utf8_bytes_unchanged_count": 74,
+    "local_proxy_tokens_unchanged_count": 74,
+    "prompt_sha256_unchanged": true,
+    "model_decoding_configuration_unchanged": true,
+    "max_tokens": 4096,
+    "new_raw_dir": "outputs/development/gdpr7_direct_llm_raw_real_v3_1",
+    "new_capsule_dir": "outputs/development/gdpr7_direct_llm_v3_1",
+    "scientific_contract_changed": false,
+    "wire_body_hash_assertion_enabled": true
+  },
+  "payload_freeze": {
+    "path": "outputs/reports/gdpr7_direct_llm_v3_1_payload_freeze.json",
+    "sha256": "9179dbb96d0f15b8a795c507d125a1a194818cb79d560f3341dc97a4e31ee7f3",
+    "schema_version": "gdpr7_direct_llm_payload_freeze@1.1.0",
+    "call_count": 74,
+    "first_request_body_sha256": "6cac383a1c00042c37838638bac60de13a694b875a93cbace08f49f8729d1a2a",
+    "last_request_body_sha256": "fb210975a2097e3e1147c045399d1443b590f7bd915a16e92c79c827080af053",
+    "request_body_sha256_sequence_sha256": "c243108dbbeb29f0233640f752de7e65033581f8c738f0c63d31c2fe87a9ca62",
+    "actual_provider_facing_body_equals_locked_body": true
+  },
+  "wire_body_hash_assertion": {
+    "planned_hash_source": "contract.call_plan[*].request_body_sha256 / preflight request_body_sha256",
+    "actual_hash_source": "RealAPITransport.last_request_body_sha256",
+    "equality_required": true,
+    "checked_independently_of_response_semantic_success": true,
+    "mismatch_status": "execution_contract_violation",
+    "mismatch_aborts_batch": true,
+    "mismatch_retry": false,
+    "both_hashes_persisted": true
+  },
+  "known_prior_provenance_defect": {
+    "version": "v2 aborted run",
+    "aborted_ledger_path": "outputs/development/gdpr7_direct_llm_raw_real_v1/ledger.jsonl",
+    "aborted_raw_responses_path": "outputs/development/gdpr7_direct_llm_raw_real_v1/raw_responses.jsonl",
+    "defect": "The aborted v2 ledger recorded the planned/frozen request hash rather than the hash of the body actually serialized and sent by RealAPITransport.",
+    "status": "documented_not_rewritten",
+    "v3_1_mitigation": "v3.1 compares RealAPITransport.last_request_body_sha256 against the planned hash for every real request before accepting the response."
+  },
+  "provenance_policy": {
+    "planned_request_body_sha256_persisted": true,
+    "actual_request_body_sha256_persisted": true,
+    "equality_required_before_response_acceptance": true,
+    "actual_hash_source": "RealAPITransport.last_request_body_sha256",
+    "mismatch_status": "execution_contract_violation",
+    "mismatch_aborts_batch": true,
+    "mismatch_retry": false,
+    "legacy_ledger_key_request_body_sha256": "planned/frozen hash only"
+  },
+  "request_body_sha256_sequence_sha256": "c243108dbbeb29f0233640f752de7e65033581f8c738f0c63d31c2fe87a9ca62"
 }
