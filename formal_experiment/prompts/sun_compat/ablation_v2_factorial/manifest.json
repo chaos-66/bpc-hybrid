@@ -1,0 +1,291 @@
+{
+  "arms": {
+    "000": {
+      "arm": "000",
+      "chars": 4601,
+      "excluded_chunks": [
+        "J_rules",
+        "S1_rules",
+        "S2_rules",
+        "user_envelope_e1",
+        "examples_e1",
+        "system_close"
+      ],
+      "factors": {
+        "E": 0,
+        "J": 0,
+        "S": 0
+      },
+      "included_chunks": [
+        "header",
+        "system_open",
+        "base_rules_1",
+        "base_rules_2",
+        "notes",
+        "user_envelope_e0",
+        "template_e0"
+      ],
+      "kind": "new",
+      "prompt_file": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_000.md",
+      "prompt_sha256": "e1fb9a2ac23c052a3ea521de5a6d4bad089fea1bafba405c7805deb78764a1ad"
+    },
+    "001": {
+      "arm": "001",
+      "chars": 5580,
+      "excluded_chunks": [
+        "S1_rules",
+        "S2_rules",
+        "user_envelope_e1",
+        "examples_e1",
+        "system_close"
+      ],
+      "factors": {
+        "E": 0,
+        "J": 1,
+        "S": 0
+      },
+      "included_chunks": [
+        "header",
+        "system_open",
+        "base_rules_1",
+        "base_rules_2",
+        "notes",
+        "J_rules",
+        "user_envelope_e0",
+        "template_e0"
+      ],
+      "kind": "new",
+      "prompt_file": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_001.md",
+      "prompt_sha256": "ad1546b151263ea6442216d9911fc2171a2d792d2e3bea86353b1c6b0073c919"
+    },
+    "010": {
+      "arm": "010",
+      "chars": 8074,
+      "excluded_chunks": [
+        "J_rules",
+        "user_envelope_e1",
+        "examples_e1",
+        "system_close"
+      ],
+      "factors": {
+        "E": 0,
+        "J": 0,
+        "S": 1
+      },
+      "included_chunks": [
+        "header",
+        "system_open",
+        "base_rules_1",
+        "base_rules_2",
+        "notes",
+        "S1_rules",
+        "S2_rules",
+        "user_envelope_e0",
+        "template_e0"
+      ],
+      "kind": "new",
+      "prompt_file": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_010.md",
+      "prompt_sha256": "5d60ca07be80dbcfa717c995f335884ecced97ec31985edfd10a1d6477511d36"
+    },
+    "011": {
+      "arm": "011",
+      "chars": 9053,
+      "excluded_chunks": [
+        "user_envelope_e1",
+        "examples_e1",
+        "system_close"
+      ],
+      "factors": {
+        "E": 0,
+        "J": 1,
+        "S": 1
+      },
+      "historical_reference": {
+        "byte_delta": 0,
+        "byte_identical": true,
+        "normalized_equivalent": true,
+        "source_prompt": "prompts/sun_compat/ablation_v2/direct_llm_no_semantic_examples_prompt_v2.md",
+        "source_sha256": "261d7b23e015c9faa3bcb75ad49c440dfdd96c00567fb498edeed939f364f072",
+        "status": "byte-identical"
+      },
+      "included_chunks": [
+        "header",
+        "system_open",
+        "base_rules_1",
+        "base_rules_2",
+        "notes",
+        "J_rules",
+        "S1_rules",
+        "S2_rules",
+        "user_envelope_e0",
+        "template_e0"
+      ],
+      "kind": "historical_anchor",
+      "prompt_file": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_011.md",
+      "prompt_sha256": "261d7b23e015c9faa3bcb75ad49c440dfdd96c00567fb498edeed939f364f072"
+    },
+    "100": {
+      "arm": "100",
+      "chars": 12588,
+      "excluded_chunks": [
+        "J_rules",
+        "S1_rules",
+        "S2_rules",
+        "user_envelope_e0",
+        "template_e0"
+      ],
+      "factors": {
+        "E": 1,
+        "J": 0,
+        "S": 0
+      },
+      "included_chunks": [
+        "header",
+        "system_open",
+        "base_rules_1",
+        "base_rules_2",
+        "notes",
+        "user_envelope_e1",
+        "examples_e1",
+        "system_close"
+      ],
+      "kind": "new",
+      "prompt_file": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_100.md",
+      "prompt_sha256": "f6b176191fd31f2d77cb876aef2a9008d186ae7db084aed4c0afd49a3d413942"
+    },
+    "101": {
+      "arm": "101",
+      "chars": 13567,
+      "excluded_chunks": [
+        "S1_rules",
+        "S2_rules",
+        "user_envelope_e0",
+        "template_e0"
+      ],
+      "factors": {
+        "E": 1,
+        "J": 1,
+        "S": 0
+      },
+      "historical_reference": {
+        "byte_delta": 0,
+        "byte_identical": true,
+        "normalized_equivalent": true,
+        "source_prompt": "prompts/sun_compat/ablation_v2/direct_llm_no_semantic_guidance_prompt_v2.md",
+        "source_sha256": "fa5e9f0043809428b8034a08cb58ff0e98a7e5b69c5be99f88286724217f0aa3",
+        "status": "byte-identical"
+      },
+      "included_chunks": [
+        "header",
+        "system_open",
+        "base_rules_1",
+        "base_rules_2",
+        "notes",
+        "J_rules",
+        "user_envelope_e1",
+        "examples_e1",
+        "system_close"
+      ],
+      "kind": "historical_anchor",
+      "prompt_file": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_101.md",
+      "prompt_sha256": "fa5e9f0043809428b8034a08cb58ff0e98a7e5b69c5be99f88286724217f0aa3"
+    },
+    "110": {
+      "arm": "110",
+      "chars": 16059,
+      "excluded_chunks": [
+        "J_rules",
+        "user_envelope_e0",
+        "template_e0"
+      ],
+      "factors": {
+        "E": 1,
+        "J": 0,
+        "S": 1
+      },
+      "historical_reference": {
+        "byte_delta": 0,
+        "byte_identical": true,
+        "normalized_equivalent": true,
+        "source_prompt": "prompts/sun_compat/ablation_v2/direct_llm_no_explicit_json_contract_prompt_v2.md",
+        "source_sha256": "0b7b93ad30e3d72f20fb809b48fdda694a2242233f203234a3f5d8dc91ab5da7",
+        "status": "byte-identical"
+      },
+      "included_chunks": [
+        "header",
+        "system_open",
+        "base_rules_1",
+        "base_rules_2",
+        "notes",
+        "S1_rules",
+        "S2_rules",
+        "user_envelope_e1",
+        "examples_e1",
+        "system_close"
+      ],
+      "kind": "historical_anchor",
+      "prompt_file": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_110.md",
+      "prompt_sha256": "0b7b93ad30e3d72f20fb809b48fdda694a2242233f203234a3f5d8dc91ab5da7"
+    },
+    "111": {
+      "arm": "111",
+      "chars": 17038,
+      "excluded_chunks": [
+        "user_envelope_e0",
+        "template_e0"
+      ],
+      "factors": {
+        "E": 1,
+        "J": 1,
+        "S": 1
+      },
+      "historical_reference": {
+        "byte_delta": 0,
+        "byte_identical": true,
+        "normalized_equivalent": true,
+        "source_prompt": "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
+        "source_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+        "status": "byte-identical"
+      },
+      "included_chunks": [
+        "header",
+        "system_open",
+        "base_rules_1",
+        "base_rules_2",
+        "notes",
+        "J_rules",
+        "S1_rules",
+        "S2_rules",
+        "user_envelope_e1",
+        "examples_e1",
+        "system_close"
+      ],
+      "kind": "historical_anchor",
+      "prompt_file": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_111.md",
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895"
+    }
+  },
+  "builder": "scripts/build_v6_factorial_arms_v3.py",
+  "design": "2^3 factorial over E x S x J by direct chunk assembly",
+  "factor_meaning": {
+    "E": "semantic examples vs structural key/type template",
+    "J": "JSON/output contract intro + rules 1-5",
+    "S": "semantic interpretation rules 9-19 and 25-27"
+  },
+  "gates": {
+    "gate1_historical_chunk_content": true,
+    "gate2_factor_semantics": true,
+    "gate3_eight_distinct_hashes": true
+  },
+  "historical_equivalence": {
+    "011": "byte-identical",
+    "101": "byte-identical",
+    "110": "byte-identical",
+    "111": "byte-identical"
+  },
+  "method": "cut frozen v6 and the committed arms into named chunks; emit each cell directly from its required chunks",
+  "schema_version": "v6_factorial_arms@3.0.0",
+  "source_prompt": "prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
+  "source_prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+  "status": "generated_not_executed"
+}

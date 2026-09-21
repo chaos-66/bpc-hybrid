@@ -5187,3 +5187,21 @@
 - 仍存在 blocker：无
 - 备注：Read-only. Confirms the detector mechanism is sound and isolates the single missing input. (1) For all 10 out_of_order pairs the CONTROL BPMN is forward-ordered only and the VARIANT is its exact inversion, so the type is decidable from the process side alone. (2) The rule side supplies no ordering information anywhere: the Gold Rule Records have 0 order relations across 92 clauses, and the promoted real Direct-LLM capsule has 0 across 78 clauses. Together these show the only missing input is the rule-side endpoint binding, whose annotation surface is built and blank at data/development/stage3_synth/stage3_binding_annotation_blank_v1.json. Once filled, the detector is mechanical work with no new method research.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-21T14:14:47.165529+00:00 - Complete v6 E/S/J 2^3 factorial Table2 and Stage3 grounded skeleton
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=V6-ESJ-FACTORIAL-001；阶段=Stage2 Table2 + Stage3 skeleton；方法=v6 chunk direct 2^3 E/S/J factorial；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_v6_factorial_ablation_v1.py --smoke --allow-llm --project-env; python scripts/run_v6_factorial_ablation_v1.py --execute --allow-llm --project-env`
+- manifest：prompts/sun_compat/ablation_v2_factorial/manifest.json
+- 结果摘要：600/600 new-arm calls (20 smoke+580 full); 0 failed; historical 111/110/101/011 reused; full 8-arm Table2 report complete; Stage3 validator/runner/evaluator skeleton implemented, Ours blocked on human binding gold
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：23 passed in 0.94s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`e9320f56047c532e504b8602b97b60b02c319994`；相关未提交路径：38 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
