@@ -5159,3 +5159,17 @@
 - 仍存在 blocker：无
 - 备注：Read-only evidence chain. (1) The 30-item panel annotates target_activity_id but NOT the rule-side action that activity realizes, and both texts span several words, so the correspondence is not recoverable by construction. (2) A direct read of the published Gold Rule Records gives 92 clauses, 70 with actions, 38 with a non-empty actor_action_map, and 0 with any order_relations. (3) The existing gdpr_capsule_converter rejects the gold schema (allowed set is the three prediction schemas) and returns failed=True for all nine rules when forced, so the gold records must be consumed by direct clause read. (4) The project's own promoted Direct-LLM linkage report already records the same wall verbatim: order relations absent for all nine rules by contract and never fabricated, 11 unobservable including 8 action_mapping_below_gamma, out_of_order F1 0.0000. Consequence: a real Ours detector needs the rule-action to activity binding as INPUT, so the remaining Table 3 work is authoring that annotation, not more detector code; filling it in automatically would mean the agent authoring its own ground truth.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-21T07:52:21.293497+00:00 - Stage 3 binding annotation surface: blank, pair-level template for the human annotation that the Ours arm requires (zero API)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：4 passed in 0.05s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`d9b7e08d94f44ca462c3f0c33b2075c8cf6d6c31`；相关未提交路径：14 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：New blank surface only; no decision value was inferred, copied or defaulted, and a guard test asserts every decision field stays None with review_state=unreviewed. Emitted at PAIR level (30 pairs, not 60 item rows) because a control and its variant describe the same rule action and target activity, so per-item rows would double the human work for no information gain. Each pair carries immutable read-only context (process, rule, target activity id AND human-readable name, the rule's action/actor spans with ids, the control and variant BPMN paths+hashes, the order pair, the structural observation) plus empty decision fields. The two limits an annotator must know are recorded in the artifact: the Gold carries zero order relations across 92 clauses, and only 38 of 92 clauses carry an actor_action_map.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
