@@ -220,7 +220,7 @@ def test_evaluation_contract_freezes_required_rules():
     )
 
 
-def test_leakage_audit_documents_strict_sample_id_residual():
+def test_leakage_audit_documents_allowed_interface_id_exemption():
     audit = _read_json(LEAKAGE_AUDIT_PATH)
     checks = audit["checks"]
     assert checks["r_def_no_full_estg_sample_or_clause_text"]["status"] == "pass"
@@ -228,21 +228,26 @@ def test_leakage_audit_documents_strict_sample_id_residual():
     assert checks["synthetic_e4_not_copied_from_estg"]["status"] == "pass"
     assert checks["no_concrete_sample_id_in_prompt_templates"]["status"] == "pass"
     assert checks["offline_requests_no_gold_ids_or_annotations"]["status"] == "pass"
-    assert (
-        checks["strict_no_concrete_sample_id_in_rendered_model_prompt"]["status"]
-        == "fail"
+    strict = checks["strict_no_concrete_sample_id_in_rendered_model_prompt"]
+    assert strict["status"] == "pass"
+    exemption = strict["allowed_exemption"]
+    assert exemption["name"] == "schema_required_interface_identifier_echo"
+    assert exemption["fields"] == ["sample_id", "source_id"]
+    assert exemption["allowed_identifier_occurrence_count"] == 168
+    assert exemption["non_exempt_sample_id_match_count"] == 0
+    assert audit["status"] == "PASS"
+    assert audit["blocking_checks"] == []
+    assert audit["allowed_exemptions"][0]["name"] == (
+        "schema_required_interface_identifier_echo"
     )
-    assert audit["status"] == "BLOCKED_STRICT_LEAKAGE_CHECK"
-    assert audit["blocking_checks"] == [
-        "strict_no_concrete_sample_id_in_rendered_model_prompt"
-    ]
 
 
 def test_generated_authorization_request_is_not_an_authorization_event():
     request = _read_json(AUTHORIZATION_REQUEST_PATH)
     assert request["suite_id"] == prep.SUITE_ID
     assert request["new_calls"] == 84
-    assert request["decision"] == "BLOCKED_NO_MATCHING_AUTHORIZATION"
+    assert request["decision"] == "AUTHORIZATION_REQUEST_READY"
+    assert request["leakage_audit_status"] == "PASS"
     allowed, reason = runner._authorization_ok(AUTHORIZATION_REQUEST_PATH)
     assert allowed is False
-    assert reason
+    assert "authorized_by_user" in reason

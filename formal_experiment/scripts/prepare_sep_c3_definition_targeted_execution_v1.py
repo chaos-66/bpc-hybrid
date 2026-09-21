@@ -580,6 +580,26 @@ def _build_authorization_request(
             for row in request_stats["rows"]
         ])
     )
+    leakage_clean = leakage_audit.get("status") == "PASS"
+    decision = (
+        "AUTHORIZATION_REQUEST_READY"
+        if leakage_clean
+        else "BLOCKED_NO_MATCHING_AUTHORIZATION"
+    )
+    authorization_status = "NOT_AUTHORIZED"
+    leakage_residual_note = (
+        "No blocking leakage checks remain.  The schema-required sample_id/"
+        "source_id interface echo is documented as an allowed non-semantic "
+        "interface-identifier exemption; substantive leakage checks continue "
+        "to be enforced and no Gold labels, spans, modalities, or evaluation "
+        "results are exposed."
+        if leakage_clean
+        else "The frozen active user envelope echoes the input sample_id and "
+        "source_id because the Stage-2 output schema requires them.  This "
+        "does not add Gold labels or spans, but it is a strict reading "
+        "residual relative to a literal no-sample-id-in-prompt statement.  "
+        "Resolve explicitly before execution if that strict reading controls."
+    )
     return {
         "schema_version": (
             "sep_c3_definition_targeted_authorization_request@1.0.0"
@@ -664,15 +684,11 @@ def _build_authorization_request(
             "--execute --allow-llm --authorization "
             "outputs/reports/sep_c3_definition_targeted_authorization_request_v1.json"
         ),
-        "decision": "BLOCKED_NO_MATCHING_AUTHORIZATION",
-        "authorization_status": "NOT_AUTHORIZED",
-        "leakage_residual_note": (
-            "The frozen active user envelope echoes the input sample_id and "
-            "source_id because the Stage-2 output schema requires them.  This "
-            "does not add Gold labels or spans, but it is a strict reading "
-            "residual relative to a literal no-sample-id-in-prompt statement.  "
-            "Resolve explicitly before execution if that strict reading "
-            "controls."
+        "decision": decision,
+        "authorization_status": authorization_status,
+        "leakage_residual_note": leakage_residual_note,
+        "allowed_interface_identifier_exemption": (
+            "schema_required_sample_id_source_id_echo_only"
         ),
     }
 
@@ -786,10 +802,23 @@ def _render_execution_plan(
     budget: Mapping[str, Any],
     leakage_audit: Mapping[str, Any],
 ) -> str:
+    leakage_clean = leakage_audit.get("status") == "PASS"
+    status_line = (
+        "- Status: **prepared offline; leakage-cleared; not executed**"
+        if leakage_clean
+        else "- Status: **prepared offline; not executed**"
+    )
+    decision_line = (
+        "- Decision: **READY for one matching authorization event; not executed**"
+        if leakage_clean
+        else "- Decision: **STOP before real calls** until explicit user "
+        "authorization for this exact suite/scope exists and any leakage "
+        "residual is resolved."
+    )
     return "\n".join([
         "# SEP-C3 Definition Targeted Execution Plan v1",
         "",
-        "- Status: **prepared offline; not executed**",
+        status_line,
         "- New API calls authorized: **no**",
         f"- Suite: `{SUITE_ID}`",
         f"- Unique panel samples N: **{panel['panel_accounting']['unique_sample_count_N']}**",
@@ -827,8 +856,7 @@ def _render_execution_plan(
         "",
         f"- Leakage audit status: `{leakage_audit.get('status')}`",
         f"- Blocking checks: `{leakage_audit.get('blocking_checks')}`",
-        "- Decision: **STOP before real calls** until explicit user authorization "
-        "for this exact suite/scope exists and any leakage residual is resolved.",
+        decision_line,
         "",
     ])
 

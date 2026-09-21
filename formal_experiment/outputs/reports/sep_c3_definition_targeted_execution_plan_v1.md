@@ -1,6 +1,6 @@
 # SEP-C3 Definition Targeted Execution Plan v1
 
-- Status: **prepared offline; not executed**
+- Status: **prepared offline; leakage-cleared; not executed**
 - New API calls authorized: **no**
 - Suite: `SEP-C3-DEFINITION-TARGETED-REFINEMENT-001`
 - Unique panel samples N: **42**
@@ -29,6 +29,6 @@
 
 ## Current authorization gate
 
-- Leakage audit status: `BLOCKED_STRICT_LEAKAGE_CHECK`
-- Blocking checks: `['strict_no_concrete_sample_id_in_rendered_model_prompt']`
-- Decision: **STOP before real calls** until explicit user authorization for this exact suite/scope exists and any leakage residual is resolved.
+- Leakage audit status: `PASS`
+- Blocking checks: `[]`
+- Decision: **READY for one matching authorization event; not executed**

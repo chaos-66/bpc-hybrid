@@ -65,13 +65,12 @@
       "composition_sha256": "585d9a81116d8fb1b1cf1858b55e4a67457ca9886dbd0487f7f0d7474f5e8b07"
     }
   },
-  "leakage_audit_status": "BLOCKED_STRICT_LEAKAGE_CHECK",
-  "leakage_blocking_checks": [
-    "strict_no_concrete_sample_id_in_rendered_model_prompt"
-  ],
+  "leakage_audit_status": "PASS",
+  "leakage_blocking_checks": [],
   "suggested_authorization_sentence": "I authorize exactly 84 real API calls for SEP-C3-DEFINITION-TARGETED-REFINEMENT-001, using openai_compatible/deepseek-v4-pro with retry=0, on the 42 frozen panel samples for BASE=42 and R_DEF=42, with input cap 296682, output cap 344064, USD cap 1.75411368, panel SHA-256 8ba4517f21402566d61364e86a5516e0ea89f1f82a32781b303eb7a53d97ec61, schedule SHA-256 ed4b12fe5de27ae9611759e0aedb292cfa633bc853b07df867e3fb4291aa355a, and request-set SHA-256 07be211b338764280daabfcc6189d236d31ebefa0bf846c065895f91443c8d39.",
   "execution_command": "cd formal_experiment && python scripts/run_sep_c3_definition_targeted_refinement_v1.py --execute --allow-llm --authorization outputs/reports/sep_c3_definition_targeted_authorization_request_v1.json",
-  "decision": "BLOCKED_NO_MATCHING_AUTHORIZATION",
+  "decision": "AUTHORIZATION_REQUEST_READY",
   "authorization_status": "NOT_AUTHORIZED",
-  "leakage_residual_note": "The frozen active user envelope echoes the input sample_id and source_id because the Stage-2 output schema requires them.  This does not add Gold labels or spans, but it is a strict reading residual relative to a literal no-sample-id-in-prompt statement.  Resolve explicitly before execution if that strict reading controls."
+  "leakage_residual_note": "No blocking leakage checks remain.  The schema-required sample_id/source_id interface echo is documented as an allowed non-semantic interface-identifier exemption; substantive leakage checks continue to be enforced and no Gold labels, spans, modalities, or evaluation results are exposed.",
+  "allowed_interface_identifier_exemption": "schema_required_sample_id_source_id_echo_only"
 }

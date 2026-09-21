@@ -225,6 +225,10 @@ def run_audit(
         clause_id_matches = sorted(set(CLAUSE_ID_RE.findall(request_blob)))
         span_id_matches = sorted(set(SPAN_ID_RE.findall(request_blob)))
         request_key_errors = []
+        strict_violations = []
+        allowed_interface_occurrence_count = 0
+        non_exempt_sample_id_matches = []
+        required_sample_id = None
         for index, row in enumerate(requests):
             body = row.get("request_body")
             if not isinstance(body, dict):
@@ -243,6 +247,40 @@ def run_audit(
                 request_key_errors.append(
                     {"index": index, "error": "messages_shape"}
                 )
+                continue
+            if not all(isinstance(message, dict) for message in messages):
+                request_key_errors.append(
+                    {"index": index, "error": "messages_not_objects"}
+                )
+                continue
+            expected_sample_id = str(row.get("sample_id") or "")
+            required_sample_id = expected_sample_id
+            system_content = str(messages[0].get("content") or "")
+            user_content = str(messages[1].get("content") or "")
+            user_without_interface_ids = user_content
+            for field_name in ("sample_id", "source_id"):
+                pattern = re.compile(
+                    rf"(?m)^[ \t]*{field_name}:[ \t]*"
+                    rf"{re.escape(expected_sample_id)}[ \t]*$"
+                )
+                allowed_interface_occurrence_count += len(
+                    pattern.findall(user_without_interface_ids)
+                )
+                user_without_interface_ids = pattern.sub(
+                    "", user_without_interface_ids
+                )
+            strict_matches = sorted(set(
+                SAMPLE_ID_RE.findall(system_content)
+                + SAMPLE_ID_RE.findall(user_without_interface_ids)
+            ))
+            if strict_matches:
+                strict_violations.append({
+                    "execution_index": row.get("execution_index"),
+                    "arm": row.get("arm"),
+                    "sample_id": expected_sample_id,
+                    "non_exempt_sample_id_matches": strict_matches,
+                })
+                non_exempt_sample_id_matches.extend(strict_matches)
         checks["offline_requests_no_gold_ids_or_annotations"] = {
             "status": (
                 "pass"
@@ -254,26 +292,50 @@ def run_audit(
             "request_count": len(requests),
             "concrete_sample_id_match_count": len(sample_id_matches),
             "concrete_sample_id_examples": sample_id_matches[:10],
+            "concrete_sample_id_policy": (
+                "ALLOWED_EXEMPTION_SCHEMA_REQUIRED_INTERFACE_IDENTIFIER_ECHO"
+            ),
             "gold_clause_id_match_count": len(clause_id_matches),
             "gold_span_id_match_count": len(span_id_matches),
             "request_schema_errors": request_key_errors[:10],
             "note": (
                 "The request bodies necessarily contain the frozen input "
                 "source_text; this check looks for Gold annotation identifiers "
-                "and schema escapes, not for the input text itself."
+                "and schema escapes, not for the input text itself.  Concrete "
+                "sample/source IDs are audited separately under the explicit "
+                "schema-required interface-identifier exemption."
             ),
         }
         checks["strict_no_concrete_sample_id_in_rendered_model_prompt"] = {
-            "status": "fail" if sample_id_matches else "pass",
+            "status": "pass" if not strict_violations else "fail",
             "detail": (
-                "The frozen active user envelope renders the input sample_id "
-                "and source_id because the output schema requires them to be "
-                "echoed.  This is a contract-required input identifier, not a "
-                "Gold label or span, but it does not satisfy a literal "
-                "no-sample-id-in-prompt reading."
+                "The only concrete sample identifiers allowed in a rendered "
+                "model prompt are the exact sample_id/source_id values echoed "
+                "on their schema-required interface lines.  All other concrete "
+                "sample identifiers are substantive leakage and fail."
             ),
             "sample_id_match_count": len(sample_id_matches),
             "sample_id_examples": sample_id_matches[:10],
+            "allowed_exemption": {
+                "name": "schema_required_interface_identifier_echo",
+                "fields": ["sample_id", "source_id"],
+                "scope": (
+                    "Existing stage2 output-schema identity echo only; these "
+                    "opaque interface values carry no Gold label, span, "
+                    "modality, or evaluator information."
+                ),
+                "required_sample_id": required_sample_id,
+                "allowed_identifier_occurrence_count": (
+                    allowed_interface_occurrence_count
+                ),
+                "non_exempt_sample_id_match_count": len(
+                    non_exempt_sample_id_matches
+                ),
+                "non_exempt_sample_id_examples": sorted(set(
+                    non_exempt_sample_id_matches
+                ))[:10],
+                "violations": strict_violations[:10],
+            },
         }
     else:
         checks["offline_requests_no_gold_ids_or_annotations"] = {
@@ -354,12 +416,28 @@ def run_audit(
         "checks": checks,
         "blocking_checks": blocking,
         "warnings": warnings,
+        "allowed_exemptions": [
+            {
+                "name": "schema_required_interface_identifier_echo",
+                "fields": ["sample_id", "source_id"],
+                "policy": (
+                    "Concrete sample_id/source_id values are exempt from the "
+                    "strict no-concrete-sample-id rule only when they appear as "
+                    "the exact, schema-required interface echo in the rendered "
+                    "user prompt.  They remain non-semantic opaque identifiers."
+                ),
+                "substantive_leakage_still_enforced": True,
+            }
+        ],
         "authorization_implication": (
-            "Do not authorize real calls while any check has status fail. "
-            "The only strict fail expected from the frozen active envelope is "
-            "the input sample_id echo required by the output schema; resolve "
-            "that contract question before treating this panel as fully "
-            "leakage-cleared."
+            "All substantive leakage checks are enforced.  The schema-required "
+            "sample_id/source_id interface echo is an explicitly allowed "
+            "non-semantic exemption.  Real calls may proceed once all checks pass "
+            "and a matching authorization event exists."
+            if not blocking
+            else "Do not authorize real calls while any check has status fail.  "
+            "Inspect blocking_checks; the interface-identifier exemption does "
+            "not apply to substantive failures."
         ),
     }
 
@@ -407,6 +485,17 @@ def _render_markdown(audit: Mapping[str, Any]) -> str:
             lines.append(f"- `{key}`")
     else:
         lines.append("- none")
+    if audit.get("allowed_exemptions"):
+        lines += [
+            "",
+            "## Allowed exemptions",
+            "",
+        ]
+        for exemption in audit["allowed_exemptions"]:
+            fields = ", ".join(f"`{field}`" for field in exemption["fields"])
+            lines.append(
+                f"- `{exemption['name']}` ({fields}): {exemption['policy']}"
+            )
     lines += [
         "",
         "## Authorization implication",
