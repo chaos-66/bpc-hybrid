@@ -88,8 +88,8 @@ reconstruction。[[TODO-SOURCE:SUN2024:核对三阶段描述与方法资产页�
   在匹配和违规类型分类上如何比较；Rules-Only 与 Direct-LLM 抽取误差如何影响固定检测器？
 - RQ3a（2026-08-22 新增）：在人工裁决的 33 条 violation panel 之外，现有非 LLM
   Stage 3 方法（Winter、Sun、BM25、TF-IDF）在 30 条**合成受控错误**（三类各 10
-  条）上分别表现如何？哪种错误类型最易/最难检测？（§7.4.2–7.4.6）
-- RQ3b：Stage 1 的结构/语义标签质量如何传播到 Stage 3 的违规类型判定？（§7.4.6）
+  条）上分别表现如何？哪种错误类型最易/最难检测？（§7.4.2–7.4.7）
+- RQ3b：Stage 1 的结构/语义标签质量如何传播到 Stage 3 的违规类型判定？（§7.4.7）
 - RQ4：Stage 2 或 Stage 3 的局部改进能否转化为端到端提升？
 
 ### 1.2 预期贡献（待验证）
@@ -889,6 +889,12 @@ AB-4（dual-view adapter）/AB-10（style-equivalent）仍待实现/待授权。
 
 #### 6.6.4 E/S/J 模块全组合提示词消融（描述性；前后两半非同批）
 
+> **⚠️ 表 2 的最终版本在 §6.6.4.1（2026-09-21，PAPER-FINAL-REPAIR）。** 本节及以下的
+> modular 家族消融**不是**表 2：表 1 的正式 Direct-LLM 行用的是 monolithic v6 prompt
+> （sha `3aa64877…`），而 modular 家族是另一个更小的 prompt 体系，且 9/17–20 的运行
+> 把 S 与 J 关掉了（`s_included=false`、`j_included=false`）。两者不是同一个系统，
+> 因此 modular 结论**不能**用来支撑或反驳表 1 的方法。本节保留为描述性研究记录。
+
 **表 6-6-2：E/S/J prompt 模块消融（n=150/格、failed=0）**
 
 | E S J | mean F1 | micro F1 | modality acc | 批次 |
@@ -915,6 +921,51 @@ AB-4（dual-view adapter）/AB-10（style-equivalent）仍待实现/待授权。
 3. 默认配方保持 v6 不变；六个候选（E/S/J/R_A/R_C/R_DEF）均未晋升。
 
 以上结果不写成「完整 prompt 更差」，不写成「E 和 S 冲突」，也不写成「JSON 约束没必要」；可支持的是：E/S/J 在同一批内呈方向性差异，且批次与功能重叠使跨批或强因果解释不成立。
+
+#### 6.6.4.1 表 2（最终）：v6 prompt 单因素消融，与表 1 同 prompt 家族同口径
+
+**为什么用这一套。** 表 1 的正式 Direct-LLM 行由 monolithic v6 prompt
+（`prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md`，
+sha `3aa64877…`）产出。该 prompt 的严格单因素消融**已经执行**（450 次真实调用，
+DeepSeek-V4-Pro-0813，temperature=0、retry=0，failed=0）。历史报告
+`d1_prompt_factorial_results_v1.json` 用的是**六字段 pooled** 口径，与表 1 不可直接
+比较；本节把同一批已存在的预测**离线重算**到与表 1 完全相同的口径
+（`pooled_five_span_fields` + 单独 modality label），**零新增 API 调用**。
+
+来源：`outputs/reports/stage2_table2_prompt_ablation_paper_final_v1.json`；
+生成器 `scripts/build_stage2_table2_prompt_ablation_v1.py`。
+
+**表 2：Prompt Design 消融（EStG-150 粗视图，n=150/臂）**
+
+| Prompt 臂 | 移除的模块 | Modality macro-F1 | Actor | Action | Condition | Constraint | Exception | **Overall（pooled 5）** | Δ Overall (pp) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Full（全模块） | — | 0.754 | 0.708 | 0.919 | 0.841 | 0.758 | 0.700 | **0.8224** | — |
+| Full − Examples (E) | 语义示例 | 0.763 | 0.570 | 0.912 | 0.865 | 0.762 | 0.737 | 0.8142 | −0.83 |
+| Full − Guidance (S) | 详细语义规则 | 0.708 | 0.764 | 0.885 | 0.845 | 0.777 | 0.746 | 0.8299 | +0.74 |
+| Full − JSON discipline (J) | 显式 JSON 契约 | 0.752 | 0.698 | 0.940 | 0.819 | 0.763 | 0.818 | 0.8268 | +0.43 |
+
+四臂合法输出均 **150/150**。
+
+**配对 per-sample 检验（10,000 次 bootstrap，同一 150 样本）。**
+
+| Prompt 臂 | 平均 Δ F1 (pp) | 95% CI (pp) | CI 排除 0 |
+|---|---:|---|---|
+| Full − Examples (E) | +0.408 | [−2.616, +3.646] | 否 |
+| Full − Guidance (S) | +2.216 | [−0.710, +5.270] | 否 |
+| Full − JSON discipline (J) | +1.339 | [−0.977, +3.915] | 否 |
+
+**结论（必须如实写，不得写成"三模块各自提升总体 F1"）：**
+
+1. **三项删除在 pooled Overall 上都没有 CI 排除 0**，因此本消融**不支持**"每个模块都
+   提升总体 F1"的阶梯叙事。
+2. **可分离的字段效应符号不一致**：−E 使 Condition F1 **+4.22 pp**（CI [+1.33, +7.78]，
+   排除 0），−J 使 Action F1 **+3.47 pp**（CI [+0.67, +6.80]，排除 0）。
+3. **J 一律作为 Base Output Contract（接口/合法性保证）呈现，不再声称是提升准确率的
+   prompt 模块**：四臂合法输出都是 150/150，删掉 J 不降低 Overall，反而 Action 略升。
+4. **结构性限制必须写明**：① E 与 S 承载重叠信息（全部 5 个示例与 S 规则功能重叠），
+   leave-one-out 只能测"移除另一载体后的残差"，无法隔离单模块贡献；② coarse view
+   仅 459 个 Gold span，功效不足以分离小效应；③ 每臂仅 1 次重复，无 run-to-run 方差。
+5. **本轮之后不再为让某模块变正而调 prompt、不再新增模块或消融臂。**
 
 #### 6.6.5 D-full-0813 后处理 2^3 全组合消融（零 API，固定响应）
 
@@ -969,7 +1020,7 @@ semantic-field 人工裁决标签。
   （label-style 信号），把词面规则升级为上下文感知的字段分配，语义 micro-F1
   0.5956→0.8185、Accuracy 0.4241→0.6928、triple 0→0.4222。
 - **structure micro-F1=1.0 的读法**：来自共享解析组件（全部方法共用），只证明
-  BPMN→记录结构的转换无错，**不能作为外部泛化证据**（见 §7.4.6 误差传播）。
+  BPMN→记录结构的转换无错，**不能作为外部泛化证据**（见 §7.4.7 误差传播）。
 - **边界**：这是 fixed GDPR-7 上的描述性复现（formal descriptive component
   evaluation）；held-out generalization claim 被明确禁止（eval v2 claim:
   held_out_generalization_claim_allowed=false、target_labels_seen_during_
@@ -988,11 +1039,38 @@ semantic-field 人工裁决标签。
 
 **5 字段 span 主视图（粗 Gold，F1）**
 
-| 方法 | actor | action | condition | constraint | exception | 五字段 mean F1 | Modality label acc / macro-F1 |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Rules-Only（旧代号 B0） | 0.8203 | 0.8927 | 0.7738 | 0.6182 | 0.8800 | 0.797 | 0.7400 / 0.7128 |
-| Direct-LLM（旧代号 D1） | 0.7579 | 0.9437 | 0.8380 | 0.7427 | 0.7619 | 0.8088 | 0.8333 / 0.7695 |
-| Rules+LLM-Repair（旧代号 H1，对照） | 0.4296 | 0.8945 | 0.7774 | 0.6200 | 0.8800 | 0.7203 | 0.8200 / 0.8123 |
+| 方法 | actor | action | condition | constraint | exception | **五字段 pooled F1（合同口径 Overall）** | 五字段 mean F1（次口径） | Modality label acc / macro-F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Rules-Only（旧代号 B0） | 0.8203 | 0.8927 | 0.7738 | 0.6182 | 0.8800 | 0.7631 | 0.7970 | 0.7400 / 0.7128 |
+| Direct-LLM（旧代号 D1） | 0.7579 | 0.9437 | 0.8380 | 0.7427 | 0.7619 | **0.8378** | 0.8088 | 0.8333 / 0.7695 |
+| Rules+LLM-Repair（旧代号 H1，对照） | 0.4296 | 0.8945 | 0.7774 | 0.6200 | 0.8800 | — | 0.7203 | 0.8200 / 0.8123 |
+
+**Overall 口径（2026-09-21 修正，PAPER-FINAL-REPAIR）。** G0.4 合同规定正式主报告为
+「粗粒度五个 span-bearing 字段 + 单独的四类 modality label 指标」，且 modality
+evidence span「不可用、绝不置零、绝不聚合」。修正前 `evaluate_span_metrics.overall`
+把 modality span 一并聚合，而该 span 在 coarse view 中是用 clause span **合成**的
+（已发布 Gold 的 modality 是纯字符串，evidence 为空），既违约又混入近常数项。
+现以 `pooled_five_span_fields`（仅 actor/action/condition/constraint/exception 的
+micro pooled P/R/F1）为**唯一合同口径 Overall**：Rules-Only **0.7631**（P 0.6984 /
+R 0.8410）vs Direct-LLM **0.8378**（P 0.8695 / R 0.8083），**Δ +7.47 pp**。
+旧的六字段 aggregate 降为显式 `NON_CANONICAL` provenance 字段，不得再作 Overall。
+
+**表注必须写清**：Overall 只聚合五个 span 字段；modality 是四类 **label** macro-F1，
+单列且绝不并入 Overall。
+
+**必须同时承认的两点**：① pooled F1 下 **Rules-Only 的 recall（0.8410）高于
+Direct-LLM（0.8083）**，且 Ours 并非全面领先——actor（−6.24 pp）与 exception
+（−11.81 pp）仍低于 Rules-Only；② 五字段 **mean** 口径下 Δ 仅 **+1.18 pp**，远小于
+pooled 的 +7.47 pp。两个口径由同一批预测算出，只因聚合方式不同而不同，因此
+**必须同时报告 pooled（主）与 mean（次）**，只报 pooled 会被质疑为口径挑选。
+
+**约束字段的定义敏感性**（`outputs/reports/stage2_gold_definition_audit_v1.json`）：
+本项目 constraint 定义明显宽于 Sun 的 marker 定义（302 条中 55.0% 不属任何 Sun marker
+类、仅 37.7% 属某类）。把 constraint 收敛到 Sun marker span 后重算，**总体优势仍然为正**
+（+5.74 pp 仅显式 quantity/time/comparison 措辞；+6.65 pp 另允许裸数字），但
+**constraint 字段优势从 +12.45 pp 缩到 +2.14 / +7.98 pp** → constraint 必须写成
+**定义敏感**并给区间，不得只报单个大数。比较对象必须写明是
+**本项目 Sun-style rules 臂在本项目更宽的 Gold 定义上评分**，不是 Sun 自己报告的数字。
 
 字段级结论（描述性，禁止显著性推断）：Direct-LLM 在 action（+0.051）、condition
 （+0.064）、constraint（+0.125）与 modality label accuracy（0.8333 vs 0.7400）
@@ -1014,7 +1092,7 @@ L3=0（无样本，不报性能）。这是**单一 zero-API arm**，不是两�
 [[TODO-RESULT:S2.12：Direct-LLM 真实 36 次完成后，回填 Rules-Only vs Direct-LLM
 复杂语料同口径比较与 S2.12 完成记录；不得等待或重跑已取消的修复组]]
 
-### 7.4 Stage 3 违规检测：人工裁决 panel（33 条，已冻结）与合成受控错误扩展（30+40 条，DEV）
+### 7.4 Stage 3 违规检测：配对合规 benchmark（主）与原 33 条 panel（已废止）
 
 #### 7.4.1 两个独立评价面板
 
@@ -1057,7 +1135,25 @@ inference pack；生成器重复运行 byte-identical。**该 panel 不是人工
 **最小字段覆盖扩展，不是穷尽性的法律违规分类体系**；40 条结果保持 DEV_ONLY，
 不改变冻结的三类人工 Gold，也不把正式 Oracle 改称七类 benchmark。
 
-#### 7.4.2 表 3：原 33 条人工裁决 panel（主表，仅总体 F1 与检出数）
+#### 7.4.2 表 3：原 33 条人工裁决 panel（**已废止，仅作历史**）
+
+> **⚠️ 本节数字已废止，不得再作为表 3 使用（2026-09-21，PAPER-FINAL-REPAIR）。**
+>
+> 该 33 条 panel 的 `decision_violation_type` **逐字复制** `check_type`（33/33），
+> `decision_evidence` 为模板问句，**没有任何 BPMN 变异记录**——它是 check-point
+> 决策集，不是性能 benchmark；且它只含违规正例（`none_gold_items: 0`），
+> precision/specificity 无分母。
+>
+> 替代物：**配对合规 benchmark**（`stage3_paired_benchmark_v1`，60 items = 30 control
+> + 30 variant，anti-degeneracy 30/30 PASS）。新表见 §7.4.3。新表报告
+> per-type P/R/F1、Macro-F1、Micro-F1 **与 compliant specificity**。
+> 复现：`scripts/build_stage3_paired_benchmark_v1.py`、
+> `scripts/run_stage3_grounded_checker_v1.py`、
+> `scripts/run_stage3_predecessors_paired_v1.py`；诊断见
+> `docs/research/STAGE3_TABLE3_VIABILITY_DIAGNOSIS_2026-09-21.md` 与
+> `docs/research/STAGE3_OURS_ARM_FEASIBILITY_2026-09-21.md`。
+>
+> 下表保留仅为 provenance；**引用时必须标注为已废止**。
 
 | 方法 | 总体检测 F1 | 检出数 |
 |---|---:|---:|
@@ -1071,6 +1167,39 @@ inference pack；生成器重复运行 byte-identical。**该 panel 不是人工
 `s35_sun_stage3_development_v2/`、`s36_bm25_stage3_development_v3/`、
 `s36_tfidf_svd_stage3_development_v2/` 的 evaluation.json；同一
 `evaluate_stage3_common.py` 口径，固定 33 条人工裁决 panel。
+
+#### 7.4.3 表 3（新）：配对合规 benchmark（60 items，含 compliant control）
+
+**Benchmark**：`data/development/stage3_synth/stage3_paired_benchmark_v1.json`。
+每个变异 BPMN 与**同一流程的未变异 BPMN** 配对为 compliant control（control 直接复用
+variant manifest 自己声明的 `source_bpmn` + sha，即冻结 Stage 1 GDPR7 字节，**未新造
+合规流程**）。Gold = 30 `compliant` + 每类违规 10。anti-degeneracy 校验
+（control 不违反、variant 必违反）**30/30 PASS**。
+
+| 方法 | missing_action | incorrect_actor | out_of_order | Macro-F1 | Micro-F1 | compliant specificity | exact type | unobservable |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Sun 重建（相似度 grounding） | 0.6667 | 0.2857 | 0.0000 | 0.3175 | 0.3871 | 0.3333 | 12/30 | 16 |
+| Winter wrapper（相似度 grounding） | 0.6667 | 0.0000 | 0.0000 | 0.2222 | 0.3846 | 0.6000 | 10/30 | 0 |
+| grounded 参考上界（声明绑定） | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **30/30** | **0** |
+
+**强制措辞（三条，缺一不可）：**
+
+1. **差距是 grounding 效应，不是前人算法弱。** 前人方法在把 rule text 映射到 BPMN
+   活动标签时依赖 embedding 相似度，本语料上该映射始终低于阈值；报告与本节均不得
+   写成"前人方法差"。
+2. **grounded 上界不是 "Ours"。** 它是**声明绑定**（benchmark 直接给出
+   `target_activity_id`）下的参考上界，等于把答案喂给检测器。要写成 "Ours"，必须先有
+   一个**从 Stage 2 Rule Record 真实推导绑定**的检测器；而该推导所需的
+   「rule action → 履行它的 BPMN activity」绑定**今天无人标注**（panel 无此字段，
+   Gold Rule Records 的 `order_relations` 0/92 非空、`actor_action_map` 仅 38/92 非空）。
+3. **out_of_order 目前不可声称结论。** Gold 与真实 Direct-LLM 胶囊都**没有** order
+   relations（项目自己的 linkage 报告原文：Definition-7 input unavailable by
+   contract; never fabricated），因此 `out_of_order` F1 = 0.0 对**所有**方法成立，
+   不构成方法间差异。
+
+**补齐 "Ours" 行所需的人工标注**已备好空白界面：
+`data/development/stage3_synth/stage3_binding_annotation_blank_v1.json`（30 pairs，
+decision 字段全空，`review_state=unreviewed`；agent 不得推断其中任何值）。
 
 **边界。** 本 panel 只含违规正例（`none_gold_items: 0`），故只报总体 F1 与检出数，
 不报 precision/recall。该表与 Sun 论文 Table 12 口径不同，不可跨表比较。分类细目
@@ -1086,7 +1215,7 @@ F1 仍为 0.0000，但两者机制需分开陈述——**incorrect_actor 为 11/
 瓶颈在检测器输入端，而不是检测公式本身。**
 
 
-#### 7.4.3 表 B：新增 30 条合成受控错误 panel（DEV，同一 evaluator）
+#### 7.4.4 表 B：新增 30 条合成受控错误 panel（DEV，同一 evaluator）
 
 | 方法 | Missing-action F1 | Incorrect-actor F1 | Out-of-order F1 | Macro-F1 | Exact | Unobservable |
 |---|---:|---:|---:|---:|---:|---:|
@@ -1101,7 +1230,7 @@ evaluation.json（Winter 3.9s、Sun 15.0s、BM25 6.0s、TF-IDF/SVD 12.7s）；
 失败案例（FN/FP 明细）见 `predictions.jsonl` 与对比胶囊
 `s39_synthetic_panel_compare_v1/comparison.json`。
 
-#### 7.4.4 S3.9-EXT 40 对受控扩展结果（DEV，2026-09-07 修复后重算）
+#### 7.4.5 S3.9-EXT 40 对受控扩展结果（DEV，2026-09-07 修复后重算）
 
 四类检测在同一输入、相同阈值、相同决策顺序下重跑。合规/违规两侧共用固定五分类决策；规则先生成预测，再根据标签评价。失败及无法判断计入完整分母。40 对合成面板与 33 条人工违规标签分开，不作为正式 Oracle。
 
@@ -1144,7 +1273,7 @@ Sun 原三类公式保留。执行者检查已恢复规则与动作、流程对�
 
 来源：`outputs/reports/s3_formula_repair_v2.json`；逐样本与运行 manifest：`outputs/evidence/s3_formula_repair_v2/`。
 
-#### 7.4.5 表 C：历史对照的错误类型分析（各自旧版实现，非本轮重新验证）
+#### 7.4.6 表 C：历史对照的错误类型分析（各自旧版实现，非本轮重新验证）
 
 | 错误类型 | 最容易的方法 | 最困难的方法 | 主要失败原因 | 对应方法模块 |
 |---|---|---|---|---|
@@ -1152,9 +1281,9 @@ Sun 原三类公式保留。执行者检查已恢复规则与动作、流程对�
 | incorrect_actor | TF-IDF/SVD（人工 0.625 / 合成 0.5714） | Winter / BM25（恒 0） | 这三个方法不引入参与者的语义标签：Winter 只读 process participant，BM25 对 actor 候选池的检索不足以支撑 min-sim<θ 判定 | actor vocabulary / pool-lane 解析；Def-6 actor matching |
 | out_of_order | 全部薄弱（人工 panel 最优 0.1667） | Sun/BM25/TF-IDF（合成 0.3333，人工 0） | 顺序违规依赖控制流可达关系；现有方法对 gateway 分支与可达性的粒度不足，多数顺序变异在可达关系上不可观测 | control-flow reachability；Def-7 顺序约束 |
 
-#### 7.4.6 讨论
+#### 7.4.7 讨论
 
-以下旧版对照归因是待验证解释；不能据低分断言特定模块必然是唯一原因。当前 Sun 已按活动绑定 participant/业务对象，旧版“participant 未绑定活动”的原因仅适用于修复前；本轮确认的原因和证据以 §7.4.4 修复报告为准。
+以下旧版对照归因是待验证解释；不能据低分断言特定模块必然是唯一原因。当前 Sun 已按活动绑定 participant/业务对象，旧版“participant 未绑定活动”的原因仅适用于修复前；本轮确认的原因和证据以 §7.4.5 修复报告为准。
 
 - **哪种错误最容易检测**：missing_action——凡规则含明确义务 action 且词面可映射，
   Winter/BM25/TF-IDF 在合成 panel 上 R=1.0（人工 panel 亦 0.95–1.0）。原因：删除任务
@@ -1193,7 +1322,7 @@ Sun 原三类公式保留。执行者检查已恢复规则与动作、流程对�
   process-model 犯罪的泛化结论；正式 Stage 3 claim 仍以人工 panel 为依据，Oracle
   与端到端仍需 S3.7/S3.10。
 
-#### 7.4.7 Stage 3 Sun 式阈值敏感性（既有网格，2026-09-07 修复后复核，零 API）
+#### 7.4.8 Stage 3 Sun 式阈值敏感性（既有网格，2026-09-07 修复后复核，零 API）
 
 当前复核：`outputs/evidence/s3_formula_repair_v2/threshold_sensitivity.json`。修复执行者关联后各网格主指标不变；历史图仅作为这些相同聚合数值的展示。
 
@@ -1413,7 +1542,7 @@ Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
   列须一起读。
 - 合成受控错误 panel 的生成目标按**语法/结构**锁定（非按规则词面选择），因此
   “方法检测不到”可能部分反映目标与原 rule 的词面对齐程度，而不仅是错误本身
-  的固有难度；此点已在 §7.4.6 如实讨论。
+  的固有难度；此点已在 §7.4.7 如实讨论。
 
 **外部效度**：
 - 全部 Stage 3 违规结果基于 7 个 GDPR 流程（45 activities）与 GDPR 义务类型
@@ -1433,7 +1562,7 @@ Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
 - actor/order 检测率（尤其 Winter/BM25 的 0）不能解释为“真实流程无此类违规”，
   只能解释为“这些方法在该表示上没有对应信号”。
 
-### 8.5 Stage 1 → Stage 3 误差传播小结（§7.4.6 的汇总）
+### 8.5 Stage 1 → Stage 3 误差传播小结（§7.4.7 的汇总）
 
 - Stage 1 结构正确（micro-F1=1.0）保证 Stage 3 的流程图输入无转换错误，但
   不提供参与者语义；GDPR-7 的 lane 名为空，actor 只存在于 participant，
@@ -1444,7 +1573,7 @@ Rules-Only 0.7986（−0.0365）、actor P 0.7077→0.2754。结论引用
   Stage 3 的传播。
 - 结论：Stage 3 违规检测的瓶颈不只在于匹配/顺序算法，还在于 Stage 1 语义
   标签（actor、组合三元组）的质量；改进 Stage 3 需先补 Stage 1 的参与者
-  语义与三元组一致性（见 §7.4.6 讨论）。
+  语义与三元组一致性（见 §7.4.7 讨论）。
 
 ## 9. 结论
 
