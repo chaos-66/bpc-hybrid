@@ -1,8 +1,8 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.16
+**文档版本**：3.7.17
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
-**最后更新**：2026-09-19
+**最后更新**：2026-09-22
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
 **当前实施优先级**：按下方「CSCWD 按依赖推进的收尾 Pipeline」执行；满足启动条件就开始，完成一项立即推进，发现问题逐项定位、修复和验证。2026-09-30 导师初稿、2026-10-31 投稿截止是最晚目标，应尽早完成；写作持续同步，正式实验仍遵守 Stage 2 冻结到 Stage 3 的实质依赖。
 
@@ -10,6 +10,12 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-22 修订 3.7.17：S3-BINDING-REVIEW-UI 逐条人工审核入口（零 API）
+
+- 将已完成 AI 初审的 30 个 pair 接入简单本地 Tk 窗口：双击 `START_STAGE3_REVIEW.cmd`，逐条确认、修改或不接受；每次决定自动保存，重开续审，30 条全部有明确决定后显示审核完成。
+- 输入仍为 `outputs/reports/stage3_binding_annotation_agent_review_v1.json` 与 immutable blank；人工结果另存 `data/development/human_review/stage3_binding_review_decisions_v1.json`。浏览/跳过不生成决定；测试仅写临时副本。使用说明见 `docs/STAGE3_BINDING_REVIEW_TOOL.md`。
+- 本子任务交付的是审核工具，真实人工审核仍待用户操作；空引用和拒绝可以作为完成的审核意见。流程顺序不自动升级成法规顺序，人工审核完成不等于绑定齐全或 Gold 发布，未推进正式 S3.7、未运行实验或 LLM/API。
 
 ## 2026-09-19 修订 3.7.16：SEP-C3 targeted refinement A/B/C/D 收口与论文接入（零 API）
 

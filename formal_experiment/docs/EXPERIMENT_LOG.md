@@ -5205,3 +5205,17 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-22T12:06:40.688303+00:00 - S3-BINDING-REVIEW-UI：提供30项候选的逐条人工审核窗口与自动保存续审
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：17 passed in 1.81s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`1837a820ad5e1706eaeed948e77045e4340a2b18`；相关未提交路径：20 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：只测试新审核工具及原blank不变量：确认/修改/拒绝、null明确确认、30条完成、备份与保存失败保护、来源变更/另一窗口保护、真实Tk按钮交互。测试只写临时副本；真实人工决定未创建。窗口布局已截图检查；原proposal、blank、benchmark和Gold不变；不运行全量测试或实验。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-19
+**更新时间**：2026-09-22
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -8,6 +8,12 @@
 
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
+
+## S3-BINDING-REVIEW-UI：30 项人工复核工具（2026-09-22，零 API）
+
+- **当前入口**：双击 `formal_experiment/START_STAGE3_REVIEW.cmd`，每条显示 AI 初审后的动作、执行者与中文理由；可确认、修改、不接受、跳过和返回。自动保存并续审，30 项决定齐全即显示审核完成。
+- **真实状态**：工具已提供，人工决定由用户在窗口中逐条保存；程序启动与验证不替用户接受任何真实条目。结果路径 `data/development/human_review/stage3_binding_review_decisions_v1.json`，原审核稿、blank、benchmark、Gold 保持不变。
+- **边界**：允许明确接受空引用或拒绝候选；完成的是候选复核。法规顺序需要用户主动选择并提供两个不同的规则动作；不自动补 Gold，不启动检测或评价。下一步是用户使用窗口完成 30 条复核。
 
 ## SEP-C3 targeted refinement 运行时校验修复（2026-09-19，零 API）
 
