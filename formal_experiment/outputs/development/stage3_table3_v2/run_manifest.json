@@ -3,7 +3,7 @@
   "code_sha256": {
     "scripts/build_stage3_table3_inputs_v2.py": "5a5c9322782a6a85b37406a591925a9c9aaf988b5a39573a4007db0bbdee91e1",
     "scripts/evaluate_stage3_table3_v2.py": "d755bfefd0ffbfd02149853e56c7013a7302ff6e73b212655bf69da7f0520ccd",
-    "scripts/run_stage3_table3_v2.py": "ba14bad6a8ba4ff2f46f1154eeec31b9c0cd132bb66c3551edfaff1f9868ed7c",
+    "scripts/run_stage3_table3_v2.py": "fb5388b1ad7aaefa26ed4333149533d8a6da7e9e82d03281769d0ec68b56df65",
     "src/bpc_hybrid/stage1_process.py": "d81bde594190c96bd3f3e1d7a0d943847809b20500044f12a401d6aee822c396",
     "src/bpc_hybrid/stage3_table3_v2.py": "52548a94b7bd0e8824c73e6b54503829727f03f6aa7050ab3497246b390b77db",
     "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
@@ -38,9 +38,9 @@
     }
   },
   "counts": {
-    "items": 1,
+    "items": 60,
     "methods": 3,
-    "prediction_rows": 3
+    "prediction_rows": 180
   },
   "existing_predictions_reused": true,
   "gold_read_by_runner": false,
@@ -65,8 +65,8 @@
   },
   "inputs": {
     "inference_view": {
-      "path": ".tmp/record-focused-zs3ojo19/pytest/test_forbidden_fields_and_miss0/view.json",
-      "sha256": "de0a2056e0c52ecfa7c6ab0bff1fc76285c1941e085a739624e8cfecdf805f21"
+      "path": "data/development/stage3_synth/stage3_paired_benchmark_inference_view_v2.json",
+      "sha256": "9b7be3b1bd5a02fe9785cbef67b2f869019050c54fa640efb99128ccb3e9ac0d"
     },
     "regulation_text_view": {
       "path": "data/development/stage3_synth/stage3_regulation_text_view_v2.json",
@@ -96,8 +96,8 @@
       "llm_used": true,
       "paper_label": "Ours",
       "predictions_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
-      "rule_records_path": ".tmp/record-focused-zs3ojo19/pytest/test_forbidden_fields_and_miss0/out/rule_records_ours_direct_llm_frozen_sun_stage3.json",
-      "rule_records_sha256": "09b39617fbe6a712312c5b1a65dbdc004ea5215dd0e3e6d3a423248f48be0aee",
+      "rule_records_path": "outputs/development/stage3_table3_v2/rule_records_ours_direct_llm_frozen_sun_stage3.json",
+      "rule_records_sha256": "ba79b6b84ee9d68d1d658a279d696a0182e816ac7136f03e935aa8d9f5f6de2d",
       "stage2_kind": "direct_llm"
     },
     "sun_rules_only_frozen_sun_stage3": {
@@ -106,8 +106,8 @@
       "llm_used": false,
       "paper_label": "Sun",
       "predictions_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
-      "rule_records_path": ".tmp/record-focused-zs3ojo19/pytest/test_forbidden_fields_and_miss0/out/rule_records_sun_rules_only_frozen_sun_stage3.json",
-      "rule_records_sha256": "40e81f2b0a7b9796f14c4c79351673b6005f964daed48a3fad06edb65fd9edf6",
+      "rule_records_path": "outputs/development/stage3_table3_v2/rule_records_sun_rules_only_frozen_sun_stage3.json",
+      "rule_records_sha256": "c3d016c56d7f3e02a7a15fe75f734d6a0a6ac551764817fc57848477ad2cd85c",
       "stage2_kind": "rules_only"
     },
     "winter_2020_native_wrapper": {
@@ -124,8 +124,8 @@
   "network_calls": 0,
   "outputs": {
     "predictions_jsonl": {
-      "path": ".tmp/record-focused-zs3ojo19/pytest/test_forbidden_fields_and_miss0/out/predictions.jsonl",
-      "sha256": "0e5f4b223a7574394dddefd9890fc5adb85018a39c2b02eccaa6ed39e3e17fd2"
+      "path": "outputs/development/stage3_table3_v2/predictions.jsonl",
+      "sha256": "56c4acf02cd3d0e137d3ff30a44261b03af7ca84f16c0b223c0de988bbb25f06"
     },
     "run_manifest": "outputs/development/stage3_table3_v2/run_manifest.json"
   },

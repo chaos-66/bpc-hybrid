@@ -344,6 +344,7 @@ def run(
         })
         rule_record_paths[method_id] = _display_path(path)
 
+    manifest_path = out_dir / "run_manifest.json"
     method_manifest: dict[str, Any] = {}
     for method_id, method in METHODS.items():
         method_manifest[method_id] = {
@@ -427,7 +428,7 @@ def run(
                 "path": _display_path(predictions_path),
                 "sha256": sha256_file(predictions_path),
             },
-            "run_manifest": _display_path(RUN_MANIFEST),
+            "run_manifest": _display_path(manifest_path),
         },
         "code_sha256": _code_hash([
             ROOT / "scripts/run_stage3_table3_v2.py",
@@ -459,7 +460,7 @@ def run(
             "only target-free regulation text and the current BPMN are read",
         ],
     }
-    _write_json(RUN_MANIFEST, manifest)
+    _write_json(manifest_path, manifest)
     return manifest
 
 

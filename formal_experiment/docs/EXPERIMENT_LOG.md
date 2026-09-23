@@ -5279,3 +5279,21 @@
 - 仍存在 blocker：无
 - 备注：Old control-grounded Ours F1=1 retracted. Current-BPMN inference with shared converter and frozen SunScorer; labels read only after persisted predictions.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-23T07:28:56.516397+00:00 - Stage 3 Table 3 v2 repaired controlled comparison (manifest path fixed)
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_table3_v2；阶段=stage3；方法=sun_rules_only+direct_llm+winter_2020；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_stage3_table3_v2.py --overwrite; python scripts/evaluate_stage3_table3_v2.py`
+- manifest：outputs/development/stage3_table3_v2/run_manifest.json
+- 结果摘要：zero new API; Sun/Ours/Winter macro-F1 0.3333, micro-F1 0.5517; missing P/R/F1 0.5/1.0/0.6667; actor F1 0.0; order N/A
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：9 passed, 2 warnings in 6.22s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`8be674ab6d1a2e09d19ffbd4037cbe4f7634eaeb`；相关未提交路径：16 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Follow-up: runner now writes run_manifest to the selected out_dir; previous test could overwrite only the default manifest.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
