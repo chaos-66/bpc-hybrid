@@ -1,0 +1,128 @@
+{
+  "code_sha256": {
+    "scripts/build_stage3_table3_v3_benchmark.py": "15fffd5791ae317eee125d7a9984ac995b139df2936c322e50f7adccf0765fe3",
+    "scripts/run_stage3_table3_v3.py": "c5159a1643403b2346bed6e85c22d0c4a2e6476a9309be05a01aeccc009d15c6",
+    "src/bpc_hybrid/stage1_process.py": "d81bde594190c96bd3f3e1d7a0d943847809b20500044f12a401d6aee822c396",
+    "src/bpc_hybrid/stage3_sun_style_checker.py": "72f8c3f1750c60b932bbf043bb060b1d9987db6038458c3bf016e351b517e346",
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
+    "src/bpc_hybrid/sun_stage3/sun_model.py": "c3e1b2dcda8401b64fe726c37f7502d69be69adac7c57a62e5930c90b42e2cdf",
+    "src/bpc_hybrid/sun_stage3/sun_scorer.py": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+    "src/bpc_hybrid/winter_stage3/winter_clause.py": "186806e00729aca70eb52338139cba4e10b09c40ef0db097d8ad238db1fdac56",
+    "src/bpc_hybrid/winter_stage3/winter_model.py": "b249367afd707961e7961f2ccdf4685ad8e2fc5f42ef9d9c158d60879fd8035b",
+    "src/bpc_hybrid/winter_stage3/winter_pair.py": "30848eb83e5bac85af4ffdf870149db3a6845b75fba1e497e8bd7d8548322a73",
+    "src/bpc_hybrid/winter_stage3/winter_similarity.py": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc"
+  },
+  "configuration": {
+    "converter": "bpc_hybrid.sun_stage3.gdpr_capsule_converter",
+    "one_sun_checker_for_sun_and_ours": true,
+    "same_thresholds_for_sun_and_ours": true,
+    "similarity_backend": {
+      "model": "en_core_web_sm",
+      "package": "spacy"
+    },
+    "sun_frozen_thresholds": {
+      "gamma": 0.8,
+      "tau": 0.8,
+      "theta": 0.8
+    },
+    "sun_scorer": "bpc_hybrid.sun_stage3.sun_scorer.SunScorer",
+    "winter_config": {
+      "delta": 0.8,
+      "gamma": 0.4,
+      "path": "configs/winter_stage3_development_v1.json",
+      "reachability_mode": "corrected_reachability",
+      "sha256": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12"
+    }
+  },
+  "counts": {
+    "cases": 60,
+    "methods": 3,
+    "prediction_rows": 180,
+    "rule_base_size": 9
+  },
+  "existing_stage2_predictions_reused": true,
+  "inference_boundary": {
+    "allowed_item_keys": [
+      "case_id",
+      "bpmn_path",
+      "process_id"
+    ],
+    "case_map_read": false,
+    "control_reference_read": false,
+    "current_bpmn_only": true,
+    "full_rule_base": true,
+    "gold_read_by_runner": false,
+    "mutation_type_read": false,
+    "pair_role_read": false,
+    "target_activity_id_read": false,
+    "target_rule_id_read": false,
+    "target_violation_type_read": false
+  },
+  "inputs": {
+    "inference_view": {
+      "path": "data/development/stage3_synth/stage3_sun_style_inference_view_v3.json",
+      "sha256": "c564f6f7784c89d6e61cb09d1e0f16b0ab15f28fa96cd232dbc3475c759c15d3"
+    },
+    "regulation_text_view": {
+      "path": "data/development/stage3_synth/stage3_regulation_text_view_v2.json",
+      "sha256": "866f635c5cd3817fd939cad66ebfe098ca328a99c868f82ff1e533210d45ad36"
+    },
+    "stage2_input": {
+      "path": "data/input/gdpr7_stage2_input_v1.json",
+      "sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109"
+    },
+    "stage2_predictions": {
+      "ours_direct_llm_full_sun_stage3": {
+        "path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
+        "sha256": "b625692d1e4e85b22f0c2e428a46a7c6cd49a2cc4b77a10f6c8e8d25adec50a1"
+      },
+      "sun_rules_only_full_sun_stage3": {
+        "path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
+        "sha256": "a993ef533489b7277d37eb0ad5074d9a8d1084b1aff03c2875499e0d103d136e"
+      },
+      "winter_2020_native_full_pipeline": null
+    }
+  },
+  "llm_api_calls": 0,
+  "methods": {
+    "ours_direct_llm_full_sun_stage3": {
+      "expected_schema": "gdpr7_direct_llm_predictions@1.0.0",
+      "label": "Ours (Direct-LLM Stage 2 + same Sun Stage 3)",
+      "paper_label": "Ours",
+      "predictions_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
+      "rule_records_path": "outputs/development/stage3_table3_v3/rule_records_ours_direct_llm_full_sun_stage3.json",
+      "rule_records_sha256": "5af62da342f3f32a112110dc9698b5fab681d6a12207d85c2aef00969f08f5a0",
+      "stage2_kind": "direct_llm"
+    },
+    "sun_rules_only_full_sun_stage3": {
+      "expected_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+      "label": "Sun (Rules-Only Stage 2 + Sun Stage 3)",
+      "paper_label": "Sun",
+      "predictions_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
+      "rule_records_path": "outputs/development/stage3_table3_v3/rule_records_sun_rules_only_full_sun_stage3.json",
+      "rule_records_sha256": "238221ceb32b1c1aa2e44f7525f40cd7e736ac6755d652a4b136209839b6092e",
+      "stage2_kind": "rules_only"
+    },
+    "winter_2020_native_full_pipeline": {
+      "expected_schema": null,
+      "label": "Winter (native full pipeline)",
+      "paper_label": "Winter",
+      "predictions_path": null,
+      "rule_records_path": null,
+      "rule_records_sha256": null,
+      "stage2_kind": "native_regulation_text"
+    }
+  },
+  "network_calls": 0,
+  "outputs": {
+    "predictions_jsonl": {
+      "path": "outputs/development/stage3_table3_v3/predictions.jsonl",
+      "sha256": "eecdb1234f91d1793a6f6ab69f4647a35ec59f3349d3178edee20b431c92d072"
+    },
+    "run_manifest": "outputs/development/stage3_table3_v3/run_manifest.json"
+  },
+  "run_id": "stage3_table3_v3_full_rule_base",
+  "schema_version": "stage3_table3_v3_run@1.0.0",
+  "scope": "full 9-rule Rule Base matching and Def4-7 checking per BPMN case",
+  "status": "complete"
+}

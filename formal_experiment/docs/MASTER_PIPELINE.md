@@ -11,6 +11,16 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
+## 2026-09-23 修订 3.7.21：Stage 3 Sun protocol realignment 与 Table 3 v3 全 Rule Base 诊断
+
+- 修复原则恢复为：Stage 1 ≈ Sun、Stage 2 是唯一主要变量、Stage 3 ≈ Sun；v1/v2 保留为 diagnostic/superseded，不再作为主 Table 3 协议。
+- 新增 `stage3_sun_style_checker`：先对完整 9 条 Rule Base 做 Definition 4 匹配，只有 matched rules 进入 Def. 5–7；Sun 与 Ours 调用同一 checker，只替换 Stage 2 capsule。
+- 新增 blinded v3 inference view（仅 `case_id`/`bpmn_path`/`process_id`）和 evaluator-only case map；runner 不读取 pair/role/target rule/target type/activity/Gold。
+- 30 pair/60 case 全部 Gold-blind 推理；13 个有效 single-mutation pair 的主 target-seeded 结果：Winter 0.5000/0.6154/0.5517，Sun 0.0000/0.0000/0.0000，Ours 0.0000/0.0000/0.0000。
+- Matching AP/MAP：Ours 0.4159/0.0000，Sun 0.3877/0.1000，Winter 0.4343/1.0000。Out-of-order N/A（无真实 rule-side order relation）。
+- 完整 multi-label control-vs-violation Gold 不存在，因此 all-alarm/strict 表只作 diagnostic；完整 multi-label Table 3 仍不可发布。报告：`outputs/reports/stage3_sun_protocol_realignment_v1.md`、`outputs/reports/stage3_table3_v3_final_report.md`。
+- 零 API、零网络；focused tests 22 passed；`audit_project.py` integrity_pass=True。
+
 ## 2026-09-23 修订 3.7.20：S3-BINDING-RESOLUTION 候选判定完成（零外部 API）
 
 - 用户要求由 AI 直接根据候选处理；已完成 30 项的补充判定，

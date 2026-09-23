@@ -5297,3 +5297,21 @@
 - 仍存在 blocker：无
 - 备注：Follow-up: runner now writes run_manifest to the selected out_dir; previous test could overwrite only the default manifest.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-23T08:42:51.114985+00:00 - Stage 3 Sun protocol realignment v3: blinded full-rule-base inference and target-seeded Table 3
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_table3_v3_full_rule_base；阶段=S3；方法=Winter/Sun/Ours；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_stage3_table3_v3.py && python scripts/evaluate_stage3_table3_v3.py`
+- manifest：outputs/development/stage3_table3_v3/run_manifest.json
+- 结果摘要：Full 9-rule Rule Base matching. Target-seeded eligible pairs Winter P/R/F1=0.5/0.6154/0.5517, Sun=0/0/0, Ours=0/0/0. Out-of-order N/A. Complete multi-label Table 3 not publishable due missing full compliance Gold.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：7 passed in 0.18s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`b676d9a1b66cf4e03f87a9889bb9ca08dfc6cc03`；相关未提交路径：29 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：无
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

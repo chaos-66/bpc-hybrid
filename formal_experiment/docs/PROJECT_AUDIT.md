@@ -9,6 +9,15 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## Stage 3 Table 3 v3：Sun-protocol realignment and full-rule-base diagnostic (2026-09-23)
+
+- Implemented `stage3_sun_style_checker` (Definition 4 full Rule Base matching; Def. 5–7 only on associated rules) and blinded v3 inference view/case map (`stage3_sun_style_inference_view_v3.json`, `stage3_sun_style_case_map_v3.json`).
+- Ran full pipelines for Winter, Sun, and Ours over the shared 9-rule GDPR Rule Base; predictions were persisted before the separate evaluator read labels.
+- Main target-seeded result on 13 eligible single-mutation pairs: Winter P/R/F1 = 0.5000/0.6154/0.5517; Sun = 0.0000/0.0000/0.0000; Ours = 0.0000/0.0000/0.0000. Full-rule-base matching prevented both Sun and Ours from selecting the labeled target rules.
+- Matching AP/MAP: Ours 0.4159 MAP / 0.0000 binary recall; Sun 0.3877 / 0.1000; Winter 0.4343 / 1.0000.
+- Out-of-order remains N/A (no real rule-side order relation). Complete multi-label control-vs-violation Gold for all nine rules is not available; the all-alarm/strict diagnostics are retained but marked non-publishable.
+- Audit report: `outputs/reports/stage3_sun_protocol_realignment_v1.md`; final report: `outputs/reports/stage3_table3_v3_final_report.md`.
+
 ## S3-BINDING-RESOLUTION：AI 候选判定完成（2026-09-23）
 
 - 用户授权由 AI 直接处理候选，30 项均已落定，没有新人工待审项。

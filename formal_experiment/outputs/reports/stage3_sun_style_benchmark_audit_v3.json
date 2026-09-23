@@ -1,0 +1,1644 @@
+{
+  "benchmark_id": "stage3_paired_benchmark_v1",
+  "control_compliance": {
+    "full_rule_base_control_compliance_established": false,
+    "full_rule_base_multi_label_gold": false,
+    "note": "The audit supports the target-seed control state only. It does not claim that every one of the nine rules has a complete control-vs-violation annotation.",
+    "target_seed_evidence": "unmutated source BPMN; mutation manifest verifies source_bytes_untouched and non-target-unchanged; human binding reference confirms the target action/actor relation for eligible pairs"
+  },
+  "counts": {
+    "eligible_incorrect_actor": 5,
+    "eligible_missing_action": 8,
+    "eligible_out_of_order": 0,
+    "eligible_pairs": 13,
+    "excluded_pairs": 17,
+    "out_of_order_unavailable": 10,
+    "pairs": 30
+  },
+  "pairs": [
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-4035AA0F-2D62-46AC-A369-4151026920A3"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+        "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn",
+        "variant_bpmn_sha256": "82195c9c3ea3c5f6763aec4192b8faef124d801033d34e45ae6bf19e6b4dde67"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "control_case_id": "case_0001",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_01",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article33",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn",
+      "variant_case_id": "case_0002"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-4035AA0F-2D62-46AC-A369-4151026920A3"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+        "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn",
+        "variant_bpmn_sha256": "29db23fb8cbd1c8d96be1e9ce3574d9c46593fa283b048ada5bd2a1baec219e3"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "control_case_id": "case_0003",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "be accompanied by reasons for the delay",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_02",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article33",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn",
+      "variant_case_id": "case_0004"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "incomplete_or_ai_only",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "action_binding_not_human_complete",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+        "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_03/gdpr_2_consent_to_use_the_data.bpmn",
+        "variant_bpmn_sha256": "39da2e3721e963a33b3e8d8ed4d40cb4312fa9581ac51803e7fc0f9fdd7cb08f"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_case_id": "case_0005",
+      "eligibility_reason": "action_binding_not_human_complete",
+      "eligible": false,
+      "exclusion_reason": "action_binding_not_human_complete",
+      "human_binding": {
+        "action_status": "no_supported_candidate",
+        "action_text": null,
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the data controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_03",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article22",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_case_id": "case_0006"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+        "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_04/gdpr_2_consent_to_use_the_data.bpmn",
+        "variant_bpmn_sha256": "3cc31db884671749f2dc359f3c243eaba60759caf1fc7efbf468bb394419c7c1"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_case_id": "case_0007",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the data controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_04",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article22",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_case_id": "case_0008"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+        "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_05/gdpr_3_right_to_access.bpmn",
+        "variant_bpmn_sha256": "6596370efc95d0873f2f9bbc488b242da66a131bf731629c6f4b24579b0204ad"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "control_case_id": "case_0009",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "access to the personal data and the following information the purposes of the processing",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "The controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_05",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article15",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_05/gdpr_3_right_to_access.bpmn",
+      "variant_case_id": "case_0010"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "incomplete_or_ai_only",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "actor_or_lane_binding_not_human_complete",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+        "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_06/gdpr_4_right_of_portability.bpmn",
+        "variant_bpmn_sha256": "5817be69d03641a31a0c37689e728dec41def704bcf554075e7aaf0a402c9f82"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "control_case_id": "case_0011",
+      "eligibility_reason": "actor_or_lane_binding_not_human_complete",
+      "eligible": false,
+      "exclusion_reason": "actor_or_lane_binding_not_human_complete",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "receive the personal data concerning him or her",
+        "actor_status": "inferred_counterparty_executor",
+        "actor_text": null,
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_06",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article20",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_06/gdpr_4_right_of_portability.bpmn",
+      "variant_case_id": "case_0012"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "incomplete_or_ai_only",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "actor_or_lane_binding_not_human_complete",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+        "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_07/gdpr_4_right_of_portability.bpmn",
+        "variant_bpmn_sha256": "c1c2807503a1a3c9af149f6f2c3fc9585685a7e71d762c352632f46c48c5c155"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "control_case_id": "case_0013",
+      "eligibility_reason": "actor_or_lane_binding_not_human_complete",
+      "eligible": false,
+      "exclusion_reason": "actor_or_lane_binding_not_human_complete",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "have the personal data transmitted directly from one controller to another",
+        "actor_status": "inferred_counterparty_executor",
+        "actor_text": null,
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_07",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article20",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_07/gdpr_4_right_of_portability.bpmn",
+      "variant_case_id": "case_0014"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+        "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_08/gdpr_5_right_to_withdraw.bpmn",
+        "variant_bpmn_sha256": "0a2a895d5577941ddb54575c0fe277e506a14d471ceb0cf33aaa2f7834fe1da0"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "control_case_id": "case_0015",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "erase personal data",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_08",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article17",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_08/gdpr_5_right_to_withdraw.bpmn",
+      "variant_case_id": "case_0016"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "incomplete_or_ai_only",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "action_binding_not_human_complete",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+        "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_09/gdpr_5_right_to_withdraw.bpmn",
+        "variant_bpmn_sha256": "4b1bc60375dfc413874739e848cb320fa6d718dfda5b1bd788993151b23687c7"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "control_case_id": "case_0017",
+      "eligibility_reason": "action_binding_not_human_complete",
+      "eligible": false,
+      "exclusion_reason": "action_binding_not_human_complete",
+      "human_binding": {
+        "action_status": "candidate_recipient_mismatch",
+        "action_text": null,
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_09",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article17",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_09/gdpr_5_right_to_withdraw.bpmn",
+      "variant_case_id": "case_0018"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "incomplete_or_ai_only",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "named_lane_count": 0,
+            "target_lane": "sid-95D07626-A357-422E-830F-B1E57917DB74"
+          },
+          "violated": false
+        },
+        "eligibility_reason": "actor_or_lane_binding_not_human_complete",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "added_lane_is_actor_lane": true,
+          "names_unchanged": true,
+          "non_target_lanes_unchanged": true,
+          "only_target_relaned": true,
+          "order_unchanged": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+        "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+        "variant_bpmn": "data/development/stage3_synth/syn_incorrect_actor_10/gdpr_6_right_to_rectify.bpmn",
+        "variant_bpmn_sha256": "72b492c26c8a4af160df898c4ac84fd23ef34faf3552eaa24c9341c17d402284"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "control_case_id": "case_0019",
+      "eligibility_reason": "actor_or_lane_binding_not_human_complete",
+      "eligible": false,
+      "exclusion_reason": "actor_or_lane_binding_not_human_complete",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "the rectification of inaccurate personal data concerning him or her",
+        "actor_status": "inferred_counterparty_executor",
+        "actor_text": null,
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_incorrect_actor_10",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article16",
+      "target_violation_type": "incorrect_actor",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_10/gdpr_6_right_to_rectify.bpmn",
+      "variant_case_id": "case_0020"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+        "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_01/gdpr_1_data_breach.bpmn",
+        "variant_bpmn_sha256": "689657bbfe6df78c908d1ef669f79381c24cbb16b22fa7834b29d4d0d9403410"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "control_case_id": "case_0021",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_01",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article33",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_01/gdpr_1_data_breach.bpmn",
+      "variant_case_id": "case_0022"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+        "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_02/gdpr_1_data_breach.bpmn",
+        "variant_bpmn_sha256": "903cb8684b609c91e014ce36292ba89225612d71216b0fcec5594b7ded6c5224"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "control_case_id": "case_0023",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_02",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article33",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_02/gdpr_1_data_breach.bpmn",
+      "variant_case_id": "case_0024"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+        "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_03/gdpr_2_consent_to_use_the_data.bpmn",
+        "variant_bpmn_sha256": "de259b8b8256784fd4e2eb8fec1cec5c980e0e36461f9d10543af37fc8faa829"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_case_id": "case_0025",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the data controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_03",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article22",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_case_id": "case_0026"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+        "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_04/gdpr_2_consent_to_use_the_data.bpmn",
+        "variant_bpmn_sha256": "6a82ae727ea8cfad85294636e3a1e0b92937bdf9ce41f0dad6a2da0e7f842016"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_case_id": "case_0027",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the data controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_04",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article22",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_case_id": "case_0028"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+        "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_05/gdpr_3_right_to_access.bpmn",
+        "variant_bpmn_sha256": "f23f1a6c0c6d55aa69bdcade86ca7f05cb071341eb2df2cdd0a394146a697589"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "control_case_id": "case_0029",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "provide a copy of the personal data undergoing processing",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "The controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_05",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article15",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_05/gdpr_3_right_to_access.bpmn",
+      "variant_case_id": "case_0030"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+        "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_06/gdpr_5_right_to_withdraw.bpmn",
+        "variant_bpmn_sha256": "044a7245b2db98f031e28c835d4316011b3b73b823336526f9ba46fc524bd7c6"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "control_case_id": "case_0031",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "erase personal data",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_06",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article17",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_06/gdpr_5_right_to_withdraw.bpmn",
+      "variant_case_id": "case_0032"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "incomplete_or_ai_only",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "action_binding_not_human_complete",
+        "eligible": false,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+        "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_07/gdpr_5_right_to_withdraw.bpmn",
+        "variant_bpmn_sha256": "fc0dc0e9b804391ea69792f16665ec1adac5ab34e2c177bd45d96b1d72571a49"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "control_case_id": "case_0033",
+      "eligibility_reason": "action_binding_not_human_complete",
+      "eligible": false,
+      "exclusion_reason": "action_binding_not_human_complete",
+      "human_binding": {
+        "action_status": "condition_check_not_action",
+        "action_text": null,
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_07",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article17",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_07/gdpr_5_right_to_withdraw.bpmn",
+      "variant_case_id": "case_0034"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "incomplete_or_ai_only",
+          "actor": "incomplete_or_ai_only",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "action_binding_not_human_complete",
+        "eligible": false,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+        "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_08/gdpr_6_right_to_rectify.bpmn",
+        "variant_bpmn_sha256": "b151a7c2c6d96a7e85895e01724f5d709751cf6773660e74830c38f26aa01558"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "control_case_id": "case_0035",
+      "eligibility_reason": "action_binding_not_human_complete",
+      "eligible": false,
+      "exclusion_reason": "action_binding_not_human_complete",
+      "human_binding": {
+        "action_status": "candidate_activity_mismatch",
+        "action_text": null,
+        "actor_status": "process_executor_only",
+        "actor_text": null,
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_08",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article16",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_08/gdpr_6_right_to_rectify.bpmn",
+      "variant_case_id": "case_0036"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "incomplete_or_ai_only",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+        "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_09/gdpr_4_right_of_portability.bpmn",
+        "variant_bpmn_sha256": "7eefc1f9f396ead1551b8b72a090844b7d9b109f7b0d187338b78f61417e1c3c"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "control_case_id": "case_0037",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "have the personal data transmitted directly from one controller to another",
+        "actor_status": "inferred_counterparty_executor",
+        "actor_text": null,
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_09",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article20",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_09/gdpr_4_right_of_portability.bpmn",
+      "variant_case_id": "case_0038"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "incomplete_or_ai_only",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "target_present": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "eligible",
+        "eligible": true,
+        "mutation_validation": {
+          "non_target_activities_unchanged": true,
+          "non_target_order_unchanged": true,
+          "removed_only_target_id": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+        "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+        "variant_bpmn": "data/development/stage3_synth/syn_missing_action_10/gdpr_6_right_to_rectify.bpmn",
+        "variant_bpmn_sha256": "e0c5e851835a708379df3f865bb8d3ab7ed2ce749dc3f694bd51d6eac51f4735"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "control_case_id": "case_0039",
+      "eligibility_reason": "eligible",
+      "eligible": true,
+      "exclusion_reason": null,
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "the rectification of inaccurate personal data concerning him or her",
+        "actor_status": "inferred_counterparty_executor",
+        "actor_text": null,
+        "order_status": "not_applicable"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_missing_action_10",
+      "rule_side_order_relation": [],
+      "target_rule_id": "article16",
+      "target_violation_type": "missing_action",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_missing_action_10/gdpr_6_right_to_rectify.bpmn",
+      "variant_case_id": "case_0040"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+        "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_01/gdpr_1_data_breach.bpmn",
+        "variant_bpmn_sha256": "a30f85acd99afe1b6bb9b39199c8b97fb88c63a88931af93a24f961a73fddafc"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "control_case_id": "case_0041",
+      "eligibility_reason": "ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_01",
+      "rule_side_order_relation": [
+        "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+        "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+      ],
+      "target_rule_id": "article33",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_01/gdpr_1_data_breach.bpmn",
+      "variant_case_id": "case_0042"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+        "source_bpmn_sha256": "578204666b669c109cec40eb9468c8a80ec2fb7a9261288628789daac1089e17",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_02/gdpr_1_data_breach.bpmn",
+        "variant_bpmn_sha256": "b7cce6eb272ddf518b0df3145a3cfb25788a307e236b64d337c58c6d75db95e8"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "control_case_id": "case_0043",
+      "eligibility_reason": "ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_02",
+      "rule_side_order_relation": [
+        "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+        "sid-20C5FDD3-8014-432D-8595-CD780D866E38"
+      ],
+      "target_rule_id": "article33",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_02/gdpr_1_data_breach.bpmn",
+      "variant_case_id": "case_0044"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "incomplete_or_ai_only",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "action_binding_not_human_complete;ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+        "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_03/gdpr_2_consent_to_use_the_data.bpmn",
+        "variant_bpmn_sha256": "a664859d048e4c37e8ddb988cb9fef48e9c5f944a8be3db6aa2e4b79d2e5b36d"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_case_id": "case_0045",
+      "eligibility_reason": "action_binding_not_human_complete;ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "action_binding_not_human_complete;ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "no_supported_candidate",
+        "action_text": null,
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the data controller",
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_03",
+      "rule_side_order_relation": [
+        "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+        "sid-141B6C65-D86C-443C-BC7F-05783264AF77"
+      ],
+      "target_rule_id": "article22",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_case_id": "case_0046"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+        "source_bpmn_sha256": "959da75bdf1139cf11fa2d29cd88eb966e24130a71fac1493fcae12263a82b92",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_04/gdpr_2_consent_to_use_the_data.bpmn",
+        "variant_bpmn_sha256": "f11423f8b77b42c278faf4bd182c5dd337269db09eef0f0248120e8c1a5e9a38"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "control_case_id": "case_0047",
+      "eligibility_reason": "ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the data controller",
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_04",
+      "rule_side_order_relation": [
+        "sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0",
+        "sid-141B6C65-D86C-443C-BC7F-05783264AF77"
+      ],
+      "target_rule_id": "article22",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "variant_case_id": "case_0048"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+        "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_05/gdpr_3_right_to_access.bpmn",
+        "variant_bpmn_sha256": "9d9834fed4b5fa426f2068bf1e596a17f10d5e2e30de6cd63233e5d7112a1d38"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "control_case_id": "case_0049",
+      "eligibility_reason": "ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "access to the personal data and the following information the purposes of the processing",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "The controller",
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_05",
+      "rule_side_order_relation": [
+        "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+        "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+      ],
+      "target_rule_id": "article15",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_05/gdpr_3_right_to_access.bpmn",
+      "variant_case_id": "case_0050"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "incomplete_or_ai_only",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+        "source_bpmn_sha256": "68601777868ed646ba16a91191f68e019c75db54593e58c45e14b6b132991d11",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_06/gdpr_4_right_of_portability.bpmn",
+        "variant_bpmn_sha256": "468011b29a7d81a8303946600701ef4f0230596378ece0a3400ef6a8ba2128ee"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "control_case_id": "case_0051",
+      "eligibility_reason": "ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "receive the personal data concerning him or her",
+        "actor_status": "inferred_counterparty_executor",
+        "actor_text": null,
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_06",
+      "rule_side_order_relation": [
+        "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+        "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+      ],
+      "target_rule_id": "article20",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_06/gdpr_4_right_of_portability.bpmn",
+      "variant_case_id": "case_0052"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+        "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_07/gdpr_5_right_to_withdraw.bpmn",
+        "variant_bpmn_sha256": "f6fa62e4d2f2a4cced85a3c358703fb85301a93787ef9b5815fb51fe3e5be575"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "control_case_id": "case_0053",
+      "eligibility_reason": "ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "erase personal data",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_07",
+      "rule_side_order_relation": [
+        "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+        "sid-1A48D305-CB15-4C57-A988-B39ED62DE531"
+      ],
+      "target_rule_id": "article17",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_07/gdpr_5_right_to_withdraw.bpmn",
+      "variant_case_id": "case_0054"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+        "source_bpmn_sha256": "cb766cf38f6a31e8cf5b102a6920186483b7f63864cab1e29343bd947fc9a7d0",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_08/gdpr_5_right_to_withdraw.bpmn",
+        "variant_bpmn_sha256": "f856697f84f7aeb1b2b11f6e328048a3b65ad1749eec03bf6544f1d49acf628e"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "control_case_id": "case_0055",
+      "eligibility_reason": "ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "erase personal data",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "the controller",
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_08",
+      "rule_side_order_relation": [
+        "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+        "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB"
+      ],
+      "target_rule_id": "article17",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_08/gdpr_5_right_to_withdraw.bpmn",
+      "variant_case_id": "case_0056"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "incomplete_or_ai_only",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+        "source_bpmn_sha256": "adb4543f38e6f940b0c6151954789e448a3f0afab1dfdc57c263a870311026aa",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_09/gdpr_6_right_to_rectify.bpmn",
+        "variant_bpmn_sha256": "ba514072c73ed0b306ab873344cbda0f79082d024bd301cf96e1677aed131895"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "control_case_id": "case_0057",
+      "eligibility_reason": "ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "the rectification of inaccurate personal data concerning him or her",
+        "actor_status": "inferred_counterparty_executor",
+        "actor_text": null,
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_09",
+      "rule_side_order_relation": [
+        "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+        "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746"
+      ],
+      "target_rule_id": "article16",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_09/gdpr_6_right_to_rectify.bpmn",
+      "variant_case_id": "case_0058"
+    },
+    {
+      "control_basis": {
+        "binding_completeness": {
+          "action": "human_complete",
+          "actor": "human_complete",
+          "order": "ineligible_no_explicit_rule_order",
+          "target_activity_in_control": true
+        },
+        "control_structural_observation": {
+          "detail": {
+            "backward_holds": false,
+            "forward_holds": true
+          },
+          "violated": false
+        },
+        "eligibility_reason": "ineligible_no_explicit_rule_order",
+        "eligible": false,
+        "mutation_validation": {
+          "activity_set_identical": true,
+          "lanes_identical": true,
+          "names_unchanged": true,
+          "order_changed_only_around_pair": true,
+          "source_bytes_untouched": true,
+          "status": "passed",
+          "structure_valid": true,
+          "xml_parse": true
+        },
+        "scope": "target-seed construction evidence only; the unmutated source BPMN is the control and the mutation manifest verifies that only the declared target changed. Full multi-label compliance for all nine rules is not asserted by this audit.",
+        "source_bpmn": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+        "source_bpmn_sha256": "d6e48d09bf821f700813bff5806f59323a7dd266223a6bb1a1eb45647bbbd3b1",
+        "variant_bpmn": "data/development/stage3_synth/syn_out_of_order_10/gdpr_3_right_to_access.bpmn",
+        "variant_bpmn_sha256": "ddd5a5bb40b9b9cb2504ecaf90dc29a52b2b6a16e8a8d016a503d5fb0b573e23"
+      },
+      "control_bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "control_case_id": "case_0059",
+      "eligibility_reason": "ineligible_no_explicit_rule_order",
+      "eligible": false,
+      "exclusion_reason": "ineligible_no_explicit_rule_order",
+      "human_binding": {
+        "action_status": "retained_human_candidate",
+        "action_text": "access to the personal data and the following information the purposes of the processing",
+        "actor_status": "retained_human_candidate",
+        "actor_text": "The controller",
+        "order_status": "process_only_no_supported_rule_order"
+      },
+      "order_eligible": false,
+      "pair_id": "syn_out_of_order_10",
+      "rule_side_order_relation": [
+        "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+        "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D"
+      ],
+      "target_rule_id": "article15",
+      "target_violation_type": "out_of_order",
+      "variant_bpmn_path": "data/development/stage3_synth/syn_out_of_order_10/gdpr_3_right_to_access.bpmn",
+      "variant_case_id": "case_0060"
+    }
+  ],
+  "schema_version": "stage3_sun_style_benchmark_audit_v3@1.0.0",
+  "source_mutation_panel": "data/development/stage3_synth/synthetic_controlled_error_extension_v1.json",
+  "source_mutation_panel_sha256": "e6b4da045a44ffc347a8de88909e005bef584335f63804d3c2155ef9242c3026",
+  "target_scope": "single-mutation target seeds; full-rule-base matching is run, but checking metrics are scoped to the labeled target rule/type and the matching stage is evaluated separately with AP/MAP"
+}

@@ -1,0 +1,1677 @@
+{
+  "acceptance_gates": {
+    "G10_independent_test_bpmn": true,
+    "G11_full_rule_base_matching": true,
+    "G12_relevant_rules_only": true,
+    "G13_control_compliance": "true_for_scoped_target_seed",
+    "G14_gold_read_after_persistence": true,
+    "G15_threshold_not_tuned": true,
+    "G1_method_level_reconstruction": true,
+    "G2_shared_stage1": true,
+    "G3_shared_stage3": true,
+    "G4_only_stage2_varies": true,
+    "G5_inference_no_rule_id": true,
+    "G6_inference_no_target_activity": true,
+    "G7_inference_no_mutation_type": true,
+    "G8_inference_no_gold_type": true,
+    "G9_inference_no_binding_gold": true,
+    "complete_multi_label_gold_available": false,
+    "complete_multi_label_main_table_publishable": false
+  },
+  "checking_target_after_matching": {
+    "ours_direct_llm_full_sun_stage3": {
+      "overall": {
+        "f1": 0.0,
+        "f1_conservative": 0.0,
+        "fn": 13,
+        "fp": 0,
+        "negative_count": 13,
+        "positive_count": 13,
+        "precision": null,
+        "precision_conservative": 0.0,
+        "recall": 0.0,
+        "recall_conservative": 0.0,
+        "tn": 13,
+        "tp": 0
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 0.0,
+          "f1_conservative": 0.0,
+          "fn": 5,
+          "fp": 0,
+          "negative_count": 5,
+          "positive_count": 5,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": 0.0,
+          "recall_conservative": 0.0,
+          "status": "evaluated_after_full_rule_base_matching",
+          "tn": 5,
+          "tp": 0
+        },
+        "missing_action": {
+          "f1": 0.0,
+          "f1_conservative": 0.0,
+          "fn": 8,
+          "fp": 0,
+          "negative_count": 8,
+          "positive_count": 8,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": 0.0,
+          "recall_conservative": 0.0,
+          "status": "evaluated_after_full_rule_base_matching",
+          "tn": 8,
+          "tp": 0
+        },
+        "out_of_order": {
+          "f1": null,
+          "f1_conservative": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "negative_count": 0,
+          "positive_count": 0,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": null,
+          "recall_conservative": 0.0,
+          "status": "N/A_no_eligible_positive",
+          "tn": 0,
+          "tp": 0
+        }
+      },
+      "scope": "eligible single-mutation pairs; prediction is true iff the target rule/type is present after full-rule-base matching"
+    },
+    "sun_rules_only_full_sun_stage3": {
+      "overall": {
+        "f1": 0.0,
+        "f1_conservative": 0.0,
+        "fn": 13,
+        "fp": 0,
+        "negative_count": 13,
+        "positive_count": 13,
+        "precision": null,
+        "precision_conservative": 0.0,
+        "recall": 0.0,
+        "recall_conservative": 0.0,
+        "tn": 13,
+        "tp": 0
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 0.0,
+          "f1_conservative": 0.0,
+          "fn": 5,
+          "fp": 0,
+          "negative_count": 5,
+          "positive_count": 5,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": 0.0,
+          "recall_conservative": 0.0,
+          "status": "evaluated_after_full_rule_base_matching",
+          "tn": 5,
+          "tp": 0
+        },
+        "missing_action": {
+          "f1": 0.0,
+          "f1_conservative": 0.0,
+          "fn": 8,
+          "fp": 0,
+          "negative_count": 8,
+          "positive_count": 8,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": 0.0,
+          "recall_conservative": 0.0,
+          "status": "evaluated_after_full_rule_base_matching",
+          "tn": 8,
+          "tp": 0
+        },
+        "out_of_order": {
+          "f1": null,
+          "f1_conservative": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "negative_count": 0,
+          "positive_count": 0,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": null,
+          "recall_conservative": 0.0,
+          "status": "N/A_no_eligible_positive",
+          "tn": 0,
+          "tp": 0
+        }
+      },
+      "scope": "eligible single-mutation pairs; prediction is true iff the target rule/type is present after full-rule-base matching"
+    },
+    "winter_2020_native_full_pipeline": {
+      "overall": {
+        "f1": 0.5517241379310345,
+        "f1_conservative": 0.5517241379310345,
+        "fn": 5,
+        "fp": 8,
+        "negative_count": 13,
+        "positive_count": 13,
+        "precision": 0.5,
+        "precision_conservative": 0.5,
+        "recall": 0.6153846153846154,
+        "recall_conservative": 0.6153846153846154,
+        "tn": 5,
+        "tp": 8
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 0.0,
+          "f1_conservative": 0.0,
+          "fn": 5,
+          "fp": 0,
+          "negative_count": 5,
+          "positive_count": 5,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": 0.0,
+          "recall_conservative": 0.0,
+          "status": "evaluated_after_full_rule_base_matching",
+          "tn": 5,
+          "tp": 0
+        },
+        "missing_action": {
+          "f1": 0.6666666666666666,
+          "f1_conservative": 0.6666666666666666,
+          "fn": 0,
+          "fp": 8,
+          "negative_count": 8,
+          "positive_count": 8,
+          "precision": 0.5,
+          "precision_conservative": 0.5,
+          "recall": 1.0,
+          "recall_conservative": 1.0,
+          "status": "evaluated_after_full_rule_base_matching",
+          "tn": 0,
+          "tp": 8
+        },
+        "out_of_order": {
+          "f1": null,
+          "f1_conservative": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "negative_count": 0,
+          "positive_count": 0,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": null,
+          "recall_conservative": 0.0,
+          "status": "N/A_no_eligible_positive",
+          "tn": 0,
+          "tp": 0
+        }
+      },
+      "scope": "eligible single-mutation pairs; prediction is true iff the target rule/type is present after full-rule-base matching"
+    }
+  },
+  "claim_boundary": "The v3 run is protocol-correct for full Rule Base matching and Gold-blind inference. The main Table 3 is target-seeded: it asks whether the pipeline detects the single independently constructed mutation after it has performed its own full Rule Base matching. Do not present the any-alarm or strict-instance diagnostics as a complete multi-label compliance Gold.",
+  "denominators": {
+    "eligible_cases": 26,
+    "eligible_incorrect_actor": 5,
+    "eligible_missing_action": 8,
+    "eligible_out_of_order": 0,
+    "eligible_pairs": 13,
+    "out_of_order_unavailable": 10,
+    "pairs": 30,
+    "rule_base_size": 9
+  },
+  "full_pipeline_diagnostics": {
+    "ours_direct_llm_full_sun_stage3": {
+      "any_violation_binary": {
+        "f1": 0.0,
+        "f1_conservative": 0.0,
+        "fn": 13,
+        "fp": 0,
+        "negative_count": 13,
+        "positive_count": 13,
+        "precision": null,
+        "precision_conservative": 0.0,
+        "recall": 0.0,
+        "recall_conservative": 0.0,
+        "tn": 13,
+        "tp": 0
+      },
+      "strict_instance_diagnostic": {
+        "fn": 13,
+        "fp": 0,
+        "status": "diagnostic_incomplete_multi_label_gold",
+        "tp": 0
+      },
+      "type_scoped_any_rule": {
+        "incorrect_actor": {
+          "f1": 0.0,
+          "f1_conservative": 0.0,
+          "fn": 5,
+          "fp": 0,
+          "negative_count": 5,
+          "positive_count": 5,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": 0.0,
+          "recall_conservative": 0.0,
+          "tn": 5,
+          "tp": 0
+        },
+        "missing_action": {
+          "f1": 0.0,
+          "f1_conservative": 0.0,
+          "fn": 8,
+          "fp": 0,
+          "negative_count": 8,
+          "positive_count": 8,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": 0.0,
+          "recall_conservative": 0.0,
+          "tn": 8,
+          "tp": 0
+        },
+        "out_of_order": {
+          "f1": null,
+          "f1_conservative": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "negative_count": 0,
+          "positive_count": 0,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": null,
+          "recall_conservative": 0.0,
+          "tn": 0,
+          "tp": 0
+        }
+      }
+    },
+    "sun_rules_only_full_sun_stage3": {
+      "any_violation_binary": {
+        "f1": 0.23529411764705882,
+        "f1_conservative": 0.23529411764705882,
+        "fn": 11,
+        "fp": 2,
+        "negative_count": 13,
+        "positive_count": 13,
+        "precision": 0.5,
+        "precision_conservative": 0.5,
+        "recall": 0.15384615384615385,
+        "recall_conservative": 0.15384615384615385,
+        "tn": 11,
+        "tp": 2
+      },
+      "strict_instance_diagnostic": {
+        "fn": 13,
+        "fp": 20,
+        "status": "diagnostic_incomplete_multi_label_gold",
+        "tp": 0
+      },
+      "type_scoped_any_rule": {
+        "incorrect_actor": {
+          "f1": 0.0,
+          "f1_conservative": 0.0,
+          "fn": 5,
+          "fp": 0,
+          "negative_count": 5,
+          "positive_count": 5,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": 0.0,
+          "recall_conservative": 0.0,
+          "tn": 5,
+          "tp": 0
+        },
+        "missing_action": {
+          "f1": 0.2,
+          "f1_conservative": 0.2,
+          "fn": 7,
+          "fp": 1,
+          "negative_count": 8,
+          "positive_count": 8,
+          "precision": 0.5,
+          "precision_conservative": 0.5,
+          "recall": 0.125,
+          "recall_conservative": 0.125,
+          "tn": 7,
+          "tp": 1
+        },
+        "out_of_order": {
+          "f1": null,
+          "f1_conservative": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "negative_count": 0,
+          "positive_count": 0,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": null,
+          "recall_conservative": 0.0,
+          "tn": 0,
+          "tp": 0
+        }
+      }
+    },
+    "winter_2020_native_full_pipeline": {
+      "any_violation_binary": {
+        "f1": 0.6666666666666666,
+        "f1_conservative": 0.6666666666666666,
+        "fn": 0,
+        "fp": 13,
+        "negative_count": 13,
+        "positive_count": 13,
+        "precision": 0.5,
+        "precision_conservative": 0.5,
+        "recall": 1.0,
+        "recall_conservative": 1.0,
+        "tn": 0,
+        "tp": 13
+      },
+      "strict_instance_diagnostic": {
+        "fn": 5,
+        "fp": 229,
+        "status": "diagnostic_incomplete_multi_label_gold",
+        "tp": 8
+      },
+      "type_scoped_any_rule": {
+        "incorrect_actor": {
+          "f1": 0.0,
+          "f1_conservative": 0.0,
+          "fn": 5,
+          "fp": 0,
+          "negative_count": 5,
+          "positive_count": 5,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": 0.0,
+          "recall_conservative": 0.0,
+          "tn": 5,
+          "tp": 0
+        },
+        "missing_action": {
+          "f1": 0.6666666666666666,
+          "f1_conservative": 0.6666666666666666,
+          "fn": 0,
+          "fp": 8,
+          "negative_count": 8,
+          "positive_count": 8,
+          "precision": 0.5,
+          "precision_conservative": 0.5,
+          "recall": 1.0,
+          "recall_conservative": 1.0,
+          "tn": 0,
+          "tp": 8
+        },
+        "out_of_order": {
+          "f1": null,
+          "f1_conservative": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "negative_count": 0,
+          "positive_count": 0,
+          "precision": null,
+          "precision_conservative": 0.0,
+          "recall": null,
+          "recall_conservative": 0.0,
+          "tn": 0,
+          "tp": 0
+        }
+      }
+    }
+  },
+  "matching": {
+    "ours_direct_llm_full_sun_stage3": {
+      "MAP": 0.41593915343915344,
+      "binary_relevance": {
+        "f1": 0.0,
+        "f1_conservative": 0.0,
+        "fn": 10,
+        "fp": 0,
+        "negative_count": 12,
+        "positive_count": 10,
+        "precision": null,
+        "precision_conservative": 0.0,
+        "recall": 0.0,
+        "recall_conservative": 0.0,
+        "rule_rule": "Sun/Ours: matching_score > tau; Winter: fitness > 0 (native config relevance rule)",
+        "tn": 12,
+        "tp": 0
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "ap": 0.22619047619047616,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.0
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.0
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            },
+            {
+              "rank": 6,
+              "relevant": true,
+              "rule_id": "article33",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": true,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article33",
+            "article34"
+          ]
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "ap": 0.3611111111111111,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.25
+            },
+            {
+              "rank": 2,
+              "relevant": true,
+              "rule_id": "article22",
+              "score": 0.2
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.2
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.16666666666666666
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.13333333333333333
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": true,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": true,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article22",
+            "article6",
+            "article7"
+          ]
+        },
+        "gdpr_3_right_to_access": {
+          "ap": 1.0,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": true,
+              "rule_id": "article15",
+              "score": 0.0
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.0
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article15"
+          ]
+        },
+        "gdpr_4_right_of_portability": {
+          "ap": 0.25,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.0
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.0
+            },
+            {
+              "rank": 4,
+              "relevant": true,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article20"
+          ]
+        },
+        "gdpr_5_right_to_withdraw": {
+          "ap": 0.325,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.6
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.5
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.3333333333333333
+            },
+            {
+              "rank": 4,
+              "relevant": true,
+              "rule_id": "article17",
+              "score": 0.3333333333333333
+            },
+            {
+              "rank": 5,
+              "relevant": true,
+              "rule_id": "article7",
+              "score": 0.25
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.2
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article17",
+            "article7"
+          ]
+        },
+        "gdpr_6_right_to_rectify": {
+          "ap": 0.3333333333333333,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.2
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.0
+            },
+            {
+              "rank": 3,
+              "relevant": true,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.0
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article16"
+          ]
+        }
+      },
+      "process_count": 6,
+      "recall_at": {
+        "3": 0.3,
+        "5": 0.6,
+        "9": 1.0
+      }
+    },
+    "sun_rules_only_full_sun_stage3": {
+      "MAP": 0.3876984126984127,
+      "binary_relevance": {
+        "f1": 0.15384615384615383,
+        "f1_conservative": 0.15384615384615383,
+        "fn": 9,
+        "fp": 2,
+        "negative_count": 12,
+        "positive_count": 10,
+        "precision": 0.3333333333333333,
+        "precision_conservative": 0.3333333333333333,
+        "recall": 0.1,
+        "recall_conservative": 0.1,
+        "rule_rule": "Sun/Ours: matching_score > tau; Winter: fitness > 0 (native config relevance rule)",
+        "tn": 10,
+        "tp": 1
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "ap": 0.22619047619047616,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.0
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.0
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            },
+            {
+              "rank": 6,
+              "relevant": true,
+              "rule_id": "article33",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": true,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article33",
+            "article34"
+          ]
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "ap": 0.25,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 1.0
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.3333333333333333
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.3333333333333333
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.25
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 6,
+              "relevant": true,
+              "rule_id": "article22",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": true,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": true,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article22",
+            "article6",
+            "article7"
+          ]
+        },
+        "gdpr_3_right_to_access": {
+          "ap": 1.0,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": true,
+              "rule_id": "article15",
+              "score": 0.0
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.0
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article15"
+          ]
+        },
+        "gdpr_4_right_of_portability": {
+          "ap": 0.25,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.0
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.0
+            },
+            {
+              "rank": 4,
+              "relevant": true,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article20"
+          ]
+        },
+        "gdpr_5_right_to_withdraw": {
+          "ap": 0.26666666666666666,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 1.0
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 1.0
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 1.0
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 1.0
+            },
+            {
+              "rank": 5,
+              "relevant": true,
+              "rule_id": "article7",
+              "score": 1.0
+            },
+            {
+              "rank": 6,
+              "relevant": true,
+              "rule_id": "article17",
+              "score": 0.5
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article17",
+            "article7"
+          ]
+        },
+        "gdpr_6_right_to_rectify": {
+          "ap": 0.3333333333333333,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.3333333333333333
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.0
+            },
+            {
+              "rank": 3,
+              "relevant": true,
+              "rule_id": "article16",
+              "score": 0.0
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.0
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.0
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.0
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.0
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.0
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.0
+            }
+          ],
+          "relevant_rules": [
+            "article16"
+          ]
+        }
+      },
+      "process_count": 6,
+      "recall_at": {
+        "3": 0.2,
+        "5": 0.4,
+        "9": 1.0
+      }
+    },
+    "winter_2020_native_full_pipeline": {
+      "MAP": 0.43425925925925923,
+      "binary_relevance": {
+        "f1": 0.625,
+        "f1_conservative": 0.625,
+        "fn": 0,
+        "fp": 12,
+        "negative_count": 12,
+        "positive_count": 10,
+        "precision": 0.45454545454545453,
+        "precision_conservative": 0.45454545454545453,
+        "recall": 1.0,
+        "recall_conservative": 1.0,
+        "rule_rule": "Sun/Ours: matching_score > tau; Winter: fitness > 0 (native config relevance rule)",
+        "tn": 0,
+        "tp": 10
+      },
+      "per_process": {
+        "gdpr_1_data_breach": {
+          "ap": 0.8333333333333333,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": true,
+              "rule_id": "article33",
+              "score": 0.6279120643933614
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.6193049073219299
+            },
+            {
+              "rank": 3,
+              "relevant": true,
+              "rule_id": "article34",
+              "score": 0.6113964042493275
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.6000221617843794
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.5951976527770361
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.5920611031171752
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.5805857943934064
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.5481864618403571
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.5455801252807889
+            }
+          ],
+          "relevant_rules": [
+            "article33",
+            "article34"
+          ]
+        },
+        "gdpr_2_consent_to_use_the_data": {
+          "ap": 0.7222222222222222,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": true,
+              "rule_id": "article7",
+              "score": 0.6029884517192841
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.5934473242078508
+            },
+            {
+              "rank": 3,
+              "relevant": true,
+              "rule_id": "article22",
+              "score": 0.5904772877693176
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.5901066048277749
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.5812337419816426
+            },
+            {
+              "rank": 6,
+              "relevant": true,
+              "rule_id": "article6",
+              "score": 0.5736732014587947
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.5558471894926496
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.5546313703060151
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.5380208194255829
+            }
+          ],
+          "relevant_rules": [
+            "article22",
+            "article6",
+            "article7"
+          ]
+        },
+        "gdpr_3_right_to_access": {
+          "ap": 0.5,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.5321441499086527
+            },
+            {
+              "rank": 2,
+              "relevant": true,
+              "rule_id": "article15",
+              "score": 0.5206235679132598
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.5196691310924032
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.5006977945566178
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.49043596982955934
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.4879697024822235
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.48297863848069134
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.48103566964467365
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.4665315866470337
+            }
+          ],
+          "relevant_rules": [
+            "article15"
+          ]
+        },
+        "gdpr_4_right_of_portability": {
+          "ap": 0.125,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.5321441499086527
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.5206235679132598
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.5196691310924032
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.5006977945566178
+            },
+            {
+              "rank": 5,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.49043596982955934
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.4879697024822235
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.48297863848069134
+            },
+            {
+              "rank": 8,
+              "relevant": true,
+              "rule_id": "article20",
+              "score": 0.48103566964467365
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.4665315866470337
+            }
+          ],
+          "relevant_rules": [
+            "article20"
+          ]
+        },
+        "gdpr_5_right_to_withdraw": {
+          "ap": 0.225,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.5874561071395874
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article16",
+              "score": 0.5615247562527657
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.5403869215931211
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.5359824758309585
+            },
+            {
+              "rank": 5,
+              "relevant": true,
+              "rule_id": "article17",
+              "score": 0.5351941690725439
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.5334218894281695
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.5311927994092306
+            },
+            {
+              "rank": 8,
+              "relevant": true,
+              "rule_id": "article7",
+              "score": 0.5210984972390261
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.49605191871523857
+            }
+          ],
+          "relevant_rules": [
+            "article17",
+            "article7"
+          ]
+        },
+        "gdpr_6_right_to_rectify": {
+          "ap": 0.2,
+          "ranked_rules": [
+            {
+              "rank": 1,
+              "relevant": false,
+              "rule_id": "article7",
+              "score": 0.4927180806795756
+            },
+            {
+              "rank": 2,
+              "relevant": false,
+              "rule_id": "article6",
+              "score": 0.4759588816336223
+            },
+            {
+              "rank": 3,
+              "relevant": false,
+              "rule_id": "article33",
+              "score": 0.4621277183294296
+            },
+            {
+              "rank": 4,
+              "relevant": false,
+              "rule_id": "article15",
+              "score": 0.45262093593676883
+            },
+            {
+              "rank": 5,
+              "relevant": true,
+              "rule_id": "article16",
+              "score": 0.4490896686911583
+            },
+            {
+              "rank": 6,
+              "relevant": false,
+              "rule_id": "article17",
+              "score": 0.44825305388523984
+            },
+            {
+              "rank": 7,
+              "relevant": false,
+              "rule_id": "article22",
+              "score": 0.4417639474074046
+            },
+            {
+              "rank": 8,
+              "relevant": false,
+              "rule_id": "article20",
+              "score": 0.4353976398706436
+            },
+            {
+              "rank": 9,
+              "relevant": false,
+              "rule_id": "article34",
+              "score": 0.4241074562072754
+            }
+          ],
+          "relevant_rules": [
+            "article16"
+          ]
+        }
+      },
+      "process_count": 6,
+      "recall_at": {
+        "3": 0.5,
+        "5": 0.7,
+        "9": 1.0
+      }
+    }
+  },
+  "method_labels": {
+    "ours_direct_llm_full_sun_stage3": "Ours",
+    "sun_rules_only_full_sun_stage3": "Sun",
+    "winter_2020_native_full_pipeline": "Winter"
+  },
+  "schema_version": "stage3_table3_v3_report@1.0.0",
+  "scope": "three complete pipelines over the full 9-rule Rule Base; the benchmark Gold is the labeled single-mutation target seed. Non-target alarms are reported only as diagnostics because the benchmark is not a complete multi-label compliance Gold.",
+  "status": "complete_target_seeded_full_matching",
+  "unscored_alarm_counts": {
+    "sun_rules_only_full_sun_stage3": {
+      "control::article15::missing_action": 2,
+      "control::article33::missing_action": 2,
+      "control::article34::missing_action": 2,
+      "control::article6::missing_action": 2,
+      "control::article7::missing_action": 2,
+      "variant::article15::missing_action": 2,
+      "variant::article33::missing_action": 2,
+      "variant::article34::missing_action": 2,
+      "variant::article6::missing_action": 2,
+      "variant::article7::missing_action": 2
+    },
+    "winter_2020_native_full_pipeline": {
+      "control::article15::missing_action": 13,
+      "control::article16::missing_action": 13,
+      "control::article17::missing_action": 13,
+      "control::article20::missing_action": 13,
+      "control::article22::missing_action": 13,
+      "control::article33::missing_action": 13,
+      "control::article33::out_of_order": 10,
+      "control::article34::missing_action": 6,
+      "control::article6::missing_action": 13,
+      "control::article7::missing_action": 13,
+      "variant::article15::missing_action": 12,
+      "variant::article16::missing_action": 12,
+      "variant::article17::missing_action": 12,
+      "variant::article20::missing_action": 12,
+      "variant::article22::missing_action": 11,
+      "variant::article33::missing_action": 11,
+      "variant::article34::missing_action": 13,
+      "variant::article6::missing_action": 13,
+      "variant::article7::missing_action": 13
+    }
+  }
+}
