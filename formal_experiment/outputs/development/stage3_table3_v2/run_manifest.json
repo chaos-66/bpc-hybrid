@@ -1,0 +1,145 @@
+{
+  "binding_reference_read_by_runner": false,
+  "code_sha256": {
+    "scripts/build_stage3_table3_inputs_v2.py": "5a5c9322782a6a85b37406a591925a9c9aaf988b5a39573a4007db0bbdee91e1",
+    "scripts/evaluate_stage3_table3_v2.py": "d755bfefd0ffbfd02149853e56c7013a7302ff6e73b212655bf69da7f0520ccd",
+    "scripts/run_stage3_table3_v2.py": "ba14bad6a8ba4ff2f46f1154eeec31b9c0cd132bb66c3551edfaff1f9868ed7c",
+    "src/bpc_hybrid/stage1_process.py": "d81bde594190c96bd3f3e1d7a0d943847809b20500044f12a401d6aee822c396",
+    "src/bpc_hybrid/stage3_table3_v2.py": "52548a94b7bd0e8824c73e6b54503829727f03f6aa7050ab3497246b390b77db",
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
+    "src/bpc_hybrid/sun_stage3/sun_model.py": "c3e1b2dcda8401b64fe726c37f7502d69be69adac7c57a62e5930c90b42e2cdf",
+    "src/bpc_hybrid/sun_stage3/sun_scorer.py": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+    "src/bpc_hybrid/winter_stage3/winter_clause.py": "186806e00729aca70eb52338139cba4e10b09c40ef0db097d8ad238db1fdac56",
+    "src/bpc_hybrid/winter_stage3/winter_model.py": "b249367afd707961e7961f2ccdf4685ad8e2fc5f42ef9d9c158d60879fd8035b",
+    "src/bpc_hybrid/winter_stage3/winter_pair.py": "30848eb83e5bac85af4ffdf870149db3a6845b75fba1e497e8bd7d8548322a73",
+    "src/bpc_hybrid/winter_stage3/winter_similarity.py": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc",
+    "tests/test_stage3_table3_v2.py": "55e7ba31ba1505ce06664024088462606b0ea5d6cb78b3539f519c8d2b585dfb"
+  },
+  "configuration": {
+    "converter": "bpc_hybrid.sun_stage3.gdpr_capsule_converter",
+    "one_scorer_instance_for_sun_and_ours": true,
+    "same_thresholds_for_sun_and_ours": true,
+    "similarity_backend": {
+      "model": "en_core_web_sm",
+      "package": "spacy"
+    },
+    "sun_frozen_thresholds": {
+      "gamma": 0.8,
+      "tau": 0.8,
+      "theta": 0.8
+    },
+    "sun_scorer": "bpc_hybrid.sun_stage3.sun_scorer.SunScorer",
+    "winter_config": {
+      "delta": 0.8,
+      "gamma": 0.4,
+      "path": "configs/winter_stage3_development_v1.json",
+      "reachability_mode": "corrected_reachability",
+      "sha256": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12"
+    }
+  },
+  "counts": {
+    "items": 1,
+    "methods": 3,
+    "prediction_rows": 3
+  },
+  "existing_predictions_reused": true,
+  "gold_read_by_runner": false,
+  "inference_boundary": {
+    "allowed_item_keys": [
+      "item_id",
+      "pair_id",
+      "bpmn_path",
+      "rule_id",
+      "process_id"
+    ],
+    "benchmark_labels_read_by_runner": false,
+    "binding_reference_read": false,
+    "current_bpmn_only": true,
+    "expected_lane_read": false,
+    "gold_violation_type_read": false,
+    "method_rule_predictions_or_regulation_text_only": true,
+    "mutation_description_read": false,
+    "pair_role_read": false,
+    "target_activity_id_read": false,
+    "target_violation_type_read": false
+  },
+  "inputs": {
+    "inference_view": {
+      "path": ".tmp/record-focused-zs3ojo19/pytest/test_forbidden_fields_and_miss0/view.json",
+      "sha256": "de0a2056e0c52ecfa7c6ab0bff1fc76285c1941e085a739624e8cfecdf805f21"
+    },
+    "regulation_text_view": {
+      "path": "data/development/stage3_synth/stage3_regulation_text_view_v2.json",
+      "sha256": "866f635c5cd3817fd939cad66ebfe098ca328a99c868f82ff1e533210d45ad36"
+    },
+    "stage2_input": {
+      "path": "data/input/gdpr7_stage2_input_v1.json",
+      "sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109"
+    },
+    "stage2_predictions": {
+      "ours_direct_llm_frozen_sun_stage3": {
+        "path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
+        "sha256": "b625692d1e4e85b22f0c2e428a46a7c6cd49a2cc4b77a10f6c8e8d25adec50a1"
+      },
+      "sun_rules_only_frozen_sun_stage3": {
+        "path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
+        "sha256": "a993ef533489b7277d37eb0ad5074d9a8d1084b1aff03c2875499e0d103d136e"
+      },
+      "winter_2020_native_wrapper": null
+    }
+  },
+  "llm_api_calls": 0,
+  "methods": {
+    "ours_direct_llm_frozen_sun_stage3": {
+      "expected_schema": "gdpr7_direct_llm_predictions@1.0.0",
+      "label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "llm_used": true,
+      "paper_label": "Ours",
+      "predictions_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
+      "rule_records_path": ".tmp/record-focused-zs3ojo19/pytest/test_forbidden_fields_and_miss0/out/rule_records_ours_direct_llm_frozen_sun_stage3.json",
+      "rule_records_sha256": "09b39617fbe6a712312c5b1a65dbdc004ea5215dd0e3e6d3a423248f48be0aee",
+      "stage2_kind": "direct_llm"
+    },
+    "sun_rules_only_frozen_sun_stage3": {
+      "expected_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+      "label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "llm_used": false,
+      "paper_label": "Sun",
+      "predictions_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
+      "rule_records_path": ".tmp/record-focused-zs3ojo19/pytest/test_forbidden_fields_and_miss0/out/rule_records_sun_rules_only_frozen_sun_stage3.json",
+      "rule_records_sha256": "40e81f2b0a7b9796f14c4c79351673b6005f964daed48a3fad06edb65fd9edf6",
+      "stage2_kind": "rules_only"
+    },
+    "winter_2020_native_wrapper": {
+      "expected_schema": null,
+      "label": "Winter (native wrapper, frozen config)",
+      "llm_used": false,
+      "paper_label": "Winter",
+      "predictions_path": null,
+      "rule_records_path": null,
+      "rule_records_sha256": null,
+      "stage2_kind": "native_regulation_text"
+    }
+  },
+  "network_calls": 0,
+  "outputs": {
+    "predictions_jsonl": {
+      "path": ".tmp/record-focused-zs3ojo19/pytest/test_forbidden_fields_and_miss0/out/predictions.jsonl",
+      "sha256": "0e5f4b223a7574394dddefd9890fc5adb85018a39c2b02eccaa6ed39e3e17fd2"
+    },
+    "run_manifest": "outputs/development/stage3_table3_v2/run_manifest.json"
+  },
+  "pair_role_used_by_inference": false,
+  "reused_existing_llm_predictions": true,
+  "run_id": "stage3_table3_v2_controlled_comparison",
+  "schema_version": "stage3_table3_v2_run@1.0.0",
+  "scope": "development paired synthetic panel; target-check evaluation",
+  "status": "complete",
+  "target_violation_type_read_by_runner": false,
+  "winter_native_implementation_differences": [
+    "re-implemented Winter wrapper, not imported from references/",
+    "corrected reachability mode is used (prototype literal bug disclosed in config)",
+    "resource_cost is explicitly unknown when the BPMN has no non-empty participant/resource labels",
+    "only target-free regulation text and the current BPMN are read"
+  ]
+}

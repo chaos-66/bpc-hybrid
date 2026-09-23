@@ -1,0 +1,449 @@
+{
+  "allowed_item_keys": [
+    "item_id",
+    "pair_id",
+    "bpmn_path",
+    "rule_id",
+    "process_id"
+  ],
+  "benchmark_id": "stage3_paired_benchmark_v1",
+  "items": [
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_missing_action_01__control",
+      "pair_id": "syn_missing_action_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_01/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_missing_action_01__variant",
+      "pair_id": "syn_missing_action_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_missing_action_02__control",
+      "pair_id": "syn_missing_action_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_02/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_missing_action_02__variant",
+      "pair_id": "syn_missing_action_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_missing_action_03__control",
+      "pair_id": "syn_missing_action_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_missing_action_03__variant",
+      "pair_id": "syn_missing_action_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_missing_action_04__control",
+      "pair_id": "syn_missing_action_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_missing_action_04__variant",
+      "pair_id": "syn_missing_action_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "item_id": "syn_missing_action_05__control",
+      "pair_id": "syn_missing_action_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_05/gdpr_3_right_to_access.bpmn",
+      "item_id": "syn_missing_action_05__variant",
+      "pair_id": "syn_missing_action_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_missing_action_06__control",
+      "pair_id": "syn_missing_action_06",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_06/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_missing_action_06__variant",
+      "pair_id": "syn_missing_action_06",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_missing_action_07__control",
+      "pair_id": "syn_missing_action_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_07/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_missing_action_07__variant",
+      "pair_id": "syn_missing_action_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "item_id": "syn_missing_action_08__control",
+      "pair_id": "syn_missing_action_08",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_08/gdpr_6_right_to_rectify.bpmn",
+      "item_id": "syn_missing_action_08__variant",
+      "pair_id": "syn_missing_action_08",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "item_id": "syn_missing_action_09__control",
+      "pair_id": "syn_missing_action_09",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_09/gdpr_4_right_of_portability.bpmn",
+      "item_id": "syn_missing_action_09__variant",
+      "pair_id": "syn_missing_action_09",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "item_id": "syn_missing_action_10__control",
+      "pair_id": "syn_missing_action_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_missing_action_10/gdpr_6_right_to_rectify.bpmn",
+      "item_id": "syn_missing_action_10__variant",
+      "pair_id": "syn_missing_action_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_incorrect_actor_01__control",
+      "pair_id": "syn_incorrect_actor_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_incorrect_actor_01__variant",
+      "pair_id": "syn_incorrect_actor_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_incorrect_actor_02__control",
+      "pair_id": "syn_incorrect_actor_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_incorrect_actor_02__variant",
+      "pair_id": "syn_incorrect_actor_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_incorrect_actor_03__control",
+      "pair_id": "syn_incorrect_actor_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_incorrect_actor_03__variant",
+      "pair_id": "syn_incorrect_actor_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_incorrect_actor_04__control",
+      "pair_id": "syn_incorrect_actor_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_incorrect_actor_04__variant",
+      "pair_id": "syn_incorrect_actor_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "item_id": "syn_incorrect_actor_05__control",
+      "pair_id": "syn_incorrect_actor_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_05/gdpr_3_right_to_access.bpmn",
+      "item_id": "syn_incorrect_actor_05__variant",
+      "pair_id": "syn_incorrect_actor_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "item_id": "syn_incorrect_actor_06__control",
+      "pair_id": "syn_incorrect_actor_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_06/gdpr_4_right_of_portability.bpmn",
+      "item_id": "syn_incorrect_actor_06__variant",
+      "pair_id": "syn_incorrect_actor_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "item_id": "syn_incorrect_actor_07__control",
+      "pair_id": "syn_incorrect_actor_07",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_07/gdpr_4_right_of_portability.bpmn",
+      "item_id": "syn_incorrect_actor_07__variant",
+      "pair_id": "syn_incorrect_actor_07",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_incorrect_actor_08__control",
+      "pair_id": "syn_incorrect_actor_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_08/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_incorrect_actor_08__variant",
+      "pair_id": "syn_incorrect_actor_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_incorrect_actor_09__control",
+      "pair_id": "syn_incorrect_actor_09",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_09/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_incorrect_actor_09__variant",
+      "pair_id": "syn_incorrect_actor_09",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "item_id": "syn_incorrect_actor_10__control",
+      "pair_id": "syn_incorrect_actor_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_incorrect_actor_10/gdpr_6_right_to_rectify.bpmn",
+      "item_id": "syn_incorrect_actor_10__variant",
+      "pair_id": "syn_incorrect_actor_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_out_of_order_01__control",
+      "pair_id": "syn_out_of_order_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_01/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_out_of_order_01__variant",
+      "pair_id": "syn_out_of_order_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_out_of_order_02__control",
+      "pair_id": "syn_out_of_order_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_02/gdpr_1_data_breach.bpmn",
+      "item_id": "syn_out_of_order_02__variant",
+      "pair_id": "syn_out_of_order_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_out_of_order_03__control",
+      "pair_id": "syn_out_of_order_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_03/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_out_of_order_03__variant",
+      "pair_id": "syn_out_of_order_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_out_of_order_04__control",
+      "pair_id": "syn_out_of_order_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_04/gdpr_2_consent_to_use_the_data.bpmn",
+      "item_id": "syn_out_of_order_04__variant",
+      "pair_id": "syn_out_of_order_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "item_id": "syn_out_of_order_05__control",
+      "pair_id": "syn_out_of_order_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_05/gdpr_3_right_to_access.bpmn",
+      "item_id": "syn_out_of_order_05__variant",
+      "pair_id": "syn_out_of_order_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_4_right_of_portability.bpmn",
+      "item_id": "syn_out_of_order_06__control",
+      "pair_id": "syn_out_of_order_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_06/gdpr_4_right_of_portability.bpmn",
+      "item_id": "syn_out_of_order_06__variant",
+      "pair_id": "syn_out_of_order_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_out_of_order_07__control",
+      "pair_id": "syn_out_of_order_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_07/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_out_of_order_07__variant",
+      "pair_id": "syn_out_of_order_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_out_of_order_08__control",
+      "pair_id": "syn_out_of_order_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_08/gdpr_5_right_to_withdraw.bpmn",
+      "item_id": "syn_out_of_order_08__variant",
+      "pair_id": "syn_out_of_order_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_6_right_to_rectify.bpmn",
+      "item_id": "syn_out_of_order_09__control",
+      "pair_id": "syn_out_of_order_09",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_09/gdpr_6_right_to_rectify.bpmn",
+      "item_id": "syn_out_of_order_09__variant",
+      "pair_id": "syn_out_of_order_09",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16"
+    },
+    {
+      "bpmn_path": "data/input/stage1_stage3/gdpr7/gdpr_3_right_to_access.bpmn",
+      "item_id": "syn_out_of_order_10__control",
+      "pair_id": "syn_out_of_order_10",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    },
+    {
+      "bpmn_path": "data/development/stage3_synth/syn_out_of_order_10/gdpr_3_right_to_access.bpmn",
+      "item_id": "syn_out_of_order_10__variant",
+      "pair_id": "syn_out_of_order_10",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15"
+    }
+  ],
+  "removed_fields": [
+    "role",
+    "target_violation_type",
+    "gold_violation_type",
+    "grounding",
+    "structural_observation",
+    "bpmn_sha256"
+  ],
+  "safety": {
+    "gold_labels_present": false,
+    "mutation_answers_present": false,
+    "pair_role_present": false
+  },
+  "schema_version": "stage3_paired_benchmark_inference_view_v2@1.0.0",
+  "source_view": "data/development/stage3_synth/stage3_paired_benchmark_inference_view_v1.json",
+  "source_view_sha256": "15e43f336b5656fcef89dee32a30c692f8dd66ea1f6b6b34c0a7400cd1a7175b",
+  "view_id": "stage3_paired_benchmark_inference_view_v2"
+}

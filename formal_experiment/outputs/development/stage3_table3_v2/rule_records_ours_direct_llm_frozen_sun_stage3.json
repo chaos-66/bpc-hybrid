@@ -1,0 +1,516 @@
+{
+  "converter_summary": {
+    "allowed_schemas": [
+      "gdpr7_sun_rule_only_predictions@1.0.0",
+      "gdpr7_direct_llm_predictions@1.0.0",
+      "gdpr7_human_rule_record_predictions@1.0.0"
+    ],
+    "capsule_records": 74,
+    "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+    "capsule_schema_ok": true,
+    "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+    "expected_schema": "gdpr7_direct_llm_predictions@1.0.0",
+    "failure_reasons": {},
+    "include_modalities": [
+      "obligation"
+    ],
+    "order_relations_absent_rules": [
+      "article15",
+      "article16",
+      "article17",
+      "article20",
+      "article22",
+      "article33"
+    ],
+    "per_rule": {
+      "article15": {
+        "action_count": 15,
+        "action_span_count": 0,
+        "actor_count": 3,
+        "actor_span_count": 0,
+        "clause_count": 13,
+        "envelopes_failed": 0,
+        "envelopes_ok": 13,
+        "excluded_modality_counts": {
+          "permission": 1,
+          "prohibition": 1
+        },
+        "failure_reasons": {},
+        "included_clause_count": 11,
+        "invalid_span_count": 1,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 13
+      },
+      "article16": {
+        "action_count": 2,
+        "action_span_count": 0,
+        "actor_count": 2,
+        "actor_span_count": 0,
+        "clause_count": 2,
+        "envelopes_failed": 0,
+        "envelopes_ok": 2,
+        "excluded_modality_counts": {},
+        "failure_reasons": {},
+        "included_clause_count": 2,
+        "invalid_span_count": 0,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 2
+      },
+      "article17": {
+        "action_count": 6,
+        "action_span_count": 0,
+        "actor_count": 3,
+        "actor_span_count": 0,
+        "clause_count": 14,
+        "envelopes_failed": 0,
+        "envelopes_ok": 13,
+        "excluded_modality_counts": {
+          "definition": 2,
+          "prohibition": 5
+        },
+        "failure_reasons": {},
+        "included_clause_count": 7,
+        "invalid_span_count": 2,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 13
+      },
+      "article20": {
+        "action_count": 4,
+        "action_span_count": 0,
+        "actor_count": 2,
+        "actor_span_count": 0,
+        "clause_count": 5,
+        "envelopes_failed": 0,
+        "envelopes_ok": 5,
+        "excluded_modality_counts": {
+          "prohibition": 2
+        },
+        "failure_reasons": {},
+        "included_clause_count": 3,
+        "invalid_span_count": 1,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 5
+      },
+      "article22": {
+        "action_count": 5,
+        "action_span_count": 0,
+        "actor_count": 2,
+        "actor_span_count": 0,
+        "clause_count": 6,
+        "envelopes_failed": 0,
+        "envelopes_ok": 6,
+        "excluded_modality_counts": {
+          "prohibition": 4
+        },
+        "failure_reasons": {},
+        "included_clause_count": 2,
+        "invalid_span_count": 3,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 6
+      },
+      "article33": {
+        "action_count": 11,
+        "action_span_count": 0,
+        "actor_count": 5,
+        "actor_span_count": 0,
+        "clause_count": 10,
+        "envelopes_failed": 0,
+        "envelopes_ok": 10,
+        "excluded_modality_counts": {
+          "permission": 1
+        },
+        "failure_reasons": {},
+        "included_clause_count": 9,
+        "invalid_span_count": 0,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 10
+      }
+    },
+    "sentence_texts_available": 74,
+    "total_envelopes": 49,
+    "total_envelopes_failed": 0,
+    "total_envelopes_ok": 49,
+    "total_invalid_spans": 7
+  },
+  "method_id": "ours_direct_llm_frozen_sun_stage3",
+  "records": {
+    "article15": {
+      "actions": [
+        "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+        "access to the personal data and the following information the purposes of the processing",
+        "access to the personal data and the categories of personal data concerned",
+        "access to the personal data and the recipients or categories of recipient to whom the personal data have been or will be disclosed",
+        "access to the personal data",
+        "the envisaged period for which the personal data will be stored",
+        "the criteria used to determine that period",
+        "the existence of the right to request from the controller rectification or erasure of personal data or restriction of processing of personal data concerning the data subject or to object to such processing",
+        "lodge a complaint with a supervisory authority",
+        "any available information as to their source",
+        "the existence of automated decision-making, including profiling, referred to in Article 22(1) and (4)",
+        "meaningful information about the logic involved, as well as the significance and the envisaged consequences of such processing for the data subject",
+        "have the right to be informed of the appropriate safeguards",
+        "provide a copy of the personal data undergoing processing",
+        "provided"
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+          "actor": "The data subject"
+        },
+        {
+          "action": "access to the personal data and the following information the purposes of the processing",
+          "actor": "The data subject"
+        },
+        {
+          "action": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+          "actor": "The data subject"
+        },
+        {
+          "action": "access to the personal data and the categories of personal data concerned",
+          "actor": "The data subject"
+        },
+        {
+          "action": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+          "actor": "The data subject"
+        },
+        {
+          "action": "access to the personal data and the recipients or categories of recipient to whom the personal data have been or will be disclosed",
+          "actor": "The data subject"
+        },
+        {
+          "action": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+          "actor": "The data subject"
+        },
+        {
+          "action": "access to the personal data",
+          "actor": "The data subject"
+        },
+        {
+          "action": "the envisaged period for which the personal data will be stored",
+          "actor": "The data subject"
+        },
+        {
+          "action": "the criteria used to determine that period",
+          "actor": "The data subject"
+        },
+        {
+          "action": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+          "actor": "The data subject"
+        },
+        {
+          "action": "access to the personal data",
+          "actor": "The data subject"
+        },
+        {
+          "action": "the existence of the right to request from the controller rectification or erasure of personal data or restriction of processing of personal data concerning the data subject or to object to such processing",
+          "actor": "The data subject"
+        },
+        {
+          "action": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+          "actor": "The data subject"
+        },
+        {
+          "action": "access to the personal data",
+          "actor": "The data subject"
+        },
+        {
+          "action": "lodge a complaint with a supervisory authority",
+          "actor": "The data subject"
+        },
+        {
+          "action": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+          "actor": "The data subject"
+        },
+        {
+          "action": "access to the personal data",
+          "actor": "The data subject"
+        },
+        {
+          "action": "any available information as to their source",
+          "actor": "The data subject"
+        },
+        {
+          "action": "obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed",
+          "actor": "The data subject"
+        },
+        {
+          "action": "access to the personal data",
+          "actor": "The data subject"
+        },
+        {
+          "action": "the existence of automated decision-making, including profiling, referred to in Article 22(1) and (4)",
+          "actor": "The data subject"
+        },
+        {
+          "action": "meaningful information about the logic involved, as well as the significance and the envisaged consequences of such processing for the data subject",
+          "actor": "The data subject"
+        },
+        {
+          "action": "have the right to be informed of the appropriate safeguards",
+          "actor": "the data subject"
+        },
+        {
+          "action": "provide a copy of the personal data undergoing processing",
+          "actor": "The controller"
+        }
+      ],
+      "actors": [
+        "The data subject",
+        "the data subject",
+        "The controller"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+      },
+      "rule_id": "article15",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article16": {
+      "actions": [
+        "obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her",
+        "have the right to have incomplete personal data completed"
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her",
+          "actor": "The data subject"
+        },
+        {
+          "action": "have the right to have incomplete personal data completed",
+          "actor": "the data subject"
+        }
+      ],
+      "actors": [
+        "The data subject",
+        "the data subject"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+      },
+      "rule_id": "article16",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article17": {
+      "actions": [
+        "obtain from the controller the erasure of personal data concerning him or her",
+        "erase personal data",
+        "withdraws consent",
+        "processed",
+        "erased",
+        "take reasonable steps, including technical measures, to inform controllers which are processing the personal data that the data subject has requested the erasure by such controllers of any links to, or copy or replication of, those personal data"
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "obtain from the controller the erasure of personal data concerning him or her",
+          "actor": "The data subject"
+        },
+        {
+          "action": "erase personal data",
+          "actor": "the controller"
+        },
+        {
+          "action": "withdraws consent",
+          "actor": "The data subject"
+        }
+      ],
+      "actors": [
+        "The data subject",
+        "the controller",
+        "the data subject"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+      },
+      "rule_id": "article17",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article20": {
+      "actions": [
+        "receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format",
+        "transmit those data to another controller without hindrance from the controller to which the personal data have been provided",
+        "have the right to have the personal data transmitted directly from one controller to another",
+        "be without prejudice to Article 17"
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format",
+          "actor": "The data subject"
+        },
+        {
+          "action": "transmit those data to another controller without hindrance from the controller to which the personal data have been provided",
+          "actor": "The data subject"
+        },
+        {
+          "action": "have the right to have the personal data transmitted directly from one controller to another",
+          "actor": "the data subject"
+        }
+      ],
+      "actors": [
+        "The data subject",
+        "the data subject"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+      },
+      "rule_id": "article20",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article22": {
+      "actions": [
+        "have the right not to be subject to a decision",
+        "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+        "obtain human intervention on the part of the controller",
+        "express his or her point of view",
+        "contest the decision"
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "have the right not to be subject to a decision",
+          "actor": "The data subject"
+        },
+        {
+          "action": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+          "actor": "the data controller"
+        }
+      ],
+      "actors": [
+        "The data subject",
+        "the data controller"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+      },
+      "rule_id": "article22",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article33": {
+      "actions": [
+        "notify the personal data breach to the supervisory authority competent in accordance with Article 55",
+        "be accompanied by reasons for the delay",
+        "notify the controller",
+        "describe the nature of the personal data breach",
+        "the categories and approximate number of data subjects concerned",
+        "the categories and approximate number of personal data records concerned",
+        "communicate the name and contact details of the data protection officer or other contact point",
+        "describe the likely consequences of the personal data breach",
+        "describe the measures taken or proposed to be taken by the controller to address the personal data breach",
+        "document any personal data breaches",
+        "enable the supervisory authority to verify compliance with this Article"
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "notify the personal data breach to the supervisory authority competent in accordance with Article 55",
+          "actor": "the controller"
+        },
+        {
+          "action": "notify the controller",
+          "actor": "The processor"
+        },
+        {
+          "action": "describe the nature of the personal data breach",
+          "actor": "The notification referred to in paragraph 1"
+        },
+        {
+          "action": "the categories and approximate number of data subjects concerned",
+          "actor": "The notification referred to in paragraph 1"
+        },
+        {
+          "action": "the categories and approximate number of personal data records concerned",
+          "actor": "The notification referred to in paragraph 1"
+        },
+        {
+          "action": "communicate the name and contact details of the data protection officer or other contact point",
+          "actor": "The notification referred to in paragraph 1"
+        },
+        {
+          "action": "describe the likely consequences of the personal data breach",
+          "actor": "The notification referred to in paragraph 1"
+        },
+        {
+          "action": "describe the measures taken or proposed to be taken by the controller to address the personal data breach",
+          "actor": "The notification referred to in paragraph 1"
+        },
+        {
+          "action": "document any personal data breaches",
+          "actor": "The controller"
+        },
+        {
+          "action": "enable the supervisory authority to verify compliance with this Article",
+          "actor": "That documentation"
+        }
+      ],
+      "actors": [
+        "the controller",
+        "The processor",
+        "The notification referred to in paragraph 1",
+        "The controller",
+        "That documentation"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+      },
+      "rule_id": "article33",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    }
+  }
+}

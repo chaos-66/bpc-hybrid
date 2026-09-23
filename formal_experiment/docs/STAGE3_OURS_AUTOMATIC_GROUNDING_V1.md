@@ -1,3 +1,11 @@
+> **Superseded on 2026-09-23.** This v1 automatic-grounding path used the
+> paired CONTROL BPMN as reference and a structural control-vs-current detector;
+> it is not the Table 3 v2 Ours arm. Its F1=1.0 is retracted. The repaired
+> controlled comparison uses `run_stage3_table3_v2.py`, current BPMN only, and
+> the same frozen Sun Stage-3 scorer for Sun and Ours. See
+> `outputs/reports/stage3_table3_v2_rootcause_notes.md` and
+> `docs/MASTER_PIPELINE.md` Section "Table 3 v2 controlled repair".
+
 ﻿# Stage 3 Ours automatic grounding and detector v1
 
 ## Boundary

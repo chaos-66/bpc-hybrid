@@ -1,0 +1,4054 @@
+{
+  "note": "Rows outside the pre-frozen eligibility denominator are retained but marked not_in_eligible_denominator. Non-target alarms are retained without a complete-label false-positive judgment.",
+  "rows": [
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_01__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_01__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_01__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "out_of_order"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_01",
+      "predicted_violated_types": [
+        "missing_action",
+        "out_of_order"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.05263157894736842,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_01__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_01__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_01__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_02__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_02__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_02__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "out_of_order"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_02",
+      "predicted_violated_types": [
+        "missing_action",
+        "out_of_order"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.05263157894736842,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_02__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_02__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_02__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_03__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_03__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.8,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_03__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.2,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_03__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_03__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.8,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_03__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_04__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_04__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.8,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_04__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.2,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_04__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_04__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.8,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_04__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_05__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_05__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_05__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.5087719298245614,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_05__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_05__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_05__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_06__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_06__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_06__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.32,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_06__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_06__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_06__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_07__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_07__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_07__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.32,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_07__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_07__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_07__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_08__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_08__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_08__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.42857142857142855,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_08__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_08__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_08__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_missing_action_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_09__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_09__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_09__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.6,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_09__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_09__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_09__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_10__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_10__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_missing_action_10__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fp",
+      "pair_id": "syn_missing_action_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.42857142857142855,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_10__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_10__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "missing_action",
+      "item_id": "syn_missing_action_10__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [],
+      "non_target_unknown_types": [
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "outcome": "tp",
+      "pair_id": "syn_missing_action_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 1.0,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_01__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_01__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_01__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action",
+        "out_of_order"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "tn",
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted_violated_types": [
+        "missing_action",
+        "out_of_order"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_01__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_01__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_01__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_02__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_02__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_02__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action",
+        "out_of_order"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "tn",
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted_violated_types": [
+        "missing_action",
+        "out_of_order"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_02__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_02__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_02__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_03__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_03__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_03__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_03__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_03__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_03__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_04__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_04__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_04__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "tn",
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_04__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_04__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_04__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_05__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_05__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_05__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "tn",
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_05__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_05__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_05__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_06__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "empty_rule_actor_denominator",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_06__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_06__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_06__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "empty_rule_actor_denominator",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_06__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_06__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_07__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "empty_rule_actor_denominator",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_07__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_07__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_07__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "empty_rule_actor_denominator",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_07__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_07__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_08__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "incomplete_rule_actor_action_map",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_08__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "unknown_negative_not_tn",
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "incomplete_rule_actor_action_map",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_08__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "tn",
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_08__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "incomplete_rule_actor_action_map",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_08__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "incomplete_rule_actor_action_map",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": true,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_08__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "fn_unknown_positive",
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_09__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "incomplete_rule_actor_action_map",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_09__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "incomplete_rule_actor_action_map",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_09__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_09__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "incomplete_rule_actor_action_map",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_09__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "incomplete_rule_actor_action_map",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_09__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_10__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "empty_rule_actor_denominator",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_10__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_incorrect_actor_10__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_10__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "empty_rule_actor_denominator",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_10__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "action_mapping_below_gamma",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_10__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "out_of_order"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_incorrect_actor_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_process_resource_labels",
+      "target_check_status": "unknown",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_01__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_01__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_01__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_01",
+      "predicted_violated_types": [
+        "missing_action",
+        "out_of_order"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.5,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_01__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_01__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_01__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_01",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_02__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_02__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_02__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_02",
+      "predicted_violated_types": [
+        "missing_action",
+        "out_of_order"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.5,
+      "target_check_reason": null,
+      "target_check_status": "violated",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_02__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_02__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_02__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_02",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": null,
+      "target_check_status": "satisfied",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_03__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_03__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_03__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_03__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_03__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_03__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_03",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_04__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_04__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_04__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_04__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_04__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_04__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_04",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_05__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_05__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_05__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_05__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_05__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_05__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_05",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_06__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_06__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_06__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_06__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_06__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_06__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_06",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_07__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_07__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_07__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_07__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_07__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_07__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_07",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_08__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_08__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_08__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_08__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_08__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_08__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_08",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_09__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_09__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_09__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_09__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_09__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_09__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_09",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_10__control",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_10__control",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "compliant",
+      "item_id": "syn_out_of_order_10__control",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "control",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_10__variant",
+      "method_id": "sun_rules_only_frozen_sun_stage3",
+      "method_label": "Sun (Rules-Only Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_10__variant",
+      "method_id": "ours_direct_llm_frozen_sun_stage3",
+      "method_label": "Ours (Direct-LLM Stage 2 + frozen Sun Stage 3)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": 0.0,
+      "target_check_reason": "no_rule_order_endpoints",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "eligible": false,
+      "gold_violation_type": "out_of_order",
+      "item_id": "syn_out_of_order_10__variant",
+      "method_id": "winter_2020_native_wrapper",
+      "method_label": "Winter (native wrapper, frozen config)",
+      "non_target_alarm_types": [
+        "missing_action"
+      ],
+      "non_target_unknown_types": [
+        "incorrect_actor"
+      ],
+      "outcome": "not_in_eligible_denominator",
+      "pair_id": "syn_out_of_order_10",
+      "predicted_violated_types": [
+        "missing_action"
+      ],
+      "role": "variant",
+      "target_check_raw_score": null,
+      "target_check_reason": "no_rule_side_flow_relations",
+      "target_check_status": "unknown",
+      "target_violation_type": "out_of_order"
+    }
+  ],
+  "schema_version": "stage3_table3_v2_error_analysis@1.0.0"
+}

@@ -1,0 +1,331 @@
+{
+  "converter_summary": {
+    "allowed_schemas": [
+      "gdpr7_sun_rule_only_predictions@1.0.0",
+      "gdpr7_direct_llm_predictions@1.0.0",
+      "gdpr7_human_rule_record_predictions@1.0.0"
+    ],
+    "capsule_records": 74,
+    "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+    "capsule_schema_ok": true,
+    "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+    "expected_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+    "failure_reasons": {},
+    "include_modalities": [
+      "obligation"
+    ],
+    "order_relations_absent_rules": [
+      "article15",
+      "article16",
+      "article17",
+      "article20",
+      "article22",
+      "article33"
+    ],
+    "per_rule": {
+      "article15": {
+        "action_count": 4,
+        "action_span_count": 0,
+        "actor_count": 1,
+        "actor_span_count": 0,
+        "clause_count": 13,
+        "envelopes_failed": 0,
+        "envelopes_ok": 13,
+        "excluded_modality_counts": {
+          "definition": 1,
+          "permission": 1,
+          "prohibition": 1
+        },
+        "failure_reasons": {},
+        "included_clause_count": 10,
+        "invalid_span_count": 0,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 13
+      },
+      "article16": {
+        "action_count": 1,
+        "action_span_count": 0,
+        "actor_count": 0,
+        "actor_span_count": 0,
+        "clause_count": 2,
+        "envelopes_failed": 0,
+        "envelopes_ok": 2,
+        "excluded_modality_counts": {
+          "definition": 1
+        },
+        "failure_reasons": {},
+        "included_clause_count": 1,
+        "invalid_span_count": 0,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 2
+      },
+      "article17": {
+        "action_count": 3,
+        "action_span_count": 0,
+        "actor_count": 2,
+        "actor_span_count": 0,
+        "clause_count": 14,
+        "envelopes_failed": 0,
+        "envelopes_ok": 13,
+        "excluded_modality_counts": {
+          "definition": 6,
+          "prohibition": 5
+        },
+        "failure_reasons": {},
+        "included_clause_count": 3,
+        "invalid_span_count": 0,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 13
+      },
+      "article20": {
+        "action_count": 2,
+        "action_span_count": 0,
+        "actor_count": 0,
+        "actor_span_count": 0,
+        "clause_count": 5,
+        "envelopes_failed": 0,
+        "envelopes_ok": 5,
+        "excluded_modality_counts": {
+          "definition": 1,
+          "prohibition": 2
+        },
+        "failure_reasons": {},
+        "included_clause_count": 2,
+        "invalid_span_count": 0,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 5
+      },
+      "article22": {
+        "action_count": 2,
+        "action_span_count": 0,
+        "actor_count": 1,
+        "actor_span_count": 0,
+        "clause_count": 6,
+        "envelopes_failed": 0,
+        "envelopes_ok": 6,
+        "excluded_modality_counts": {
+          "prohibition": 4
+        },
+        "failure_reasons": {},
+        "included_clause_count": 2,
+        "invalid_span_count": 0,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 6
+      },
+      "article33": {
+        "action_count": 12,
+        "action_span_count": 0,
+        "actor_count": 3,
+        "actor_span_count": 0,
+        "clause_count": 10,
+        "envelopes_failed": 0,
+        "envelopes_ok": 10,
+        "excluded_modality_counts": {
+          "permission": 1
+        },
+        "failure_reasons": {},
+        "included_clause_count": 9,
+        "invalid_span_count": 0,
+        "order_relations_absent": true,
+        "order_relations_count": 0,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+        "sentence_count": 10
+      }
+    },
+    "sentence_texts_available": 74,
+    "total_envelopes": 49,
+    "total_envelopes_failed": 0,
+    "total_envelopes_ok": 49,
+    "total_invalid_spans": 0
+  },
+  "method_id": "sun_rules_only_frozen_sun_stage3",
+  "records": {
+    "article15": {
+      "actions": [
+        "have the right to obtain from the controller confirmation as to whether or not",
+        "have the right",
+        "have the right to be informed of the appropriate safeguards pursuant to Article",
+        "provide a copy of the personal data undergoing processing."
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "provide a copy of the personal data undergoing processing.",
+          "actor": "The controller"
+        }
+      ],
+      "actors": [
+        "The controller"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+      },
+      "rule_id": "article15",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article16": {
+      "actions": [
+        "have the right to obtain from the controller without undue delay the"
+      ],
+      "actor_action_pairs": [],
+      "actors": [],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+      },
+      "rule_id": "article16",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article17": {
+      "actions": [
+        "have the right to obtain from the controller the erasure of personal data",
+        "have",
+        "take reasonable steps, including technical measures, to inform controllers which"
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "take reasonable steps, including technical measures, to inform controllers which",
+          "actor": "the controller, taking account of available technology and the cost of implementation"
+        }
+      ],
+      "actors": [
+        "the controller, taking account of available technology and the cost of implementation",
+        "the controller"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+      },
+      "rule_id": "article17",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article20": {
+      "actions": [
+        "have the right to have the personal data transmitted directly from one",
+        "be without prejudice to Article 17."
+      ],
+      "actor_action_pairs": [],
+      "actors": [],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+      },
+      "rule_id": "article20",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article22": {
+      "actions": [
+        "have the right not to be subject to a decision based solely on automated",
+        "implement suitable measures to safeguard the data subject's rights and freedoms"
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "implement suitable measures to safeguard the data subject's rights and freedoms",
+          "actor": "the data controller"
+        }
+      ],
+      "actors": [
+        "the data controller"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+      },
+      "rule_id": "article22",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    },
+    "article33": {
+      "actions": [
+        "notify the personal data breach to the supervisory authority competent in",
+        ", it shall be accompanied by reasons for the delay.",
+        "notify the controller without undue delay after becoming aware of a personal data breach.",
+        "describe the nature of the personal data breach including where possible, the",
+        "referred to in paragraph 1 shall at least communicate the name and contact",
+        "communicate the name and contact details of the data protection officer or other",
+        "where more information can be obtained",
+        "at least describe the likely consequences of the personal data breach.",
+        "referred to in paragraph 1 shall at least describe the measures taken or",
+        "at least describe",
+        "document any personal data breaches, comprising the facts relating to the",
+        "enable the supervisory authority to verify compliance with this Article."
+      ],
+      "actor_action_pairs": [
+        {
+          "action": "notify the personal data breach to the supervisory authority competent in",
+          "actor": "the controller"
+        },
+        {
+          "action": "notify the controller without undue delay after becoming aware of a personal data breach.",
+          "actor": "The processor"
+        },
+        {
+          "action": "document any personal data breaches, comprising the facts relating to the",
+          "actor": "The controller"
+        }
+      ],
+      "actors": [
+        "the controller",
+        "The processor",
+        "The controller"
+      ],
+      "failed": false,
+      "failure_reasons": [],
+      "modality": "obligation",
+      "order_relations": [],
+      "provenance": {
+        "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+        "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+        "gold_fields_read": false,
+        "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+        "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+      },
+      "rule_id": "article33",
+      "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+    }
+  }
+}

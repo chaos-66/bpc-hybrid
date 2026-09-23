@@ -1521,3 +1521,25 @@ development 准备可受控并行；Stage 3 LLM/Hybrid、正式 Oracle、端到�
 - S2.11 canonical v3（2026-08-17，Checkpoint F，**当前入口**）：`outputs/reports/s2_11_proposal_report_v3.json` + `outputs/reports/s2_11_batch_import_dry_run_v3.json`（+ `data/development/human_review/s2_11_blank_review_v2.json`（canonical，36 条全 unresolved）+ `s2_11_review_decisions_v2.json`；提案构建 `scripts/s2_11_build_proposals_v3.py`；importer v3 `scripts/s2_11_batch_import_v3.py`；canonical validator v3 `src/bpc_hybrid/s2_11_canonical_v3.py`；freeze validator v3 `scripts/verify_s2_11_review_freeze_v3.py`；review tool v3 `scripts/review_s2_11_v3.py`；测试 `tests/test_s2_11_canonical_v3.py`）；**proposal v1/v2 已 superseded 不可批准**（`s2_11_proposal_report_v1.json`/`_v2.json` 与本地包逐字节保留）；v1/v2 空白 pack/决策文件保留为历史；Checkpoint A 应用门禁 `outputs/reports/s2_11_gates_applied_checkpoint_a_v1.json`（用户授权事件 `configs/s2_11_user_authorization_event_v1.json`、G0.5 冻结 `configs/g05_complexity_frozen_v1.json`、M1 政策 `configs/s2_11_mapping_policy_m1_v1.json`）；v6 及更早为历史安全基线（核心资产字节未改）
 - 历史（superseded 当前状态判断，文件保留）：`outputs/reports/s2_13_stage2_freeze_gap_capsule.{json,md}`、`outputs/reports/s3_7_oracle_readiness_v2.json`、`outputs/reports/s37_oracle_readiness_v1.json`
 - 论文工作稿与主张矩阵：`paper/THESIS_DRAFT.md`、`paper/CLAIM_EVIDENCE_MATRIX.md`
+
+## 8. 2026-09-23 Table 3 v2 repair（当前）
+
+- 旧 `outputs/reports/stage3_table3_v1.json` 的 Ours F1=1.0 **已撤回**：其 automatic
+  grounding 以配对 control BPMN 为参考，候选并集在 13 个 eligible pairs 中有 10 个覆盖
+  整个 control；`run_stage3_ours_v1.decide_item` 仅检查『control 活动是否在当前图缺失 /
+  lane 是否改变』，`actor_predictions` 未进入 actor 判定；predecessor runner 另用
+  development rule extractor 并按 `target_violation_type` 选输出。
+- 修复主比较：Sun 与 Ours 只替换 Stage 2 capsule，共用同一个 `gdpr_capsule_converter`、
+  同一个冻结 `SunScorer` 实例与 frozen thresholds；Winter 使用 native wrapper；input view
+  无 role/target/gold；所有信号先持久化再由 evaluator 读 label。
+- 运行产物：`outputs/development/stage3_table3_v2/`（predictions、rule records、manifest）；
+  `outputs/reports/stage3_table3_v2.{json,md}`、`stage3_table3_v2_error_analysis.json`、
+  `stage3_table3_v2_rootcause_notes.md`。
+- 真实结果（13 pairs / 26 items；out_of_order N/A）：Sun/Ours/Winter 三者 macro-F1 均
+  0.3333、micro-F1 均 0.5517；missing_action P=0.5000/R=1.0000/F1=0.6667（8 TP/8 FP）；
+  Sun/Ours actor 5 正例 + 5 control 全部 unknown、F1=0.0；Winter actor 5 正例 unknown、
+  5 control satisfied、F1=0.0。Ours 未胜出；未调阈值或改样本。
+- 独立证据：13 个 eligible controls 仅 6 个唯一 BPMN（7 个重复 control）。
+- 验收判断：实验已真实完成且旧泄漏 F1=1 口径已修复；正向 Ours 主张不满足。下一项若要
+  继续，只能单独预注册额外 grounding 实验臂并说明新增变量，或补齐有原文依据的 order
+  标注产生合法 order 分母，不得围绕本轮分数调参。

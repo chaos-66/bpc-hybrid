@@ -1291,6 +1291,22 @@ compliant specificity **1.0000**、variant exact-type **30/30**、unobservable *
 | B | Table 3 作为**框架+可行性**表发表：配对 benchmark、anti-degeneracy 保证、grounded 上界、前人结果，并把 grounding 要求本身写成发现 | 无需新增 | "我们说明现有检测在本语料上为何退化，以及一个可测 benchmark 究竟需要什么" |
 
 路径 B **完全由已提交的证据支撑**；A1/A2 是唯一能得出"优于前人"的路，且都卡在人工标注上。
+### Table 3 v2 controlled repair（2026-09-23，零 API，当前口径）
+
+**旧 F1=1 撤回**：`outputs/reports/stage3_table3_v1.json` 的 Ours 行来自一个受控对照之外的结构检查路径：automatic grounding 使用配对 CONTROL BPMN，`detector_activity_ids` 是候选并集（13 个 eligible pairs 中 10 个覆盖整个 control 活动集）；随后 `run_stage3_ours_v1.decide_item` 仅比较 current BPMN 与 control 的『活动是否存在 / lane 是否改变』，且 `actor_predictions` 未进入 actor 判定；`run_stage3_predecessors_paired_v1.py` 又用 development rule extractor 并按 `target_violation_type` 选输出。因此旧 Ours F1=1 是结构变异复现，不是法规语义匹配，相关『Ours 胜出/端到端语义合规』结论撤回。
+
+**修复后的主比较**：新增 sanitized inference view（无 role/target/gold）和 `scripts/run_stage3_table3_v2.py`。Sun 与 Ours 只替换 Stage 2 capsule，共用同一 `gdpr_capsule_converter`、同一个冻结 `SunScorer` 实例与同一组 frozen `tau/gamma/theta`；Winter 使用 native wrapper 与 frozen config；所有类型信号先持久化，之后 evaluator 才读取 benchmark label。产物：
+
+- `data/development/stage3_synth/stage3_paired_benchmark_inference_view_v2.json`
+- `data/development/stage3_synth/stage3_regulation_text_view_v2.json`
+- `outputs/development/stage3_table3_v2/{predictions.jsonl,rule_records_*.json,run_manifest.json}`
+- `outputs/reports/stage3_table3_v2.{json,md}`
+- `outputs/reports/stage3_table3_v2_error_analysis.json`
+- `outputs/reports/stage3_table3_v2_rootcause_notes.md`
+
+**真实结果（eligible target checks, 13 pairs / 26 items）**：Sun、Ours、Winter 三者 macro-F1 均为 0.3333，micro-F1 均为 0.5517。`missing_action` 为 P 0.5000 / R 1.0000 / F1 0.6667（8 TP / 8 FP）；Sun 与 Ours 的 `incorrect_actor` 5 个正例与 5 个 control 全部 unknown（frozen gamma 下 action mapping below gamma / actor map 不完整），`f1=0.0`；Winter 的 5 个 actor 正例 unknown、5 个 control 为 satisfied（无资源标签的 variant 为 unknown，有资源标签的 control 为 satisfied），`f1=0.0`。`out_of_order` 因规则侧 `order_relations` 为 0，eligible 分母为 0，保持 N/A，不填 0。结果不支持『Ours 优于前人』；本轮未按结果调阈值或改样本。
+
+**边界**：13 个 eligible pairs 只有 6 个独立 control BPMN（7 个重复 control），不能把重复 control 当独立证据。下一步若要做正向 Ours 主张，必须单独预注册额外实验臂并明确新增变量（例如 rule-action→activity grounding），或补齐有原文依据的规则侧 order 标注以产生合法 order 分母；不得在本轮分数上继续调参。
 
 **过渡核账 successor v9**：`outputs/reports/s2_13_s3_7_transition_readiness_v9.json`
 （builder/verifier/schema/tests 齐备，verifier 全过）。v8 的 Gold-Rule-Record 三态

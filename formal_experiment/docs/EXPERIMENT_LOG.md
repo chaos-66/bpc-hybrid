@@ -5261,3 +5261,21 @@
 - 仍存在 blocker：无
 - 备注：用户要求直接根据候选解决。仅因明确追溯请求只读ZIP内指定agent-review成员，核验member hash，未解压/恢复归档代码或重开旧批次。新增AI补充参考结果30/30完成、human_recheck=0，is_gold=false。原25 action/22 actor对应及全量人工决定保留；5个空action明确为候选无对应、通知对象不同、条件检查或动作不同；7项以原文证据补充controller相对执行者推断、1项只确认流程执行者；10项顺序为process-only。未创建原Gold中不存在的ID，未将新判断标为人工批准或正式Gold，不作为自动预测输入。测试只读活动来源，不打开归档；未执行真实实验或外部API。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-23T07:24:48.287197+00:00 - Stage 3 Table 3 v2 repaired controlled comparison
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_table3_v2；阶段=stage3；方法=sun_rules_only+direct_llm+winter_2020；状态=成功（`succeeded`）
+- 实际运行命令：`python scripts/run_stage3_table3_v2.py --overwrite; python scripts/evaluate_stage3_table3_v2.py`
+- manifest：outputs/development/stage3_table3_v2/run_manifest.json
+- 结果摘要：zero new API; Sun/Ours/Winter macro-F1 0.3333, micro-F1 0.5517; missing P/R/F1 0.5/1.0/0.6667; actor F1 0.0; order N/A
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：9 passed, 2 warnings in 6.20s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`8b95d62f7b39edbfae3a4bf2f940263866e6cbac`；相关未提交路径：28 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Old control-grounded Ours F1=1 retracted. Current-BPMN inference with shared converter and frozen SunScorer; labels read only after persisted predictions.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
