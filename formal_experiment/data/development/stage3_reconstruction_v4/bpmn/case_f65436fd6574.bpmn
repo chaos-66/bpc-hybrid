@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions" targetNamespace="urn:bpc:reconstruction:v4">
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="Participant" name="Controller" processRef="Process" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:startEvent id="Start" name="Impact assessment completed; high risk without mitigation requires prior consultation" />
+    <bpmn:task id="Activity_0" name="Review the impact assessment requiring consultation" />
+    <bpmn:task id="Activity_1" name="Consult the supervisory authority about the proposed processing" />
+    <bpmn:task id="Activity_2" name="Start the proposed processing" />
+    <bpmn:task id="Activity_3" name="Retain the consultation record" />
+    <bpmn:endEvent id="End" />
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="Start" targetRef="Activity_0" />
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Activity_0" targetRef="Activity_1" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Activity_1" targetRef="Activity_2" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Activity_2" targetRef="Activity_3" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Activity_3" targetRef="End" />
+  </bpmn:process>
+</bpmn:definitions>

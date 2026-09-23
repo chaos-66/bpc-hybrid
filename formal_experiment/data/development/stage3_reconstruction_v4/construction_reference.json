@@ -1,0 +1,1183 @@
+{
+  "schema_version": "stage3_construction_reference@1.0.0",
+  "is_gold": false,
+  "human_adjudicated": false,
+  "release_gate": {
+    "formal_gold_created": false,
+    "benchmark_scope_user_acceptance": "pending_concrete_review",
+    "sun_order_extraction_conformance": "blocked_existing_b0_hardcodes_empty_order_relations",
+    "new_api_authorization": "not_authorized",
+    "extreme_f1_handling": "Retain actual predictions and metrics; investigate implementation and scope. Never clip scores, tune on this benchmark, alter references, or remove cases to avoid 0/1."
+  },
+  "evaluation_scope": "Checking on independently specified applicable regulation-process pairs; predict all five rules for every current BPMN, then evaluate the specified scope in a separate evaluator. No claim of automatic end-to-end rule selection or complete GDPR compliance. Matching scores may be stored, but no MAP without independent complete relevance reference.",
+  "cases": [
+    {
+      "case_id": "case_fd4b197b953b",
+      "family_id": "article13p3",
+      "rule_id": "article13p3",
+      "variant": "control",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "数据直接从本人获得；控制者决定改用于新目的；本人尚不知道新目的及相关补充信息；本例评价第13(3)款的告知与先后要求，不评价整个第13条的信息收集环节。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+        "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          2676,
+          3006
+        ],
+        "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to that further processing",
+            "span_in_excerpt": [
+              186,
+              218
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall provide the data subject",
+            "span_in_excerpt": [
+              155,
+              185
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall provide",
+            "span_in_excerpt": [
+              140,
+              168
+            ]
+          }
+        },
+        "applicability_context": [
+          {
+            "char_span": [
+              3008,
+              3112
+            ],
+            "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information."
+          }
+        ]
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_c4d9054721a1",
+      "family_id": "article13p3",
+      "rule_id": "article13p3",
+      "variant": "missing_action",
+      "reference_states": {
+        "missing_action": "violated",
+        "incorrect_actor": "not_applicable",
+        "out_of_order": "not_applicable"
+      },
+      "applicability_zh": "数据直接从本人获得；控制者决定改用于新目的；本人尚不知道新目的及相关补充信息；本例评价第13(3)款的告知与先后要求，不评价整个第13条的信息收集环节。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+        "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          2676,
+          3006
+        ],
+        "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to that further processing",
+            "span_in_excerpt": [
+              186,
+              218
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall provide the data subject",
+            "span_in_excerpt": [
+              155,
+              185
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall provide",
+            "span_in_excerpt": [
+              140,
+              168
+            ]
+          }
+        },
+        "applicability_context": [
+          {
+            "char_span": [
+              3008,
+              3112
+            ],
+            "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information."
+          }
+        ]
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_5c2cca2ca4cf",
+      "family_id": "article13p3",
+      "rule_id": "article13p3",
+      "variant": "incorrect_actor",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "violated",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "数据直接从本人获得；控制者决定改用于新目的；本人尚不知道新目的及相关补充信息；本例评价第13(3)款的告知与先后要求，不评价整个第13条的信息收集环节。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+        "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          2676,
+          3006
+        ],
+        "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to that further processing",
+            "span_in_excerpt": [
+              186,
+              218
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall provide the data subject",
+            "span_in_excerpt": [
+              155,
+              185
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall provide",
+            "span_in_excerpt": [
+              140,
+              168
+            ]
+          }
+        },
+        "applicability_context": [
+          {
+            "char_span": [
+              3008,
+              3112
+            ],
+            "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information."
+          }
+        ]
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_9a62a7fd9853",
+      "family_id": "article13p3",
+      "rule_id": "article13p3",
+      "variant": "out_of_order",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "violated"
+      },
+      "applicability_zh": "数据直接从本人获得；控制者决定改用于新目的；本人尚不知道新目的及相关补充信息；本例评价第13(3)款的告知与先后要求，不评价整个第13条的信息收集环节。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+        "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          2676,
+          3006
+        ],
+        "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to that further processing",
+            "span_in_excerpt": [
+              186,
+              218
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall provide the data subject",
+            "span_in_excerpt": [
+              155,
+              185
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall provide",
+            "span_in_excerpt": [
+              140,
+              168
+            ]
+          }
+        },
+        "applicability_context": [
+          {
+            "char_span": [
+              3008,
+              3112
+            ],
+            "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information."
+          }
+        ]
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_44fc51ad7da0",
+      "family_id": "article14p4",
+      "rule_id": "article14p4",
+      "variant": "control",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "数据来自第三方；控制者计划用于另一目的；本人尚不知道该信息；可以合理提供信息，且不存在法定取得/披露或保密例外；本例仅评价第14(4)款。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          3155,
+          3484
+        ],
+        "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to that further processing",
+            "span_in_excerpt": [
+              185,
+              217
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall provide the data subject",
+            "span_in_excerpt": [
+              154,
+              184
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall provide",
+            "span_in_excerpt": [
+              139,
+              167
+            ]
+          }
+        },
+        "applicability_context": [
+          {
+            "char_span": [
+              3486,
+              3571
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information."
+          },
+          {
+            "char_span": [
+              3576,
+              4295
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  the provision of such information proves impossible or would involve a disproportionate effort, in particular for processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes, subject to the conditions and safeguards referred to in Article 89(1) or in so far as the obligation referred to in paragraph 1 of this Article is likely to render impossible or seriously impair the achievement of the objectives of that processing. In such cases the controller shall take appropriate measures to protect the data subject's rights and freedoms and legitimate interests, including making the information publicly available."
+          },
+          {
+            "char_span": [
+              4298,
+              4541
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  obtaining or disclosure is expressly laid down by Union or Member State law to which the controller is subject and which provides appropriate measures to protect the data subject's legitimate interests."
+          },
+          {
+            "char_span": [
+              4544,
+              4767
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  where the personal data must remain confidential subject to an obligation of professional secrecy regulated by Union or Member State law, including a statutory obligation of secrecy."
+          }
+        ]
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_0f7180438501",
+      "family_id": "article14p4",
+      "rule_id": "article14p4",
+      "variant": "missing_action",
+      "reference_states": {
+        "missing_action": "violated",
+        "incorrect_actor": "not_applicable",
+        "out_of_order": "not_applicable"
+      },
+      "applicability_zh": "数据来自第三方；控制者计划用于另一目的；本人尚不知道该信息；可以合理提供信息，且不存在法定取得/披露或保密例外；本例仅评价第14(4)款。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          3155,
+          3484
+        ],
+        "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to that further processing",
+            "span_in_excerpt": [
+              185,
+              217
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall provide the data subject",
+            "span_in_excerpt": [
+              154,
+              184
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall provide",
+            "span_in_excerpt": [
+              139,
+              167
+            ]
+          }
+        },
+        "applicability_context": [
+          {
+            "char_span": [
+              3486,
+              3571
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information."
+          },
+          {
+            "char_span": [
+              3576,
+              4295
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  the provision of such information proves impossible or would involve a disproportionate effort, in particular for processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes, subject to the conditions and safeguards referred to in Article 89(1) or in so far as the obligation referred to in paragraph 1 of this Article is likely to render impossible or seriously impair the achievement of the objectives of that processing. In such cases the controller shall take appropriate measures to protect the data subject's rights and freedoms and legitimate interests, including making the information publicly available."
+          },
+          {
+            "char_span": [
+              4298,
+              4541
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  obtaining or disclosure is expressly laid down by Union or Member State law to which the controller is subject and which provides appropriate measures to protect the data subject's legitimate interests."
+          },
+          {
+            "char_span": [
+              4544,
+              4767
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  where the personal data must remain confidential subject to an obligation of professional secrecy regulated by Union or Member State law, including a statutory obligation of secrecy."
+          }
+        ]
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_3d2aaae29b37",
+      "family_id": "article14p4",
+      "rule_id": "article14p4",
+      "variant": "incorrect_actor",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "violated",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "数据来自第三方；控制者计划用于另一目的；本人尚不知道该信息；可以合理提供信息，且不存在法定取得/披露或保密例外；本例仅评价第14(4)款。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          3155,
+          3484
+        ],
+        "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to that further processing",
+            "span_in_excerpt": [
+              185,
+              217
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall provide the data subject",
+            "span_in_excerpt": [
+              154,
+              184
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall provide",
+            "span_in_excerpt": [
+              139,
+              167
+            ]
+          }
+        },
+        "applicability_context": [
+          {
+            "char_span": [
+              3486,
+              3571
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information."
+          },
+          {
+            "char_span": [
+              3576,
+              4295
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  the provision of such information proves impossible or would involve a disproportionate effort, in particular for processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes, subject to the conditions and safeguards referred to in Article 89(1) or in so far as the obligation referred to in paragraph 1 of this Article is likely to render impossible or seriously impair the achievement of the objectives of that processing. In such cases the controller shall take appropriate measures to protect the data subject's rights and freedoms and legitimate interests, including making the information publicly available."
+          },
+          {
+            "char_span": [
+              4298,
+              4541
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  obtaining or disclosure is expressly laid down by Union or Member State law to which the controller is subject and which provides appropriate measures to protect the data subject's legitimate interests."
+          },
+          {
+            "char_span": [
+              4544,
+              4767
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  where the personal data must remain confidential subject to an obligation of professional secrecy regulated by Union or Member State law, including a statutory obligation of secrecy."
+          }
+        ]
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_f8aaa652c17b",
+      "family_id": "article14p4",
+      "rule_id": "article14p4",
+      "variant": "out_of_order",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "violated"
+      },
+      "applicability_zh": "数据来自第三方；控制者计划用于另一目的；本人尚不知道该信息；可以合理提供信息，且不存在法定取得/披露或保密例外；本例仅评价第14(4)款。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          3155,
+          3484
+        ],
+        "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to that further processing",
+            "span_in_excerpt": [
+              185,
+              217
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall provide the data subject",
+            "span_in_excerpt": [
+              154,
+              184
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall provide",
+            "span_in_excerpt": [
+              139,
+              167
+            ]
+          }
+        },
+        "applicability_context": [
+          {
+            "char_span": [
+              3486,
+              3571
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information."
+          },
+          {
+            "char_span": [
+              3576,
+              4295
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  the provision of such information proves impossible or would involve a disproportionate effort, in particular for processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes, subject to the conditions and safeguards referred to in Article 89(1) or in so far as the obligation referred to in paragraph 1 of this Article is likely to render impossible or seriously impair the achievement of the objectives of that processing. In such cases the controller shall take appropriate measures to protect the data subject's rights and freedoms and legitimate interests, including making the information publicly available."
+          },
+          {
+            "char_span": [
+              4298,
+              4541
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  obtaining or disclosure is expressly laid down by Union or Member State law to which the controller is subject and which provides appropriate measures to protect the data subject's legitimate interests."
+          },
+          {
+            "char_span": [
+              4544,
+              4767
+            ],
+            "text": "Paragraphs 1 to 4 shall not apply where  where the personal data must remain confidential subject to an obligation of professional secrecy regulated by Union or Member State law, including a statutory obligation of secrecy."
+          }
+        ]
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_89c44a45c04d",
+      "family_id": "article18p3",
+      "rule_id": "article18p3",
+      "variant": "control",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "本人已依据第18(1)款取得处理限制；解除条件已满足；控制者准备解除限制；本例只评价解除前由控制者告知的义务。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article18.txt",
+        "source_file_sha256": "7b1015297c6f023e39ce2cb8d74ef942a2d72dbbe804cfac73c6295dcb0693b9",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          1172,
+          1337
+        ],
+        "text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+        "text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+        "evidence": {
+          "order_marker": {
+            "text": "before the restriction of processing is lifted",
+            "span_in_excerpt": [
+              118,
+              164
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall be informed by the controller",
+            "span_in_excerpt": [
+              82,
+              117
+            ]
+          },
+          "executor_evidence": {
+            "text": "by the controller",
+            "span_in_excerpt": [
+              100,
+              117
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_fb254253b6dd",
+      "family_id": "article18p3",
+      "rule_id": "article18p3",
+      "variant": "missing_action",
+      "reference_states": {
+        "missing_action": "violated",
+        "incorrect_actor": "not_applicable",
+        "out_of_order": "not_applicable"
+      },
+      "applicability_zh": "本人已依据第18(1)款取得处理限制；解除条件已满足；控制者准备解除限制；本例只评价解除前由控制者告知的义务。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article18.txt",
+        "source_file_sha256": "7b1015297c6f023e39ce2cb8d74ef942a2d72dbbe804cfac73c6295dcb0693b9",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          1172,
+          1337
+        ],
+        "text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+        "text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+        "evidence": {
+          "order_marker": {
+            "text": "before the restriction of processing is lifted",
+            "span_in_excerpt": [
+              118,
+              164
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall be informed by the controller",
+            "span_in_excerpt": [
+              82,
+              117
+            ]
+          },
+          "executor_evidence": {
+            "text": "by the controller",
+            "span_in_excerpt": [
+              100,
+              117
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_d038f52f8cf3",
+      "family_id": "article18p3",
+      "rule_id": "article18p3",
+      "variant": "incorrect_actor",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "violated",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "本人已依据第18(1)款取得处理限制；解除条件已满足；控制者准备解除限制；本例只评价解除前由控制者告知的义务。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article18.txt",
+        "source_file_sha256": "7b1015297c6f023e39ce2cb8d74ef942a2d72dbbe804cfac73c6295dcb0693b9",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          1172,
+          1337
+        ],
+        "text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+        "text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+        "evidence": {
+          "order_marker": {
+            "text": "before the restriction of processing is lifted",
+            "span_in_excerpt": [
+              118,
+              164
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall be informed by the controller",
+            "span_in_excerpt": [
+              82,
+              117
+            ]
+          },
+          "executor_evidence": {
+            "text": "by the controller",
+            "span_in_excerpt": [
+              100,
+              117
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_8cbb7ad90a6d",
+      "family_id": "article18p3",
+      "rule_id": "article18p3",
+      "variant": "out_of_order",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "violated"
+      },
+      "applicability_zh": "本人已依据第18(1)款取得处理限制；解除条件已满足；控制者准备解除限制；本例只评价解除前由控制者告知的义务。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article18.txt",
+        "source_file_sha256": "7b1015297c6f023e39ce2cb8d74ef942a2d72dbbe804cfac73c6295dcb0693b9",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          1172,
+          1337
+        ],
+        "text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+        "text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+        "evidence": {
+          "order_marker": {
+            "text": "before the restriction of processing is lifted",
+            "span_in_excerpt": [
+              118,
+              164
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall be informed by the controller",
+            "span_in_excerpt": [
+              82,
+              117
+            ]
+          },
+          "executor_evidence": {
+            "text": "by the controller",
+            "span_in_excerpt": [
+              100,
+              117
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_aa37540e7989",
+      "family_id": "article35p1",
+      "rule_id": "article35p1",
+      "variant": "control",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "拟开展的处理很可能对自然人权利自由造成高风险；不适用免做评估情形；本例将完整评估作为一个业务活动，只评价第35(1)款开展评估及其先后，不评价评估文档内容质量。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          0,
+          389
+        ],
+        "text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+        "text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to the processing",
+            "span_in_excerpt": [
+              252,
+              275
+            ]
+          },
+          "obligation_evidence": {
+            "text": "carry out an assessment",
+            "span_in_excerpt": [
+              277,
+              300
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall",
+            "span_in_excerpt": [
+              230,
+              250
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_d8a82d59687d",
+      "family_id": "article35p1",
+      "rule_id": "article35p1",
+      "variant": "missing_action",
+      "reference_states": {
+        "missing_action": "violated",
+        "incorrect_actor": "not_applicable",
+        "out_of_order": "not_applicable"
+      },
+      "applicability_zh": "拟开展的处理很可能对自然人权利自由造成高风险；不适用免做评估情形；本例将完整评估作为一个业务活动，只评价第35(1)款开展评估及其先后，不评价评估文档内容质量。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          0,
+          389
+        ],
+        "text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+        "text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to the processing",
+            "span_in_excerpt": [
+              252,
+              275
+            ]
+          },
+          "obligation_evidence": {
+            "text": "carry out an assessment",
+            "span_in_excerpt": [
+              277,
+              300
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall",
+            "span_in_excerpt": [
+              230,
+              250
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_06bacb820524",
+      "family_id": "article35p1",
+      "rule_id": "article35p1",
+      "variant": "incorrect_actor",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "violated",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "拟开展的处理很可能对自然人权利自由造成高风险；不适用免做评估情形；本例将完整评估作为一个业务活动，只评价第35(1)款开展评估及其先后，不评价评估文档内容质量。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          0,
+          389
+        ],
+        "text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+        "text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to the processing",
+            "span_in_excerpt": [
+              252,
+              275
+            ]
+          },
+          "obligation_evidence": {
+            "text": "carry out an assessment",
+            "span_in_excerpt": [
+              277,
+              300
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall",
+            "span_in_excerpt": [
+              230,
+              250
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_bbe530084075",
+      "family_id": "article35p1",
+      "rule_id": "article35p1",
+      "variant": "out_of_order",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "violated"
+      },
+      "applicability_zh": "拟开展的处理很可能对自然人权利自由造成高风险；不适用免做评估情形；本例将完整评估作为一个业务活动，只评价第35(1)款开展评估及其先后，不评价评估文档内容质量。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          0,
+          389
+        ],
+        "text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+        "text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to the processing",
+            "span_in_excerpt": [
+              252,
+              275
+            ]
+          },
+          "obligation_evidence": {
+            "text": "carry out an assessment",
+            "span_in_excerpt": [
+              277,
+              300
+            ]
+          },
+          "executor_evidence": {
+            "text": "the controller shall",
+            "span_in_excerpt": [
+              230,
+              250
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_f65436fd6574",
+      "family_id": "article36p1",
+      "rule_id": "article36p1",
+      "variant": "control",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "第35条评估已在本流程开始前完成，表明无缓解措施时有高风险；本例只评价第36(1)款控制者事先咨询义务，不评价咨询材料或监管机关随后采取的措施。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
+        "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          0,
+          264
+        ],
+        "text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.",
+        "text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to processing",
+            "span_in_excerpt": [
+              55,
+              74
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall consult the supervisory authority",
+            "span_in_excerpt": [
+              15,
+              54
+            ]
+          },
+          "executor_evidence": {
+            "text": "The controller shall consult",
+            "span_in_excerpt": [
+              0,
+              28
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_0adc59ea1a26",
+      "family_id": "article36p1",
+      "rule_id": "article36p1",
+      "variant": "missing_action",
+      "reference_states": {
+        "missing_action": "violated",
+        "incorrect_actor": "not_applicable",
+        "out_of_order": "not_applicable"
+      },
+      "applicability_zh": "第35条评估已在本流程开始前完成，表明无缓解措施时有高风险；本例只评价第36(1)款控制者事先咨询义务，不评价咨询材料或监管机关随后采取的措施。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
+        "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          0,
+          264
+        ],
+        "text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.",
+        "text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to processing",
+            "span_in_excerpt": [
+              55,
+              74
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall consult the supervisory authority",
+            "span_in_excerpt": [
+              15,
+              54
+            ]
+          },
+          "executor_evidence": {
+            "text": "The controller shall consult",
+            "span_in_excerpt": [
+              0,
+              28
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_7dc164f81677",
+      "family_id": "article36p1",
+      "rule_id": "article36p1",
+      "variant": "incorrect_actor",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "violated",
+        "out_of_order": "satisfied"
+      },
+      "applicability_zh": "第35条评估已在本流程开始前完成，表明无缓解措施时有高风险；本例只评价第36(1)款控制者事先咨询义务，不评价咨询材料或监管机关随后采取的措施。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
+        "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          0,
+          264
+        ],
+        "text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.",
+        "text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to processing",
+            "span_in_excerpt": [
+              55,
+              74
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall consult the supervisory authority",
+            "span_in_excerpt": [
+              15,
+              54
+            ]
+          },
+          "executor_evidence": {
+            "text": "The controller shall consult",
+            "span_in_excerpt": [
+              0,
+              28
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    },
+    {
+      "case_id": "case_92fe183843b7",
+      "family_id": "article36p1",
+      "rule_id": "article36p1",
+      "variant": "out_of_order",
+      "reference_states": {
+        "missing_action": "satisfied",
+        "incorrect_actor": "satisfied",
+        "out_of_order": "violated"
+      },
+      "applicability_zh": "第35条评估已在本流程开始前完成，表明无缓解措施时有高风险；本例只评价第36(1)款控制者事先咨询义务，不评价咨询材料或监管机关随后采取的措施。",
+      "source": {
+        "source_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
+        "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
+        "offset_convention": "UTF-8 decoded; CRLF normalized to LF",
+        "char_span": [
+          0,
+          264
+        ],
+        "text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.",
+        "text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+        "evidence": {
+          "order_marker": {
+            "text": "prior to processing",
+            "span_in_excerpt": [
+              55,
+              74
+            ]
+          },
+          "obligation_evidence": {
+            "text": "shall consult the supervisory authority",
+            "span_in_excerpt": [
+              15,
+              54
+            ]
+          },
+          "executor_evidence": {
+            "text": "The controller shall consult",
+            "span_in_excerpt": [
+              0,
+              28
+            ]
+          }
+        },
+        "applicability_context": []
+      },
+      "mandatory_activity": "Activity_1",
+      "later_activity": "Activity_2",
+      "required_executor": "Controller",
+      "reference_origin": "AI source interpretation + deterministic mutation construction"
+    }
+  ]
+}

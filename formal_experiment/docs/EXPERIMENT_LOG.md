@@ -5329,3 +5329,17 @@
 - 仍存在 blocker：无
 - 备注：57/57本地继承输入一致，活动7/7 BPMN一致；未发现合规补充模型、违规变体或答案；当前25/63 matching已标，38项未标不作负例；规则侧顺序0。用户已选择补齐三类，新API另列预算授权。仅资产审计与状态纠正，不运行性能实验、不改旧Gold、不恢复审核。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-23T12:24:14.299763+00:00 - S3-RECONSTRUCT：冻结预测前五项有明确顺序依据的条款构造草案
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：5 passed in 0.19s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`365ab30bb39ab8b625b527a0cb9ab3870aa2f412`；相关未提交路径：43 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：5项来源义务，20个BPMN，50项可评参考与10项预先不适用；AI构造参考不是人工Gold。仅条款范围内checking草案，非Sun46篇端到端复现。发现B0硬编码空顺序通路，正式三类运行仍阻断。本次只验证来源与结构，不跑性能实验或全量测试。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

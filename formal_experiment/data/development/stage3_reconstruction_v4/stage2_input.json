@@ -1,0 +1,101 @@
+{
+  "schema_version": "stage3_reconstruction_stage2_input@1.0.0",
+  "dataset_id": "stage3_scoped_gdpr_v4",
+  "gold_visible": false,
+  "counts": {
+    "rules": 5,
+    "sentences": 5
+  },
+  "rules": [
+    {
+      "rule_id": "article13p3",
+      "sentences": [
+        {
+          "sample_id": "gdpr_article13p3_s001",
+          "source_id": "gdpr_article13p3_s001",
+          "sentence_idx": 1,
+          "approved_text_en": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+          "text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+          "char_span": [
+            2676,
+            3006
+          ]
+        }
+      ],
+      "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+      "citation": "GDPR Article 13(3), with Article 13(4) applicability context"
+    },
+    {
+      "rule_id": "article14p4",
+      "sentences": [
+        {
+          "sample_id": "gdpr_article14p4_s001",
+          "source_id": "gdpr_article14p4_s001",
+          "sentence_idx": 1,
+          "approved_text_en": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+          "text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+          "char_span": [
+            3155,
+            3484
+          ]
+        }
+      ],
+      "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+      "citation": "GDPR Article 14(4), with Article 14(5) applicability context"
+    },
+    {
+      "rule_id": "article18p3",
+      "sentences": [
+        {
+          "sample_id": "gdpr_article18p3_s001",
+          "source_id": "gdpr_article18p3_s001",
+          "sentence_idx": 1,
+          "approved_text_en": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+          "text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+          "char_span": [
+            1172,
+            1337
+          ]
+        }
+      ],
+      "source_file_sha256": "7b1015297c6f023e39ce2cb8d74ef942a2d72dbbe804cfac73c6295dcb0693b9",
+      "citation": "GDPR Article 18(3)"
+    },
+    {
+      "rule_id": "article35p1",
+      "sentences": [
+        {
+          "sample_id": "gdpr_article35p1_s001",
+          "source_id": "gdpr_article35p1_s001",
+          "sentence_idx": 1,
+          "approved_text_en": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+          "text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+          "char_span": [
+            0,
+            389
+          ]
+        }
+      ],
+      "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+      "citation": "GDPR Article 35(1), first sentence"
+    },
+    {
+      "rule_id": "article36p1",
+      "sentences": [
+        {
+          "sample_id": "gdpr_article36p1_s001",
+          "source_id": "gdpr_article36p1_s001",
+          "sentence_idx": 1,
+          "approved_text_en": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.",
+          "text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+          "char_span": [
+            0,
+            264
+          ]
+        }
+      ],
+      "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
+      "citation": "GDPR Article 36(1)"
+    }
+  ]
+}

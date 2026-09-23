@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions" targetNamespace="urn:bpc:reconstruction:v4">
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="Participant" name="Controller" processRef="Process" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:startEvent id="Start" name="Indirect collection completed; new purpose proposed; no transparency exemption applies" />
+    <bpmn:task id="Activity_0" name="Review the proposed secondary use of third-party data" />
+    <bpmn:task id="Activity_1" name="Provide the data subject with the other purpose and relevant additional information" />
+    <bpmn:task id="Activity_2" name="Further process the personal data for the other purpose" />
+    <bpmn:task id="Activity_3" name="Log the completed secondary use" />
+    <bpmn:endEvent id="End" />
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="Start" targetRef="Activity_0" />
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Activity_0" targetRef="Activity_2" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Activity_2" targetRef="Activity_1" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Activity_1" targetRef="Activity_3" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Activity_3" targetRef="End" />
+  </bpmn:process>
+</bpmn:definitions>

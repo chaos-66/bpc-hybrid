@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-23
-**收录文件**：2563 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2591 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -185,6 +185,7 @@
 | `configs/stage3_development_method_registry_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_development_method_registry_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_extended_violation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage3_reconstruction_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_semantic_grounding_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_semantic_grounding_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_semantic_grounding_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -485,6 +486,30 @@
 | `data/development/sim_case_c1/sun_figure10_reconstruction.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/sim_case_c1/sun_figure10_reconstruction_provenance.md` | 开发/溯源 | 说明、规范或研究文档 |
 | `data/development/sim_case_c1/sun_table13_rules_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/stage3_reconstruction_v4/bpmn/case_06bacb820524.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_0adc59ea1a26.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_0f7180438501.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_3d2aaae29b37.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_44fc51ad7da0.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_5c2cca2ca4cf.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_7dc164f81677.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_89c44a45c04d.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_8cbb7ad90a6d.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_92fe183843b7.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_9a62a7fd9853.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_aa37540e7989.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_bbe530084075.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_c4d9054721a1.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_d038f52f8cf3.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_d8a82d59687d.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_f65436fd6574.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_f8aaa652c17b.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_fb254253b6dd.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/bpmn/case_fd4b197b953b.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_reconstruction_v4/construction_reference.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/stage3_reconstruction_v4/inference_view.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/stage3_reconstruction_v4/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/stage3_reconstruction_v4/stage2_input.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_synth/stage3_binding_audit_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_synth/stage3_binding_human_decisions_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_synth/stage3_binding_reference_human_approved_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
@@ -1724,6 +1749,7 @@
 | `outputs/reports/stage3_paired_benchmark_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_predecessors_paired_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_predecessors_paired_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage3_reconstruction_v4_protocol.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_sun_protocol_realignment_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_sun_style_benchmark_audit_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_sun_style_benchmark_audit_v3.md` | 活动 | 说明、规范或研究文档 |
@@ -2010,6 +2036,7 @@
 | `scripts/build_stage3_method_registry_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_paired_benchmark_eligibility_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_paired_benchmark_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage3_reconstruction_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_repair_summary_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_table3_inputs_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_table3_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -2656,6 +2683,7 @@
 | `tests/test_stage3_contract_repair.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_gold_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_paired_benchmark_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage3_reconstruction_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_v3.py` | 活动 | Python 实现、脚本或测试 |
