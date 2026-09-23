@@ -83,6 +83,10 @@ def _fmt_action_list(items: list[dict[str, Any]]) -> list[str]:
     return lines
 
 
+def _clean(text: Any) -> str:
+    return " ".join(str(text or "").split())
+
+
 def main() -> int:
     reference = {str(r["pair_id"]): r for r in _load(REFERENCE)["records"]}
     human = _load(HUMAN)["records"]
@@ -152,6 +156,9 @@ def main() -> int:
             if str(activity.get("id")) == target_id:
                 lane_id = (activity.get("lane_ids") or [None])[0]
         preds, succs = _neighbors(control, target_id)
+        human_record = human.get(pair_id) or {}
+        regulation_text = _clean(
+            (control_item.get("grounding") or {}).get("rule_action_text") or "")
         actions = rule_index.get(str(ref.get("rule_id")), [])
         flat_actions = [a for rec in actions for a in rec.get("actions") or []]
         flat_actors = []
@@ -168,6 +175,7 @@ def main() -> int:
             f"- rule: `{ref.get('rule_id')}`",
             f"- process: `{ref.get('process_id')}`",
             f"- target violation type: `{ref.get('target_violation_type')}`",
+            f"- regulation text: \"{regulation_text or 'not available'}\"",
             f"- target BPMN activity: `{target_id}` \"{target_name}\""
             f" (lane `{lane_id}` \"{_lane_name(control, lane_id)}\")",
             f"- predecessors: {', '.join(preds) if preds else 'none'}",
@@ -177,6 +185,12 @@ def main() -> int:
 
         if not (ref.get("action_binding") or {}).get("human_approved"):
             action = ref.get("action_binding") or {}
+            action_evidence = action.get("evidence") or []
+            action_evidence_text = (
+                _clean(action_evidence[0].get("text"))
+                if action_evidence and isinstance(action_evidence[0], dict)
+                else "not recorded"
+            )
             lines += [
                 "### Action binding (unresolved)",
                 "",
@@ -187,6 +201,9 @@ def main() -> int:
                 f"**AI recommendation:** `{action.get('rule_action_id') or 'N/A'}` "
                 f"(status `{action.get('status')}`, authority `{action.get('authority')}`).",
                 "",
+                f"- candidate span evidence: \"{action_evidence_text}\"",
+                f"- confidence: not recorded (status/evidence-based AI resolution)",
+                "",
                 f"Evidence/reason: {action.get('reason') or 'n/a'}",
                 "",
                 "Options: `ACCEPT` / `CHANGE TO <rule_action_id>` / `N/A`",
@@ -195,6 +212,13 @@ def main() -> int:
 
         if not (ref.get("actor_binding") or {}).get("human_approved"):
             actor = ref.get("actor_binding") or {}
+            actor_evidence = actor.get("evidence") or []
+            actor_evidence_text = (
+                _clean(actor_evidence[0].get("text"))
+                if actor_evidence and isinstance(actor_evidence[0], dict)
+                else "not recorded"
+            )
+            right_holder = actor.get("right_holder_reference") or {}
             lines += [
                 "### Actor / lane binding (unresolved)",
                 "",
@@ -205,6 +229,11 @@ def main() -> int:
                 lines.append(f"* `{item.get('rule_actor_id')}`: \"{item.get('text')}\" "
                              f"(sample={item.get('sample_id')})")
             lines += [
+                "",
+                f"- candidate actor span evidence: \"{actor_evidence_text}\"",
+                f"- right-holder reference: `{right_holder.get('id') or 'N/A'}` "
+                f"\"{_clean(right_holder.get('text')) or 'N/A'}\"",
+                f"- confidence: not recorded (status/evidence-based AI resolution)",
                 "",
                 f"**AI recommendation:** rule actor "
                 f"`{actor.get('rule_actor_id') or 'N/A'}`; process executor "
@@ -236,6 +265,13 @@ def main() -> int:
                 _ordering(variant, order_pair[0], order_pair[1])
                 if len(order_pair) == 2 else "none"
             )
+            order_evidence = order.get("evidence") or []
+            order_evidence_texts = [
+                _clean(e.get("text")) for e in order_evidence
+                if isinstance(e, dict) and e.get("text")
+            ]
+            process_order = human_record.get("process_order") or {}
+            order_confidence = process_order.get("confidence")
             lines += [
                 "### Rule-side order relation (unresolved)",
                 "",
@@ -243,6 +279,12 @@ def main() -> int:
                 f"- control BPMN order: `{control_order}`",
                 f"- variant BPMN order: `{variant_order}`",
                 f"- AI recommendation: `N/A` (`{order.get('status')}`)",
+                f"- confidence: {order_confidence if order_confidence is not None else 'not recorded'}",
+                "",
+            ]
+            for evidence_text in order_evidence_texts[:3]:
+                lines.append(f"- regulation/order evidence: \"{evidence_text}\"")
+            lines += [
                 "",
                 f"Evidence/reason: {order.get('reason') or 'n/a'}",
                 "",

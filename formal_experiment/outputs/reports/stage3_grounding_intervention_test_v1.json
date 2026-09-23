@@ -1,0 +1,224 @@
+{
+  "benchmark": "data/development/stage3_synth/stage3_paired_benchmark_v1.json",
+  "causal_checks": {
+    "baseline_macro_f1": 1.0,
+    "baseline_reproduces_formal_predictions": true,
+    "causality_established": true,
+    "cross_pair_action_grounding_shuffle_macro_f1": 0.3478260869565218,
+    "interpretation": "Null grounding and adversarial lane injection remove detector recall; cross-pair binding-content shuffle lowers macro-F1. Within-pair action-order rotation stays at baseline because the detector consumes the union of candidate activity IDs and the per-ID lane map, not the per-action top-1 order.  This does not indicate missing grounding dependency; it localises the dependency in the candidate-set/lane representation.",
+    "null_grounding_macro_f1": 0.0,
+    "within_pair_action_order_shuffle_macro_f1": 1.0,
+    "wrong_lane_injection_macro_f1": 0.5
+  },
+  "eligibility": "data/development/stage3_synth/stage3_paired_benchmark_eligibility_v1.json",
+  "formal_predictions": {
+    "items": 60,
+    "path": "outputs/development/stage3_ours_v1/predictions.jsonl",
+    "sha256": "659355be0c867c6b33f65c520911aa750eeccb0e5a6aa26976c49bb9e0b038ba"
+  },
+  "grounding_input": {
+    "path": "outputs/development/stage3_ours_v1/automatic_grounding_predictions_v1.json",
+    "sha256": "f39da0ef3a318d1690652d1357cd4cff5ff0dc61486e2eff65371467cceae395"
+  },
+  "protocol": "Same benchmark inference view and same decide_item detector; only the grounding payload is perturbed.  Each diagnostic prediction file is written before the full benchmark/Gold is loaded for scoring.  Formal Ours artifacts are never overwritten.",
+  "schema_version": "stage3_grounding_intervention_test@1.0.0",
+  "status": "diagnostic_only_not_formal_result",
+  "tests": {
+    "a1_within_pair_action_order_shuffle": {
+      "description": "Rotate action-level grounding records inside each pair; candidate sets travel with the action.",
+      "grounding_perturbation": "action_order_rotation_within_pair",
+      "metrics": {
+        "compliant_specificity": 1.0,
+        "macro_f1": 1.0,
+        "micro_f1": 1.0,
+        "per_type_f1": {
+          "incorrect_actor": 1.0,
+          "missing_action": 1.0,
+          "out_of_order": 0.0
+        },
+        "per_type_support": {
+          "incorrect_actor": null,
+          "missing_action": null,
+          "out_of_order": null
+        },
+        "unobservable": 0,
+        "variant_exact_type_accuracy": 1.0
+      },
+      "predictions_path": "outputs/development/stage3_grounding_intervention_v1/a1_within_pair_action_order_shuffle_predictions.jsonl",
+      "predictions_sha256": "dd7782ad0f5ffc3bcdb47916c069e10bd34c71b8820166f450dec4260a313e89"
+    },
+    "a2_cross_pair_action_grounding_shuffle": {
+      "description": "Deterministically re-assign whole action/candidate/lane grounding payloads across eligible pairs; this changes the detector-consumed activity union.",
+      "grounding_perturbation": "cross_pair_action_grounding_payload_permutation",
+      "mapping": {
+        "syn_incorrect_actor_01": "syn_incorrect_actor_04",
+        "syn_incorrect_actor_02": "syn_incorrect_actor_05",
+        "syn_incorrect_actor_04": "syn_incorrect_actor_08",
+        "syn_incorrect_actor_05": "syn_missing_action_01",
+        "syn_incorrect_actor_08": "syn_missing_action_02",
+        "syn_missing_action_01": "syn_missing_action_03",
+        "syn_missing_action_02": "syn_missing_action_04",
+        "syn_missing_action_03": "syn_missing_action_05",
+        "syn_missing_action_04": "syn_missing_action_06",
+        "syn_missing_action_05": "syn_missing_action_09",
+        "syn_missing_action_06": "syn_missing_action_10",
+        "syn_missing_action_09": "syn_incorrect_actor_01",
+        "syn_missing_action_10": "syn_incorrect_actor_02"
+      },
+      "mapping_summary": {
+        "eligible_pairs": [
+          "syn_incorrect_actor_01",
+          "syn_incorrect_actor_02",
+          "syn_incorrect_actor_04",
+          "syn_incorrect_actor_05",
+          "syn_incorrect_actor_08",
+          "syn_missing_action_01",
+          "syn_missing_action_02",
+          "syn_missing_action_03",
+          "syn_missing_action_04",
+          "syn_missing_action_05",
+          "syn_missing_action_06",
+          "syn_missing_action_09",
+          "syn_missing_action_10"
+        ],
+        "mapping": {
+          "syn_incorrect_actor_01": "syn_incorrect_actor_04",
+          "syn_incorrect_actor_02": "syn_incorrect_actor_05",
+          "syn_incorrect_actor_04": "syn_incorrect_actor_08",
+          "syn_incorrect_actor_05": "syn_missing_action_01",
+          "syn_incorrect_actor_08": "syn_missing_action_02",
+          "syn_missing_action_01": "syn_missing_action_03",
+          "syn_missing_action_02": "syn_missing_action_04",
+          "syn_missing_action_03": "syn_missing_action_05",
+          "syn_missing_action_04": "syn_missing_action_06",
+          "syn_missing_action_05": "syn_missing_action_09",
+          "syn_missing_action_06": "syn_missing_action_10",
+          "syn_missing_action_09": "syn_incorrect_actor_01",
+          "syn_missing_action_10": "syn_incorrect_actor_02"
+        },
+        "same_process_source_pairs": 0
+      },
+      "metrics": {
+        "compliant_specificity": 0.07692307692307693,
+        "macro_f1": 0.3478260869565218,
+        "micro_f1": 0.4848484848484849,
+        "per_type_f1": {
+          "incorrect_actor": 0.0,
+          "missing_action": 0.6956521739130436,
+          "out_of_order": 0.0
+        },
+        "per_type_support": {
+          "incorrect_actor": null,
+          "missing_action": null,
+          "out_of_order": null
+        },
+        "unobservable": 0,
+        "variant_exact_type_accuracy": 0.6153846153846154
+      },
+      "predictions_path": "outputs/development/stage3_grounding_intervention_v1/a2_cross_pair_action_grounding_shuffle_predictions.jsonl",
+      "predictions_sha256": "f48d041a6aef56d7230c3736605e783ce9baa0bf152382a3a1016949290a9c71"
+    },
+    "b_wrong_lane_injection": {
+      "description": "Replace the grounded expected lane of each eligible incorrect_actor target with the lane observed in the variant process, removing the lane mismatch signal.",
+      "grounding_perturbation": "expected_lane_replaced_by_variant_observed_lane",
+      "injections": [
+        {
+          "injected_expected_lane_id": "syn_lane_sid-20C5FDD3-8014-432D-8595-CD780D866E38_0D866E38",
+          "old_expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+          "pair_id": "syn_incorrect_actor_01",
+          "target_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38"
+        },
+        {
+          "injected_expected_lane_id": "syn_lane_sid-28448355-C13E-462C-8D66-8CEB2F6B557C_2F6B557C",
+          "old_expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+          "pair_id": "syn_incorrect_actor_02",
+          "target_activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+        },
+        {
+          "injected_expected_lane_id": "syn_lane_sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F_2F8D7F6F",
+          "old_expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+          "pair_id": "syn_incorrect_actor_04",
+          "target_activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F"
+        },
+        {
+          "injected_expected_lane_id": "syn_lane_sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824_63548824",
+          "old_expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+          "pair_id": "syn_incorrect_actor_05",
+          "target_activity_id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824"
+        },
+        {
+          "injected_expected_lane_id": "syn_lane_sid-1A48D305-CB15-4C57-A988-B39ED62DE531_D62DE531",
+          "old_expected_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+          "pair_id": "syn_incorrect_actor_08",
+          "target_activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531"
+        }
+      ],
+      "metrics": {
+        "compliant_specificity": 0.6153846153846154,
+        "macro_f1": 0.5,
+        "micro_f1": 0.6153846153846154,
+        "per_type_f1": {
+          "incorrect_actor": 0.0,
+          "missing_action": 1.0,
+          "out_of_order": 0.0
+        },
+        "per_type_support": {
+          "incorrect_actor": null,
+          "missing_action": null,
+          "out_of_order": null
+        },
+        "unobservable": 0,
+        "variant_exact_type_accuracy": 0.6153846153846154
+      },
+      "predictions_path": "outputs/development/stage3_grounding_intervention_v1/b_wrong_lane_injection_predictions.jsonl",
+      "predictions_sha256": "ffa126d7aae4f1f9b1095bef1560674869b177dd5e95c526f03915ec8ac60abf"
+    },
+    "baseline_unchanged_grounding": {
+      "description": "Persisted automatic grounding, same detector; control replay.",
+      "grounding_perturbation": "none",
+      "matches_formal_predictions": true,
+      "metrics": {
+        "compliant_specificity": 1.0,
+        "macro_f1": 1.0,
+        "micro_f1": 1.0,
+        "per_type_f1": {
+          "incorrect_actor": 1.0,
+          "missing_action": 1.0,
+          "out_of_order": 0.0
+        },
+        "per_type_support": {
+          "incorrect_actor": null,
+          "missing_action": null,
+          "out_of_order": null
+        },
+        "unobservable": 0,
+        "variant_exact_type_accuracy": 1.0
+      },
+      "predictions_path": "outputs/development/stage3_grounding_intervention_v1/baseline_unchanged_grounding_predictions.jsonl",
+      "predictions_sha256": "b9519f18c6f4f81d3ad32931973d15c521209abd431f614409b249258b9be158"
+    },
+    "c_null_grounding": {
+      "description": "Replace all detector grounding fields with null/empty values.",
+      "grounding_perturbation": "all_grounding_fields_null",
+      "metrics": {
+        "compliant_specificity": 1.0,
+        "macro_f1": 0.0,
+        "micro_f1": 0.0,
+        "per_type_f1": {
+          "incorrect_actor": 0.0,
+          "missing_action": 0.0,
+          "out_of_order": 0.0
+        },
+        "per_type_support": {
+          "incorrect_actor": null,
+          "missing_action": null,
+          "out_of_order": null
+        },
+        "unobservable": 0,
+        "variant_exact_type_accuracy": 0.0
+      },
+      "predictions_path": "outputs/development/stage3_grounding_intervention_v1/c_null_grounding_predictions.jsonl",
+      "predictions_sha256": "ac9afb5f07c3d3d1fea905369ffac54ffa3fd8eaa5c9cb04f9022c1ec0d7a88f"
+    }
+  }
+}

@@ -109,6 +109,8 @@ be treated as Sun-compatible without an explicit adapter and provenance check.
 
 ## Mandatory Check and Experiment Log
 
+Governance note: this checkpoint is not institutional or artifact-only, and the full suite is not run twice in the same workspace without a new explicit authorization.
+
 The legacy `audit_*` filenames refer to offline integrity checks and experiment
 logs, not third-party audits. The root `AGENTS.md` Validation Scope and Cost
 policy and `docs/AI_CHANGE_PROTOCOL.md` govern test selection. This 2026-09-10

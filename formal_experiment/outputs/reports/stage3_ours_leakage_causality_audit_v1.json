@@ -1,0 +1,852 @@
+{
+  "A_input_whitelist": {
+    "allowed_fields": [
+      "bpmn_path",
+      "item_id",
+      "pair_id",
+      "process_id",
+      "role",
+      "rule_id"
+    ],
+    "checks": {
+      "allowed_item_keys_declared": [
+        "bpmn_path",
+        "item_id",
+        "pair_id",
+        "process_id",
+        "role",
+        "rule_id"
+      ],
+      "extra_keys_found": [],
+      "observed_item_key_union": [
+        "bpmn_path",
+        "item_id",
+        "pair_id",
+        "process_id",
+        "role",
+        "rule_id"
+      ],
+      "safety": {
+        "binding_gold_present": false,
+        "gold_labels_present": false,
+        "mutation_answers_present": false
+      },
+      "source_benchmark_sha256_matches_current_file": true,
+      "view_file_sha256": "15e43f336b5656fcef89dee32a30c692f8dd66ea1f6b6b34c0a7400cd1a7175b",
+      "whitelist_ok": true
+    },
+    "path": "data/development/stage3_synth/stage3_paired_benchmark_inference_view_v1.json"
+  },
+  "B_forbidden_fields": {
+    "forbidden_fields": [
+      "expected_violation_type",
+      "gold_label",
+      "gold_violation_type",
+      "target_violation_type",
+      "target_activity_id",
+      "expected_lane_id",
+      "binding_gold",
+      "mutation_answer",
+      "mutation_type",
+      "oracle_mapping",
+      "grounding",
+      "structural_observation",
+      "bpmn_sha256"
+    ],
+    "grounding_forbidden_keys": [],
+    "inference_static_hits": {
+      "scripts/build_stage3_inference_view_v1.py": [
+        {
+          "field": "grounding",
+          "line": 5,
+          "text": "Mutation manifests, grounding blocks, target ids, expected lanes, order pairs"
+        },
+        {
+          "field": "gold_violation_type",
+          "line": 40,
+          "text": "\"grounding\", \"target_violation_type\", \"gold_violation_type\","
+        },
+        {
+          "field": "target_violation_type",
+          "line": 40,
+          "text": "\"grounding\", \"target_violation_type\", \"gold_violation_type\","
+        },
+        {
+          "field": "grounding",
+          "line": 40,
+          "text": "\"grounding\", \"target_violation_type\", \"gold_violation_type\","
+        },
+        {
+          "field": "structural_observation",
+          "line": 41,
+          "text": "\"structural_observation\", \"bpmn_sha256\","
+        },
+        {
+          "field": "bpmn_sha256",
+          "line": 41,
+          "text": "\"structural_observation\", \"bpmn_sha256\","
+        },
+        {
+          "field": "mutation_answer",
+          "line": 44,
+          "text": "\"mutation_answers_present\": False,"
+        },
+        {
+          "field": "binding_gold",
+          "line": 45,
+          "text": "\"binding_gold_present\": False,"
+        },
+        {
+          "field": "gold_label",
+          "line": 46,
+          "text": "\"gold_labels_present\": False,"
+        }
+      ],
+      "scripts/run_stage3_ours_v1.py": [
+        {
+          "field": "grounding",
+          "line": 2,
+          "text": "\"\"\"Run Stage-3 Ours: automatic grounding followed by the compliance detector."
+        },
+        {
+          "field": "grounding",
+          "line": 6,
+          "text": "2. build automatic grounding predictions on each pair's reference/control BPMN;"
+        },
+        {
+          "field": "grounding",
+          "line": 10,
+          "text": "The detector consumes the persisted grounding predictions and the item BPMN."
+        },
+        {
+          "field": "target_activity_id",
+          "line": 11,
+          "text": "It never reads mutation answers (`grounding`, `target_activity_id`,"
+        },
+        {
+          "field": "grounding",
+          "line": 11,
+          "text": "It never reads mutation answers (`grounding`, `target_activity_id`,"
+        },
+        {
+          "field": "gold_violation_type",
+          "line": 12,
+          "text": "`expected_lane`, `order_pair`, `gold_violation_type`, `target_violation_type`)."
+        },
+        {
+          "field": "target_violation_type",
+          "line": 12,
+          "text": "`expected_lane`, `order_pair`, `gold_violation_type`, `target_violation_type`)."
+        },
+        {
+          "field": "grounding",
+          "line": 35,
+          "text": "from bpc_hybrid.stage3_grounding.automatic_rule_process_grounding_v1 import (  # noqa: E402"
+        },
+        {
+          "field": "grounding",
+          "line": 40,
+          "text": "build_all_grounding_predictions,"
+        },
+        {
+          "field": "grounding",
+          "line": 49,
+          "text": "GROUNDING_JSON = OUT_DIR / \"automatic_grounding_predictions_v1.json\""
+        },
+        {
+          "field": "grounding",
+          "line": 121,
+          "text": "grounding: dict[str, Any]) -> tuple[bool, dict[str, Any]]:"
+        },
+        {
+          "field": "grounding",
+          "line": 128,
+          "text": "for relation in grounding.get(\"order_predictions\") or []:"
+        },
+        {
+          "field": "grounding",
+          "line": 152,
+          "text": "def decide_item(record: dict[str, Any], grounding: dict[str, Any]"
+        },
+        {
+          "field": "grounding",
+          "line": 155,
+          "text": "detector_ids = [str(x) for x in grounding.get(\"detector_activity_ids\") or []]"
+        },
+        {
+          "field": "grounding",
+          "line": 170,
+          "text": "lane_map = grounding.get(\"activity_lane_map\") or {}"
+        },
+        {
+          "field": "expected_lane_id",
+          "line": 179,
+          "text": "\"expected_lane_id\": expected,"
+        },
+        {
+          "field": "grounding",
+          "line": 191,
+          "text": "order_violation, order_details = _order_violation(record, grounding)"
+        },
+        {
+          "field": "grounding",
+          "line": 203,
+          "text": "\"order_observable\": bool(grounding.get(\"order_predictions\")),"
+        },
+        {
+          "field": "grounding",
+          "line": 230,
+          "text": "grounding_doc = build_all_grounding_predictions("
+        },
+        {
+          "field": "grounding",
+          "line": 238,
+          "text": "grounding_json = out_dir / \"automatic_grounding_predictions_v1.json\""
+        },
+        {
+          "field": "grounding",
+          "line": 239,
+          "text": "_write_json(grounding_json, grounding_doc)"
+        },
+        {
+          "field": "grounding",
+          "line": 241,
+          "text": "grounding_by_pair = {"
+        },
+        {
+          "field": "grounding",
+          "line": 242,
+          "text": "str(row[\"pair_id\"]): row for row in grounding_doc[\"rows\"]"
+        },
+        {
+          "field": "grounding",
+          "line": 254,
+          "text": "grounding = grounding_by_pair.get(pair_id) or {}"
+        },
+        {
+          "field": "grounding",
+          "line": 256,
+          "text": "decision = decide_item(record, grounding)"
+        },
+        {
+          "field": "grounding",
+          "line": 265,
+          "text": "\"grounding_reference_pair_id\": pair_id,"
+        },
+        {
+          "field": "grounding",
+          "line": 266,
+          "text": "\"inference_uses_benchmark_grounding_block\": False,"
+        },
+        {
+          "field": "grounding",
+          "line": 274,
+          "text": "\"method_id\": \"ours_automatic_grounding_detector_v1\","
+        },
+        {
+          "field": "grounding",
+          "line": 284,
+          "text": "\"grounding_predictions_path\": str("
+        },
+        {
+          "field": "grounding",
+          "line": 285,
+          "text": "grounding_json.resolve().relative_to(ROOT.resolve())"
+        },
+        {
+          "field": "gold_label",
+          "line": 291,
+          "text": "+ [\"binding_reference\", \"mutation_manifest\", \"gold_label\"],"
+        },
+        {
+          "field": "grounding",
+          "line": 292,
+          "text": "\"inference_uses_benchmark_grounding_block\": False,"
+        }
+      ],
+      "src/bpc_hybrid/stage3_grounding/automatic_rule_process_grounding_v1.py": [
+        {
+          "field": "grounding",
+          "line": 2,
+          "text": "\"\"\"Automatic rule-to-process grounding for the Stage 3 paired benchmark."
+        },
+        {
+          "field": "grounding",
+          "line": 10,
+          "text": "reference process.  It never reads the benchmark grounding block, target"
+        },
+        {
+          "field": "grounding",
+          "line": 26,
+          "text": "from bpc_hybrid.s3_semantic_grounding_v1 import ("
+        },
+        {
+          "field": "grounding",
+          "line": 44,
+          "text": "SCHEMA_VERSION = \"stage3_automatic_grounding_predictions@1.0.0\""
+        },
+        {
+          "field": "grounding",
+          "line": 45,
+          "text": "METHOD_ID = \"automatic_rule_process_grounding_v1\""
+        },
+        {
+          "field": "gold_violation_type",
+          "line": 50,
+          "text": "\"grounding\", \"gold_violation_type\", \"target_violation_type\","
+        },
+        {
+          "field": "target_violation_type",
+          "line": 50,
+          "text": "\"grounding\", \"gold_violation_type\", \"target_violation_type\","
+        },
+        {
+          "field": "grounding",
+          "line": 50,
+          "text": "\"grounding\", \"gold_violation_type\", \"target_violation_type\","
+        },
+        {
+          "field": "structural_observation",
+          "line": 51,
+          "text": "\"structural_observation\", \"bpmn_sha256\","
+        },
+        {
+          "field": "bpmn_sha256",
+          "line": 51,
+          "text": "\"structural_observation\", \"bpmn_sha256\","
+        },
+        {
+          "field": "grounding",
+          "line": 73,
+          "text": "declarations out of the grounding/detector path."
+        },
+        {
+          "field": "grounding",
+          "line": 429,
+          "text": "# Actor grounding is resource matching plus structural owner evidence."
+        },
+        {
+          "field": "bpmn_sha256",
+          "line": 512,
+          "text": "\"reference_bpmn_sha256\": _sha256(process_path),"
+        },
+        {
+          "field": "grounding",
+          "line": 526,
+          "text": "def build_all_grounding_predictions("
+        },
+        {
+          "field": "gold_label",
+          "line": 576,
+          "text": "+ [\"binding_reference\", \"mutation_manifest\", \"gold_label\"],"
+        },
+        {
+          "field": "grounding",
+          "line": 590,
+          "text": "\"build_all_grounding_predictions\","
+        }
+      ]
+    },
+    "note": "Matches in removal lists, docstrings and post-prediction evaluator/table code are expected. The formal inference path uses allow-list projection and the taint replay confirms no forbidden field is consumed.",
+    "predictions_forbidden_keys": [],
+    "serialized_view_forbidden_keys": []
+  },
+  "C_eligible_pair_evidence": [
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 6,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "sid-231C2935-E80E-48E9-8E30-CBF3FC58DFB3",
+          "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+        ],
+        "top1_target_hit": false
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": "syn_lane_sid-20C5FDD3-8014-432D-8595-CD780D866E38_0D866E38"
+      },
+      "final_prediction": "incorrect_actor",
+      "gold_label": "incorrect_actor",
+      "pair_id": "syn_incorrect_actor_01",
+      "target_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+      "target_activity_name": "Retrieve breached subjects",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 6,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "sid-231C2935-E80E-48E9-8E30-CBF3FC58DFB3",
+          "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+        ],
+        "top1_target_hit": true
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": "syn_lane_sid-28448355-C13E-462C-8D66-8CEB2F6B557C_2F6B557C"
+      },
+      "final_prediction": "incorrect_actor",
+      "gold_label": "incorrect_actor",
+      "pair_id": "syn_incorrect_actor_02",
+      "target_activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+      "target_activity_name": "Handle delay",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 19,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-8C6443CA-D075-4BD1-BD49-A821B09172AA",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-5550E7E0-4FB0-4BDF-9BFB-08BCEBC02E2D",
+          "sid-5550E7E0-4FB0-4BDF-9BFB-08BCEBC02E2D",
+          "sid-8C6443CA-D075-4BD1-BD49-A821B09172AA",
+          "sid-F4438EC3-80AE-4972-AA25-7F4A82092B32",
+          "sid-F1836E1F-395C-4E96-9438-2468F33B4D59"
+        ],
+        "top1_target_hit": false
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": "syn_lane_sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F_2F8D7F6F"
+      },
+      "final_prediction": "incorrect_actor",
+      "gold_label": "incorrect_actor",
+      "pair_id": "syn_incorrect_actor_04",
+      "target_activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+      "target_activity_name": "Add \"existence of the right to withdraw\"",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 3,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+        ],
+        "top1_target_hit": false
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": "syn_lane_sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824_63548824"
+      },
+      "final_prediction": "incorrect_actor",
+      "gold_label": "incorrect_actor",
+      "pair_id": "syn_incorrect_actor_05",
+      "target_activity_id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+      "target_activity_name": "Retrieve elaborations",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 5,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "sid-DFB327FD-78D3-4012-8BAC-82AF87341389",
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB"
+        ],
+        "top1_target_hit": true
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "expected_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": "syn_lane_sid-1A48D305-CB15-4C57-A988-B39ED62DE531_D62DE531"
+      },
+      "final_prediction": "incorrect_actor",
+      "gold_label": "incorrect_actor",
+      "pair_id": "syn_incorrect_actor_08",
+      "target_activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+      "target_activity_name": "Stop using withdrawn data",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 6,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "sid-231C2935-E80E-48E9-8E30-CBF3FC58DFB3",
+          "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+        ],
+        "top1_target_hit": false
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": null
+      },
+      "final_prediction": "missing_action",
+      "gold_label": "missing_action",
+      "pair_id": "syn_missing_action_01",
+      "target_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+      "target_activity_name": "Retrieve breached subjects",
+      "violation_type": "missing_action"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 6,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "sid-231C2935-E80E-48E9-8E30-CBF3FC58DFB3",
+          "sid-3E08BE45-CB56-43B2-94BA-7C4A13B92761",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF"
+        ],
+        "top1_target_hit": true
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": null
+      },
+      "final_prediction": "missing_action",
+      "gold_label": "missing_action",
+      "pair_id": "syn_missing_action_02",
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "target_activity_name": "Retrieve breached data",
+      "violation_type": "missing_action"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 19,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-8C6443CA-D075-4BD1-BD49-A821B09172AA",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-5550E7E0-4FB0-4BDF-9BFB-08BCEBC02E2D",
+          "sid-5550E7E0-4FB0-4BDF-9BFB-08BCEBC02E2D",
+          "sid-8C6443CA-D075-4BD1-BD49-A821B09172AA",
+          "sid-F4438EC3-80AE-4972-AA25-7F4A82092B32",
+          "sid-F1836E1F-395C-4E96-9438-2468F33B4D59"
+        ],
+        "top1_target_hit": false
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": null
+      },
+      "final_prediction": "missing_action",
+      "gold_label": "missing_action",
+      "pair_id": "syn_missing_action_03",
+      "target_activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+      "target_activity_name": "Add \"existence of the right to withdraw\"",
+      "violation_type": "missing_action"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 19,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-8C6443CA-D075-4BD1-BD49-A821B09172AA",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "sid-5550E7E0-4FB0-4BDF-9BFB-08BCEBC02E2D",
+          "sid-5550E7E0-4FB0-4BDF-9BFB-08BCEBC02E2D",
+          "sid-8C6443CA-D075-4BD1-BD49-A821B09172AA",
+          "sid-F4438EC3-80AE-4972-AA25-7F4A82092B32",
+          "sid-F1836E1F-395C-4E96-9438-2468F33B4D59"
+        ],
+        "top1_target_hit": false
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": null
+      },
+      "final_prediction": "missing_action",
+      "gold_label": "missing_action",
+      "pair_id": "syn_missing_action_04",
+      "target_activity_id": "sid-2CFD3957-D6FB-4CA6-95B4-86EEC4B4B4B8",
+      "target_activity_name": "Add \"existence of the right to rectify of personal data\"",
+      "violation_type": "missing_action"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 3,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+        ],
+        "top1_target_hit": false
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": null
+      },
+      "final_prediction": "missing_action",
+      "gold_label": "missing_action",
+      "pair_id": "syn_missing_action_05",
+      "target_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+      "target_activity_name": "Communicate data and elaborations",
+      "violation_type": "missing_action"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 5,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "sid-DFB327FD-78D3-4012-8BAC-82AF87341389",
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB"
+        ],
+        "top1_target_hit": true
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "expected_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": null
+      },
+      "final_prediction": "missing_action",
+      "gold_label": "missing_action",
+      "pair_id": "syn_missing_action_06",
+      "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "target_activity_name": "Stop running BPs using withdrawn data",
+      "violation_type": "missing_action"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 3,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "sid-2E045BBD-9F82-497F-8458-49AA9129F991"
+        ],
+        "top1_target_hit": false
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": null
+      },
+      "final_prediction": "missing_action",
+      "gold_label": "missing_action",
+      "pair_id": "syn_missing_action_09",
+      "target_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+      "target_activity_name": "Communicate data and elaborations",
+      "violation_type": "missing_action"
+    },
+    {
+      "automatic_grounding": {
+        "detector_activity_count": 2,
+        "target_in_candidate_union": true,
+        "top1_activity_ids": [
+          "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+          "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814"
+        ],
+        "top1_target_hit": true
+      },
+      "correct": true,
+      "detector_consumed_binding": {
+        "control_lane_id": "sid-95D07626-A357-422E-830F-B1E57917DB74",
+        "expected_lane_id": "sid-95D07626-A357-422E-830F-B1E57917DB74",
+        "target_in_detector_activity_ids": true,
+        "variant_lane_id": null
+      },
+      "final_prediction": "missing_action",
+      "gold_label": "missing_action",
+      "pair_id": "syn_missing_action_10",
+      "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "target_activity_name": "Rectify data",
+      "violation_type": "missing_action"
+    }
+  ],
+  "conclusion": "Ours inference does not read Gold, target_activity_id, mutation type, expected lane, binding reference or the benchmark grounding block. The automatic-grounding predictions are persisted before evaluation; the evaluator reads Gold only after persistence; and injecting forbidden fields into a temporary inference view leaves grounding rows and predictions unchanged.",
+  "evaluator_consumption": {
+    "automatic_eval_binding_reference_read_after_prediction": true,
+    "automatic_eval_gold_read_after_prediction": true,
+    "grounding_persisted_before_automatic_eval": true,
+    "grounding_persisted_before_ours_eval": true,
+    "ours_eval_has_gold_rows": true,
+    "table3_has_ours_and_oracle_separate": true
+  },
+  "pass_criteria": {
+    "evaluator_reads_after_persistence": true,
+    "forbidden_fields_absent_from_view": true,
+    "grounding_safety_flags": true,
+    "inference_view_whitelist_ok": true,
+    "predictions_clean_of_forbidden_keys": true,
+    "run_manifest_declares_gold_blind": true,
+    "taint_replay_grounding_and_predictions_unchanged": true
+  },
+  "schema_version": "stage3_ours_leakage_causality_audit@1.0.0",
+  "scope": "Ours inference input boundary, forbidden-field handling, automatic-grounding/detector/evaluator ordering, intermediate artifacts, and eligible-pair causal evidence.",
+  "status": "PASS",
+  "taint_replay": {
+    "forbidden_fields_injected": [
+      "expected_violation_type",
+      "gold_label",
+      "gold_violation_type",
+      "target_violation_type",
+      "target_activity_id",
+      "expected_lane_id",
+      "binding_gold",
+      "mutation_answer",
+      "mutation_type",
+      "oracle_mapping",
+      "grounding",
+      "structural_observation",
+      "bpmn_sha256"
+    ],
+    "grounding_rows_identical": true,
+    "mismatched_levels": "none",
+    "predictions_semantically_identical": true,
+    "run": true,
+    "status": "pass",
+    "tainted_fields_interpreted_as_gold": true,
+    "tainted_grounding_rows_sha256": "c79f363129b8863687007cf685ab13e917dd0821d5dd9df48ef7e013937a8e36",
+    "tainted_predictions_sha256": "659355be0c867c6b33f65c520911aa750eeccb0e5a6aa26976c49bb9e0b038ba",
+    "tainted_view_sha256": "98d8dfe60486eab5cb1818c688adf73b23bf8b922aafb8254574d00f9a639246"
+  }
+}
