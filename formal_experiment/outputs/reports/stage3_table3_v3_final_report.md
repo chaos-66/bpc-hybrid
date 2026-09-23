@@ -83,7 +83,7 @@ Changing Stage 2 from Sun Rules-Only to Direct-LLM did not improve downstream de
 
 ## I. Git
 
-Branch: `paper-final-repair`; commits and push state are reported after the scoped checkpoint.
+Branch: `paper-final-repair`. Pipeline/analysis checkpoint commit: `9cbcdc0` (`S3-TABLE3-V3: restore Sun full-rule-base matching and target-seeded diagnostic`). Pushed to `origin/paper-final-repair` successfully before this final report Git note was added. The report-note commit is the follow-up scoped commit for this line.
 
 ## Acceptance gates
 
