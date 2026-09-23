@@ -35,7 +35,7 @@ def test_catalog_excludes_tracked_archives_and_keeps_active_files(tmp_path, monk
 
 @pytest.mark.parametrize("script", [
     "validate_binding_gold_v1.py",
-    "run_stage3_ours_grounded_v1.py",
+    "run_stage3_binding_oracle_v1.py",
 ])
 def test_binding_commands_require_explicit_input_before_reading_or_writing(script, tmp_path):
     result = subprocess.run(

@@ -9,6 +9,19 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## S3-BINDING-SCOPE：机械核对与 oracle 定位纠正（2026-09-23）
+
+- 已核对活动最终决定与来源，25 action / 22 actor 引用及 30 个 target/lane ID 有效；
+  5/8 个空值合并为 7 个规则—活动组合，10 项顺序均为 process-only。
+  原文、重复项和需要澄清的角色定义见 `outputs/reports/stage3_binding_reference_assessment_v1.md`。
+- 旧人工绑定检查器已更名 `scripts/run_stage3_binding_oracle_v1.py`；
+  runner/evaluator 产物明确禁止端到端 Ours 主张。使用人工答案的诊断不评测自动 grounding。
+- 项目已有自动 action/actor 匹配实现；本轮未证明其在该 30-pair 设置中已完成集成或有效。
+  后续预测须与评测参考隔离。null 不自动代表漏标，权利主体不自动等于 lane 执行者，
+  process-only 顺序不升级为法规顺序；没有新审核批次等待用户操作。
+- 原人工结果、Gold、benchmark 和历史产物均未改；未打开归档、未运行实验/API。
+  完成范围是职责纠正和只读核对，不是 Ours 或 Binding Gold 完成。
+
 ## S3-BINDING-REVIEW：人工复核完成、批次已归档（2026-09-23，零 API）
 
 - **完成状态**：用户于 2026-09-22 保存 30/30 项确认，`human_review_complete`；

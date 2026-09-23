@@ -1,6 +1,6 @@
 ﻿# Stage 3 Binding Gold annotation format (v1)
 
-The Stage-3 `Ours` detector consumes three inputs:
+The supplied-binding **oracle diagnostic** consumes three inputs:
 
 1. **Direct-LLM Rule Record**:
    `data/predictions/gdpr7_direct_llm_v1/predictions.json`
@@ -8,7 +8,11 @@ The Stage-3 `Ours` detector consumes three inputs:
 3. **BPMN**: control/variant paths already embedded in each binding item.
 
 Agents must never infer human decision fields. This document defines the
-detector input format. Both validator and runner require an explicit input.
+oracle input format. Both validator and runner require an explicit input.
+These human bindings are reference answers; an automatic predictor must not
+receive them, the expected lane, target activity ID or declared order pair.
+The Rule Record input below is used for ID diagnostics, not for predicting
+bindings. This runner cannot establish end-to-end Ours performance.
 
 The 30-item candidate review is complete. Its retained result is
 `data/development/stage3_synth/stage3_binding_human_decisions_v1.json`
@@ -46,17 +50,17 @@ The validator checks BPMN existence and sha256, action/actor id existence,
 target activity existence, lane existence, order-pair format, and review state.
 It never generates or modifies Gold.
 
-## Running the grounded detector
+## Running the supplied-binding oracle diagnostic
 
-The detector fails closed until the binding gold is ready:
+The oracle fails closed until the supplied binding file is ready. This is not automatic Ours:
 
 ```powershell
-python scripts/run_stage3_ours_grounded_v1.py \
+python scripts/run_stage3_binding_oracle_v1.py \
   --binding-gold <filled-binding-gold.json>
 ```
 
-It writes `outputs/development/stage3_ours_grounded_v1/predictions.jsonl` and
-`outputs/reports/stage3_ours_grounded_v1.{json,md}`.
+It writes `outputs/development/stage3_binding_oracle_v1/predictions.jsonl` and
+`outputs/reports/stage3_binding_oracle_v1.{json,md}`.
 
 ## Evaluation
 
@@ -64,9 +68,9 @@ The runner invokes the evaluator pipeline automatically.  To re-score an
 existing prediction file:
 
 ```powershell
-python scripts/evaluate_stage3_ours_grounded_v1.py \
+python scripts/evaluate_stage3_binding_oracle_v1.py \
   --benchmark data/development/stage3_synth/stage3_paired_benchmark_v1.json \
-  --predictions outputs/development/stage3_ours_grounded_v1/predictions.jsonl
+  --predictions outputs/development/stage3_binding_oracle_v1/predictions.jsonl
 ```
 
 Reported metrics: per-type precision/recall/F1, Macro-F1, Micro-F1, and

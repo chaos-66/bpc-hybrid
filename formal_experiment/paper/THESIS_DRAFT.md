@@ -1201,6 +1201,10 @@ variant manifest 自己声明的 `source_bpmn` + sha，即冻结 Stage 1 GDPR7 �
 `data/development/stage3_synth/stage3_binding_human_decisions_v1.json`；
 5 个 action、8 个 actor 引用为空，10 项顺序仅确认 process-side 关系。
 该结果 `is_gold=false`，不能视为所需绑定已齐备；旧模板与审核过程已归档。
+人工绑定作为参考答案只能用于评测；直接使用这些绑定和指定 activity ID 的检查器属于
+supplied-binding oracle 诊断，不能报告为端到端 Ours。自动预测应从 Stage 2 Rule Record
+与 BPMN 产生绑定，评测侧再与参考对应；完成参考标注并不自动完成该预测链路。
+空值也不必然是漏标：权利主体与流程执行者可能不同，流程先后关系未必是法规顺序。
 
 **边界。** 本 panel 只含违规正例（`none_gold_items: 0`），故只报总体 F1 与检出数，
 不报 precision/recall。该表与 Sun 论文 Table 12 口径不同，不可跨表比较。分类细目

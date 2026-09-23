@@ -5233,3 +5233,17 @@
 - 仍存在 blocker：无
 - 备注：用户已确认30/30项；50个原文件逐字节校验后压缩归档，含31份备份。最终人工结果原样迁至stage3_synth，SHA256=1434da07946484e7bae95e7af959930d3f154c375df733ae146bbdd54191ce9f；is_gold=false，保留5个空action和8个空actor以及10项process-only顺序。旧模板、候选、工具、blocked报告和启动入口撤下；默认rg搜索与活动文件目录排除归档，validator和runner要求显式输入。benchmark与现有Gold未改；未执行实验、全量测试或API。仅归档与相关发现/调用边界检查。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-23T00:53:03.694255+00:00 - S3-BINDING-SCOPE：区分人工绑定oracle与自动预测并完成只读来源核对
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：6 passed in 5.60s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`845c1b4228c1bbe85521537b320d8f3426cdb483`；相关未提交路径：26 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：原人工绑定runner及evaluator更名为binding_oracle，成功和受阻报告均明确人工/目标ID输入及不可声称端到端Ours；判定公式保持不变。仅使用合成测试运行两条报告路径，不执行真实实验。只读核对活动人工结果：25个action和22个actor引用有效，30个target/lane存在；5/8个空值合并为7个规则活动组合，10项顺序为process-only。报告收录来源哈希与字段角色问题，不修改人工决定或Gold、不打开归档、不恢复取消的LLM fallback；已有自动匹配代码存在，端到端接入与评价未在本轮完成。纠正旧文档只差人工标注的过强结论。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

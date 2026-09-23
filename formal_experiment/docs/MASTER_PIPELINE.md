@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.18
+**文档版本**：3.7.19
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-23
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,22 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-23 修订 3.7.19：S3-BINDING-SCOPE 参考答案与自动预测职责纠正（零 API）
+
+- 完成机械核对：25 个非空 action、22 个非空 actor 引用有效，30 个 target/lane
+  均存在于 control BPMN；5/8 个空值合并为 7 个规则—活动组合，10 项顺序仍为
+  process-only。报告 `outputs/reports/stage3_binding_reference_assessment_v1.md`
+  整理原文与角色定义问题；不恢复旧批次、不撤销既有 30/30 人工确认。
+- 原 supplied-binding runner/evaluator 更名为 `*_stage3_binding_oracle_v1.py`，
+  产物明确标记 oracle、使用人工绑定、不可声称端到端 Ours。原方法只把
+  Direct Rule Record 用于 ID 诊断，不能因输入该文件就称为自动 grounding。
+- 纠正“只差人工标注、不差代码”的旧结论：已有 Sun 自动匹配和 action matching v3；
+  自动预测接入与独立评价仍需完成。参考绑定只用于评测，预测不得读取 target ID、
+  expected lane、mutation order_pair 或人工答案；不能把 Gold/预测的 ID 相同当语义对齐。
+- 不要求强行填满 null 或制造法规顺序；先区分权利主体与流程执行者，再对有原文依据的
+  新语义问题申请最小人工裁决。当前没有需要重新操作的审核批次。本次未生成 Gold，
+  未运行预测/评价/API，也未恢复用户取消的规则先行 LLM fallback。
 
 ## 2026-09-23 修订 3.7.18：S3-BINDING-REVIEW 人工复核完成并归档（零 API）
 

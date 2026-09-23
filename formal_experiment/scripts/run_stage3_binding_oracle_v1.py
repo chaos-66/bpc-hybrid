@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-"""Grounded Stage-3 'Ours' detector framework.
+"""Stage-3 diagnostic oracle with supplied human bindings.
 
 Inputs
 ------
@@ -16,6 +16,11 @@ Outputs
 - ``out_of_order``
 - an evaluation report with precision/recall/F1, Macro-F1 and Micro-F1.
 
+This script is NOT an end-to-end Ours method. It receives human action/lane
+bindings and benchmark-supplied activity/order IDs. The Direct-LLM record is
+used only for ID provenance diagnostics; it does not predict the bindings.
+Scores can describe this supplied-binding diagnostic, never automatic
+grounding accuracy or an end-to-end superiority claim.
 This script never creates, infers, or mutates Gold.  While the binding gold is
 blank/unreviewed it fails closed and writes a blocked report instead of
 fabricating predictions.
@@ -42,7 +47,7 @@ from bpc_hybrid.stage1_process import (  # noqa: E402
     parse_bpmn_file,
 )
 import validate_binding_gold_v1 as validator  # noqa: E402
-from evaluate_stage3_ours_grounded_v1 import evaluate_predictions  # noqa: E402
+from evaluate_stage3_binding_oracle_v1 import evaluate_predictions  # noqa: E402
 
 DEFAULT_BENCHMARK = (
     ROOT / "data/development/stage3_synth"
@@ -52,9 +57,9 @@ DEFAULT_RULE_RECORD = (
     ROOT / "data/predictions/gdpr7_direct_llm_v1/predictions.json"
 )
 STRUCTURAL_CONTRACT = ROOT / "configs/stage1_structural_s11_s14.json"
-OUT_DIR = ROOT / "outputs/development/stage3_ours_grounded_v1"
-REPORT_JSON = ROOT / "outputs/reports/stage3_ours_grounded_v1.json"
-REPORT_MD = ROOT / "outputs/reports/stage3_ours_grounded_v1.md"
+OUT_DIR = ROOT / "outputs/development/stage3_binding_oracle_v1"
+REPORT_JSON = ROOT / "outputs/reports/stage3_binding_oracle_v1.json"
+REPORT_MD = ROOT / "outputs/reports/stage3_binding_oracle_v1.md"
 TYPES = ("missing_action", "incorrect_actor", "out_of_order")
 COMPLIANT = "compliant"
 
@@ -241,8 +246,15 @@ def run(binding_path: Path, benchmark_path: Path, rule_record_path: Path,
     benchmark = _load(benchmark_path)
     rule_record = _load(rule_record_path)
     report: dict[str, Any] = {
-        "schema_version": "stage3_ours_grounded_run@1.0.0",
+        "schema_version": "stage3_binding_oracle_run@1.0.0",
         "status": "blocked_on_human_annotation",
+        "method_id": "supplied_binding_oracle_v1",
+        "claim_scope": "development_oracle_diagnostic",
+        "inference_uses_human_bindings": True,
+        "inference_uses_declared_activity_ids": True,
+        "automatic_grounding_evaluated": False,
+        "end_to_end_ours_claim_allowed": False,
+        "rule_record_role": "ID provenance diagnostics only; not binding prediction",
         "binding_gold": validation,
         "benchmark_id": benchmark.get("benchmark_id"),
         "rule_record": {
@@ -263,18 +275,18 @@ def run(binding_path: Path, benchmark_path: Path, rule_record_path: Path,
     if not validation.get("ready"):
         report["blocked_reason"] = (
             "Binding gold is not ready; human annotation must be completed "
-            "before any Ours detector run. No predictions were generated.")
+            "before any binding-oracle diagnostic run. No predictions were generated.")
         _write_json(report_json, report)
         report_md.write_text(
-            "# Stage 3 Ours grounded detector: blocked\n\n"
+            "# Stage 3 supplied-binding oracle diagnostic: blocked\n\n"
             f"- binding gold: `{validation['input_path']}`\n"
             f"- status: `{validation['status']}`\n"
             f"- ready items: {validation['items_ready']}/"
             f"{validation['items']}\n"
             f"- errors: {len(validation['errors'])}\n"
             f"- warnings: {len(validation['warnings'])}\n\n"
-            "No predictions or Gold were generated. Complete the human "
-            "binding annotation first, then re-run with the filled file.\n",
+            "No predictions or Gold were generated. This diagnostic requires supplied human "
+            "bindings; it is not an automatic-grounding evaluation.\n",
             encoding="utf-8", newline="\n")
         return report
 
@@ -334,7 +346,7 @@ def run(binding_path: Path, benchmark_path: Path, rule_record_path: Path,
     _write_json(report_json, report)
     _write_json(out_dir / "evaluation.json", evaluation)
     lines = [
-        "# Stage 3 Ours grounded detector",
+        "# Stage 3 supplied-binding oracle diagnostic",
         "",
         f"- status: `{report['status']}`",
         f"- binding gold: `{validation['input_path']}`",
@@ -358,7 +370,7 @@ def run(binding_path: Path, benchmark_path: Path, rule_record_path: Path,
         f"- Unobservable: {evaluation['unobservable']}",
         "",
         "The detector consumes the human binding gold as input and never "
-        "creates or infers Gold.",
+        "creates or infers Gold. These scores must not be labelled end-to-end Ours.",
     ]
     report_md.write_text("\n".join(lines) + "\n", encoding="utf-8",
                          newline="\n")

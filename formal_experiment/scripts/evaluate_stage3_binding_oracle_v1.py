@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-"""Evaluate Stage-3 grounded predictions against the paired benchmark.
+"""Evaluate Stage-3 supplied-binding oracle predictions against the paired benchmark.
 
 Outputs per-type precision/recall/F1, Macro-F1 over the three violation types,
 Micro-F1, compliant specificity, and exact-type accuracy.  It never writes Gold.
@@ -68,7 +68,9 @@ def evaluate_predictions(
     exact = sum(1 for r in variants if r["predicted"] == r["gold"])
 
     return {
-        "schema_version": "stage3_ours_grounded_evaluation@1.0.0",
+        "schema_version": "stage3_binding_oracle_evaluation@1.0.0",
+        "claim_scope": "development_oracle_diagnostic",
+        "end_to_end_ours_claim_allowed": False,
         "benchmark_id": benchmark.get("benchmark_id"),
         "items": len(rows),
         "missing_predictions": missing,

@@ -7,8 +7,11 @@ predictions or results.
 rule-to-process bindings from the **published Stage 2 Rule Record**, so the
 paper can report an "Ours" row on the paired benchmark?
 
-**Answer: not yet, and the missing piece is a human annotation — not code.**
-The reasoning is a chain of four verified facts.
+**Corrected interpretation (2026-09-23): reference annotation and automatic
+prediction are separate requirements.** Completing human bindings alone
+cannot produce an end-to-end Ours result. Existing automatic matchers are
+present; their integration and evaluation must keep reference bindings out of
+inference. The observations below remain historical development evidence.
 
 ---
 
@@ -54,8 +57,9 @@ On the 60-item paired benchmark, with each arm's own frozen rule:
 | `winter_wrapper` | 0.2222 | 0.6000 | 10/30 | 0 |
 | grounded reference (declared bindings) | 1.0000 | 1.0000 | 30/30 | 0 |
 
-`out_of_order` F1 is **0.0 for both predecessors**. The gap is a *grounding*
-effect, not algorithm quality.
+`out_of_order` F1 is **0.0 for both predecessors**. The declared-binding
+reference receives additional answer information, so this comparison cannot
+isolate algorithm quality or prove that a new grounding method is superior.
 
 ## 4. The project's own formal pipeline already records this blocker
 
@@ -76,18 +80,21 @@ relation to check.
 
 ## 5. What this means
 
-A real "Ours" detector needs, as **input**, a binding from each rule action to
-the BPMN activity that discharges it. Today:
+Automatic prediction and reference annotation have different owners:
 
-- the benchmark does not annotate it (§1);
-- the Gold Rule Records partially annotate the actor side but not the order
-  side (§2);
-- deriving it lexically is the failing step (§3, §4).
+- The predictor receives a Stage 2 Rule Record, a BPMN model and frozen method
+  settings. It must predict action/activity and actor/executor mappings itself.
+- The evaluator may use independently adjudicated bindings as reference
+  answers. Accepted nulls must not be silently converted into positive matches.
+- A supplied-binding checker uses human mappings and declared activity/order
+  IDs. It is an oracle diagnostic, not an end-to-end Ours arm. Merely consuming
+  a Direct-LLM file for ID diagnostics does not change that classification.
 
-Therefore the remaining work for the Table 3 "Ours" row is **authoring that
-annotation**, not writing more detector code. Any attempt to fill it in
-automatically would be the agent authoring its own Ground Truth — exactly what
-the objective forbids ("no fabricated results").
+The earlier claim that only human annotation remained was too strong.
+Automatic matching already exists in `sun_stage3/sun_scorer.py` and
+`s3_action_matching_v3.py`; further integration and controlled evaluation are
+distinct from producing reference labels. AI-generated predictions are allowed
+as predictions, but must never be relabelled as human Gold.
 
 ## 5b. The mechanism itself works — measured (added 2026-09-21, round 5)
 
@@ -102,32 +109,32 @@ mechanism was tested directly
 | order relations available from the **Gold** Rule Records | **0** (0 of 92 clauses) |
 | order relations available from the **real Direct-LLM capsule** | **0** (0 of 78 clauses) |
 
-So `out_of_order` is decidable **from the process side alone** — the control is
-ordered one way and the variant is its exact inversion. What is missing is
-purely the **rule-side endpoint binding**: the rules carry no ordering
-information anywhere, in either the Gold or the promoted Direct-LLM arm.
+The control/variant inversion establishes a **process-structure difference**.
+It does not establish that a regulation requires that order. Missing rule-side
+relations in the two saved capsules also do not prove that the legal text
+contains, or omits, a particular relation: source evidence must be checked.
 
-This is the tightest form of the argument. The detector needs exactly one
-input that the evidence above does not supply. At this report's original date,
-a blank 30-pair annotation surface was prepared. Update 2026-09-23: the user
-completed candidate review; the retained result is
-`data/development/stage3_synth/stage3_binding_human_decisions_v1.json`.
-It still has 5 null actions, 8 null actors and 10 process-only order decisions,
-and is not Binding Gold. The old annotation batch is archived; no old review
-task should be resumed from this historical report. The detector still needs
-complete, explicitly supplied bindings before those claims can be tested.
+The user completed 30/30 candidate reviews. The active result is
+`data/development/stage3_synth/stage3_binding_human_decisions_v1.json`,
+with 5 null actions, 8 null actors and 10 process-only orders. The null action
+and actor occurrences cover 7 distinct rule/activity contexts. This is not
+Binding Gold; review completion remains valid and does not need to be undone.
+The old review batch stays archived. The source inventory and role questions
+are in `outputs/reports/stage3_binding_reference_assessment_v1.md`.
 
-## 6. The three honest paths
+## 6. Evaluation paths
 
-| # | Path | What it needs | What the paper may claim |
-|---|---|---|---|
-| A1 | Annotate rule-action → BPMN-activity bindings (and rule order relations) for the 30 paired items, then build the grounded detector that consumes them. | Human annotation of 30 items × 3 types, plus the order relations for the 9 rules. | "Ours outperforms predecessors on three-type compliance checking." |
-| A2 | Same annotation work, but restrict the claim to the types that are actually annotatable now: `missing_action` and `incorrect_actor` (both 10/10 structurally detectable and both fully grounded once actions are bound). Keep `out_of_order` explicitly out of scope. | Human annotation of the action bindings only. | "Ours outperforms predecessors on missing-action and incorrect-actor detection." |
-| B | Publish Table 3 as a **framework + feasibility** table: the paired benchmark, the anti-degeneracy guarantee, the grounded upper bound, and the predecessor results, with the grounding requirement stated as the finding. | Nothing new. | "We show why existing detection is degenerate on this corpus and exactly what a measurable benchmark requires." |
+| Path | Required inputs and separation | Permitted interpretation |
+|---|---|---|
+| Automatic grounding evaluation | Predictor uses only predicted Rule Records and process inputs; evaluator separately holds adjudicated bindings, including supported no-match/unknown cases. | Measured grounding accuracy and coverage within the declared development/test scope; no superiority assumed. |
+| End-to-end compliance evaluation | The same automatic predictions feed fixed formulas; reference bindings, mutation targets and expected lanes/orders are unavailable during inference. Legal order checks require source-supported rule relations. | Actual measured compliance results under comparable inputs; completion of annotation alone is insufficient. |
+| Supplied-binding oracle diagnostic | Human mappings and declared process IDs are deliberately supplied to the checker. | Diagnostic performance with privileged inputs; never label this as end-to-end Ours. |
 
-Path B is fully supported by evidence that already exists and is committed.
-Paths A1/A2 are the only routes to a superiority claim, and both are gated on
-human annotation.
+A complete reference dataset can include justified no-match or not-applicable
+decisions. It does not require every BPMN task to have a legal action span, or
+every synthetic order inversion to have a corresponding legal ordering rule.
+The deterministic work in this correction does not modify frozen methods,
+publish Gold, resume cancelled LLM fallback, or run new experiments.
 
 ## 7. Reproduction
 
