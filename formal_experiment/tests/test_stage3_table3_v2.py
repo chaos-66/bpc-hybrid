@@ -138,6 +138,31 @@ def test_missing_action_comes_from_rule_process_mismatch(common_module, nlp):
     assert signal["reason"] is None
 
 
+def test_full_graph_coverage_does_not_imply_semantic_match(common_module):
+    from bpc_hybrid.sun_stage3.sun_scorer import SunScorer
+
+    class NoMatchSim:
+        def text_pair(self, left, right):
+            return 0.0
+
+    scorer = SunScorer(NoMatchSim(), 0.8, 0.8, 0.8, nlp=None)
+    model = SimpleNamespace(
+        actions=[
+            {"id": f"A{i}", "name": f"Unrelated process step {i}"}
+            for i in range(25)
+        ],
+        actors=[],
+        actor_sources={},
+        action_actor_names={},
+        business_objects=[],
+    )
+    raw = scorer.missing_action(["notify the supervisory authority"], model)
+    signal = common_module.normalize_sun_signal("missing_action", raw)
+    assert raw["denominator"] == 1
+    assert raw["score"] == 1.0
+    assert signal["status"] == "violated"
+
+
 def test_incorrect_actor_comes_from_rule_actor_relation_not_lane(common_module):
     from bpc_hybrid.sun_stage3.sun_scorer import SunScorer
 
