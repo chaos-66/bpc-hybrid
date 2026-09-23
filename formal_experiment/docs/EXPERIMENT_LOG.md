@@ -5315,3 +5315,17 @@
 - 仍存在 blocker：无
 - 备注：无
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-23T12:00:06.720056+00:00 - S3-ASSET-RECOVERY：核对官方继承资产并撤销不受协议支持的v3性能身份
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：4 passed in 0.14s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`6dfa96c387973ca2e3c5cd4d32ba463e9ecd8257`；相关未提交路径：20 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：57/57本地继承输入一致，活动7/7 BPMN一致；未发现合规补充模型、违规变体或答案；当前25/63 matching已标，38项未标不作负例；规则侧顺序0。用户已选择补齐三类，新API另列预算授权。仅资产审计与状态纠正，不运行性能实验、不改旧Gold、不恢复审核。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

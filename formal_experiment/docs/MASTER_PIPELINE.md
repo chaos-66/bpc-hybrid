@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.20
+**文档版本**：3.7.22
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-23
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -11,7 +11,21 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
-## 2026-09-23 修订 3.7.21：Stage 3 Sun protocol realignment 与 Table 3 v3 全 Rule Base 诊断
+## 2026-09-23 修订 3.7.22：S3-ASSET-RECOVERY 与三类 benchmark 重建
+
+- 用户纠偏总结优先：固定 Stage 1≈Sun / Stage 2 为主要变量 / Stage 3≈Sun；禁止
+  Ours 专属 grounding、matcher、backend、追分阈值或按结果筛选。
+- 官方继承输入审计 verified：两份本地 57 文件一致，活动 7 BPMN 逐字节相同；
+  包中没有 Sun 补充合规模型、单错误变体和逐项答案，不能直接恢复原 checking 集。
+- v3 外层 matching_score>tau 在可读作者稿中未定义，原 control 完整合规性未确认；
+  v3 性能身份撤销，连同 v1/v2/no-gate 保留 diagnostic，不作为最终表三。
+- 用户已选择补齐三类：先补充有明确法规顺序的条文，独立构造 control 与 exactly-one-error
+  variants；新参考明确来源与裁决身份，不修改旧 Gold 或重开已完成审核。
+- 独立 benchmark 仍 in_progress；新 LLM 请求须完成具体 payload/预算后另行授权，
+  不把本次实验恢复指令解释为无预算 API 许可。
+- 资产报告：`outputs/reports/sun_stage3_official_asset_audit_v1.{json,md}`。
+
+## 2026-09-23 修订 3.7.21：历史 Stage 3 v3 全 Rule Base 诊断（被 3.7.22 纠正）
 
 - 修复原则恢复为：Stage 1 ≈ Sun、Stage 2 是唯一主要变量、Stage 3 ≈ Sun；v1/v2 保留为 diagnostic/superseded，不再作为主 Table 3 协议。
 - 新增 `stage3_sun_style_checker`：先对完整 9 条 Rule Base 做 Definition 4 匹配，只有 matched rules 进入 Def. 5–7；Sun 与 Ours 调用同一 checker，只替换 Stage 2 capsule。

@@ -9,7 +9,22 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
-## Stage 3 Table 3 v3：Sun-protocol realignment and full-rule-base diagnostic (2026-09-23)
+## S3-ASSET-RECOVERY：官方继承资产核对与 Table 3 重新构造（2026-09-23）
+
+- 用户提供纠偏总结，并选择优先补齐三类：补充有明确顺序依据的条文与基准流程；
+  新增 LLM 调用先准备精确输入/预算再授权。Stage 1/3 共用，Stage 2 为主要变量。
+- 资产审计已完成：本地两个继承副本 57/57 一致，活动 BPMN 7/7 与来源相同；
+  57 文件为 7 BPMN + 46 法规 + 4 配置/词表，没有已补充的合规模型、变体或答案。
+  官方 ZIP 本轮未重新下载；历史官方身份与本轮本地字节核对分开说明。
+- **v3 的零分不再具有论文性能身份**：外层 `matching_score > tau` 在可读作者稿
+  中无依据，control 的完整合规性也未确认；v1/v2/v3/no-gate 均保留历史诊断。
+  不删除旧结果，不将旧协议分数换名重新发布。
+- 已有 matching Gold 25/63；未标的 38 项不作负例。92 个人工 rule clause 无
+  规则侧顺序关系，原 Gold 与完成的绑定审核不改、不重开。
+- 下一项是新 benchmark 的来源、适用范围、独立 reference、合规基准与单错误
+  变体构造；仍未产生最终表三。详见 `outputs/reports/sun_stage3_official_asset_audit_v1.md`。
+
+## Stage 3 Table 3 v3：历史全规则库诊断（性能身份已由上节撤销）
 
 - Implemented `stage3_sun_style_checker` (Definition 4 full Rule Base matching; Def. 5–7 only on associated rules) and blinded v3 inference view/case map (`stage3_sun_style_inference_view_v3.json`, `stage3_sun_style_case_map_v3.json`).
 - Ran full pipelines for Winter, Sun, and Ours over the shared 9-rule GDPR Rule Base; predictions were persisted before the separate evaluator read labels.
