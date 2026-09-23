@@ -1190,16 +1190,17 @@ variant manifest 自己声明的 `source_bpmn` + sha，即冻结 Stage 1 GDPR7 �
 2. **grounded 上界不是 "Ours"。** 它是**声明绑定**（benchmark 直接给出
    `target_activity_id`）下的参考上界，等于把答案喂给检测器。要写成 "Ours"，必须先有
    一个**从 Stage 2 Rule Record 真实推导绑定**的检测器；而该推导所需的
-   「rule action → 履行它的 BPMN activity」绑定**今天无人标注**（panel 无此字段，
+   「rule action → 履行它的 BPMN activity」绑定**尚未齐备或发布为绑定 Gold**（panel 无此字段，
    Gold Rule Records 的 `order_relations` 0/92 非空、`actor_action_map` 仅 38/92 非空）。
 3. **out_of_order 目前不可声称结论。** Gold 与真实 Direct-LLM 胶囊都**没有** order
    relations（项目自己的 linkage 报告原文：Definition-7 input unavailable by
    contract; never fabricated），因此 `out_of_order` F1 = 0.0 对**所有**方法成立，
    不构成方法间差异。
 
-**补齐 "Ours" 行所需的人工标注**已备好空白界面：
-`data/development/stage3_synth/stage3_binding_annotation_blank_v1.json`（30 pairs，
-decision 字段全空，`review_state=unreviewed`；agent 不得推断其中任何值）。
+**绑定候选人工复核**已完成 30/30 pairs，结果保存在
+`data/development/stage3_synth/stage3_binding_human_decisions_v1.json`；
+5 个 action、8 个 actor 引用为空，10 项顺序仅确认 process-side 关系。
+该结果 `is_gold=false`，不能视为所需绑定已齐备；旧模板与审核过程已归档。
 
 **边界。** 本 panel 只含违规正例（`none_gold_items: 0`），故只报总体 F1 与检出数，
 不报 precision/recall。该表与 Sun 论文 Table 12 口径不同，不可跨表比较。分类细目

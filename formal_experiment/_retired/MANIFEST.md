@@ -32,3 +32,18 @@
 机器事件日志没有归档或重写：`docs/AUDIT_EVENTS.jsonl` 原样迁移为
 `docs/EXPERIMENT_EVENTS.jsonl`，其中事件 1—29 保持原始 JSONL 内容。
 
+
+## 2026-09-23：已完成人工审核的 Stage 3 binding v1
+
+- 归档包：`_retired/review_batches/stage3_binding_v1_20260922.zip`。
+- 用户于 2026-09-22 完成 30/30 项确认并要求归档；包内保存 50 个原文件：
+  blank/proposal/AI 初审与 checklist、旧验证与 blocked 报告、临时审核工具及其
+  测试说明、原人工决定及 31 份备份。原路径和每个文件哈希见包内
+  `ARCHIVE_MANIFEST.json`；内容逐字节核验后才从活动区移除。
+- ZIP SHA-256：`dafb4f98090e8dd1c21008b2ef3a4f11a8fdbd8984d091297c4f822a21860db4`。
+- 唯一活动结果：`data/development/stage3_synth/stage3_binding_human_decisions_v1.json`，
+  与原人工决定逐字节一致，SHA-256：
+  `1434da07946484e7bae95e7af959930d3f154c375df733ae146bbdd54191ce9f`。
+- 本批状态 `human_review_complete`，`is_gold=false`；不自动补填 5 个空 action、
+  8 个空 actor，也不把 10 项 process-only 顺序升级为法规顺序。
+- 本包只供明确的历史追溯，禁止默认搜索、队列扫描、导入或自动恢复。

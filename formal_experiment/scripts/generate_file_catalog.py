@@ -1,6 +1,6 @@
 """生成面向人和 Agent 的中文逐文件目录。
 
-脚本只枚举路径，不读取文件内容；明确跳过 .env 与可再生缓存。
+脚本只枚举活动路径，不读取文件内容；跳过归档、.env 与可再生缓存。
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "docs" / "FILE_CATALOG.md"
-IGNORED_DIRS = {".pytest_cache", "__pycache__", ".tmp"}
+IGNORED_DIRS = {".pytest_cache", "__pycache__", ".tmp", "_retired"}
 IGNORED_FILES = {".env"}
 IGNORED_SUFFIXES = {".bak"}
 
@@ -82,7 +82,8 @@ def collect_files() -> list[Path]:
 
     The workspace may contain large ignored development runs and local review
     backups.  A reproducible catalog must not change merely because those
-    machine-local artifacts exist.
+    machine-local artifacts exist. Retired provenance is excluded even when
+    tracked: it must never be discovered as an active review batch.
     """
     files: list[Path] = []
     completed = subprocess.run(
@@ -124,11 +125,11 @@ def render(files: list[Path]) -> str:
         "# 项目逐文件目录",
         "",
         f"**生成日期**：{date.today().isoformat()}",
-        f"**收录文件**：{len(files)} 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）",
+        f"**收录文件**：{len(files)} 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）",
         "**生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`",
         "",
-        "本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”",
-        "表示只可追溯；“开发/溯源”表示不能直接用于最终论文表格；“正式区（受门禁）”",
+        "本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。",
+        "“开发/溯源”表示不能直接用于最终论文表格；“正式区（受门禁）”",
         "表示只有冻结和运行门禁通过后才能写入。",
         "",
     ]

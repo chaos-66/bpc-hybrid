@@ -5219,3 +5219,17 @@
 - 仍存在 blocker：无
 - 备注：只测试新审核工具及原blank不变量：确认/修改/拒绝、null明确确认、30条完成、备份与保存失败保护、来源变更/另一窗口保护、真实Tk按钮交互。测试只写临时副本；真实人工决定未创建。窗口布局已截图检查；原proposal、blank、benchmark和Gold不变；不运行全量测试或实验。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-23T00:28:45.047417+00:00 - S3-BINDING-REVIEW：归档已完成的30项人工复核并排除默认发现
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：8 passed in 1.26s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`6fdfbfc2a0990f3910fe01b5c3ce2c183d707897`；相关未提交路径：48 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：用户已确认30/30项；50个原文件逐字节校验后压缩归档，含31份备份。最终人工结果原样迁至stage3_synth，SHA256=1434da07946484e7bae95e7af959930d3f154c375df733ae146bbdd54191ce9f；is_gold=false，保留5个空action和8个空actor以及10项process-only顺序。旧模板、候选、工具、blocked报告和启动入口撤下；默认rg搜索与活动文件目录排除归档，validator和runner要求显式输入。benchmark与现有Gold未改；未执行实验、全量测试或API。仅归档与相关发现/调用边界检查。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

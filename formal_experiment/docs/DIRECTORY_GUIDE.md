@@ -31,7 +31,7 @@
 | `scripts/` | 检查、记录、构建、验证和 runner 入口 | 活动命令入口 |
 | `src/` | Python 实现 | 活动代码 |
 | `tests/` | 离线回归测试和 fixture | 活动验证 |
-| `_retired/` | 已退出活动流程但需追溯的材料 | 只读，不得导入或直接运行 |
+| `_retired/` | 已退出活动流程但需追溯的材料 | 默认搜索和目录排除；仅明确追溯时查阅，不得导入或直接运行 |
 
 `.pytest_cache/`、`__pycache__/` 和 `.tmp/` 是可再生缓存，不属于研究资产；可以
 清除，也不会写入逐文件目录。`.env` 可能含密钥，任何 Agent、目录脚本和日志都
@@ -51,6 +51,10 @@
 | `data/gold/` | 未来冻结的人工 Gold | 当前保持空壳 |
 | `data/predictions/` | 未来正式预测 | 只由受控 runner 写入 |
 | `data/results/` | 未来正式指标和明细 | 默认禁止覆盖 |
+
+完成的审核批次仅保留一份最终人工结果作为项目记录，不再进入待审核队列。
+本批 Stage 3 结果为 `data/development/stage3_synth/stage3_binding_human_decisions_v1.json`；
+审核过程、工具及备份已压缩封存。后续批次使用独立 ID 与路径，默认不搜索归档。
 
 被替代的熟悉用审核副本和 R15.0 历史输出已经迁入 `_retired/data/`；它们不能
 重新成为活动审核面或正式结果。

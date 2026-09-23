@@ -4,12 +4,18 @@ The Stage-3 `Ours` detector consumes three inputs:
 
 1. **Direct-LLM Rule Record**:
    `data/predictions/gdpr7_direct_llm_v1/predictions.json`
-2. **Binding Gold** (human-filled):
-   `data/development/stage3_synth/stage3_binding_annotation_blank_v1.json`
+2. **Binding Gold** (human-filled): an explicitly supplied `--binding-gold` path.
 3. **BPMN**: control/variant paths already embedded in each binding item.
 
-Agents must never fill the decision fields.  The blank surface is the
-annotation tool; this document defines its format.
+Agents must never infer human decision fields. This document defines the
+detector input format. Both validator and runner require an explicit input.
+
+The 30-item candidate review is complete. Its retained result is
+`data/development/stage3_synth/stage3_binding_human_decisions_v1.json`
+(`human_review_complete`, `is_gold=false`). It uses the review-decision schema,
+not the detector's binding schema below. The old template and temporary review
+tool are archived and must not be auto-selected for another batch. Completing
+review does not supply missing rule order endpoints or publish Binding Gold.
 
 ## Item fields
 
@@ -30,10 +36,10 @@ following human decision fields:
 
 ```powershell
 python scripts/validate_binding_gold_v1.py \
-  --binding-gold data/development/stage3_synth/stage3_binding_annotation_blank_v1.json
+  --binding-gold <explicit-binding-file.json>
 
 # strict gate; exits non-zero until every item is filled/reviewed
-python scripts/validate_binding_gold_v1.py --require-ready
+python scripts/validate_binding_gold_v1.py --binding-gold <explicit-binding-file.json> --require-ready
 ```
 
 The validator checks BPMN existence and sha256, action/actor id existence,

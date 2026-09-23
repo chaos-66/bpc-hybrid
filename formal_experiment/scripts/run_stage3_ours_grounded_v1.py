@@ -4,8 +4,8 @@
 Inputs
 ------
 - Direct-LLM Rule Record: ``data/predictions/gdpr7_direct_llm_v1/predictions.json``
-- Binding Gold: human-filled copy of
-  ``data/development/stage3_synth/stage3_binding_annotation_blank_v1.json``
+- Binding Gold: explicitly selected human-filled input (``--binding-gold``).
+  Completed review decisions are not automatically promoted to Binding Gold.
 - BPMN: the control/variant files named by the paired benchmark and the binding
   surface.
 
@@ -44,7 +44,6 @@ from bpc_hybrid.stage1_process import (  # noqa: E402
 import validate_binding_gold_v1 as validator  # noqa: E402
 from evaluate_stage3_ours_grounded_v1 import evaluate_predictions  # noqa: E402
 
-DEFAULT_BINDING = validator.DEFAULT_BINDING
 DEFAULT_BENCHMARK = (
     ROOT / "data/development/stage3_synth"
     / "stage3_paired_benchmark_v1.json"
@@ -368,7 +367,8 @@ def run(binding_path: Path, benchmark_path: Path, rule_record_path: Path,
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--binding-gold", type=Path, default=DEFAULT_BINDING)
+    parser.add_argument("--binding-gold", type=Path, required=True,
+                        help="Explicit input path; completed batches are never auto-selected.")
     parser.add_argument("--benchmark", type=Path, default=DEFAULT_BENCHMARK)
     parser.add_argument("--rule-record", type=Path, default=DEFAULT_RULE_RECORD)
     parser.add_argument("--out-dir", type=Path, default=OUT_DIR)

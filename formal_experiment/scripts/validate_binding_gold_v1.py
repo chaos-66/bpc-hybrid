@@ -13,10 +13,10 @@ referential integrity of an annotation file that a human fills:
 - order relation fields have a valid pair format;
 - review_state is one of unreviewed/reviewed/adjudicated.
 
-The default input is the blank annotation surface.  It will validate as
-``blank_awaiting_human_annotation`` and report non-readiness unless
-``--require-ready`` is intentionally omitted.  A ready run requires every item
-to have a non-null decision and review_state in {reviewed, adjudicated}.
+The input must be explicitly selected with ``--binding-gold``. Completed
+review batches and their archived templates are never selected automatically.
+A ready run requires every item to have a non-null decision and review_state
+in {reviewed, adjudicated}.
 """
 
 from __future__ import annotations
@@ -39,10 +39,6 @@ from bpc_hybrid.stage1_process import (  # noqa: E402
     parse_bpmn_file,
 )
 
-DEFAULT_BINDING = (
-    ROOT / "data/development/stage3_synth"
-    / "stage3_binding_annotation_blank_v1.json"
-)
 STRUCTURAL_CONTRACT = ROOT / "configs/stage1_structural_s11_s14.json"
 VALID_REVIEW_STATES = ("unreviewed", "reviewed", "adjudicated")
 VALID_TYPES = ("missing_action", "incorrect_actor", "out_of_order")
@@ -263,7 +259,8 @@ def validate_binding_gold(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--binding-gold", type=Path, default=DEFAULT_BINDING)
+    parser.add_argument("--binding-gold", type=Path, required=True,
+                        help="Explicit input path; completed batches are never auto-selected.")
     parser.add_argument("--require-ready", action="store_true")
     parser.add_argument("--json-out", type=Path, default=None)
     args = parser.parse_args()

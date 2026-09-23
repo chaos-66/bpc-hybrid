@@ -108,11 +108,14 @@ purely the **rule-side endpoint binding**: the rules carry no ordering
 information anywhere, in either the Gold or the promoted Direct-LLM arm.
 
 This is the tightest form of the argument. The detector needs exactly one
-input that no artifact currently supplies, and the annotation surface for that
-input is built and blank
-(`data/development/stage3_synth/stage3_binding_annotation_blank_v1.json`,
-30 pairs, `review_state=unreviewed`). Once it is filled, the detector is
-mechanical work — no new method research is required.
+input that the evidence above does not supply. At this report's original date,
+a blank 30-pair annotation surface was prepared. Update 2026-09-23: the user
+completed candidate review; the retained result is
+`data/development/stage3_synth/stage3_binding_human_decisions_v1.json`.
+It still has 5 null actions, 8 null actors and 10 process-only order decisions,
+and is not Binding Gold. The old annotation batch is archived; no old review
+task should be resumed from this historical report. The detector still needs
+complete, explicitly supplied bindings before those claims can be tested.
 
 ## 6. The three honest paths
 

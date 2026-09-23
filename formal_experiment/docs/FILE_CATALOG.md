@@ -1,11 +1,11 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-17
-**收录文件**：2120 个（不含 Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-23
+**收录文件**：2476 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
-本文件由脚本按路径生成，用于快速定位，不替代各文件自身说明。状态“退役归档”
-表示只可追溯；“开发/溯源”表示不能直接用于最终论文表格；“正式区（受门禁）”
+本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
+“开发/溯源”表示不能直接用于最终论文表格；“正式区（受门禁）”
 表示只有冻结和运行门禁通过后才能写入。
 
 ## `.env.example`
@@ -26,31 +26,11 @@
 |---|---|---|
 | `.gitignore` | 活动 | 项目文件 |
 
-## `_retired`
+## `.ignore`
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
-| `_retired/changes/2026-07/ESTG150_HUMAN_REVIEW_START_GATE_SPLIT_CHANGESET_2026-07-13.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
-| `_retired/changes/2026-07/ESTG150_LLM_ASSISTED_V2_CHANGESET_2026-07-13.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
-| `_retired/changes/2026-07/ESTG150_REVIEW_GATE_GOVERNANCE_ALIGNMENT_CHANGESET_2026-07-13.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
-| `_retired/changes/2026-07/ESTG150_REVIEW_TOOL_READY_CHANGESET_2026-07-13.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
-| `_retired/data/human_review_user_audit/convert_jsonl_to_json.py` | 退役归档 | Python 实现、脚本或测试 |
-| `_retired/data/human_review_user_audit/estg150_review_pack_user_audit_v1.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
-| `_retired/data/human_review_user_audit/estg150_review_pack_user_audit_v1.jsonl` | 退役归档 | 机器可读配置、数据、事件或产物 |
-| `_retired/data/legacy_r15_0/sun_rule_only_manifest.json` | 退役归档 | 机器可读配置、数据、事件或产物 |
-| `_retired/data/legacy_r15_0/sun_rule_only_predictions.jsonl` | 退役归档 | 机器可读配置、数据、事件或产物 |
-| `_retired/docs/2026-07/CCF_C_POSITIONING_AND_SUPERVISOR_FIGURE.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/docs/2026-07/CURRENT_HANDOFF_2026-07-12.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/docs/2026-07/DATA_TRANSLATION_PROTOCOL.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/docs/2026-07/EStG_150_SAMPLING_PROTOCOL.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/docs/2026-07/EXPERIMENT_FOR_BEGINNER.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/docs/2026-07/REORGANIZATION_PLAN.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/docs/2026-07/STATUS_REPORT.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/docs/2026-07/STATUS_SNAPSHOT_2026-07-12.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/docs/2026-07/SUN2024_FINAL_GAP_AND_ROADMAP.md` | 退役归档 | 说明、规范或研究文档 |
-| `_retired/MANIFEST.md` | 退役归档 | 结构或迁移清单 |
-| `_retired/README.md` | 退役归档 | 所在目录的入口说明 |
-| `_retired/scripts/build_user_override_review_pack.py` | 退役归档 | Python 实现、脚本或测试 |
+| `.ignore` | 活动 | 项目文件 |
 
 ## `AGENTS.md`
 
@@ -70,6 +50,9 @@
 | `configs/ablations/e_same_data_input_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/e_same_data_input_contract_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/gdpr7_direct_llm_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/ablations/gdpr7_direct_llm_execution_contract_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/ablations/gdpr7_direct_llm_execution_contract_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/ablations/gdpr7_direct_llm_execution_contract_v3_1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/datasets/stage1_stage3_gdpr7_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -96,6 +79,8 @@
 | `configs/g05_complexity_candidate_draft_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/g05_complexity_frozen_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/gdpr7_direct_llm_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/gdpr7_direct_llm_authorization_event_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/gdpr7_direct_llm_authorization_event_v3_1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/gdpr7_gold_rule_records_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/gdpr7_sun_rule_only_run_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/methods.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -171,7 +156,25 @@
 | `configs/schemas/stage3_inference.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/schemas/stage3_prediction.schema.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sep_c2_stage2b_predecessor_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_condition_preservation_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_condition_preservation_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_condition_preservation_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_condition_preservation_recovery_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_condition_preservation_recovery_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_condition_preservation_schedule_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_definition_full150_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_definition_full150_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_definition_full150_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_definition_full150_schedule_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_definition_targeted_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_definition_targeted_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_definition_targeted_evaluation_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_definition_targeted_panel_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_definition_targeted_schedule_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sep_c3_modular_ablation_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_modular_ablation_budget_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_targeted_refinement_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/sep_c3_targeted_refinement_schedule_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_annotation_protocol_s15.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_evaluator_s16.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage1_evaluator_s16_formal.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -190,6 +193,8 @@
 | `configs/sun_corenlp_runtime.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/tfidf_svd_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/v6_factorial_ablation_budget_smoke_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/v6_factorial_ablation_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/winter_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 
 ## `data`
@@ -480,6 +485,8 @@
 | `data/development/sim_case_c1/sun_figure10_reconstruction.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/sim_case_c1/sun_figure10_reconstruction_provenance.md` | 开发/溯源 | 说明、规范或研究文档 |
 | `data/development/sim_case_c1/sun_table13_rules_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/stage3_synth/stage3_binding_human_decisions_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/stage3_synth/stage3_paired_benchmark_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_synth/syn_incorrect_actor_03/gdpr_2_consent_to_use_the_data.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
@@ -622,6 +629,11 @@
 | `data/predictions/b0_formal_arm_v1_replay/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/direct_llm_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/direct_llm_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_direct_llm_v1/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_direct_llm_v1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_direct_llm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_direct_llm_v1/promotion_manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/gdpr7_direct_llm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/gdpr7_human_rule_record_v1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/gdpr7_human_rule_record_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/gdpr7_sun_rule_only_v1/cost.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
@@ -714,6 +726,11 @@
 | `docs/research/S28D_R6C1_REMAINING_PILOT_RESULTS.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/S3_EXT_UNIFIED_EVALUATION_NOTE_2026-09-06.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/S3_REAL_CASE_E2E_TASK_SPEC_2026-09-11.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/SEP_C3_MODULAR_ABLATION_FINDINGS_AND_DIAGNOSIS_2026-09-17.json` | 研究证据 | 机器可读配置、数据、事件或产物 |
+| `docs/research/SEP_C3_MODULAR_ABLATION_FINDINGS_AND_DIAGNOSIS_2026-09-17.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/SEP_C3_PROMPT_DESIGN_OUTCOME_AND_FAILURE_RECORD_2026-09-20.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/STAGE3_OURS_ARM_FEASIBILITY_2026-09-21.md` | 研究证据 | 说明、规范或研究文档 |
+| `docs/research/STAGE3_TABLE3_VIABILITY_DIAGNOSIS_2026-09-21.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_BASELINE_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_FINAL_VERSION_AND_DATA_AUDIT.md` | 研究证据 | 说明、规范或研究文档 |
 | `docs/research/SUN_MODALITY_DATASET_INGESTION.md` | 研究证据 | 说明、规范或研究文档 |
@@ -724,9 +741,31 @@
 | `docs/STAGE1_HUMAN_GOLD_GUIDE.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STAGE2_CANONICAL_SCHEMA_SPEC.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STAGE2_LLM_INNOVATION_DESIGN.md` | 活动 | 说明、规范或研究文档 |
+| `docs/STAGE3_BINDING_ANNOTATION_FORMAT_V1.md` | 活动 | 说明、规范或研究文档 |
 | `docs/STYLE_EQUIVALENT_SPEC.md` | 活动 | 说明、规范或研究文档 |
 | `docs/SUPERVISOR_Q_A_PREP_2026-08-06.md` | 活动 | 说明、规范或研究文档 |
 | `docs/USER_DECISION_LOCK_2026-07-12.md` | 活动 | 说明、规范或研究文档 |
+
+## `literature`
+
+| 文件 | 状态 | 用途 |
+|---|---|---|
+| `literature/prompt_design_review/actor_prompt_review.md` | 活动 | 说明、规范或研究文档 |
+| `literature/prompt_design_review/condition_constraint_boundary_review.md` | 活动 | 说明、规范或研究文档 |
+| `literature/prompt_design_review/mapping/README.md` | 活动 | 所在目录的入口说明 |
+| `literature/prompt_design_review/notes/search_log.md` | 活动 | 说明、规范或研究文档 |
+| `literature/prompt_design_review/prompt_evidence.md` | 活动 | 说明、规范或研究文档 |
+| `literature/prompt_design_review/prompt_excerpts/coling2025_templates_exact.md` | 活动 | 说明、规范或研究文档 |
+| `literature/prompt_design_review/prompt_excerpts/haque_singh_prompt_exact.md` | 活动 | 说明、规范或研究文档 |
+| `literature/prompt_design_review/prompt_excerpts/legal_discourse_appendix_F_raw.txt` | 活动 | 文本清单或依赖说明 |
+| `literature/prompt_design_review/prompt_excerpts/legalchanges4bpc_prompt_review_exact.txt` | 活动 | 文本清单或依赖说明 |
+| `literature/prompt_design_review/prompt_excerpts/rc4pc_formalize_requirements_prompt_exact.txt` | 活动 | 文本清单或依赖说明 |
+| `literature/prompt_design_review/reports/literature_grounded_prompt_design_review.md` | 活动 | 说明、规范或研究文档 |
+| `literature/prompt_design_review/semantic_mapping.md` | 活动 | 说明、规范或研究文档 |
+| `literature/prompt_design_review/sources/.gitignore` | 活动 | 项目文件 |
+| `literature/prompt_design_review/sources/README.md` | 活动 | 所在目录的入口说明 |
+| `literature/prompt_design_review/sources_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `literature/prompt_design_review/transferability_matrix.md` | 活动 | 说明、规范或研究文档 |
 
 ## `MANIFEST.md`
 
@@ -916,6 +955,17 @@
 | `outputs/development/s3_semantic_grounding_v5/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_semantic_grounding_v5/metrics.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/s3_semantic_grounding_v5/predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/A_current_contract/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/A_current_contract/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/A_current_contract/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/R_DEF/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/R_DEF/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/R_DEF/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/R_DEF/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/R_DEF/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/sep_c3_definition_full150_confirmation_v1/R_DEF/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage1_formal_capsule_v1/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage1_formal_capsule_v1/export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage1_formal_capsule_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1126,6 +1176,54 @@
 | `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_adapted_clause_regions.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c2_stage2b_predecessor_baseline_v1/winter_native.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c2_stage2b_public_source_probe_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/offline_requests.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/backup_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/BASE/repeat-01/attempts.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/BASE/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/contracts/sep_c3_condition_preservation_authorization_event_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/contracts/sep_c3_condition_preservation_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/contracts/sep_c3_condition_preservation_execution_contract_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/contracts/sep_c3_condition_preservation_schedule_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/global/attempts.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/global/partial_execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/global/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/RC1/repeat-01/attempts.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/RC1/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/RC_KEEP/repeat-01/attempts.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/backup/RC_KEEP/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/monitor/recovery_run_stderr.log` | 活动 | 项目文件 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/monitor/recovery_run_stdout.log` | 活动 | 项目文件 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/monitor/runtime_monitor.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/attempts.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/attempts.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/BASE/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/partial_execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/post_recovery_backup_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/attempts.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC1/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/attempts.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/post_recovery_backup/RC_KEEP/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/pre_recovery_ledger_audit.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/recovery_ledger_v1.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_condition_preservation_v1/recovery_v1/recovery_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_definition_full150_confirmation_v1/offline_requests.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_definition_full150_confirmation_v1/request_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_definition_targeted_refinement_v1/offline_requests.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_definition_targeted_refinement_v1/request_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c3_modular_ablation_v1/arms/011/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1152,6 +1250,32 @@
 | `outputs/evidence/sep_c3_modular_ablation_v1/arms/111/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c3_modular_ablation_v1/execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/sep_c3_modular_ablation_v1/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/000/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/000/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/000/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/000/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/000/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/000/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/001/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/001/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/001/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/001/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/001/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/001/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/010/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/010/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/010/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/010/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/010/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/010/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/100/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/100/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/100/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/100/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/100/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/arms/100/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/evidence/sep_c3_modular_ablation_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/.gitkeep` | 目录占位 | 保留当前空目录 |
 | `outputs/reports/b0_d1_experiment_closure_brief.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/b0_d1_formal_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1179,6 +1303,8 @@
 | `outputs/reports/d1_prompt_factorial_results_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/d_full_postprocessing_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/d_full_postprocessing_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/d_full_postprocessing_ablation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/d_full_postprocessing_ablation_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/d_no_fewshot_interface_diagnosis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/d_no_fewshot_interface_diagnosis_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/direct_llm_ablation_existing_results_classified_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1206,17 +1332,31 @@
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/g0_7_barrientos_adapter_registry_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr7_direct_llm_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr7_direct_llm_preflight_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr7_direct_llm_preflight_v2_binding_update.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr7_direct_llm_preflight_v2_binding_update.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/gdpr7_direct_llm_preflight_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr7_direct_llm_v3_1_payload_freeze.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr7_direct_llm_v3_payload_freeze.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/gdpr7_gold_rule_records_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/gdpr7_gold_rule_records_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr7_human_rule_record_capsule_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_3type_linkage_v1_direct_llm.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_3type_linkage_v1_direct_llm.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr_3type_linkage_v1_human_rules.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/gdpr_3type_linkage_v1_human_rules.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr_3type_linkage_v1_reference.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/gdpr_3type_linkage_v1_reference.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr_3type_linkage_v1_rules_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/gdpr_3type_linkage_v1_rules_only.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/gdpr_s2_s3_linkage_v1_direct_llm.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_s2_s3_linkage_v1_direct_llm.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/gdpr_s2_s3_linkage_v1_human_rules.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gdpr_s2_s3_linkage_v1_human_rules.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/gdpr_s2_s3_linkage_v1_rules_only.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/gdpr_s2_s3_linkage_v1_rules_only.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/gold_conflict_audit_readonly_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/gold_conflict_audit_readonly_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/paper_experiment_completion_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s11_s14_stage1_structural_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s13_stage1_label_semantics_synthetic_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1288,6 +1428,7 @@
 | `outputs/reports/s2_12_active_preflight_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_api_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_api_readiness_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/s2_12_direct36_readiness_review_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/s2_12_execution_plan_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_execution_plan_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/s2_12_execution_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1401,13 +1542,118 @@
 | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c2_stage2b_predecessor_baseline_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_condition_preservation_v1_bootstrap.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_config_diff.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_execution.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_final_report.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_final_report.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_condition_preservation_v1_incomplete_observation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_incomplete_observation.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_condition_preservation_v1_judgment_rules.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_missing_response_sensitivity.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_offline_render_audit.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_preflight.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_preflight.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_condition_preservation_v1_prepare_audit.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_prompt_audit.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_condition_preservation_v1_prompt_diffs/BASE_vs_RC1.diff` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_condition_preservation_v1_prompt_diffs/BASE_vs_RC_KEEP.diff` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_condition_preservation_v1_prompt_diffs/RC1_vs_RC_KEEP.diff` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_condition_preservation_v1_sample_evidence.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_constraint_refinement_v2_go_no_go_review.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_constraint_refinement_v2_semantic_review.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_constraint_refinement_v2_semantic_review.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_action_matrix.csv` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_definition_active_assembly_audit_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_adjudication_cases.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_adjudication_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_candidate_E4_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_candidate_prompt_audit_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_candidate_prompt_diff_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_clause_cases.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_clause_semantics_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_contrastive_pairs.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_field_priority.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_full150_A_current_contract_freeze_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_full150_confirmation_execution_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_full150_confirmation_execution_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_full150_confirmation_precheck_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_full150_confirmation_precheck_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_full150_confirmation_preflight_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_full150_confirmation_preflight_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_full150_confirmation_v1_analysis.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_full150_confirmation_v1_analysis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_full150_confirmation_v1_decision_report.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_full150_evaluator_dry_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_future_experiment_plan_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_gold_consistency_audit.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_modality_contrastive_matrix.csv` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_definition_modality_matrix.csv` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_definition_offline_patch_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_prompt_candidate_diff_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_prompt_design_gate.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_prompt_design_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_prompt_safety_review_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_synthetic_E4_candidate_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_targeted_authorization_request_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_targeted_authorization_request_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_targeted_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_targeted_budget_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_targeted_evaluation_contract_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_targeted_execution_plan_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_targeted_leakage_audit_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_targeted_leakage_audit_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_targeted_panel_manifest_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_targeted_panel_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_targeted_refinement_v1_analysis.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_definition_targeted_refinement_v1_analysis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_definition_targeted_refinement_v1_decision_report.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_E4_coverage_audit.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_E4_final_diagnosis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_E_examples_coverage_matrix.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_example_coverage_audit.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_field_refinement_decision_matrix.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_gold_condition_constraint_matrix.csv` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_gold_contrastive_pairs.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_gold_semantic_boundary_cases.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_gold_semantic_boundary_derived_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_gold_semantic_boundary_study_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_modular_ablation_analysis_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_offline_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_modular_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_modular_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_modular_ablation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_ablation_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_modular_ablation_v2_offline_check.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_full8_protocol_audit_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_full8_protocol_audit_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_modular_paired_error_attribution_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_prompt_overlap_audit_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_prompt_overlap_audit_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_prompt_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_prompt_v1_offline_check.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_rc_boundary_attribution_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_rc_boundary_attribution_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_rc_condition_preservation_draft_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_rc_constraint_boundary_candidate_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_S_definition_guidance_diagnosis.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_S_modality_action_audit.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_source_text_anomaly_audit.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_config_diff.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_execution.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_phase1_audit.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_phase2_analysis.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_phase2_evidence.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_phase2_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_prepare_audit.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_prompt_audit.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_prompt_diffs/arm_A_vs_arm_B.diff` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_prompt_diffs/arm_A_vs_arm_C.diff` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_prompt_diffs/arm_A_vs_arm_D.diff` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_prompt_diffs/arm_B_vs_arm_C.diff` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_prompt_diffs/arm_B_vs_arm_D.diff` | 活动 | 项目文件 |
+| `outputs/reports/sep_c3_targeted_refinement_v1_prompt_diffs/arm_C_vs_arm_D.diff` | 活动 | 项目文件 |
 | `outputs/reports/sim_case_c1_checklist.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sim_case_c1_checklist.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sim_case_c1_result_figure.pdf` | 活动 | 项目文件 |
@@ -1430,6 +1676,20 @@
 | `outputs/reports/stage2_formal_three_method_comparison_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_formal_three_method_comparison_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage2_formal_three_method_comparison_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage2_gold_definition_audit_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage2_gold_definition_audit_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage2_table1_paper_final_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage2_table1_paper_final_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage2_table2_prompt_ablation_paper_final_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage2_table2_prompt_ablation_paper_final_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage2_table2_prompt_ablation_paper_final_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage2_table2_prompt_ablation_paper_final_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage3_grounded_checker_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_grounded_checker_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage3_paired_benchmark_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_paired_benchmark_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage3_predecessors_paired_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_predecessors_paired_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sun_llm_fallback_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sun_llm_fallback_formal_arm_v1_export_index.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1439,6 +1699,9 @@
 | `outputs/reports/sun_llm_fallback_method_gate_decision_dry_run_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sun_rule_only_method_gate_authorization_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sun_rule_only_method_gate_authorization_dry_run.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/v6_factorial_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/v6_factorial_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/v6_factorial_ablation_v1_offline_check.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/verify_b0_formal_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `outputs/reports/verify_b0_formal_arm_v1_replay.py` | 活动 | Python 实现、脚本或测试 |
 | `outputs/reports/verify_direct_llm_formal_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1475,6 +1738,15 @@
 | `prompts/sun_compat/ablation_v2/direct_llm_no_semantic_examples_prompt_v2.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/ablation_v2/direct_llm_no_semantic_guidance_prompt_v2.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/ablation_v2/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_000.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_001.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_010.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_011.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_100.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_101.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_110.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_111.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/ablation_v2_factorial/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `prompts/sun_compat/direct_llm_few_shot_fixtures.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `prompts/sun_compat/direct_llm_sun_record_prompt.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/direct_llm_sun_record_prompt_solcand_pilot_2026_08_07.md` | 活动 | 说明、规范或研究文档 |
@@ -1484,6 +1756,28 @@
 | `prompts/sun_compat/dry_run_back_translation.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/dry_run_six_element.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/dry_run_zh_gloss.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_condition_preservation_v1/generated/direct_llm_condition_preservation_BASE_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_condition_preservation_v1/generated/direct_llm_condition_preservation_RC1_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_condition_preservation_v1/generated/direct_llm_condition_preservation_RC_KEEP_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_condition_preservation_v1/generated/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `prompts/sun_compat/modular_condition_preservation_v1/README.md` | 活动 | 所在目录的入口说明 |
+| `prompts/sun_compat/modular_definition_refinement_v1/E_examples_E4_v2.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_definition_refinement_v1/generated/compatibility/direct_llm_definition_COMPAT_R_A_R_C_R_DEF_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_definition_refinement_v1/generated/compatibility/direct_llm_definition_COMPAT_R_A_R_DEF_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_definition_refinement_v1/generated/compatibility/direct_llm_definition_COMPAT_R_C_R_DEF_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_definition_refinement_v1/generated/direct_llm_definition_BASE_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_definition_refinement_v1/generated/direct_llm_definition_R_DEF_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_definition_refinement_v1/generated/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `prompts/sun_compat/modular_definition_refinement_v1/README.md` | 活动 | 所在目录的入口说明 |
+| `prompts/sun_compat/modular_refinement_v1/generated/direct_llm_refinement_A_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_refinement_v1/generated/direct_llm_refinement_B_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_refinement_v1/generated/direct_llm_refinement_C_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_refinement_v1/generated/direct_llm_refinement_D_v1.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_refinement_v1/generated/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `prompts/sun_compat/modular_refinement_v1/R_A_actor_minimality.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_refinement_v1/R_C_constraint_recall.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_refinement_v1/R_DEF_definition_guidance.md` | 活动 | 说明、规范或研究文档 |
+| `prompts/sun_compat/modular_refinement_v1/README.md` | 活动 | 所在目录的入口说明 |
 | `prompts/sun_compat/modular_v1/common_system.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/modular_v1/examples_E.md` | 活动 | 说明、规范或研究文档 |
 | `prompts/sun_compat/modular_v1/generated/direct_llm_modular_000_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -1553,8 +1847,21 @@
 | `scripts/_precheck_estg150.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/analyze_b0_error_types.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/analyze_d_no_fewshot_interface_failure_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_sep_c3_condition_preservation_bootstrap_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_sep_c3_condition_preservation_missing_sensitivity_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_sep_c3_definition_adjudication_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_sep_c3_definition_clause_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_sep_c3_definition_full150_confirmation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_sep_c3_definition_targeted_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_sep_c3_gold_semantic_boundary_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_sep_c3_modular_paired_errors_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/analyze_sep_c3_targeted_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/audit_gold_conflict_readonly_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/audit_ingest_sun_modality_official.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/audit_project.py` | 活动 | 离线项目完整性检查（兼容文件名） |
+| `scripts/audit_sep_c3_definition_targeted_leakage_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/audit_sep_c3_modular_prompt_overlap_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/audit_stage2_gold_definition_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/audit_stage2_to_stage3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/baseline_stage3_sensitivity.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_b0_d1_formal_readiness_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -1625,19 +1932,30 @@
 | `scripts/build_s3_extended_violation_panel_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_semantic_grounding_llm_authorization_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_s3_semantic_grounding_v5_llm_preflight.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sep_c3_definition_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sep_c3_definition_targeted_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sep_c3_modular_findings_and_diagnosis_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sep_c3_modular_full8_protocol_audit_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_sep_c3_targeted_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sim_case_checklist_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_adjudication_asset.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_annotation_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage1_gdpr7.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage2_formal_comparison_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage2_formal_conclusion_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage2_table1_paper_final_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage2_table2_prompt_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_evidence_capsule.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_gold_inference.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_method_registry.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_method_registry_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage3_paired_benchmark_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sun_rule_only_authorization_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sun_stage3_threshold_sensitivity_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_v6_factorial_arms_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_v6_factorial_arms_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_v6_factorial_arms_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_api_env_ready_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/clean_estg150_german.py` | 活动 | Python 实现、脚本或测试 |
@@ -1650,6 +1968,10 @@
 | `scripts/compare_stage3_methods_dev.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compare_winter_sun_stage3_dev.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/compute_estg_membership_hashes.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/diagnose_stage3_binding_selfcheck_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/diagnose_stage3_mutation_detectability_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/diagnose_stage3_table3_threshold_rootcause_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/diagnose_stage3_table3_viability_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/dry_run_llm_estimate.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/estg150_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_d1_r3_clean_rerun.py` | 活动 | Python 实现、脚本或测试 |
@@ -1658,6 +1980,7 @@
 | `scripts/evaluate_s2_12_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_stage1_s16.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_stage3_common.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/evaluate_stage3_ours_grounded_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/finalize_s2_12_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/gdpr7_review_tool_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1666,6 +1989,11 @@
 | `scripts/import_gdpr7_review_decisions_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/ingest_sun_modality.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/modality_classifier_alignment_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/postprocess_sep_c3_definition_targeted_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/prepare_sep_c3_condition_preservation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/prepare_sep_c3_definition_full150_confirmation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/prepare_sep_c3_definition_targeted_execution_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/prepare_sep_c3_targeted_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/promote_gdpr7_direct_llm_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/publish_formal_benchmark_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -1699,6 +2027,8 @@
 | `scripts/run_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_formal_pipeline.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_gdpr7_direct_llm_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_gdpr7_direct_llm_v3.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_gdpr7_direct_llm_v3_1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_gdpr7_sun_rule_only_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_gdpr_3type_linkage_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_gdpr_s2_s3_linkage_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1732,7 +2062,12 @@
 | `scripts/run_s3_semantic_grounding_v5.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_s3_synthetic_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sep_c2_stage2b_predecessor_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c3_condition_preservation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c3_definition_full150_confirmation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c3_definition_targeted_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sep_c3_modular_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c3_modular_ablation_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_sep_c3_targeted_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_supplement_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_c1_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sim_case_stage2_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1742,9 +2077,13 @@
 | `scripts/run_stage1_structural.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_baselines.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage3_grounded_checker_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage3_ours_grounded_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage3_predecessors_paired_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_llm_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_rule_only.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_v6_factorial_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s28d_r2_canary_forensics.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/s2_11_batch_import_dry_run.py` | 活动 | Python 实现、脚本或测试 |
@@ -1765,6 +2104,7 @@
 | `scripts/status.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/sun_selection_criteria_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/sun_stage3_sensitivity.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/validate_binding_gold_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_canonical_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_estg_human_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/validate_gdpr7_review_filled_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -1827,6 +2167,7 @@
 | `scripts/verify_stage1_structural_s11_s14.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_stage3_gold_annotation.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/verify_sun_modality_zip.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/verify_thesis_tables_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/winter_stage3_sensitivity.py` | 活动 | Python 实现、脚本或测试 |
 
 ## `src`
@@ -1882,6 +2223,7 @@
 | `src/bpc_hybrid/llm_provider.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/mini_pilot_evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/modular_prompt.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/modular_refinement_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/normalization.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/prompt_loader.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_11_barrientos_adapter.py` | 活动 | Python 实现、脚本或测试 |
@@ -1915,6 +2257,8 @@
 | `src/bpc_hybrid/schema.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sep_c2_stage2b_winter_estg150.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sep_c3_condition_preservation_prompt.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sep_c3_definition_refinement_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sep_c3_modular_evaluation.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sim_case_c1.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sim_case_c1_transforms.py` | 活动 | Python 实现、脚本或测试 |
@@ -2010,6 +2354,7 @@
 | `tests/fixtures/h1_transport/sensitive_envelope.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/h1_transport/sse_delta_body.txt` | 活动 | 文本清单或依赖说明 |
 | `tests/fixtures/public_marker_lexicon/marker_cases_en_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `tests/fixtures/sep_c3_definition_synthetic_cases_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `tests/fixtures/stage1/s11_branch_parallel.bpmn` | 活动 | 流程模型或测试 fixture |
 | `tests/fixtures/stage1/s13_label_edge_cases.bpmn` | 活动 | 流程模型或测试 fixture |
 | `tests/fixtures/stage1/s14_cycle_unreachable.bpmn` | 活动 | 流程模型或测试 fixture |
@@ -2035,6 +2380,7 @@
 | `tests/fixtures/sun_modality/synthetic_one_hot_non_binary.csv` | 活动 | 项目文件 |
 | `tests/fixtures/sun_modality/synthetic_small_class.csv` | 活动 | 项目文件 |
 | `tests/fixtures/sun_modality/synthetic_unknown_label.csv` | 活动 | 项目文件 |
+| `tests/test_active_file_discovery.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_analyze_b0_error_types.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_audit.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_b0_formal_candidate.py` | 活动 | Python 实现、脚本或测试 |
@@ -2084,6 +2430,7 @@
 | `tests/test_gdpr7_confirmed_prefill_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_direct_llm_authorization_builder_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_direct_llm_executor_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_gdpr7_direct_llm_executor_v3_1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_direct_llm_preflight_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_gold_rule_records_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_gdpr7_review_surface_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -2193,7 +2540,19 @@
 | `tests/test_schema_alignment.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sep_c2_stage2b_predecessor_baseline_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sep_c2_two_method_execution_contract_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_condition_preservation_recovery_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_condition_preservation_runtime_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_condition_preservation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_definition_adjudication_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_definition_clause_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_definition_full150_confirmation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_definition_prompt_design_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_definition_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_definition_targeted_panel_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_gold_semantic_boundary_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sep_c3_modular_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_modular_ablation_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_sep_c3_targeted_refinement_runtime_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_shared_comparison_correction.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sim_case_c1_run_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sim_case_checklist_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -2208,10 +2567,12 @@
 | `tests/test_stage1_adjudication_chain.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_human_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage1_process_gold.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage2_gold_definition_audit_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_sun_literal_overlap.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_contract_repair.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_gold_review_tool.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage3_paired_benchmark_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_compat.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_gate.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_ingestion.py` | 活动 | Python 实现、脚本或测试 |

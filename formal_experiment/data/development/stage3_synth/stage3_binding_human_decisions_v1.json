@@ -1,0 +1,1079 @@
+{
+  "schema_version": "stage3_binding_human_review@1.0.0",
+  "status": "human_review_complete",
+  "is_gold": false,
+  "source": {
+    "proposal_sha256": "f18f6fee9cd83cc3b745e01071f10139e3903350f9a3355e6e2eb646c85d1b4c",
+    "blank_sha256": "42b9be8437072b252ff22c507f00a10934fef068e545d73dfc31e38a15809d64"
+  },
+  "reviewed_count": 30,
+  "total_count": 30,
+  "last_pair_id": "syn_out_of_order_10",
+  "records": {
+    "syn_incorrect_actor_01": {
+      "pair_id": "syn_incorrect_actor_01",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article33_s004.c1.action.1",
+        "actor_id": "gdpr_article33_s001.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+      "target_activity_name": "Retrieve breached subjects",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:20.516395+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_incorrect_actor_02": {
+      "pair_id": "syn_incorrect_actor_02",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article33_s002.c1.action.1",
+        "actor_id": "gdpr_article33_s001.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "be accompanied by reasons for the delay",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_activity_id": "sid-28448355-C13E-462C-8D66-8CEB2F6B557C",
+      "target_activity_name": "Handle delay",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:21.822896+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_incorrect_actor_03": {
+      "pair_id": "syn_incorrect_actor_03",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": null,
+        "actor_id": "gdpr_article22_s005.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": null,
+      "actor_span_text": "the data controller",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_activity_id": "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+      "target_activity_name": "Retrieve identity and contact details",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:22.295446+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_incorrect_actor_04": {
+      "pair_id": "syn_incorrect_actor_04",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article22_s005.c1.action.1",
+        "actor_id": "gdpr_article22_s005.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+      "actor_span_text": "the data controller",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+      "target_activity_name": "Add \"existence of the right to withdraw\"",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:22.471065+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_incorrect_actor_05": {
+      "pair_id": "syn_incorrect_actor_05",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article15_s001.c2.action.1",
+        "actor_id": "gdpr_article15_s010.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "access to the personal data and the following information the purposes of the processing",
+      "actor_span_text": "The controller",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "target_activity_id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+      "target_activity_name": "Retrieve elaborations",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:22.631958+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_incorrect_actor_06": {
+      "pair_id": "syn_incorrect_actor_06",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article20_s001.c1.action.1",
+        "actor_id": null,
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "receive the personal data concerning him or her",
+      "actor_span_text": null,
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "target_activity_name": "Retrieve available data of the data subject",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:22.811629+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_incorrect_actor_07": {
+      "pair_id": "syn_incorrect_actor_07",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article20_s002.c1.action.1",
+        "actor_id": null,
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "have the personal data transmitted directly from one controller to another",
+      "actor_span_text": null,
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "target_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+      "target_activity_name": "Communicate data and elaborations",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:22.953633+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_incorrect_actor_08": {
+      "pair_id": "syn_incorrect_actor_08",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article17_s001.c2.action.1",
+        "actor_id": "gdpr_article17_s001.c2.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "erase personal data",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+      "target_activity_name": "Stop using withdrawn data",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:23.099842+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_incorrect_actor_09": {
+      "pair_id": "syn_incorrect_actor_09",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": null,
+        "actor_id": "gdpr_article17_s008.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": null,
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_activity_id": "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+      "target_activity_name": "Communicate the withdraw",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:23.251348+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_incorrect_actor_10": {
+      "pair_id": "syn_incorrect_actor_10",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article16_s001.c1.action.2",
+        "actor_id": null,
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-95D07626-A357-422E-830F-B1E57917DB74",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "the rectification of inaccurate personal data concerning him or her",
+      "actor_span_text": null,
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "target_activity_name": "Rectify data",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=incorrect_actor；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:23.394038+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_01": {
+      "pair_id": "syn_missing_action_01",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article33_s004.c1.action.1",
+        "actor_id": "gdpr_article33_s001.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+      "target_activity_name": "Retrieve breached subjects",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:23.547817+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_02": {
+      "pair_id": "syn_missing_action_02",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article33_s004.c1.action.1",
+        "actor_id": "gdpr_article33_s001.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "target_activity_name": "Retrieve breached data",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:23.709055+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_03": {
+      "pair_id": "syn_missing_action_03",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article22_s005.c1.action.1",
+        "actor_id": "gdpr_article22_s005.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+      "actor_span_text": "the data controller",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_activity_id": "sid-2147FDF3-2F2C-4874-B263-CFE22F8D7F6F",
+      "target_activity_name": "Add \"existence of the right to withdraw\"",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:23.873692+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_04": {
+      "pair_id": "syn_missing_action_04",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article22_s005.c1.action.1",
+        "actor_id": "gdpr_article22_s005.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+      "actor_span_text": "the data controller",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_activity_id": "sid-2CFD3957-D6FB-4CA6-95B4-86EEC4B4B4B8",
+      "target_activity_name": "Add \"existence of the right to rectify of personal data\"",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:24.030817+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_05": {
+      "pair_id": "syn_missing_action_05",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article15_s010.c1.action.1",
+        "actor_id": "gdpr_article15_s010.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "provide a copy of the personal data undergoing processing",
+      "actor_span_text": "The controller",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "target_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+      "target_activity_name": "Communicate data and elaborations",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:24.195907+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_06": {
+      "pair_id": "syn_missing_action_06",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article17_s001.c2.action.1",
+        "actor_id": "gdpr_article17_s008.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "erase personal data",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "target_activity_name": "Stop running BPs using withdrawn data",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:24.348626+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_07": {
+      "pair_id": "syn_missing_action_07",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": null,
+        "actor_id": "gdpr_article17_s001.c2.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": null,
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_activity_id": "sid-A9B97678-298C-4EE7-82A3-836179299938",
+      "target_activity_name": "Check if withdrawn data are relevant",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:24.514841+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_08": {
+      "pair_id": "syn_missing_action_08",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": null,
+        "actor_id": null,
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-95D07626-A357-422E-830F-B1E57917DB74",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": null,
+      "actor_span_text": null,
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "target_activity_id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+      "target_activity_name": "Communicate the rectification\n",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:24.668790+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_09": {
+      "pair_id": "syn_missing_action_09",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article20_s002.c1.action.1",
+        "actor_id": null,
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "have the personal data transmitted directly from one controller to another",
+      "actor_span_text": null,
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "target_activity_id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+      "target_activity_name": "Communicate data and elaborations",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:24.820195+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_missing_action_10": {
+      "pair_id": "syn_missing_action_10",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article16_s001.c1.action.2",
+        "actor_id": null,
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-95D07626-A357-422E-830F-B1E57917DB74",
+        "order_scope": "not_applicable",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "the rectification of inaccurate personal data concerning him or her",
+      "actor_span_text": null,
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "target_activity_name": "Rectify data",
+      "process_order": {
+        "after_activity": null,
+        "before_activity": null,
+        "confidence": 0.0,
+        "evidence": [
+          "target_violation_type=missing_action；immutable_context.order_pair=[] 为空，因此没有 process-side order pair 可提议。",
+          "candidate=null，confidence=0；该项 order relation 不适用于该 pair。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:24.976747+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_01": {
+      "pair_id": "syn_out_of_order_01",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article33_s004.c1.action.1",
+        "actor_id": "gdpr_article33_s001.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "order_scope": "process_only",
+        "order_before_action_id": "gdpr_article33_s004.c1.action.1",
+        "order_after_action_id": "gdpr_article33_s001.c1.action.1"
+      },
+      "note": "",
+      "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_activity_id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+      "target_activity_name": "Retrieve breached subjects",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-0F3D7191-F96A-45A1-B616-EC78A870BACF",
+          "name": "Notify national authority"
+        },
+        "before_activity": {
+          "id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "name": "Retrieve breached subjects"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-20C5FDD3-8014-432D-8595-CD780D866E38', 'sid-0F3D7191-F96A-45A1-B616-EC78A870BACF']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:25.122314+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_02": {
+      "pair_id": "syn_out_of_order_02",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article33_s004.c1.action.1",
+        "actor_id": "gdpr_article33_s001.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4035AA0F-2D62-46AC-A369-4151026920A3",
+        "order_scope": "process_only",
+        "order_before_action_id": "gdpr_article33_s004.c1.action.1",
+        "order_after_action_id": "gdpr_article33_s004.c1.action.1"
+      },
+      "note": "",
+      "action_text": "describe the nature of the personal data breach including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_activity_id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+      "target_activity_name": "Retrieve breached data",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-20C5FDD3-8014-432D-8595-CD780D866E38",
+          "name": "Retrieve breached subjects"
+        },
+        "before_activity": {
+          "id": "sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0",
+          "name": "Retrieve breached data"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0', 'sid-20C5FDD3-8014-432D-8595-CD780D866E38']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:25.264981+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_03": {
+      "pair_id": "syn_out_of_order_03",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": null,
+        "actor_id": "gdpr_article22_s005.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "order_scope": "process_only",
+        "order_before_action_id": null,
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": null,
+      "actor_span_text": "the data controller",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_activity_id": "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+      "target_activity_name": "Retrieve identity and contact details",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "name": "Collect consent information"
+        },
+        "before_activity": {
+          "id": "sid-17C48064-C83F-44C6-998A-8DB69B109E8D",
+          "name": "Retrieve identity and contact details"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-17C48064-C83F-44C6-998A-8DB69B109E8D', 'sid-141B6C65-D86C-443C-BC7F-05783264AF77']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:25.431209+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_04": {
+      "pair_id": "syn_out_of_order_04",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article22_s005.c1.action.1",
+        "actor_id": "gdpr_article22_s005.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-1EFFB55B-1F5D-4446-A232-417CC5AE81BB",
+        "order_scope": "process_only",
+        "order_before_action_id": "gdpr_article22_s005.c1.action.1",
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "implement suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+      "actor_span_text": "the data controller",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_activity_id": "sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0",
+      "target_activity_name": "Check if legitimate interests are presents",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-141B6C65-D86C-443C-BC7F-05783264AF77",
+          "name": "Collect consent information"
+        },
+        "before_activity": {
+          "id": "sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0",
+          "name": "Check if legitimate interests are presents"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-1C0F89DD-F7D8-403C-B629-EBBCC78D6CE0', 'sid-141B6C65-D86C-443C-BC7F-05783264AF77']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:25.587526+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_05": {
+      "pair_id": "syn_out_of_order_05",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article15_s001.c2.action.1",
+        "actor_id": "gdpr_article15_s010.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "order_scope": "process_only",
+        "order_before_action_id": "gdpr_article15_s001.c2.action.1",
+        "order_after_action_id": "gdpr_article15_s010.c1.action.1"
+      },
+      "note": "",
+      "action_text": "access to the personal data and the following information the purposes of the processing",
+      "actor_span_text": "The controller",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "target_activity_name": "Retrieve available data of the data subject",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "name": "Communicate data and elaborations"
+        },
+        "before_activity": {
+          "id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "name": "Retrieve available data of the data subject"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-2E045BBD-9F82-497F-8458-49AA9129F991', 'sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:25.750153+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_06": {
+      "pair_id": "syn_out_of_order_06",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article20_s001.c1.action.1",
+        "actor_id": null,
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "order_scope": "process_only",
+        "order_before_action_id": "gdpr_article20_s001.c1.action.1",
+        "order_after_action_id": "gdpr_article20_s002.c1.action.1"
+      },
+      "note": "",
+      "action_text": "receive the personal data concerning him or her",
+      "actor_span_text": null,
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "target_activity_id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+      "target_activity_name": "Retrieve available data of the data subject",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "name": "Communicate data and elaborations"
+        },
+        "before_activity": {
+          "id": "sid-2E045BBD-9F82-497F-8458-49AA9129F991",
+          "name": "Retrieve available data of the data subject"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-2E045BBD-9F82-497F-8458-49AA9129F991', 'sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:25.895270+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_07": {
+      "pair_id": "syn_out_of_order_07",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article17_s001.c2.action.1",
+        "actor_id": "gdpr_article17_s008.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "order_scope": "process_only",
+        "order_before_action_id": "gdpr_article17_s001.c2.action.1",
+        "order_after_action_id": "gdpr_article17_s001.c2.action.1"
+      },
+      "note": "",
+      "action_text": "erase personal data",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_activity_id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+      "target_activity_name": "Stop running BPs using withdrawn data",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "name": "Stop using withdrawn data"
+        },
+        "before_activity": {
+          "id": "sid-07817A82-69C2-45A1-9ABC-277F17D93747",
+          "name": "Stop running BPs using withdrawn data"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-07817A82-69C2-45A1-9ABC-277F17D93747', 'sid-1A48D305-CB15-4C57-A988-B39ED62DE531']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:26.078169+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_08": {
+      "pair_id": "syn_out_of_order_08",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article17_s001.c2.action.1",
+        "actor_id": "gdpr_article17_s001.c2.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-DCB3F2D9-6A70-4CA7-90B8-63D710F86A7C",
+        "order_scope": "process_only",
+        "order_before_action_id": "gdpr_article17_s001.c2.action.1",
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "erase personal data",
+      "actor_span_text": "the controller",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_activity_id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+      "target_activity_name": "Stop using withdrawn data",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB",
+          "name": "Communicate the withdraw"
+        },
+        "before_activity": {
+          "id": "sid-1A48D305-CB15-4C57-A988-B39ED62DE531",
+          "name": "Stop using withdrawn data"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-1A48D305-CB15-4C57-A988-B39ED62DE531', 'sid-BB5F1C3A-DCD5-4C17-90CF-503D23B048FB']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:26.242758+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_09": {
+      "pair_id": "syn_out_of_order_09",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article16_s001.c1.action.2",
+        "actor_id": null,
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-95D07626-A357-422E-830F-B1E57917DB74",
+        "order_scope": "process_only",
+        "order_before_action_id": "gdpr_article16_s001.c1.action.2",
+        "order_after_action_id": null
+      },
+      "note": "",
+      "action_text": "the rectification of inaccurate personal data concerning him or her",
+      "actor_span_text": null,
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "target_activity_id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+      "target_activity_name": "Rectify data",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-F9E3B912-20D2-4AD2-B92F-811216B4F746",
+          "name": "Communicate the rectification\n"
+        },
+        "before_activity": {
+          "id": "sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814",
+          "name": "Rectify data"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-2D1BF282-F735-4BE0-996F-4D9C7DBED814', 'sid-F9E3B912-20D2-4AD2-B92F-811216B4F746']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:26.408052+00:00",
+      "decision_source": "human_local_ui"
+    },
+    "syn_out_of_order_10": {
+      "pair_id": "syn_out_of_order_10",
+      "choice": "accept",
+      "decision": "accepted",
+      "review_state": "reviewed",
+      "values": {
+        "action_id": "gdpr_article15_s001.c2.action.1",
+        "actor_id": "gdpr_article15_s010.c1.actor.1",
+        "process_actor": "Data Controller",
+        "expected_lane_id": "sid-4B676321-4DD2-470E-9CBE-51E1ECB93A5F",
+        "order_scope": "process_only",
+        "order_before_action_id": "gdpr_article15_s001.c2.action.1",
+        "order_after_action_id": "gdpr_article15_s010.c1.action.1"
+      },
+      "note": "",
+      "action_text": "access to the personal data and the following information the purposes of the processing",
+      "actor_span_text": "The controller",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "target_activity_id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+      "target_activity_name": "Retrieve elaborations",
+      "process_order": {
+        "after_activity": {
+          "id": "sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D",
+          "name": "Communicate data and elaborations"
+        },
+        "before_activity": {
+          "id": "sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824",
+          "name": "Retrieve elaborations"
+        },
+        "confidence": 1.0,
+        "evidence": [
+          "immutable_context.order_pair=['sid-7CABF962-BFAE-4BFD-9C33-E7ED63548824', 'sid-BB84BABD-20ED-4C97-B755-BDA101C57A8D']（来自 blank surface 的 process-side 声明）。",
+          "control BPMN direct/reachable ordering: forward=True, backward=False；variant BPMN: forward=False, backward=True。",
+          "候选只表达 process-side before/after activity；blank 中的 decision_order_before_action_id / after_action_id 仍需人工结合 action binding 填入 rule action ids。"
+        ]
+      },
+      "reviewed_at": "2026-09-22T12:15:27.626466+00:00",
+      "decision_source": "human_local_ui"
+    }
+  },
+  "updated_at": "2026-09-22T12:15:27.626466+00:00",
+  "accepted_count": 30,
+  "rejected_count": 0,
+  "accepted_missing_action_count": 5,
+  "accepted_missing_actor_span_count": 8
+}

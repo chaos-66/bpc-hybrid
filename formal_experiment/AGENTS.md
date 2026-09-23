@@ -47,6 +47,18 @@ executing/finalizing the reduced comparison, align its machine contract and
 freeze checks with this two-method scope without marking missing results done.
 This instruction overrides older three-method dispatch templates and budgets.
 
+## Completed review batches (user instruction, 2026-09-23)
+
+用户要求：完成的审核批次封存，除明确寻找历史材料外，不得再次发现为待审核任务。
+
+- 活动区只保留该批人工最终决定；proposal、初审稿、空白模板、临时工具和过程备份
+  封存在 `_retired/review_batches/`，不作为后续批次输入、候选、测试数据或任务入口。
+- 日常搜索、文件目录和审核队列排除 `_retired/`；不得常规解压、读取或重新检测归档。
+  只有用户明确要求追溯该批历史时才查阅；恢复为活动材料仍需明确授权。
+- 后续审核使用独立批次 ID 和路径，不复用已封存批次的默认文件名或启动入口。
+- 保留历史事件，不把日志中的旧路径和“待审核”状态当作当前任务；实时状态以
+  `docs/PROJECT_AUDIT.md` 为准。人工完成不自动发布 Gold 或补填缺失绑定。
+
 ## Required Reading
 
 The full list below applies to experiment-affecting work. For artifact/prose/
@@ -69,7 +81,7 @@ files in place; do not create another dated status, handoff, or competing
 pipeline document.
 
 `docs/DIRECTORY_GUIDE.md` explains where every class of file belongs;
-`docs/FILE_CATALOG.md` is the generated exhaustive file index. Retired material
+`docs/FILE_CATALOG.md` is the generated active-file index (archives excluded). Retired material
 under `_retired/` is read-only provenance and must never be imported or used as
 an active task entry.
 
