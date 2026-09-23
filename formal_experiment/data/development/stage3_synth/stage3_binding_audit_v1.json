@@ -1,0 +1,964 @@
+{
+  "classes": {
+    "A": "human-confirmed candidate; mechanical conversion only",
+    "H": "already direct/complete human-approved surface",
+    "N": "AI substantive judgment without human approval",
+    "U": "Rule Record lacks a legal span/relation; cannot fill an ID"
+  },
+  "human_approved_new_judgments": false,
+  "is_gold": false,
+  "records": [
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s004.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s004.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s001.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s001.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_incorrect_actor_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s002.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s002.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s001.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s001.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_incorrect_actor_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "当前 article22 候选中没有收集身份及联系方式的动作。宽泛的保障措施不能据此指定为该活动；按当前候选集判为无对应。",
+        "resolved_status": "no_supported_candidate",
+        "resolved_value": null
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "U",
+      "pair_id": "syn_incorrect_actor_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_incorrect_actor_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article15_s001.c2.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article15_s001.c2.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article15_s010.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article15_s010.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_incorrect_actor_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article20_s001.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article20_s001.c1.action.1"
+      },
+      "actor": {
+        "class": "N",
+        "executor": "Data Controller",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "保留 data subject 为接收数据的权利主体；将已持有数据的 controller 判为检索/提供数据的执行方。不是将 receive 的主语改成 controller。",
+        "resolved_status": "inferred_counterparty_executor",
+        "resolved_value": null
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "N",
+      "pair_id": "syn_incorrect_actor_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article20_s002.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article20_s002.c1.action.1"
+      },
+      "actor": {
+        "class": "N",
+        "executor": "Data Controller",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "以直接传输中 from one controller 的源端控制者对应发送方 Data Controller；data subject 仍为权利主体，Third Party 对应另一控制者沿用已接受的候选假设。",
+        "resolved_status": "inferred_counterparty_executor",
+        "resolved_value": null
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "N",
+      "pair_id": "syn_incorrect_actor_07",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s001.c2.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s001.c2.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s001.c2.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s001.c2.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_incorrect_actor_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "BPMN 通知的接收者为 Data subject；原候选要求 inform controllers。对象明确不同，拒绝该候选，当前规则集合内无合适替代。",
+        "resolved_status": "candidate_recipient_mismatch",
+        "resolved_value": null
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s008.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s008.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "U",
+      "pair_id": "syn_incorrect_actor_09",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article16_s001.c1.action.2",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article16_s001.c1.action.2"
+      },
+      "actor": {
+        "class": "N",
+        "executor": "Data Controller",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "保留 data subject 为权利主体；依据 obtain from the controller 将 controller 判为实现更正的相对执行方，并与 Data Controller 对应。该关系是 AI 补充推断。",
+        "resolved_status": "inferred_counterparty_executor",
+        "resolved_value": null
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "N",
+      "pair_id": "syn_incorrect_actor_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "target_violation_type": "incorrect_actor"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s004.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s004.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s001.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s001.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_missing_action_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s004.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s004.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s001.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s001.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_missing_action_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_missing_action_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_missing_action_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article15_s010.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article15_s010.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article15_s010.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article15_s010.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_missing_action_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s001.c2.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s001.c2.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s008.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s008.c1.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "A",
+      "pair_id": "syn_missing_action_06",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "检查数据相关性归为删除流程的适用条件检查，可关联 erase personal data 的背景，但不等同于执行删除；action_id 保留空并明确类型。",
+        "resolved_status": "condition_check_not_action",
+        "resolved_value": null
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s001.c2.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s001.c2.actor.1"
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "U",
+      "pair_id": "syn_missing_action_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "Rectify data 与 Communicate the rectification 是独立活动；通知数据主体不能替代实际更正。当前 article16 动作候选无独立通知项，判为无对应。",
+        "resolved_status": "candidate_activity_mismatch",
+        "resolved_value": null
+      },
+      "actor": {
+        "class": "U",
+        "executor": "Data Controller",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "确认此通知节点属于 Data Controller；当前 article16 无对应通知动作，故只确认流程执行者，不声明已获得该通知义务的法规 actor 绑定。",
+        "resolved_status": "process_executor_only",
+        "resolved_value": null
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "U",
+      "pair_id": "syn_missing_action_08",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article20_s002.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article20_s002.c1.action.1"
+      },
+      "actor": {
+        "class": "N",
+        "executor": "Data Controller",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "以直接传输中 from one controller 的源端控制者对应发送方 Data Controller；data subject 仍为权利主体，Third Party 对应另一控制者沿用已接受的候选假设。",
+        "resolved_status": "inferred_counterparty_executor",
+        "resolved_value": null
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "N",
+      "pair_id": "syn_missing_action_09",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article16_s001.c1.action.2",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article16_s001.c1.action.2"
+      },
+      "actor": {
+        "class": "N",
+        "executor": "Data Controller",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "保留 data subject 为权利主体；依据 obtain from the controller 将 controller 判为实现更正的相对执行方，并与 Data Controller 对应。该关系是 AI 补充推断。",
+        "resolved_status": "inferred_counterparty_executor",
+        "resolved_value": null
+      },
+      "order": {
+        "class": "H",
+        "human_approved": true,
+        "reason": "target violation is not out_of_order",
+        "status": "not_applicable"
+      },
+      "overall_class": "N",
+      "pair_id": "syn_missing_action_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "target_violation_type": "missing_action"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s004.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s004.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s001.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s001.c1.actor.1"
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": "gdpr_article33_s001.c1.action.1",
+          "before_action_id": "gdpr_article33_s004.c1.action.1",
+          "order_scope": "process_only"
+        },
+        "reason": "描述泄露与通知不是“检索主体必须先于首次通知”的明文动作对；s008 还允许分阶段补充信息，不采纳该严格法规顺序。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_01",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s004.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s004.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article33_s001.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article33_s001.c1.actor.1"
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": "gdpr_article33_s004.c1.action.1",
+          "before_action_id": "gdpr_article33_s004.c1.action.1",
+          "order_scope": "process_only"
+        },
+        "reason": "两个检索活动均关联同一个 describe 动作；不能生成 action 先于自身的关系。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_02",
+      "process_id": "gdpr_1_data_breach",
+      "rule_id": "article33",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "action": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "当前 article22 候选中没有收集身份及联系方式的动作。宽泛的保障措施不能据此指定为该活动；按当前候选集判为无对应。",
+        "resolved_status": "no_supported_candidate",
+        "resolved_value": null
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.actor.1"
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": null,
+          "before_action_id": null,
+          "order_scope": "process_only"
+        },
+        "reason": "身份联系方式检索和收集同意没有两个对应的法规动作候选，流程先后不能补成法规顺序。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article22_s005.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article22_s005.c1.actor.1"
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": null,
+          "before_action_id": "gdpr_article22_s005.c1.action.1",
+          "order_scope": "process_only"
+        },
+        "reason": "保障合法利益与基于同意的条件，不构成“先检查合法利益再收集同意”的两个法规动作及强制顺序。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "rule_id": "article22",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article15_s001.c2.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article15_s001.c2.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article15_s010.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article15_s010.c1.actor.1"
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": "gdpr_article15_s010.c1.action.1",
+          "before_action_id": "gdpr_article15_s001.c2.action.1",
+          "order_scope": "process_only"
+        },
+        "reason": "获取访问权与提供副本描述权利和履行行为；原文没有指定两个 BPMN 步骤的先后，保留流程关系。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_05",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article20_s001.c1.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article20_s001.c1.action.1"
+      },
+      "actor": {
+        "class": "N",
+        "executor": "Data Controller",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "保留 data subject 为接收数据的权利主体；将已持有数据的 controller 判为检索/提供数据的执行方。不是将 receive 的主语改成 controller。",
+        "resolved_status": "inferred_counterparty_executor",
+        "resolved_value": null
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": "gdpr_article20_s002.c1.action.1",
+          "before_action_id": "gdpr_article20_s001.c1.action.1",
+          "order_scope": "process_only"
+        },
+        "reason": "接收数据和直接传输是不同实现安排；所给原文没有要求先执行本流程的检索活动再通信。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "rule_id": "article20",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s001.c2.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s001.c2.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s008.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s008.c1.actor.1"
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": "gdpr_article17_s001.c2.action.1",
+          "before_action_id": "gdpr_article17_s001.c2.action.1",
+          "order_scope": "process_only"
+        },
+        "reason": "停止业务流程与停止使用都只是 erase 的支持步骤候选，缺少两个不同的法规动作，不能填 A 先于 A。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s001.c2.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s001.c2.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article17_s001.c2.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article17_s001.c2.actor.1"
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": null,
+          "before_action_id": "gdpr_article17_s001.c2.action.1",
+          "order_scope": "process_only"
+        },
+        "reason": "后端通知数据主体与 inform controllers 接收者不符；没有正确的通知动作端点。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "rule_id": "article17",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article16_s001.c1.action.2",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article16_s001.c1.action.2"
+      },
+      "actor": {
+        "class": "N",
+        "executor": "Data Controller",
+        "human_approved": false,
+        "human_value": null,
+        "reason": "保留 data subject 为权利主体；依据 obtain from the controller 将 controller 判为实现更正的相对执行方，并与 Data Controller 对应。该关系是 AI 补充推断。",
+        "resolved_status": "inferred_counterparty_executor",
+        "resolved_value": null
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": null,
+          "before_action_id": "gdpr_article16_s001.c1.action.2",
+          "order_scope": "process_only"
+        },
+        "reason": "有更正动作，但当前 article16 动作集合没有更正后通知的端点，不能据流程连线增加法规顺序。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_09",
+      "process_id": "gdpr_6_right_to_rectify",
+      "rule_id": "article16",
+      "target_violation_type": "out_of_order"
+    },
+    {
+      "action": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article15_s001.c2.action.1",
+        "reason": "human-confirmed action candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article15_s001.c2.action.1"
+      },
+      "actor": {
+        "class": "A",
+        "human_approved": true,
+        "human_value": "gdpr_article15_s010.c1.actor.1",
+        "reason": "human-confirmed actor candidate; mechanical schema conversion only",
+        "resolved_status": "retained_human_candidate",
+        "resolved_value": "gdpr_article15_s010.c1.actor.1"
+      },
+      "order": {
+        "class": "U",
+        "human_approved": false,
+        "human_value": {
+          "after_action_id": "gdpr_article15_s010.c1.action.1",
+          "before_action_id": "gdpr_article15_s001.c2.action.1",
+          "order_scope": "process_only"
+        },
+        "reason": "检索处理信息和对外提供数据之间的先后来自流程实现，不是当前原文明确的两个法规动作次序。",
+        "resolved_status": "process_only_no_supported_rule_order",
+        "resolved_value": null
+      },
+      "overall_class": "U",
+      "pair_id": "syn_out_of_order_10",
+      "process_id": "gdpr_3_right_to_access",
+      "rule_id": "article15",
+      "target_violation_type": "out_of_order"
+    }
+  ],
+  "schema_version": "stage3_binding_audit@1.0.0",
+  "status": "audit_complete",
+  "summary": {
+    "A": 11,
+    "N": 5,
+    "U": 14,
+    "action:A": 25,
+    "action:U": 5,
+    "actor:A": 22,
+    "actor:N": 7,
+    "actor:U": 1,
+    "order:H": 20,
+    "order:U": 10
+  }
+}

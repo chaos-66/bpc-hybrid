@@ -1,0 +1,413 @@
+{
+  "eligibility_protocol": "stage3_paired_benchmark_eligibility_v1",
+  "method_id": "ours_automatic_grounding_detector_v1",
+  "overall_eligible": {
+    "compliant_false_positive_rate": 0.0,
+    "compliant_specificity": 1.0,
+    "controls": 13,
+    "controls_correct": 13,
+    "items": 26,
+    "macro_f1": 1.0,
+    "macro_f1_supported_types": [
+      "missing_action",
+      "incorrect_actor"
+    ],
+    "micro_f1": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 13
+    },
+    "per_type": {
+      "incorrect_actor": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 5
+      },
+      "missing_action": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 8
+      },
+      "out_of_order": {
+        "f1": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "tp": 0
+      }
+    },
+    "unobservable": 0,
+    "variant_exact_type_accuracy": 1.0,
+    "variant_exact_type_correct": 13,
+    "variants": 13
+  },
+  "per_violation_type_eligible": {
+    "incorrect_actor": {
+      "compliant_false_positive_rate": 0.0,
+      "compliant_specificity": 1.0,
+      "controls": 5,
+      "controls_correct": 5,
+      "items": 10,
+      "macro_f1": 1.0,
+      "macro_f1_supported_types": [
+        "incorrect_actor"
+      ],
+      "micro_f1": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 5
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 5
+        },
+        "missing_action": {
+          "f1": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0
+        },
+        "out_of_order": {
+          "f1": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0
+        }
+      },
+      "unobservable": 0,
+      "variant_exact_type_accuracy": 1.0,
+      "variant_exact_type_correct": 5,
+      "variants": 5
+    },
+    "missing_action": {
+      "compliant_false_positive_rate": 0.0,
+      "compliant_specificity": 1.0,
+      "controls": 8,
+      "controls_correct": 8,
+      "items": 16,
+      "macro_f1": 1.0,
+      "macro_f1_supported_types": [
+        "missing_action"
+      ],
+      "micro_f1": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 8
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0
+        },
+        "missing_action": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 8
+        },
+        "out_of_order": {
+          "f1": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0
+        }
+      },
+      "unobservable": 0,
+      "variant_exact_type_accuracy": 1.0,
+      "variant_exact_type_correct": 8,
+      "variants": 8
+    },
+    "out_of_order": {
+      "compliant_false_positive_rate": null,
+      "compliant_specificity": null,
+      "controls": 0,
+      "controls_correct": 0,
+      "items": 0,
+      "macro_f1": null,
+      "macro_f1_supported_types": [],
+      "micro_f1": {
+        "f1": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0
+        },
+        "missing_action": {
+          "f1": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0
+        },
+        "out_of_order": {
+          "f1": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "tp": 0
+        }
+      },
+      "unobservable": 0,
+      "variant_exact_type_accuracy": null,
+      "variant_exact_type_correct": 0,
+      "variants": 0
+    }
+  },
+  "rows": [
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_01__control",
+      "pair_id": "syn_missing_action_01",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_01__variant",
+      "pair_id": "syn_missing_action_01",
+      "predicted": "missing_action",
+      "role": "variant",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_02__control",
+      "pair_id": "syn_missing_action_02",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_02__variant",
+      "pair_id": "syn_missing_action_02",
+      "predicted": "missing_action",
+      "role": "variant",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_03__control",
+      "pair_id": "syn_missing_action_03",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_03__variant",
+      "pair_id": "syn_missing_action_03",
+      "predicted": "missing_action",
+      "role": "variant",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_04__control",
+      "pair_id": "syn_missing_action_04",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_04__variant",
+      "pair_id": "syn_missing_action_04",
+      "predicted": "missing_action",
+      "role": "variant",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_05__control",
+      "pair_id": "syn_missing_action_05",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_05__variant",
+      "pair_id": "syn_missing_action_05",
+      "predicted": "missing_action",
+      "role": "variant",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_06__control",
+      "pair_id": "syn_missing_action_06",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_06__variant",
+      "pair_id": "syn_missing_action_06",
+      "predicted": "missing_action",
+      "role": "variant",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_09__control",
+      "pair_id": "syn_missing_action_09",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_09__variant",
+      "pair_id": "syn_missing_action_09",
+      "predicted": "missing_action",
+      "role": "variant",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_missing_action_10__control",
+      "pair_id": "syn_missing_action_10",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "missing_action",
+      "item_id": "syn_missing_action_10__variant",
+      "pair_id": "syn_missing_action_10",
+      "predicted": "missing_action",
+      "role": "variant",
+      "target_type": "missing_action"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_01__control",
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "incorrect_actor"
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_01__variant",
+      "pair_id": "syn_incorrect_actor_01",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "target_type": "incorrect_actor"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_02__control",
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "incorrect_actor"
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_02__variant",
+      "pair_id": "syn_incorrect_actor_02",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "target_type": "incorrect_actor"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_04__control",
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "incorrect_actor"
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_04__variant",
+      "pair_id": "syn_incorrect_actor_04",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "target_type": "incorrect_actor"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_05__control",
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "incorrect_actor"
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_05__variant",
+      "pair_id": "syn_incorrect_actor_05",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "target_type": "incorrect_actor"
+    },
+    {
+      "gold": "compliant",
+      "item_id": "syn_incorrect_actor_08__control",
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted": "compliant",
+      "role": "control",
+      "target_type": "incorrect_actor"
+    },
+    {
+      "gold": "incorrect_actor",
+      "item_id": "syn_incorrect_actor_08__variant",
+      "pair_id": "syn_incorrect_actor_08",
+      "predicted": "incorrect_actor",
+      "role": "variant",
+      "target_type": "incorrect_actor"
+    }
+  ],
+  "schema_version": "stage3_ours_evaluation@1.0.0",
+  "status": "complete"
+}

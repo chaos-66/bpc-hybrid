@@ -1,0 +1,569 @@
+{
+  "eligible_pairs_by_type": {
+    "incorrect_actor": [
+      "syn_incorrect_actor_01",
+      "syn_incorrect_actor_02",
+      "syn_incorrect_actor_04",
+      "syn_incorrect_actor_05",
+      "syn_incorrect_actor_08"
+    ],
+    "missing_action": [
+      "syn_missing_action_01",
+      "syn_missing_action_02",
+      "syn_missing_action_03",
+      "syn_missing_action_04",
+      "syn_missing_action_05",
+      "syn_missing_action_06",
+      "syn_missing_action_09",
+      "syn_missing_action_10"
+    ],
+    "out_of_order": []
+  },
+  "is_gold": false,
+  "policy": "Rule-side eligibility is independent of whether a mutated process exhibits the violation.  out_of_order requires an explicit rule order; process-only order mutations are ineligible.",
+  "records": [
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_01",
+      "process_id": "gdpr_1_data_breach",
+      "reason": "eligible",
+      "rule_id": "article33",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_02",
+      "process_id": "gdpr_1_data_breach",
+      "reason": "eligible",
+      "rule_id": "article33",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "incomplete_or_ai_only",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "reason": "action_binding_not_human_complete",
+      "rule_id": "article22",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "reason": "eligible",
+      "rule_id": "article22",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_05",
+      "process_id": "gdpr_3_right_to_access",
+      "reason": "eligible",
+      "rule_id": "article15",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "incomplete_or_ai_only",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "reason": "actor_or_lane_binding_not_human_complete",
+      "rule_id": "article20",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "incomplete_or_ai_only",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_07",
+      "process_id": "gdpr_4_right_of_portability",
+      "reason": "actor_or_lane_binding_not_human_complete",
+      "rule_id": "article20",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "reason": "eligible",
+      "rule_id": "article17",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "incomplete_or_ai_only",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_09",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "reason": "action_binding_not_human_complete",
+      "rule_id": "article17",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "incomplete_or_ai_only",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": null,
+      "pair_id": "syn_incorrect_actor_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "reason": "actor_or_lane_binding_not_human_complete",
+      "rule_id": "article16",
+      "violation_type": "incorrect_actor"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_01",
+      "process_id": "gdpr_1_data_breach",
+      "reason": "eligible",
+      "rule_id": "article33",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_02",
+      "process_id": "gdpr_1_data_breach",
+      "reason": "eligible",
+      "rule_id": "article33",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "reason": "eligible",
+      "rule_id": "article22",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "reason": "eligible",
+      "rule_id": "article22",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_05",
+      "process_id": "gdpr_3_right_to_access",
+      "reason": "eligible",
+      "rule_id": "article15",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_06",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "reason": "eligible",
+      "rule_id": "article17",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "incomplete_or_ai_only",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "reason": "action_binding_not_human_complete",
+      "rule_id": "article17",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "incomplete_or_ai_only",
+        "actor": "incomplete_or_ai_only",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_08",
+      "process_id": "gdpr_6_right_to_rectify",
+      "reason": "action_binding_not_human_complete",
+      "rule_id": "article16",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "incomplete_or_ai_only",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_09",
+      "process_id": "gdpr_4_right_of_portability",
+      "reason": "eligible",
+      "rule_id": "article20",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "incomplete_or_ai_only",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": true,
+      "order_semantics_audit": null,
+      "pair_id": "syn_missing_action_10",
+      "process_id": "gdpr_6_right_to_rectify",
+      "reason": "eligible",
+      "rule_id": "article16",
+      "violation_type": "missing_action"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [
+          "after",
+          "without undue delay after"
+        ],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 1867
+      },
+      "pair_id": "syn_out_of_order_01",
+      "process_id": "gdpr_1_data_breach",
+      "reason": "ineligible_no_explicit_rule_order",
+      "rule_id": "article33",
+      "violation_type": "out_of_order"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [
+          "after",
+          "without undue delay after"
+        ],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 1867
+      },
+      "pair_id": "syn_out_of_order_02",
+      "process_id": "gdpr_1_data_breach",
+      "reason": "ineligible_no_explicit_rule_order",
+      "rule_id": "article33",
+      "violation_type": "out_of_order"
+    },
+    {
+      "binding_completeness": {
+        "action": "incomplete_or_ai_only",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 1343
+      },
+      "pair_id": "syn_out_of_order_03",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "reason": "action_binding_not_human_complete;ineligible_no_explicit_rule_order",
+      "rule_id": "article22",
+      "violation_type": "out_of_order"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 1343
+      },
+      "pair_id": "syn_out_of_order_04",
+      "process_id": "gdpr_2_consent_to_use_the_data",
+      "reason": "ineligible_no_explicit_rule_order",
+      "rule_id": "article22",
+      "violation_type": "out_of_order"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [
+          "following"
+        ],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 3574
+      },
+      "pair_id": "syn_out_of_order_05",
+      "process_id": "gdpr_3_right_to_access",
+      "reason": "ineligible_no_explicit_rule_order",
+      "rule_id": "article15",
+      "violation_type": "out_of_order"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "incomplete_or_ai_only",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 1175
+      },
+      "pair_id": "syn_out_of_order_06",
+      "process_id": "gdpr_4_right_of_portability",
+      "reason": "ineligible_no_explicit_rule_order",
+      "rule_id": "article20",
+      "violation_type": "out_of_order"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [
+          "following"
+        ],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 2800
+      },
+      "pair_id": "syn_out_of_order_07",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "reason": "ineligible_no_explicit_rule_order",
+      "rule_id": "article17",
+      "violation_type": "out_of_order"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [
+          "following"
+        ],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 2800
+      },
+      "pair_id": "syn_out_of_order_08",
+      "process_id": "gdpr_5_right_to_withdraw",
+      "reason": "ineligible_no_explicit_rule_order",
+      "rule_id": "article17",
+      "violation_type": "out_of_order"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "incomplete_or_ai_only",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 349
+      },
+      "pair_id": "syn_out_of_order_09",
+      "process_id": "gdpr_6_right_to_rectify",
+      "reason": "ineligible_no_explicit_rule_order",
+      "rule_id": "article16",
+      "violation_type": "out_of_order"
+    },
+    {
+      "binding_completeness": {
+        "action": "human_complete",
+        "actor": "human_complete",
+        "order": "ineligible_no_explicit_rule_order",
+        "target_activity_in_control": true
+      },
+      "eligible": false,
+      "order_semantics_audit": {
+        "direct_llm_order_relation_count": 0,
+        "explicit_order_cue_hits": [
+          "following"
+        ],
+        "gold_rule_order_relation_count": 0,
+        "human_review_order_scope": "process_only",
+        "note": "Cue hits are diagnostic only. An eligible formal rule order also requires a human-approved endpoint binding and an explicit/entailed relation.",
+        "regulation_text_length": 3574
+      },
+      "pair_id": "syn_out_of_order_10",
+      "process_id": "gdpr_3_right_to_access",
+      "reason": "ineligible_no_explicit_rule_order",
+      "rule_id": "article15",
+      "violation_type": "out_of_order"
+    }
+  ],
+  "schema_version": "stage3_paired_benchmark_eligibility@1.0.0",
+  "status": "eligibility_audit_complete",
+  "summary": {
+    "incorrect_actor": 5,
+    "incorrect_actor:ineligible": 5,
+    "missing_action": 8,
+    "missing_action:ineligible": 2,
+    "out_of_order:ineligible": 10
+  }
+}

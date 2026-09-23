@@ -1,0 +1,240 @@
+{
+  "benchmark_id": "stage3_paired_benchmark_v1",
+  "claim_boundary": "out_of_order has no eligible formal pairs because the supplied Rule Records express no explicit rule-side order relation; its row is N/A, not zero-filled. Oracle/grounded upper bound is a separate supplied-binding diagnostic, not Ours.",
+  "denominators": {
+    "eligible_items_total": 26,
+    "incorrect_actor_pairs": 5,
+    "missing_action_pairs": 8,
+    "out_of_order_pairs": 0
+  },
+  "eligibility_protocol": "data/development/stage3_synth/stage3_paired_benchmark_eligibility_v1.json",
+  "eligible_pairs": {
+    "incorrect_actor": [
+      "syn_incorrect_actor_01",
+      "syn_incorrect_actor_02",
+      "syn_incorrect_actor_04",
+      "syn_incorrect_actor_05",
+      "syn_incorrect_actor_08"
+    ],
+    "missing_action": [
+      "syn_missing_action_01",
+      "syn_missing_action_02",
+      "syn_missing_action_03",
+      "syn_missing_action_04",
+      "syn_missing_action_05",
+      "syn_missing_action_06",
+      "syn_missing_action_09",
+      "syn_missing_action_10"
+    ],
+    "out_of_order": []
+  },
+  "methods": {
+    "oracle_grounded_upper_bound": {
+      "compliant_false_positive_rate": 0.0,
+      "compliant_specificity": 1.0,
+      "items": 26,
+      "macro_f1_eligible_types": 1.0,
+      "macro_f1_supported_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "micro_f1": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 13
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 10,
+          "tp": 5
+        },
+        "missing_action": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 16,
+          "tp": 8
+        },
+        "out_of_order": {
+          "f1": null,
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "support": 0,
+          "tp": 0
+        }
+      },
+      "unobservable": 0,
+      "variant_exact_type_accuracy": 1.0,
+      "variant_exact_type_correct": 13,
+      "variants": 13
+    },
+    "ours": {
+      "compliant_false_positive_rate": 0.0,
+      "compliant_specificity": 1.0,
+      "items": 26,
+      "macro_f1_eligible_types": 1.0,
+      "macro_f1_supported_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "micro_f1": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 13
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 10,
+          "tp": 5
+        },
+        "missing_action": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 16,
+          "tp": 8
+        },
+        "out_of_order": {
+          "f1": null,
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "support": 0,
+          "tp": 0
+        }
+      },
+      "unobservable": 0,
+      "variant_exact_type_accuracy": 1.0,
+      "variant_exact_type_correct": 13,
+      "variants": 13
+    },
+    "sun_reconstruction": {
+      "compliant_false_positive_rate": 1.0,
+      "compliant_specificity": 0.0,
+      "items": 26,
+      "macro_f1_eligible_types": 0.47619047619047616,
+      "macro_f1_supported_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "micro_f1": {
+        "f1": 0.5806451612903226,
+        "fn": 4,
+        "fp": 9,
+        "precision": 0.5,
+        "recall": 0.6923076923076923,
+        "tp": 9
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 0.28571428571428575,
+          "fn": 4,
+          "fp": 1,
+          "precision": 0.5,
+          "recall": 0.2,
+          "support": 10,
+          "tp": 1
+        },
+        "missing_action": {
+          "f1": 0.6666666666666666,
+          "fn": 0,
+          "fp": 8,
+          "precision": 0.5,
+          "recall": 1.0,
+          "support": 16,
+          "tp": 8
+        },
+        "out_of_order": {
+          "f1": null,
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "support": 0,
+          "tp": 0
+        }
+      },
+      "unobservable": 8,
+      "variant_exact_type_accuracy": 0.6923076923076923,
+      "variant_exact_type_correct": 9,
+      "variants": 13
+    },
+    "winter_wrapper": {
+      "compliant_false_positive_rate": 0.6153846153846154,
+      "compliant_specificity": 0.38461538461538464,
+      "items": 26,
+      "macro_f1_eligible_types": 0.3333333333333333,
+      "macro_f1_supported_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "micro_f1": {
+        "f1": 0.5517241379310345,
+        "fn": 5,
+        "fp": 8,
+        "precision": 0.5,
+        "recall": 0.6153846153846154,
+        "tp": 8
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "f1": 0.0,
+          "fn": 5,
+          "fp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 10,
+          "tp": 0
+        },
+        "missing_action": {
+          "f1": 0.6666666666666666,
+          "fn": 0,
+          "fp": 8,
+          "precision": 0.5,
+          "recall": 1.0,
+          "support": 16,
+          "tp": 8
+        },
+        "out_of_order": {
+          "f1": null,
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "support": 0,
+          "tp": 0
+        }
+      },
+      "unobservable": 0,
+      "variant_exact_type_accuracy": 0.6153846153846154,
+      "variant_exact_type_correct": 8,
+      "variants": 13
+    }
+  },
+  "oracle_label": "Oracle / Grounded Upper Bound (supplied binding)",
+  "schema_version": "stage3_table3@1.0.0",
+  "status": "complete_eligibility_audited"
+}

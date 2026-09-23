@@ -1,0 +1,28 @@
+{
+  "benchmark_id": "stage3_paired_benchmark_v1",
+  "benchmark_view_path": "data/development/stage3_synth/stage3_paired_benchmark_inference_view_v1.json",
+  "benchmark_view_sha256": "15e43f336b5656fcef89dee32a30c692f8dd66ea1f6b6b34c0a7400cd1a7175b",
+  "binding_reference_read_before_prediction_persisted": false,
+  "forbidden_inputs_not_read": [
+    "grounding",
+    "gold_violation_type",
+    "target_violation_type",
+    "structural_observation",
+    "bpmn_sha256",
+    "binding_reference",
+    "mutation_manifest",
+    "gold_label"
+  ],
+  "grounding_predictions_path": "outputs/development/stage3_ours_v1/automatic_grounding_predictions_v1.json",
+  "inference_uses_benchmark_grounding_block": false,
+  "inference_uses_binding_reference": false,
+  "items": 60,
+  "llm_api_calls": 0,
+  "method_id": "ours_automatic_grounding_detector_v1",
+  "network_calls": 0,
+  "predictions_path": "outputs/development/stage3_ours_v1/predictions.jsonl",
+  "schema_version": "stage3_ours_run@1.0.0",
+  "source_benchmark": "data/development/stage3_synth/stage3_paired_benchmark_v1.json",
+  "source_benchmark_sha256": "8205371ee71af75ae9179481fe87e972e2e70650c0985661bbff8d183f1a3fc5",
+  "status": "complete"
+}

@@ -1,0 +1,283 @@
+{
+  "is_gold": false,
+  "items": [
+    {
+      "auto_applied": false,
+      "field": "action",
+      "issue": "no_supported_candidate",
+      "pair_id": "syn_incorrect_actor_03",
+      "proposed_correction": null,
+      "reason": "当前 article22 候选中没有收集身份及联系方式的动作。宽泛的保障措施不能据此指定为该活动；按当前候选集判为无对应。"
+    },
+    {
+      "auto_applied": false,
+      "field": "actor",
+      "issue": "inferred_counterparty_executor",
+      "pair_id": "syn_incorrect_actor_06",
+      "proposed_correction": {
+        "field": "actor",
+        "proposed_actor_text": "the controller to which the personal data have been provided",
+        "requires_human_approval": true,
+        "source_span": {
+          "end": 342,
+          "rule_id": "article20",
+          "sample_id": "gdpr_article20_s001",
+          "source_path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+          "start": 282,
+          "text": "the controller to which the personal data have been provided"
+        },
+        "type": "gold_annotation_omission"
+      },
+      "reason": "保留 data subject 为接收数据的权利主体；将已持有数据的 controller 判为检索/提供数据的执行方。不是将 receive 的主语改成 controller。"
+    },
+    {
+      "auto_applied": false,
+      "field": "actor",
+      "issue": "inferred_counterparty_executor",
+      "pair_id": "syn_incorrect_actor_07",
+      "proposed_correction": {
+        "field": "actor",
+        "proposed_actor_text": "from one controller to another",
+        "requires_human_approval": true,
+        "source_span": {
+          "end": 191,
+          "rule_id": "article20",
+          "sample_id": "gdpr_article20_s002",
+          "source_path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+          "start": 161,
+          "text": "from one controller to another"
+        },
+        "type": "gold_annotation_omission"
+      },
+      "reason": "以直接传输中 from one controller 的源端控制者对应发送方 Data Controller；data subject 仍为权利主体，Third Party 对应另一控制者沿用已接受的候选假设。"
+    },
+    {
+      "auto_applied": false,
+      "field": "action",
+      "issue": "candidate_recipient_mismatch",
+      "pair_id": "syn_incorrect_actor_09",
+      "proposed_correction": null,
+      "reason": "BPMN 通知的接收者为 Data subject；原候选要求 inform controllers。对象明确不同，拒绝该候选，当前规则集合内无合适替代。"
+    },
+    {
+      "auto_applied": false,
+      "field": "actor",
+      "issue": "inferred_counterparty_executor",
+      "pair_id": "syn_incorrect_actor_10",
+      "proposed_correction": {
+        "field": "actor",
+        "proposed_actor_text": "the controller",
+        "requires_human_approval": true,
+        "source_span": {
+          "end": 67,
+          "rule_id": "article16",
+          "sample_id": "gdpr_article16_s001",
+          "source_path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+          "start": 53,
+          "text": "the controller"
+        },
+        "type": "gold_annotation_omission"
+      },
+      "reason": "保留 data subject 为权利主体；依据 obtain from the controller 将 controller 判为实现更正的相对执行方，并与 Data Controller 对应。该关系是 AI 补充推断。"
+    },
+    {
+      "auto_applied": false,
+      "field": "action",
+      "issue": "condition_check_not_action",
+      "pair_id": "syn_missing_action_07",
+      "proposed_correction": null,
+      "reason": "检查数据相关性归为删除流程的适用条件检查，可关联 erase personal data 的背景，但不等同于执行删除；action_id 保留空并明确类型。"
+    },
+    {
+      "auto_applied": false,
+      "field": "action",
+      "issue": "candidate_activity_mismatch",
+      "pair_id": "syn_missing_action_08",
+      "proposed_correction": null,
+      "reason": "Rectify data 与 Communicate the rectification 是独立活动；通知数据主体不能替代实际更正。当前 article16 动作候选无独立通知项，判为无对应。"
+    },
+    {
+      "auto_applied": false,
+      "field": "actor",
+      "issue": "process_executor_only",
+      "pair_id": "syn_missing_action_08",
+      "proposed_correction": null,
+      "reason": "确认此通知节点属于 Data Controller；当前 article16 无对应通知动作，故只确认流程执行者，不声明已获得该通知义务的法规 actor 绑定。"
+    },
+    {
+      "auto_applied": false,
+      "field": "actor",
+      "issue": "inferred_counterparty_executor",
+      "pair_id": "syn_missing_action_09",
+      "proposed_correction": {
+        "field": "actor",
+        "proposed_actor_text": "from one controller to another",
+        "requires_human_approval": true,
+        "source_span": {
+          "end": 191,
+          "rule_id": "article20",
+          "sample_id": "gdpr_article20_s002",
+          "source_path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+          "start": 161,
+          "text": "from one controller to another"
+        },
+        "type": "gold_annotation_omission"
+      },
+      "reason": "以直接传输中 from one controller 的源端控制者对应发送方 Data Controller；data subject 仍为权利主体，Third Party 对应另一控制者沿用已接受的候选假设。"
+    },
+    {
+      "auto_applied": false,
+      "field": "actor",
+      "issue": "inferred_counterparty_executor",
+      "pair_id": "syn_missing_action_10",
+      "proposed_correction": {
+        "field": "actor",
+        "proposed_actor_text": "the controller",
+        "requires_human_approval": true,
+        "source_span": {
+          "end": 67,
+          "rule_id": "article16",
+          "sample_id": "gdpr_article16_s001",
+          "source_path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+          "start": 53,
+          "text": "the controller"
+        },
+        "type": "gold_annotation_omission"
+      },
+      "reason": "保留 data subject 为权利主体；依据 obtain from the controller 将 controller 判为实现更正的相对执行方，并与 Data Controller 对应。该关系是 AI 补充推断。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_01",
+      "proposed_correction": null,
+      "reason": "描述泄露与通知不是“检索主体必须先于首次通知”的明文动作对；s008 还允许分阶段补充信息，不采纳该严格法规顺序。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_02",
+      "proposed_correction": null,
+      "reason": "两个检索活动均关联同一个 describe 动作；不能生成 action 先于自身的关系。"
+    },
+    {
+      "auto_applied": false,
+      "field": "action",
+      "issue": "no_supported_candidate",
+      "pair_id": "syn_out_of_order_03",
+      "proposed_correction": null,
+      "reason": "当前 article22 候选中没有收集身份及联系方式的动作。宽泛的保障措施不能据此指定为该活动；按当前候选集判为无对应。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_03",
+      "proposed_correction": null,
+      "reason": "身份联系方式检索和收集同意没有两个对应的法规动作候选，流程先后不能补成法规顺序。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_04",
+      "proposed_correction": null,
+      "reason": "保障合法利益与基于同意的条件，不构成“先检查合法利益再收集同意”的两个法规动作及强制顺序。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_05",
+      "proposed_correction": null,
+      "reason": "获取访问权与提供副本描述权利和履行行为；原文没有指定两个 BPMN 步骤的先后，保留流程关系。"
+    },
+    {
+      "auto_applied": false,
+      "field": "actor",
+      "issue": "inferred_counterparty_executor",
+      "pair_id": "syn_out_of_order_06",
+      "proposed_correction": {
+        "field": "actor",
+        "proposed_actor_text": "the controller to which the personal data have been provided",
+        "requires_human_approval": true,
+        "source_span": {
+          "end": 342,
+          "rule_id": "article20",
+          "sample_id": "gdpr_article20_s001",
+          "source_path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+          "start": 282,
+          "text": "the controller to which the personal data have been provided"
+        },
+        "type": "gold_annotation_omission"
+      },
+      "reason": "保留 data subject 为接收数据的权利主体；将已持有数据的 controller 判为检索/提供数据的执行方。不是将 receive 的主语改成 controller。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_06",
+      "proposed_correction": null,
+      "reason": "接收数据和直接传输是不同实现安排；所给原文没有要求先执行本流程的检索活动再通信。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_07",
+      "proposed_correction": null,
+      "reason": "停止业务流程与停止使用都只是 erase 的支持步骤候选，缺少两个不同的法规动作，不能填 A 先于 A。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_08",
+      "proposed_correction": null,
+      "reason": "后端通知数据主体与 inform controllers 接收者不符；没有正确的通知动作端点。"
+    },
+    {
+      "auto_applied": false,
+      "field": "actor",
+      "issue": "inferred_counterparty_executor",
+      "pair_id": "syn_out_of_order_09",
+      "proposed_correction": {
+        "field": "actor",
+        "proposed_actor_text": "the controller",
+        "requires_human_approval": true,
+        "source_span": {
+          "end": 67,
+          "rule_id": "article16",
+          "sample_id": "gdpr_article16_s001",
+          "source_path": "data/gold/stage3/gdpr7_gold_rule_records_v1.json",
+          "start": 53,
+          "text": "the controller"
+        },
+        "type": "gold_annotation_omission"
+      },
+      "reason": "保留 data subject 为权利主体；依据 obtain from the controller 将 controller 判为实现更正的相对执行方，并与 Data Controller 对应。该关系是 AI 补充推断。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_09",
+      "proposed_correction": null,
+      "reason": "有更正动作，但当前 article16 动作集合没有更正后通知的端点，不能据流程连线增加法规顺序。"
+    },
+    {
+      "auto_applied": false,
+      "field": "order",
+      "issue": "ineligible_no_rule_order",
+      "pair_id": "syn_out_of_order_10",
+      "proposed_correction": null,
+      "reason": "检索处理信息和对外提供数据之间的先后来自流程实现，不是当前原文明确的两个法规动作次序。"
+    }
+  ],
+  "policy": "No span id is fabricated.  Items remain unresolved until final human approval; a correction is proposed only when the regulation contains a clear omitted semantic element.",
+  "schema_version": "stage3_binding_rule_record_correction_proposal@1.0.0",
+  "status": "proposal_only_not_applied"
+}

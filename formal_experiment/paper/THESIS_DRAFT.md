@@ -1168,57 +1168,53 @@ inference pack；生成器重复运行 byte-identical。**该 panel 不是人工
 `s36_tfidf_svd_stage3_development_v2/` 的 evaluation.json；同一
 `evaluate_stage3_common.py` 口径，固定 33 条人工裁决 panel。
 
-#### 7.4.3 表 3（新）：配对合规 benchmark（60 items，含 compliant control）
+#### 7.4.3 表 3（新）：eligibility-audited paired compliance benchmark
 
 **Benchmark**：`data/development/stage3_synth/stage3_paired_benchmark_v1.json`。
-每个变异 BPMN 与**同一流程的未变异 BPMN** 配对为 compliant control（control 直接复用
-variant manifest 自己声明的 `source_bpmn` + sha，即冻结 Stage 1 GDPR7 字节，**未新造
-合规流程**）。Gold = 30 `compliant` + 每类违规 10。anti-degeneracy 校验
-（control 不违反、variant 必违反）**30/30 PASS**。
+每个变异 BPMN 与同一流程的冻结未变异 BPMN 配对为 compliant control；variant 的绑定
+由 `stage3_binding_reference_v1.json` 分离保存，inference 侧不可见。eligibility
+audit 为 `stage3_paired_benchmark_eligibility_v1.json`。
 
-| 方法 | missing_action | incorrect_actor | out_of_order | Macro-F1 | Micro-F1 | compliant specificity | exact type | unobservable |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Sun 重建（相似度 grounding） | 0.6667 | 0.2857 | 0.0000 | 0.3175 | 0.3871 | 0.3333 | 12/30 | 16 |
-| Winter wrapper（相似度 grounding） | 0.6667 | 0.0000 | 0.0000 | 0.2222 | 0.3846 | 0.6000 | 10/30 | 0 |
-| grounded 参考上界（声明绑定） | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **30/30** | **0** |
+**Eligibility 结果**：原 30 对中，human-approved 且绑定完整者
+missing_action 8 对、incorrect_actor 5 对；out_of_order 10 对全部
+`ineligible_no_rule_order`，因为供应 Rule Record 没有明确规则侧先后关系。
+因此 Table 3 使用 8/5/0 的合法 denominator，而不是强行维持 10/10/10。
+`out_of_order` 行记为 **N/A**，不是 0；不能因 benchmark 有流程侧顺序扰动就反推法规顺序。
+
+| 方法 | Missing P | Missing R | Missing F1 | Actor P | Actor R | Actor F1 | Order P | Order R | Order F1 | Macro-F1 | Micro-F1 | Specificity | Exact type | Unobs. |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Sun 重建（相似度 grounding） | 0.5000 | 1.0000 | 0.6667 | 0.5000 | 0.2000 | 0.2857 | N/A | N/A | N/A | 0.4762 | 0.5806 | 0.0000 | 9/13 | 8 |
+| Winter wrapper（相似度 grounding） | 0.5000 | 1.0000 | 0.6667 | 0.0000 | 0.0000 | 0.0000 | N/A | N/A | N/A | 0.3333 | 0.5517 | 0.3846 | 8/13 | 0 |
+| Ours（自动 grounding） | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | N/A | N/A | N/A | 1.0000 | 1.0000 | 1.0000 | 13/13 | 0 |
+| Oracle / Grounded 上界（声明绑定，非 Ours） | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | N/A | N/A | N/A | 1.0000 | 1.0000 | 1.0000 | 13/13 | 0 |
+
+**Ours 组件与隔离**：Ours 先从 Direct-LLM Rule Record + control Process Record
+生成 automatic grounding predictions，持久化后才允许 evaluator 读取 Binding
+Reference。Grounding 单独评估：action any-action top1 accuracy = 0.5000，
+candidate-set recall = 1.0000，
+lane coverage = 1.0000，lane exact accuracy
+= 1.0000。
+Ours detector 使用候选集合的 missing/lane differential；它不读取 benchmark
+`grounding` 块、`target_activity_id`、expected lane、order pair 或 gold label。
 
 **强制措辞（三条，缺一不可）：**
 
-1. **差距是 grounding 效应，不是前人算法弱。** 前人方法在把 rule text 映射到 BPMN
-   活动标签时依赖 embedding 相似度，本语料上该映射始终低于阈值；报告与本节均不得
-   写成"前人方法差"。
-2. **grounded 上界不是 "Ours"。** 它是**声明绑定**（benchmark 直接给出
-   `target_activity_id`）下的参考上界，等于把答案喂给检测器。要写成 "Ours"，必须先有
-   一个**从 Stage 2 Rule Record 真实推导绑定**的检测器；而该推导所需的
-   「rule action → 履行它的 BPMN activity」绑定**尚未齐备或发布为绑定 Gold**（panel 无此字段，
-   Gold Rule Records 的 `order_relations` 0/92 非空、`actor_action_map` 仅 38/92 非空）。
-3. **out_of_order 目前不可声称结论。** Gold 与真实 Direct-LLM 胶囊都**没有** order
-   relations（项目自己的 linkage 报告原文：Definition-7 input unavailable by
-   contract; never fabricated），因此 `out_of_order` F1 = 0.0 对**所有**方法成立，
-   不构成方法间差异。
+1. **差距是 grounding 效应，不是前人算法弱。** Sun/Winter 行是在同一 eligible
+   item subset 上重算的相似度 grounding 结果；不得写成"前人方法差"。
+2. **Oracle / Grounded 上界不是 Ours。** 它消费 supplied human binding；
+   Ours 行才走 Direct-LLM Rule Record → automatic grounding → detector。
+3. **out_of_order 目前不可声称正式结论。** 在最终人工批准 order 语义之前，
+   它只能是 N/A；不得把 process-only mutation 写成 formal rule order。
+   全量三类 formal claim 仍需人工确认 19 个 unresolved pair
+   （见 `outputs/reports/stage3_binding_final_human_approval_packet_v1.md`）。
 
-**绑定候选人工复核**已完成 30/30 pairs，结果保存在
-`data/development/stage3_synth/stage3_binding_human_decisions_v1.json`；
-5 个 action、8 个 actor 引用为空，10 项顺序仅确认 process-side 关系。
-该结果 `is_gold=false`，不能视为所需绑定已齐备；旧模板与审核过程已归档。
-人工绑定作为参考答案只能用于评测；直接使用这些绑定和指定 activity ID 的检查器属于
-supplied-binding oracle 诊断，不能报告为端到端 Ours。自动预测应从 Stage 2 Rule Record
-与 BPMN 产生绑定，评测侧再与参考对应；完成参考标注并不自动完成该预测链路。
-空值也不必然是漏标：权利主体与流程执行者可能不同，流程先后关系未必是法规顺序。
-
-**边界。** 本 panel 只含违规正例（`none_gold_items: 0`），故只报总体 F1 与检出数，
-不报 precision/recall。该表与 Sun 论文 Table 12 口径不同，不可跨表比较。分类细目
-与不可判定原因放附录，其中必须区分两种 0：Winter/BM25 是「判定但全错」，Sun 是
-「不可判定（action_mapping_below_gamma）」。
-
-**Oracle 隔离结论。** 额外附 Oracle 隔离运行（`outputs/reports/s3_oracle_gold_rules_v1.json`）：
-人工 Gold 规则输入下 missing_action F1 = 1.0000；incorrect_actor 与 out_of_order 的
-F1 仍为 0.0000，但两者机制需分开陈述——**incorrect_actor 为 11/11 不可判定**
-（`per_type_observable = 0`，原因全部为 `action_mapping_below_gamma`）；**out_of_order
-在 aggregate 层记为可观察（11/11），其 item-level score denominator 为 0**，即没有
-规则侧顺序端点映射到阈值以上的流程动作。两种机制都在指向上游输入：**该结果指向
-瓶颈在检测器输入端，而不是检测公式本身。**
-
+**边界。** 本表已在 human-approved eligible subset 上按同一协议比较三个方法；
+它不是对全部 30 对的完整三类结论，也不替代正式人工 Gold 发布。Oracle 与 end-to-end
+仍分表。自动 grounding 文件为
+`outputs/development/stage3_ours_v1/automatic_grounding_predictions_v1.json`，
+Ours 预测为 `outputs/development/stage3_ours_v1/predictions.jsonl`，
+评价为 `outputs/reports/stage3_ours_v1_evaluation.json` 与
+`outputs/reports/stage3_automatic_grounding_evaluation_v1.json`。
 
 #### 7.4.4 表 B：新增 30 条合成受控错误 panel（DEV，同一 evaluator）
 

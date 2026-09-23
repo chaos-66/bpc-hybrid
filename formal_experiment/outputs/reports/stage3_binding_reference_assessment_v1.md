@@ -145,3 +145,16 @@ Where the controller has made the personal data public and is obliged pursuant t
 | data/gold/stage3/gdpr7_gold_rule_records_v1.json | 7cf896abdb6e420e46efd297a8e183bcdc4c15834aa9567eb88d1af60eec627a |
 | data/predictions/gdpr7_direct_llm_v1/predictions.json | b625692d1e4e85b22f0c2e428a46a7c6cd49a2cc4b77a10f6c8e8d25adec50a1 |
 | data/development/stage3_synth/stage3_paired_benchmark_v1.json | 8205371ee71af75ae9179481fe87e972e2e70650c0985661bbff8d183f1a3fc5 |
+
+---
+
+> **2026-09-23 repair note.** The machine-readable audit, separated
+> human/AI reference, eligibility denominators, automatic grounding and final
+> Table 3 are now in:
+> `stage3_binding_audit_v1.json`,
+> `stage3_binding_reference_v1.json`,
+> `stage3_paired_benchmark_eligibility_v1.json`,
+> `stage3_table3_v1.md`, and
+> `stage3_binding_final_human_approval_packet_v1.md`.
+> This assessment remains the historical AI-resolution rationale; it is not a
+> human Gold declaration.
