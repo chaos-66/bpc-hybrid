@@ -5,12 +5,12 @@ Status: experiment run complete; Ours superiority claim not supported.
 ## Verified root cause of the old F1=1 row
 
 1. `outputs/development/stage3_ours_v1/automatic_grounding_predictions_v1.json` grounded each
-   pair`s rule actions against the pair CONTROL BPMN. Its `detector_activity_ids` were the
+   pair's rule actions against the pair CONTROL BPMN. Its `detector_activity_ids` were the
    union of all retained candidates. The 13 eligible pairs had candidate sets that covered
    the entire control in 10/13 cases (verified from the persisted grounding file and the
    Stage-1 control process records).
 2. `scripts/run_stage3_ours_v1.py` then checked the CURRENT item BPMN only by asking whether a
-   control candidate id was absent (`missing_action`) or whether that activity`s lane changed
+   control candidate id was absent (`missing_action`) or whether that activity's lane changed
    relative to the control (`incorrect_actor`). This reproduces the synthetic structural
    mutation, not semantic matching between the regulation and the process.
 3. The persisted `actor_predictions` were not used by `decide_item`. Actor decisions came from
@@ -63,7 +63,7 @@ removed. It does not satisfy a positive acceptance criterion for Ours: Sun, Ours
 the same macro-F1 0.3333 and micro-F1 0.5517 on the supported target checks. Missing-action
 precision is 0.5 because all controls are false-positive; incorrect-actor is unobservable under
 the frozen SunScorer for Sun/Ours and is unknown for all five Winter positives because the
-current BPMN has no resource labels. Order remains N/A. Next work should be separately
+variant BPMN lacks resource labels under the native wrapper. Order remains N/A. Next work should be separately
 pre-registered and must not tune this run: either a rule-action-to-activity grounded detector
 declared as an extra arm with the added variable stated, or correct order-side annotations that
 create a legitimate order denominator. Until then Table 3 is a completed repaired comparison,
