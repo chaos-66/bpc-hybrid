@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-23
-**收录文件**：2478 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2480 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -486,6 +486,7 @@
 | `data/development/sim_case_c1/sun_figure10_reconstruction_provenance.md` | 开发/溯源 | 说明、规范或研究文档 |
 | `data/development/sim_case_c1/sun_table13_rules_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_synth/stage3_binding_human_decisions_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/stage3_synth/stage3_binding_resolved_reference_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_synth/stage3_paired_benchmark_v1.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_synth/syn_incorrect_actor_01/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_synth/syn_incorrect_actor_02/gdpr_1_data_breach.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
@@ -2572,6 +2573,7 @@
 | `tests/test_stage2_prediction_schema.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage2_sun_literal_overlap.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_binding_oracle_scope.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage3_binding_resolved_reference.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_contract_repair.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_gold_review_tool.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_paired_benchmark_v1.py` | 活动 | Python 实现、脚本或测试 |

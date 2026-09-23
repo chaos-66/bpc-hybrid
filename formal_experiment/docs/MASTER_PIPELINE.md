@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.19
+**文档版本**：3.7.20
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-23
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,19 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-23 修订 3.7.20：S3-BINDING-RESOLUTION 候选判定完成（零外部 API）
+
+- 用户要求由 AI 直接根据候选处理；已完成 30 项的补充判定，
+  `data/development/stage3_synth/stage3_binding_resolved_reference_v1.json`，
+  `status=ai_resolution_complete`、`requires_human_review=false`、`is_gold=false`。
+- 原人工 action/actor ID 均保留。5 个空 action 已归为候选无对应/对象不同/条件检查/
+  动作不同；8 个空 actor 中 7 项补充 controller 相对执行者推断、1 项只确认流程执行者。
+  10 项顺序均判为 process-only，不制造法规动作对，不再作为用户待填任务。
+- 人工结果逐项原样保存；新判断明确归属 AI，不发布 Gold，不作为自动预测输入。
+  本次依用户明确请求只读查阅指定归档候选成员，没有解压、恢复或重开审核工具。
+- 完成记录沿用 `outputs/reports/stage3_binding_reference_assessment_v1.md`，
+  不新建审核队列或重复的状态页；自动方法接入与正式评价仍为独立任务。
 
 ## 2026-09-23 修订 3.7.19：S3-BINDING-SCOPE 参考答案与自动预测职责纠正（零 API）
 

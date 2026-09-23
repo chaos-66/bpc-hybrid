@@ -1,79 +1,79 @@
-# Stage 3 绑定参考数据与自动预测职责核对
+# Stage 3 候选判定完成记录
 
-日期：2026-09-23。只读分析；不是新审核批次，不是 Gold，不恢复已归档材料。
-只读取活动区的最终人工决定、既有规则记录和 benchmark；不改任何决定或原始来源。
+2026-09-23：用户授权由 AI 直接根据候选处理。本批补充判定已完成，没有待用户再次审核的条目。
+机器结果：`data/development/stage3_synth/stage3_binding_resolved_reference_v1.json`。原人工决定逐项保留；补充结论标为 AI 判断，未生成 Gold。
 
-## 核对结果
+## 已落定的处理
 
-- 30/30 项人工决定保持完成；25 个非空 action ID、22 个非空 actor ID 均存在于对应规则。
-- 30 个目标 activity ID 与 30 个已选 lane ID 均存在于对应 control BPMN。
-- 5 个空 action 合并为 4 个法规—活动组合；8 个空 actor 合并为 4 个组合；二者交集 1 个，合计 7 个组合。
-- 原规则 Gold 与既有 Direct-LLM 输出的 order_relations 均为 0；已确认的 10 项顺序全部是 process-only。
-- ID 存在只证明引用有效，不证明语义对应正确，也不代表允许将人工绑定用于预测。
+- 25 个已有 action 对应保留；另外 5 个空值不再作为待办：2 个候选集无对应、1 个接收者不同、1 个属于条件检查、1 个通知/更正动作不同。
+- 22 个已有 actor 对应保留；7 项由原文中 controller 相对方角色推断执行者为 Data Controller；另 1 项只确认流程执行者，因缺少法规通知动作，不声称该义务的 actor 对应。
+- 10 项顺序均决定只保留流程关系：4 项没有严格法规顺序依据、2 项落在同一规则动作、4 项缺少合适动作端点。不生成伪造的法规 before/after。
+- 所有 null 均带有明确判定类型、原因和来源；不创建原 Gold 中不存在的 action/actor ID。
 
-## 哪些需要语义判断
+## 7 个去重组合的结论
 
-以下表只定位现有空值及其来源，不撤销用户的既有确认，也不自动要求再次审核。
-未来若建设绑定评测集，必须区分“有匹配”“经人工确认无匹配”“适用性不足/证据不足”；
-已接受 null 本身不够区分后两种状态。完整标注不意味着每一格都必须存在正向匹配。
-
-| 编号 | 规则 | BPMN 活动 | 空字段 | 涉及 pair |
+| 规则 | 活动 | action 处理 | actor 处理 | 涉及 pair |
 |---|---|---|---|---|
-| 1 | article22 | Retrieve identity and contact details | action | syn_incorrect_actor_03, syn_out_of_order_03 |
-| 2 | article20 | Retrieve available data of the data subject | actor | syn_incorrect_actor_06, syn_out_of_order_06 |
-| 3 | article20 | Communicate data and elaborations | actor | syn_incorrect_actor_07, syn_missing_action_09 |
-| 4 | article17 | Communicate the withdraw | action | syn_incorrect_actor_09 |
-| 5 | article16 | Rectify data | actor | syn_incorrect_actor_10, syn_missing_action_10, syn_out_of_order_09 |
-| 6 | article17 | Check if withdrawn data are relevant | action | syn_missing_action_07 |
-| 7 | article16 | Communicate the rectification | action/actor | syn_missing_action_08 |
+| article22 | Retrieve identity and contact details | 当前候选无对应 | 保留人工选择 | syn_incorrect_actor_03, syn_out_of_order_03 |
+| article20 | Retrieve available data of the data subject | 保留人工选择 | AI 判为 Controller 执行；保留 data subject 权利主体 | syn_incorrect_actor_06, syn_out_of_order_06 |
+| article20 | Communicate data and elaborations | 保留人工选择 | AI 判为 Controller 执行；保留 data subject 权利主体 | syn_incorrect_actor_07, syn_missing_action_09 |
+| article17 | Communicate the withdraw | 拒绝：通知对象不同 | 保留人工选择 | syn_incorrect_actor_09 |
+| article16 | Rectify data | 保留人工选择 | AI 判为 Controller 执行；保留 data subject 权利主体 | syn_incorrect_actor_10, syn_missing_action_10, syn_out_of_order_09 |
+| article17 | Check if withdrawn data are relevant | 条件检查；不等同执行删除 | 保留人工选择 | syn_missing_action_07 |
+| article16 | Communicate the rectification | 拒绝：通知不等同实际更正 | 仅确认流程执行者 Controller | syn_missing_action_08 |
 
-### Action：先核对适用规则，不强配相似词
+## 逐项理由
 
-- article22 / Retrieve identity and contact details：当前 article22 动作记录没有该活动的直接同名要求；要确认关联条款是否充分，而非从剩余 ID 中随便选一个。
-- article17 / Communicate the withdraw：需要区分撤回/删除流程中的通知对象和法规动作的对象。
-- article17 / Check if withdrawn data are relevant：可能是判断适用条件的实现步骤，不能自动当成独立法规义务动作。
-- article16 / Communicate the rectification：不能把流程中的通知步骤自动等同于法规中获得更正的权利。
-以上是 AI 的问题定位，不是新增 Gold 裁决；后续有新依据时才提交最小补充项。
+### article22 / Retrieve identity and contact details
 
-### Actor：权利主体与流程执行者不一定相同
+当前 article22 候选中没有收集身份及联系方式的动作。宽泛的保障措施不能据此指定为该活动；按当前候选集判为无对应。
 
-article16、article20 的现有 actor 标注包括 data subject，已审流程执行者则为 Data Controller。
-两者差异不能直接证明 Rule Gold 漏标。需要先约定字段是法规句子的权利主体，还是履行义务的执行者；
-如确需额外的执行者关系，应新增有出处的角色/关系标注，不能为了与 lane 一致而改掉正确的原 span。
-在这个定义澄清前，保持原 null，不自动创建 controller actor ID。
+### article20 / Retrieve available data of the data subject
 
-## 10 项流程顺序：不是 10 条已经证实遗漏的法规顺序
+保留 data subject 为接收数据的权利主体；将已持有数据的 controller 判为检索/提供数据的执行方。不是将 receive 的主语改成 controller。
 
-| pair | 规则 | 已确认的流程顺序 |
+### article20 / Communicate data and elaborations
+
+以直接传输中 from one controller 的源端控制者对应发送方 Data Controller；data subject 仍为权利主体，Third Party 对应另一控制者沿用已接受的候选假设。
+
+### article17 / Communicate the withdraw
+
+BPMN 通知的接收者为 Data subject；原候选要求 inform controllers。对象明确不同，拒绝该候选，当前规则集合内无合适替代。
+
+### article16 / Rectify data
+
+保留 data subject 为权利主体；依据 obtain from the controller 将 controller 判为实现更正的相对执行方，并与 Data Controller 对应。该关系是 AI 补充推断。
+
+### article17 / Check if withdrawn data are relevant
+
+检查数据相关性归为删除流程的适用条件检查，可关联 erase personal data 的背景，但不等同于执行删除；action_id 保留空并明确类型。
+
+### article16 / Communicate the rectification
+
+Rectify data 与 Communicate the rectification 是独立活动；通知数据主体不能替代实际更正。当前 article16 动作候选无独立通知项，判为无对应。
+确认此通知节点属于 Data Controller；当前 article16 无对应通知动作，故只确认流程执行者，不声明已获得该通知义务的法规 actor 绑定。
+
+## 10 项顺序的结论
+
+| pair | 决定 | 理由 |
 |---|---|---|
-| syn_out_of_order_01 | article33 | Retrieve breached subjects → Notify national authority |
-| syn_out_of_order_02 | article33 | Retrieve breached data → Retrieve breached subjects |
-| syn_out_of_order_03 | article22 | Retrieve identity and contact details → Collect consent information |
-| syn_out_of_order_04 | article22 | Check if legitimate interests are presents → Collect consent information |
-| syn_out_of_order_05 | article15 | Retrieve available data of the data subject → Communicate data and elaborations |
-| syn_out_of_order_06 | article20 | Retrieve available data of the data subject → Communicate data and elaborations |
-| syn_out_of_order_07 | article17 | Stop running BPs using withdrawn data → Stop using withdrawn data |
-| syn_out_of_order_08 | article17 | Stop using withdrawn data → Communicate the withdraw |
-| syn_out_of_order_09 | article16 | Rectify data → Communicate the rectification |
-| syn_out_of_order_10 | article15 | Retrieve elaborations → Communicate data and elaborations |
+| syn_out_of_order_01 | 仅流程顺序 | 描述泄露与通知不是“检索主体必须先于首次通知”的明文动作对；s008 还允许分阶段补充信息，不采纳该严格法规顺序。 |
+| syn_out_of_order_02 | 仅流程顺序 | 两个检索活动均关联同一个 describe 动作；不能生成 action 先于自身的关系。 |
+| syn_out_of_order_03 | 仅流程顺序 | 身份联系方式检索和收集同意没有两个对应的法规动作候选，流程先后不能补成法规顺序。 |
+| syn_out_of_order_04 | 仅流程顺序 | 保障合法利益与基于同意的条件，不构成“先检查合法利益再收集同意”的两个法规动作及强制顺序。 |
+| syn_out_of_order_05 | 仅流程顺序 | 获取访问权与提供副本描述权利和履行行为；原文没有指定两个 BPMN 步骤的先后，保留流程关系。 |
+| syn_out_of_order_06 | 仅流程顺序 | 接收数据和直接传输是不同实现安排；所给原文没有要求先执行本流程的检索活动再通信。 |
+| syn_out_of_order_07 | 仅流程顺序 | 停止业务流程与停止使用都只是 erase 的支持步骤候选，缺少两个不同的法规动作，不能填 A 先于 A。 |
+| syn_out_of_order_08 | 仅流程顺序 | 后端通知数据主体与 inform controllers 接收者不符；没有正确的通知动作端点。 |
+| syn_out_of_order_09 | 仅流程顺序 | 有更正动作，但当前 article16 动作集合没有更正后通知的端点，不能据流程连线增加法规顺序。 |
+| syn_out_of_order_10 | 仅流程顺序 | 检索处理信息和对外提供数据之间的先后来自流程实现，不是当前原文明确的两个法规动作次序。 |
 
-只有原文支持两个法规动作及其先后关系，才能新增法规顺序标签。控制流程的布局、技术依赖、
-“without undue delay”等时限文字，都不能单独用来制造两个 action 的 before/after 关系。
-当前只能保留为流程结构扰动诊断；不能将该表改称法规顺序 Gold，也不能只删除难例后宣称三类全覆盖。
+## 使用范围
 
-## 程序职责核对
-
-| 模块 | 当前事实 | 可用范围 |
-|---|---|---|
-| scripts/run_stage3_binding_oracle_v1.py | 直接使用人工 action/lane、指定 activity ID 和 order_pair；Direct Rule Record 的 ID 匹配只进诊断信息 | supplied-binding oracle 诊断，不是端到端 Ours |
-| src/bpc_hybrid/sun_stage3/sun_scorer.py | 已有 _best_action_match、_best_actor_match 和 out_of_order 的端点匹配 | 现有自动匹配基础；本轮未重新评测 |
-| src/bpc_hybrid/s3_action_matching_v3.py | 已有动作结构与候选匹配实现 | 开发实现，不等于新 30-pair 正式验证已完成 |
-| src/bpc_hybrid/s3_semantic_grounding_v1.py | 已有 Top-K 自动动作 grounding；同时含旧 fallback 路径 | 仅记录代码存在；用户取消的规则先行 LLM fallback 不恢复 |
-
-后续自动预测只能从待测 Rule Record、BPMN 和事先冻结的方法配置产生绑定；
-人工绑定、mutation target、expected lane、order_pair 与违规答案由评测侧持有。
-不得用 Gold action ID 的字符串相等代替预测 span 与参考 span 的对齐，也不得用这 30 对调参后称为独立测试。
-不能因补完参考标注就自动宣称优于基线；还需要相同输入条件下的实际预测与冻结评价。
+这是参考资料可见、目标 activity 可见的 AI 补充判定，不是盲测预测，不是正式 Gold。
+不作为自动 Ours 的输入，不自动导入 oracle 或任何评价器；当前任务没有待人工操作。
+只读查阅了用户此次明确要求的归档候选成员，未解压、恢复或重开旧批次。
+判定以当前给定规则与候选集合为范围；“没有支持的对应/顺序”不等于声称全部法规中绝无相关要求。
 
 ## 原文定位（现有 Gold 记录，供解释字段）
 

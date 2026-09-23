@@ -9,18 +9,19 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
-## S3-BINDING-SCOPE：机械核对与 oracle 定位纠正（2026-09-23）
+## S3-BINDING-RESOLUTION：AI 候选判定完成（2026-09-23）
 
-- 已核对活动最终决定与来源，25 action / 22 actor 引用及 30 个 target/lane ID 有效；
-  5/8 个空值合并为 7 个规则—活动组合，10 项顺序均为 process-only。
-  原文、重复项和需要澄清的角色定义见 `outputs/reports/stage3_binding_reference_assessment_v1.md`。
-- 旧人工绑定检查器已更名 `scripts/run_stage3_binding_oracle_v1.py`；
-  runner/evaluator 产物明确禁止端到端 Ours 主张。使用人工答案的诊断不评测自动 grounding。
-- 项目已有自动 action/actor 匹配实现；本轮未证明其在该 30-pair 设置中已完成集成或有效。
-  后续预测须与评测参考隔离。null 不自动代表漏标，权利主体不自动等于 lane 执行者，
-  process-only 顺序不升级为法规顺序；没有新审核批次等待用户操作。
-- 原人工结果、Gold、benchmark 和历史产物均未改；未打开归档、未运行实验/API。
-  完成范围是职责纠正和只读核对，不是 Ours 或 Binding Gold 完成。
+- 用户授权由 AI 直接处理候选，30 项均已落定，没有新人工待审项。
+  结果 `data/development/stage3_synth/stage3_binding_resolved_reference_v1.json`，
+  `ai_resolution_complete`、`is_gold=false`；说明沿用
+  `outputs/reports/stage3_binding_reference_assessment_v1.md`。
+- 保留 25 个 action 和 22 个 actor 的人工选择。5 个空 action 已明确原因；8 个 actor
+  缺口中 7 项补充 Controller 相对执行者推断、1 项只确认流程执行者。10 项顺序判为
+  仅流程关系：4 项缺严格顺序依据、2 项同一动作、4 项缺端点。不新增原 Gold ID。
+- 原人工文件、Gold、benchmark 均未改。按用户明确请求查阅归档候选的指定成员，
+  未恢复旧批次、未生成新审核工具；AI 结论不冒充人工批准或正式 Gold。
+- supplied-binding 检查器已定位为 oracle；此处参考资料可见的 AI 判定不是自动 Ours
+  盲测预测。没有执行真实实验/外部 API；端到端接入与正式评价未因此完成。
 
 ## S3-BINDING-REVIEW：人工复核完成、批次已归档（2026-09-23，零 API）
 

@@ -5247,3 +5247,17 @@
 - 仍存在 blocker：无
 - 备注：原人工绑定runner及evaluator更名为binding_oracle，成功和受阻报告均明确人工/目标ID输入及不可声称端到端Ours；判定公式保持不变。仅使用合成测试运行两条报告路径，不执行真实实验。只读核对活动人工结果：25个action和22个actor引用有效，30个target/lane存在；5/8个空值合并为7个规则活动组合，10项顺序为process-only。报告收录来源哈希与字段角色问题，不修改人工决定或Gold、不打开归档、不恢复取消的LLM fallback；已有自动匹配代码存在，端到端接入与评价未在本轮完成。纠正旧文档只差人工标注的过强结论。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-23T01:23:42.384599+00:00 - S3-BINDING-RESOLUTION：按用户授权直接完成候选判定，不新增人工待审项
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：5 passed in 0.48s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`0f4ee81f19aa8b3edd28380e67455b6124384ba4`；相关未提交路径：21 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：用户要求直接根据候选解决。仅因明确追溯请求只读ZIP内指定agent-review成员，核验member hash，未解压/恢复归档代码或重开旧批次。新增AI补充参考结果30/30完成、human_recheck=0，is_gold=false。原25 action/22 actor对应及全量人工决定保留；5个空action明确为候选无对应、通知对象不同、条件检查或动作不同；7项以原文证据补充controller相对执行者推断、1项只确认流程执行者；10项顺序为process-only。未创建原Gold中不存在的ID，未将新判断标为人工批准或正式Gold，不作为自动预测输入。测试只读活动来源，不打开归档；未执行真实实验或外部API。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

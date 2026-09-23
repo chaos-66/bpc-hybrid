@@ -59,6 +59,15 @@ This instruction overrides older three-method dispatch templates and budgets.
 - 保留历史事件，不把日志中的旧路径和“待审核”状态当作当前任务；实时状态以
   `docs/PROJECT_AUDIT.md` 为准。人工完成不自动发布 Gold 或补填缺失绑定。
 
+## Delegated candidate resolution (2026-09-23)
+
+用户明确要求 AI 直接根据候选解决剩余判断，不将机械整理或可判断的候选再次推回人工。
+可生成有证据、明确署名 AI 的补充判定；原人工决定保持不变，不伪称新增判断获得人工
+逐项批准，不自动发布正式 Gold。当前 Stage 3 补充判定已完成，结果见
+`data/development/stage3_synth/stage3_binding_resolved_reference_v1.json`，
+不得因保留 null、无对应或 process-only 就重新创建待用户审核的同批任务。
+本轮查阅归档候选是用户明确指定的追溯；默认归档排除规则继续生效。
+
 ## Required Reading
 
 The full list below applies to experiment-affecting work. For artifact/prose/
