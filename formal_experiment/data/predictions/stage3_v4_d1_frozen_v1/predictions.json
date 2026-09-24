@@ -1,0 +1,726 @@
+{
+  "dataset_id": "stage3_scoped_gdpr_v4_r1",
+  "gold_read_by_runner": false,
+  "method_id": "direct_llm",
+  "raw_text_committed": false,
+  "record_count": 5,
+  "records": [
+    {
+      "api_call_status": "ok_message_content",
+      "canonical_validation_status": "passed",
+      "canonicalizer_audit": {
+        "attempted": true,
+        "clause_span_count": 1,
+        "dropped_clauses": [],
+        "dropped_edges": [
+          "clauses[0].actor_action_map[0]",
+          "clauses[0].actor_action_map[1]"
+        ],
+        "dropped_spans": [
+          "clauses[0].actors[0]"
+        ],
+        "failed_reasons": [],
+        "field_span_count": 7,
+        "reanchored_count": 7,
+        "status": "degraded"
+      },
+      "cost_usd": 0.00895488,
+      "error": null,
+      "error_category": null,
+      "failure_stage": null,
+      "input_binding": {
+        "errors": [],
+        "expected": {
+          "sample_id": "gdpr_article13p3_s001",
+          "source_id": "gdpr_article13p3_s001",
+          "source_text_length": 330,
+          "source_text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa"
+        },
+        "observed": {
+          "payload_type": "dict",
+          "sample_id": "gdpr_article13p3_s001",
+          "source_id": "gdpr_article13p3_s001",
+          "source_text_length": 330,
+          "source_text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa"
+        },
+        "status": "passed"
+      },
+      "input_binding_status": "passed",
+      "output_parse_status": "passed",
+      "parser_audit": {
+        "attempted": true,
+        "dropped_spans": [],
+        "failed_reasons": [],
+        "spans_adapted": 6,
+        "status": "adapted"
+      },
+      "raw_response_content_sha256": "02caa9c29c2bcba88c222459a0e8dcdaa8bfa33e3ec0599419e552ebbf779331",
+      "raw_response_path": "data/predictions/stage3_v4_d1_frozen_v1/raw_responses/01_gdpr_article13p3_s001.json",
+      "record": {
+        "clauses": [
+          {
+            "actions": [
+              {
+                "end": 257,
+                "id": "p01",
+                "normalized": "provide the data subject prior to that further processing with information on that other purpose",
+                "start": 161,
+                "text": "provide the data subject prior to that further processing with information on that other purpose"
+              },
+              {
+                "end": 329,
+                "id": "p02",
+                "normalized": "with any relevant further information as referred to in paragraph 2",
+                "start": 262,
+                "text": "with any relevant further information as referred to in paragraph 2"
+              }
+            ],
+            "actor_action_map": [],
+            "actors": [],
+            "clause_id": "gdpr_article13p3_s001_c01",
+            "clause_span": {
+              "end": 330,
+              "start": 0,
+              "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2."
+            },
+            "conditions": [
+              {
+                "end": 138,
+                "id": "c01",
+                "normalized": "where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected",
+                "start": 0,
+                "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected"
+              }
+            ],
+            "constraints": [
+              {
+                "end": 218,
+                "id": "c02",
+                "normalized": "prior to that further processing",
+                "start": 186,
+                "text": "prior to that further processing"
+              },
+              {
+                "end": 329,
+                "id": "c03",
+                "normalized": "as referred to in paragraph 2",
+                "start": 300,
+                "text": "as referred to in paragraph 2"
+              }
+            ],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 160,
+                  "start": 155,
+                  "text": "shall"
+                }
+              ],
+              "label": "obligation"
+            },
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "direct_llm",
+          "schema_source": "stage2_prediction.schema.json@1.0.0"
+        },
+        "sample_id": "gdpr_article13p3_s001",
+        "schema_version": "1.0.0",
+        "source_id": "gdpr_article13p3_s001",
+        "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "unsupported_or_ambiguous": [],
+        "validation": {
+          "cross_field_valid": true,
+          "errors": [],
+          "schema_valid": true
+        }
+      },
+      "request_body_sha256": "905137ac5a0f3eb40da56ed5d0fd61a831dd19fc17a7a62c30fd27f104e294f7",
+      "request_status": "ok",
+      "response_model": "deepseek-v4-pro",
+      "runtime_validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      },
+      "sample_id": "gdpr_article13p3_s001",
+      "transport_error": null,
+      "usage": {
+        "completion_tokens": 802,
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 3098,
+        "prompt_tokens": 4378,
+        "total_tokens": 5180
+      }
+    },
+    {
+      "api_call_status": "ok_message_content",
+      "canonical_validation_status": "passed",
+      "canonicalizer_audit": {
+        "attempted": true,
+        "clause_span_count": 1,
+        "dropped_clauses": [],
+        "dropped_edges": [
+          "clauses[0].actor_action_map[0]"
+        ],
+        "dropped_spans": [
+          "clauses[0].actors[0]"
+        ],
+        "failed_reasons": [],
+        "field_span_count": 6,
+        "reanchored_count": 6,
+        "status": "degraded"
+      },
+      "cost_usd": 0.00872124,
+      "error": null,
+      "error_category": null,
+      "failure_stage": null,
+      "input_binding": {
+        "errors": [],
+        "expected": {
+          "sample_id": "gdpr_article14p4_s001",
+          "source_id": "gdpr_article14p4_s001",
+          "source_text_length": 329,
+          "source_text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5"
+        },
+        "observed": {
+          "payload_type": "dict",
+          "sample_id": "gdpr_article14p4_s001",
+          "source_id": "gdpr_article14p4_s001",
+          "source_text_length": 329,
+          "source_text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5"
+        },
+        "status": "passed"
+      },
+      "input_binding_status": "passed",
+      "output_parse_status": "passed",
+      "parser_audit": {
+        "attempted": true,
+        "dropped_spans": [],
+        "failed_reasons": [],
+        "spans_adapted": 5,
+        "status": "adapted"
+      },
+      "raw_response_content_sha256": "68feee1430409031cb6ca7d4e7887555c1aea20690b2bb904f2519fe0f549c34",
+      "raw_response_path": "data/predictions/stage3_v4_d1_frozen_v1/raw_responses/02_gdpr_article14p4_s001.json",
+      "record": {
+        "clauses": [
+          {
+            "actions": [
+              {
+                "end": 328,
+                "id": "p01",
+                "normalized": "provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2",
+                "start": 160,
+                "text": "provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2"
+              }
+            ],
+            "actor_action_map": [],
+            "actors": [],
+            "clause_id": "gdpr_article14p4_s001_c01",
+            "clause_span": {
+              "end": 329,
+              "start": 0,
+              "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2."
+            },
+            "conditions": [
+              {
+                "end": 137,
+                "id": "c01",
+                "normalized": "where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained",
+                "start": 0,
+                "text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained"
+              }
+            ],
+            "constraints": [
+              {
+                "end": 217,
+                "id": "c02",
+                "normalized": "prior to that further processing",
+                "start": 185,
+                "text": "prior to that further processing"
+              },
+              {
+                "end": 328,
+                "id": "c03",
+                "normalized": "as referred to in paragraph 2",
+                "start": 299,
+                "text": "as referred to in paragraph 2"
+              }
+            ],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 159,
+                  "start": 154,
+                  "text": "shall"
+                }
+              ],
+              "label": "obligation"
+            },
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "direct_llm",
+          "schema_source": "stage2_prediction.schema.json@1.0.0"
+        },
+        "sample_id": "gdpr_article14p4_s001",
+        "schema_version": "1.0.0",
+        "source_id": "gdpr_article14p4_s001",
+        "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "unsupported_or_ambiguous": [],
+        "validation": {
+          "cross_field_valid": true,
+          "errors": [],
+          "schema_valid": true
+        }
+      },
+      "request_body_sha256": "175bf024bc4d342d190cf9322931ea84c0e1b7c1b35118147bcf7d687495dd63",
+      "request_status": "ok",
+      "response_model": "deepseek-v4-pro",
+      "runtime_validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      },
+      "sample_id": "gdpr_article14p4_s001",
+      "transport_error": null,
+      "usage": {
+        "completion_tokens": 743,
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 3098,
+        "prompt_tokens": 4378,
+        "total_tokens": 5121
+      }
+    },
+    {
+      "api_call_status": "ok_message_content",
+      "canonical_validation_status": "passed",
+      "canonicalizer_audit": {
+        "attempted": true,
+        "clause_span_count": 1,
+        "dropped_clauses": [],
+        "dropped_edges": [],
+        "dropped_spans": [],
+        "failed_reasons": [],
+        "field_span_count": 4,
+        "reanchored_count": 4,
+        "status": "reanchored"
+      },
+      "cost_usd": 0.00771804,
+      "error": null,
+      "error_category": null,
+      "failure_stage": null,
+      "input_binding": {
+        "errors": [],
+        "expected": {
+          "sample_id": "gdpr_article18p3_s001",
+          "source_id": "gdpr_article18p3_s001",
+          "source_text_length": 165,
+          "source_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f"
+        },
+        "observed": {
+          "payload_type": "dict",
+          "sample_id": "gdpr_article18p3_s001",
+          "source_id": "gdpr_article18p3_s001",
+          "source_text_length": 165,
+          "source_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f"
+        },
+        "status": "passed"
+      },
+      "input_binding_status": "passed",
+      "output_parse_status": "passed",
+      "parser_audit": {
+        "attempted": true,
+        "dropped_spans": [],
+        "failed_reasons": [],
+        "spans_adapted": 3,
+        "status": "adapted"
+      },
+      "raw_response_content_sha256": "0de8b8bfdb8ceb85e81505d6e923ba73645432f5470d2e6129d297e8548e431a",
+      "raw_response_path": "data/predictions/stage3_v4_d1_frozen_v1/raw_responses/03_gdpr_article18p3_s001.json",
+      "record": {
+        "clauses": [
+          {
+            "actions": [
+              {
+                "end": 99,
+                "id": "p01",
+                "normalized": "be informed",
+                "start": 88,
+                "text": "be informed"
+              }
+            ],
+            "actor_action_map": [
+              {
+                "action_id": "p01",
+                "actor_id": "a01"
+              }
+            ],
+            "actors": [
+              {
+                "end": 117,
+                "id": "a01",
+                "normalized": "the controller",
+                "start": 103,
+                "text": "the controller"
+              }
+            ],
+            "clause_id": "gdpr_article18p3_s001_c01",
+            "clause_span": {
+              "end": 165,
+              "start": 0,
+              "text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted."
+            },
+            "conditions": [],
+            "constraints": [
+              {
+                "end": 164,
+                "id": "c01",
+                "normalized": "before the restriction of processing is lifted",
+                "start": 118,
+                "text": "before the restriction of processing is lifted"
+              }
+            ],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 87,
+                  "start": 82,
+                  "text": "shall"
+                }
+              ],
+              "label": "obligation"
+            },
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "direct_llm",
+          "schema_source": "stage2_prediction.schema.json@1.0.0"
+        },
+        "sample_id": "gdpr_article18p3_s001",
+        "schema_version": "1.0.0",
+        "source_id": "gdpr_article18p3_s001",
+        "source_text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+        "unsupported_or_ambiguous": [],
+        "validation": {
+          "cross_field_valid": true,
+          "errors": [],
+          "schema_valid": true
+        }
+      },
+      "request_body_sha256": "477e1d29c7f9b7f956a9a5d50c13cf73db129674b83fcbde9d66d1470622e4e5",
+      "request_status": "ok",
+      "response_model": "deepseek-v4-pro",
+      "runtime_validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      },
+      "sample_id": "gdpr_article18p3_s001",
+      "transport_error": null,
+      "usage": {
+        "completion_tokens": 499,
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 3070,
+        "prompt_tokens": 4350,
+        "total_tokens": 4849
+      }
+    },
+    {
+      "api_call_status": "ok_message_content",
+      "canonical_validation_status": "passed",
+      "canonicalizer_audit": {
+        "attempted": true,
+        "clause_span_count": 1,
+        "dropped_clauses": [],
+        "dropped_edges": [],
+        "dropped_spans": [],
+        "failed_reasons": [],
+        "field_span_count": 5,
+        "reanchored_count": 6,
+        "status": "reanchored"
+      },
+      "cost_usd": 0.0087384,
+      "error": null,
+      "error_category": null,
+      "failure_stage": null,
+      "input_binding": {
+        "errors": [],
+        "expected": {
+          "sample_id": "gdpr_article35p1_s001",
+          "source_id": "gdpr_article35p1_s001",
+          "source_text_length": 389,
+          "source_text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e"
+        },
+        "observed": {
+          "payload_type": "dict",
+          "sample_id": "gdpr_article35p1_s001",
+          "source_id": "gdpr_article35p1_s001",
+          "source_text_length": 389,
+          "source_text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e"
+        },
+        "status": "passed"
+      },
+      "input_binding_status": "passed",
+      "output_parse_status": "passed",
+      "parser_audit": {
+        "attempted": true,
+        "dropped_spans": [],
+        "failed_reasons": [],
+        "spans_adapted": 4,
+        "status": "adapted"
+      },
+      "raw_response_content_sha256": "38438c1818251167eee26e1c61b6ec3f869e62c18f6a099ba929326acf2a9e97",
+      "raw_response_path": "data/predictions/stage3_v4_d1_frozen_v1/raw_responses/04_gdpr_article35p1_s001.json",
+      "record": {
+        "clauses": [
+          {
+            "actions": [
+              {
+                "end": 388,
+                "id": "p01",
+                "normalized": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                "start": 277,
+                "text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data"
+              }
+            ],
+            "actor_action_map": [
+              {
+                "action_id": "p01",
+                "actor_id": "a01"
+              }
+            ],
+            "actors": [
+              {
+                "end": 244,
+                "id": "a01",
+                "normalized": "the controller",
+                "start": 230,
+                "text": "the controller"
+              }
+            ],
+            "clause_id": "gdpr_article35p1_s001_c01",
+            "clause_span": {
+              "end": 389,
+              "start": 0,
+              "text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data."
+            },
+            "conditions": [
+              {
+                "end": 228,
+                "id": "c01",
+                "normalized": "where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons",
+                "start": 0,
+                "text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons"
+              }
+            ],
+            "constraints": [
+              {
+                "end": 275,
+                "id": "c02",
+                "normalized": "prior to the processing",
+                "start": 252,
+                "text": "prior to the processing"
+              }
+            ],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 250,
+                  "start": 245,
+                  "text": "shall"
+                }
+              ],
+              "label": "obligation"
+            },
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "direct_llm",
+          "schema_source": "stage2_prediction.schema.json@1.0.0"
+        },
+        "sample_id": "gdpr_article35p1_s001",
+        "schema_version": "1.0.0",
+        "source_id": "gdpr_article35p1_s001",
+        "source_text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+        "unsupported_or_ambiguous": [],
+        "validation": {
+          "cross_field_valid": true,
+          "errors": [],
+          "schema_valid": true
+        }
+      },
+      "request_body_sha256": "bbc58aafad73a12a07e4b52395b1a53a6f7f3440632e2b8daac64986f37fe0a5",
+      "request_status": "ok",
+      "response_model": "deepseek-v4-pro",
+      "runtime_validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      },
+      "sample_id": "gdpr_article35p1_s001",
+      "transport_error": null,
+      "usage": {
+        "completion_tokens": 742,
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 3114,
+        "prompt_tokens": 4394,
+        "total_tokens": 5136
+      }
+    },
+    {
+      "api_call_status": "ok_message_content",
+      "canonical_validation_status": "passed",
+      "canonicalizer_audit": {
+        "attempted": true,
+        "clause_span_count": 1,
+        "dropped_clauses": [],
+        "dropped_edges": [],
+        "dropped_spans": [],
+        "failed_reasons": [],
+        "field_span_count": 5,
+        "reanchored_count": 3,
+        "status": "reanchored"
+      },
+      "cost_usd": 0.0082698,
+      "error": null,
+      "error_category": null,
+      "failure_stage": null,
+      "input_binding": {
+        "errors": [],
+        "expected": {
+          "sample_id": "gdpr_article36p1_s001",
+          "source_id": "gdpr_article36p1_s001",
+          "source_text_length": 264,
+          "source_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52"
+        },
+        "observed": {
+          "payload_type": "dict",
+          "sample_id": "gdpr_article36p1_s001",
+          "source_id": "gdpr_article36p1_s001",
+          "source_text_length": 264,
+          "source_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52"
+        },
+        "status": "passed"
+      },
+      "input_binding_status": "passed",
+      "output_parse_status": "passed",
+      "parser_audit": {
+        "attempted": true,
+        "dropped_spans": [],
+        "failed_reasons": [],
+        "spans_adapted": 4,
+        "status": "adapted"
+      },
+      "raw_response_content_sha256": "16b5f346fb69ef89e9b64b306fc96e0bdf4bcaf00e710f8a6449a700138dc04e",
+      "raw_response_path": "data/predictions/stage3_v4_d1_frozen_v1/raw_responses/05_gdpr_article36p1_s001.json",
+      "record": {
+        "clauses": [
+          {
+            "actions": [
+              {
+                "end": 54,
+                "id": "p01",
+                "normalized": "consult the supervisory authority",
+                "start": 21,
+                "text": "consult the supervisory authority"
+              }
+            ],
+            "actor_action_map": [
+              {
+                "action_id": "p01",
+                "actor_id": "a01"
+              }
+            ],
+            "actors": [
+              {
+                "end": 14,
+                "id": "a01",
+                "normalized": "the controller",
+                "start": 0,
+                "text": "The controller"
+              }
+            ],
+            "clause_id": "gdpr_article36p1_s001_c01",
+            "clause_span": {
+              "end": 264,
+              "start": 0,
+              "text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk."
+            },
+            "conditions": [
+              {
+                "end": 263,
+                "id": "d01",
+                "normalized": "where a data protection impact assessment under article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk",
+                "start": 75,
+                "text": "where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk"
+              }
+            ],
+            "constraints": [
+              {
+                "end": 74,
+                "id": "c01",
+                "normalized": "prior to processing",
+                "start": 55,
+                "text": "prior to processing"
+              }
+            ],
+            "exceptions": [],
+            "modality": {
+              "evidence": [
+                {
+                  "end": 20,
+                  "start": 15,
+                  "text": "shall"
+                }
+              ],
+              "label": "obligation"
+            },
+            "order_relations": []
+          }
+        ],
+        "method": {
+          "name": "direct_llm",
+          "schema_source": "stage2_prediction.schema.json@1.0.0"
+        },
+        "sample_id": "gdpr_article36p1_s001",
+        "schema_version": "1.0.0",
+        "source_id": "gdpr_article36p1_s001",
+        "source_text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.",
+        "unsupported_or_ambiguous": [],
+        "validation": {
+          "cross_field_valid": true,
+          "errors": [],
+          "schema_valid": true
+        }
+      },
+      "request_body_sha256": "00f7e8a7f359dd178cb55f00254adf3bf79ea8226dd155827afa00e9fa9a11e2",
+      "request_status": "ok",
+      "response_model": "deepseek-v4-pro",
+      "runtime_validation": {
+        "cross_field_valid": true,
+        "errors": [],
+        "schema_valid": true
+      },
+      "sample_id": "gdpr_article36p1_s001",
+      "transport_error": null,
+      "usage": {
+        "completion_tokens": 633,
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 3086,
+        "prompt_tokens": 4366,
+        "total_tokens": 4999
+      }
+    }
+  ],
+  "schema_version": "gdpr7_direct_llm_predictions@1.0.0"
+}

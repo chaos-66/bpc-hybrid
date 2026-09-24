@@ -1,0 +1,18 @@
+{
+  "model": "deepseek-v4-pro",
+  "path": "outputs/reports/stage3_d1_preflight_v4.json",
+  "planned_calls": 5,
+  "price_snapshot": {
+    "currency": "USD",
+    "off_peak_multiplier": 0.5,
+    "per_million_peak": {
+      "input_cache_hit": 0.044,
+      "input_cache_miss": 1.32,
+      "output": 3.96
+    },
+    "reverify_before_authorized_execution": true,
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified_date": "2026-09-23"
+  },
+  "sha256": "b79cae69bd295d1be933eb4109a44c5a88ca8579ee646833d59dd5d0411020c5"
+}

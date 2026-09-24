@@ -1,0 +1,70 @@
+{
+  "authorization": {
+    "calls_cap": 5,
+    "path": "configs/authorization/stage3_d1_v4_r1_user_authorization_v1.json",
+    "retry_cap": 0,
+    "total_budget_usd_cap": 8.02,
+    "total_output_tokens_cap": 20480
+  },
+  "command": "python formal_experiment/scripts/run_stage3_d1_v4_r1.py --execute",
+  "cost_usd_peak_conservative": 0.04240236,
+  "counts": {
+    "attempted": 5,
+    "completed": 5,
+    "failed": 0,
+    "planned": 5,
+    "retry": 0
+  },
+  "env_read_by_runner": false,
+  "gold_read": false,
+  "live_contract_check": {
+    "checked_at_utc": "2026-09-24T16:08:30.6585022Z",
+    "contract_match": true,
+    "path": "outputs/reports/stage3_d1_v4_r1_live_contract_check.json",
+    "sha256": "23d82220d97dc4bedd7e807b0a3d56b01409ca8038d8cdd88052a1fd6d0b706a"
+  },
+  "method": {
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "expected_response_model": "deepseek-v4-pro",
+    "max_tokens": 4096,
+    "model": "deepseek-v4-pro",
+    "response_format": null,
+    "seed": "omitted",
+    "stream": false,
+    "temperature": 0,
+    "thinking": "disabled",
+    "top_p": 1
+  },
+  "output_tokens_total": 3419,
+  "outputs": {
+    "predictions": {
+      "path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
+      "sha256": "be83c1c02e96037dca948450a835dd01f46c4cd9a34b8ab557e498a427d44821"
+    }
+  },
+  "preflight": {
+    "path": "outputs/reports/stage3_d1_preflight_v4.json",
+    "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+    "sha256": "b79cae69bd295d1be933eb4109a44c5a88ca8579ee646833d59dd5d0411020c5"
+  },
+  "raw_response_files": [
+    "raw_responses/01_gdpr_article13p3_s001.json",
+    "raw_responses/02_gdpr_article14p4_s001.json",
+    "raw_responses/03_gdpr_article18p3_s001.json",
+    "raw_responses/04_gdpr_article35p1_s001.json",
+    "raw_responses/05_gdpr_article36p1_s001.json"
+  ],
+  "response_models": [
+    "deepseek-v4-pro"
+  ],
+  "run_id": "stage3_v4_d1_frozen_v1",
+  "schema_version": "stage3_v4_d1_r1_run@1.0.0",
+  "status": "complete",
+  "timestamp_utc": "2026-09-24T16:09:31.029215+00:00",
+  "usage": {
+    "completion_tokens": 3419,
+    "prompt_tokens": 21866,
+    "total_tokens": 25285
+  }
+}
