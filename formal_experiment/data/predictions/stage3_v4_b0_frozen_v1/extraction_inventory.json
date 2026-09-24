@@ -1,0 +1,187 @@
+{
+  "sample_inventory": {
+    "gdpr_article13p3_s001": {
+      "clause_count": 1,
+      "modality_labels": [
+        "obligation"
+      ],
+      "actions": 2,
+      "actors": 2,
+      "conditions": 2,
+      "constraints": 3,
+      "actor_action_map": 2,
+      "order_relations": 0
+    },
+    "gdpr_article14p4_s001": {
+      "clause_count": 1,
+      "modality_labels": [
+        "obligation"
+      ],
+      "actions": 2,
+      "actors": 2,
+      "conditions": 2,
+      "constraints": 3,
+      "actor_action_map": 2,
+      "order_relations": 0
+    },
+    "gdpr_article18p3_s001": {
+      "clause_count": 1,
+      "modality_labels": [
+        "obligation"
+      ],
+      "actions": 1,
+      "actors": 1,
+      "conditions": 1,
+      "constraints": 2,
+      "actor_action_map": 1,
+      "order_relations": 0
+    },
+    "gdpr_article35p1_s001": {
+      "clause_count": 1,
+      "modality_labels": [
+        "obligation"
+      ],
+      "actions": 1,
+      "actors": 1,
+      "conditions": 1,
+      "constraints": 3,
+      "actor_action_map": 1,
+      "order_relations": 0
+    },
+    "gdpr_article36p1_s001": {
+      "clause_count": 1,
+      "modality_labels": [
+        "obligation"
+      ],
+      "actions": 1,
+      "actors": 1,
+      "conditions": 1,
+      "constraints": 1,
+      "actor_action_map": 1,
+      "order_relations": 0
+    }
+  },
+  "converter": {
+    "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+    "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+    "expected_schema": null,
+    "allowed_schemas": [
+      "gdpr7_sun_rule_only_predictions@1.0.0",
+      "gdpr7_direct_llm_predictions@1.0.0",
+      "gdpr7_human_rule_record_predictions@1.0.0"
+    ],
+    "capsule_schema_ok": true,
+    "capsule_records": 5,
+    "sentence_texts_available": 5,
+    "include_modalities": [
+      "obligation"
+    ],
+    "per_rule": {
+      "article13p3": {
+        "sentence_count": 1,
+        "envelopes_ok": 1,
+        "envelopes_failed": 0,
+        "failure_reasons": {},
+        "clause_count": 1,
+        "included_clause_count": 1,
+        "excluded_modality_counts": {},
+        "actor_span_count": 0,
+        "action_span_count": 0,
+        "invalid_span_count": 0,
+        "order_relations_count": 0,
+        "action_count": 2,
+        "actor_count": 1,
+        "order_relations_absent": true,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article14p4": {
+        "sentence_count": 1,
+        "envelopes_ok": 1,
+        "envelopes_failed": 0,
+        "failure_reasons": {},
+        "clause_count": 1,
+        "included_clause_count": 1,
+        "excluded_modality_counts": {},
+        "actor_span_count": 0,
+        "action_span_count": 0,
+        "invalid_span_count": 0,
+        "order_relations_count": 0,
+        "action_count": 2,
+        "actor_count": 1,
+        "order_relations_absent": true,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article18p3": {
+        "sentence_count": 1,
+        "envelopes_ok": 1,
+        "envelopes_failed": 0,
+        "failure_reasons": {},
+        "clause_count": 1,
+        "included_clause_count": 1,
+        "excluded_modality_counts": {},
+        "actor_span_count": 0,
+        "action_span_count": 0,
+        "invalid_span_count": 0,
+        "order_relations_count": 0,
+        "action_count": 1,
+        "actor_count": 1,
+        "order_relations_absent": true,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article35p1": {
+        "sentence_count": 1,
+        "envelopes_ok": 1,
+        "envelopes_failed": 0,
+        "failure_reasons": {},
+        "clause_count": 1,
+        "included_clause_count": 1,
+        "excluded_modality_counts": {},
+        "actor_span_count": 0,
+        "action_span_count": 0,
+        "invalid_span_count": 0,
+        "order_relations_count": 0,
+        "action_count": 1,
+        "actor_count": 1,
+        "order_relations_absent": true,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article36p1": {
+        "sentence_count": 1,
+        "envelopes_ok": 1,
+        "envelopes_failed": 0,
+        "failure_reasons": {},
+        "clause_count": 1,
+        "included_clause_count": 1,
+        "excluded_modality_counts": {},
+        "actor_span_count": 0,
+        "action_span_count": 0,
+        "invalid_span_count": 0,
+        "order_relations_count": 0,
+        "action_count": 1,
+        "actor_count": 1,
+        "order_relations_absent": true,
+        "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0"
+      }
+    },
+    "total_envelopes": 5,
+    "total_envelopes_ok": 5,
+    "total_envelopes_failed": 0,
+    "failure_reasons": {},
+    "order_relations_absent_rules": [
+      "article13p3",
+      "article14p4",
+      "article18p3",
+      "article35p1",
+      "article36p1"
+    ],
+    "total_invalid_spans": 0
+  },
+  "performance_evaluation_run": false,
+  "rule_records_order_counts": {
+    "article13p3": 0,
+    "article14p4": 0,
+    "article18p3": 0,
+    "article35p1": 0,
+    "article36p1": 0
+  }
+}

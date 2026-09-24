@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-24
-**收录文件**：2595 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2599 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -681,6 +681,10 @@
 | `data/predictions/s2_12_sun_rule_only_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/s2_12_sun_rule_only_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/stage1_formal_v1/formal_predictions_v1.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage3_v4_b0_frozen_v1/extraction_inventory.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage3_v4_b0_frozen_v1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage3_v4_b0_frozen_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage3_v4_b0_frozen_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/sun_llm_fallback_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/sun_llm_fallback_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/README.md` | 正式区（受门禁） | 所在目录的入口说明 |

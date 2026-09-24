@@ -5357,3 +5357,21 @@
 - 仍存在 blocker：无
 - 备注：不更改Stage2算法或Stage3评分；D1仅渲染5个固定请求，0重试，上限20480输出tokens；预算区分本地代理估算与保守上下文上限。正式三类比较仍受顺序通路与实验范围约束，尚无API授权。本地B0真实运行另记。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-24T02:25:57.716371+00:00 - S3-B0-NEW-SOURCES：冻结Rules-Only处理五条新法规并核实顺序通路
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_v4_b0_frozen_v1；阶段=stage2_to_stage3；方法=sun_rule_only；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/prepare_stage3_execution_v4.py --run-b0`
+- manifest：data/predictions/stage3_v4_b0_frozen_v1/manifest.json
+- 结果摘要：5/5输入成功，均有义务及时间等约束；顺序边全空。22.973秒，零API；未运行Stage3性能评价。
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：1 passed in 2.17s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`21a601807465e5b038b7fa30617e81d7744ca031`；相关未提交路径：21 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：本次只检查新持久化预测的成员、输入及产物哈希，不重跑此前请求测试或全量测试。Sun与Ours共用顺序转换的重建差异已提交用户判断，尚未接入。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

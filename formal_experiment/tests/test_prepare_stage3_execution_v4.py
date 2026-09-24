@@ -51,3 +51,19 @@ def test_preflight_is_not_authorization_and_distinguishes_proxy_budget():
         "total_output_tokens": 20_480, "usd_peak_including_20_percent_margin": 8.02}
     assert preflight["planning_estimate"]["not_actual_bill_or_provider_tokenizer"]
     assert preflight["execution_blockers"]
+
+
+def test_persisted_b0_run_has_exact_inputs_and_bound_artifacts():
+    output = prepare.B0_OUT
+    manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
+    for name, binding in manifest["artifacts"].items():
+        assert prepare.sha(output / name) == binding["sha256"]
+        assert (output / name).stat().st_size == binding["bytes"]
+    assert manifest["input_sha256"] == prepare.EXPECTED_INPUT_SHA
+    assert manifest["gold_read"] is False and manifest["calls"] == 0
+    capsule = json.loads((output / "predictions.json").read_text(encoding="utf-8"))
+    _, inputs = prepare.load_inputs()
+    assert {x["sample_id"] for x in capsule["records"]} == {s["sample_id"] for s in inputs}
+    assert len(capsule["records"]) == 5
+    assert all(x["request_status"] == "ok" for x in capsule["records"])
+    assert not prepare.b0_recipe._contains_raw_text(capsule["records"])

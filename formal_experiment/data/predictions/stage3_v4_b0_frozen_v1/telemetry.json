@@ -1,0 +1,86 @@
+{
+  "runtime_identity": {
+    "code_jar": {
+      "name": "stanford-corenlp-4.5.10.jar",
+      "bytes": 9118725,
+      "sha256": "f813ce4ed7319d79225f2a520d40733075c6b3500dd0b81ee069229e461aab43"
+    },
+    "models_jar": {
+      "name": "stanford-corenlp-4.5.10-models.jar",
+      "bytes": 474409531,
+      "sha256": "a5da9f6feb35a0fd2ea2cbe8909bede3952965b238a68c833ae3e031ed9026a0"
+    }
+  },
+  "corenlp_seconds": 9.414437299943529,
+  "bridge_seconds": 0.40300660009961575,
+  "sentence_count": 5,
+  "pattern_count": 29,
+  "match_count": 40,
+  "surgery_count": 0,
+  "terminal_tree_removal_count": 0,
+  "bridge_class": "SunPhraseRuleBatchBridgeMulti",
+  "bridge_source": "tools/corenlp/SunPhraseRuleBatchBridgeMulti.java",
+  "patterns_path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+  "tsurgeon_enabled": false,
+  "classifier_seconds": 10.671352499979548,
+  "compose_seconds": 0.0159288999857381,
+  "total_seconds": 20.50472530000843,
+  "device": "cpu",
+  "record_count": 5,
+  "predicted_clause_count": 5,
+  "final_hybrid_label_counts_by_clause": {
+    "obligation": 5
+  },
+  "classifier_mean_confidence": 0.6,
+  "modality_route_counts": {
+    "marker_obligation": 5
+  },
+  "alignment_summary": {
+    "total": 5,
+    "heuristic_supported": 5,
+    "validated": 0,
+    "unsupported": 0,
+    "by_status": {
+      "equal_count_candidate": 5
+    },
+    "note": "heuristic_supported is not verified alignment"
+  },
+  "lexicon_v2": {
+    "lexicon_id": "public_marker_lexicon_en_v2",
+    "manifest_sha256": "eddc8179de33580ca08e6bf86ceb6a0caf3a9546f82a599c3eeedfecfeaa3dda",
+    "category_file_sha256": {
+      "modality": "cb6fae1292e3601b0bf10ca21459e37f63957a1e34f58d8155bc7bee74b69095",
+      "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+      "constraint": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+      "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e",
+      "actor": "43e404d2a69c091e6b07ee2a474ab4f8bb3021403fc481ca2500952a6a6d8378"
+    },
+    "loaded_active_total": 174,
+    "active_counts": {
+      "modality": 29,
+      "condition": 34,
+      "constraint": 45,
+      "exception": 16,
+      "actor": 50
+    },
+    "scope_invocations": 15,
+    "scope_raw_matches": 23,
+    "scope_accepted": 23,
+    "scope_rejected": 0,
+    "tregex_candidates": 17,
+    "tregex_accepted": 14,
+    "tregex_final_affected": 14,
+    "final_affected_spans": 21,
+    "legacy_broken_only_label_ignored": 7,
+    "modality_patterns_compiled": 29
+  },
+  "edge_stats": {
+    "edges": 7
+  },
+  "placeholder_classifier_count": 0,
+  "method_id": "sun_rule_only",
+  "method_variant": "b0_enhanced_v10a",
+  "profile_id": "v10-A_scope_tregex_recall_recovery",
+  "paper_faithful_b0": false,
+  "s26_config_rel": "configs/models/sun_b0_s26_candidate_B_v1.json"
+}
