@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-25
-**收录文件**：2695 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2700 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -1058,6 +1058,11 @@
 | `outputs/development/stage3_table3_v4/rule_records.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage3_table3_v4/run_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage3_table3_v4/signals_matrix.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/stage3_table3_v4_r1/global_role_candidates.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/stage3_table3_v4_r1/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/stage3_table3_v4_r1/rule_records.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/stage3_table3_v4_r1/run_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/stage3_table3_v4_r1/signals_matrix.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/v6_factorial_ablation_v1/000/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/v6_factorial_ablation_v1/000/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/v6_factorial_ablation_v1/000/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
