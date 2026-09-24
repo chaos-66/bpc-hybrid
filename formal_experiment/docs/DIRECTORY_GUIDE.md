@@ -73,7 +73,7 @@
 | Stage 2 | `B0_RECONSTRUCTION_DESIGN.md`、`STAGE2_*`、`EVAL_3DIM_SPEC.md` 等 | baseline、schema、LLM 和评价设计 |
 | Gold | `HUMAN_GOLD_*`、`ANNOTATION_PROTOCOL.md`、`ESTG150_DATA_MAP.md` | 审核规则和数据映射 |
 | 研究证据 | `research/` | Sun、Winter、Barrientos 的来源核查；不是任务入口 |
-| Agent 派工 | `AGENT_RUNBOOK.md` | 静态任务卡与 Prompt；实时派工仍在 `PROJECT_AUDIT.md` |
+| Agent 派工 | `AGENT_RUNBOOK.md`、`agent_prompts/` | 手册及其较长的静态可复制 Prompt；不建平行状态/交接页，实时派工仍在 `PROJECT_AUDIT.md` |
 
 旧状态、旧交接、旧路线和旧 changeset 统一在 `_retired/docs/` 与
 `_retired/changes/`，不再在 `docs/` 建 `history/` 或 `changes/` 平行入口。

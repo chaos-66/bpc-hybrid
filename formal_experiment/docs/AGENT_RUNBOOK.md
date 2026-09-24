@@ -4,6 +4,16 @@
 必须停止。实时状态和当前派工只写在 `PROJECT_AUDIT.md`，本文不建立第二份状态页，
 也不改变 `MASTER_PIPELINE.md` 的权威性。
 
+## S3-TABLE3-V4 静态执行入口（2026-09-24 用户选择）
+
+完整可转交 Prompt：[`agent_prompts/STAGE3_TABLE3_V4.md`](agent_prompts/STAGE3_TABLE3_V4.md)。
+本轮只做实验与数据，Codex 负责设计/验收，用户手动交给现有 DeepSeek Agent 执行。
+其中五次固定 Direct-LLM 已获用户接受，预算/输入边界按该任务卡，不重复请求旧许可。
+本卡覆盖下方与其冲突的历史写作同步、旧 API 计划及通用工作 Agent 权限模板。
+为完成强制 checkpoint，执行 Agent 可机械更新本任务的 S3 实时事实/完成状态、
+目录与运行日志；这是第 1 节第 3 条的限定例外，不允许自行更改研究路线或其他任务。
+当前是否已实施、是否验收，只见 PROJECT_AUDIT；静态 Prompt 的存在不代表已运行。
+
 > **2026-09-14 用户取消决定优先**：不再派发 Rules+LLM-Repair / H1 /
 > `sun_llm_fallback` 或规则先行的 LLM 修复/fallback 实验；S2.12 的 F-1/F-2/F-3
 > 共 27 次已取消。旧三方法模板和旧授权仅作历史。当前比较为 Rules-Only 与

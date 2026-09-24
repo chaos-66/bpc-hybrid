@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-24
-**收录文件**：2599 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2600 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -721,6 +721,7 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `docs/agent_prompts/STAGE3_TABLE3_V4.md` | 活动 | 说明、规范或研究文档 |
 | `docs/AGENT_RUNBOOK.md` | 活动 | Agent 分阶段派工规则与可复制 Prompt |
 | `docs/AI_CHANGE_PROTOCOL.md` | 活动 | 实验日志与自动检查协议 |
 | `docs/ANNOTATION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |

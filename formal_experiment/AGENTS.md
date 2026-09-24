@@ -2,6 +2,19 @@
 
 This directory is the only active experiment surface.
 
+## Current user experiment-only delegation (2026-09-24)
+
+本轮用户只要求实验和数据，不写论文、不改 PPT 或绘制论文图。该当前任务优先于
+下方历史写作安排：Codex 负责研究设计、协议和验收，机械实现/运行由用户现有
+DeepSeek Agent 按 `docs/agent_prompts/STAGE3_TABLE3_V4.md` 执行，用户手动转交。
+用户已接受 Sun/Ours 共用的时间约束→顺序边重建补充，以及预检固定的五条新
+Direct-LLM 抽取：最多 5 次、0 重试、总输出 20,480 tokens、总上限 8.02 USD。
+旧 preflight 的 authorized=false 是历史快照，不覆盖本轮授权；执行时另建绑定
+该预检和本轮决定的授权/账本，不改历史，也不重复索取这五次许可。
+其他新调用、旧实验重跑、Rules+LLM 和全量测试不在授权内。研究预期不是验收分数：
+保留真实负结果与极端值，诊断其原因，不能改标签/阈值/样本追分。此范围的构造参考
+仍是 AI development reference，不能自动发布 Gold 或声称完整 Sun 端到端复现。
+
 ## User writing priority: explain the work and contributions (2026-09-15)
 
 用户明确要求：“目标是写清楚自己的贡献，把自己做的事情都要写清楚，把一些数据都要放在论文里”。
