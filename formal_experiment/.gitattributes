@@ -289,3 +289,28 @@ data/development/stage3_synth/stage3_binding_human_decisions_v1.json text eol=lf
 
 # Completed AI supplement with source-bound evidence (not Gold).
 data/development/stage3_synth/stage3_binding_resolved_reference_v1.json text eol=lf
+
+# S3-TABLE3-V4 (2026-09-24): narrow LF pins for the frozen v4 execution
+# contract, implementation, focused tests, and persisted run/report artifacts
+# whose raw LF SHA-256 values are bound in the run/report manifests.  Scope is
+# limited to this exact feature; no broad *.py/*.json/files text=auto rule.
+configs/stage3_table3_v4_execution_v1.json text eol=lf
+configs/authorization/stage3_d1_v4_user_authorization_v1.json text eol=lf
+scripts/run_stage3_d1_v4.py text eol=lf
+scripts/run_stage3_table3_v4.py text eol=lf
+scripts/evaluate_stage3_table3_v4.py text eol=lf
+src/bpc_hybrid/sun_stage3/temporal_projection_v1.py text eol=lf
+src/bpc_hybrid/sun_stage3/no_gate_checker_v1.py text eol=lf
+tests/test_temporal_projection_v1.py text eol=lf
+tests/test_stage3_no_gate_checker_v1.py text eol=lf
+tests/test_stage3_table3_v4_evaluator.py text eol=lf
+tests/test_run_stage3_d1_v4.py text eol=lf
+outputs/development/stage3_table3_v4/predictions.json text eol=lf
+outputs/development/stage3_table3_v4/signals_matrix.json text eol=lf
+outputs/development/stage3_table3_v4/rule_records.json text eol=lf
+outputs/development/stage3_table3_v4/run_manifest.json text eol=lf
+outputs/reports/stage3_table3_v4.json text eol=lf
+outputs/reports/stage3_table3_v4.md text eol=lf
+outputs/reports/stage3_table3_v4.manifest.json text eol=lf
+outputs/reports/stage3_d1_v4_execution_blocked_v1.json text eol=lf
+outputs/reports/experiment_tables_delivery_v1.json text eol=lf

@@ -1,0 +1,55 @@
+{
+  "acceptance": "needs_method_review",
+  "counts": {
+    "ours": {
+      "fn": 15,
+      "fp": 0,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 0,
+      "tp": 0,
+      "unknown_negative": 35,
+      "unknown_positive": 15
+    },
+    "sun": {
+      "fn": 9,
+      "fp": 14,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 3,
+      "tp": 6,
+      "unknown_negative": 18,
+      "unknown_positive": 9
+    },
+    "winter": {
+      "fn": 12,
+      "fp": 6,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 19,
+      "tp": 3,
+      "unknown_negative": 10,
+      "unknown_positive": 5
+    }
+  },
+  "gold_read": false,
+  "inputs": {
+    "construction_reference": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+    "predictions": "6377c6a3bbdc437d63086ac0521180cdd15735c36366b824cbed64b3e90164d9",
+    "run_manifest": "65554df7c9c25a9b3abfd831ff71944558ce296bfaefe75a59f9a6466caca580",
+    "signals_matrix": "2cc4847ac8dd2949565751e889fe9bc760bba9bc9ed9cc91621f5d77d7704eba"
+  },
+  "no_prediction_modification": true,
+  "outputs": {
+    "json": {
+      "path": "outputs/reports/stage3_table3_v4.json",
+      "sha256": "7f399dea08207016a1565c76b10f5f29ed92e8399fe14f7c8ef9c8a0a586b446"
+    },
+    "markdown": {
+      "path": "outputs/reports/stage3_table3_v4.md",
+      "sha256": "7314bb2d085c93e26854d618027f8ead052d99bf01b7a4dc528608bfdbd7f9ae"
+    }
+  },
+  "schema_version": "stage3_table3_v4_report_manifest@1.0.0",
+  "status": "needs_method_review"
+}

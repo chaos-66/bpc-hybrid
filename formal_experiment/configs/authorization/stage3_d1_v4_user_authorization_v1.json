@@ -1,0 +1,46 @@
+{
+  "authorization_record_id": "stage3_d1_v4_user_authorization_v1",
+  "authorization_source": "STAGE3_TABLE3_V4.md section 1 user acceptance and section 6B",
+  "authorized_by": "user",
+  "created_utc": "2026-09-24T00:00:00Z",
+  "documented_release": "DeepSeek-V4-Pro-0813",
+  "env_read": false,
+  "gold_read": false,
+  "hard_caps": {
+    "calls": 5,
+    "max_tokens_per_call": 4096,
+    "retries": 0,
+    "total_budget_usd": 8.02,
+    "total_output_tokens": 20480
+  },
+  "model": "deepseek-v4-pro",
+  "preflight_path": "outputs/reports/stage3_d1_preflight_v4.json",
+  "preflight_sha256": "b79cae69bd295d1be933eb4109a44c5a88ca8579ee646833d59dd5d0411020c5",
+  "price_snapshot_used_for_cap": {
+    "currency": "USD",
+    "input_cache_miss_per_million": 1.32,
+    "note": "peak-price conservative bound inherited from the frozen preflight; live re-verification is mandatory before dispatch",
+    "output_per_million": 3.96,
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified_date": "2026-09-23"
+  },
+  "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+  "registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+  "sample_ids": [
+    "gdpr_article13p3_s001",
+    "gdpr_article14p4_s001",
+    "gdpr_article18p3_s001",
+    "gdpr_article35p1_s001",
+    "gdpr_article36p1_s001"
+  ],
+  "schema_version": "stage3_d1_v4_user_authorization@1.0.0",
+  "scope": "One independent Direct-LLM extraction per listed sample; no other calls, no retries, no model substitution, no budget expansion.",
+  "signature": {
+    "human_signature": null,
+    "statement": "Recorded by the executing agent from the user's explicit acceptance in the task card. Not a human signature.",
+    "type": "ai_recorded_user_authorization"
+  },
+  "status": "authorized",
+  "task_card_path": "docs/agent_prompts/STAGE3_TABLE3_V4.md",
+  "task_card_sha256": "7870322b926e0cafcb0fab8c239bc3bd3fcd75854a894baef58a58233ab6ebd3"
+}

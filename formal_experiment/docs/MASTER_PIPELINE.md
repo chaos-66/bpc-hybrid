@@ -30,6 +30,17 @@
   不能仅以数值落在 (0,1) 或 Ours 最高替代实验验收。
 - 表一总体 +7.47 pp 基本符合预想；表二 full 111 非最好、J 主效应为负，不支持
   所有模块必要。两表保留真实来源/指标口径，不重跑或选结果迎合写作结构。
+- 执行回报（本轮机械实施）：A 已完成并冻结 `temporal_projection_v1`、无外门槛
+  `NoGateSunChecker`、独立 evaluator/config/authorization；四个具名测试文件 20 passed。
+  B 的预检/授权/runner 绑定已 `--check-only` 通过，但当前进程环境缺少
+  `BPC_HYBRID_DeepSeek_API_KEY`/`BPC_HYBRID_LLM_API_KEY`，按合同停止真实调用
+  （attempts=0、retry=0、network=0），未读 `.env`。C/D 用冻结 B0 与 Winter 原文完成
+  三方法名称下的 900 信号矩阵和 50 单元评价；Ours 因无真实 D1 预测而显式标为
+  `blocked_missing_d1_predictions`，全部 unknown，不伪造分数。表三报告
+  `outputs/reports/stage3_table3_v4.{json,md}` 状态 `needs_method_review`：Sun/Winter
+  out_of_order 分母全 0、Winter incorrect_actor 恒定 satisfied，均为真实负结果。
+  这不是完整表三验收；解除 B 环境 blocker 后需按同一冻结 runner 重跑 D1 并重评价。
+  E 数据索引见 `outputs/reports/experiment_tables_delivery_v1.json`。
 
 ## 2026-09-23 修订 3.7.23：S3-RECONSTRUCT 构造记录（含 3.7.24；授权状态已被 3.7.25 更新）
 

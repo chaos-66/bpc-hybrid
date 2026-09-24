@@ -1,0 +1,138 @@
+{
+  "d1_llm": {
+    "authorization_path": "configs/authorization/stage3_d1_v4_user_authorization_v1.json",
+    "calls_cap": 5,
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "max_output_tokens_per_call": 4096,
+    "model": "deepseek-v4-pro",
+    "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+    "retry_cap": 0,
+    "total_budget_usd_cap": 8.02,
+    "total_output_tokens_cap": 20480
+  },
+  "evaluation": {
+    "markdown_min_decimals": 4,
+    "not_applicable_policy": "excluded_from_main_denominator_diagnostic_only",
+    "precision_null_when_no_predicted_positive": true,
+    "report_unrounded_json": true,
+    "states": [
+      "violated",
+      "satisfied",
+      "unknown"
+    ],
+    "types": [
+      "missing_action",
+      "incorrect_actor",
+      "out_of_order"
+    ],
+    "unknown_policy": {
+      "reference_not_applicable": "excluded",
+      "reference_satisfied": "unknown_counted_as_unknown_negative_not_TN",
+      "reference_violated": "unknown_counted_as_FN_and_unknown_positive"
+    }
+  },
+  "git_baseline": "67ef832421dd0920fdc5f62f11cf615fca878893d",
+  "hash_bindings": {
+    "configs/sun_stage3_development_v1.json": "3ef60d5bda1e5103486d5269cd3740330e911c1b912367d822c7dbab729714c4",
+    "configs/winter_stage3_development_v1.json": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+    "data/development/stage3_reconstruction_v4/construction_reference.json": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+    "data/development/stage3_reconstruction_v4/inference_view.json": "6248e8396ad4d8d7077b6332f51b1aa2b5de7e97188e324cb49e00bda4c1eb33",
+    "data/development/stage3_reconstruction_v4/manifest.json": "e49980ef7e4fcfdb39d770082706433cf22fe143cf97cf24f2c39e555013d501",
+    "data/development/stage3_reconstruction_v4/stage2_input.json": "4c934712d4e85316167136a46861084165c75969c113eca7d995de5ddaabd1f2",
+    "data/predictions/stage3_v4_b0_frozen_v1/predictions.json": "eee1d6447bdab21d20704df64801e81aaa642e543a0bd706b0783882009c71fa",
+    "outputs/reports/stage3_d1_preflight_v4.json": "b79cae69bd295d1be933eb4109a44c5a88ca8579ee646833d59dd5d0411020c5",
+    "scripts/prepare_stage3_execution_v4.py": "bceec17c04980b97c4a40694e30f7bca98eacaca07c22edd142d910c02787298",
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
+    "src/bpc_hybrid/sun_stage3/sun_scorer.py": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b"
+  },
+  "methods": {
+    "ours": {
+      "expected_schema": "gdpr7_direct_llm_predictions@1.0.0",
+      "label": "Ours (Direct-LLM Stage 2 + same Sun Stage 3)",
+      "method_id": "ours_d1_frozen_v1",
+      "order_relation_source": "temporal_projection_v1_plus_valid_native_edges",
+      "predictions_path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
+      "stage2_kind": "direct_llm"
+    },
+    "sun": {
+      "expected_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+      "label": "Sun (Rules-Only Stage 2 + Sun Stage 3)",
+      "method_id": "sun_b0_frozen_v1",
+      "order_relation_source": "temporal_projection_v1_plus_valid_native_edges",
+      "predictions_path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
+      "stage2_kind": "rules_only"
+    },
+    "winter": {
+      "delta": 0.8,
+      "gamma": 0.4,
+      "label": "Winter (native full pipeline)",
+      "method_id": "winter_2020_native_full_pipeline",
+      "order_relation_source": "native_winter_rule_side_flows_only",
+      "reachability_mode": "REACHABILITY_CORRECTED",
+      "stage2_kind": "native_regulation_text"
+    }
+  },
+  "notes": "Frozen execution contract for the scoped v4 Table 3 benchmark.  The reference is AI-constructed, not formal Gold.",
+  "schema_version": "stage3_table3_v4_execution@1.0.0",
+  "scope": {
+    "bpmn_count": 20,
+    "case_count": 20,
+    "claim_boundary": "checking on independently specified applicable regulation-process pairs; not end-to-end rule selection or complete GDPR F1",
+    "dataset_id": "stage3_scoped_gdpr_v4",
+    "family_count": 5,
+    "human_adjudicated": false,
+    "negative_cells_per_method": 35,
+    "not_applicable_cells_per_method": 10,
+    "positive_cells_per_method": 15,
+    "reference_is_gold": false,
+    "rule_ids": [
+      "article13p3",
+      "article14p4",
+      "article18p3",
+      "article35p1",
+      "article36p1"
+    ],
+    "scored_cells_per_method": 50,
+    "signals_per_method": 300,
+    "signals_total": 900
+  },
+  "status": "frozen_before_real_run",
+  "sun_scorer": {
+    "gamma": 0.8,
+    "matching_ranking_used_for": "diagnostic_only",
+    "outer_matching_gate_applied": false,
+    "path": "src/bpc_hybrid/sun_stage3/sun_scorer.py",
+    "similarity_backend": {
+      "model": "en_core_web_sm",
+      "package": "spacy"
+    },
+    "tau": 0.8,
+    "theta": 0.8
+  },
+  "task_id": "S3-TABLE3-V4",
+  "temporal_projection": {
+    "algorithm": "sun_stage3_temporal_projection_v1@1.0.0",
+    "derived_endpoints_are_not_added_to_mandatory_actions": true,
+    "difference_from_sun_definition_3": "derived order endpoints may come from predicted constraints; Ur subset of Ar x Ar is not claimed for the supplement",
+    "exception_marker_rejection": true,
+    "main_action_must_be_exactly_one_after_exclusion": true,
+    "marker_scope": "predicted conditions and constraints spans only",
+    "markers": [
+      "before",
+      "after",
+      "prior to"
+    ],
+    "module": "src/bpc_hybrid/sun_stage3/temporal_projection_v1.py",
+    "multi_marker_span_rejection": true,
+    "native_order_relations_priority": true,
+    "negation_rejection": true
+  },
+  "winter_native": {
+    "config_path": "configs/winter_stage3_development_v1.json",
+    "delta": 0.8,
+    "gamma": 0.4,
+    "reachability_mode": "REACHABILITY_CORRECTED",
+    "unknown_when_no_rule_side_flow": true
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "actual_attempts": 0,
+  "authorization_path": "configs/authorization/stage3_d1_v4_user_authorization_v1.json",
+  "authorization_sha256": "c7589771f4dccd7fe5577a17a287beb31916523a344f7a3dc4c23187de231792",
+  "blocker": "BPC_HYBRID_DeepSeek_API_KEY / BPC_HYBRID_LLM_API_KEY not present in current process environment; project .env was not read and no credential search was performed.",
+  "check_only_status": "verified_no_dispatch",
+  "completed": 0,
+  "cost_usd": 0.0,
+  "d1_output_dir": "data/predictions/stage3_v4_d1_frozen_v1",
+  "d1_output_dir_exists": false,
+  "failed": 0,
+  "network_calls": 0,
+  "next_action": "Provide the key in the executing process environment and re-run the frozen runner; do not modify preflight, prompt, budget, or model.",
+  "preflight_body_source_binding_verified": true,
+  "preflight_path": "outputs/reports/stage3_d1_preflight_v4.json",
+  "preflight_sha256": "b79cae69bd295d1be933eb4109a44c5a88ca8579ee646833d59dd5d0411020c5",
+  "requested_calls": 5,
+  "retries": 0,
+  "retry_cap": 0,
+  "run_id": "stage3_d1_v4_execution_blocked_v1",
+  "runner_path": "scripts/run_stage3_d1_v4.py",
+  "runner_sha256": "c5569b861ccd0f0ad4337155779d9b6098a60270e6729fb88a187f7693e327ce",
+  "schema_version": "stage3_d1_v4_execution_record@1.0.0",
+  "status": "blocked_missing_process_env_api_key",
+  "usage": {
+    "completion_tokens": 0,
+    "prompt_tokens": 0,
+    "total_tokens": 0
+  }
+}

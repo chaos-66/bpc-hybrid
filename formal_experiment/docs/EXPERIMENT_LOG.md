@@ -5403,3 +5403,21 @@
 - 仍存在 blocker：无
 - 备注：前次相关测试发现原生Winter无法读取带bpmn前缀的过程；本次将新模型改为与官方BPMN一致的默认命名空间，并同步process.name和participant。旧失败日志保留；源文本、构造参考、成员及B0预测不变。仅重验受本次XML表示修改影响的六项测试，未扩大全量或运行F1。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-24T04:18:04.438365+00:00 - S3-TABLE3-V4 local 900-signal matrix and independent 50-cell diagnostic evaluation; D1 dispatch blocked by missing process-environment API key
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_table3_v4；阶段=stage3；方法=sun_rule_only+winter_2020_native+ours_d1_blocked；状态=部分完成（`partial`）
+- 实际运行命令：`python formal_experiment/scripts/run_stage3_table3_v4.py --overwrite; python formal_experiment/scripts/evaluate_stage3_table3_v4.py`
+- manifest：outputs/development/stage3_table3_v4/run_manifest.json
+- 结果摘要：900 signals; Sun overall F1 0.3429, Winter 0.2500, Ours blocked/unknown; acceptance needs_method_review; API attempts 0
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：20 passed in 5.10s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`ed458a7ed8c52b9158118a1ee7570044aff8d1cd`；相关未提交路径：32 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：No real API call attempted because the required process environment key is absent; no .env read. No full suite run.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

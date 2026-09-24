@@ -17,11 +17,20 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - 已接受共同顺序投影和固定五条新 Direct-LLM 抽取：最多 5 次、0 重试、总输出
   20,480 tokens、上限 $8.02。授权前 preflight 保持不变，执行 Agent 另建当前授权
   记录及防重试账本。该五次无需重新许可；未授权其他调用/全量测试。
-- 本轮仅完成方法与执行任务卡、内容核对及任务入口更新；新增实际 API=0，
-  未启动实验、未生成新表三指标。顺序投影、D1 executor、三方法矩阵/评价仍待实施。
-- 下一步按任务卡 A→E：先冻结实现和离线验证，再执行五条抽取、持久化三方法
-  900 信号、独立评价每方法 50 单元并交数据。每阶段合格后直接推进，方法问题交
-  Codex；不能将写完脚本、得到非极端分数或 Ours 更高本身当作实验完成。
+- 本轮执行回报：A 实现冻结（temporal projection、无外门槛 checker、独立
+  inference/evaluator、config、authorization）；四个 v4 具名测试文件 20 passed。
+  B `--check-only` 已验证五条 body/source/preflight/授权绑定，但当前进程环境缺
+  `BPC_HYBRID_DeepSeek_API_KEY`/`BPC_HYBRID_LLM_API_KEY`，真实调用按合同停止：
+  attempts=0、retry=0、network_calls=0、usage=0、cost=0；未读 `.env`、未搜索凭据。
+  C Sun（冻结 B0）与 Winter（原文 native）矩阵完成，Ours 因缺真实 D1 预测显式
+  `blocked_missing_d1_predictions`，共 900 信号中 Ours 300 个均为 unknown 诊断。
+  D 独立 evaluator 已按固定 50 单元/方法完成，表三报告 `needs_method_review`：
+  Sun Ours/F1、Winter order 等极端/不可观察值保留；报告见
+  `outputs/reports/stage3_table3_v4.{json,md}`。E 三表索引见
+  `outputs/reports/experiment_tables_delivery_v1.json`。
+- 当前 blocker：给执行进程设置官方环境变量后，按同一冻结 runner/prompt/model 执行
+  五次已授权调用并重跑表三评价；不修改算法、阈值、参考或样本，不重问这五次许可。
+  表三尚未验收，不能把 Ours unknown/0 或 Sun/Winter 低分当成完整结论。
 - 表一已支持多数要素较好、pooled 五字段总体 +7.47 pp；表二不支持全部模块必要。
   表三本轮固定五项条文/20 构造流程，参考为 AI development；不是 Sun 原始完整
   端到端实验，顺序表示补充和范围限制必须随数据交付。

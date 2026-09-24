@@ -1,0 +1,823 @@
+{
+  "api_execution": {
+    "actual_attempts": 0,
+    "authorized_calls": 5,
+    "blocker": "BPC_HYBRID_DeepSeek_API_KEY / BPC_HYBRID_LLM_API_KEY absent in the current process environment",
+    "cost_usd": 0.0,
+    "env_file_read": false,
+    "failure": 0,
+    "network_calls": 0,
+    "retries": 0,
+    "retry_cap": 0,
+    "success": 0,
+    "usage": {
+      "completion_tokens": 0,
+      "prompt_tokens": 0,
+      "total_tokens": 0
+    }
+  },
+  "generated_from": "authoritative frozen reports; no experiment rerun",
+  "not_run_full_suite": "No full pytest/audit_project --with-tests; only named v4 tests were run.",
+  "schema_version": "experiment_tables_delivery@1.0.0",
+  "tables": {
+    "table1_stage2_six_semantic_fields": {
+      "arms": {
+        "Ours": {
+          "modality_macro_f1": 0.7694506979014613,
+          "overall_pooled_five_span_fields_f1": 0.8377685388362014,
+          "span_fields": {
+            "action": 0.9437163978494625,
+            "actor": 0.7578947368421053,
+            "condition": 0.8380185491408441,
+            "constraint": 0.7426621160409557,
+            "exception": 0.761904761904762
+          }
+        },
+        "Sun": {
+          "modality_macro_f1": 0.712845542257307,
+          "overall_pooled_five_span_fields_f1": 0.7630963921754044,
+          "span_fields": {
+            "action": 0.8926856128973049,
+            "actor": 0.8203299152920196,
+            "condition": 0.7738369415016121,
+            "constraint": 0.6181622204257612,
+            "exception": 0.88
+          }
+        }
+      },
+      "expectation_check": "Ours overall > Sun supported; field-level expectation not uniformly supported (Actor and Exception favor Sun).",
+      "fields_won_by_baseline": 2,
+      "fields_won_by_ours": 3,
+      "metric_definition": "five span fields pooled micro-F1 plus Modality four-class macro-F1 separately; not a joint six-field micro-F1",
+      "overall_pooled_delta_pp": 7.467214666079702,
+      "sample_count": 150,
+      "sources": [
+        {
+          "path": "outputs/reports/stage2_table1_paper_final_v1.json",
+          "role": "metrics",
+          "sha256": "05a601d16034db6bc6981122651ba4549aa686be74da6a9e0b32d8dc076bd941"
+        },
+        {
+          "path": "outputs/reports/stage2_table1_paper_final_v1.md",
+          "role": "paper_table",
+          "sha256": "113796c3f5c6c67545e73a2e28e82ebc72eafa2e7b58812aa2affe85a599ff75"
+        }
+      ],
+      "status": "reused_authoritative"
+    },
+    "table2_prompt_ablation": {
+      "arms": {
+        "000": {
+          "coarse_five_field_mean_f1": 0.6919601713098904,
+          "coarse_five_field_micro_f1": 0.7380064922435935,
+          "modality_label_macro_f1": 0.833823450922019,
+          "path": "outputs/development/v6_factorial_ablation_v1/000/repeat-01/canonical_predictions.jsonl",
+          "sha256": "83e56603ab72f16e8c7d9677d388b63bbdeb0abef6ecc4dd88fc66bc4bdd8164"
+        },
+        "001": {
+          "coarse_five_field_mean_f1": 0.6949720455443998,
+          "coarse_five_field_micro_f1": 0.7260518308676949,
+          "modality_label_macro_f1": 0.8095756925733121,
+          "path": "outputs/development/v6_factorial_ablation_v1/001/repeat-01/canonical_predictions.jsonl",
+          "sha256": "081da6f4f3ca4980903ac250d7320fe56777e0a07e0394dee4ccf50f026a2a73"
+        },
+        "010": {
+          "coarse_five_field_mean_f1": 0.7527697307853786,
+          "coarse_five_field_micro_f1": 0.8107468260809508,
+          "modality_label_macro_f1": 0.8005870433279695,
+          "path": "outputs/development/v6_factorial_ablation_v1/010/repeat-01/canonical_predictions.jsonl",
+          "sha256": "602031ec551900bee12e02c9833cc00602a544c357b7a77a38f098064e0d2f43"
+        },
+        "011": {
+          "coarse_five_field_mean_f1": 0.7691431819221756,
+          "coarse_five_field_micro_f1": 0.8141890664022139,
+          "modality_label_macro_f1": 0.7627379774274876,
+          "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/canonical_predictions.jsonl",
+          "sha256": "ba642d6a8377720b71a9d2c4a5ae3a4b7417c9783bfa7c8efd4aa2aa1a77d121"
+        },
+        "100": {
+          "coarse_five_field_mean_f1": 0.8006075767935055,
+          "coarse_five_field_micro_f1": 0.8353992235371158,
+          "modality_label_macro_f1": 0.7369687005236877,
+          "path": "outputs/development/v6_factorial_ablation_v1/100/repeat-01/canonical_predictions.jsonl",
+          "sha256": "d7bc985f395576260af7972107290cb467fa9a2ee4aebb03416c7381251288a7"
+        },
+        "101": {
+          "coarse_five_field_mean_f1": 0.8033023301084121,
+          "coarse_five_field_micro_f1": 0.8298805705524039,
+          "modality_label_macro_f1": 0.7083290074750831,
+          "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/canonical_predictions.jsonl",
+          "sha256": "a32e60c7982765f1ab453eddde45c37ae82f474ae8f8173d2e81ab36e798bd6e"
+        },
+        "110": {
+          "coarse_five_field_mean_f1": 0.8075805346570435,
+          "coarse_five_field_micro_f1": 0.8267530216647663,
+          "modality_label_macro_f1": 0.752003831913289,
+          "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/canonical_predictions.jsonl",
+          "sha256": "a240a11a2bba3a0e6196d36dd62ea6a036b83ba4be476efaac0723a44ccef5ed"
+        },
+        "111": {
+          "coarse_five_field_mean_f1": 0.7850304424814778,
+          "coarse_five_field_micro_f1": 0.8224493117168078,
+          "modality_label_macro_f1": 0.7537201079506458,
+          "path": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/canonical_predictions.jsonl",
+          "sha256": "2dc036c3c72f54e194ad9882aac5b78f2fd0e0a7f9fbdf44dc73baa31ce23195"
+        }
+      },
+      "expectation_check": "E/S average main effect positive and J negative; all-modules-necessary claim not supported by these existing results.",
+      "main_effects": {
+        "E_main_effect": 0.05637197796916027,
+        "J_main_effect": -0.004583695996826509,
+        "S_main_effect": 0.036200027165982696,
+        "three_way_ESJ": -0.014181958660408278,
+        "two_way_EJ": -0.0006549709390174518,
+        "two_way_ES": -0.08847751503991097,
+        "two_way_SJ": 0.008305922366957486
+      },
+      "primary_metric_definition": "pooled five-span-field micro-F1; identical family to the paper's Table 1 Overall (pooled 5) metric",
+      "sources": [
+        {
+          "path": "outputs/reports/stage2_table2_prompt_ablation_paper_final_v2.json",
+          "role": "metrics",
+          "sha256": "3725eb574747fc871e5f2f78978c30a2f19252563262e44e34614343b44311b5"
+        },
+        {
+          "path": "outputs/reports/stage2_table2_prompt_ablation_paper_final_v2.md",
+          "role": "paper_table",
+          "sha256": "e3c5da480c77c18bc124f56b2bbea8184441d2f9d8229ff6e9bcf585b6f114f0"
+        }
+      ],
+      "status": "reused_authoritative",
+      "status_raw": "complete",
+      "suite_id": "V6-ESJ-FACTORIAL-001"
+    },
+    "table3_stage3_three_method_checking": {
+      "acceptance": "needs_method_review",
+      "denominators": {
+        "negative_cells": 35,
+        "not_applicable_cells": 10,
+        "positive_cells": 15,
+        "scored_cells_per_method": 50,
+        "signals_total": 900
+      },
+      "diagnostics": {
+        "acceptance": "needs_method_review",
+        "boundary": {
+          "claim": "Given applicable-scope checking only; not full GDPR end-to-end F1 and not MAP.",
+          "human_adjudicated": false,
+          "reference_is_gold": false
+        },
+        "flags": [
+          "sun/out_of_order: extreme_f1=0.0",
+          "sun/out_of_order: constant_prediction=unknown",
+          "sun/out_of_order: all_denominators_zero",
+          "ours/missing_action: extreme_f1=0.0",
+          "ours/incorrect_actor: extreme_f1=0.0",
+          "ours/out_of_order: extreme_f1=0.0",
+          "ours: overall_extreme_f1=0.0",
+          "ours: blocked_status=blocked_missing_d1_predictions",
+          "ours/missing_action: constant_prediction=unknown",
+          "ours/missing_action: all_denominators_zero",
+          "ours/incorrect_actor: constant_prediction=unknown",
+          "ours/incorrect_actor: all_denominators_zero",
+          "ours/out_of_order: constant_prediction=unknown",
+          "ours/out_of_order: all_denominators_zero",
+          "winter/incorrect_actor: extreme_f1=0.0",
+          "winter/out_of_order: extreme_f1=0.0",
+          "winter/incorrect_actor: constant_prediction=satisfied",
+          "winter/out_of_order: constant_prediction=unknown",
+          "winter/out_of_order: all_denominators_zero"
+        ],
+        "methods": {
+          "ours": {
+            "overall": {
+              "cells": 50,
+              "f1": 0.0,
+              "fn": 15,
+              "fp": 0,
+              "negative_cells": 35,
+              "negative_unknown_rate": 1.0,
+              "not_applicable_cells": 10,
+              "observable_coverage": 0.3,
+              "positive_cells": 15,
+              "positive_unknown_rate": 1.0,
+              "precision": null,
+              "predicted_positive": 0,
+              "recall": 0.0,
+              "tn": 0,
+              "tp": 0,
+              "unknown_negative": 35,
+              "unknown_positive": 15,
+              "unknown_rate": 1.0,
+              "unknown_total": 50
+            },
+            "per_type": {
+              "incorrect_actor": {
+                "cells": 15,
+                "f1": 0.0,
+                "fn": 5,
+                "fp": 0,
+                "negative_cells": 10,
+                "negative_unknown_rate": 1.0,
+                "not_applicable_cells": 5,
+                "observable_coverage": 0.3333333333333333,
+                "positive_cells": 5,
+                "positive_unknown_rate": 1.0,
+                "precision": null,
+                "predicted_positive": 0,
+                "recall": 0.0,
+                "tn": 0,
+                "tp": 0,
+                "unknown_negative": 10,
+                "unknown_positive": 5,
+                "unknown_rate": 1.0,
+                "unknown_total": 15
+              },
+              "missing_action": {
+                "cells": 20,
+                "f1": 0.0,
+                "fn": 5,
+                "fp": 0,
+                "negative_cells": 15,
+                "negative_unknown_rate": 1.0,
+                "not_applicable_cells": 0,
+                "observable_coverage": 0.25,
+                "positive_cells": 5,
+                "positive_unknown_rate": 1.0,
+                "precision": null,
+                "predicted_positive": 0,
+                "recall": 0.0,
+                "tn": 0,
+                "tp": 0,
+                "unknown_negative": 15,
+                "unknown_positive": 5,
+                "unknown_rate": 1.0,
+                "unknown_total": 20
+              },
+              "out_of_order": {
+                "cells": 15,
+                "f1": 0.0,
+                "fn": 5,
+                "fp": 0,
+                "negative_cells": 10,
+                "negative_unknown_rate": 1.0,
+                "not_applicable_cells": 5,
+                "observable_coverage": 0.3333333333333333,
+                "positive_cells": 5,
+                "positive_unknown_rate": 1.0,
+                "precision": null,
+                "predicted_positive": 0,
+                "recall": 0.0,
+                "tn": 0,
+                "tp": 0,
+                "unknown_negative": 10,
+                "unknown_positive": 5,
+                "unknown_rate": 1.0,
+                "unknown_total": 15
+              }
+            },
+            "prediction_row_status": "blocked_missing_d1_predictions"
+          },
+          "sun": {
+            "overall": {
+              "cells": 50,
+              "f1": 0.34285714285714286,
+              "fn": 9,
+              "fp": 14,
+              "negative_cells": 35,
+              "negative_unknown_rate": 0.5142857142857142,
+              "not_applicable_cells": 10,
+              "observable_coverage": 0.64,
+              "positive_cells": 15,
+              "positive_unknown_rate": 0.6,
+              "precision": 0.3,
+              "predicted_positive": 20,
+              "recall": 0.4,
+              "tn": 3,
+              "tp": 6,
+              "unknown_negative": 18,
+              "unknown_positive": 9,
+              "unknown_rate": 0.54,
+              "unknown_total": 27
+            },
+            "per_type": {
+              "incorrect_actor": {
+                "cells": 15,
+                "f1": 0.25,
+                "fn": 4,
+                "fp": 2,
+                "negative_cells": 10,
+                "negative_unknown_rate": 0.8,
+                "not_applicable_cells": 5,
+                "observable_coverage": 0.4666666666666667,
+                "positive_cells": 5,
+                "positive_unknown_rate": 0.8,
+                "precision": 0.3333333333333333,
+                "predicted_positive": 3,
+                "recall": 0.2,
+                "tn": 0,
+                "tp": 1,
+                "unknown_negative": 8,
+                "unknown_positive": 4,
+                "unknown_rate": 0.8,
+                "unknown_total": 12
+              },
+              "missing_action": {
+                "cells": 20,
+                "f1": 0.45454545454545453,
+                "fn": 0,
+                "fp": 12,
+                "negative_cells": 15,
+                "negative_unknown_rate": 0.0,
+                "not_applicable_cells": 0,
+                "observable_coverage": 1.0,
+                "positive_cells": 5,
+                "positive_unknown_rate": 0.0,
+                "precision": 0.29411764705882354,
+                "predicted_positive": 17,
+                "recall": 1.0,
+                "tn": 3,
+                "tp": 5,
+                "unknown_negative": 0,
+                "unknown_positive": 0,
+                "unknown_rate": 0.0,
+                "unknown_total": 0
+              },
+              "out_of_order": {
+                "cells": 15,
+                "f1": 0.0,
+                "fn": 5,
+                "fp": 0,
+                "negative_cells": 10,
+                "negative_unknown_rate": 1.0,
+                "not_applicable_cells": 5,
+                "observable_coverage": 0.3333333333333333,
+                "positive_cells": 5,
+                "positive_unknown_rate": 1.0,
+                "precision": null,
+                "predicted_positive": 0,
+                "recall": 0.0,
+                "tn": 0,
+                "tp": 0,
+                "unknown_negative": 10,
+                "unknown_positive": 5,
+                "unknown_rate": 1.0,
+                "unknown_total": 15
+              }
+            },
+            "prediction_row_status": "available"
+          },
+          "winter": {
+            "overall": {
+              "cells": 50,
+              "f1": 0.25,
+              "fn": 12,
+              "fp": 6,
+              "negative_cells": 35,
+              "negative_unknown_rate": 0.2857142857142857,
+              "not_applicable_cells": 10,
+              "observable_coverage": 0.8,
+              "positive_cells": 15,
+              "positive_unknown_rate": 0.3333333333333333,
+              "precision": 0.3333333333333333,
+              "predicted_positive": 9,
+              "recall": 0.2,
+              "tn": 19,
+              "tp": 3,
+              "unknown_negative": 10,
+              "unknown_positive": 5,
+              "unknown_rate": 0.3,
+              "unknown_total": 15
+            },
+            "per_type": {
+              "incorrect_actor": {
+                "cells": 15,
+                "f1": 0.0,
+                "fn": 5,
+                "fp": 0,
+                "negative_cells": 10,
+                "negative_unknown_rate": 0.0,
+                "not_applicable_cells": 5,
+                "observable_coverage": 1.0,
+                "positive_cells": 5,
+                "positive_unknown_rate": 0.0,
+                "precision": null,
+                "predicted_positive": 0,
+                "recall": 0.0,
+                "tn": 10,
+                "tp": 0,
+                "unknown_negative": 0,
+                "unknown_positive": 0,
+                "unknown_rate": 0.0,
+                "unknown_total": 0
+              },
+              "missing_action": {
+                "cells": 20,
+                "f1": 0.42857142857142855,
+                "fn": 2,
+                "fp": 6,
+                "negative_cells": 15,
+                "negative_unknown_rate": 0.0,
+                "not_applicable_cells": 0,
+                "observable_coverage": 1.0,
+                "positive_cells": 5,
+                "positive_unknown_rate": 0.0,
+                "precision": 0.3333333333333333,
+                "predicted_positive": 9,
+                "recall": 0.6,
+                "tn": 9,
+                "tp": 3,
+                "unknown_negative": 0,
+                "unknown_positive": 0,
+                "unknown_rate": 0.0,
+                "unknown_total": 0
+              },
+              "out_of_order": {
+                "cells": 15,
+                "f1": 0.0,
+                "fn": 5,
+                "fp": 0,
+                "negative_cells": 10,
+                "negative_unknown_rate": 1.0,
+                "not_applicable_cells": 5,
+                "observable_coverage": 0.3333333333333333,
+                "positive_cells": 5,
+                "positive_unknown_rate": 1.0,
+                "precision": null,
+                "predicted_positive": 0,
+                "recall": 0.0,
+                "tn": 0,
+                "tp": 0,
+                "unknown_negative": 10,
+                "unknown_positive": 5,
+                "unknown_rate": 1.0,
+                "unknown_total": 15
+              }
+            },
+            "prediction_row_status": "available_native"
+          }
+        },
+        "reference_leakage_check": {
+          "all_prediction_rows_declare_no_reference": true,
+          "prediction_declared_no_reference": true,
+          "runner_declared_no_reference": true
+        },
+        "structural_checks": {
+          "empty_process_cases": [],
+          "invisible_executor_cases": [],
+          "no_prediction_modification": true,
+          "order_relation_counts_per_method_rule": {
+            "ours": {
+              "article13p3": 0,
+              "article14p4": 0,
+              "article18p3": 0,
+              "article35p1": 0,
+              "article36p1": 0
+            },
+            "sun": {
+              "article13p3": 0,
+              "article14p4": 0,
+              "article18p3": 0,
+              "article35p1": 1,
+              "article36p1": 1
+            },
+            "winter": {}
+          }
+        },
+        "unknown_cause_counts": {
+          "actor_unknown_reasons": {
+            "action_mapping_below_gamma": 97,
+            "stage2_rule_record_failed": 100
+          },
+          "missing_action_unknown_reasons": {
+            "stage2_rule_record_failed": 100
+          },
+          "order_denominator_zero_cells": 300,
+          "order_endpoint_same_activity": 0,
+          "order_unknown_reasons": {
+            "no_rule_order_endpoints": 100,
+            "no_rule_side_flow_relations": 100,
+            "stage2_rule_record_failed": 100
+          },
+          "order_unmapped_detail_reasons": {
+            "endpoint similarity below gamma": 40
+          }
+        }
+      },
+      "expectation_check": "Ours not evaluated as a real arm because the authorized five Direct-LLM calls were blocked by missing process-environment API key; no value is fabricated. Sun/Winter show real low/zero order F1 and zero-denominator gaps.",
+      "methods": {
+        "ours": {
+          "method_status": "blocked_missing_d1_predictions",
+          "overall": {
+            "cells": 50,
+            "f1": 0.0,
+            "fn": 15,
+            "fp": 0,
+            "negative_cells": 35,
+            "negative_unknown_rate": 1.0,
+            "not_applicable_cells": 10,
+            "observable_coverage": 0.3,
+            "positive_cells": 15,
+            "positive_unknown_rate": 1.0,
+            "precision": null,
+            "predicted_positive": 0,
+            "recall": 0.0,
+            "tn": 0,
+            "tp": 0,
+            "unknown_negative": 35,
+            "unknown_positive": 15,
+            "unknown_rate": 1.0,
+            "unknown_total": 50
+          },
+          "per_type": {
+            "incorrect_actor": {
+              "cells": 15,
+              "f1": 0.0,
+              "fn": 5,
+              "fp": 0,
+              "negative_cells": 10,
+              "negative_unknown_rate": 1.0,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.3333333333333333,
+              "positive_cells": 5,
+              "positive_unknown_rate": 1.0,
+              "precision": null,
+              "predicted_positive": 0,
+              "recall": 0.0,
+              "tn": 0,
+              "tp": 0,
+              "unknown_negative": 10,
+              "unknown_positive": 5,
+              "unknown_rate": 1.0,
+              "unknown_total": 15
+            },
+            "missing_action": {
+              "cells": 20,
+              "f1": 0.0,
+              "fn": 5,
+              "fp": 0,
+              "negative_cells": 15,
+              "negative_unknown_rate": 1.0,
+              "not_applicable_cells": 0,
+              "observable_coverage": 0.25,
+              "positive_cells": 5,
+              "positive_unknown_rate": 1.0,
+              "precision": null,
+              "predicted_positive": 0,
+              "recall": 0.0,
+              "tn": 0,
+              "tp": 0,
+              "unknown_negative": 15,
+              "unknown_positive": 5,
+              "unknown_rate": 1.0,
+              "unknown_total": 20
+            },
+            "out_of_order": {
+              "cells": 15,
+              "f1": 0.0,
+              "fn": 5,
+              "fp": 0,
+              "negative_cells": 10,
+              "negative_unknown_rate": 1.0,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.3333333333333333,
+              "positive_cells": 5,
+              "positive_unknown_rate": 1.0,
+              "precision": null,
+              "predicted_positive": 0,
+              "recall": 0.0,
+              "tn": 0,
+              "tp": 0,
+              "unknown_negative": 10,
+              "unknown_positive": 5,
+              "unknown_rate": 1.0,
+              "unknown_total": 15
+            }
+          }
+        },
+        "sun": {
+          "method_status": "available",
+          "overall": {
+            "cells": 50,
+            "f1": 0.34285714285714286,
+            "fn": 9,
+            "fp": 14,
+            "negative_cells": 35,
+            "negative_unknown_rate": 0.5142857142857142,
+            "not_applicable_cells": 10,
+            "observable_coverage": 0.64,
+            "positive_cells": 15,
+            "positive_unknown_rate": 0.6,
+            "precision": 0.3,
+            "predicted_positive": 20,
+            "recall": 0.4,
+            "tn": 3,
+            "tp": 6,
+            "unknown_negative": 18,
+            "unknown_positive": 9,
+            "unknown_rate": 0.54,
+            "unknown_total": 27
+          },
+          "per_type": {
+            "incorrect_actor": {
+              "cells": 15,
+              "f1": 0.25,
+              "fn": 4,
+              "fp": 2,
+              "negative_cells": 10,
+              "negative_unknown_rate": 0.8,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.4666666666666667,
+              "positive_cells": 5,
+              "positive_unknown_rate": 0.8,
+              "precision": 0.3333333333333333,
+              "predicted_positive": 3,
+              "recall": 0.2,
+              "tn": 0,
+              "tp": 1,
+              "unknown_negative": 8,
+              "unknown_positive": 4,
+              "unknown_rate": 0.8,
+              "unknown_total": 12
+            },
+            "missing_action": {
+              "cells": 20,
+              "f1": 0.45454545454545453,
+              "fn": 0,
+              "fp": 12,
+              "negative_cells": 15,
+              "negative_unknown_rate": 0.0,
+              "not_applicable_cells": 0,
+              "observable_coverage": 1.0,
+              "positive_cells": 5,
+              "positive_unknown_rate": 0.0,
+              "precision": 0.29411764705882354,
+              "predicted_positive": 17,
+              "recall": 1.0,
+              "tn": 3,
+              "tp": 5,
+              "unknown_negative": 0,
+              "unknown_positive": 0,
+              "unknown_rate": 0.0,
+              "unknown_total": 0
+            },
+            "out_of_order": {
+              "cells": 15,
+              "f1": 0.0,
+              "fn": 5,
+              "fp": 0,
+              "negative_cells": 10,
+              "negative_unknown_rate": 1.0,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.3333333333333333,
+              "positive_cells": 5,
+              "positive_unknown_rate": 1.0,
+              "precision": null,
+              "predicted_positive": 0,
+              "recall": 0.0,
+              "tn": 0,
+              "tp": 0,
+              "unknown_negative": 10,
+              "unknown_positive": 5,
+              "unknown_rate": 1.0,
+              "unknown_total": 15
+            }
+          }
+        },
+        "winter": {
+          "method_status": "available_native",
+          "overall": {
+            "cells": 50,
+            "f1": 0.25,
+            "fn": 12,
+            "fp": 6,
+            "negative_cells": 35,
+            "negative_unknown_rate": 0.2857142857142857,
+            "not_applicable_cells": 10,
+            "observable_coverage": 0.8,
+            "positive_cells": 15,
+            "positive_unknown_rate": 0.3333333333333333,
+            "precision": 0.3333333333333333,
+            "predicted_positive": 9,
+            "recall": 0.2,
+            "tn": 19,
+            "tp": 3,
+            "unknown_negative": 10,
+            "unknown_positive": 5,
+            "unknown_rate": 0.3,
+            "unknown_total": 15
+          },
+          "per_type": {
+            "incorrect_actor": {
+              "cells": 15,
+              "f1": 0.0,
+              "fn": 5,
+              "fp": 0,
+              "negative_cells": 10,
+              "negative_unknown_rate": 0.0,
+              "not_applicable_cells": 5,
+              "observable_coverage": 1.0,
+              "positive_cells": 5,
+              "positive_unknown_rate": 0.0,
+              "precision": null,
+              "predicted_positive": 0,
+              "recall": 0.0,
+              "tn": 10,
+              "tp": 0,
+              "unknown_negative": 0,
+              "unknown_positive": 0,
+              "unknown_rate": 0.0,
+              "unknown_total": 0
+            },
+            "missing_action": {
+              "cells": 20,
+              "f1": 0.42857142857142855,
+              "fn": 2,
+              "fp": 6,
+              "negative_cells": 15,
+              "negative_unknown_rate": 0.0,
+              "not_applicable_cells": 0,
+              "observable_coverage": 1.0,
+              "positive_cells": 5,
+              "positive_unknown_rate": 0.0,
+              "precision": 0.3333333333333333,
+              "predicted_positive": 9,
+              "recall": 0.6,
+              "tn": 9,
+              "tp": 3,
+              "unknown_negative": 0,
+              "unknown_positive": 0,
+              "unknown_rate": 0.0,
+              "unknown_total": 0
+            },
+            "out_of_order": {
+              "cells": 15,
+              "f1": 0.0,
+              "fn": 5,
+              "fp": 0,
+              "negative_cells": 10,
+              "negative_unknown_rate": 1.0,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.3333333333333333,
+              "positive_cells": 5,
+              "positive_unknown_rate": 1.0,
+              "precision": null,
+              "predicted_positive": 0,
+              "recall": 0.0,
+              "tn": 0,
+              "tp": 0,
+              "unknown_negative": 10,
+              "unknown_positive": 5,
+              "unknown_rate": 1.0,
+              "unknown_total": 15
+            }
+          }
+        }
+      },
+      "scope": {
+        "claim": "Given applicable-scope checking only; not full GDPR end-to-end F1 and not MAP.",
+        "human_adjudicated": false,
+        "reference_is_gold": false
+      },
+      "sources": [
+        {
+          "path": "outputs/reports/stage3_table3_v4.json",
+          "role": "metrics",
+          "sha256": "7f399dea08207016a1565c76b10f5f29ed92e8399fe14f7c8ef9c8a0a586b446"
+        },
+        {
+          "path": "outputs/reports/stage3_table3_v4.md",
+          "role": "paper_table",
+          "sha256": "7314bb2d085c93e26854d618027f8ead052d99bf01b7a4dc528608bfdbd7f9ae"
+        },
+        {
+          "path": "outputs/reports/stage3_table3_v4.manifest.json",
+          "role": "report_manifest",
+          "sha256": "fdd6dcea446a54a8fa78b2420da8eccc6fa8f210f2decb1a27e727df2526408a"
+        },
+        {
+          "path": "outputs/development/stage3_table3_v4/run_manifest.json",
+          "role": "run_manifest",
+          "sha256": "65554df7c9c25a9b3abfd831ff71944558ce296bfaefe75a59f9a6466caca580"
+        },
+        {
+          "path": "data/development/stage3_reconstruction_v4/construction_reference.json",
+          "role": "reference_is_ai_constructed_not_gold",
+          "sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915"
+        },
+        {
+          "path": "outputs/reports/stage3_d1_v4_execution_blocked_v1.json",
+          "role": "d1_blocker_record",
+          "sha256": "347cc637e82bb6f1521b55220e06e1c5d793937a2231f24c77c6c5de70c66a57"
+        }
+      ],
+      "status": "diagnostic_incomplete_d1_blocked"
+    }
+  },
+  "unsupported_expected_results": [
+    "Table 3 Ours > Sun cannot be tested because D1 predictions are absent (blocker, not a negative score chosen by the agent).",
+    "Sun out_of_order and Winter out_of_order are unobservable on this scoped construction (all denominators zero).",
+    "Winter incorrect_actor is constant satisfied here and yields F1=0 against the five actor violations.",
+    "The scoped reference is is_gold=false / human_adjudicated=false; no complete GDPR end-to-end or MAP claim is supported."
+  ]
+}
