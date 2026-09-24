@@ -6,6 +6,10 @@
 
 ## S3-TABLE3-V4 静态执行入口（2026-09-24 用户选择）
 
+当前修正卡：[`agent_prompts/STAGE3_TABLE3_V4_R1.md`](agent_prompts/STAGE3_TABLE3_V4_R1.md)。
+它覆盖初版已确认的实现错误和限定方法调整；原卡/原五次授权不变，不覆盖旧结果。
+先 R1-A/B 离线修复冻结，再 C 原五次抽取，D 新版真实诊断；执行进度只见状态页。
+
 完整可转交 Prompt：[`agent_prompts/STAGE3_TABLE3_V4.md`](agent_prompts/STAGE3_TABLE3_V4.md)。
 本轮只做实验与数据，Codex 负责设计/验收，用户手动交给现有 DeepSeek Agent 执行。
 其中五次固定 Direct-LLM 已获用户接受，预算/输入边界按该任务卡，不重复请求旧许可。

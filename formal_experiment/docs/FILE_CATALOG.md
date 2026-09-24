@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-24
-**收录文件**：2616 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2621 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -724,6 +724,7 @@
 | 文件 | 状态 | 用途 |
 |---|---|---|
 | `docs/agent_prompts/STAGE3_TABLE3_V4.md` | 活动 | 说明、规范或研究文档 |
+| `docs/agent_prompts/STAGE3_TABLE3_V4_R1.md` | 活动 | 说明、规范或研究文档 |
 | `docs/AGENT_RUNBOOK.md` | 活动 | Agent 分阶段派工规则与可复制 Prompt |
 | `docs/AI_CHANGE_PROTOCOL.md` | 活动 | 实验日志与自动检查协议 |
 | `docs/ANNOTATION_PROTOCOL.md` | 活动 | 说明、规范或研究文档 |
@@ -1022,6 +1023,10 @@
 | `outputs/development/stage3_table3_v2/rule_records_ours_direct_llm_frozen_sun_stage3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage3_table3_v2/rule_records_sun_rules_only_frozen_sun_stage3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage3_table3_v2/run_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/stage3_table3_v4/predictions.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/stage3_table3_v4/rule_records.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/stage3_table3_v4/run_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/stage3_table3_v4/signals_matrix.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/evidence/d1_h1_zero_api_reeval_v1/d1/reevaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |

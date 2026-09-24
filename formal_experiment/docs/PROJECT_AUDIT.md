@@ -9,11 +9,36 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
-## 当前派工：S3-TABLE3-V4，用户转交 DeepSeek（2026-09-24）
+## 当前派工：S3-TABLE3-V4-R1，Codex 复核后退回纠错（2026-09-24）
+
+- 复核对象 2f9dd9f 已推送；保留其诊断证据，**表三未验收**。本轮 Codex 只读
+  检查源代码/既有产物、重算 coverage 算术、核对请求序列化及来源，未改实验代码、
+  未跑新实验/测试或真实 LLM。下一执行卡 `docs/agent_prompts/STAGE3_TABLE3_V4_R1.md`
+  已准备，由用户转交 DeepSeek。
+- 已确认机械问题：发送端 ensure_ascii=False 与预检 True 不同，五请求均少 18 bytes，
+  补 key 也会 hash 拒绝；coverage 未扣 positive unknown，正确总体应为
+  Sun 0.46 / Ours 0 / Winter 0.70（仅既有计数算术，非修复后的新实验分数）。
+  Winter 使用当前单角色作为全局候选，资源违例条件不可满足，不能归为基线真实性能。
+- manifest 缺推理输出 hash 绑定，evaluator 只自算 hash/信 count；推理 hash loop
+  实际读取 construction_reference 字节，与“未打开参考”声明不一致。未发现标签
+  实际用于评分的证据，但现有 false 字段不足以证明隔离。投影还存在 nominal
+  越出预测 span、of 拼接丢失及 before 补语规则不全的问题。
+- 当前会话仅检查环境变量存在性：DEEPSEEK_API_KEY/BPC_HYBRID_LLM_API_KEY 存在，
+  未输出值、未读 .env；不据此推断 DeepSeek 历史执行进程的环境。仍须修复 alias
+  支持和请求/预算门禁后，由执行 Agent 用原五次授权抽取。官方模型/价格本轮核对
+  与预检一致；本轮实际调用仍为 0，不再将“整个项目缺 key”作为唯一 blocker。
+- R1 决策：保留现样本与阈值；独立准备无标签全局角色集合、修正共同投影为 v2、
+  修正评价/manifest/传输并真正执行 D1，新产物进 stage3_table3_v4_r1，不覆盖旧结果。
+  未运行方法主指标 null，旧全 unknown 的算术分数仅诊断。修正后若顺序仍不可观察，
+  继续 needs_method_review；自然 after 来源仅整理为后续候选，不自动扩大实验。
+- 表一 3/5 span 加 Modality 为 4/6 字段更好，总体 +7.47 pp，符合多数胜、少数负；
+  表二所有模块必要仍无证据。没有承诺修正后 Ours 必然最高或三类 F1 必然非极端。
+
+## S3-TABLE3-V4 初版执行回报（历史诊断；当前判断以上节为准）
 
 - 用户明确“只把实验和数据跑出来”，Codex 负责想法与验收，机械工作交现有
   DeepSeek Agent。完整静态执行 prompt 已准备：`docs/agent_prompts/STAGE3_TABLE3_V4.md`。
-  用户选择手动转交；当前没有宣称已自动派发或 DeepSeek 已开始运行。
+  用户手动转交后 DeepSeek 已回报实施，提交 2f9dd9f；其验收结论经上节复核修正。
 - 已接受共同顺序投影和固定五条新 Direct-LLM 抽取：最多 5 次、0 重试、总输出
   20,480 tokens、上限 $8.02。授权前 preflight 保持不变，执行 Agent 另建当前授权
   记录及防重试账本。该五次无需重新许可；未授权其他调用/全量测试。
@@ -25,12 +50,11 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
   C Sun（冻结 B0）与 Winter（原文 native）矩阵完成，Ours 因缺真实 D1 预测显式
   `blocked_missing_d1_predictions`，共 900 信号中 Ours 300 个均为 unknown 诊断。
   D 独立 evaluator 已按固定 50 单元/方法完成，表三报告 `needs_method_review`：
-  Sun Ours/F1、Winter order 等极端/不可观察值保留；报告见
+  Sun/Ours/Winter 的极端/不可观察值保留；报告见
   `outputs/reports/stage3_table3_v4.{json,md}`。E 三表索引见
   `outputs/reports/experiment_tables_delivery_v1.json`。
-- 当前 blocker：给执行进程设置官方环境变量后，按同一冻结 runner/prompt/model 执行
-  五次已授权调用并重跑表三评价；不修改算法、阈值、参考或样本，不重问这五次许可。
-  表三尚未验收，不能把 Ours unknown/0 或 Sun/Winter 低分当成完整结论。
+- 初版建议“给进程设置 key 后直接重跑”已被 R1 替代：先纠正实现与输入合同，
+  再执行五次已授权调用；不能按旧 --overwrite 命令覆盖诊断。表三尚未验收。
 - 表一已支持多数要素较好、pooled 五字段总体 +7.47 pp；表二不支持全部模块必要。
   表三本轮固定五项条文/20 构造流程，参考为 AI development；不是 Sun 原始完整
   端到端实验，顺序表示补充和范围限制必须随数据交付。

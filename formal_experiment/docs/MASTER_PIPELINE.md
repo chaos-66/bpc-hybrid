@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.25
+**文档版本**：3.7.26
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-24
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -11,7 +11,25 @@
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
 
-## 2026-09-24 修订 3.7.25：S3-TABLE3-V4 设计锁定与 DeepSeek 执行任务
+## 2026-09-24 修订 3.7.26：S3-TABLE3-V4-R1 实现纠错与真实 D1 补齐
+
+- Codex 复核 2f9dd9f 后撤回“A 已充分验收、只是 key 阻塞、无机械问题”的判断：
+  五个请求真实 payload 的发送编码均不匹配预检 SHA；coverage 把 positive unknown
+  算进可观察；Winter wrapper 将原型全局候选角色误缩为当前流程；manifest/隔离
+  的实现验证也不充分。完整证据与机械指令在 `docs/agent_prompts/STAGE3_TABLE3_V4_R1.md`。
+- R1-A 修正计分/未运行身份及证据链 → R1-B 恢复无标签全局角色词表并冻结共同
+  投影 v2 的边界/of 连续性与 prep-pcomp 解析 → R1-C 修复发送端并执行原五次
+  授权 D1 → R1-D 新目录三方法推理、独立评分及数据交付；每项独立 checkpoint。
+- 数据集、Gold、B0、模型 prompt/registry、五请求 SHA、Sun/Winter scorer 与阈值
+  不变；旧输出不覆盖。新增角色词表仅有无标签字符串，不带 case/活动/控制对应；
+  投影改进双方相同，研究差异必须披露，不将方法修改的效果归于 LLM。
+- 五条 before/prior-to 输入不覆盖 Winter 原生 after/then 支持，顺序缺失不能用
+  改名/改句/降阈值消除。补充三项自然 after 条文候选证据作为后续设计材料，
+  本轮不建新 benchmark、不加 API；现有三类比较不可观察时继续未验收。
+- DoD 仍要求真实运行、正确计数、三类能力证据和完整 provenance；未执行 Ours
+  主 F1=null。修复实现与交出诊断不等于最终表三通过，也不以 Ours 是否最高验收。
+
+## 2026-09-24 修订 3.7.25：S3-TABLE3-V4 初版设计与执行记录（验收判断以 3.7.26 为准）
 
 - 用户已接受共同顺序投影及预检固定五次 Direct-LLM，0 重试、总输出 20,480 tokens、
   总预算上限 $8.02；不重问原许可，不将额度挪给消融、coding 或其他批次。

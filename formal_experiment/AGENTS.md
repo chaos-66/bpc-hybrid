@@ -7,6 +7,10 @@ This directory is the only active experiment surface.
 本轮用户只要求实验和数据，不写论文、不改 PPT 或绘制论文图。该当前任务优先于
 下方历史写作安排：Codex 负责研究设计、协议和验收，机械实现/运行由用户现有
 DeepSeek Agent 按 `docs/agent_prompts/STAGE3_TABLE3_V4.md` 执行，用户手动转交。
+当前追加修正入口为 `docs/agent_prompts/STAGE3_TABLE3_V4_R1.md`：原卡/授权保留，
+R1 冲突条款优先。允许按该卡修正新 wrapper/评价器/请求传输、恢复 Winter 全局
+角色词表合同、建立双方共用的限定句法投影 v2；旧数据/阈值/结果不改，输出另版本。
+该卡不增加调用额度或自动放行正式表三；未运行方法的主指标记 null，不冒称性能 0。
 用户已接受 Sun/Ours 共用的时间约束→顺序边重建补充，以及预检固定的五条新
 Direct-LLM 抽取：最多 5 次、0 重试、总输出 20,480 tokens、总上限 8.02 USD。
 旧 preflight 的 authorized=false 是历史快照，不覆盖本轮授权；执行时另建绑定
