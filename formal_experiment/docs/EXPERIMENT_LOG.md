@@ -5343,3 +5343,17 @@
 - 仍存在 blocker：无
 - 备注：5项来源义务，20个BPMN，50项可评参考与10项预先不适用；AI构造参考不是人工Gold。仅条款范围内checking草案，非Sun46篇端到端复现。发现B0硬编码空顺序通路，正式三类运行仍阻断。本次只验证来源与结构，不跑性能实验或全量测试。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-24T02:19:25.502400+00:00 - S3-EXECUTION-PREP：准备五条输入的冻结B0入口和D1逐请求预算
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：4 passed, 1 warning in 2.16s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`f7e2009ede1a893110ce83d43be62608cde7c3ed`；相关未提交路径：16 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：不更改Stage2算法或Stage3评分；D1仅渲染5个固定请求，0重试，上限20480输出tokens；预算区分本地代理估算与保守上下文上限。正式三类比较仍受顺序通路与实验范围约束，尚无API授权。本地B0真实运行另记。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

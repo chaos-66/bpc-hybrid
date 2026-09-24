@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-23
-**收录文件**：2591 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-24
+**收录文件**：2595 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -1736,6 +1736,8 @@
 | `outputs/reports/stage3_binding_reference_assessment_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_binding_reference_validation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_binding_repair_summary_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage3_d1_preflight_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_d1_preflight_v4.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_grounded_checker_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_grounded_checker_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_grounding_intervention_test_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -2091,6 +2093,7 @@
 | `scripts/prepare_sep_c3_definition_full150_confirmation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/prepare_sep_c3_definition_targeted_execution_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/prepare_sep_c3_targeted_refinement_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/prepare_stage3_execution_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/promote_gdpr7_direct_llm_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/promote_layer_d_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/publish_formal_benchmark_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -2561,6 +2564,7 @@
 | `tests/test_master_pipeline_and_layout.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_modular_prompt_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_normalization.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_prepare_stage3_execution_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_project_structure.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_prompt_contract.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_public_marker_lexicon.py` | 活动 | Python 实现、脚本或测试 |

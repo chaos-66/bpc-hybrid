@@ -1,0 +1,118 @@
+{
+  "schema_version": "stage3_d1_preflight_v4@1.0.0",
+  "authorized": false,
+  "calls_made": 0,
+  "planned_calls": 5,
+  "retry_cap": 0,
+  "scope": "Five scoped GDPR excerpts, independent Direct-LLM extraction only; no old 74-input rerun",
+  "method": {
+    "model": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "thinking": "disabled",
+    "stream": false,
+    "response_format": null,
+    "seed": "omitted"
+  },
+  "input_sha256": "4c934712d4e85316167136a46861084165c75969c113eca7d995de5ddaabd1f2",
+  "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+  "registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+  "preparer_sha256": "bceec17c04980b97c4a40694e30f7bca98eacaca07c22edd142d910c02787298",
+  "calls": [
+    {
+      "index": 1,
+      "sample_id": "gdpr_article13p3_s001",
+      "source_text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+      "body_sha256": "905137ac5a0f3eb40da56ed5d0fd61a831dd19fc17a7a62c30fd27f104e294f7",
+      "body_bytes": 17625,
+      "local_proxy_input_tokens": 4977,
+      "max_output_tokens": 4096
+    },
+    {
+      "index": 2,
+      "sample_id": "gdpr_article14p4_s001",
+      "source_text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+      "body_sha256": "175bf024bc4d342d190cf9322931ea84c0e1b7c1b35118147bcf7d687495dd63",
+      "body_bytes": 17624,
+      "local_proxy_input_tokens": 4977,
+      "max_output_tokens": 4096
+    },
+    {
+      "index": 3,
+      "sample_id": "gdpr_article18p3_s001",
+      "source_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+      "body_sha256": "477e1d29c7f9b7f956a9a5d50c13cf73db129674b83fcbde9d66d1470622e4e5",
+      "body_bytes": 17460,
+      "local_proxy_input_tokens": 4950,
+      "max_output_tokens": 4096
+    },
+    {
+      "index": 4,
+      "sample_id": "gdpr_article35p1_s001",
+      "source_text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+      "body_sha256": "bbc58aafad73a12a07e4b52395b1a53a6f7f3440632e2b8daac64986f37fe0a5",
+      "body_bytes": 17684,
+      "local_proxy_input_tokens": 4995,
+      "max_output_tokens": 4096
+    },
+    {
+      "index": 5,
+      "sample_id": "gdpr_article36p1_s001",
+      "source_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+      "body_sha256": "00f7e8a7f359dd178cb55f00254adf3bf79ea8226dd155827afa00e9fa9a11e2",
+      "body_bytes": 17559,
+      "local_proxy_input_tokens": 4965,
+      "max_output_tokens": 4096
+    }
+  ],
+  "price_snapshot": {
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified_date": "2026-09-23",
+    "currency": "USD",
+    "per_million_peak": {
+      "input_cache_hit": 0.044,
+      "input_cache_miss": 1.32,
+      "output": 3.96
+    },
+    "off_peak_multiplier": 0.5,
+    "reverify_before_authorized_execution": true
+  },
+  "planning_estimate": {
+    "proxy": {
+      "model_id": "nlpaueb/legal-bert-base-uncased",
+      "revision": "15b570cbf88259610b082a167dacc190124f60f6",
+      "kind": "Bert WordPiece local planning proxy",
+      "is_deepseek_tokenizer": false,
+      "is_billing_token_count": false,
+      "add_special_tokens": true,
+      "truncation": false,
+      "file_sha256": {
+        "vocab.txt": "3aaa02f2e3a397eee0f813caa567c87cddab1045a4a6b8ac6261f0cc799efb8f",
+        "tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+        "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+        "config.json": "716ea70c3c3e74bfe8496cc04cba7cd52f4ca45401e74042bb1058fe0390a1b6"
+      }
+    },
+    "input_proxy_tokens": 24864,
+    "output_cap_tokens": 20480,
+    "cost_using_proxy_input_and_max_output_usd": 0.113921,
+    "not_actual_bill_or_provider_tokenizer": true
+  },
+  "recommended_authorization_hard_caps": {
+    "calls": 5,
+    "retries": 0,
+    "total_input_tokens": 5000000,
+    "total_output_tokens": 20480,
+    "usd_peak_including_20_percent_margin": 8.02
+  },
+  "execution_blockers": [
+    "explicit user authorization for these five requests and cap absent",
+    "scoped benchmark not yet accepted as final Table 3 scope",
+    "Sun reconstruction has no implemented rule-order extraction path"
+  ],
+  "gold_read": false,
+  "env_read": false,
+  "network_calls": 0
+}
