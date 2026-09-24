@@ -314,3 +314,18 @@ outputs/reports/stage3_table3_v4.md text eol=lf
 outputs/reports/stage3_table3_v4.manifest.json text eol=lf
 outputs/reports/stage3_d1_v4_execution_blocked_v1.json text eol=lf
 outputs/reports/experiment_tables_delivery_v1.json text eol=lf
+
+# S2-TABLE2-EVIDENCE-BACKUP (2026-09-24): preserve the bytes of the eight
+# completed runs used by the current table. No repository-wide normalization.
+outputs/development/v6_factorial_ablation_v1/000/repeat-01/* -text
+outputs/development/v6_factorial_ablation_v1/001/repeat-01/* -text
+outputs/development/v6_factorial_ablation_v1/010/repeat-01/* -text
+outputs/development/v6_factorial_ablation_v1/100/repeat-01/* -text
+outputs/development/v6_factorial_ablation_v1/execution_summary.json -text
+outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/* -text
+outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/* -text
+outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/* -text
+outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/* -text
+outputs/reports/stage2_table2_evidence_backup_v1.json text eol=lf
+# This already-versioned verifier's capsule binds its LF Git blob.
+outputs/reports/verify_b0_formal_arm_v1.py text eol=lf

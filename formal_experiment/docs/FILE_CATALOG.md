@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-24
-**收录文件**：2621 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：2669 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -822,6 +822,30 @@
 
 | 文件 | 状态 | 用途 |
 |---|---|---|
+| `outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/human_review/restore_layer_e_56d2b03_20260806.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/human_review/review_backups/estg_150_human_correction_v1.pre_restore_56d2b03_20260805T181815Z.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/human_review/stage1_adjudications/gdpr_1_data_breach/decision_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1027,6 +1051,31 @@
 | `outputs/development/stage3_table3_v4/rule_records.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage3_table3_v4/run_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/development/stage3_table3_v4/signals_matrix.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/000/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/000/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/000/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/000/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/000/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/000/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/001/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/001/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/001/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/001/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/001/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/001/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/010/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/010/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/010/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/010/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/010/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/010/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/100/repeat-01/calls_ledger.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/100/repeat-01/canonical_predictions.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/100/repeat-01/evaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/100/repeat-01/failed_samples.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/100/repeat-01/manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/100/repeat-01/raw_responses.jsonl` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/development/v6_factorial_ablation_v1/execution_summary.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/evidence/d1_h1_zero_api_reeval_v1/comparison_capsule.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/evidence/d1_h1_zero_api_reeval_v1/d1/reevaluation.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1680,6 +1729,7 @@
 | `outputs/reports/sep_c3_modular_ablation_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_modular_ablation_analysis_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_offline_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_ablation_root_cause_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_modular_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1739,6 +1789,7 @@
 | `outputs/reports/stage2_gold_definition_audit_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage2_table1_paper_final_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_table1_paper_final_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage2_table2_evidence_backup_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_table2_prompt_ablation_paper_final_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage2_table2_prompt_ablation_paper_final_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage2_table2_prompt_ablation_paper_final_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1814,7 +1865,6 @@
 | `paper/CLAIM_EVIDENCE_MATRIX.md` | 活动 | 科学主张、证据状态和解锁条件 |
 | `paper/CSCWD_POSITIONING.md` | 活动 | 说明、规范或研究文档 |
 | `paper/MENTOR_REPORT_CONTENT_2026-09.md` | 活动 | 说明、规范或研究文档 |
-| `paper/presentations/bpc_hybrid_revised_20260912.pptx` | 活动 | 项目文件 |
 | `paper/presentations/bpc_hybrid_Stage3_completed.pptx` | 活动 | 项目文件 |
 | `paper/README.md` | 活动 | 所在目录的入口说明 |
 | `paper/SIM_CASE_SECTION_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -2062,8 +2112,6 @@
 | `scripts/build_stage3_table3_v3_benchmark.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sun_rule_only_authorization_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sun_stage3_threshold_sensitivity_v1.py` | 活动 | Python 实现、脚本或测试 |
-| `scripts/build_v6_factorial_arms_v1.py` | 活动 | Python 实现、脚本或测试 |
-| `scripts/build_v6_factorial_arms_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_v6_factorial_arms_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_api_env_ready_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |

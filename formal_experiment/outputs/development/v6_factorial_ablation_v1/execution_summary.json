@@ -1,0 +1,83 @@
+{
+  "schema_version": "sep_c3_modular_ablation_execution@1.1.0",
+  "planned_calls": 600,
+  "call_cap": 600,
+  "actual_calls": 580,
+  "completed_samples": 600,
+  "aborted": false,
+  "runs": [
+    {
+      "arm": "000",
+      "actual_call_count": 145,
+      "resumed_completed_count": 5,
+      "failed_count": 0,
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.6919601713098904,
+      "coarse_five_field_micro_f1": 0.7380064922435935,
+      "modality_label_macro_f1": 0.833823450922019
+    },
+    {
+      "arm": "001",
+      "actual_call_count": 145,
+      "resumed_completed_count": 5,
+      "failed_count": 0,
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.6949720455443998,
+      "coarse_five_field_micro_f1": 0.7260518308676949,
+      "modality_label_macro_f1": 0.8095756925733121
+    },
+    {
+      "arm": "010",
+      "actual_call_count": 145,
+      "resumed_completed_count": 5,
+      "failed_count": 0,
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.7527697307853786,
+      "coarse_five_field_micro_f1": 0.8107468260809508,
+      "modality_label_macro_f1": 0.8005870433279695
+    },
+    {
+      "arm": "100",
+      "actual_call_count": 145,
+      "resumed_completed_count": 5,
+      "failed_count": 0,
+      "primary_metric": "coarse_five_field_mean_f1",
+      "coarse_five_field_mean_f1": 0.8006075767935055,
+      "coarse_five_field_micro_f1": 0.8353992235371158,
+      "modality_label_macro_f1": 0.7369687005236877
+    }
+  ],
+  "arms": [
+    "000",
+    "001",
+    "010",
+    "100"
+  ],
+  "model": {
+    "id": "deepseek-v4-pro",
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "budget_gate": {
+    "calls_made": 600,
+    "input_tokens": 1048426,
+    "output_tokens": 511572,
+    "cost_usd": 3.40974744,
+    "missing_usage_calls": 0,
+    "call_cap": 600,
+    "input_token_cap": 2243873.0,
+    "output_token_cap": 2457600.0,
+    "usd_cost_cap": 15.23,
+    "aborted": false,
+    "abort_reason": null
+  },
+  "runtime_seconds": 4470.768,
+  "complete": true
+}

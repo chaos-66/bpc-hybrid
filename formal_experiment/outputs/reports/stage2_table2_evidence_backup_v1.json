@@ -1,0 +1,393 @@
+{
+  "schema_version": "stage2_table2_evidence_backup@1.0.0",
+  "recorded_date": "2026-09-24",
+  "purpose": "Preserve existing Table 2 evidence under the user-authorized formal-content backup; no rerun or metric change.",
+  "source_commit_before_backup": "e7c3514ba1f17ea62c6f2344e53812e1a852448e",
+  "report": {
+    "path": "outputs/reports/stage2_table2_prompt_ablation_paper_final_v2.json",
+    "sha256": "3725eb574747fc871e5f2f78978c30a2f19252563262e44e34614343b44311b5"
+  },
+  "artifact_count": 49,
+  "total_bytes": 8658598,
+  "files": [
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/000/repeat-01/calls_ledger.jsonl",
+      "bytes": 26850,
+      "sha256": "bb590faba535a050bd56ab124ab1100b307d9492550bd68a490c94d978fc5c62"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/000/repeat-01/canonical_predictions.jsonl",
+      "bytes": 446025,
+      "sha256": "83e56603ab72f16e8c7d9677d388b63bbdeb0abef6ecc4dd88fc66bc4bdd8164"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/000/repeat-01/evaluation.json",
+      "bytes": 6437,
+      "sha256": "f3ee47d85fecb0246070c783e78210513e5988bb16ddcde6ee06ca176560a525"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/000/repeat-01/failed_samples.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/000/repeat-01/manifest.json",
+      "bytes": 1000,
+      "sha256": "2ac36ff1f66690fbcc5bcb39cc2d420982de021476588280675d1b5c65aa2433"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/000/repeat-01/raw_responses.jsonl",
+      "bytes": 660139,
+      "sha256": "00561fcd67da9438ff08d5233d71fd55f4b3130539fe14d668315bebb9bbbdaf"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/001/repeat-01/calls_ledger.jsonl",
+      "bytes": 26850,
+      "sha256": "37569cf8f39049c760945e9cf1816a47f672f89b98d76237fb6a7d46785c9347"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/001/repeat-01/canonical_predictions.jsonl",
+      "bytes": 443872,
+      "sha256": "081da6f4f3ca4980903ac250d7320fe56777e0a07e0394dee4ccf50f026a2a73"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/001/repeat-01/evaluation.json",
+      "bytes": 6377,
+      "sha256": "5dd86bf4c3d2bc0a98c790ab5b126451eb691b6dcff89f0e8785ca301c7cd626"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/001/repeat-01/failed_samples.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/001/repeat-01/manifest.json",
+      "bytes": 1000,
+      "sha256": "e429a74fd4f3cb4f8fb455eae633f40b7431957fb896bd5bf2a27fb2733b8b49"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/001/repeat-01/raw_responses.jsonl",
+      "bytes": 652684,
+      "sha256": "a981a830536a45e3dc5a13573c5bc0e93ceede76552186f4b44f9c8d954bdb6e"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/010/repeat-01/calls_ledger.jsonl",
+      "bytes": 26850,
+      "sha256": "8c090e456502d66d44948294352c4d09cd148dd0580b4cf4c2be0c77e59c3136"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/010/repeat-01/canonical_predictions.jsonl",
+      "bytes": 438026,
+      "sha256": "602031ec551900bee12e02c9833cc00602a544c357b7a77a38f098064e0d2f43"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/010/repeat-01/evaluation.json",
+      "bytes": 6441,
+      "sha256": "a28c95a45133b6ee9290d589adb6647f46043e73ddd356b87d7e30215a9724e2"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/010/repeat-01/failed_samples.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/010/repeat-01/manifest.json",
+      "bytes": 1000,
+      "sha256": "dd23b9d37fdd225d14d76819d6c603227049cf26dbda1ff4c6bd838e572b8244"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/010/repeat-01/raw_responses.jsonl",
+      "bytes": 628312,
+      "sha256": "897b858fb36725f95c8b1c0fd98290c2f895b36c0c29c0268157f083da538557"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/calls_ledger.jsonl",
+      "bytes": 30450,
+      "sha256": "3c8bcc76cc09c8f5ceba6a8f75aa334a440a6d5bf129e7ac0626057d5c903e87"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/canonical_predictions.jsonl",
+      "bytes": 444713,
+      "sha256": "ba642d6a8377720b71a9d2c4a5ae3a4b7417c9783bfa7c8efd4aa2aa1a77d121"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/evaluation.json",
+      "bytes": 3256,
+      "sha256": "aa1ee89a2e6caf3413981886ebcfd5d3528dc74c46ac9f68c94503794cc9e3cd"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/failed_samples.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/manifest.json",
+      "bytes": 544,
+      "sha256": "00d2baa2073d6cba810f4e98bb60f36c1cb0715cec371ed55d2de9818539830f"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/raw_responses.jsonl",
+      "bytes": 636440,
+      "sha256": "66912594cd072c9a3216d7a392892fd4e44c1fd32ade02ab1ec690bafa936ce7"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/100/repeat-01/calls_ledger.jsonl",
+      "bytes": 26850,
+      "sha256": "d8d34033ed4f10a4e98052fa7f66f48d0e1559d8bedddcea00ddf8662e1645b2"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/100/repeat-01/canonical_predictions.jsonl",
+      "bytes": 416390,
+      "sha256": "d7bc985f395576260af7972107290cb467fa9a2ee4aebb03416c7381251288a7"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/100/repeat-01/evaluation.json",
+      "bytes": 6430,
+      "sha256": "fa6a082d1b143799c129a6a8c1e507fc5bf1bae4cf8a2f19220e36c4b2cc1714"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/100/repeat-01/failed_samples.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/100/repeat-01/manifest.json",
+      "bytes": 1000,
+      "sha256": "a606326450fd8bb2f5eda1eb3eee88b5bbcaa096238cc454a9e81e2cc81d7bc0"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/100/repeat-01/raw_responses.jsonl",
+      "bytes": 573327,
+      "sha256": "17bf5e7bfbc7e5d9c7ccd83cc43e39e294739a1e542c222bfbe7e9433265c19b"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/calls_ledger.jsonl",
+      "bytes": 30450,
+      "sha256": "73ea3594ec046e57de8a400261069529b73a5b46b18529b704606f214ec0c3c8"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/canonical_predictions.jsonl",
+      "bytes": 423168,
+      "sha256": "a32e60c7982765f1ab453eddde45c37ae82f474ae8f8173d2e81ab36e798bd6e"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/evaluation.json",
+      "bytes": 3253,
+      "sha256": "693f7487779ec834f83519f5ad4fc98340d890580e3afe14c6de14bf8fdb83e9"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/failed_samples.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/manifest.json",
+      "bytes": 544,
+      "sha256": "a7fce4de859f90d907b17b9cfab9aab8b122b51716a9e4e3f2a8c678329e13d6"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/raw_responses.jsonl",
+      "bytes": 598113,
+      "sha256": "030af9558767a1ebdaf2704934a6e32674edc1bb8cedd61e65087e537887a19a"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/calls_ledger.jsonl",
+      "bytes": 31200,
+      "sha256": "204abe000b5fb8edb2fd54eb63baa6ca42214078a791e656445dfda3822db453"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/canonical_predictions.jsonl",
+      "bytes": 422621,
+      "sha256": "a240a11a2bba3a0e6196d36dd62ea6a036b83ba4be476efaac0723a44ccef5ed"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/evaluation.json",
+      "bytes": 3273,
+      "sha256": "6b6ca0bde05cb1ded06738a91388cb682529380bd5fc61958252a9cd5a3a7020"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/failed_samples.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/manifest.json",
+      "bytes": 549,
+      "sha256": "07e4cc9c8504053335c598f1339bba7cd2f2efbc270f675dddc69713fb1f3c62"
+    },
+    {
+      "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/raw_responses.jsonl",
+      "bytes": 579594,
+      "sha256": "7523e0725c55e0baaf4b510499b56aa824ec005ea9c2e09bc30f60aead3440f1"
+    },
+    {
+      "path": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/calls_ledger.jsonl",
+      "bytes": 28050,
+      "sha256": "85766bf77a63ad076aff782ed88cc9c9aa9330f4745cf74d30953450bf39557b"
+    },
+    {
+      "path": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/canonical_predictions.jsonl",
+      "bytes": 416483,
+      "sha256": "2dc036c3c72f54e194ad9882aac5b78f2fd0e0a7f9fbdf44dc73baa31ce23195"
+    },
+    {
+      "path": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/evaluation.json",
+      "bytes": 3352,
+      "sha256": "0259150657253cce207ae37ed615bf8555973db037daea30532b8b0289c4e7db"
+    },
+    {
+      "path": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/failed_samples.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/manifest.json",
+      "bytes": 3622,
+      "sha256": "c2cbde7cfcf452e2ebe63a89f930a2627d8fec9915228d63c42ccfc2d394fd05"
+    },
+    {
+      "path": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/raw_responses.jsonl",
+      "bytes": 600813,
+      "sha256": "b45ea6ef530c80162bd2b60fb7877c8728beabcdecc772fe8ff9e338d3bf5dce"
+    },
+    {
+      "path": "outputs/development/v6_factorial_ablation_v1/execution_summary.json",
+      "bytes": 2250,
+      "sha256": "97d3c56f6433e4edecfb67d73361a517c338f8fd9c6b587880a6aa63d32376c4"
+    }
+  ],
+  "validation": {
+    "scope": "Read-only artifact checks performed in this backup task; no experiment/code tests.",
+    "arms": {
+      "100": {
+        "sample_count": 150,
+        "input_membership_matches": true,
+        "report_prediction_hash_matches": true,
+        "manifest_aggregate_hashes_match": true,
+        "reconstructed_two_message_request_hash_matches": 150,
+        "raw_response_hash_matches": 150,
+        "raw_prediction_ledger_bindings_match": 150,
+        "fixed_demonstrations": 6,
+        "prompt_path": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_100.md",
+        "prompt_sha256": "f6b176191fd31f2d77cb876aef2a9008d186ae7db084aed4c0afd49a3d413942"
+      },
+      "101": {
+        "sample_count": 150,
+        "input_membership_matches": true,
+        "report_prediction_hash_matches": true,
+        "manifest_aggregate_hashes_match": true,
+        "reconstructed_two_message_request_hash_matches": 150,
+        "raw_response_hash_matches": 150,
+        "raw_prediction_ledger_bindings_match": 150,
+        "fixed_demonstrations": 6,
+        "prompt_path": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_101.md",
+        "prompt_sha256": "fa5e9f0043809428b8034a08cb58ff0e98a7e5b69c5be99f88286724217f0aa3"
+      },
+      "110": {
+        "sample_count": 150,
+        "input_membership_matches": true,
+        "report_prediction_hash_matches": true,
+        "manifest_aggregate_hashes_match": true,
+        "reconstructed_two_message_request_hash_matches": 150,
+        "raw_response_hash_matches": 150,
+        "raw_prediction_ledger_bindings_match": 150,
+        "fixed_demonstrations": 6,
+        "prompt_path": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_110.md",
+        "prompt_sha256": "0b7b93ad30e3d72f20fb809b48fdda694a2242233f203234a3f5d8dc91ab5da7"
+      },
+      "111": {
+        "sample_count": 150,
+        "input_membership_matches": true,
+        "report_prediction_hash_matches": true,
+        "manifest_aggregate_hashes_match": true,
+        "reconstructed_two_message_request_hash_matches": 150,
+        "raw_response_hash_matches": 150,
+        "raw_prediction_ledger_bindings_match": 150,
+        "fixed_demonstrations": 6,
+        "prompt_path": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_111.md",
+        "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895"
+      },
+      "000": {
+        "sample_count": 150,
+        "input_membership_matches": true,
+        "report_prediction_hash_matches": true,
+        "manifest_aggregate_hashes_match": true,
+        "reconstructed_two_message_request_hash_matches": 150,
+        "raw_response_hash_matches": 150,
+        "raw_prediction_ledger_bindings_match": 150,
+        "fixed_demonstrations": 0,
+        "prompt_path": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_000.md",
+        "prompt_sha256": "e1fb9a2ac23c052a3ea521de5a6d4bad089fea1bafba405c7805deb78764a1ad"
+      },
+      "001": {
+        "sample_count": 150,
+        "input_membership_matches": true,
+        "report_prediction_hash_matches": true,
+        "manifest_aggregate_hashes_match": true,
+        "reconstructed_two_message_request_hash_matches": 150,
+        "raw_response_hash_matches": 150,
+        "raw_prediction_ledger_bindings_match": 150,
+        "fixed_demonstrations": 0,
+        "prompt_path": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_001.md",
+        "prompt_sha256": "ad1546b151263ea6442216d9911fc2171a2d792d2e3bea86353b1c6b0073c919"
+      },
+      "010": {
+        "sample_count": 150,
+        "input_membership_matches": true,
+        "report_prediction_hash_matches": true,
+        "manifest_aggregate_hashes_match": true,
+        "reconstructed_two_message_request_hash_matches": 150,
+        "raw_response_hash_matches": 150,
+        "raw_prediction_ledger_bindings_match": 150,
+        "fixed_demonstrations": 0,
+        "prompt_path": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_010.md",
+        "prompt_sha256": "5d60ca07be80dbcfa717c995f335884ecced97ec31985edfd10a1d6477511d36"
+      },
+      "011": {
+        "sample_count": 150,
+        "input_membership_matches": true,
+        "report_prediction_hash_matches": true,
+        "manifest_aggregate_hashes_match": true,
+        "reconstructed_two_message_request_hash_matches": 150,
+        "raw_response_hash_matches": 150,
+        "raw_prediction_ledger_bindings_match": 150,
+        "fixed_demonstrations": 0,
+        "prompt_path": "prompts/sun_compat/ablation_v2_factorial/direct_llm_v6_011.md",
+        "prompt_sha256": "261d7b23e015c9faa3bcb75ad49c440dfdd96c00567fb498edeed939f364f072"
+      }
+    },
+    "credential_scan_findings": 0,
+    "credential_scan_scope": "Selected JSON/JSONL recursively parsed and scanned for credential fields and token patterns; no .env or request headers read.",
+    "limits": [
+      "Request hashes are runner-side canonical JSON digests, not full HTTP captures.",
+      "Historical evaluation files retain their original metric definitions; the bound Table 2 report defines pooled micro-F1.",
+      "Execution summary actual_calls=580 counts resumed-process sends; 20 earlier calls remain in the 600-row ledger.",
+      "Historical prompt_family/schema labels are preserved; actual prompt bindings were checked separately."
+    ]
+  },
+  "already_versioned_table1_capsules": [
+    {
+      "capsule": "outputs/reports/direct_llm_formal_arm_v1_capsule_manifest.json",
+      "sha256": "fb81e240711ef10ea2f9605fa68f9e464b15251cd2ff838f3156f3ccdb960922",
+      "bound_git_blobs_verified": 9,
+      "local_crlf_only_differences": [],
+      "already_versioned": true
+    },
+    {
+      "capsule": "outputs/reports/b0_formal_arm_v1_capsule_manifest.json",
+      "sha256": "e08366e1f7118d2dccbe183dccbd354e0f1d61b5836ccefbcaeb01320ebd3511",
+      "bound_git_blobs_verified": 10,
+      "local_crlf_only_differences": [
+        "outputs/reports/verify_b0_formal_arm_v1.py"
+      ],
+      "already_versioned": true
+    }
+  ],
+  "scope_boundaries": [
+    "No new API calls, experiment reruns, metric/Gold/prompt edits.",
+    "Table 3 remains needs_method_review; this backup does not accept it.",
+    "000 retains base task/rules/JSON template; E=1 includes six explicit current-request examples.",
+    "E-only 100 is a simplification candidate, not a substituted formal method.",
+    "Incomplete local legacy reports, untracked superseded builders, PPTs, backups, caches and restricted third-party datasets are excluded."
+  ]
+}
