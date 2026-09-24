@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions" targetNamespace="urn:bpc:reconstruction:v4">
-  <bpmn:collaboration id="Collaboration">
-    <bpmn:participant id="Participant" name="Controller" processRef="Process" />
-  </bpmn:collaboration>
-  <bpmn:process id="Process" isExecutable="false">
-    <bpmn:startEvent id="Start" name="Processing restricted under Article 18(1); grounds for lifting restriction confirmed" />
-    <bpmn:task id="Activity_0" name="Record the decision to lift the restriction" />
-    <bpmn:task id="Activity_1" name="Inform the data subject that the processing restriction will be lifted" />
-    <bpmn:task id="Activity_2" name="Lift the restriction of processing" />
-    <bpmn:task id="Activity_3" name="Archive the restriction handling record" />
-    <bpmn:endEvent id="End" />
-    <bpmn:sequenceFlow id="Flow_0" sourceRef="Start" targetRef="Activity_0" />
-    <bpmn:sequenceFlow id="Flow_1" sourceRef="Activity_0" targetRef="Activity_1" />
-    <bpmn:sequenceFlow id="Flow_2" sourceRef="Activity_1" targetRef="Activity_2" />
-    <bpmn:sequenceFlow id="Flow_3" sourceRef="Activity_2" targetRef="Activity_3" />
-    <bpmn:sequenceFlow id="Flow_4" sourceRef="Activity_3" targetRef="End" />
-  </bpmn:process>
-</bpmn:definitions>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions" targetNamespace="urn:bpc:reconstruction:v4">
+  <collaboration id="Collaboration">
+    <participant id="Participant" name="Controller" processRef="Process" />
+  </collaboration>
+  <process id="Process" name="Controller" isExecutable="false">
+    <startEvent id="Start" name="Processing restricted under Article 18(1); grounds for lifting restriction confirmed" />
+    <task id="Activity_0" name="Record the decision to lift the restriction" />
+    <task id="Activity_1" name="Inform the data subject that the processing restriction will be lifted" />
+    <task id="Activity_2" name="Lift the restriction of processing" />
+    <task id="Activity_3" name="Archive the restriction handling record" />
+    <endEvent id="End" />
+    <sequenceFlow id="Flow_0" sourceRef="Start" targetRef="Activity_0" />
+    <sequenceFlow id="Flow_1" sourceRef="Activity_0" targetRef="Activity_1" />
+    <sequenceFlow id="Flow_2" sourceRef="Activity_1" targetRef="Activity_2" />
+    <sequenceFlow id="Flow_3" sourceRef="Activity_2" targetRef="Activity_3" />
+    <sequenceFlow id="Flow_4" sourceRef="Activity_3" targetRef="End" />
+  </process>
+</definitions>

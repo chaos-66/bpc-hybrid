@@ -69,3 +69,20 @@ def test_generated_models_pass_existing_structural_parser():
         assert record["process_id"] == "Process"
         assert len(record["activities"]) in (3, 4)
     assert len(list(builder.OUT.glob("bpmn/*.bpmn"))) == 20
+
+
+def test_native_winter_and_sun_observe_same_executor():
+    import spacy
+    from bpc_hybrid.stage1_process import load_stage1_contract, parse_bpmn_file
+    from bpc_hybrid.winter_stage3.winter_model import parse_bpmn_file_winter, REACHABILITY_CORRECTED
+    reference = json.loads((builder.OUT / "construction_reference.json").read_text(encoding="utf-8"))
+    # Parser-only integration check: no similarity scoring or performance metric.
+    nlp = spacy.load("en_core_web_sm")
+    contract = load_stage1_contract(ROOT / "configs/stage1_structural_s11_s14.json")
+    for case in reference["cases"]:
+        path = builder.OUT / "bpmn" / f"{case['case_id']}.bpmn"
+        expected = "Data subject" if case["variant"] == "incorrect_actor" else "Controller"
+        sun = parse_bpmn_file(path, contract=contract)
+        winter = parse_bpmn_file_winter(path, nlp, set(), reachability_mode=REACHABILITY_CORRECTED)
+        assert {p["name"] for p in sun["pools"]} == {expected}
+        assert {p.participant for p in winter.processes} == {expected}

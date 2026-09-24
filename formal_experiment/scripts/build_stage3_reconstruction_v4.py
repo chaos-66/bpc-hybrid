@@ -18,7 +18,7 @@ OUT = ROOT / "data/development/stage3_reconstruction_v4"
 NS = "http://www.omg.org/spec/BPMN/20100524/MODEL"
 TYPES = ("missing_action", "incorrect_actor", "out_of_order")
 VARIANTS = ("control",) + TYPES
-ET.register_namespace("bpmn", NS)
+ET.register_namespace("", NS)
 
 
 def sha(data: bytes) -> str:
@@ -67,11 +67,16 @@ def extract_source(spec: dict, source_dir: Path) -> dict:
 def create_bpmn(spec: dict, variant: str) -> bytes:
     if variant not in VARIANTS:
         raise ValueError("unknown mutation")
+    # The inherited minidom Winter parser expects unprefixed tag names, just
+    # like the official GDPR BPMN files. The default namespace preserves URI.
+    ET.register_namespace("", NS)
     defs = ET.Element(f"{{{NS}}}definitions", {"id": "Definitions", "targetNamespace": "urn:bpc:reconstruction:v4"})
     collab = ET.SubElement(defs, f"{{{NS}}}collaboration", {"id": "Collaboration"})
     actor = spec["wrong_executor"] if variant == "incorrect_actor" else spec["required_executor"]
     ET.SubElement(collab, f"{{{NS}}}participant", {"id": "Participant", "name": actor, "processRef": "Process"})
-    process = ET.SubElement(defs, f"{{{NS}}}process", {"id": "Process", "isExecutable": "false"})
+    # Winter reads process.name; Sun reads the collaboration participant.
+    # Give both representations the same executor, including actor mutations.
+    process = ET.SubElement(defs, f"{{{NS}}}process", {"id": "Process", "name": actor, "isExecutable": "false"})
     ET.SubElement(process, f"{{{NS}}}startEvent", {"id": "Start", "name": spec["start_label"]})
     indexes = list(range(len(spec["tasks"])))
     required, later = spec["mandatory_task_index"], spec["later_task_index"]
@@ -186,8 +191,29 @@ def build(config: dict | None = None) -> dict[str, bytes]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true")
+    parser.add_argument("--refresh-unscored-models", action="store_true")
     args = parser.parse_args()
     artifacts = build()
+    if args.refresh_unscored_models:
+        if args.write:
+            raise ValueError("choose build or refresh, not both")
+        old = json.loads((OUT / "manifest.json").read_text(encoding="utf-8"))
+        if old["status"] != "constructed_before_predictions_not_formal_gold":
+            raise ValueError("not an unreleased construction draft")
+        if (ROOT / "outputs/development/stage3_table3_v4").exists():
+            raise ValueError("Stage 3 output exists: use a new benchmark version")
+        for name, binding in old["artifacts"].items():
+            if sha((OUT / name).read_bytes()) != binding["sha256"]:
+                raise ValueError(f"draft already modified: {name}")
+        if set(old["artifacts"]) != set(artifacts) - {"manifest.json"}:
+            raise ValueError("model refresh cannot change membership")
+        for name, raw in artifacts.items():
+            if not name.startswith("bpmn/") and name != "manifest.json":
+                if (OUT / name).read_bytes() != raw:
+                    raise ValueError("refresh cannot change source/reference/inference view")
+        for name, raw in artifacts.items():
+            if name.startswith("bpmn/") or name == "manifest.json":
+                (OUT / name).write_bytes(raw)
     if args.write:
         if OUT.exists():
             raise FileExistsError(f"refusing to overwrite {OUT}")
@@ -197,7 +223,7 @@ def main() -> int:
             target.parent.mkdir(parents=True, exist_ok=True)
             with target.open("xb") as handle:
                 handle.write(raw)
-    print(json.dumps({"written": args.write, **{k: v for k, v in json.loads(artifacts["manifest.json"]).items() if k != "artifacts"}}, ensure_ascii=False))
+    print(json.dumps({"written": args.write or args.refresh_unscored_models, **{k: v for k, v in json.loads(artifacts["manifest.json"]).items() if k != "artifacts"}}, ensure_ascii=False))
     return 0
 
 

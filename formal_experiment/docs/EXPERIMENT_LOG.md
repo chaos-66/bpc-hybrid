@@ -5375,3 +5375,31 @@
 - 仍存在 blocker：无
 - 备注：本次只检查新持久化预测的成员、输入及产物哈希，不重跑此前请求测试或全量测试。Sun与Ours共用顺序转换的重建差异已提交用户判断，尚未接入。
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-24T02:30:39.521700+00:00 - S3-MODEL-CONTRACT：让Sun与Winter观察同一流程执行者
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：是
+- 测试：1 failed, 5 passed in 3.41s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`4583ccf90f321b714d97128a9ade1d1f972e3c83`；相关未提交路径：39 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：用户已授权实验纠偏；在首次Stage3评分前修正本轮新建20个BPMN的process.name，与participant一致。源文本、构造参考、成员和已有B0预测逐字节保留。测试实际调用双方解析器验证执行者可见性，不执行相似度或违规评分；仅六项相关测试，非全量。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-24T02:33:52.728146+00:00 - S3-MODEL-CONTRACT：修正命名空间及执行者字段并复验双解析器
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：6 passed in 3.84s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`4583ccf90f321b714d97128a9ade1d1f972e3c83`；相关未提交路径：41 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：已授权覆盖（`authorized_overwrite`）
+- 仍存在 blocker：无
+- 备注：前次相关测试发现原生Winter无法读取带bpmn前缀的过程；本次将新模型改为与官方BPMN一致的默认命名空间，并同步process.name和participant。旧失败日志保留；源文本、构造参考、成员及B0预测不变。仅重验受本次XML表示修改影响的六项测试，未扩大全量或运行F1。
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
