@@ -1,0 +1,182 @@
+{
+  "candidate_count": 3,
+  "candidates": [
+    {
+      "applicability_and_exceptions": {
+        "applicability": "Transparency duty for data not obtained from the data subject; Article 14(3)(a) time condition.",
+        "current_scope_difference": "Not among the five current v4 rules; current BPMN cases do not encode a separate obtained event and the current source set is before/prior-to only.",
+        "exceptions": [
+          "Article 14(5)(a)-(c) exceptions would need separate applicability handling."
+        ]
+      },
+      "candidate_id": "article14_3_a",
+      "governance": {
+        "added_to_current_benchmark": false,
+        "requires_new_input_design": true,
+        "used_for_api": false,
+        "used_for_f1": false
+      },
+      "natural_order": {
+        "marker": {
+          "span_in_excerpt": [
+            106,
+            111
+          ],
+          "text": "after"
+        },
+        "notes": "Candidate only; not extracted and not added to any benchmark.",
+        "obligation_event": {
+          "actor": "controller",
+          "role": "required later event",
+          "span_in_excerpt": [
+            21,
+            78
+          ],
+          "text": "provide the information referred to in paragraphs 1 and 2"
+        },
+        "relation_candidate": "trigger_event -> obligation_event (natural after reading)",
+        "trigger_event": {
+          "actor": "controller",
+          "role": "precondition/earlier event",
+          "span_in_excerpt": [
+            112,
+            139
+          ],
+          "text": "obtaining the personal data"
+        }
+      },
+      "provision": "Article14(3)(a)",
+      "source": {
+        "char_span": [
+          2469,
+          2731
+        ],
+        "offset_convention": "UTF-8 decoded; CRLF/CR normalized to LF",
+        "path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "text": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
+        "text_sha256": "bf9cb5977a41103664d4bce95f889ac6c5decc316f63af95826591e4134b4764"
+      },
+      "status": "candidate_not_benchmark"
+    },
+    {
+      "applicability_and_exceptions": {
+        "applicability": "Processor-to-controller breach notification; paragraph 1 separately governs controller-to-authority notification.",
+        "current_scope_difference": "Not among the five current v4 rules; requires a new processor-awareness/notification BPMN family.",
+        "exceptions": [
+          "No explicit exception in Article 33(2); paragraph 1 72-hour context and Article 34 boundary remain."
+        ]
+      },
+      "candidate_id": "article33_2",
+      "governance": {
+        "added_to_current_benchmark": false,
+        "requires_new_input_design": true,
+        "used_for_api": false,
+        "used_for_f1": false
+      },
+      "natural_order": {
+        "marker": {
+          "span_in_excerpt": [
+            62,
+            67
+          ],
+          "text": "after"
+        },
+        "notes": "Candidate only; not extracted and not added to any benchmark.",
+        "obligation_event": {
+          "actor": "processor",
+          "role": "required later event",
+          "span_in_excerpt": [
+            20,
+            41
+          ],
+          "text": "notify the controller"
+        },
+        "relation_candidate": "trigger_event -> obligation_event (natural after reading)",
+        "trigger_event": {
+          "actor": "processor",
+          "role": "precondition/earlier event",
+          "span_in_excerpt": [
+            68,
+            108
+          ],
+          "text": "becoming aware of a personal data breach"
+        }
+      },
+      "provision": "Article33(2)",
+      "source": {
+        "char_span": [
+          503,
+          612
+        ],
+        "offset_convention": "UTF-8 decoded; CRLF/CR normalized to LF",
+        "path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article33.txt",
+        "source_file_sha256": "e1175946861db87f898615fc49e9b4182c3c76320468ed42cbc92e25538bfa3d",
+        "text": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+        "text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2"
+      },
+      "status": "candidate_not_benchmark"
+    },
+    {
+      "applicability_and_exceptions": {
+        "applicability": "Certification-body duty and procedural precondition; first sentence of Article 43(1).",
+        "current_scope_difference": "Not among the five current v4 rules; requires a new certification-body process family.",
+        "exceptions": [
+          "The Without prejudice clause and where necessary condition are part of the source; later paragraphs impose accreditation conditions."
+        ]
+      },
+      "candidate_id": "article43_1",
+      "governance": {
+        "added_to_current_benchmark": false,
+        "requires_new_input_design": true,
+        "used_for_api": false,
+        "used_for_f1": false
+      },
+      "natural_order": {
+        "marker": {
+          "span_in_excerpt": [
+            211,
+            216
+          ],
+          "text": "after"
+        },
+        "notes": "Candidate only; not extracted and not added to any benchmark.",
+        "obligation_event": {
+          "actor": "certification body",
+          "role": "required later event",
+          "span_in_excerpt": [
+            353,
+            382
+          ],
+          "text": "issue and renew certification"
+        },
+        "relation_candidate": "trigger_event -> obligation_event (natural after reading)",
+        "trigger_event": {
+          "actor": "certification body",
+          "role": "precondition/earlier event",
+          "span_in_excerpt": [
+            217,
+            351
+          ],
+          "text": "informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary"
+        }
+      },
+      "provision": "Article43(1)",
+      "source": {
+        "char_span": [
+          0,
+          869
+        ],
+        "offset_convention": "UTF-8 decoded; CRLF/CR normalized to LF",
+        "path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article43.txt",
+        "source_file_sha256": "f71799eca33eb2a1755b926e79b4df19aa6159204cded7b6d51406a9eb8ae6d4",
+        "text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification. Member States shall ensure that those certification bodies are accredited by one or both of the following:\nthe supervisory authority which is competent pursuant to Article 55 or 56.\nthe national accreditation body named in accordance with Regulation (EC) No 765/2008 of the European Parliament and of the Council (20) in accordance with EN-ISO/IEC 17065/2012 and with the additional requirements established by the supervisory authority which is competent pursuant to Article 55 or 56.",
+        "text_sha256": "1ba03f81f60dbffa140d48108de13bc4ac7b2bdc9c7aa9fdd97364324e4c8fd7"
+      },
+      "status": "candidate_not_benchmark"
+    }
+  ],
+  "purpose": "R1 section 3.3 mechanical source candidate inventory only; no benchmark addition, no extraction, no API, no F1 selection.",
+  "schema_version": "stage3_temporal_scope_candidates_r1@1.0.0",
+  "status": "candidate_not_benchmark"
+}

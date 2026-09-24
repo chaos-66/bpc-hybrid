@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-24
-**收录文件**：2669 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-25
+**收录文件**：2695 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -53,6 +53,7 @@
 | `configs/ablations/gdpr7_direct_llm_execution_contract_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/gdpr7_direct_llm_execution_contract_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/ablations/gdpr7_direct_llm_execution_contract_v3_1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/authorization/stage3_d1_v4_r1_user_authorization_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/authorization/stage3_d1_v4_user_authorization_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/bm25_stage3_development_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -192,6 +193,7 @@
 | `configs/stage3_semantic_grounding_v3.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_semantic_grounding_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_semantic_grounding_v5.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `configs/stage3_table3_v4_execution_r1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/stage3_table3_v4_execution_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_corenlp_runtime.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `configs/sun_stage3_development_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -687,6 +689,11 @@
 | `data/predictions/stage3_v4_b0_frozen_v1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/stage3_v4_b0_frozen_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/stage3_v4_b0_frozen_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage3_v4_d1_frozen_v1/authorization_snapshot.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage3_v4_d1_frozen_v1/calls_ledger.jsonl` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage3_v4_d1_frozen_v1/manifest.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage3_v4_d1_frozen_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
+| `data/predictions/stage3_v4_d1_frozen_v1/preflight_snapshot.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/sun_llm_fallback_formal_arm_v1/predictions.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/predictions/sun_llm_fallback_formal_arm_v1/telemetry.json` | 正式区（受门禁） | 机器可读配置、数据、事件或产物 |
 | `data/README.md` | 正式区（受门禁） | 所在目录的入口说明 |
@@ -1424,6 +1431,7 @@
 | `outputs/reports/direct_llm_method_gate_decision_dry_run_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/direct_llm_method_gate_decision_dry_run_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/experiment_tables_delivery_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/experiment_tables_delivery_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/final_readiness_hardening_dry_run.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/final_readiness_hardening_dry_run.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/formal_benchmark_release_v2.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1729,7 +1737,6 @@
 | `outputs/reports/sep_c3_modular_ablation_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_modular_ablation_analysis_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_offline_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
-| `outputs/reports/sep_c3_modular_ablation_root_cause_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_modular_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1803,6 +1810,8 @@
 | `outputs/reports/stage3_d1_preflight_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_d1_preflight_v4.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_d1_v4_execution_blocked_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_d1_v4_r1_live_contract_check.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_d1_v4_r1_raw_responses_safe.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_grounded_checker_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_grounded_checker_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_grounding_intervention_test_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1835,6 +1844,11 @@
 | `outputs/reports/stage3_table3_v4.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_v4.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_v4.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage3_table3_v4_r1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_table3_v4_r1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_table3_v4_r1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage3_temporal_scope_candidates_r1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_temporal_scope_candidates_r1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_top1_vs_detection_explanation_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sun_llm_fallback_formal_arm_v1.manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sun_llm_fallback_formal_arm_v1_capsule_manifest.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -1865,6 +1879,7 @@
 | `paper/CLAIM_EVIDENCE_MATRIX.md` | 活动 | 科学主张、证据状态和解锁条件 |
 | `paper/CSCWD_POSITIONING.md` | 活动 | 说明、规范或研究文档 |
 | `paper/MENTOR_REPORT_CONTENT_2026-09.md` | 活动 | 说明、规范或研究文档 |
+| `paper/presentations/bpc_hybrid_revised_20260912.pptx` | 活动 | 项目文件 |
 | `paper/presentations/bpc_hybrid_Stage3_completed.pptx` | 活动 | 项目文件 |
 | `paper/README.md` | 活动 | 所在目录的入口说明 |
 | `paper/SIM_CASE_SECTION_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -2112,6 +2127,8 @@
 | `scripts/build_stage3_table3_v3_benchmark.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sun_rule_only_authorization_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sun_stage3_threshold_sensitivity_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_v6_factorial_arms_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_v6_factorial_arms_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_v6_factorial_arms_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_api_env_ready_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
@@ -2145,6 +2162,7 @@
 | `scripts/evaluate_stage3_table3_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_stage3_table3_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_stage3_table3_v4.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/evaluate_stage3_table3_v4_r1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/evaluate_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/explain_stage3_top1_vs_detection_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/finalize_s2_12_arm_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -2244,6 +2262,7 @@
 | `scripts/run_stage3_baselines.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_binding_oracle_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_d1_v4.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage3_d1_v4_r1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_fixture_harness.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_full_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_grounded_checker_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -2252,6 +2271,7 @@
 | `scripts/run_stage3_table3_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_table3_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_stage3_table3_v4.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_stage3_table3_v4_r1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_llm_fallback.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_rule_only.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_sun_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
@@ -2469,6 +2489,7 @@
 | `src/bpc_hybrid/sun_stage3/sun_rule_extraction.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_stage3/sun_scorer.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_stage3/temporal_projection_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/sun_stage3/temporal_projection_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/__init__.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/bert_modality_classifier.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/bert_textcnn.py` | 活动 | Python 实现、脚本或测试 |
@@ -2486,6 +2507,7 @@
 | `src/bpc_hybrid/sun_style/syntactic_rules.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/sun_style/violation_detection.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/winter_stage3/__init__.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/winter_stage3/global_roles.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/winter_stage3/winter_clause.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/winter_stage3/winter_model.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/winter_stage3/winter_pair.py` | 活动 | Python 实现、脚本或测试 |
@@ -2647,6 +2669,7 @@
 | `tests/test_relaxation_experiments_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_restore_layer_e_adjudication.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_run_stage3_d1_v4.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_run_stage3_d1_v4_r1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_1_s1_4_stage1_structural.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_3_p2_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_s1_3_stage1_label_semantics.py` | 活动 | Python 实现、脚本或测试 |
@@ -2764,6 +2787,7 @@
 | `tests/test_stage3_table3_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_v4_evaluator.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage3_table3_v4_r1_evaluator.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_compat.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_gate.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_modality_ingestion.py` | 活动 | Python 实现、脚本或测试 |
@@ -2773,7 +2797,9 @@
 | `tests/test_sun_stage3_official_assets_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_sun_stage3_threshold_sensitivity_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_temporal_projection_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_temporal_projection_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_verification_receipt.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_winter_global_roles_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_winter_stage3_development.py` | 活动 | Python 实现、脚本或测试 |
 
 ## `tools`

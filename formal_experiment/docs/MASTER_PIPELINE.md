@@ -2642,3 +2642,12 @@ eferences/winter_2020_model_check/model_check/lib，代码独立重写不 import
 | 3.1.1 | 2026-07-14 | P0 完成：全量检查通过并记录 Event 27；主线转入 P1/S2.1 | `record_change.py` 的已验证结果 |
 | 3.1.0 | 2026-07-14 | 固定各阶段最低 baseline 覆盖；增加前人数据/结果的 C1-C4 比较证据等级，禁止跨数据和跨阶段误比 | 用户要求多 baseline、复用公开数据并澄清第二/三阶段比较 |
 | 3.0.0 | 2026-07-14 | 扩展为完整三阶段重建；Stage 2 优先，多 baseline 与复杂数据；Stage 3 后续扩展；建立 WBS、依赖、DoD 与 Agent 协议 | 用户根据导师要求明确指示 |
+# S3-TABLE3-V4-R1 status (2026-09-24)
+
+Subtask `S3-TABLE3-V4-R1` is implemented and executed on the frozen scoped GDPR construction benchmark.
+
+- Table 3 data: 5 GDPR obligations, 20 BPMN cases, 50 evaluable cells and 300 signals per method; 900 signals total.
+- Methods: Sun (frozen Rules-Only + shared Sun Stage 3), Ours (real Direct-LLM v6 extraction + same shared Sun Stage 3), Winter (native paragraph/model/pair pipeline with R1 global role candidates).
+- Acceptance: `needs_method_review`, because all three methods have zero observable order relations. The three-method comparison is real and traceable but is not a complete GDPR end-to-end result and not an order-capability result.
+- Outputs: `outputs/development/stage3_table3_v4_r1/`, `outputs/reports/stage3_table3_v4_r1.{json,md,manifest.json}`, `outputs/reports/experiment_tables_delivery_v2.json`.
+- Future order work: natural-after source candidates (Article14(3)(a), Article33(2), Article43(1)) are inventoried only and require a new, independently authorised benchmark; they were not added to the current 50 cells and no API was used for them.

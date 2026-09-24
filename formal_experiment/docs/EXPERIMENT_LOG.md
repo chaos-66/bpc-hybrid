@@ -5421,3 +5421,33 @@
 - 仍存在 blocker：无
 - 备注：No real API call attempted because the required process environment key is absent; no .env read. No full suite run.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+## 2026-09-24T16:30:00Z - S3-TABLE3-V4-R1 executed
+
+- Event type: experiment_run.
+- Run id: `stage3_table3_v4_r1`.
+- Methods: sun_rule_only + winter_2020_native + ours_d1_frozen_v1.
+- Command: `python formal_experiment/scripts/run_stage3_table3_v4_r1.py --overwrite; python formal_experiment/scripts/evaluate_stage3_table3_v4_r1.py`.
+- LLM/API: 5 authorized Direct-LLM extractions attempted, 5 completed, 0 retries, usage 21,866 prompt + 3,419 completion tokens, conservative peak cost 0.04240236 USD.
+- Outputs: `outputs/development/stage3_table3_v4_r1/`, `outputs/reports/stage3_table3_v4_r1.json/md/manifest.json`, `outputs/reports/experiment_tables_delivery_v2.json`.
+- Result: Sun F1 0.3429, Ours F1 0.3429, Winter F1 0.5000; coverage Sun/Ours 0.46, Winter 0.70; order class unknown for all three. Acceptance `needs_method_review`.
+- Boundary: AI construction reference (`is_gold=false`, `human_adjudicated=false`); scoped checking only; no full GDPR end-to-end or MAP claim.
+- Remaining capability gap: current five sources do not provide natural after expressions sufficient for Winter order extraction; candidate sources are not in this benchmark.
+- Machine event: `docs/EXPERIMENT_EVENTS.jsonl`.
+
+## 2026-09-24T16:17:04.607505+00:00 - S3-TABLE3-V4-R1 final three-method matrix and independent Table 3 evaluation
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_table3_v4_r1；阶段=stage3；方法=sun_rule_only+winter_2020_native+ours_d1_frozen_v1；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_stage3_table3_v4_r1.py --overwrite; python formal_experiment/scripts/evaluate_stage3_table3_v4_r1.py`
+- manifest：outputs/development/stage3_table3_v4_r1/run_manifest.json
+- 结果摘要：Sun F1 0.3429, Ours F1 0.3429, Winter F1 0.5000; coverage Sun/Ours 0.46, Winter 0.70; 900 signals; acceptance needs_method_review; 5/5 D1 calls complete, 0 retry, conservative cost 0.04240236 USD
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：4 passed in 0.05s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`02ad377495d711eecfae219177b147fe7d27c7f6`；相关未提交路径：24 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：已授权调用（`authorized_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Table 3 R1 real matrix; order class unknown for all methods; natural-after candidates inventoried only; no full suite run.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

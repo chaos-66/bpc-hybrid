@@ -1664,3 +1664,22 @@ development 准备可受控并行；Stage 3 LLM/Hybrid、正式 Oracle、端到�
 - 验收判断：实验已真实完成且旧泄漏 F1=1 口径已修复；正向 Ours 主张不满足。下一项若要
   继续，只能单独预注册额外 grounding 实验臂并说明新增变量，或补齐有原文依据的 order
   标注产生合法 order 分母，不得围绕本轮分数调参。
+# S3-TABLE3-V4-R1 status (2026-09-24)
+
+Status: `needs_method_review` (all three methods have real Table 3 data; order class is still unobservable for all three).
+
+Confirmed Table 3 R1 scoped results (AI construction reference; `is_gold=false`, `human_adjudicated=false`):
+
+| Method | Missing F1 | Actor F1 | Order F1 | Overall P | Overall R | Overall F1 | Coverage | Status |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| Sun | 0.4545 | 0.2500 | 0.0000 | 0.3000 | 0.4000 | 0.3429 | 0.4600 | available |
+| Ours (Direct-LLM v6 + same Sun Stage 3) | 0.4545 | 0.2500 | 0.0000 | 0.3000 | 0.4000 | 0.3429 | 0.4600 | available |
+| Winter (native) | 0.4286 | 0.8889 | 0.0000 | 0.5385 | 0.4667 | 0.5000 | 0.7000 | available_native |
+
+R1-A/B/C/D:
+- R1-A: observable coverage corrected to `(cells - unknown_positive - unknown_negative)/cells`; blocked methods publish null P/R/F1 with diagnostic arithmetic separated; inference output hashes and manifest bindings validated before reference read.
+- R1-B: `temporal_projection_v2` bounds nominal endpoints by the selected span and preserves exact source substrings; before/after can use a post-marker clausal predicate (article18p3 `lifted`); Winter receives a global role-candidate set built only from the 20 inference-view BPMN process names.
+- R1-C: five real Direct-LLM calls completed (`deepseek-v4-pro`, response model `deepseek-v4-pro`), 0 retries, 21,866 prompt tokens + 3,419 completion tokens, conservative cost 0.04240236 USD. Raw responses, ledger, canonical predictions, and manifest are under `data/predictions/stage3_v4_d1_frozen_v1/`.
+- R1-D: 900 signals and 50 evaluable cells per method persisted before evaluation; independent evaluator produced `outputs/reports/stage3_table3_v4_r1.{json,md,manifest.json}`.
+
+Remaining limitation: all three methods leave `out_of_order` entirely unknown. The current five source excerpts use `before`/`prior to`, which is insufficient to establish the ordered-event expressions needed by the native Winter sequence mechanism. Article14(3)(a), Article33(2), and Article43(1) natural-after candidates are inventoried in `outputs/reports/stage3_temporal_scope_candidates_r1.{json,md}` and are **not** part of the current benchmark. No scores were altered to avoid zero/extreme values.

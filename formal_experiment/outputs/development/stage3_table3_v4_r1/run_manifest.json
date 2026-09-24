@@ -1,0 +1,207 @@
+{
+  "code_sha256": {
+    "scripts/run_stage3_table3_v4_r1.py": "e8afd125f4ca8f98a06f293236233fb67e5abbd2dd0dd1af48d2ee622dcbc92d",
+    "src/bpc_hybrid/stage3_sun_style_checker.py": "72f8c3f1750c60b932bbf043bb060b1d9987db6038458c3bf016e351b517e346",
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
+    "src/bpc_hybrid/sun_stage3/no_gate_checker_v1.py": "6b925e4d27a8d614733002d0adad3f45f9082dfd92c15173183ed61997edaf51",
+    "src/bpc_hybrid/sun_stage3/sun_scorer.py": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+    "src/bpc_hybrid/sun_stage3/temporal_projection_v1.py": "f8cb073024dca930c2d2fa2ca270e115c84c00e8efdff2603b1ddece81d305d3",
+    "src/bpc_hybrid/sun_stage3/temporal_projection_v2.py": "891d9db075e38886ebfa04bcfec7434ebc9c52ab1835c99c1a4ce322d76f302f",
+    "src/bpc_hybrid/winter_stage3/global_roles.py": "b5534ca95fa0a9a1f6ff768ab0d8ad1c70a146dfc3467053df4f27bb185b45c4",
+    "src/bpc_hybrid/winter_stage3/winter_clause.py": "186806e00729aca70eb52338139cba4e10b09c40ef0db097d8ad238db1fdac56",
+    "src/bpc_hybrid/winter_stage3/winter_model.py": "b249367afd707961e7961f2ccdf4685ad8e2fc5f42ef9d9c158d60879fd8035b",
+    "src/bpc_hybrid/winter_stage3/winter_pair.py": "30848eb83e5bac85af4ffdf870149db3a6845b75fba1e497e8bd7d8548322a73",
+    "src/bpc_hybrid/winter_stage3/winter_similarity.py": "97632047435166b809f64b0abda6564de00a324702ad0cade32aaa51443c0ddc"
+  },
+  "command": "python formal_experiment/scripts/run_stage3_table3_v4_r1.py",
+  "configuration": {
+    "one_sun_checker_for_sun_and_ours": true,
+    "outer_matching_gate_applied": false,
+    "sun_thresholds": {
+      "gamma": 0.8,
+      "tau": 0.8,
+      "theta": 0.8
+    },
+    "temporal_projection": {
+      "algorithm": "sun_stage3_temporal_projection_v2@1.0.0",
+      "derived_endpoints_are_not_added_to_mandatory_actions": true,
+      "difference_from_sun_definition_3": "derived order endpoints may come from predicted constraints; Ur subset of Ar x Ar is not claimed for the supplement",
+      "exception_marker_rejection": true,
+      "main_action_must_be_exactly_one_after_exclusion": true,
+      "marker_scope": "predicted conditions and constraints spans only",
+      "markers": [
+        "before",
+        "after",
+        "prior to"
+      ],
+      "module": "src/bpc_hybrid/sun_stage3/temporal_projection_v2.py",
+      "multi_marker_span_rejection": true,
+      "native_order_relations_priority": true,
+      "negation_rejection": true,
+      "version_note": "R1 bounded nominal endpoints and post-marker verbal head selection; v1 preserved."
+    },
+    "winter_delta": 0.8,
+    "winter_gamma": 0.4,
+    "winter_reachability_mode": "corrected_reachability"
+  },
+  "construction_reference_read_by_runner": false,
+  "counts": {
+    "cases": 20,
+    "methods": 3,
+    "prediction_rows": 60,
+    "signals": 900
+  },
+  "dependency_versions": {
+    "python": "3.14.6",
+    "spacy": "3.8.13",
+    "spacy_model": "en_core_web_sm"
+  },
+  "elapsed_seconds": 7.873,
+  "git": {
+    "commit": "72cb8e28d904cd03a78a7afb3bd9d075bde2592d",
+    "dirty_paths": [
+      "M formal_experiment/data/development/human_review/stage1_gdpr7_human_correction_v1.json",
+      " M formal_experiment/outputs/reports/sep_c3_modular_ablation_v1.json",
+      " M formal_experiment/outputs/reports/sep_c3_modular_ablation_v1.md",
+      "?? .codex_worktree_c36sep/",
+      "?? .patch_exec_cmd.py",
+      "?? .run_patch_exec_cmd.cmd",
+      "?? .tmp_mod_fairness.py",
+      "?? .tmp_modality_check.py",
+      "?? .tmp_pooled_check.py",
+      "?? .tmp_pooled_five.py",
+      "?? .tmp_probe/",
+      "?? .tmp_probe2.py",
+      "?? .tmp_verify_fix.py",
+      "?? \"bpc_hybrid - 副本 (2).pptx\"",
+      "?? formal_experiment/configs/authorization/stage3_d1_v4_r1_user_authorization_v1.json",
+      "?? formal_experiment/configs/stage3_table3_v4_execution_r1.json",
+      "?? formal_experiment/data/development/human_review/s2_11_review_decisions_v2.json.bak",
+      "?? formal_experiment/data/predictions/stage3_v4_d1_frozen_v1/",
+      "?? formal_experiment/outputs/reports/s2_11_batch_import_dry_run_v3.json.bak",
+      "?? formal_experiment/outputs/reports/s2_12_execution_readiness_v3.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.manifest.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.md.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7_export_index.json.bak",
+      "?? formal_experiment/outputs/reports/stage3_d1_v4_r1_live_contract_check.json",
+      "?? formal_experiment/outputs/reports/stage3_table3_v4_r1.json",
+      "?? formal_experiment/outputs/reports/stage3_table3_v4_r1.manifest.json",
+      "?? formal_experiment/outputs/reports/stage3_table3_v4_r1.md",
+      "?? formal_experiment/paper/presentations/bpc_hybrid_revised_20260912.pptx",
+      "?? formal_experiment/scripts/build_v6_factorial_arms_v1.py",
+      "?? formal_experiment/scripts/build_v6_factorial_arms_v2.py",
+      "?? formal_experiment/scripts/evaluate_stage3_table3_v4_r1.py",
+      "?? formal_experiment/scripts/run_stage3_d1_v4_r1.py",
+      "?? formal_experiment/scripts/run_stage3_table3_v4_r1.py",
+      "?? formal_experiment/src/bpc_hybrid/sun_stage3/temporal_projection_v2.py",
+      "?? formal_experiment/src/bpc_hybrid/winter_stage3/global_roles.py",
+      "?? formal_experiment/tests/test_run_stage3_d1_v4_r1.py",
+      "?? formal_experiment/tests/test_stage3_table3_v4_r1_evaluator.py",
+      "?? formal_experiment/tests/test_temporal_projection_v2.py",
+      "?? formal_experiment/tests/test_winter_global_roles_v1.py"
+    ]
+  },
+  "gold_read_by_runner": false,
+  "inference_reference_forbidden": {
+    "action": "do_not_open_or_hash_in_inference_process",
+    "paths": [
+      "data/development/stage3_reconstruction_v4/construction_reference.json"
+    ]
+  },
+  "inputs": {
+    "execution_config": {
+      "path": "configs/stage3_table3_v4_execution_r1.json",
+      "sha256": "7ffe7fc6cb573f95b3c5a80cee56452e21eb306ce1aadc9064c272a623da2253"
+    },
+    "global_role_candidates": {
+      "path": "outputs/development/stage3_table3_v4_r1/global_role_candidates.json",
+      "sha256": "08212bbf5118e53ca20c7e292e2a97b081cb95dc4c58f22a3ef398e1986dfcca"
+    },
+    "inference_view": {
+      "path": "data/development/stage3_reconstruction_v4/inference_view.json",
+      "sha256": "6248e8396ad4d8d7077b6332f51b1aa2b5de7e97188e324cb49e00bda4c1eb33"
+    },
+    "ours_predictions": {
+      "path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
+      "sha256": "be83c1c02e96037dca948450a835dd01f46c4cd9a34b8ab557e498a427d44821"
+    },
+    "stage2_input": {
+      "path": "data/development/stage3_reconstruction_v4/stage2_input.json",
+      "sha256": "4c934712d4e85316167136a46861084165c75969c113eca7d995de5ddaabd1f2"
+    },
+    "sun_predictions": {
+      "path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
+      "sha256": "eee1d6447bdab21d20704df64801e81aaa642e543a0bd706b0783882009c71fa"
+    },
+    "winter_config": {
+      "path": "configs/winter_stage3_development_v1.json",
+      "sha256": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12"
+    }
+  },
+  "llm_api_calls": 0,
+  "methods": {
+    "ours": {
+      "blocker": null,
+      "label": "Ours (Direct-LLM Stage 2 + same Sun Stage 3)",
+      "method_id": "ours_d1_frozen_v1",
+      "status": "available"
+    },
+    "sun": {
+      "blocker": null,
+      "label": "Sun (Rules-Only Stage 2 + Sun Stage 3)",
+      "method_id": "sun_b0_frozen_v1",
+      "status": "available"
+    },
+    "winter": {
+      "blocker": null,
+      "label": "Winter (native full pipeline)",
+      "method_id": "winter_2020_native_full_pipeline",
+      "status": "available_native"
+    }
+  },
+  "network_calls": 0,
+  "outputs": {
+    "global_role_candidates": {
+      "path": "outputs/development/stage3_table3_v4_r1/global_role_candidates.json",
+      "sha256": "08212bbf5118e53ca20c7e292e2a97b081cb95dc4c58f22a3ef398e1986dfcca"
+    },
+    "predictions": {
+      "path": "outputs/development/stage3_table3_v4_r1/predictions.json",
+      "sha256": "4104ceba62549b2fe79100f66e4dcab83e37caf4203e067c368ef8d40c1da23a"
+    },
+    "rule_records": {
+      "path": "outputs/development/stage3_table3_v4_r1/rule_records.json",
+      "sha256": "152b5e1d22f8be1e930becb0b060b24174e543f175a7837c66dd2d4c7f3756c4"
+    },
+    "signals_matrix": {
+      "path": "outputs/development/stage3_table3_v4_r1/signals_matrix.json",
+      "sha256": "02eb24f36617d5a9ef0b6e9b2c47c01e8ae834c4eb9e8862570afbcaa6fdac06"
+    }
+  },
+  "run_id": "stage3_table3_v4_r1",
+  "schema_version": "stage3_table3_v4_r1_run@1.0.0",
+  "scope": {
+    "bpmn_count": 20,
+    "case_count": 20,
+    "claim_boundary": "checking on independently specified applicable regulation-process pairs; not end-to-end rule selection or complete GDPR F1",
+    "dataset_id": "stage3_scoped_gdpr_v4",
+    "family_count": 5,
+    "human_adjudicated": false,
+    "negative_cells_per_method": 35,
+    "not_applicable_cells_per_method": 10,
+    "positive_cells_per_method": 15,
+    "reference_is_gold": false,
+    "rule_ids": [
+      "article13p3",
+      "article14p4",
+      "article18p3",
+      "article35p1",
+      "article36p1"
+    ],
+    "scored_cells_per_method": 50,
+    "signals_per_method": 300,
+    "signals_total": 900
+  },
+  "status": "complete"
+}

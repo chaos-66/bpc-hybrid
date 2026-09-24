@@ -113,3 +113,14 @@
   `FILE_CATALOG.md` 和实验日志；恢复时需要用户批准。
 - 不确定去向时先查本文和 `MANIFEST.md`，不要新建平行 status、handoff、pipeline、
   history 或 changes 目录。
+
+## Stage 3 R1 artifacts (2026-09-24)
+
+- `configs/stage3_table3_v4_execution_r1.json` freezes the R1 matrix contract.
+- `src/bpc_hybrid/sun_stage3/temporal_projection_v2.py` and `src/bpc_hybrid/winter_stage3/global_roles.py` implement R1-B.
+- `scripts/run_stage3_table3_v4_r1.py` / `scripts/evaluate_stage3_table3_v4_r1.py` run and independently evaluate Table 3 R1.
+- `scripts/run_stage3_d1_v4_r1.py` is the repair of the five-call Direct-LLM extraction runner.
+- `data/predictions/stage3_v4_d1_frozen_v1/` stores real D1 raw responses, ledger, canonical predictions, and manifest.
+- `outputs/development/stage3_table3_v4_r1/` stores the 900-signal inference matrix.
+- `outputs/reports/stage3_table3_v4_r1.{json,md,manifest.json}` and `outputs/reports/experiment_tables_delivery_v2.json` are the evaluation and data index.
+- `outputs/reports/stage3_temporal_scope_candidates_r1.{json,md}` are future natural-after candidate notes, not current benchmark data.
