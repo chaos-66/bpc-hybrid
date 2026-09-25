@@ -1,0 +1,528 @@
+{
+  "rows": [
+    {
+      "changed": false,
+      "event_predicates_preserved": [],
+      "method": "ours",
+      "new_edges": [],
+      "new_order_relation_views": [],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article13p3"
+    },
+    {
+      "changed": false,
+      "event_predicates_preserved": [],
+      "method": "ours",
+      "new_edges": [],
+      "new_order_relation_views": [],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article14p4"
+    },
+    {
+      "changed": true,
+      "event_predicates_preserved": [
+        "lifted"
+      ],
+      "method": "ours",
+      "new_edges": [
+        [
+          "be informed",
+          "the restriction of processing is lifted"
+        ]
+      ],
+      "new_order_relation_views": [
+        {
+          "after": {
+            "action_surface": "lifted",
+            "business_object_surface": "the restriction processing",
+            "match_source_text": "lifted the restriction processing",
+            "matching_text": "lift the restriction processing",
+            "offsets": [
+              125,
+              164
+            ],
+            "original_text": "the restriction of processing is lifted",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "before": {
+            "action_surface": "informed",
+            "business_object_surface": null,
+            "match_source_text": "informed",
+            "matching_text": "inform",
+            "offsets": [
+              88,
+              99
+            ],
+            "original_text": "be informed",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "branch": "local_verbal_predicate",
+          "kind": "verbal",
+          "predicate": "lifted",
+          "source": "derived"
+        }
+      ],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [
+        [
+          "be informed",
+          "the restriction of processing"
+        ]
+      ],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article18p3"
+    },
+    {
+      "changed": false,
+      "event_predicates_preserved": [],
+      "method": "ours",
+      "new_edges": [
+        [
+          "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+          "the processing"
+        ]
+      ],
+      "new_order_relation_views": [
+        {
+          "after": {
+            "action_surface": "processing",
+            "business_object_surface": null,
+            "match_source_text": "processing",
+            "matching_text": "process",
+            "offsets": [
+              261,
+              275
+            ],
+            "original_text": "the processing",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "before": {
+            "action_surface": "carry",
+            "business_object_surface": "an assessment the impact the envisaged processing operations the protection personal data",
+            "match_source_text": "carry an assessment the impact the envisaged processing operations the protection personal data",
+            "matching_text": "carry an assessment the impact the envisage processing operation the protection personal datum",
+            "offsets": [
+              277,
+              388
+            ],
+            "original_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "branch": "nominal",
+          "kind": "nominal",
+          "predicate": null,
+          "source": "derived"
+        }
+      ],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [
+        [
+          "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+          "the processing"
+        ]
+      ],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article35p1"
+    },
+    {
+      "changed": false,
+      "event_predicates_preserved": [],
+      "method": "ours",
+      "new_edges": [
+        [
+          "consult the supervisory authority",
+          "processing"
+        ]
+      ],
+      "new_order_relation_views": [
+        {
+          "after": {
+            "action_surface": "processing",
+            "business_object_surface": null,
+            "match_source_text": "processing",
+            "matching_text": "process",
+            "offsets": [
+              64,
+              74
+            ],
+            "original_text": "processing",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "before": {
+            "action_surface": "consult",
+            "business_object_surface": "the supervisory authority",
+            "match_source_text": "consult the supervisory authority",
+            "matching_text": "consult the supervisory authority",
+            "offsets": [
+              21,
+              54
+            ],
+            "original_text": "consult the supervisory authority",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "branch": "nominal",
+          "kind": "nominal",
+          "predicate": null,
+          "source": "derived"
+        }
+      ],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [
+        [
+          "consult the supervisory authority",
+          "processing"
+        ]
+      ],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article36p1"
+    },
+    {
+      "changed": false,
+      "event_predicates_preserved": [],
+      "method": "sun",
+      "new_edges": [],
+      "new_order_relation_views": [],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article13p3"
+    },
+    {
+      "changed": false,
+      "event_predicates_preserved": [],
+      "method": "sun",
+      "new_edges": [],
+      "new_order_relation_views": [],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article14p4"
+    },
+    {
+      "changed": true,
+      "event_predicates_preserved": [
+        "lifted"
+      ],
+      "method": "sun",
+      "new_edges": [
+        [
+          "be informed by the controller",
+          "the restriction of processing is lifted"
+        ]
+      ],
+      "new_order_relation_views": [
+        {
+          "after": {
+            "action_surface": "lifted",
+            "business_object_surface": "the restriction processing",
+            "match_source_text": "lifted the restriction processing",
+            "matching_text": "lift the restriction processing",
+            "offsets": [
+              125,
+              164
+            ],
+            "original_text": "the restriction of processing is lifted",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "before": {
+            "action_surface": "informed",
+            "business_object_surface": null,
+            "match_source_text": "informed",
+            "matching_text": "inform",
+            "offsets": [
+              88,
+              117
+            ],
+            "original_text": "be informed by the controller",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "branch": "local_verbal_predicate",
+          "kind": "verbal",
+          "predicate": "lifted",
+          "source": "derived"
+        }
+      ],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [
+        [
+          "be informed by the controller",
+          "the restriction of processing"
+        ]
+      ],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article18p3"
+    },
+    {
+      "changed": false,
+      "event_predicates_preserved": [],
+      "method": "sun",
+      "new_edges": [
+        [
+          "carry out an assessment of the impact of the envisaged processing operations on",
+          "the processing"
+        ]
+      ],
+      "new_order_relation_views": [
+        {
+          "after": {
+            "action_surface": "processing",
+            "business_object_surface": null,
+            "match_source_text": "processing",
+            "matching_text": "process",
+            "offsets": [
+              261,
+              275
+            ],
+            "original_text": "the processing",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "before": {
+            "action_surface": "carry",
+            "business_object_surface": "an assessment the impact the envisaged processing operations",
+            "match_source_text": "carry an assessment the impact the envisaged processing operations",
+            "matching_text": "carry an assessment the impact the envisage processing operation",
+            "offsets": [
+              277,
+              356
+            ],
+            "original_text": "carry out an assessment of the impact of the envisaged processing operations on",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "branch": "nominal",
+          "kind": "nominal",
+          "predicate": null,
+          "source": "derived"
+        }
+      ],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [
+        [
+          "carry out an assessment of the impact of the envisaged processing operations on",
+          "the processing"
+        ]
+      ],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article35p1"
+    },
+    {
+      "changed": true,
+      "event_predicates_preserved": [],
+      "method": "sun",
+      "new_edges": [],
+      "new_order_relation_views": [],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [
+        [
+          "consult the supervisory authority",
+          "processing"
+        ]
+      ],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article36p1"
+    }
+  ],
+  "schema_version": "stage3_table3_r3_projection_fix@1.0.0",
+  "summary": {
+    "article18p3": {
+      "changed": true,
+      "event_predicates_preserved": [
+        "lifted"
+      ],
+      "method": "sun",
+      "new_edges": [
+        [
+          "be informed by the controller",
+          "the restriction of processing is lifted"
+        ]
+      ],
+      "new_order_relation_views": [
+        {
+          "after": {
+            "action_surface": "lifted",
+            "business_object_surface": "the restriction processing",
+            "match_source_text": "lifted the restriction processing",
+            "matching_text": "lift the restriction processing",
+            "offsets": [
+              125,
+              164
+            ],
+            "original_text": "the restriction of processing is lifted",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "before": {
+            "action_surface": "informed",
+            "business_object_surface": null,
+            "match_source_text": "informed",
+            "matching_text": "inform",
+            "offsets": [
+              88,
+              117
+            ],
+            "original_text": "be informed by the controller",
+            "parse_error": null,
+            "parse_source": "predicted_order_endpoint",
+            "parse_status": "parsed"
+          },
+          "branch": "local_verbal_predicate",
+          "kind": "verbal",
+          "predicate": "lifted",
+          "source": "derived"
+        }
+      ],
+      "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "old_edges": [
+        [
+          "be informed by the controller",
+          "the restriction of processing"
+        ]
+      ],
+      "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+      "rule_id": "article18p3"
+    },
+    "changed_rule_method_pairs": 3,
+    "predicate_rows": [
+      {
+        "changed": true,
+        "event_predicates_preserved": [
+          "lifted"
+        ],
+        "method": "ours",
+        "new_edges": [
+          [
+            "be informed",
+            "the restriction of processing is lifted"
+          ]
+        ],
+        "new_order_relation_views": [
+          {
+            "after": {
+              "action_surface": "lifted",
+              "business_object_surface": "the restriction processing",
+              "match_source_text": "lifted the restriction processing",
+              "matching_text": "lift the restriction processing",
+              "offsets": [
+                125,
+                164
+              ],
+              "original_text": "the restriction of processing is lifted",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "before": {
+              "action_surface": "informed",
+              "business_object_surface": null,
+              "match_source_text": "informed",
+              "matching_text": "inform",
+              "offsets": [
+                88,
+                99
+              ],
+              "original_text": "be informed",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "branch": "local_verbal_predicate",
+            "kind": "verbal",
+            "predicate": "lifted",
+            "source": "derived"
+          }
+        ],
+        "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "old_edges": [
+          [
+            "be informed",
+            "the restriction of processing"
+          ]
+        ],
+        "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+        "rule_id": "article18p3"
+      },
+      {
+        "changed": true,
+        "event_predicates_preserved": [
+          "lifted"
+        ],
+        "method": "sun",
+        "new_edges": [
+          [
+            "be informed by the controller",
+            "the restriction of processing is lifted"
+          ]
+        ],
+        "new_order_relation_views": [
+          {
+            "after": {
+              "action_surface": "lifted",
+              "business_object_surface": "the restriction processing",
+              "match_source_text": "lifted the restriction processing",
+              "matching_text": "lift the restriction processing",
+              "offsets": [
+                125,
+                164
+              ],
+              "original_text": "the restriction of processing is lifted",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "before": {
+              "action_surface": "informed",
+              "business_object_surface": null,
+              "match_source_text": "informed",
+              "matching_text": "inform",
+              "offsets": [
+                88,
+                117
+              ],
+              "original_text": "be informed by the controller",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "branch": "local_verbal_predicate",
+            "kind": "verbal",
+            "predicate": "lifted",
+            "source": "derived"
+          }
+        ],
+        "new_projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "old_edges": [
+          [
+            "be informed by the controller",
+            "the restriction of processing"
+          ]
+        ],
+        "old_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+        "rule_id": "article18p3"
+      }
+    ]
+  }
+}

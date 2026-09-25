@@ -5497,3 +5497,21 @@
 - 仍存在 blocker：无
 - 备注：R3 adapter, projection v4, sm/lg backend configs, frozen synthetic development fixtures; no reference/Gold/API read.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T05:50:22.936522+00:00 - S3-TABLE3-R3 M1 complete diagnostic matrix and independent evaluation
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_table3_r3_m1；阶段=S3-TABLE3-R3-INTEGRATION；方法=M1_P2_v4_sm；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_stage3_table3_r3.py --config formal_experiment/configs/stage3_table3_r3_m1.json --out-dir formal_experiment/outputs/development/stage3_table3_r3_m1 --overwrite`
+- manifest：formal_experiment/outputs/development/stage3_table3_r3_m1/run_manifest.json
+- 结果摘要：M1 complete: Sun/Ours P2+v4 projection, Winter reused; independent evaluator produced 900 signals.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：8 passed in 4.42s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`e5578171af5a5770c9dd936cb84831d19c553638`；相关未提交路径：24 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：M1 scoring required two software-path reruns: first relative out_dir failed in R1 relative_to, then missing inference_view manifest binding; both were fixed before the successful complete run. M1 metrics are development/retrospective.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

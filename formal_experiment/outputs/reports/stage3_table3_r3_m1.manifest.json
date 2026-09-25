@@ -1,0 +1,59 @@
+{
+  "acceptance": "needs_method_review",
+  "backend": "frozen_spacy_sm_text_similarity",
+  "counts": {
+    "ours": {
+      "fn": 8,
+      "fp": 13,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 6,
+      "tp": 7,
+      "unknown_negative": 16,
+      "unknown_positive": 8
+    },
+    "sun": {
+      "fn": 7,
+      "fp": 14,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 9,
+      "tp": 8,
+      "unknown_negative": 12,
+      "unknown_positive": 6
+    },
+    "winter": {
+      "fn": 8,
+      "fp": 6,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 19,
+      "tp": 7,
+      "unknown_negative": 10,
+      "unknown_positive": 5
+    }
+  },
+  "gold_read": false,
+  "inputs": {
+    "construction_reference": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+    "execution_config": "83d71b792e4ad55f35f61e5f0bb0ccd420de61c6639da2b389869611a4d698c2",
+    "global_role_candidates": "08212bbf5118e53ca20c7e292e2a97b081cb95dc4c58f22a3ef398e1986dfcca",
+    "predictions": "f1b09975e873e744c30ac50b42bc763d0cdd6abdb3951fd392cad5aeddd688cf",
+    "rule_records": "0a5391d6f547ce8e715f6c9e566078214df20a2a5b83b7a43ae27b4209348c29",
+    "run_manifest": "3bef1998de682ad5bf94b7834abb41d3db775fd25f846e50a7d7053a8dc8be00",
+    "signals_matrix": "86984e97702656fe5e9d008c1a3f6efd99ddcfeb576c0149eb0ddbbcad9cbdfd"
+  },
+  "no_prediction_modification": true,
+  "outputs": {
+    "json": {
+      "path": "outputs/reports/stage3_table3_r3_m1.json",
+      "sha256": "ee5f0835e2bc65e2c12c52eaec22d9c25a0842c0e8f7515147a2209739317d51"
+    },
+    "markdown": {
+      "path": "outputs/reports/stage3_table3_r3_m1.md",
+      "sha256": "3bf8e853cd7a50f88f5a8f4f7073408f1e38ecbf57604f5f035633b0eebb7347"
+    }
+  },
+  "schema_version": "stage3_table3_r3_report_manifest@1.0.0",
+  "status": "needs_method_review"
+}

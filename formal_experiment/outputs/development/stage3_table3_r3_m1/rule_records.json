@@ -1,0 +1,2869 @@
+{
+  "ours": {
+    "converter_summary": {
+      "allowed_schemas": [
+        "gdpr7_sun_rule_only_predictions@1.0.0",
+        "gdpr7_direct_llm_predictions@1.0.0",
+        "gdpr7_human_rule_record_predictions@1.0.0"
+      ],
+      "capsule_records": 5,
+      "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+      "capsule_schema_ok": true,
+      "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+      "expected_schema": "gdpr7_direct_llm_predictions@1.0.0",
+      "failure_reasons": {},
+      "include_modalities": [
+        "obligation"
+      ],
+      "order_relations_absent_rules": [
+        "article13p3",
+        "article14p4",
+        "article18p3",
+        "article35p1",
+        "article36p1"
+      ],
+      "per_rule": {
+        "article13p3": {
+          "action_count": 2,
+          "action_span_count": 0,
+          "actor_count": 0,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        },
+        "article14p4": {
+          "action_count": 1,
+          "action_span_count": 0,
+          "actor_count": 0,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        },
+        "article18p3": {
+          "action_count": 1,
+          "action_span_count": 0,
+          "actor_count": 1,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        },
+        "article35p1": {
+          "action_count": 1,
+          "action_span_count": 0,
+          "actor_count": 1,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        },
+        "article36p1": {
+          "action_count": 1,
+          "action_span_count": 0,
+          "actor_count": 1,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        }
+      },
+      "sentence_texts_available": 5,
+      "total_envelopes": 5,
+      "total_envelopes_failed": 0,
+      "total_envelopes_ok": 5,
+      "total_invalid_spans": 0
+    },
+    "method_id": "ours_d1_frozen_v1",
+    "projection_audit": {
+      "article13p3": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article13p3_s001_c01",
+            "derived_edges": [],
+            "markers": [
+              {
+                "field": "constraints",
+                "main_action_rejections": [
+                  {
+                    "candidate_count": 2,
+                    "candidates": [
+                      {
+                        "end": 257,
+                        "id": "p01",
+                        "start": 161,
+                        "text": "provide the data subject prior to that further processing with information on that other purpose"
+                      },
+                      {
+                        "end": 329,
+                        "id": "p02",
+                        "start": 262,
+                        "text": "with any relevant further information as referred to in paragraph 2"
+                      }
+                    ],
+                    "reason": "expected_exactly_one_main_action_candidate"
+                  }
+                ],
+                "marker": "prior to",
+                "marker_end": 194,
+                "marker_start": 186,
+                "reason": "no_single_main_action_endpoint",
+                "span_end": 218,
+                "span_id": "c02",
+                "span_length": 32,
+                "span_start": 186
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [
+              {
+                "field": "constraints",
+                "main_action_rejections": [
+                  {
+                    "candidate_count": 2,
+                    "candidates": [
+                      {
+                        "end": 257,
+                        "id": "p01",
+                        "start": 161,
+                        "text": "provide the data subject prior to that further processing with information on that other purpose"
+                      },
+                      {
+                        "end": 329,
+                        "id": "p02",
+                        "start": 262,
+                        "text": "with any relevant further information as referred to in paragraph 2"
+                      }
+                    ],
+                    "reason": "expected_exactly_one_main_action_candidate"
+                  }
+                ],
+                "marker": "prior to",
+                "marker_end": 194,
+                "marker_start": 186,
+                "reason": "no_single_main_action_endpoint",
+                "span_end": 218,
+                "span_id": "c02",
+                "span_length": 32,
+                "span_start": 186
+              }
+            ],
+            "status": "no_edge"
+          }
+        ],
+        "derived_edge_count": 0,
+        "edge_count": 0,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      },
+      "article14p4": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article14p4_s001_c01",
+            "derived_edges": [],
+            "markers": [
+              {
+                "field": "constraints",
+                "main_action_rejections": [
+                  {
+                    "fragment_count": 2,
+                    "fragments": [
+                      {
+                        "end": 184,
+                        "start": 160,
+                        "text": "provide the data subject",
+                        "verb_count": 1
+                      },
+                      {
+                        "end": 328,
+                        "start": 218,
+                        "text": "with information on that other purpose and with any relevant further information as referred to in paragraph 2",
+                        "verb_count": 1
+                      }
+                    ],
+                    "reason": "main_action_remaining_fragments_with_verb_not_exactly_one"
+                  }
+                ],
+                "marker": "prior to",
+                "marker_end": 193,
+                "marker_start": 185,
+                "reason": "no_single_main_action_endpoint",
+                "span_end": 217,
+                "span_id": "c02",
+                "span_length": 32,
+                "span_start": 185
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [
+              {
+                "field": "constraints",
+                "main_action_rejections": [
+                  {
+                    "fragment_count": 2,
+                    "fragments": [
+                      {
+                        "end": 184,
+                        "start": 160,
+                        "text": "provide the data subject",
+                        "verb_count": 1
+                      },
+                      {
+                        "end": 328,
+                        "start": 218,
+                        "text": "with information on that other purpose and with any relevant further information as referred to in paragraph 2",
+                        "verb_count": 1
+                      }
+                    ],
+                    "reason": "main_action_remaining_fragments_with_verb_not_exactly_one"
+                  }
+                ],
+                "marker": "prior to",
+                "marker_end": 193,
+                "marker_start": 185,
+                "reason": "no_single_main_action_endpoint",
+                "span_end": 217,
+                "span_id": "c02",
+                "span_length": 32,
+                "span_start": 185
+              }
+            ],
+            "status": "no_edge"
+          }
+        ],
+        "derived_edge_count": 0,
+        "edge_count": 0,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      },
+      "article18p3": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article18p3_s001_c01",
+            "derived_edges": [
+              {
+                "after_offsets": [
+                  125,
+                  164
+                ],
+                "after_text": "the restriction of processing is lifted",
+                "before_offsets": [
+                  88,
+                  99
+                ],
+                "before_text": "be informed",
+                "marker": "before",
+                "marker_offsets": [
+                  118,
+                  124
+                ],
+                "second_endpoint_branch": "local_verbal_predicate",
+                "second_endpoint_kind": "verbal",
+                "second_endpoint_predicate": "lifted",
+                "source": "derived"
+              }
+            ],
+            "markers": [
+              {
+                "edge": {
+                  "after_offsets": [
+                    125,
+                    164
+                  ],
+                  "after_text": "the restriction of processing is lifted",
+                  "before_offsets": [
+                    88,
+                    99
+                  ],
+                  "before_text": "be informed",
+                  "marker": "before",
+                  "marker_offsets": [
+                    118,
+                    124
+                  ],
+                  "second_endpoint_branch": "local_verbal_predicate",
+                  "second_endpoint_kind": "verbal",
+                  "second_endpoint_predicate": "lifted",
+                  "source": "derived"
+                },
+                "field": "constraints",
+                "main_action_rejections": [],
+                "marker": "before",
+                "marker_end": 124,
+                "marker_start": 118,
+                "second_endpoint_audit": {
+                  "branch": "local_verbal_predicate",
+                  "global_span": [
+                    125,
+                    164
+                  ],
+                  "head_subtree_included": false,
+                  "local_predicate_count": 1,
+                  "local_predicates": [
+                    {
+                      "dep": "ROOT",
+                      "head": "lifted",
+                      "head_pos": "VERB",
+                      "index": 6,
+                      "pos": "VERB",
+                      "text": "lifted"
+                    }
+                  ],
+                  "local_span": [
+                    1,
+                    40,
+                    "the restriction of processing is lifted"
+                  ],
+                  "marker_end": 124,
+                  "predicate": {
+                    "dep": "ROOT",
+                    "head": "lifted",
+                    "head_pos": "VERB",
+                    "index": 6,
+                    "pos": "VERB",
+                    "text": "lifted"
+                  },
+                  "predicate_global_span": [
+                    158,
+                    164
+                  ],
+                  "segment": " the restriction of processing is lifted",
+                  "segment_global_start": 124,
+                  "selected_span": {
+                    "end": 164,
+                    "start": 118
+                  },
+                  "subtree_token_count": 7
+                },
+                "span_end": 164,
+                "span_id": "c01",
+                "span_length": 46,
+                "span_start": 118
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [],
+            "status": "derived"
+          }
+        ],
+        "derived_edge_count": 1,
+        "edge_count": 1,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      },
+      "article35p1": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article35p1_s001_c01",
+            "derived_edges": [
+              {
+                "after_offsets": [
+                  261,
+                  275
+                ],
+                "after_text": "the processing",
+                "before_offsets": [
+                  277,
+                  388
+                ],
+                "before_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                "marker": "prior to",
+                "marker_offsets": [
+                  252,
+                  260
+                ],
+                "second_endpoint_branch": "nominal",
+                "second_endpoint_kind": "nominal",
+                "second_endpoint_predicate": null,
+                "source": "derived"
+              }
+            ],
+            "markers": [
+              {
+                "edge": {
+                  "after_offsets": [
+                    261,
+                    275
+                  ],
+                  "after_text": "the processing",
+                  "before_offsets": [
+                    277,
+                    388
+                  ],
+                  "before_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    252,
+                    260
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "second_endpoint_predicate": null,
+                  "source": "derived"
+                },
+                "field": "constraints",
+                "main_action_rejections": [],
+                "marker": "prior to",
+                "marker_end": 260,
+                "marker_start": 252,
+                "second_endpoint_audit": {
+                  "after_marker": 260,
+                  "branch": "nominal",
+                  "chunks": [
+                    {
+                      "end": 275,
+                      "root": "processing",
+                      "root_ent_type": "",
+                      "root_pos": "NOUN",
+                      "start": 261,
+                      "text": "the processing"
+                    }
+                  ],
+                  "local_predicate_count": 0,
+                  "local_predicates": [],
+                  "of_chain_complete": true,
+                  "of_chain_started": false,
+                  "segment": " the processing",
+                  "segment_global_start": 260,
+                  "selected_span": {
+                    "end": 275,
+                    "start": 252
+                  },
+                  "source_substring_identity": true,
+                  "value": "the processing"
+                },
+                "span_end": 275,
+                "span_id": "c02",
+                "span_length": 23,
+                "span_start": 252
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [],
+            "status": "derived"
+          }
+        ],
+        "derived_edge_count": 1,
+        "edge_count": 1,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      },
+      "article36p1": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article36p1_s001_c01",
+            "derived_edges": [
+              {
+                "after_offsets": [
+                  64,
+                  74
+                ],
+                "after_text": "processing",
+                "before_offsets": [
+                  21,
+                  54
+                ],
+                "before_text": "consult the supervisory authority",
+                "marker": "prior to",
+                "marker_offsets": [
+                  55,
+                  63
+                ],
+                "second_endpoint_branch": "nominal",
+                "second_endpoint_kind": "nominal",
+                "second_endpoint_predicate": null,
+                "source": "derived"
+              }
+            ],
+            "markers": [
+              {
+                "edge": {
+                  "after_offsets": [
+                    64,
+                    74
+                  ],
+                  "after_text": "processing",
+                  "before_offsets": [
+                    21,
+                    54
+                  ],
+                  "before_text": "consult the supervisory authority",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    55,
+                    63
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "second_endpoint_predicate": null,
+                  "source": "derived"
+                },
+                "field": "constraints",
+                "main_action_rejections": [],
+                "marker": "prior to",
+                "marker_end": 63,
+                "marker_start": 55,
+                "second_endpoint_audit": {
+                  "after_marker": 63,
+                  "branch": "nominal",
+                  "chunks": [
+                    {
+                      "end": 74,
+                      "root": "processing",
+                      "root_ent_type": "",
+                      "root_pos": "NOUN",
+                      "start": 64,
+                      "text": "processing"
+                    }
+                  ],
+                  "local_predicate_count": 0,
+                  "local_predicates": [],
+                  "of_chain_complete": true,
+                  "of_chain_started": false,
+                  "segment": " processing",
+                  "segment_global_start": 63,
+                  "selected_span": {
+                    "end": 74,
+                    "start": 55
+                  },
+                  "source_substring_identity": true,
+                  "value": "processing"
+                },
+                "span_end": 74,
+                "span_id": "c01",
+                "span_length": 19,
+                "span_start": 55
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [],
+            "status": "derived"
+          }
+        ],
+        "derived_edge_count": 1,
+        "edge_count": 1,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      }
+    },
+    "records": {
+      "article13p3": {
+        "action_views": [
+          {
+            "action_surface": "provide",
+            "business_object_surface": "the data subject",
+            "index": 0,
+            "match_source_text": "provide the data subject",
+            "matching_text": "provide the data subject",
+            "original_text": "provide the data subject prior to that further processing with information on that other purpose",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          },
+          {
+            "action_surface": null,
+            "business_object_surface": null,
+            "index": 1,
+            "match_source_text": null,
+            "matching_text": null,
+            "original_text": "with any relevant further information as referred to in paragraph 2",
+            "parse_error": "p2_label_status=degenerate_label",
+            "parse_source": "predicted_action",
+            "parse_status": "failed_no_surfaces"
+          }
+        ],
+        "actions": [
+          "provide the data subject prior to that further processing with information on that other purpose",
+          "with any relevant further information as referred to in paragraph 2"
+        ],
+        "actor_action_pairs": [],
+        "actors": [],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article13p3_s001_c01",
+              "derived_edges": [],
+              "markers": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [
+                    {
+                      "candidate_count": 2,
+                      "candidates": [
+                        {
+                          "end": 257,
+                          "id": "p01",
+                          "start": 161,
+                          "text": "provide the data subject prior to that further processing with information on that other purpose"
+                        },
+                        {
+                          "end": 329,
+                          "id": "p02",
+                          "start": 262,
+                          "text": "with any relevant further information as referred to in paragraph 2"
+                        }
+                      ],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 194,
+                  "marker_start": 186,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 218,
+                  "span_id": "c02",
+                  "span_length": 32,
+                  "span_start": 186
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [
+                    {
+                      "candidate_count": 2,
+                      "candidates": [
+                        {
+                          "end": 257,
+                          "id": "p01",
+                          "start": 161,
+                          "text": "provide the data subject prior to that further processing with information on that other purpose"
+                        },
+                        {
+                          "end": 329,
+                          "id": "p02",
+                          "start": 262,
+                          "text": "with any relevant further information as referred to in paragraph 2"
+                        }
+                      ],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 194,
+                  "marker_start": 186,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 218,
+                  "span_id": "c02",
+                  "span_length": 32,
+                  "span_start": 186
+                }
+              ],
+              "status": "no_edge"
+            }
+          ],
+          "derived_edge_count": 0,
+          "edge_count": 0,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [],
+        "order_relations": [],
+        "provenance": {
+          "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+        },
+        "rule_id": "article13p3",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article14p4": {
+        "action_views": [
+          {
+            "action_surface": "provide",
+            "business_object_surface": "the data subject",
+            "index": 0,
+            "match_source_text": "provide the data subject",
+            "matching_text": "provide the data subject",
+            "original_text": "provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          }
+        ],
+        "actions": [
+          "provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2"
+        ],
+        "actor_action_pairs": [],
+        "actors": [],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article14p4_s001_c01",
+              "derived_edges": [],
+              "markers": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [
+                    {
+                      "fragment_count": 2,
+                      "fragments": [
+                        {
+                          "end": 184,
+                          "start": 160,
+                          "text": "provide the data subject",
+                          "verb_count": 1
+                        },
+                        {
+                          "end": 328,
+                          "start": 218,
+                          "text": "with information on that other purpose and with any relevant further information as referred to in paragraph 2",
+                          "verb_count": 1
+                        }
+                      ],
+                      "reason": "main_action_remaining_fragments_with_verb_not_exactly_one"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 193,
+                  "marker_start": 185,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 217,
+                  "span_id": "c02",
+                  "span_length": 32,
+                  "span_start": 185
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [
+                    {
+                      "fragment_count": 2,
+                      "fragments": [
+                        {
+                          "end": 184,
+                          "start": 160,
+                          "text": "provide the data subject",
+                          "verb_count": 1
+                        },
+                        {
+                          "end": 328,
+                          "start": 218,
+                          "text": "with information on that other purpose and with any relevant further information as referred to in paragraph 2",
+                          "verb_count": 1
+                        }
+                      ],
+                      "reason": "main_action_remaining_fragments_with_verb_not_exactly_one"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 193,
+                  "marker_start": 185,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 217,
+                  "span_id": "c02",
+                  "span_length": 32,
+                  "span_start": 185
+                }
+              ],
+              "status": "no_edge"
+            }
+          ],
+          "derived_edge_count": 0,
+          "edge_count": 0,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [],
+        "order_relations": [],
+        "provenance": {
+          "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+        },
+        "rule_id": "article14p4",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article18p3": {
+        "action_views": [
+          {
+            "action_surface": "informed",
+            "business_object_surface": null,
+            "index": 0,
+            "match_source_text": "informed",
+            "matching_text": "inform",
+            "original_text": "be informed",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          }
+        ],
+        "actions": [
+          "be informed"
+        ],
+        "actor_action_pairs": [
+          {
+            "action": "be informed",
+            "actor": "the controller"
+          }
+        ],
+        "actors": [
+          "the controller"
+        ],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article18p3_s001_c01",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    125,
+                    164
+                  ],
+                  "after_text": "the restriction of processing is lifted",
+                  "before_offsets": [
+                    88,
+                    99
+                  ],
+                  "before_text": "be informed",
+                  "marker": "before",
+                  "marker_offsets": [
+                    118,
+                    124
+                  ],
+                  "second_endpoint_branch": "local_verbal_predicate",
+                  "second_endpoint_kind": "verbal",
+                  "second_endpoint_predicate": "lifted",
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      125,
+                      164
+                    ],
+                    "after_text": "the restriction of processing is lifted",
+                    "before_offsets": [
+                      88,
+                      99
+                    ],
+                    "before_text": "be informed",
+                    "marker": "before",
+                    "marker_offsets": [
+                      118,
+                      124
+                    ],
+                    "second_endpoint_branch": "local_verbal_predicate",
+                    "second_endpoint_kind": "verbal",
+                    "second_endpoint_predicate": "lifted",
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "before",
+                  "marker_end": 124,
+                  "marker_start": 118,
+                  "second_endpoint_audit": {
+                    "branch": "local_verbal_predicate",
+                    "global_span": [
+                      125,
+                      164
+                    ],
+                    "head_subtree_included": false,
+                    "local_predicate_count": 1,
+                    "local_predicates": [
+                      {
+                        "dep": "ROOT",
+                        "head": "lifted",
+                        "head_pos": "VERB",
+                        "index": 6,
+                        "pos": "VERB",
+                        "text": "lifted"
+                      }
+                    ],
+                    "local_span": [
+                      1,
+                      40,
+                      "the restriction of processing is lifted"
+                    ],
+                    "marker_end": 124,
+                    "predicate": {
+                      "dep": "ROOT",
+                      "head": "lifted",
+                      "head_pos": "VERB",
+                      "index": 6,
+                      "pos": "VERB",
+                      "text": "lifted"
+                    },
+                    "predicate_global_span": [
+                      158,
+                      164
+                    ],
+                    "segment": " the restriction of processing is lifted",
+                    "segment_global_start": 124,
+                    "selected_span": {
+                      "end": 164,
+                      "start": 118
+                    },
+                    "subtree_token_count": 7
+                  },
+                  "span_end": 164,
+                  "span_id": "c01",
+                  "span_length": 46,
+                  "span_start": 118
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [
+          {
+            "after": {
+              "action_surface": "lifted",
+              "business_object_surface": "the restriction processing",
+              "match_source_text": "lifted the restriction processing",
+              "matching_text": "lift the restriction processing",
+              "offsets": [
+                125,
+                164
+              ],
+              "original_text": "the restriction of processing is lifted",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "before": {
+              "action_surface": "informed",
+              "business_object_surface": null,
+              "match_source_text": "informed",
+              "matching_text": "inform",
+              "offsets": [
+                88,
+                99
+              ],
+              "original_text": "be informed",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "branch": "local_verbal_predicate",
+            "kind": "verbal",
+            "predicate": "lifted",
+            "source": "derived"
+          }
+        ],
+        "order_relations": [
+          [
+            "be informed",
+            "the restriction of processing is lifted"
+          ]
+        ],
+        "provenance": {
+          "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+        },
+        "rule_id": "article18p3",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article35p1": {
+        "action_views": [
+          {
+            "action_surface": "carry",
+            "business_object_surface": "an assessment the impact the envisaged processing operations the protection personal data",
+            "index": 0,
+            "match_source_text": "carry an assessment the impact the envisaged processing operations the protection personal data",
+            "matching_text": "carry an assessment the impact the envisage processing operation the protection personal datum",
+            "original_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          }
+        ],
+        "actions": [
+          "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data"
+        ],
+        "actor_action_pairs": [
+          {
+            "action": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+            "actor": "the controller"
+          }
+        ],
+        "actors": [
+          "the controller"
+        ],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article35p1_s001_c01",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    261,
+                    275
+                  ],
+                  "after_text": "the processing",
+                  "before_offsets": [
+                    277,
+                    388
+                  ],
+                  "before_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    252,
+                    260
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "second_endpoint_predicate": null,
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      261,
+                      275
+                    ],
+                    "after_text": "the processing",
+                    "before_offsets": [
+                      277,
+                      388
+                    ],
+                    "before_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                    "marker": "prior to",
+                    "marker_offsets": [
+                      252,
+                      260
+                    ],
+                    "second_endpoint_branch": "nominal",
+                    "second_endpoint_kind": "nominal",
+                    "second_endpoint_predicate": null,
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "prior to",
+                  "marker_end": 260,
+                  "marker_start": 252,
+                  "second_endpoint_audit": {
+                    "after_marker": 260,
+                    "branch": "nominal",
+                    "chunks": [
+                      {
+                        "end": 275,
+                        "root": "processing",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 261,
+                        "text": "the processing"
+                      }
+                    ],
+                    "local_predicate_count": 0,
+                    "local_predicates": [],
+                    "of_chain_complete": true,
+                    "of_chain_started": false,
+                    "segment": " the processing",
+                    "segment_global_start": 260,
+                    "selected_span": {
+                      "end": 275,
+                      "start": 252
+                    },
+                    "source_substring_identity": true,
+                    "value": "the processing"
+                  },
+                  "span_end": 275,
+                  "span_id": "c02",
+                  "span_length": 23,
+                  "span_start": 252
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [
+          {
+            "after": {
+              "action_surface": "processing",
+              "business_object_surface": null,
+              "match_source_text": "processing",
+              "matching_text": "process",
+              "offsets": [
+                261,
+                275
+              ],
+              "original_text": "the processing",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "before": {
+              "action_surface": "carry",
+              "business_object_surface": "an assessment the impact the envisaged processing operations the protection personal data",
+              "match_source_text": "carry an assessment the impact the envisaged processing operations the protection personal data",
+              "matching_text": "carry an assessment the impact the envisage processing operation the protection personal datum",
+              "offsets": [
+                277,
+                388
+              ],
+              "original_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "branch": "nominal",
+            "kind": "nominal",
+            "predicate": null,
+            "source": "derived"
+          }
+        ],
+        "order_relations": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+            "the processing"
+          ]
+        ],
+        "provenance": {
+          "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+        },
+        "rule_id": "article35p1",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article36p1": {
+        "action_views": [
+          {
+            "action_surface": "consult",
+            "business_object_surface": "the supervisory authority",
+            "index": 0,
+            "match_source_text": "consult the supervisory authority",
+            "matching_text": "consult the supervisory authority",
+            "original_text": "consult the supervisory authority",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          }
+        ],
+        "actions": [
+          "consult the supervisory authority"
+        ],
+        "actor_action_pairs": [
+          {
+            "action": "consult the supervisory authority",
+            "actor": "The controller"
+          }
+        ],
+        "actors": [
+          "The controller"
+        ],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article36p1_s001_c01",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    64,
+                    74
+                  ],
+                  "after_text": "processing",
+                  "before_offsets": [
+                    21,
+                    54
+                  ],
+                  "before_text": "consult the supervisory authority",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    55,
+                    63
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "second_endpoint_predicate": null,
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      64,
+                      74
+                    ],
+                    "after_text": "processing",
+                    "before_offsets": [
+                      21,
+                      54
+                    ],
+                    "before_text": "consult the supervisory authority",
+                    "marker": "prior to",
+                    "marker_offsets": [
+                      55,
+                      63
+                    ],
+                    "second_endpoint_branch": "nominal",
+                    "second_endpoint_kind": "nominal",
+                    "second_endpoint_predicate": null,
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "prior to",
+                  "marker_end": 63,
+                  "marker_start": 55,
+                  "second_endpoint_audit": {
+                    "after_marker": 63,
+                    "branch": "nominal",
+                    "chunks": [
+                      {
+                        "end": 74,
+                        "root": "processing",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 64,
+                        "text": "processing"
+                      }
+                    ],
+                    "local_predicate_count": 0,
+                    "local_predicates": [],
+                    "of_chain_complete": true,
+                    "of_chain_started": false,
+                    "segment": " processing",
+                    "segment_global_start": 63,
+                    "selected_span": {
+                      "end": 74,
+                      "start": 55
+                    },
+                    "source_substring_identity": true,
+                    "value": "processing"
+                  },
+                  "span_end": 74,
+                  "span_id": "c01",
+                  "span_length": 19,
+                  "span_start": 55
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [
+          {
+            "after": {
+              "action_surface": "processing",
+              "business_object_surface": null,
+              "match_source_text": "processing",
+              "matching_text": "process",
+              "offsets": [
+                64,
+                74
+              ],
+              "original_text": "processing",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "before": {
+              "action_surface": "consult",
+              "business_object_surface": "the supervisory authority",
+              "match_source_text": "consult the supervisory authority",
+              "matching_text": "consult the supervisory authority",
+              "offsets": [
+                21,
+                54
+              ],
+              "original_text": "consult the supervisory authority",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "branch": "nominal",
+            "kind": "nominal",
+            "predicate": null,
+            "source": "derived"
+          }
+        ],
+        "order_relations": [
+          [
+            "consult the supervisory authority",
+            "processing"
+          ]
+        ],
+        "provenance": {
+          "capsule_schema": "gdpr7_direct_llm_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Direct-LLM Stage-2 capsule (data/predictions/gdpr7_direct_llm_v1)"
+        },
+        "rule_id": "article36p1",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      }
+    },
+    "status": "available"
+  },
+  "sun": {
+    "converter_summary": {
+      "allowed_schemas": [
+        "gdpr7_sun_rule_only_predictions@1.0.0",
+        "gdpr7_direct_llm_predictions@1.0.0",
+        "gdpr7_human_rule_record_predictions@1.0.0"
+      ],
+      "capsule_records": 5,
+      "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+      "capsule_schema_ok": true,
+      "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+      "expected_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+      "failure_reasons": {},
+      "include_modalities": [
+        "obligation"
+      ],
+      "order_relations_absent_rules": [
+        "article13p3",
+        "article14p4",
+        "article18p3",
+        "article35p1",
+        "article36p1"
+      ],
+      "per_rule": {
+        "article13p3": {
+          "action_count": 2,
+          "action_span_count": 0,
+          "actor_count": 1,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        },
+        "article14p4": {
+          "action_count": 2,
+          "action_span_count": 0,
+          "actor_count": 1,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        },
+        "article18p3": {
+          "action_count": 1,
+          "action_span_count": 0,
+          "actor_count": 1,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        },
+        "article35p1": {
+          "action_count": 1,
+          "action_span_count": 0,
+          "actor_count": 1,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        },
+        "article36p1": {
+          "action_count": 1,
+          "action_span_count": 0,
+          "actor_count": 1,
+          "actor_span_count": 0,
+          "clause_count": 1,
+          "envelopes_failed": 0,
+          "envelopes_ok": 1,
+          "excluded_modality_counts": {},
+          "failure_reasons": {},
+          "included_clause_count": 1,
+          "invalid_span_count": 0,
+          "order_relations_absent": true,
+          "order_relations_count": 0,
+          "rule_record_schema": "sun_rule_record_capsule_v1@1.0.0",
+          "sentence_count": 1
+        }
+      },
+      "sentence_texts_available": 5,
+      "total_envelopes": 5,
+      "total_envelopes_failed": 0,
+      "total_envelopes_ok": 5,
+      "total_invalid_spans": 0
+    },
+    "method_id": "sun_b0_frozen_v1",
+    "projection_audit": {
+      "article13p3": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article13p3_s001.c1",
+            "derived_edges": [],
+            "markers": [
+              {
+                "field": "conditions",
+                "main_action_rejections": [
+                  {
+                    "end": 99,
+                    "reason": "action_fully_inside_condition_constraint_or_exception",
+                    "span_id": "gdpr_article13p3_s001.c1.action.1",
+                    "start": 21,
+                    "text": "intends to further process the personal data for a purpose other than that for"
+                  },
+                  {
+                    "end": 168,
+                    "reason": "action_fully_inside_condition_constraint_or_exception",
+                    "span_id": "gdpr_article13p3_s001.c1.action.2",
+                    "start": 161,
+                    "text": "provide"
+                  },
+                  {
+                    "candidate_count": 0,
+                    "candidates": [],
+                    "reason": "expected_exactly_one_main_action_candidate"
+                  }
+                ],
+                "marker": "prior to",
+                "marker_end": 194,
+                "marker_start": 186,
+                "reason": "no_single_main_action_endpoint",
+                "span_end": 299,
+                "span_id": "gdpr_article13p3_s001.c1.condition.2",
+                "span_length": 113,
+                "span_start": 186
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [
+              {
+                "field": "conditions",
+                "main_action_rejections": [
+                  {
+                    "end": 99,
+                    "reason": "action_fully_inside_condition_constraint_or_exception",
+                    "span_id": "gdpr_article13p3_s001.c1.action.1",
+                    "start": 21,
+                    "text": "intends to further process the personal data for a purpose other than that for"
+                  },
+                  {
+                    "end": 168,
+                    "reason": "action_fully_inside_condition_constraint_or_exception",
+                    "span_id": "gdpr_article13p3_s001.c1.action.2",
+                    "start": 161,
+                    "text": "provide"
+                  },
+                  {
+                    "candidate_count": 0,
+                    "candidates": [],
+                    "reason": "expected_exactly_one_main_action_candidate"
+                  }
+                ],
+                "marker": "prior to",
+                "marker_end": 194,
+                "marker_start": 186,
+                "reason": "no_single_main_action_endpoint",
+                "span_end": 299,
+                "span_id": "gdpr_article13p3_s001.c1.condition.2",
+                "span_length": 113,
+                "span_start": 186
+              }
+            ],
+            "status": "no_edge"
+          }
+        ],
+        "derived_edge_count": 0,
+        "edge_count": 0,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      },
+      "article14p4": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article14p4_s001.c1",
+            "derived_edges": [],
+            "markers": [
+              {
+                "field": "conditions",
+                "main_action_rejections": [
+                  {
+                    "end": 99,
+                    "reason": "action_fully_inside_condition_constraint_or_exception",
+                    "span_id": "gdpr_article14p4_s001.c1.action.1",
+                    "start": 21,
+                    "text": "intends to further process the personal data for a purpose other than that for"
+                  },
+                  {
+                    "end": 167,
+                    "reason": "action_fully_inside_condition_constraint_or_exception",
+                    "span_id": "gdpr_article14p4_s001.c1.action.2",
+                    "start": 160,
+                    "text": "provide"
+                  },
+                  {
+                    "candidate_count": 0,
+                    "candidates": [],
+                    "reason": "expected_exactly_one_main_action_candidate"
+                  }
+                ],
+                "marker": "prior to",
+                "marker_end": 193,
+                "marker_start": 185,
+                "reason": "no_single_main_action_endpoint",
+                "span_end": 298,
+                "span_id": "gdpr_article14p4_s001.c1.condition.2",
+                "span_length": 113,
+                "span_start": 185
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [
+              {
+                "field": "conditions",
+                "main_action_rejections": [
+                  {
+                    "end": 99,
+                    "reason": "action_fully_inside_condition_constraint_or_exception",
+                    "span_id": "gdpr_article14p4_s001.c1.action.1",
+                    "start": 21,
+                    "text": "intends to further process the personal data for a purpose other than that for"
+                  },
+                  {
+                    "end": 167,
+                    "reason": "action_fully_inside_condition_constraint_or_exception",
+                    "span_id": "gdpr_article14p4_s001.c1.action.2",
+                    "start": 160,
+                    "text": "provide"
+                  },
+                  {
+                    "candidate_count": 0,
+                    "candidates": [],
+                    "reason": "expected_exactly_one_main_action_candidate"
+                  }
+                ],
+                "marker": "prior to",
+                "marker_end": 193,
+                "marker_start": 185,
+                "reason": "no_single_main_action_endpoint",
+                "span_end": 298,
+                "span_id": "gdpr_article14p4_s001.c1.condition.2",
+                "span_length": 113,
+                "span_start": 185
+              }
+            ],
+            "status": "no_edge"
+          }
+        ],
+        "derived_edge_count": 0,
+        "edge_count": 0,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      },
+      "article18p3": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article18p3_s001.c1",
+            "derived_edges": [
+              {
+                "after_offsets": [
+                  125,
+                  164
+                ],
+                "after_text": "the restriction of processing is lifted",
+                "before_offsets": [
+                  88,
+                  117
+                ],
+                "before_text": "be informed by the controller",
+                "marker": "before",
+                "marker_offsets": [
+                  118,
+                  124
+                ],
+                "second_endpoint_branch": "local_verbal_predicate",
+                "second_endpoint_kind": "verbal",
+                "second_endpoint_predicate": "lifted",
+                "source": "derived"
+              }
+            ],
+            "markers": [
+              {
+                "edge": {
+                  "after_offsets": [
+                    125,
+                    164
+                  ],
+                  "after_text": "the restriction of processing is lifted",
+                  "before_offsets": [
+                    88,
+                    117
+                  ],
+                  "before_text": "be informed by the controller",
+                  "marker": "before",
+                  "marker_offsets": [
+                    118,
+                    124
+                  ],
+                  "second_endpoint_branch": "local_verbal_predicate",
+                  "second_endpoint_kind": "verbal",
+                  "second_endpoint_predicate": "lifted",
+                  "source": "derived"
+                },
+                "field": "constraints",
+                "main_action_rejections": [],
+                "marker": "before",
+                "marker_end": 124,
+                "marker_start": 118,
+                "second_endpoint_audit": {
+                  "branch": "local_verbal_predicate",
+                  "global_span": [
+                    125,
+                    164
+                  ],
+                  "head_subtree_included": false,
+                  "local_predicate_count": 1,
+                  "local_predicates": [
+                    {
+                      "dep": "ROOT",
+                      "head": "lifted",
+                      "head_pos": "VERB",
+                      "index": 6,
+                      "pos": "VERB",
+                      "text": "lifted"
+                    }
+                  ],
+                  "local_span": [
+                    1,
+                    40,
+                    "the restriction of processing is lifted"
+                  ],
+                  "marker_end": 124,
+                  "predicate": {
+                    "dep": "ROOT",
+                    "head": "lifted",
+                    "head_pos": "VERB",
+                    "index": 6,
+                    "pos": "VERB",
+                    "text": "lifted"
+                  },
+                  "predicate_global_span": [
+                    158,
+                    164
+                  ],
+                  "segment": " the restriction of processing is lifted",
+                  "segment_global_start": 124,
+                  "selected_span": {
+                    "end": 164,
+                    "start": 118
+                  },
+                  "subtree_token_count": 7
+                },
+                "span_end": 164,
+                "span_id": "gdpr_article18p3_s001.c1.constraint.2",
+                "span_length": 46,
+                "span_start": 118
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [],
+            "status": "derived"
+          }
+        ],
+        "derived_edge_count": 1,
+        "edge_count": 1,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      },
+      "article35p1": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article35p1_s001.c1",
+            "derived_edges": [
+              {
+                "after_offsets": [
+                  261,
+                  275
+                ],
+                "after_text": "the processing",
+                "before_offsets": [
+                  277,
+                  356
+                ],
+                "before_text": "carry out an assessment of the impact of the envisaged processing operations on",
+                "marker": "prior to",
+                "marker_offsets": [
+                  252,
+                  260
+                ],
+                "second_endpoint_branch": "nominal",
+                "second_endpoint_kind": "nominal",
+                "second_endpoint_predicate": null,
+                "source": "derived"
+              }
+            ],
+            "markers": [
+              {
+                "edge": {
+                  "after_offsets": [
+                    261,
+                    275
+                  ],
+                  "after_text": "the processing",
+                  "before_offsets": [
+                    277,
+                    356
+                  ],
+                  "before_text": "carry out an assessment of the impact of the envisaged processing operations on",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    252,
+                    260
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "second_endpoint_predicate": null,
+                  "source": "derived"
+                },
+                "field": "constraints",
+                "main_action_rejections": [],
+                "marker": "prior to",
+                "marker_end": 260,
+                "marker_start": 252,
+                "second_endpoint_audit": {
+                  "after_marker": 260,
+                  "branch": "nominal",
+                  "chunks": [
+                    {
+                      "end": 275,
+                      "root": "processing",
+                      "root_ent_type": "",
+                      "root_pos": "NOUN",
+                      "start": 261,
+                      "text": "the processing"
+                    }
+                  ],
+                  "local_predicate_count": 0,
+                  "local_predicates": [],
+                  "of_chain_complete": true,
+                  "of_chain_started": false,
+                  "segment": " the processing",
+                  "segment_global_start": 260,
+                  "selected_span": {
+                    "end": 275,
+                    "start": 252
+                  },
+                  "source_substring_identity": true,
+                  "value": "the processing"
+                },
+                "span_end": 275,
+                "span_id": "gdpr_article35p1_s001.c1.constraint.3",
+                "span_length": 23,
+                "span_start": 252
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [],
+            "status": "derived"
+          }
+        ],
+        "derived_edge_count": 1,
+        "edge_count": 1,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      },
+      "article36p1": {
+        "clause_audits": [
+          {
+            "clause_id": "gdpr_article36p1_s001.c1",
+            "derived_edges": [],
+            "markers": [
+              {
+                "field": "constraints",
+                "main_action_rejections": [],
+                "marker": "prior to",
+                "marker_end": 63,
+                "marker_start": 55,
+                "reason": "multiple_top_level_event_predicates",
+                "second_endpoint_audit": {
+                  "branch": "local_rejected",
+                  "local_predicate_count": 2,
+                  "local_predicates": [
+                    {
+                      "dep": "ROOT",
+                      "head": "processing",
+                      "head_pos": "VERB",
+                      "index": 1,
+                      "pos": "VERB",
+                      "text": "processing"
+                    },
+                    {
+                      "dep": "advcl",
+                      "head": "processing",
+                      "head_pos": "VERB",
+                      "index": 11,
+                      "pos": "VERB",
+                      "text": "indicates"
+                    }
+                  ],
+                  "reason": "multiple_top_level_event_predicates",
+                  "segment": " processing where a data protection impact assessment under Article 35 indicates that the",
+                  "segment_global_start": 63
+                },
+                "span_end": 152,
+                "span_id": "gdpr_article36p1_s001.c1.constraint.1",
+                "span_length": 97,
+                "span_start": 55
+              }
+            ],
+            "modality": "obligation",
+            "native": {
+              "edges": [],
+              "rejected": []
+            },
+            "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+            "rejections": [
+              {
+                "field": "constraints",
+                "main_action_rejections": [],
+                "marker": "prior to",
+                "marker_end": 63,
+                "marker_start": 55,
+                "reason": "multiple_top_level_event_predicates",
+                "second_endpoint_audit": {
+                  "branch": "local_rejected",
+                  "local_predicate_count": 2,
+                  "local_predicates": [
+                    {
+                      "dep": "ROOT",
+                      "head": "processing",
+                      "head_pos": "VERB",
+                      "index": 1,
+                      "pos": "VERB",
+                      "text": "processing"
+                    },
+                    {
+                      "dep": "advcl",
+                      "head": "processing",
+                      "head_pos": "VERB",
+                      "index": 11,
+                      "pos": "VERB",
+                      "text": "indicates"
+                    }
+                  ],
+                  "reason": "multiple_top_level_event_predicates",
+                  "segment": " processing where a data protection impact assessment under Article 35 indicates that the",
+                  "segment_global_start": 63
+                },
+                "span_end": 152,
+                "span_id": "gdpr_article36p1_s001.c1.constraint.1",
+                "span_length": 97,
+                "span_start": 55
+              }
+            ],
+            "status": "no_edge"
+          }
+        ],
+        "derived_edge_count": 0,
+        "edge_count": 0,
+        "native_edge_count": 0,
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+      }
+    },
+    "records": {
+      "article13p3": {
+        "action_views": [
+          {
+            "action_surface": "intends process",
+            "business_object_surface": "the personal data",
+            "index": 0,
+            "match_source_text": "intends process the personal data",
+            "matching_text": "intend process the personal datum",
+            "original_text": "intends to further process the personal data for a purpose other than that for",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          },
+          {
+            "action_surface": "provide",
+            "business_object_surface": null,
+            "index": 1,
+            "match_source_text": "provide",
+            "matching_text": "provide",
+            "original_text": "provide",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          }
+        ],
+        "actions": [
+          "intends to further process the personal data for a purpose other than that for",
+          "provide"
+        ],
+        "actor_action_pairs": [
+          {
+            "action": "intends to further process the personal data for a purpose other than that for",
+            "actor": "the controller"
+          },
+          {
+            "action": "provide",
+            "actor": "the controller"
+          }
+        ],
+        "actors": [
+          "the controller"
+        ],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article13p3_s001.c1",
+              "derived_edges": [],
+              "markers": [
+                {
+                  "field": "conditions",
+                  "main_action_rejections": [
+                    {
+                      "end": 99,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article13p3_s001.c1.action.1",
+                      "start": 21,
+                      "text": "intends to further process the personal data for a purpose other than that for"
+                    },
+                    {
+                      "end": 168,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article13p3_s001.c1.action.2",
+                      "start": 161,
+                      "text": "provide"
+                    },
+                    {
+                      "candidate_count": 0,
+                      "candidates": [],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 194,
+                  "marker_start": 186,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 299,
+                  "span_id": "gdpr_article13p3_s001.c1.condition.2",
+                  "span_length": 113,
+                  "span_start": 186
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [
+                {
+                  "field": "conditions",
+                  "main_action_rejections": [
+                    {
+                      "end": 99,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article13p3_s001.c1.action.1",
+                      "start": 21,
+                      "text": "intends to further process the personal data for a purpose other than that for"
+                    },
+                    {
+                      "end": 168,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article13p3_s001.c1.action.2",
+                      "start": 161,
+                      "text": "provide"
+                    },
+                    {
+                      "candidate_count": 0,
+                      "candidates": [],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 194,
+                  "marker_start": 186,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 299,
+                  "span_id": "gdpr_article13p3_s001.c1.condition.2",
+                  "span_length": 113,
+                  "span_start": 186
+                }
+              ],
+              "status": "no_edge"
+            }
+          ],
+          "derived_edge_count": 0,
+          "edge_count": 0,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [],
+        "order_relations": [],
+        "provenance": {
+          "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+        },
+        "rule_id": "article13p3",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article14p4": {
+        "action_views": [
+          {
+            "action_surface": "intends process",
+            "business_object_surface": "the personal data",
+            "index": 0,
+            "match_source_text": "intends process the personal data",
+            "matching_text": "intend process the personal datum",
+            "original_text": "intends to further process the personal data for a purpose other than that for",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          },
+          {
+            "action_surface": "provide",
+            "business_object_surface": null,
+            "index": 1,
+            "match_source_text": "provide",
+            "matching_text": "provide",
+            "original_text": "provide",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          }
+        ],
+        "actions": [
+          "intends to further process the personal data for a purpose other than that for",
+          "provide"
+        ],
+        "actor_action_pairs": [
+          {
+            "action": "intends to further process the personal data for a purpose other than that for",
+            "actor": "the controller"
+          },
+          {
+            "action": "provide",
+            "actor": "the controller"
+          }
+        ],
+        "actors": [
+          "the controller"
+        ],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article14p4_s001.c1",
+              "derived_edges": [],
+              "markers": [
+                {
+                  "field": "conditions",
+                  "main_action_rejections": [
+                    {
+                      "end": 99,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article14p4_s001.c1.action.1",
+                      "start": 21,
+                      "text": "intends to further process the personal data for a purpose other than that for"
+                    },
+                    {
+                      "end": 167,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article14p4_s001.c1.action.2",
+                      "start": 160,
+                      "text": "provide"
+                    },
+                    {
+                      "candidate_count": 0,
+                      "candidates": [],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 193,
+                  "marker_start": 185,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 298,
+                  "span_id": "gdpr_article14p4_s001.c1.condition.2",
+                  "span_length": 113,
+                  "span_start": 185
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [
+                {
+                  "field": "conditions",
+                  "main_action_rejections": [
+                    {
+                      "end": 99,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article14p4_s001.c1.action.1",
+                      "start": 21,
+                      "text": "intends to further process the personal data for a purpose other than that for"
+                    },
+                    {
+                      "end": 167,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article14p4_s001.c1.action.2",
+                      "start": 160,
+                      "text": "provide"
+                    },
+                    {
+                      "candidate_count": 0,
+                      "candidates": [],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 193,
+                  "marker_start": 185,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 298,
+                  "span_id": "gdpr_article14p4_s001.c1.condition.2",
+                  "span_length": 113,
+                  "span_start": 185
+                }
+              ],
+              "status": "no_edge"
+            }
+          ],
+          "derived_edge_count": 0,
+          "edge_count": 0,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [],
+        "order_relations": [],
+        "provenance": {
+          "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+        },
+        "rule_id": "article14p4",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article18p3": {
+        "action_views": [
+          {
+            "action_surface": "informed",
+            "business_object_surface": null,
+            "index": 0,
+            "match_source_text": "informed",
+            "matching_text": "inform",
+            "original_text": "be informed by the controller before the restriction of processing is lifted.",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          }
+        ],
+        "actions": [
+          "be informed by the controller before the restriction of processing is lifted."
+        ],
+        "actor_action_pairs": [
+          {
+            "action": "be informed by the controller before the restriction of processing is lifted.",
+            "actor": "the controller"
+          }
+        ],
+        "actors": [
+          "the controller"
+        ],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article18p3_s001.c1",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    125,
+                    164
+                  ],
+                  "after_text": "the restriction of processing is lifted",
+                  "before_offsets": [
+                    88,
+                    117
+                  ],
+                  "before_text": "be informed by the controller",
+                  "marker": "before",
+                  "marker_offsets": [
+                    118,
+                    124
+                  ],
+                  "second_endpoint_branch": "local_verbal_predicate",
+                  "second_endpoint_kind": "verbal",
+                  "second_endpoint_predicate": "lifted",
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      125,
+                      164
+                    ],
+                    "after_text": "the restriction of processing is lifted",
+                    "before_offsets": [
+                      88,
+                      117
+                    ],
+                    "before_text": "be informed by the controller",
+                    "marker": "before",
+                    "marker_offsets": [
+                      118,
+                      124
+                    ],
+                    "second_endpoint_branch": "local_verbal_predicate",
+                    "second_endpoint_kind": "verbal",
+                    "second_endpoint_predicate": "lifted",
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "before",
+                  "marker_end": 124,
+                  "marker_start": 118,
+                  "second_endpoint_audit": {
+                    "branch": "local_verbal_predicate",
+                    "global_span": [
+                      125,
+                      164
+                    ],
+                    "head_subtree_included": false,
+                    "local_predicate_count": 1,
+                    "local_predicates": [
+                      {
+                        "dep": "ROOT",
+                        "head": "lifted",
+                        "head_pos": "VERB",
+                        "index": 6,
+                        "pos": "VERB",
+                        "text": "lifted"
+                      }
+                    ],
+                    "local_span": [
+                      1,
+                      40,
+                      "the restriction of processing is lifted"
+                    ],
+                    "marker_end": 124,
+                    "predicate": {
+                      "dep": "ROOT",
+                      "head": "lifted",
+                      "head_pos": "VERB",
+                      "index": 6,
+                      "pos": "VERB",
+                      "text": "lifted"
+                    },
+                    "predicate_global_span": [
+                      158,
+                      164
+                    ],
+                    "segment": " the restriction of processing is lifted",
+                    "segment_global_start": 124,
+                    "selected_span": {
+                      "end": 164,
+                      "start": 118
+                    },
+                    "subtree_token_count": 7
+                  },
+                  "span_end": 164,
+                  "span_id": "gdpr_article18p3_s001.c1.constraint.2",
+                  "span_length": 46,
+                  "span_start": 118
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [
+          {
+            "after": {
+              "action_surface": "lifted",
+              "business_object_surface": "the restriction processing",
+              "match_source_text": "lifted the restriction processing",
+              "matching_text": "lift the restriction processing",
+              "offsets": [
+                125,
+                164
+              ],
+              "original_text": "the restriction of processing is lifted",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "before": {
+              "action_surface": "informed",
+              "business_object_surface": null,
+              "match_source_text": "informed",
+              "matching_text": "inform",
+              "offsets": [
+                88,
+                117
+              ],
+              "original_text": "be informed by the controller",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "branch": "local_verbal_predicate",
+            "kind": "verbal",
+            "predicate": "lifted",
+            "source": "derived"
+          }
+        ],
+        "order_relations": [
+          [
+            "be informed by the controller",
+            "the restriction of processing is lifted"
+          ]
+        ],
+        "provenance": {
+          "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+        },
+        "rule_id": "article18p3",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article35p1": {
+        "action_views": [
+          {
+            "action_surface": "carry",
+            "business_object_surface": "an assessment the impact the envisaged processing operations",
+            "index": 0,
+            "match_source_text": "carry an assessment the impact the envisaged processing operations",
+            "matching_text": "carry an assessment the impact the envisage processing operation",
+            "original_text": "carry out an assessment of the impact of the envisaged processing operations on",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          }
+        ],
+        "actions": [
+          "carry out an assessment of the impact of the envisaged processing operations on"
+        ],
+        "actor_action_pairs": [
+          {
+            "action": "carry out an assessment of the impact of the envisaged processing operations on",
+            "actor": "the controller"
+          }
+        ],
+        "actors": [
+          "the controller"
+        ],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article35p1_s001.c1",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    261,
+                    275
+                  ],
+                  "after_text": "the processing",
+                  "before_offsets": [
+                    277,
+                    356
+                  ],
+                  "before_text": "carry out an assessment of the impact of the envisaged processing operations on",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    252,
+                    260
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "second_endpoint_predicate": null,
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      261,
+                      275
+                    ],
+                    "after_text": "the processing",
+                    "before_offsets": [
+                      277,
+                      356
+                    ],
+                    "before_text": "carry out an assessment of the impact of the envisaged processing operations on",
+                    "marker": "prior to",
+                    "marker_offsets": [
+                      252,
+                      260
+                    ],
+                    "second_endpoint_branch": "nominal",
+                    "second_endpoint_kind": "nominal",
+                    "second_endpoint_predicate": null,
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "prior to",
+                  "marker_end": 260,
+                  "marker_start": 252,
+                  "second_endpoint_audit": {
+                    "after_marker": 260,
+                    "branch": "nominal",
+                    "chunks": [
+                      {
+                        "end": 275,
+                        "root": "processing",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 261,
+                        "text": "the processing"
+                      }
+                    ],
+                    "local_predicate_count": 0,
+                    "local_predicates": [],
+                    "of_chain_complete": true,
+                    "of_chain_started": false,
+                    "segment": " the processing",
+                    "segment_global_start": 260,
+                    "selected_span": {
+                      "end": 275,
+                      "start": 252
+                    },
+                    "source_substring_identity": true,
+                    "value": "the processing"
+                  },
+                  "span_end": 275,
+                  "span_id": "gdpr_article35p1_s001.c1.constraint.3",
+                  "span_length": 23,
+                  "span_start": 252
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [
+          {
+            "after": {
+              "action_surface": "processing",
+              "business_object_surface": null,
+              "match_source_text": "processing",
+              "matching_text": "process",
+              "offsets": [
+                261,
+                275
+              ],
+              "original_text": "the processing",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "before": {
+              "action_surface": "carry",
+              "business_object_surface": "an assessment the impact the envisaged processing operations",
+              "match_source_text": "carry an assessment the impact the envisaged processing operations",
+              "matching_text": "carry an assessment the impact the envisage processing operation",
+              "offsets": [
+                277,
+                356
+              ],
+              "original_text": "carry out an assessment of the impact of the envisaged processing operations on",
+              "parse_error": null,
+              "parse_source": "predicted_order_endpoint",
+              "parse_status": "parsed"
+            },
+            "branch": "nominal",
+            "kind": "nominal",
+            "predicate": null,
+            "source": "derived"
+          }
+        ],
+        "order_relations": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on",
+            "the processing"
+          ]
+        ],
+        "provenance": {
+          "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+        },
+        "rule_id": "article35p1",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      },
+      "article36p1": {
+        "action_views": [
+          {
+            "action_surface": "consult",
+            "business_object_surface": "the supervisory authority",
+            "index": 0,
+            "match_source_text": "consult the supervisory authority",
+            "matching_text": "consult the supervisory authority",
+            "original_text": "consult the supervisory authority prior to processing where a data protection",
+            "parse_error": null,
+            "parse_source": "predicted_action",
+            "parse_status": "parsed"
+          }
+        ],
+        "actions": [
+          "consult the supervisory authority prior to processing where a data protection"
+        ],
+        "actor_action_pairs": [
+          {
+            "action": "consult the supervisory authority prior to processing where a data protection",
+            "actor": "The controller"
+          }
+        ],
+        "actors": [
+          "The controller"
+        ],
+        "failed": false,
+        "failure_reasons": [],
+        "modality": "obligation",
+        "order_relation_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article36p1_s001.c1",
+              "derived_edges": [],
+              "markers": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "prior to",
+                  "marker_end": 63,
+                  "marker_start": 55,
+                  "reason": "multiple_top_level_event_predicates",
+                  "second_endpoint_audit": {
+                    "branch": "local_rejected",
+                    "local_predicate_count": 2,
+                    "local_predicates": [
+                      {
+                        "dep": "ROOT",
+                        "head": "processing",
+                        "head_pos": "VERB",
+                        "index": 1,
+                        "pos": "VERB",
+                        "text": "processing"
+                      },
+                      {
+                        "dep": "advcl",
+                        "head": "processing",
+                        "head_pos": "VERB",
+                        "index": 11,
+                        "pos": "VERB",
+                        "text": "indicates"
+                      }
+                    ],
+                    "reason": "multiple_top_level_event_predicates",
+                    "segment": " processing where a data protection impact assessment under Article 35 indicates that the",
+                    "segment_global_start": 63
+                  },
+                  "span_end": 152,
+                  "span_id": "gdpr_article36p1_s001.c1.constraint.1",
+                  "span_length": 97,
+                  "span_start": 55
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+              "rejections": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "prior to",
+                  "marker_end": 63,
+                  "marker_start": 55,
+                  "reason": "multiple_top_level_event_predicates",
+                  "second_endpoint_audit": {
+                    "branch": "local_rejected",
+                    "local_predicate_count": 2,
+                    "local_predicates": [
+                      {
+                        "dep": "ROOT",
+                        "head": "processing",
+                        "head_pos": "VERB",
+                        "index": 1,
+                        "pos": "VERB",
+                        "text": "processing"
+                      },
+                      {
+                        "dep": "advcl",
+                        "head": "processing",
+                        "head_pos": "VERB",
+                        "index": 11,
+                        "pos": "VERB",
+                        "text": "indicates"
+                      }
+                    ],
+                    "reason": "multiple_top_level_event_predicates",
+                    "segment": " processing where a data protection impact assessment under Article 35 indicates that the",
+                    "segment_global_start": 63
+                  },
+                  "span_end": 152,
+                  "span_id": "gdpr_article36p1_s001.c1.constraint.1",
+                  "span_length": 97,
+                  "span_start": 55
+                }
+              ],
+              "status": "no_edge"
+            }
+          ],
+          "derived_edge_count": 0,
+          "edge_count": 0,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0"
+        },
+        "order_relation_views": [],
+        "order_relations": [],
+        "provenance": {
+          "capsule_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+          "converter": "gdpr_capsule_rule_record_converter@1.3.0",
+          "gold_fields_read": false,
+          "mapping": "clause modality label == 'obligation' only; action/actor texts reconstructed by slicing approved_text_en sentence offsets (validated 0<=start<end<=len); conditions/constraints/exceptions not consumed by the Sun scorer; actor_action_map and clause order_relations resolve validated action/actor IDs; absent relations remain absent, never fabricated",
+          "source": "EXTERNAL Rules-Only Stage-2 capsule (data/predictions/gdpr7_sun_rule_only_v1)"
+        },
+        "rule_id": "article36p1",
+        "schema_version": "sun_rule_record_capsule_v1@1.0.0"
+      }
+    },
+    "status": "available"
+  },
+  "winter": {
+    "converter_summary": null,
+    "method_id": "winter_2020_native_full_pipeline",
+    "projection_audit": null,
+    "records": null,
+    "status": "available_native"
+  }
+}

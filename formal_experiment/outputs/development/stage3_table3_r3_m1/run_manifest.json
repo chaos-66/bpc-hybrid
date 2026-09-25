@@ -1,0 +1,236 @@
+{
+  "actual_output_case_ids": [
+    "case_06bacb820524",
+    "case_0adc59ea1a26",
+    "case_0f7180438501",
+    "case_3d2aaae29b37",
+    "case_44fc51ad7da0",
+    "case_5c2cca2ca4cf",
+    "case_7dc164f81677",
+    "case_89c44a45c04d",
+    "case_8cbb7ad90a6d",
+    "case_92fe183843b7",
+    "case_9a62a7fd9853",
+    "case_aa37540e7989",
+    "case_bbe530084075",
+    "case_c4d9054721a1",
+    "case_d038f52f8cf3",
+    "case_d8a82d59687d",
+    "case_f65436fd6574",
+    "case_f8aaa652c17b",
+    "case_fb254253b6dd",
+    "case_fd4b197b953b"
+  ],
+  "actual_output_rule_ids": [
+    "article13p3",
+    "article14p4",
+    "article18p3",
+    "article35p1",
+    "article36p1"
+  ],
+  "code_sha256": {
+    "scripts/build_stage3_r3_sidecars.py": "a21e73bbb558d036fede60091b91fda65367658e518878342333e2d0391ca11f",
+    "scripts/run_stage3_table3_r3.py": "bef8a3016abc7d8c2a77ac724252bfb28e5430093db15f5f439d8cc23c30fbdd",
+    "scripts/run_stage3_table3_v4_r1.py": "e8afd125f4ca8f98a06f293236233fb67e5abbd2dd0dd1af48d2ee622dcbc92d",
+    "src/bpc_hybrid/stage1_label_semantics_p2.py": "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2",
+    "src/bpc_hybrid/stage3_r3_p2_adapter_v1.py": "0f95c72ed4d7594f103c483e2c2d2cad612f6b44e8466d71daebb7207f1b8640",
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
+    "src/bpc_hybrid/sun_stage3/no_gate_checker_v1.py": "6b925e4d27a8d614733002d0adad3f45f9082dfd92c15173183ed61997edaf51",
+    "src/bpc_hybrid/sun_stage3/r3_sun_scorer.py": "643ccf36b49d078c21b3686dbf238fcdda487f424870dd64498945f411951b36",
+    "src/bpc_hybrid/sun_stage3/static_vector_similarity_v1.py": "6cfb65cc78dbdbd715002660bf7f1715119799405dfd2e253acf9e8d08d3884f",
+    "src/bpc_hybrid/sun_stage3/sun_scorer.py": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+    "src/bpc_hybrid/sun_stage3/temporal_projection_v1.py": "f8cb073024dca930c2d2fa2ca270e115c84c00e8efdff2603b1ddece81d305d3",
+    "src/bpc_hybrid/sun_stage3/temporal_projection_v2.py": "891d9db075e38886ebfa04bcfec7434ebc9c52ab1835c99c1a4ce322d76f302f",
+    "src/bpc_hybrid/sun_stage3/temporal_projection_v3.py": "2eec05cdbda3cee8c1721c265bafb734314522fc28a65241a5ff60eaa43542ca",
+    "src/bpc_hybrid/sun_stage3/temporal_projection_v4_r3.py": "34ded79bb42428dc794afd5dd46c3e7ff09f2af595bd7eeb62f53ed87977a556"
+  },
+  "command": "python formal_experiment/scripts/run_stage3_table3_r3.py --config configs/stage3_table3_r3_m1.json --out-dir outputs/development/stage3_table3_r3_m1",
+  "configuration": {
+    "outer_matching_gate_applied": false,
+    "p2_adapter": "src/bpc_hybrid/stage3_r3_p2_adapter_v1.py",
+    "p2_original_implementation": "src/bpc_hybrid/stage1_label_semantics_p2.py",
+    "similarity_backend": {
+      "backend": "sm"
+    },
+    "sun_thresholds": {
+      "gamma": 0.8,
+      "tau": 0.8,
+      "theta": 0.8
+    },
+    "temporal_projection": {
+      "algorithm": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "dates_and_durations_not_events": "bounded nominal rejection remains in v1/v3 helper",
+      "derived_endpoints_are_not_added_to_mandatory_actions": true,
+      "event_predicate_must_be_inside_continuous_endpoint": true,
+      "local_parse_of_post_marker_complement": true,
+      "main_action_must_be_exactly_one_after_exclusion": true,
+      "marker_inside_exception_rejection": true,
+      "marker_scope": "predicted conditions and constraints spans only",
+      "markers": [
+        "before",
+        "after",
+        "prior to"
+      ],
+      "module": "src/bpc_hybrid/sun_stage3/temporal_projection_v4_r3.py",
+      "multi_marker_span_rejection": true,
+      "multiple_top_level_events_rejected": true,
+      "native_order_relations_priority": true,
+      "negation_rejection": true,
+      "nominal_branch_only_when_no_unresolved_event_predicate": true,
+      "truncated_span_rejected": true,
+      "unique_top_level_event_predicate_retained": true,
+      "version_note": "R3 event-predicate preservation; v1/v2/v3 preserved."
+    }
+  },
+  "construction_reference_read_by_runner": false,
+  "counts": {
+    "cases": 20,
+    "methods": 3,
+    "prediction_rows": 60,
+    "signals": 900
+  },
+  "dependency_versions": {
+    "python": "3.14.6",
+    "similarity_backend": {
+      "backend": "sm"
+    },
+    "spacy": "3.8.13",
+    "spacy_model": "en_core_web_sm"
+  },
+  "development_status": "development_retrospective_not_independent_test",
+  "elapsed_seconds": 5.425,
+  "git": {
+    "commit": "e5578171af5a5770c9dd936cb84831d19c553638",
+    "dirty_paths": [
+      "M formal_experiment/data/development/human_review/stage1_gdpr7_human_correction_v1.json",
+      " M formal_experiment/outputs/reports/sep_c3_modular_ablation_v1.json",
+      " M formal_experiment/outputs/reports/sep_c3_modular_ablation_v1.md",
+      "?? .codex_worktree_c36sep/",
+      "?? .patch_exec_cmd.py",
+      "?? .run_patch_exec_cmd.cmd",
+      "?? .tmp_mod_fairness.py",
+      "?? .tmp_modality_check.py",
+      "?? .tmp_pooled_check.py",
+      "?? .tmp_pooled_five.py",
+      "?? .tmp_probe/",
+      "?? .tmp_probe2.py",
+      "?? .tmp_verify_fix.py",
+      "?? \"bpc_hybrid - 副本 (2).pptx\"",
+      "?? formal_experiment/data/development/human_review/s2_11_review_decisions_v2.json.bak",
+      "?? formal_experiment/outputs/reports/s2_11_batch_import_dry_run_v3.json.bak",
+      "?? formal_experiment/outputs/reports/s2_12_execution_readiness_v3.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.manifest.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.md.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7_export_index.json.bak",
+      "?? formal_experiment/outputs/reports/stage3_table3_r3_mechanism_m1.json",
+      "?? formal_experiment/outputs/reports/stage3_table3_r3_mechanism_m1.md",
+      "?? formal_experiment/paper/presentations/bpc_hybrid_revised_20260912.pptx",
+      "?? formal_experiment/scripts/build_v6_factorial_arms_v1.py",
+      "?? formal_experiment/scripts/build_v6_factorial_arms_v2.py"
+    ]
+  },
+  "gold_read_by_runner": false,
+  "inputs": {
+    "execution_config": {
+      "path": "configs/stage3_table3_r3_m1.json",
+      "sha256": "83d71b792e4ad55f35f61e5f0bb0ccd420de61c6639da2b389869611a4d698c2"
+    },
+    "inference_view": {
+      "path": "data/development/stage3_reconstruction_v4/inference_view.json",
+      "sha256": "6248e8396ad4d8d7077b6332f51b1aa2b5de7e97188e324cb49e00bda4c1eb33"
+    },
+    "ours_predictions": {
+      "path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
+      "sha256": "be83c1c02e96037dca948450a835dd01f46c4cd9a34b8ab557e498a427d44821"
+    },
+    "p2_sidecar_index": {
+      "path": "outputs/development/stage3_table3_r3_p2_sidecars/index.json",
+      "sha256": "463c05f718d682a5878f94be48098ea16b69d9c12a14bcf10aa3138dee68b211"
+    },
+    "r2_reused_manifest": {
+      "path": "outputs/development/stage3_table3_v4_r2/run_manifest.json",
+      "sha256": "eaff286c1608128e207972da8bf5de0f72ad0a70bf69a8c473db08f17312afa8"
+    },
+    "r2_reused_predictions": {
+      "path": "outputs/development/stage3_table3_v4_r2/predictions.json",
+      "sha256": "969c5f8ae573fb9f0792b62ede1d449204a1318c9d3389315348dc2bdc3dce8b"
+    },
+    "stage2_input": {
+      "path": "data/development/stage3_reconstruction_v4/stage2_input.json",
+      "sha256": "4c934712d4e85316167136a46861084165c75969c113eca7d995de5ddaabd1f2"
+    },
+    "sun_predictions": {
+      "path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
+      "sha256": "eee1d6447bdab21d20704df64801e81aaa642e543a0bd706b0783882009c71fa"
+    }
+  },
+  "llm_api_calls": 0,
+  "methods": {
+    "ours": {
+      "method_id": "ours_d1_frozen_v1",
+      "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "status": "available_r3"
+    },
+    "sun": {
+      "method_id": "sun_b0_frozen_v1",
+      "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "status": "available_r3"
+    },
+    "winter": {
+      "method_id": "winter_2020_native_full_pipeline",
+      "reused_from": "outputs/development/stage3_table3_v4_r2/predictions.json",
+      "status": "available_native_reused_from_r2"
+    }
+  },
+  "network_calls": 0,
+  "outputs": {
+    "global_role_candidates": {
+      "path": "outputs/development/stage3_table3_r3_m1/global_role_candidates.json",
+      "sha256": "08212bbf5118e53ca20c7e292e2a97b081cb95dc4c58f22a3ef398e1986dfcca"
+    },
+    "predictions": {
+      "path": "outputs/development/stage3_table3_r3_m1/predictions.json",
+      "sha256": "f1b09975e873e744c30ac50b42bc763d0cdd6abdb3951fd392cad5aeddd688cf"
+    },
+    "rule_records": {
+      "path": "outputs/development/stage3_table3_r3_m1/rule_records.json",
+      "sha256": "0a5391d6f547ce8e715f6c9e566078214df20a2a5b83b7a43ae27b4209348c29"
+    },
+    "signals_matrix": {
+      "path": "outputs/development/stage3_table3_r3_m1/signals_matrix.json",
+      "sha256": "86984e97702656fe5e9d008c1a3f6efd99ddcfeb576c0149eb0ddbbcad9cbdfd"
+    }
+  },
+  "reused_winter": {
+    "binding_note": "R2 native Winter config and global role-candidate input reused; not rerun in R3.",
+    "source_predictions": "outputs/development/stage3_table3_v4_r2/predictions.json",
+    "source_predictions_sha256": "969c5f8ae573fb9f0792b62ede1d449204a1318c9d3389315348dc2bdc3dce8b",
+    "status": "reused_not_rerun"
+  },
+  "run_id": "stage3_table3_r3_frozen_spacy_sm_text_similarity",
+  "schema_version": "stage3_table3_r3_frozen_spacy_sm_text_similarity_run@1.0.0",
+  "scope": {
+    "bpmn_count": 20,
+    "case_count": 20,
+    "claim_boundary": "checking on independently specified applicable regulation-process pairs; not end-to-end rule selection or complete GDPR F1",
+    "dataset_id": "stage3_scoped_gdpr_v4",
+    "family_count": 5,
+    "human_adjudicated": false,
+    "negative_cells_per_method": 35,
+    "not_applicable_cells_per_method": 10,
+    "positive_cells_per_method": 15,
+    "reference_is_gold": false,
+    "rule_ids": [
+      "article13p3",
+      "article14p4",
+      "article18p3",
+      "article35p1",
+      "article36p1"
+    ],
+    "scored_cells_per_method": 50,
+    "signals_per_method": 300,
+    "signals_total": 900
+  },
+  "status": "complete"
+}
