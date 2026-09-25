@@ -1,0 +1,375 @@
+{
+  "schema_version": "actor_refinement_prompt_diff@1.0.0",
+  "created_at_utc": "2026-09-25T15:39:32Z",
+  "base_prompt_sha": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+  "expected_unexpected_diff_count": 0,
+  "unexpected_diff_count": 0,
+  "arms": [
+    {
+      "arm": "B0",
+      "base_prompt_sha": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "variant_prompt_sha": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "changed_line_ranges": [],
+      "conceptual_factor": "fresh_unchanged_baseline",
+      "unexpected_diff_count": 0,
+      "diff_hunks": []
+    },
+    {
+      "arm": "R",
+      "base_prompt_sha": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "variant_prompt_sha": "57d42002060ff2909855bdb0eda1ec3c9af76933b6ebd5805d002fa9fe7626dd",
+      "changed_line_ranges": [
+        {
+          "baseline": [
+            57,
+            61
+          ],
+          "variant": [
+            57,
+            67
+          ],
+          "regions": [
+            "rule10"
+          ]
+        }
+      ],
+      "conceptual_factor": "actor_role_eligibility_only",
+      "unexpected_diff_count": 0,
+      "diff_hunks": [
+        {
+          "opcode": "replace",
+          "baseline_line_range": [
+            57,
+            61
+          ],
+          "variant_line_range": [
+            57,
+            67
+          ],
+          "baseline_regions": [
+            "rule10"
+          ],
+          "variant_regions": [
+            "rule10"
+          ],
+          "baseline_changed_lines": [
+            "10. actor is the smallest explicit noun phrase or pronominal mention that bears",
+            "    or performs the norm. A subject pronoun it/they/this/these/such is a real",
+            "    actor mention. Extract the pronoun exact span even when its reference is",
+            "    unresolved. If this/these/such modifies a noun, extract the complete minimal",
+            "    noun phrase instead of the determiner alone."
+          ],
+          "variant_changed_lines": [
+            "10. actor is the smallest explicit noun phrase or pronominal mention that",
+            "    denotes a participant that explicitly performs or bears an action or state",
+            "    relevant to the rule.",
+            "    Grammatical subjecthood alone is not sufficient for actor status.",
+            "    Do not extract an expression as an actor when it functions only as the",
+            "    regulated object, legal provision, amount, asset, proposition, event/state,",
+            "    or another non-participant in the described action or normative relation.",
+            "    A subject pronoun it/they/this/these/such is a real actor mention. Extract",
+            "    the pronoun exact span even when its reference is unresolved. If",
+            "    this/these/such modifies a noun, extract the complete minimal noun phrase",
+            "    instead of the determiner alone."
+          ],
+          "allowed_by_arm": true
+        }
+      ]
+    },
+    {
+      "arm": "P",
+      "base_prompt_sha": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "variant_prompt_sha": "4ec0756bae791fdb0f013f80c93deeb6cfa3b14a0b2656ee89b16f76653f539f",
+      "changed_line_ranges": [
+        {
+          "baseline": [
+            58,
+            61
+          ],
+          "variant": [
+            58,
+            65
+          ],
+          "regions": [
+            "rule10"
+          ]
+        },
+        {
+          "baseline": [
+            78,
+            78
+          ],
+          "variant": [
+            82,
+            83
+          ],
+          "regions": [
+            "rule1617"
+          ]
+        },
+        {
+          "baseline": [
+            83,
+            85
+          ],
+          "variant": [
+            88,
+            92
+          ],
+          "regions": [
+            "rule1617"
+          ]
+        },
+        {
+          "baseline": [
+            146,
+            146
+          ],
+          "variant": [
+            153,
+            153
+          ],
+          "regions": [
+            "example1"
+          ]
+        },
+        {
+          "baseline": [
+            160,
+            160
+          ],
+          "variant": [
+            167,
+            167
+          ],
+          "regions": [
+            "example1"
+          ]
+        },
+        {
+          "baseline": [
+            165,
+            165
+          ],
+          "variant": [
+            172,
+            172
+          ],
+          "regions": [
+            "example1"
+          ]
+        }
+      ],
+      "conceptual_factor": "unresolved_pronoun_policy_only",
+      "unexpected_diff_count": 0,
+      "diff_hunks": [
+        {
+          "opcode": "replace",
+          "baseline_line_range": [
+            58,
+            61
+          ],
+          "variant_line_range": [
+            58,
+            65
+          ],
+          "baseline_regions": [
+            "rule10"
+          ],
+          "variant_regions": [
+            "rule10"
+          ],
+          "baseline_changed_lines": [
+            "    or performs the norm. A subject pronoun it/they/this/these/such is a real",
+            "    actor mention. Extract the pronoun exact span even when its reference is",
+            "    unresolved. If this/these/such modifies a noun, extract the complete minimal",
+            "    noun phrase instead of the determiner alone."
+          ],
+          "variant_changed_lines": [
+            "    or performs the norm. A subject pronoun such as it/they/this/these/such may",
+            "    be emitted as an actor only when its antecedent is explicitly recoverable",
+            "    within source_text and that antecedent denotes an actor-eligible participant.",
+            "    If the antecedent is not explicitly recoverable within source_text, do not",
+            "    emit the unresolved pronoun in actors. Do not replace the pronoun with an",
+            "    antecedent inferred from outside source_text. If this/these/such modifies a",
+            "    noun, extract the complete minimal noun phrase instead of the determiner",
+            "    alone."
+          ],
+          "allowed_by_arm": true
+        },
+        {
+          "opcode": "replace",
+          "baseline_line_range": [
+            78,
+            78
+          ],
+          "variant_line_range": [
+            82,
+            83
+          ],
+          "baseline_regions": [
+            "rule1617"
+          ],
+          "variant_regions": [
+            "rule1617"
+          ],
+          "baseline_changed_lines": [
+            "    entry. Use only these reason strings:"
+          ],
+          "variant_changed_lines": [
+            "    entry. Preserve uncertain surface mentions as usual, except for unresolved",
+            "    actor pronouns governed by Rule 17. Use only these reason strings:"
+          ],
+          "allowed_by_arm": true
+        },
+        {
+          "opcode": "replace",
+          "baseline_line_range": [
+            83,
+            85
+          ],
+          "variant_line_range": [
+            88,
+            92
+          ],
+          "baseline_regions": [
+            "rule1617"
+          ],
+          "variant_regions": [
+            "rule1617"
+          ],
+          "baseline_changed_lines": [
+            "17. For an unresolved subject pronoun, keep normalized surface-preserving",
+            "    (for example \"it\"), and add:",
+            "    {\"field\":\"actor\",\"reason\":\"reference_status=unresolved_coreference;independence_status=context_required\"}."
+          ],
+          "variant_changed_lines": [
+            "17. For an unresolved subject pronoun whose antecedent is not explicitly",
+            "    recoverable within source_text, do not emit that pronoun in actors.",
+            "    Add:",
+            "    {\"field\":\"actor\",",
+            "     \"reason\":\"reference_status=unresolved_coreference;independence_status=context_required\"}."
+          ],
+          "allowed_by_arm": true
+        },
+        {
+          "opcode": "replace",
+          "baseline_line_range": [
+            146,
+            146
+          ],
+          "variant_line_range": [
+            153,
+            153
+          ],
+          "baseline_regions": [
+            "example1"
+          ],
+          "variant_regions": [
+            "example1"
+          ],
+          "baseline_changed_lines": [
+            "Example 1 — unresolved subject pronoun remains an exact actor mention:"
+          ],
+          "variant_changed_lines": [
+            "Example 1 — unresolved subject pronoun is not promoted to actor:"
+          ],
+          "allowed_by_arm": true
+        },
+        {
+          "opcode": "replace",
+          "baseline_line_range": [
+            160,
+            160
+          ],
+          "variant_line_range": [
+            167,
+            167
+          ],
+          "baseline_regions": [
+            "example1"
+          ],
+          "variant_regions": [
+            "example1"
+          ],
+          "baseline_changed_lines": [
+            "      \"actors\": [{\"id\": \"a01\", \"text\": \"It\", \"start\": 0, \"end\": 2, \"normalized\": \"it\"}],"
+          ],
+          "variant_changed_lines": [
+            "      \"actors\": [],"
+          ],
+          "allowed_by_arm": true
+        },
+        {
+          "opcode": "replace",
+          "baseline_line_range": [
+            165,
+            165
+          ],
+          "variant_line_range": [
+            172,
+            172
+          ],
+          "baseline_regions": [
+            "example1"
+          ],
+          "variant_regions": [
+            "example1"
+          ],
+          "baseline_changed_lines": [
+            "      \"actor_action_map\": [{\"actor_id\": \"a01\", \"action_id\": \"p01\"}],"
+          ],
+          "variant_changed_lines": [
+            "      \"actor_action_map\": [{\"actor_id\": null, \"action_id\": \"p01\"}],"
+          ],
+          "allowed_by_arm": true
+        }
+      ]
+    },
+    {
+      "arm": "C",
+      "base_prompt_sha": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "variant_prompt_sha": "aac408ad9d1940eeee899d223cb51544afdc9d04de331b907d9a485e2e19792d",
+      "changed_line_ranges": [
+        {
+          "baseline": [],
+          "variant": [
+            126,
+            133
+          ],
+          "regions": [
+            "rule2728"
+          ]
+        }
+      ],
+      "conceptual_factor": "condition_actor_projection_only",
+      "unexpected_diff_count": 0,
+      "diff_hunks": [
+        {
+          "opcode": "insert",
+          "baseline_line_range": [],
+          "variant_line_range": [
+            126,
+            133
+          ],
+          "baseline_regions": [],
+          "variant_regions": [
+            "rule2728"
+          ],
+          "baseline_changed_lines": [],
+          "variant_changed_lines": [
+            "",
+            "28. Actor and condition spans may overlap. When a condition contains an",
+            "    explicit actor-eligible mention that itself performs or bears an action or",
+            "    state stated inside that condition, emit the smallest exact actor mention",
+            "    independently in actors as well as preserving the complete condition span.",
+            "    Do not infer an unstated actor. Do not promote every noun phrase inside a",
+            "    condition; the mention must itself be the explicit participant in the",
+            "    condition's action or state."
+          ],
+          "allowed_by_arm": true
+        }
+      ]
+    }
+  ]
+}

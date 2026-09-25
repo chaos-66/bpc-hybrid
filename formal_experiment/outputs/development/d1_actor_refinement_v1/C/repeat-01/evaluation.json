@@ -1,0 +1,582 @@
+{
+  "arm": "C",
+  "evaluation": {
+    "evaluator": "sun_literal_overlap@2.0.0",
+    "metrics": {
+      "schema_version": "sun_literal_overlap_evaluation@2.0.0",
+      "dataset_id": "independently_reconstructed_estg_150_v1",
+      "method_id": "direct_llm",
+      "sample_count": 150,
+      "invalid_attempt_count": 0,
+      "evaluation_unit": "statement",
+      "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+      "assignment": "none_independent_overlap_coverage",
+      "clause_alignment_required": false,
+      "overlap_threshold": "strictly_greater_than_zero_characters",
+      "modality_policy": "evidence_span_extraction_only_label_ignored",
+      "reporting_role": "primary_sun_phrase_extraction_metric",
+      "per_field": {
+        "modality": {
+          "ground_truth": 231,
+          "extracted": 257,
+          "matched_predictions": 245,
+          "matched_ground_truth": 211,
+          "misclassified": 12,
+          "missed": 20,
+          "precision": 0.953307392996109,
+          "recall": 0.9134199134199135,
+          "f1": 0.9329375033838048
+        },
+        "actor": {
+          "ground_truth": 48,
+          "extracted": 103,
+          "matched_predictions": 47,
+          "matched_ground_truth": 46,
+          "misclassified": 56,
+          "missed": 2,
+          "precision": 0.4563106796116505,
+          "recall": 0.9583333333333334,
+          "f1": 0.6182442093222763
+        },
+        "action": {
+          "ground_truth": 247,
+          "extracted": 233,
+          "matched_predictions": 212,
+          "matched_ground_truth": 214,
+          "misclassified": 21,
+          "missed": 33,
+          "precision": 0.9098712446351931,
+          "recall": 0.8663967611336032,
+          "f1": 0.8876019799268288
+        },
+        "condition": {
+          "ground_truth": 214,
+          "extracted": 141,
+          "matched_predictions": 127,
+          "matched_ground_truth": 150,
+          "misclassified": 14,
+          "missed": 64,
+          "precision": 0.900709219858156,
+          "recall": 0.7009345794392523,
+          "f1": 0.7883628538321469
+        },
+        "constraint": {
+          "ground_truth": 302,
+          "extracted": 260,
+          "matched_predictions": 168,
+          "matched_ground_truth": 169,
+          "misclassified": 92,
+          "missed": 133,
+          "precision": 0.6461538461538462,
+          "recall": 0.5596026490066225,
+          "f1": 0.5997718534792345
+        },
+        "exception": {
+          "ground_truth": 13,
+          "extracted": 8,
+          "matched_predictions": 8,
+          "matched_ground_truth": 8,
+          "misclassified": 0,
+          "missed": 5,
+          "precision": 1.0,
+          "recall": 0.6153846153846154,
+          "f1": 0.761904761904762
+        }
+      },
+      "overall": {
+        "ground_truth": 1055,
+        "extracted": 1002,
+        "matched_predictions": 807,
+        "matched_ground_truth": 798,
+        "misclassified": 195,
+        "missed": 257,
+        "precision": 0.8053892215568862,
+        "recall": 0.7563981042654029,
+        "f1": 0.7801252709752565
+      }
+    }
+  },
+  "metrics": {
+    "schema_version": "sun_literal_overlap_evaluation@2.0.0",
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "method_id": "direct_llm",
+    "sample_count": 150,
+    "invalid_attempt_count": 0,
+    "evaluation_unit": "statement",
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+    "assignment": "none_independent_overlap_coverage",
+    "clause_alignment_required": false,
+    "overlap_threshold": "strictly_greater_than_zero_characters",
+    "modality_policy": "evidence_span_extraction_only_label_ignored",
+    "reporting_role": "primary_sun_phrase_extraction_metric",
+    "per_field": {
+      "modality": {
+        "ground_truth": 231,
+        "extracted": 257,
+        "matched_predictions": 245,
+        "matched_ground_truth": 211,
+        "misclassified": 12,
+        "missed": 20,
+        "precision": 0.953307392996109,
+        "recall": 0.9134199134199135,
+        "f1": 0.9329375033838048
+      },
+      "actor": {
+        "ground_truth": 48,
+        "extracted": 103,
+        "matched_predictions": 47,
+        "matched_ground_truth": 46,
+        "misclassified": 56,
+        "missed": 2,
+        "precision": 0.4563106796116505,
+        "recall": 0.9583333333333334,
+        "f1": 0.6182442093222763
+      },
+      "action": {
+        "ground_truth": 247,
+        "extracted": 233,
+        "matched_predictions": 212,
+        "matched_ground_truth": 214,
+        "misclassified": 21,
+        "missed": 33,
+        "precision": 0.9098712446351931,
+        "recall": 0.8663967611336032,
+        "f1": 0.8876019799268288
+      },
+      "condition": {
+        "ground_truth": 214,
+        "extracted": 141,
+        "matched_predictions": 127,
+        "matched_ground_truth": 150,
+        "misclassified": 14,
+        "missed": 64,
+        "precision": 0.900709219858156,
+        "recall": 0.7009345794392523,
+        "f1": 0.7883628538321469
+      },
+      "constraint": {
+        "ground_truth": 302,
+        "extracted": 260,
+        "matched_predictions": 168,
+        "matched_ground_truth": 169,
+        "misclassified": 92,
+        "missed": 133,
+        "precision": 0.6461538461538462,
+        "recall": 0.5596026490066225,
+        "f1": 0.5997718534792345
+      },
+      "exception": {
+        "ground_truth": 13,
+        "extracted": 8,
+        "matched_predictions": 8,
+        "matched_ground_truth": 8,
+        "misclassified": 0,
+        "missed": 5,
+        "precision": 1.0,
+        "recall": 0.6153846153846154,
+        "f1": 0.761904761904762
+      }
+    },
+    "overall": {
+      "ground_truth": 1055,
+      "extracted": 1002,
+      "matched_predictions": 807,
+      "matched_ground_truth": 798,
+      "misclassified": 195,
+      "missed": 257,
+      "precision": 0.8053892215568862,
+      "recall": 0.7563981042654029,
+      "f1": 0.7801252709752565
+    }
+  },
+  "actor_inventory": {
+    "metrics": {
+      "ground_truth": 48,
+      "extracted": 103,
+      "matched_predictions": 47,
+      "matched_ground_truth": 46,
+      "misclassified": 56,
+      "missed": 2,
+      "precision": 0.4563106796116505,
+      "recall": 0.9583333333333334,
+      "f1": 0.6182442093222763
+    },
+    "tp_count": 47,
+    "fp_count": 56,
+    "fn_count": 2,
+    "fp_taxonomy": {
+      "counts": {
+        "FP-A_PRONOUN_DEMONSTRATIVE": 10,
+        "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT": 40,
+        "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED": 6
+      },
+      "shares": {
+        "FP-A_PRONOUN_DEMONSTRATIVE": 0.17857142857142858,
+        "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT": 0.7142857142857143,
+        "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED": 0.10714285714285714
+      },
+      "total": 56,
+      "labels": {
+        "FN-A": "ABSENT_FROM_ALL_MODEL_SEMANTIC_SPANS",
+        "FN-B": "EMBEDDED_IN_CONDITION",
+        "FN-C": "EMBEDDED_IN_CONSTRAINT",
+        "FN-D": "EMBEDDED_IN_ACTION",
+        "FN-E": "EMBEDDED_IN_EXCEPTION",
+        "FN-F": "WRONG_ACTOR_BOUNDARY",
+        "FN-G": "DUPLICATE_OCCURRENCE_COVERAGE",
+        "FN-H": "CLAUSE_SEGMENTATION_SCOPE",
+        "FN-I": "OTHER",
+        "FP-A": "PRONOUN_DEMONSTRATIVE",
+        "FP-B": "NON_ROLE_GRAMMATICAL_SUBJECT",
+        "FP-C": "LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+        "FP-D": "WRONG_OCCURRENCE_DUPLICATE",
+        "FP-E": "OVERLONG_UNDER_SPECIFIC_ACTOR_SPAN",
+        "FP-F": "CLAUSE_SCOPE_ERROR",
+        "FP-G": "OTHER"
+      }
+    },
+    "fn_taxonomy": {
+      "counts": {
+        "FN-B_EMBEDDED_IN_CONDITION": 2
+      },
+      "shares": {
+        "FN-B_EMBEDDED_IN_CONDITION": 1.0
+      },
+      "total": 2,
+      "labels": {
+        "FN-A": "ABSENT_FROM_ALL_MODEL_SEMANTIC_SPANS",
+        "FN-B": "EMBEDDED_IN_CONDITION",
+        "FN-C": "EMBEDDED_IN_CONSTRAINT",
+        "FN-D": "EMBEDDED_IN_ACTION",
+        "FN-E": "EMBEDDED_IN_EXCEPTION",
+        "FN-F": "WRONG_ACTOR_BOUNDARY",
+        "FN-G": "DUPLICATE_OCCURRENCE_COVERAGE",
+        "FN-H": "CLAUSE_SEGMENTATION_SCOPE",
+        "FN-I": "OTHER",
+        "FP-A": "PRONOUN_DEMONSTRATIVE",
+        "FP-B": "NON_ROLE_GRAMMATICAL_SUBJECT",
+        "FP-C": "LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+        "FP-D": "WRONG_OCCURRENCE_DUPLICATE",
+        "FP-E": "OVERLONG_UNDER_SPECIFIC_ACTOR_SPAN",
+        "FP-F": "CLAUSE_SCOPE_ERROR",
+        "FP-G": "OTHER"
+      }
+    },
+    "pronoun_analysis": {
+      "total": 11,
+      "tp": 1,
+      "fp": 10,
+      "precision": 0.09090909090909091,
+      "prompt_pronoun_total": 10,
+      "prompt_pronoun_tp": 1,
+      "prompt_pronoun_fp": 9,
+      "surface_distribution": {
+        "It": 1,
+        "This": 3,
+        "he": 1,
+        "it": 4,
+        "they": 1,
+        "this": 1
+      },
+      "cases": [
+        {
+          "sample_id": "estg_000003",
+          "pronoun": "It",
+          "coordinates": [
+            0,
+            2
+          ],
+          "gold_overlap": true,
+          "tp_fp": "TP",
+          "clause_context": {
+            "clause_index": 0,
+            "clause_id": "estg_000003_c01",
+            "clause_span": {
+              "id": null,
+              "text": "It may cover a shorter period if  \n1. a business is opened or closed, or  \n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date.",
+              "normalized": null,
+              "start": 0,
+              "end": 194,
+              "coordinates": [
+                0,
+                194
+              ]
+            }
+          },
+          "source_text": "It may cover a shorter period if  \n1. a business is opened or closed, or  \n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date.",
+          "taxonomy": null
+        },
+        {
+          "sample_id": "estg_000036",
+          "pronoun": "he",
+          "coordinates": [
+            40,
+            42
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 0,
+            "clause_id": "estg_000036_c01",
+            "clause_span": {
+              "id": null,
+              "text": "The taxpayer may decide for himself whether he treats the VAT amounts owed on supplies and other services and the deductible input tax amounts as transitory items.",
+              "normalized": null,
+              "start": 0,
+              "end": 163,
+              "coordinates": [
+                0,
+                163
+              ]
+            }
+          },
+          "source_text": "The taxpayer may decide for himself whether he treats the VAT amounts owed on supplies and other services and the deductible input tax amounts as transitory items.",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000044",
+          "pronoun": "This",
+          "coordinates": [
+            0,
+            4
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 0,
+            "clause_id": "estg_000044_c01",
+            "clause_span": {
+              "id": null,
+              "text": "This shall be assessed on the basis of the average benefits granted by the fund to the recipients during the three years preceding the date of the allocation.",
+              "normalized": null,
+              "start": 0,
+              "end": 158,
+              "coordinates": [
+                0,
+                158
+              ]
+            }
+          },
+          "source_text": "This shall be assessed on the basis of the average benefits granted by the fund to the recipients during the three years preceding the date of the allocation. 3.",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000061",
+          "pronoun": "it",
+          "coordinates": [
+            13,
+            15
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 0,
+            "clause_id": "estg_000061_c01",
+            "clause_span": {
+              "id": null,
+              "text": "Furthermore, it must be ensured through additions or deductions and through appropriate balance sheet items that other changes in the profit determination principles (e.g., regarding the commercial law principles of orderly bookkeeping when transitioning from profit determination pursuant to Section 4(1) or (3) to Section 5, or regarding the consideration of diminutions in the value of business assets when transitioning to bookkeeping) are taken into account upon the change in the profit determination method.",
+              "normalized": null,
+              "start": 0,
+              "end": 514,
+              "coordinates": [
+                0,
+                514
+              ]
+            }
+          },
+          "source_text": "Furthermore, it must be ensured through additions or deductions and through appropriate balance sheet items that other changes in the profit determination principles (e.g., regarding the commercial law principles of orderly bookkeeping when transitioning from profit determination pursuant to Section 4(1) or (3) to Section 5, or regarding the consideration of diminutions in the value of business assets when transitioning to bookkeeping) are taken into account upon the change in the profit determination method. 3. a) When transitioning to profit determination pursuant to Section 5, land must be revalued on a tax-neutral basis to the higher going-concern value.",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000082",
+          "pronoun": "it",
+          "coordinates": [
+            98,
+            100
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 0,
+            "clause_id": "estg_000082_c01",
+            "clause_span": {
+              "id": null,
+              "text": "To the extent that the input tax can be deducted (Section 12(1) of the Value Added Tax Act 1972), it does not form part of the acquisition or production costs of the asset on the acquisition or production of which it is incurred, and shall be reported as a receivable.",
+              "normalized": null,
+              "start": 0,
+              "end": 268,
+              "coordinates": [
+                0,
+                268
+              ]
+            }
+          },
+          "source_text": "To the extent that the input tax can be deducted (Section 12(1) of the Value Added Tax Act 1972), it does not form part of the acquisition or production costs of the asset on the acquisition or production of which it is incurred, and shall be reported as a receivable.",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000083",
+          "pronoun": "This",
+          "coordinates": [
+            0,
+            4
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 0,
+            "clause_id": "estg_000083_c01",
+            "clause_span": {
+              "id": null,
+              "text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972",
+              "normalized": null,
+              "start": 0,
+              "end": 107,
+              "coordinates": [
+                0,
+                107
+              ]
+            }
+          },
+          "source_text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972; in this case, the additional amounts shall be treated as business income and the reduced amounts as business expenses. 13.",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000207",
+          "pronoun": "they",
+          "coordinates": [
+            313,
+            317
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 2,
+            "clause_id": "estg_000207_c03",
+            "clause_span": {
+              "id": null,
+              "text": "To the extent that amounts have been recognized as special expenses under subsection 1 item 3, they may not be taken into account again as special expenses on another legal basis",
+              "normalized": null,
+              "start": 218,
+              "end": 396,
+              "coordinates": [
+                218,
+                396
+              ]
+            }
+          },
+          "source_text": "A child for whom the additional amount has been claimed may not claim such special expenses itself; if the child has claimed such special expenses itself, the additional amount may not be claimed for that child. 3. a) To the extent that amounts have been recognized as special expenses under subsection 1 item 3, they may not be taken into account again as special expenses on another legal basis.",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000209",
+          "pronoun": "this",
+          "coordinates": [
+            383,
+            387
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 1,
+            "clause_id": "estg_000209_c02",
+            "clause_span": {
+              "id": null,
+              "text": "this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette)",
+              "normalized": null,
+              "start": 383,
+              "end": 680,
+              "coordinates": [
+                383,
+                680
+              ]
+            }
+          },
+          "source_text": "Shares issued as a result of a capital increase are not eligible if the resolution on the increase of the share capital (Section 149(1) of the Stock Corporation Act 1965) was adopted within two years after the registration of the resolution on the reduction of the share capital for the purpose of repaying parts of the share capital (Section 177 of the Stock Corporation Act 1965); this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette).",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000286",
+          "pronoun": "it",
+          "coordinates": [
+            320,
+            322
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 0,
+            "clause_id": "estg_000286_c01",
+            "clause_span": {
+              "id": null,
+              "text": "If a more favourable provision on the charging of proportional daily allowances is contained in collective agreements or works agreements concluded on the basis of special collective agreement authorisations, or is based on service (salary) regulations of corporations under public law approved by the supervisory authority, it shall be taken into account.",
+              "normalized": null,
+              "start": 0,
+              "end": 356,
+              "coordinates": [
+                0,
+                356
+              ]
+            }
+          },
+          "source_text": "If a more favourable provision on the charging of proportional daily allowances is contained in collective agreements or works agreements concluded on the basis of special collective agreement authorisations, or is based on service (salary) regulations of corporations under public law approved by the supervisory authority, it shall be taken into account. c) If, in the case of a domestic business trip, no higher costs for overnight accommodation are proven, an amount of up to 200 S may be taken into account as an overnight allowance including the cost of breakfast. d) Daily allowances for foreign business trips may be taken into account at the maximum rate of the foreign travel rates for federal employees. e) If, in the case of a foreign business trip, no higher costs for overnight accommodation— 152.",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000433",
+          "pronoun": "it",
+          "coordinates": [
+            118,
+            120
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 0,
+            "clause_id": "estg_000433_c01",
+            "clause_span": {
+              "id": null,
+              "text": "If the municipality has entered the sole-earner tax credit (Section 57(2)) on the employee’s first wage tax card, it must be cancelled simultaneously with the issuance of a wage tax card for the spouse.",
+              "normalized": null,
+              "start": 4,
+              "end": 206,
+              "coordinates": [
+                4,
+                206
+              ]
+            }
+          },
+          "source_text": "(2) If the municipality has entered the sole-earner tax credit (Section 57(2)) on the employee’s first wage tax card, it must be cancelled simultaneously with the issuance of a wage tax card for the spouse.",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000800",
+          "pronoun": "This",
+          "coordinates": [
+            0,
+            4
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 0,
+            "clause_id": "estg_000800_c01",
+            "clause_span": {
+              "id": null,
+              "text": "This does not apply as long as the sponsoring undertaking suspends the contribution payments (Section 4(4) no. 2 of the Income Tax Act 1988).",
+              "normalized": null,
+              "start": 0,
+              "end": 141,
+              "coordinates": [
+                0,
+                141
+              ]
+            }
+          },
+          "source_text": "This does not apply as long as the sponsoring undertaking suspends the contribution payments (Section 4(4) no. 2 of the Income Tax Act 1988).\nd) The pension commitments of the fund may not exceed 80% of the last current active remuneration.\ne) The beneficiary must also have a legal entitlement to the pension upon termination of the employment relationship (vesting) if he/she has been a beneficiary for more than five years.\nf) Upon termination of the employment relationship before the insured event occurs, the beneficiary's entitlements from own contributions and from employer contributions that have become vested may be settled or transferred to another pension fund.\ng) After the insured event has occurred, the following may be settled:\n— minor benefits and\n— benefits for survivors' provision.\nh) The entitled employees must have the right to participate in the administration of all amounts that flow to the fund.\n2.",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        }
+      ]
+    }
+  }
+}

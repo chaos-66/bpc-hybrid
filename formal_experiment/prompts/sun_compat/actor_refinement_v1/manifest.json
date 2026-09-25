@@ -1,0 +1,161 @@
+{
+  "schema_version": "actor_refinement_prompt_variants@1.0.0",
+  "created_at_utc": "2026-09-25T15:39:32Z",
+  "base_prompt": {
+    "path": "prompts\\sun_compat\\direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md",
+    "sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895"
+  },
+  "construction": {
+    "script": "scripts\\build_actor_refinement_prompt_variants_v1.py",
+    "script_sha256": "261284ccd90520b5736aca8ded4fa703fac691065ff55054d09cb2f9f3185a51",
+    "gold_used": false,
+    "benchmark_lexicon_added": false,
+    "iterative_search": false
+  },
+  "arms": [
+    {
+      "arm": "B0",
+      "filename": "direct_llm_actor_baseline_v1",
+      "conceptual_factor": "fresh_unchanged_baseline",
+      "description": "Byte-for-byte copy of the frozen full prompt.",
+      "path": "prompts\\sun_compat\\actor_refinement_v1\\direct_llm_actor_baseline_v1.md",
+      "sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "unexpected_diff_count": 0,
+      "changed_line_ranges": []
+    },
+    {
+      "arm": "R",
+      "filename": "direct_llm_actor_role_eligibility_v1",
+      "conceptual_factor": "actor_role_eligibility_only",
+      "description": "Tighten actor noun-phrase eligibility while preserving the pronoun policy and condition projection exactly.",
+      "path": "prompts\\sun_compat\\actor_refinement_v1\\direct_llm_actor_role_eligibility_v1.md",
+      "sha256": "57d42002060ff2909855bdb0eda1ec3c9af76933b6ebd5805d002fa9fe7626dd",
+      "unexpected_diff_count": 0,
+      "changed_line_ranges": [
+        {
+          "baseline": [
+            57,
+            61
+          ],
+          "variant": [
+            57,
+            67
+          ],
+          "regions": [
+            "rule10"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "P",
+      "filename": "direct_llm_actor_pronoun_policy_v1",
+      "conceptual_factor": "unresolved_pronoun_policy_only",
+      "description": "Abstain on unresolved actor pronouns; synchronize Rule 16/17 and Synthetic Example 1 only.",
+      "path": "prompts\\sun_compat\\actor_refinement_v1\\direct_llm_actor_pronoun_policy_v1.md",
+      "sha256": "4ec0756bae791fdb0f013f80c93deeb6cfa3b14a0b2656ee89b16f76653f539f",
+      "unexpected_diff_count": 0,
+      "changed_line_ranges": [
+        {
+          "baseline": [
+            58,
+            61
+          ],
+          "variant": [
+            58,
+            65
+          ],
+          "regions": [
+            "rule10"
+          ]
+        },
+        {
+          "baseline": [
+            78,
+            78
+          ],
+          "variant": [
+            82,
+            83
+          ],
+          "regions": [
+            "rule1617"
+          ]
+        },
+        {
+          "baseline": [
+            83,
+            85
+          ],
+          "variant": [
+            88,
+            92
+          ],
+          "regions": [
+            "rule1617"
+          ]
+        },
+        {
+          "baseline": [
+            146,
+            146
+          ],
+          "variant": [
+            153,
+            153
+          ],
+          "regions": [
+            "example1"
+          ]
+        },
+        {
+          "baseline": [
+            160,
+            160
+          ],
+          "variant": [
+            167,
+            167
+          ],
+          "regions": [
+            "example1"
+          ]
+        },
+        {
+          "baseline": [
+            165,
+            165
+          ],
+          "variant": [
+            172,
+            172
+          ],
+          "regions": [
+            "example1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "C",
+      "filename": "direct_llm_actor_condition_projection_v1",
+      "conceptual_factor": "condition_actor_projection_only",
+      "description": "Project an explicit actor-eligible participant out of a condition into actors; no eligibility or pronoun change.",
+      "path": "prompts\\sun_compat\\actor_refinement_v1\\direct_llm_actor_condition_projection_v1.md",
+      "sha256": "aac408ad9d1940eeee899d223cb51544afdc9d04de331b907d9a485e2e19792d",
+      "unexpected_diff_count": 0,
+      "changed_line_ranges": [
+        {
+          "baseline": [],
+          "variant": [
+            126,
+            133
+          ],
+          "regions": [
+            "rule2728"
+          ]
+        }
+      ]
+    }
+  ]
+}

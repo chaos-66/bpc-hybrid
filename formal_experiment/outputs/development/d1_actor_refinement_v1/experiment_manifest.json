@@ -1,0 +1,99 @@
+{
+  "schema_version": "d1_actor_refinement_experiment@1.0.0",
+  "experiment_id": "d1_actor_refinement_v1",
+  "created_at_utc": "2026-09-25T15:44:28Z",
+  "status": "frozen_pre_execution",
+  "scope": "development_screening_only",
+  "design": {
+    "arms": [
+      "B0",
+      "R",
+      "P",
+      "C"
+    ],
+    "planned_calls": 600,
+    "samples_per_arm": 150,
+    "repeat_count": 0,
+    "fresh_baseline": true,
+    "one_factor_per_arm": true,
+    "combined_arm_allowed": false
+  },
+  "prompts": {
+    "B0": {
+      "path": "prompts\\sun_compat\\actor_refinement_v1\\direct_llm_actor_baseline_v1.md",
+      "sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "conceptual_factor": "fresh_unchanged_baseline"
+    },
+    "R": {
+      "path": "prompts\\sun_compat\\actor_refinement_v1\\direct_llm_actor_role_eligibility_v1.md",
+      "sha256": "57d42002060ff2909855bdb0eda1ec3c9af76933b6ebd5805d002fa9fe7626dd",
+      "conceptual_factor": "actor_role_eligibility_only"
+    },
+    "P": {
+      "path": "prompts\\sun_compat\\actor_refinement_v1\\direct_llm_actor_pronoun_policy_v1.md",
+      "sha256": "4ec0756bae791fdb0f013f80c93deeb6cfa3b14a0b2656ee89b16f76653f539f",
+      "conceptual_factor": "unresolved_pronoun_policy_only"
+    },
+    "C": {
+      "path": "prompts\\sun_compat\\actor_refinement_v1\\direct_llm_actor_condition_projection_v1.md",
+      "sha256": "aac408ad9d1940eeee899d223cb51544afdc9d04de331b907d9a485e2e19792d",
+      "conceptual_factor": "condition_actor_projection_only"
+    }
+  },
+  "model": {
+    "id": "deepseek-v4-pro",
+    "provider": "openai_compatible",
+    "documented_release": "DeepSeek-V4-Pro-0813"
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null
+  },
+  "dataset": {
+    "path": "data\\input\\estg150_formal_inference_input_v2.json",
+    "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "sample_count": 150,
+    "sample_ids_sha256": "95b6ae7a206dec3b01985cdcdcbca09147f470b6988a209d7b5cd65bab413c6c",
+    "first_sample_id": "estg_000002",
+    "ordering": "frozen_input_array_order"
+  },
+  "canonicalizer": {
+    "module": "bpc_hybrid.d1_span_canonicalizer",
+    "policy": "repair_v1",
+    "policy_explicit_pin": true,
+    "cost_metric": "sum_absolute_endpoint_distance"
+  },
+  "evaluator": {
+    "id": "sun_literal_overlap_evaluation@2.0.0",
+    "same_for_all_arms": true
+  },
+  "gold_isolation": {
+    "used_during_prompt_construction": false,
+    "used_during_api_execution": false,
+    "evaluation_after_predictions_locked": true
+  },
+  "provenance_requirements": [
+    "sample_id",
+    "arm",
+    "request_body_sha256",
+    "prompt_sha256",
+    "raw_response_content",
+    "parsed_response",
+    "adapter_output",
+    "canonicalizer_output",
+    "validation",
+    "canonical_final_record",
+    "failure_reason"
+  ],
+  "runner": {
+    "path": "scripts\\run_actor_refinement_experiment_v1.py",
+    "sha256": "1b9a28b75ca88056c675fd42bca562b2ca27969d02b1b95e46dd0705094dafc5"
+  }
+}

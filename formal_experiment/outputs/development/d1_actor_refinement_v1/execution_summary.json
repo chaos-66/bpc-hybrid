@@ -1,0 +1,120 @@
+{
+  "schema_version": "d1_actor_refinement_execution@1.0.0",
+  "experiment_id": "d1_actor_refinement_v1",
+  "status": "complete",
+  "model": {
+    "id": "deepseek-v4-pro",
+    "provider": "openai_compatible",
+    "documented_release": "DeepSeek-V4-Pro-0813"
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 4096,
+    "retry": 0,
+    "stream": false,
+    "thinking": {
+      "type": "disabled"
+    },
+    "response_format": null
+  },
+  "dataset": {
+    "path": "data\\input\\estg150_formal_inference_input_v2.json",
+    "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+    "sample_count": 150,
+    "sample_ids_sha256": "95b6ae7a206dec3b01985cdcdcbca09147f470b6988a209d7b5cd65bab413c6c",
+    "first_sample_id": "estg_000002",
+    "ordering": "frozen_input_array_order"
+  },
+  "canonicalizer": {
+    "module": "bpc_hybrid.d1_span_canonicalizer",
+    "policy": "repair_v1",
+    "policy_explicit_pin": true,
+    "cost_metric": "sum_absolute_endpoint_distance"
+  },
+  "evaluator": {
+    "id": "sun_literal_overlap_evaluation@2.0.0",
+    "same_for_all_arms": true
+  },
+  "planned_calls": 600,
+  "actual_new_calls": 518,
+  "resumed_completed_count": 82,
+  "total_calls_accounted": 600,
+  "complete": true,
+  "arms": {
+    "B0": {
+      "arm": "B0",
+      "repeat_id": "repeat-01",
+      "sample_count": 150,
+      "planned_sample_count": 150,
+      "new_calls": 68,
+      "resumed_completed_count": 82,
+      "api_ok_count": 150,
+      "json_parse_ok_count": 150,
+      "adapter_ok_count": 150,
+      "canonicalizer_ok_count": 150,
+      "validator_ok_count": 150,
+      "prediction_ok_count": 150,
+      "failed_count": 0,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "raw_responses_sha256": "c5692a71befd503bf180ec2972af550d4324dda0636fc5e36eef68acd220e133",
+      "canonical_predictions_sha256": "b3148b62cab1c866dda9c47b8253e09d9ef440aa2c299c62dff0ab7aeda32042"
+    },
+    "R": {
+      "arm": "R",
+      "repeat_id": "repeat-01",
+      "sample_count": 150,
+      "planned_sample_count": 150,
+      "new_calls": 150,
+      "resumed_completed_count": 0,
+      "api_ok_count": 150,
+      "json_parse_ok_count": 150,
+      "adapter_ok_count": 150,
+      "canonicalizer_ok_count": 150,
+      "validator_ok_count": 150,
+      "prediction_ok_count": 150,
+      "failed_count": 0,
+      "prompt_sha256": "57d42002060ff2909855bdb0eda1ec3c9af76933b6ebd5805d002fa9fe7626dd",
+      "raw_responses_sha256": "7263372fb0d657b65ae1fd996e6b2b282c1157cad8eedf5278a38dcc0ab931c3",
+      "canonical_predictions_sha256": "9d341c7e32ea9d4650148030374dddfc65d654ed05440d729e6bbd1ce6f4ee87"
+    },
+    "P": {
+      "arm": "P",
+      "repeat_id": "repeat-01",
+      "sample_count": 150,
+      "planned_sample_count": 150,
+      "new_calls": 150,
+      "resumed_completed_count": 0,
+      "api_ok_count": 150,
+      "json_parse_ok_count": 150,
+      "adapter_ok_count": 150,
+      "canonicalizer_ok_count": 150,
+      "validator_ok_count": 150,
+      "prediction_ok_count": 150,
+      "failed_count": 0,
+      "prompt_sha256": "4ec0756bae791fdb0f013f80c93deeb6cfa3b14a0b2656ee89b16f76653f539f",
+      "raw_responses_sha256": "94a9a8ab90c0d367834879ac050e5236be509d6f41fa0278a7fad9f432d8a9a2",
+      "canonical_predictions_sha256": "1b9cb9f47002b759e9093236625f98c4bbef5864a4b31f216e18e8b673bcd2c2"
+    },
+    "C": {
+      "arm": "C",
+      "repeat_id": "repeat-01",
+      "sample_count": 150,
+      "planned_sample_count": 150,
+      "new_calls": 150,
+      "resumed_completed_count": 0,
+      "api_ok_count": 150,
+      "json_parse_ok_count": 150,
+      "adapter_ok_count": 150,
+      "canonicalizer_ok_count": 150,
+      "validator_ok_count": 150,
+      "prediction_ok_count": 150,
+      "failed_count": 0,
+      "prompt_sha256": "aac408ad9d1940eeee899d223cb51544afdc9d04de331b907d9a485e2e19792d",
+      "raw_responses_sha256": "a0f9a2751c30f2f0c2d27375237beeabf6e7dedf5f2544cf29e2543c2f1e748f",
+      "canonical_predictions_sha256": "56dc72d141edeb1a434f9fe81f5629e3d3801bb1bf91ce66994dab0220dae930"
+    }
+  },
+  "runtime_seconds": 3246.876,
+  "finished_at_utc": "2026-09-25T16:47:13Z"
+}

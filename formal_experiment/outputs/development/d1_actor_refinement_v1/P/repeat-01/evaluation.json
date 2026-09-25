@@ -1,0 +1,309 @@
+{
+  "arm": "P",
+  "evaluation": {
+    "evaluator": "sun_literal_overlap@2.0.0",
+    "metrics": {
+      "schema_version": "sun_literal_overlap_evaluation@2.0.0",
+      "dataset_id": "independently_reconstructed_estg_150_v1",
+      "method_id": "direct_llm",
+      "sample_count": 150,
+      "invalid_attempt_count": 0,
+      "evaluation_unit": "statement",
+      "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+      "assignment": "none_independent_overlap_coverage",
+      "clause_alignment_required": false,
+      "overlap_threshold": "strictly_greater_than_zero_characters",
+      "modality_policy": "evidence_span_extraction_only_label_ignored",
+      "reporting_role": "primary_sun_phrase_extraction_metric",
+      "per_field": {
+        "modality": {
+          "ground_truth": 231,
+          "extracted": 256,
+          "matched_predictions": 247,
+          "matched_ground_truth": 213,
+          "misclassified": 9,
+          "missed": 18,
+          "precision": 0.96484375,
+          "recall": 0.922077922077922,
+          "f1": 0.9429762064793654
+        },
+        "actor": {
+          "ground_truth": 48,
+          "extracted": 70,
+          "matched_predictions": 44,
+          "matched_ground_truth": 44,
+          "misclassified": 26,
+          "missed": 4,
+          "precision": 0.6285714285714286,
+          "recall": 0.9166666666666666,
+          "f1": 0.7457627118644068
+        },
+        "action": {
+          "ground_truth": 247,
+          "extracted": 230,
+          "matched_predictions": 211,
+          "matched_ground_truth": 214,
+          "misclassified": 19,
+          "missed": 33,
+          "precision": 0.9173913043478261,
+          "recall": 0.8663967611336032,
+          "f1": 0.8911651223146531
+        },
+        "condition": {
+          "ground_truth": 214,
+          "extracted": 141,
+          "matched_predictions": 127,
+          "matched_ground_truth": 149,
+          "misclassified": 14,
+          "missed": 65,
+          "precision": 0.900709219858156,
+          "recall": 0.6962616822429907,
+          "f1": 0.7853985514765394
+        },
+        "constraint": {
+          "ground_truth": 302,
+          "extracted": 241,
+          "matched_predictions": 159,
+          "matched_ground_truth": 158,
+          "misclassified": 82,
+          "missed": 144,
+          "precision": 0.6597510373443983,
+          "recall": 0.5231788079470199,
+          "f1": 0.5835811187511614
+        },
+        "exception": {
+          "ground_truth": 13,
+          "extracted": 8,
+          "matched_predictions": 8,
+          "matched_ground_truth": 8,
+          "misclassified": 0,
+          "missed": 5,
+          "precision": 1.0,
+          "recall": 0.6153846153846154,
+          "f1": 0.761904761904762
+        }
+      },
+      "overall": {
+        "ground_truth": 1055,
+        "extracted": 946,
+        "matched_predictions": 796,
+        "matched_ground_truth": 786,
+        "misclassified": 150,
+        "missed": 269,
+        "precision": 0.8414376321353065,
+        "recall": 0.7450236966824645,
+        "f1": 0.7903009847562361
+      }
+    }
+  },
+  "metrics": {
+    "schema_version": "sun_literal_overlap_evaluation@2.0.0",
+    "dataset_id": "independently_reconstructed_estg_150_v1",
+    "method_id": "direct_llm",
+    "sample_count": 150,
+    "invalid_attempt_count": 0,
+    "evaluation_unit": "statement",
+    "match_rule": "independent_same_field_any_nonempty_character_span_intersection",
+    "assignment": "none_independent_overlap_coverage",
+    "clause_alignment_required": false,
+    "overlap_threshold": "strictly_greater_than_zero_characters",
+    "modality_policy": "evidence_span_extraction_only_label_ignored",
+    "reporting_role": "primary_sun_phrase_extraction_metric",
+    "per_field": {
+      "modality": {
+        "ground_truth": 231,
+        "extracted": 256,
+        "matched_predictions": 247,
+        "matched_ground_truth": 213,
+        "misclassified": 9,
+        "missed": 18,
+        "precision": 0.96484375,
+        "recall": 0.922077922077922,
+        "f1": 0.9429762064793654
+      },
+      "actor": {
+        "ground_truth": 48,
+        "extracted": 70,
+        "matched_predictions": 44,
+        "matched_ground_truth": 44,
+        "misclassified": 26,
+        "missed": 4,
+        "precision": 0.6285714285714286,
+        "recall": 0.9166666666666666,
+        "f1": 0.7457627118644068
+      },
+      "action": {
+        "ground_truth": 247,
+        "extracted": 230,
+        "matched_predictions": 211,
+        "matched_ground_truth": 214,
+        "misclassified": 19,
+        "missed": 33,
+        "precision": 0.9173913043478261,
+        "recall": 0.8663967611336032,
+        "f1": 0.8911651223146531
+      },
+      "condition": {
+        "ground_truth": 214,
+        "extracted": 141,
+        "matched_predictions": 127,
+        "matched_ground_truth": 149,
+        "misclassified": 14,
+        "missed": 65,
+        "precision": 0.900709219858156,
+        "recall": 0.6962616822429907,
+        "f1": 0.7853985514765394
+      },
+      "constraint": {
+        "ground_truth": 302,
+        "extracted": 241,
+        "matched_predictions": 159,
+        "matched_ground_truth": 158,
+        "misclassified": 82,
+        "missed": 144,
+        "precision": 0.6597510373443983,
+        "recall": 0.5231788079470199,
+        "f1": 0.5835811187511614
+      },
+      "exception": {
+        "ground_truth": 13,
+        "extracted": 8,
+        "matched_predictions": 8,
+        "matched_ground_truth": 8,
+        "misclassified": 0,
+        "missed": 5,
+        "precision": 1.0,
+        "recall": 0.6153846153846154,
+        "f1": 0.761904761904762
+      }
+    },
+    "overall": {
+      "ground_truth": 1055,
+      "extracted": 946,
+      "matched_predictions": 796,
+      "matched_ground_truth": 786,
+      "misclassified": 150,
+      "missed": 269,
+      "precision": 0.8414376321353065,
+      "recall": 0.7450236966824645,
+      "f1": 0.7903009847562361
+    }
+  },
+  "actor_inventory": {
+    "metrics": {
+      "ground_truth": 48,
+      "extracted": 70,
+      "matched_predictions": 44,
+      "matched_ground_truth": 44,
+      "misclassified": 26,
+      "missed": 4,
+      "precision": 0.6285714285714286,
+      "recall": 0.9166666666666666,
+      "f1": 0.7457627118644068
+    },
+    "tp_count": 44,
+    "fp_count": 26,
+    "fn_count": 4,
+    "fp_taxonomy": {
+      "counts": {
+        "FP-A_PRONOUN_DEMONSTRATIVE": 1,
+        "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT": 22,
+        "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED": 3
+      },
+      "shares": {
+        "FP-A_PRONOUN_DEMONSTRATIVE": 0.038461538461538464,
+        "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT": 0.8461538461538461,
+        "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED": 0.11538461538461539
+      },
+      "total": 26,
+      "labels": {
+        "FN-A": "ABSENT_FROM_ALL_MODEL_SEMANTIC_SPANS",
+        "FN-B": "EMBEDDED_IN_CONDITION",
+        "FN-C": "EMBEDDED_IN_CONSTRAINT",
+        "FN-D": "EMBEDDED_IN_ACTION",
+        "FN-E": "EMBEDDED_IN_EXCEPTION",
+        "FN-F": "WRONG_ACTOR_BOUNDARY",
+        "FN-G": "DUPLICATE_OCCURRENCE_COVERAGE",
+        "FN-H": "CLAUSE_SEGMENTATION_SCOPE",
+        "FN-I": "OTHER",
+        "FP-A": "PRONOUN_DEMONSTRATIVE",
+        "FP-B": "NON_ROLE_GRAMMATICAL_SUBJECT",
+        "FP-C": "LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+        "FP-D": "WRONG_OCCURRENCE_DUPLICATE",
+        "FP-E": "OVERLONG_UNDER_SPECIFIC_ACTOR_SPAN",
+        "FP-F": "CLAUSE_SCOPE_ERROR",
+        "FP-G": "OTHER"
+      }
+    },
+    "fn_taxonomy": {
+      "counts": {
+        "FN-A_ABSENT_FROM_ALL_MODEL_SEMANTIC_SPANS": 1,
+        "FN-B_EMBEDDED_IN_CONDITION": 3
+      },
+      "shares": {
+        "FN-A_ABSENT_FROM_ALL_MODEL_SEMANTIC_SPANS": 0.25,
+        "FN-B_EMBEDDED_IN_CONDITION": 0.75
+      },
+      "total": 4,
+      "labels": {
+        "FN-A": "ABSENT_FROM_ALL_MODEL_SEMANTIC_SPANS",
+        "FN-B": "EMBEDDED_IN_CONDITION",
+        "FN-C": "EMBEDDED_IN_CONSTRAINT",
+        "FN-D": "EMBEDDED_IN_ACTION",
+        "FN-E": "EMBEDDED_IN_EXCEPTION",
+        "FN-F": "WRONG_ACTOR_BOUNDARY",
+        "FN-G": "DUPLICATE_OCCURRENCE_COVERAGE",
+        "FN-H": "CLAUSE_SEGMENTATION_SCOPE",
+        "FN-I": "OTHER",
+        "FP-A": "PRONOUN_DEMONSTRATIVE",
+        "FP-B": "NON_ROLE_GRAMMATICAL_SUBJECT",
+        "FP-C": "LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+        "FP-D": "WRONG_OCCURRENCE_DUPLICATE",
+        "FP-E": "OVERLONG_UNDER_SPECIFIC_ACTOR_SPAN",
+        "FP-F": "CLAUSE_SCOPE_ERROR",
+        "FP-G": "OTHER"
+      }
+    },
+    "pronoun_analysis": {
+      "total": 1,
+      "tp": 0,
+      "fp": 1,
+      "precision": 0.0,
+      "prompt_pronoun_total": 1,
+      "prompt_pronoun_tp": 0,
+      "prompt_pronoun_fp": 1,
+      "surface_distribution": {
+        "this": 1
+      },
+      "cases": [
+        {
+          "sample_id": "estg_000209",
+          "pronoun": "this",
+          "coordinates": [
+            383,
+            387
+          ],
+          "gold_overlap": false,
+          "tp_fp": "FP",
+          "clause_context": {
+            "clause_index": 1,
+            "clause_id": "estg_000209_c02",
+            "clause_span": {
+              "id": null,
+              "text": "this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette)",
+              "normalized": null,
+              "start": 383,
+              "end": 680,
+              "coordinates": [
+                383,
+                680
+              ]
+            }
+          },
+          "source_text": "Shares issued as a result of a capital increase are not eligible if the resolution on the increase of the share capital (Section 149(1) of the Stock Corporation Act 1965) was adopted within two years after the registration of the resolution on the reduction of the share capital for the purpose of repaying parts of the share capital (Section 177 of the Stock Corporation Act 1965); this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette).",
+          "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        }
+      ]
+    }
+  }
+}

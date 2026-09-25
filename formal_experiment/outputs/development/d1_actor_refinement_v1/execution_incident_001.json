@@ -1,0 +1,16 @@
+{
+    "completed_raw_rows_P":  0,
+    "completed_raw_rows_C":  0,
+    "last_stdout_progress":  "[B0] new calls=80 resumed=1 last=estg_000207",
+    "schema_version":  "d1_actor_refinement_execution_incident@1.0.0",
+    "incident_id":  "exec-interruption-001",
+    "occurred_at_utc":  "2026-09-25T15:53:00Z",
+    "process_id":  7096,
+    "prompt_modified":  false,
+    "completed_raw_rows_R":  0,
+    "gold_reached":  false,
+    "failure_mode":  "KeyboardInterrupt during urllib response read after monitoring shell reset",
+    "observed_by":  "assistant polling timeout",
+    "resume_policy":  "restart runner with --execute; completed raw rows are reused; the single in-flight sample may be resent",
+    "completed_raw_rows_B0":  82
+}

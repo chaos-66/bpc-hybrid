@@ -1,0 +1,2141 @@
+{
+  "schema_version": "d1_actor_refinement_report@1.0.0",
+  "experiment_id": "d1_actor_refinement_v1",
+  "generated_at_utc": "2026-09-25T16:49:42Z",
+  "scope": "development_screening_only",
+  "status": "evaluation_only_no_promotion",
+  "execution": {
+    "schema_version": "d1_actor_refinement_execution@1.0.0",
+    "experiment_id": "d1_actor_refinement_v1",
+    "status": "complete",
+    "model": {
+      "id": "deepseek-v4-pro",
+      "provider": "openai_compatible",
+      "documented_release": "DeepSeek-V4-Pro-0813"
+    },
+    "sampling": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 4096,
+      "retry": 0,
+      "stream": false,
+      "thinking": {
+        "type": "disabled"
+      },
+      "response_format": null
+    },
+    "dataset": {
+      "path": "data\\input\\estg150_formal_inference_input_v2.json",
+      "sha256": "52a73aa1109970b6c4fbc17214b0828ed0dd64b330001e884cdc803b1ce81dc2",
+      "sample_count": 150,
+      "sample_ids_sha256": "95b6ae7a206dec3b01985cdcdcbca09147f470b6988a209d7b5cd65bab413c6c",
+      "first_sample_id": "estg_000002",
+      "ordering": "frozen_input_array_order"
+    },
+    "canonicalizer": {
+      "module": "bpc_hybrid.d1_span_canonicalizer",
+      "policy": "repair_v1",
+      "policy_explicit_pin": true,
+      "cost_metric": "sum_absolute_endpoint_distance"
+    },
+    "evaluator": {
+      "id": "sun_literal_overlap_evaluation@2.0.0",
+      "same_for_all_arms": true
+    },
+    "planned_calls": 600,
+    "actual_new_calls": 518,
+    "resumed_completed_count": 82,
+    "total_calls_accounted": 600,
+    "complete": true,
+    "arms": {
+      "B0": {
+        "arm": "B0",
+        "repeat_id": "repeat-01",
+        "sample_count": 150,
+        "planned_sample_count": 150,
+        "new_calls": 68,
+        "resumed_completed_count": 82,
+        "api_ok_count": 150,
+        "json_parse_ok_count": 150,
+        "adapter_ok_count": 150,
+        "canonicalizer_ok_count": 150,
+        "validator_ok_count": 150,
+        "prediction_ok_count": 150,
+        "failed_count": 0,
+        "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+        "raw_responses_sha256": "c5692a71befd503bf180ec2972af550d4324dda0636fc5e36eef68acd220e133",
+        "canonical_predictions_sha256": "b3148b62cab1c866dda9c47b8253e09d9ef440aa2c299c62dff0ab7aeda32042"
+      },
+      "R": {
+        "arm": "R",
+        "repeat_id": "repeat-01",
+        "sample_count": 150,
+        "planned_sample_count": 150,
+        "new_calls": 150,
+        "resumed_completed_count": 0,
+        "api_ok_count": 150,
+        "json_parse_ok_count": 150,
+        "adapter_ok_count": 150,
+        "canonicalizer_ok_count": 150,
+        "validator_ok_count": 150,
+        "prediction_ok_count": 150,
+        "failed_count": 0,
+        "prompt_sha256": "57d42002060ff2909855bdb0eda1ec3c9af76933b6ebd5805d002fa9fe7626dd",
+        "raw_responses_sha256": "7263372fb0d657b65ae1fd996e6b2b282c1157cad8eedf5278a38dcc0ab931c3",
+        "canonical_predictions_sha256": "9d341c7e32ea9d4650148030374dddfc65d654ed05440d729e6bbd1ce6f4ee87"
+      },
+      "P": {
+        "arm": "P",
+        "repeat_id": "repeat-01",
+        "sample_count": 150,
+        "planned_sample_count": 150,
+        "new_calls": 150,
+        "resumed_completed_count": 0,
+        "api_ok_count": 150,
+        "json_parse_ok_count": 150,
+        "adapter_ok_count": 150,
+        "canonicalizer_ok_count": 150,
+        "validator_ok_count": 150,
+        "prediction_ok_count": 150,
+        "failed_count": 0,
+        "prompt_sha256": "4ec0756bae791fdb0f013f80c93deeb6cfa3b14a0b2656ee89b16f76653f539f",
+        "raw_responses_sha256": "94a9a8ab90c0d367834879ac050e5236be509d6f41fa0278a7fad9f432d8a9a2",
+        "canonical_predictions_sha256": "1b9cb9f47002b759e9093236625f98c4bbef5864a4b31f216e18e8b673bcd2c2"
+      },
+      "C": {
+        "arm": "C",
+        "repeat_id": "repeat-01",
+        "sample_count": 150,
+        "planned_sample_count": 150,
+        "new_calls": 150,
+        "resumed_completed_count": 0,
+        "api_ok_count": 150,
+        "json_parse_ok_count": 150,
+        "adapter_ok_count": 150,
+        "canonicalizer_ok_count": 150,
+        "validator_ok_count": 150,
+        "prediction_ok_count": 150,
+        "failed_count": 0,
+        "prompt_sha256": "aac408ad9d1940eeee899d223cb51544afdc9d04de331b907d9a485e2e19792d",
+        "raw_responses_sha256": "a0f9a2751c30f2f0c2d27375237beeabf6e7dedf5f2544cf29e2543c2f1e748f",
+        "canonical_predictions_sha256": "56dc72d141edeb1a434f9fe81f5629e3d3801bb1bf91ce66994dab0220dae930"
+      }
+    },
+    "runtime_seconds": 3246.876,
+    "finished_at_utc": "2026-09-25T16:47:13Z"
+  },
+  "execution_incidents": [
+    {
+      "completed_raw_rows_P": 0,
+      "completed_raw_rows_C": 0,
+      "last_stdout_progress": "[B0] new calls=80 resumed=1 last=estg_000207",
+      "schema_version": "d1_actor_refinement_execution_incident@1.0.0",
+      "incident_id": "exec-interruption-001",
+      "occurred_at_utc": "2026-09-25T15:53:00Z",
+      "process_id": 7096,
+      "prompt_modified": false,
+      "completed_raw_rows_R": 0,
+      "gold_reached": false,
+      "failure_mode": "KeyboardInterrupt during urllib response read after monitoring shell reset",
+      "observed_by": "assistant polling timeout",
+      "resume_policy": "restart runner with --execute; completed raw rows are reused; the single in-flight sample may be resent",
+      "completed_raw_rows_B0": 82
+    }
+  ],
+  "prompt_integrity": {
+    "base_prompt_sha": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "variants": {
+      "B0": {
+        "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+        "conceptual_factor": "fresh_unchanged_baseline"
+      },
+      "R": {
+        "prompt_sha256": "57d42002060ff2909855bdb0eda1ec3c9af76933b6ebd5805d002fa9fe7626dd",
+        "conceptual_factor": "actor_role_eligibility_only"
+      },
+      "P": {
+        "prompt_sha256": "4ec0756bae791fdb0f013f80c93deeb6cfa3b14a0b2656ee89b16f76653f539f",
+        "conceptual_factor": "unresolved_pronoun_policy_only"
+      },
+      "C": {
+        "prompt_sha256": "aac408ad9d1940eeee899d223cb51544afdc9d04de331b907d9a485e2e19792d",
+        "conceptual_factor": "condition_actor_projection_only"
+      }
+    },
+    "unexpected_diff_count": 0
+  },
+  "metrics": {
+    "B0": {
+      "overall": {
+        "precision": 0.816901,
+        "recall": 0.756398,
+        "f1": 0.785486,
+        "ground_truth": 1055,
+        "extracted": 994,
+        "matched_predictions": 812,
+        "matched_ground_truth": 798
+      },
+      "per_field": {
+        "modality": {
+          "ground_truth": 231,
+          "pred": 256,
+          "matched_predictions": 248,
+          "matched_gold": 212,
+          "precision": 0.96875,
+          "recall": 0.917749,
+          "f1": 0.94256,
+          "fp": 8,
+          "fn": 19
+        },
+        "actor": {
+          "ground_truth": 48,
+          "pred": 92,
+          "matched_predictions": 45,
+          "matched_gold": 45,
+          "precision": 0.48913,
+          "recall": 0.9375,
+          "f1": 0.642857,
+          "fp": 47,
+          "fn": 3
+        },
+        "action": {
+          "ground_truth": 247,
+          "pred": 231,
+          "matched_predictions": 211,
+          "matched_gold": 213,
+          "precision": 0.91342,
+          "recall": 0.862348,
+          "f1": 0.88715,
+          "fp": 20,
+          "fn": 34
+        },
+        "condition": {
+          "ground_truth": 214,
+          "pred": 142,
+          "matched_predictions": 127,
+          "matched_gold": 149,
+          "precision": 0.894366,
+          "recall": 0.696262,
+          "f1": 0.782977,
+          "fp": 15,
+          "fn": 65
+        },
+        "constraint": {
+          "ground_truth": 302,
+          "pred": 264,
+          "matched_predictions": 173,
+          "matched_gold": 171,
+          "precision": 0.655303,
+          "recall": 0.566225,
+          "f1": 0.607516,
+          "fp": 91,
+          "fn": 131
+        },
+        "exception": {
+          "ground_truth": 13,
+          "pred": 9,
+          "matched_predictions": 8,
+          "matched_gold": 8,
+          "precision": 0.888889,
+          "recall": 0.615385,
+          "f1": 0.727273,
+          "fp": 1,
+          "fn": 5
+        }
+      },
+      "quality": {
+        "api_ok_count": 150,
+        "failed_count": 0,
+        "schema_valid_rate": 1.0,
+        "nonempty_record_count": 149,
+        "failed_prediction_count": 0,
+        "retry_count": 0
+      }
+    },
+    "R": {
+      "overall": {
+        "precision": 0.829418,
+        "recall": 0.75545,
+        "f1": 0.790708,
+        "ground_truth": 1055,
+        "extracted": 979,
+        "matched_predictions": 812,
+        "matched_ground_truth": 797
+      },
+      "per_field": {
+        "modality": {
+          "ground_truth": 231,
+          "pred": 257,
+          "matched_predictions": 247,
+          "matched_gold": 211,
+          "precision": 0.961089,
+          "recall": 0.91342,
+          "f1": 0.936649,
+          "fp": 10,
+          "fn": 20
+        },
+        "actor": {
+          "ground_truth": 48,
+          "pred": 81,
+          "matched_predictions": 46,
+          "matched_gold": 46,
+          "precision": 0.567901,
+          "recall": 0.958333,
+          "f1": 0.713178,
+          "fp": 35,
+          "fn": 2
+        },
+        "action": {
+          "ground_truth": 247,
+          "pred": 234,
+          "matched_predictions": 212,
+          "matched_gold": 215,
+          "precision": 0.905983,
+          "recall": 0.870445,
+          "f1": 0.887859,
+          "fp": 22,
+          "fn": 32
+        },
+        "condition": {
+          "ground_truth": 214,
+          "pred": 140,
+          "matched_predictions": 126,
+          "matched_gold": 147,
+          "precision": 0.9,
+          "recall": 0.686916,
+          "f1": 0.779152,
+          "fp": 14,
+          "fn": 67
+        },
+        "constraint": {
+          "ground_truth": 302,
+          "pred": 258,
+          "matched_predictions": 173,
+          "matched_gold": 170,
+          "precision": 0.670543,
+          "recall": 0.562914,
+          "f1": 0.612033,
+          "fp": 85,
+          "fn": 132
+        },
+        "exception": {
+          "ground_truth": 13,
+          "pred": 9,
+          "matched_predictions": 8,
+          "matched_gold": 8,
+          "precision": 0.888889,
+          "recall": 0.615385,
+          "f1": 0.727273,
+          "fp": 1,
+          "fn": 5
+        }
+      },
+      "quality": {
+        "api_ok_count": 150,
+        "failed_count": 0,
+        "schema_valid_rate": 1.0,
+        "nonempty_record_count": 149,
+        "failed_prediction_count": 0,
+        "retry_count": 0
+      }
+    },
+    "P": {
+      "overall": {
+        "precision": 0.841438,
+        "recall": 0.745024,
+        "f1": 0.790301,
+        "ground_truth": 1055,
+        "extracted": 946,
+        "matched_predictions": 796,
+        "matched_ground_truth": 786
+      },
+      "per_field": {
+        "modality": {
+          "ground_truth": 231,
+          "pred": 256,
+          "matched_predictions": 247,
+          "matched_gold": 213,
+          "precision": 0.964844,
+          "recall": 0.922078,
+          "f1": 0.942976,
+          "fp": 9,
+          "fn": 18
+        },
+        "actor": {
+          "ground_truth": 48,
+          "pred": 70,
+          "matched_predictions": 44,
+          "matched_gold": 44,
+          "precision": 0.628571,
+          "recall": 0.916667,
+          "f1": 0.745763,
+          "fp": 26,
+          "fn": 4
+        },
+        "action": {
+          "ground_truth": 247,
+          "pred": 230,
+          "matched_predictions": 211,
+          "matched_gold": 214,
+          "precision": 0.917391,
+          "recall": 0.866397,
+          "f1": 0.891165,
+          "fp": 19,
+          "fn": 33
+        },
+        "condition": {
+          "ground_truth": 214,
+          "pred": 141,
+          "matched_predictions": 127,
+          "matched_gold": 149,
+          "precision": 0.900709,
+          "recall": 0.696262,
+          "f1": 0.785399,
+          "fp": 14,
+          "fn": 65
+        },
+        "constraint": {
+          "ground_truth": 302,
+          "pred": 241,
+          "matched_predictions": 159,
+          "matched_gold": 158,
+          "precision": 0.659751,
+          "recall": 0.523179,
+          "f1": 0.583581,
+          "fp": 82,
+          "fn": 144
+        },
+        "exception": {
+          "ground_truth": 13,
+          "pred": 8,
+          "matched_predictions": 8,
+          "matched_gold": 8,
+          "precision": 1.0,
+          "recall": 0.615385,
+          "f1": 0.761905,
+          "fp": 0,
+          "fn": 5
+        }
+      },
+      "quality": {
+        "api_ok_count": 150,
+        "failed_count": 0,
+        "schema_valid_rate": 1.0,
+        "nonempty_record_count": 149,
+        "failed_prediction_count": 0,
+        "retry_count": 0
+      }
+    },
+    "C": {
+      "overall": {
+        "precision": 0.805389,
+        "recall": 0.756398,
+        "f1": 0.780125,
+        "ground_truth": 1055,
+        "extracted": 1002,
+        "matched_predictions": 807,
+        "matched_ground_truth": 798
+      },
+      "per_field": {
+        "modality": {
+          "ground_truth": 231,
+          "pred": 257,
+          "matched_predictions": 245,
+          "matched_gold": 211,
+          "precision": 0.953307,
+          "recall": 0.91342,
+          "f1": 0.932938,
+          "fp": 12,
+          "fn": 20
+        },
+        "actor": {
+          "ground_truth": 48,
+          "pred": 103,
+          "matched_predictions": 47,
+          "matched_gold": 46,
+          "precision": 0.456311,
+          "recall": 0.958333,
+          "f1": 0.618244,
+          "fp": 56,
+          "fn": 2
+        },
+        "action": {
+          "ground_truth": 247,
+          "pred": 233,
+          "matched_predictions": 212,
+          "matched_gold": 214,
+          "precision": 0.909871,
+          "recall": 0.866397,
+          "f1": 0.887602,
+          "fp": 21,
+          "fn": 33
+        },
+        "condition": {
+          "ground_truth": 214,
+          "pred": 141,
+          "matched_predictions": 127,
+          "matched_gold": 150,
+          "precision": 0.900709,
+          "recall": 0.700935,
+          "f1": 0.788363,
+          "fp": 14,
+          "fn": 64
+        },
+        "constraint": {
+          "ground_truth": 302,
+          "pred": 260,
+          "matched_predictions": 168,
+          "matched_gold": 169,
+          "precision": 0.646154,
+          "recall": 0.559603,
+          "f1": 0.599772,
+          "fp": 92,
+          "fn": 133
+        },
+        "exception": {
+          "ground_truth": 13,
+          "pred": 8,
+          "matched_predictions": 8,
+          "matched_gold": 8,
+          "precision": 1.0,
+          "recall": 0.615385,
+          "f1": 0.761905,
+          "fp": 0,
+          "fn": 5
+        }
+      },
+      "quality": {
+        "api_ok_count": 150,
+        "failed_count": 0,
+        "schema_valid_rate": 1.0,
+        "nonempty_record_count": 148,
+        "failed_prediction_count": 0,
+        "retry_count": 0
+      }
+    }
+  },
+  "actor_comparison": {
+    "B0": {
+      "Gold": 48,
+      "Pred": 92,
+      "matched_pred": 45,
+      "matched_Gold": 45,
+      "P": 0.48913,
+      "R": 0.9375,
+      "F1": 0.642857,
+      "FP": 47,
+      "FN": 3
+    },
+    "R": {
+      "Gold": 48,
+      "Pred": 81,
+      "matched_pred": 46,
+      "matched_Gold": 46,
+      "P": 0.567901,
+      "R": 0.958333,
+      "F1": 0.713178,
+      "FP": 35,
+      "FN": 2
+    },
+    "P": {
+      "Gold": 48,
+      "Pred": 70,
+      "matched_pred": 44,
+      "matched_Gold": 44,
+      "P": 0.628571,
+      "R": 0.916667,
+      "F1": 0.745763,
+      "FP": 26,
+      "FN": 4
+    },
+    "C": {
+      "Gold": 48,
+      "Pred": 103,
+      "matched_pred": 47,
+      "matched_Gold": 46,
+      "P": 0.456311,
+      "R": 0.958333,
+      "F1": 0.618244,
+      "FP": 56,
+      "FN": 2
+    }
+  },
+  "deltas_vs_fresh_B0": {
+    "R": {
+      "delta_P": 0.078771,
+      "delta_R": 0.020833,
+      "delta_F1": 0.070321,
+      "delta_FP": -12,
+      "delta_FN": -1
+    },
+    "P": {
+      "delta_P": 0.139441,
+      "delta_R": -0.020833,
+      "delta_F1": 0.102906,
+      "delta_FP": -21,
+      "delta_FN": 1
+    },
+    "C": {
+      "delta_P": -0.032819,
+      "delta_R": 0.020833,
+      "delta_F1": -0.024613,
+      "delta_FP": 9,
+      "delta_FN": -1
+    }
+  },
+  "overall_delta": {
+    "R": {
+      "delta_P": 0.012517,
+      "delta_R": -0.000948,
+      "delta_F1": 0.005222
+    },
+    "P": {
+      "delta_P": 0.024537,
+      "delta_R": -0.011374,
+      "delta_F1": 0.004815
+    },
+    "C": {
+      "delta_P": -0.011512,
+      "delta_R": 0.0,
+      "delta_F1": -0.005361
+    }
+  },
+  "factor_R": {
+    "conceptual_factor": "actor_role_eligibility_only",
+    "non_role_fp": {
+      "B0": 36,
+      "R": 25,
+      "delta": -11
+    },
+    "actor_changes": {
+      "base_actor_count": 92,
+      "other_actor_count": 81,
+      "retained_actor_count": 76,
+      "removed": [
+        {
+          "sample_id": "estg_000039",
+          "text": "The contributions",
+          "normalized": "the contributions",
+          "start": 201,
+          "end": 218,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000044",
+          "text": "This",
+          "normalized": "this",
+          "start": 0,
+          "end": 4,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000130",
+          "text": "A transfer to tangible assets",
+          "normalized": "a transfer to tangible assets",
+          "start": 4,
+          "end": 33,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000134",
+          "text": "Hidden reserves",
+          "normalized": "hidden reserves",
+          "start": 4,
+          "end": 19,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000135",
+          "text": "The reserve (the tax-free amount)",
+          "normalized": "the reserve (the tax-free amount)",
+          "start": 4,
+          "end": 37,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000209",
+          "text": "Shares issued as a result of a capital increase",
+          "normalized": "shares issued as a result of a capital increase",
+          "start": 0,
+          "end": 47,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000218",
+          "text": "the notification obligation",
+          "normalized": "the notification obligation",
+          "start": 91,
+          "end": 118,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000218",
+          "text": "Subsequent taxation of amounts tied up for eight years (Section 1(3)(a))",
+          "normalized": "subsequent taxation of amounts tied up for eight years (section 1(3)(a))",
+          "start": 211,
+          "end": 283,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000247",
+          "text": "expenses and outlays that are not deductible from the individual categories of income",
+          "normalized": "expenses and outlays that are not deductible from the individual categories of income",
+          "start": 11,
+          "end": 96,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000293",
+          "text": "The following income",
+          "normalized": "the following income",
+          "start": 4,
+          "end": 24,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000664",
+          "text": "taxation",
+          "normalized": "taxation",
+          "start": 186,
+          "end": 194,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000664",
+          "text": "the tax base",
+          "normalized": "the tax base",
+          "start": 274,
+          "end": 286,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000664",
+          "text": "the tax",
+          "normalized": "the tax",
+          "start": 290,
+          "end": 297,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000800",
+          "text": "This",
+          "normalized": "this",
+          "start": 0,
+          "end": 4,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000800",
+          "text": "the following",
+          "normalized": "the following",
+          "start": 717,
+          "end": 730,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000861",
+          "text": "the liquidation gain",
+          "normalized": "the liquidation gain",
+          "start": 104,
+          "end": 124,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        }
+      ],
+      "added": [
+        {
+          "sample_id": "estg_000115",
+          "text": "the investment allowance",
+          "normalized": "the investment allowance",
+          "start": 60,
+          "end": 84,
+          "gold_overlap": false,
+          "classification": "new_FP"
+        },
+        {
+          "sample_id": "estg_000131",
+          "text": "a transfer",
+          "normalized": "a transfer",
+          "start": 31,
+          "end": 41,
+          "gold_overlap": false,
+          "classification": "new_FP"
+        },
+        {
+          "sample_id": "estg_000195",
+          "text": "the housing applicant",
+          "normalized": "the housing applicant",
+          "start": 35,
+          "end": 56,
+          "gold_overlap": false,
+          "classification": "new_FP"
+        },
+        {
+          "sample_id": "estg_000417",
+          "text": "the person performing the activity",
+          "normalized": "the person performing the activity",
+          "start": 22,
+          "end": 56,
+          "gold_overlap": true,
+          "classification": "new_TP"
+        },
+        {
+          "sample_id": "estg_000861",
+          "text": "a taxpayer falling under Section 7(3) who has resolved to dissolve",
+          "normalized": "a taxpayer falling under section 7(3) who has resolved to dissolve",
+          "start": 3,
+          "end": 69,
+          "gold_overlap": false,
+          "classification": "new_FP"
+        }
+      ],
+      "removed_count": 16,
+      "added_count": 5,
+      "harmful_tp_removal_count": 0,
+      "beneficial_fp_removal_count": 16,
+      "new_tp_count": 1,
+      "new_fp_count": 4
+    },
+    "legal_role_tp_removed_count": 0,
+    "legal_role_tp_removed": [],
+    "pronoun_prediction_stability": {
+      "base_pronoun_count": 10,
+      "other_pronoun_count": 8,
+      "base_pronoun_removed": 2,
+      "other_pronoun_added": 0
+    },
+    "fn_delta": -1,
+    "remaining_fp_taxonomy_R": {
+      "FP-A_PRONOUN_DEMONSTRATIVE": 7,
+      "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT": 25,
+      "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED": 3
+    },
+    "remaining_fn_taxonomy_R": {
+      "FN-B_EMBEDDED_IN_CONDITION": 2
+    }
+  },
+  "factor_P": {
+    "conceptual_factor": "unresolved_pronoun_policy_only",
+    "pronoun": {
+      "B0": {
+        "total": 10,
+        "tp": 1,
+        "fp": 9,
+        "precision": 0.1,
+        "prompt_pronoun_total": 10,
+        "prompt_pronoun_tp": 1,
+        "prompt_pronoun_fp": 9,
+        "surface_distribution": {
+          "It": 1,
+          "This": 3,
+          "it": 4,
+          "they": 1,
+          "this": 1
+        },
+        "cases": [
+          {
+            "sample_id": "estg_000003",
+            "pronoun": "It",
+            "coordinates": [
+              0,
+              2
+            ],
+            "gold_overlap": true,
+            "tp_fp": "TP",
+            "clause_context": {
+              "clause_index": 0,
+              "clause_id": "estg_000003_c01",
+              "clause_span": {
+                "id": null,
+                "text": "It may cover a shorter period if  \n1. a business is opened or closed, or  \n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date.",
+                "normalized": null,
+                "start": 0,
+                "end": 194,
+                "coordinates": [
+                  0,
+                  194
+                ]
+              }
+            },
+            "source_text": "It may cover a shorter period if  \n1. a business is opened or closed, or  \n2. the business year of a bookkeeping farmer or forester or a registered trader is changed to a different closing date.",
+            "taxonomy": null
+          },
+          {
+            "sample_id": "estg_000044",
+            "pronoun": "This",
+            "coordinates": [
+              0,
+              4
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 0,
+              "clause_id": "estg_000044_c01",
+              "clause_span": {
+                "id": null,
+                "text": "This shall be assessed on the basis of the average benefits granted by the fund to the recipients during the three years preceding the date of the allocation.",
+                "normalized": null,
+                "start": 0,
+                "end": 158,
+                "coordinates": [
+                  0,
+                  158
+                ]
+              }
+            },
+            "source_text": "This shall be assessed on the basis of the average benefits granted by the fund to the recipients during the three years preceding the date of the allocation. 3.",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          },
+          {
+            "sample_id": "estg_000061",
+            "pronoun": "it",
+            "coordinates": [
+              13,
+              15
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 0,
+              "clause_id": "estg_000061_c01",
+              "clause_span": {
+                "id": null,
+                "text": "Furthermore, it must be ensured through additions or deductions and through appropriate balance sheet items that other changes in the profit determination principles (e.g., regarding the commercial law principles of orderly bookkeeping when transitioning from profit determination pursuant to Section 4(1) or (3) to Section 5, or regarding the consideration of diminutions in the value of business assets when transitioning to bookkeeping) are taken into account upon the change in the profit determination method.",
+                "normalized": null,
+                "start": 0,
+                "end": 514,
+                "coordinates": [
+                  0,
+                  514
+                ]
+              }
+            },
+            "source_text": "Furthermore, it must be ensured through additions or deductions and through appropriate balance sheet items that other changes in the profit determination principles (e.g., regarding the commercial law principles of orderly bookkeeping when transitioning from profit determination pursuant to Section 4(1) or (3) to Section 5, or regarding the consideration of diminutions in the value of business assets when transitioning to bookkeeping) are taken into account upon the change in the profit determination method. 3. a) When transitioning to profit determination pursuant to Section 5, land must be revalued on a tax-neutral basis to the higher going-concern value.",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          },
+          {
+            "sample_id": "estg_000082",
+            "pronoun": "it",
+            "coordinates": [
+              98,
+              100
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 0,
+              "clause_id": "estg_000082_c01",
+              "clause_span": {
+                "id": null,
+                "text": "To the extent that the input tax can be deducted (Section 12(1) of the Value Added Tax Act 1972), it does not form part of the acquisition or production costs of the asset on the acquisition or production of which it is incurred, and shall be reported as a receivable.",
+                "normalized": null,
+                "start": 0,
+                "end": 268,
+                "coordinates": [
+                  0,
+                  268
+                ]
+              }
+            },
+            "source_text": "To the extent that the input tax can be deducted (Section 12(1) of the Value Added Tax Act 1972), it does not form part of the acquisition or production costs of the asset on the acquisition or production of which it is incurred, and shall be reported as a receivable.",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          },
+          {
+            "sample_id": "estg_000083",
+            "pronoun": "This",
+            "coordinates": [
+              0,
+              4
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 0,
+              "clause_id": "estg_000083_c01",
+              "clause_span": {
+                "id": null,
+                "text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972",
+                "normalized": null,
+                "start": 0,
+                "end": 107,
+                "coordinates": [
+                  0,
+                  107
+                ]
+              }
+            },
+            "source_text": "This does not apply if the input tax is adjusted under Section 12(10) and (11) of the Turnover Tax Act 1972; in this case, the additional amounts shall be treated as business income and the reduced amounts as business expenses. 13.",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          },
+          {
+            "sample_id": "estg_000207",
+            "pronoun": "they",
+            "coordinates": [
+              313,
+              317
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 2,
+              "clause_id": "estg_000207_c03",
+              "clause_span": {
+                "id": null,
+                "text": "To the extent that amounts have been recognized as special expenses under subsection 1 item 3, they may not be taken into account again as special expenses on another legal basis",
+                "normalized": null,
+                "start": 218,
+                "end": 396,
+                "coordinates": [
+                  218,
+                  396
+                ]
+              }
+            },
+            "source_text": "A child for whom the additional amount has been claimed may not claim such special expenses itself; if the child has claimed such special expenses itself, the additional amount may not be claimed for that child. 3. a) To the extent that amounts have been recognized as special expenses under subsection 1 item 3, they may not be taken into account again as special expenses on another legal basis.",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          },
+          {
+            "sample_id": "estg_000209",
+            "pronoun": "this",
+            "coordinates": [
+              383,
+              387
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 1,
+              "clause_id": "estg_000209_c02",
+              "clause_span": {
+                "id": null,
+                "text": "this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette)",
+                "normalized": null,
+                "start": 383,
+                "end": 680,
+                "coordinates": [
+                  383,
+                  680
+                ]
+              }
+            },
+            "source_text": "Shares issued as a result of a capital increase are not eligible if the resolution on the increase of the share capital (Section 149(1) of the Stock Corporation Act 1965) was adopted within two years after the registration of the resolution on the reduction of the share capital for the purpose of repaying parts of the share capital (Section 177 of the Stock Corporation Act 1965); this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette).",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          },
+          {
+            "sample_id": "estg_000286",
+            "pronoun": "it",
+            "coordinates": [
+              320,
+              322
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 0,
+              "clause_id": "estg_000286_c01",
+              "clause_span": {
+                "id": null,
+                "text": "If a more favourable provision on the charging of proportional daily allowances is contained in collective agreements or works agreements concluded on the basis of special collective agreement authorisations, or is based on service (salary) regulations of corporations under public law approved by the supervisory authority, it shall be taken into account.",
+                "normalized": null,
+                "start": 0,
+                "end": 356,
+                "coordinates": [
+                  0,
+                  356
+                ]
+              }
+            },
+            "source_text": "If a more favourable provision on the charging of proportional daily allowances is contained in collective agreements or works agreements concluded on the basis of special collective agreement authorisations, or is based on service (salary) regulations of corporations under public law approved by the supervisory authority, it shall be taken into account. c) If, in the case of a domestic business trip, no higher costs for overnight accommodation are proven, an amount of up to 200 S may be taken into account as an overnight allowance including the cost of breakfast. d) Daily allowances for foreign business trips may be taken into account at the maximum rate of the foreign travel rates for federal employees. e) If, in the case of a foreign business trip, no higher costs for overnight accommodation— 152.",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          },
+          {
+            "sample_id": "estg_000433",
+            "pronoun": "it",
+            "coordinates": [
+              118,
+              120
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 0,
+              "clause_id": "estg_000433_c01",
+              "clause_span": {
+                "id": null,
+                "text": "If the municipality has entered the sole-earner tax credit (Section 57(2)) on the employee’s first wage tax card, it must be cancelled simultaneously with the issuance of a wage tax card for the spouse.",
+                "normalized": null,
+                "start": 4,
+                "end": 206,
+                "coordinates": [
+                  4,
+                  206
+                ]
+              }
+            },
+            "source_text": "(2) If the municipality has entered the sole-earner tax credit (Section 57(2)) on the employee’s first wage tax card, it must be cancelled simultaneously with the issuance of a wage tax card for the spouse.",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          },
+          {
+            "sample_id": "estg_000800",
+            "pronoun": "This",
+            "coordinates": [
+              0,
+              4
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 0,
+              "clause_id": "estg_000800_c01",
+              "clause_span": {
+                "id": null,
+                "text": "This does not apply as long as the sponsoring undertaking suspends the contribution payments (Section 4(4) no. 2 of the Income Tax Act 1988).",
+                "normalized": null,
+                "start": 0,
+                "end": 141,
+                "coordinates": [
+                  0,
+                  141
+                ]
+              }
+            },
+            "source_text": "This does not apply as long as the sponsoring undertaking suspends the contribution payments (Section 4(4) no. 2 of the Income Tax Act 1988).\nd) The pension commitments of the fund may not exceed 80% of the last current active remuneration.\ne) The beneficiary must also have a legal entitlement to the pension upon termination of the employment relationship (vesting) if he/she has been a beneficiary for more than five years.\nf) Upon termination of the employment relationship before the insured event occurs, the beneficiary's entitlements from own contributions and from employer contributions that have become vested may be settled or transferred to another pension fund.\ng) After the insured event has occurred, the following may be settled:\n— minor benefits and\n— benefits for survivors' provision.\nh) The entitled employees must have the right to participate in the administration of all amounts that flow to the fund.\n2.",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          }
+        ]
+      },
+      "P": {
+        "total": 1,
+        "tp": 0,
+        "fp": 1,
+        "precision": 0.0,
+        "prompt_pronoun_total": 1,
+        "prompt_pronoun_tp": 0,
+        "prompt_pronoun_fp": 1,
+        "surface_distribution": {
+          "this": 1
+        },
+        "cases": [
+          {
+            "sample_id": "estg_000209",
+            "pronoun": "this",
+            "coordinates": [
+              383,
+              387
+            ],
+            "gold_overlap": false,
+            "tp_fp": "FP",
+            "clause_context": {
+              "clause_index": 1,
+              "clause_id": "estg_000209_c02",
+              "clause_span": {
+                "id": null,
+                "text": "this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette)",
+                "normalized": null,
+                "start": 383,
+                "end": 680,
+                "coordinates": [
+                  383,
+                  680
+                ]
+              }
+            },
+            "source_text": "Shares issued as a result of a capital increase are not eligible if the resolution on the increase of the share capital (Section 149(1) of the Stock Corporation Act 1965) was adopted within two years after the registration of the resolution on the reduction of the share capital for the purpose of repaying parts of the share capital (Section 177 of the Stock Corporation Act 1965); this also applies to capital reductions by a stock corporation or a limited liability company as the legal predecessor of the stock corporation (Sections 219 and 245 of the Stock Corporation Act 1965, Section 2 of the Federal Act on the Transformation of Commercial Companies, Federal Law Gazette).",
+            "taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+          }
+        ]
+      },
+      "delta_total": -9,
+      "delta_tp": -1,
+      "delta_fp": -8
+    },
+    "estg_000003_It": {
+      "B0_actor_spans": [
+        {
+          "sample_id": "estg_000003",
+          "start": 0,
+          "end": 2,
+          "text_normalized": "it"
+        }
+      ],
+      "P_actor_spans": [],
+      "gold_actor_spans": [
+        {
+          "id": "estg_000003_c01_sp001",
+          "text": "It",
+          "normalized": "it",
+          "start": 0,
+          "end": 2,
+          "coordinates": [
+            0,
+            2
+          ]
+        }
+      ],
+      "pronoun_disappeared": true
+    },
+    "non_pronoun_actor_changes": {
+      "B0_non_pronoun_count": 82,
+      "P_non_pronoun_count": 69,
+      "symmetric_difference_count": 15,
+      "behavioral_spillover_flag": true,
+      "changed_spans": [
+        {
+          "sample_id": "estg_000004",
+          "text": "A change of the fiscal year to a different closing date",
+          "start": 4,
+          "end": 59,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000040",
+          "text": "The contributions, together with direct benefits within the meaning of Section 3(1) item 15",
+          "start": 65,
+          "end": 156,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000052",
+          "text": "The contributions",
+          "start": 0,
+          "end": 17,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000130",
+          "text": "A transfer to tangible assets",
+          "start": 4,
+          "end": 33,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000134",
+          "text": "Hidden reserves",
+          "start": 4,
+          "end": 19,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000218",
+          "text": "the notification obligation",
+          "start": 91,
+          "end": 118,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000218",
+          "text": "Subsequent taxation of amounts tied up for eight years (Section 1(3)(a))",
+          "start": 211,
+          "end": 283,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000247",
+          "text": "expenses and outlays that are not deductible from the individual categories of income",
+          "start": 11,
+          "end": 96,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000659",
+          "text": "Persons with limited tax liability",
+          "start": 4,
+          "end": 38,
+          "present_in_B0": false,
+          "present_in_P": true,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000664",
+          "text": "taxation",
+          "start": 186,
+          "end": 194,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000664",
+          "text": "the tax base",
+          "start": 274,
+          "end": 286,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000664",
+          "text": "the tax",
+          "start": 290,
+          "end": 297,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000800",
+          "text": "the beneficiary's entitlements from own contributions and from employer contributions that have become vested",
+          "start": 511,
+          "end": 620,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000800",
+          "text": "the following",
+          "start": 717,
+          "end": 730,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        },
+        {
+          "sample_id": "estg_000861",
+          "text": "the liquidation gain",
+          "start": 104,
+          "end": 124,
+          "present_in_B0": true,
+          "present_in_P": false,
+          "gold_overlap": false
+        }
+      ]
+    },
+    "actor_changes": {
+      "base_actor_count": 92,
+      "other_actor_count": 70,
+      "retained_actor_count": 69,
+      "removed": [
+        {
+          "sample_id": "estg_000003",
+          "text": "It",
+          "normalized": "it",
+          "start": 0,
+          "end": 2,
+          "gold_overlap": true,
+          "classification": "harmful_TP_removal",
+          "base_side_taxonomy": "TP"
+        },
+        {
+          "sample_id": "estg_000004",
+          "text": "A change of the fiscal year to a different closing date",
+          "normalized": "a change of the fiscal year to a different closing date",
+          "start": 4,
+          "end": 59,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000040",
+          "text": "The contributions, together with direct benefits within the meaning of Section 3(1) item 15",
+          "normalized": "the contributions, together with direct benefits within the meaning of section 3(1) item 15",
+          "start": 65,
+          "end": 156,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000044",
+          "text": "This",
+          "normalized": "this",
+          "start": 0,
+          "end": 4,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000052",
+          "text": "The contributions",
+          "normalized": "the contributions",
+          "start": 0,
+          "end": 17,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000061",
+          "text": "it",
+          "normalized": "it",
+          "start": 13,
+          "end": 15,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000082",
+          "text": "it",
+          "normalized": "it",
+          "start": 98,
+          "end": 100,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000083",
+          "text": "This",
+          "normalized": "this",
+          "start": 0,
+          "end": 4,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000130",
+          "text": "A transfer to tangible assets",
+          "normalized": "a transfer to tangible assets",
+          "start": 4,
+          "end": 33,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000134",
+          "text": "Hidden reserves",
+          "normalized": "hidden reserves",
+          "start": 4,
+          "end": 19,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000207",
+          "text": "they",
+          "normalized": "they",
+          "start": 313,
+          "end": 317,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000218",
+          "text": "the notification obligation",
+          "normalized": "the notification obligation",
+          "start": 91,
+          "end": 118,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000218",
+          "text": "Subsequent taxation of amounts tied up for eight years (Section 1(3)(a))",
+          "normalized": "subsequent taxation of amounts tied up for eight years (section 1(3)(a))",
+          "start": 211,
+          "end": 283,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000247",
+          "text": "expenses and outlays that are not deductible from the individual categories of income",
+          "normalized": "expenses and outlays that are not deductible from the individual categories of income",
+          "start": 11,
+          "end": 96,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000286",
+          "text": "it",
+          "normalized": "it",
+          "start": 320,
+          "end": 322,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000433",
+          "text": "it",
+          "normalized": "it",
+          "start": 118,
+          "end": 120,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000664",
+          "text": "taxation",
+          "normalized": "taxation",
+          "start": 186,
+          "end": 194,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000664",
+          "text": "the tax base",
+          "normalized": "the tax base",
+          "start": 274,
+          "end": 286,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000664",
+          "text": "the tax",
+          "normalized": "the tax",
+          "start": 290,
+          "end": 297,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000800",
+          "text": "This",
+          "normalized": "this",
+          "start": 0,
+          "end": 4,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-A_PRONOUN_DEMONSTRATIVE"
+        },
+        {
+          "sample_id": "estg_000800",
+          "text": "the beneficiary's entitlements from own contributions and from employer contributions that have become vested",
+          "normalized": "the beneficiary's entitlements from own contributions and from employer contributions that have become vested",
+          "start": 511,
+          "end": 620,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000800",
+          "text": "the following",
+          "normalized": "the following",
+          "start": 717,
+          "end": 730,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        },
+        {
+          "sample_id": "estg_000861",
+          "text": "the liquidation gain",
+          "normalized": "the liquidation gain",
+          "start": 104,
+          "end": 124,
+          "gold_overlap": false,
+          "classification": "beneficial_FP_removal",
+          "base_side_taxonomy": "FP-B_NON_ROLE_GRAMMATICAL_SUBJECT"
+        }
+      ],
+      "added": [
+        {
+          "sample_id": "estg_000659",
+          "text": "Persons with limited tax liability",
+          "normalized": "persons with limited tax liability",
+          "start": 4,
+          "end": 38,
+          "gold_overlap": false,
+          "classification": "new_FP"
+        }
+      ],
+      "removed_count": 23,
+      "added_count": 1,
+      "harmful_tp_removal_count": 1,
+      "beneficial_fp_removal_count": 22,
+      "new_tp_count": 0,
+      "new_fp_count": 1
+    }
+  },
+  "factor_C": {
+    "conceptual_factor": "condition_actor_projection_only",
+    "all_new_actor_predictions": [
+      {
+        "sample_id": "estg_000002",
+        "start": 0,
+        "end": 33,
+        "text_normalized": "bookkeeping farmers and foresters",
+        "text": "Bookkeeping farmers and foresters",
+        "normalized": "bookkeeping farmers and foresters",
+        "contained_in_B0_condition": false,
+        "gold_overlap": true,
+        "classification": "TP_addition"
+      },
+      {
+        "sample_id": "estg_000002",
+        "start": 38,
+        "end": 56,
+        "text_normalized": "registered traders",
+        "text": "registered traders",
+        "normalized": "registered traders",
+        "contained_in_B0_condition": false,
+        "gold_overlap": true,
+        "classification": "TP_addition"
+      },
+      {
+        "sample_id": "estg_000021",
+        "start": 49,
+        "end": 95,
+        "text_normalized": "employees in tobacco processing establishments",
+        "text": "employees in tobacco processing establishments",
+        "normalized": "employees in tobacco processing establishments",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000036",
+        "start": 40,
+        "end": 42,
+        "text_normalized": "he",
+        "text": "he",
+        "normalized": "he",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000095",
+        "start": 0,
+        "end": 17,
+        "text_normalized": "this depreciation",
+        "text": "This depreciation",
+        "normalized": "this depreciation",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000098",
+        "start": 4,
+        "end": 21,
+        "text_normalized": "tax-free reserves",
+        "text": "Tax-free reserves",
+        "normalized": "tax-free reserves",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000098",
+        "start": 85,
+        "end": 101,
+        "text_normalized": "tax-free amounts",
+        "text": "tax-free amounts",
+        "normalized": "tax-free amounts",
+        "contained_in_B0_condition": true,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000109",
+        "start": 107,
+        "end": 130,
+        "text_normalized": "an investment allowance",
+        "text": "an investment allowance",
+        "normalized": "an investment allowance",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000131",
+        "start": 31,
+        "end": 41,
+        "text_normalized": "a transfer",
+        "text": "a transfer",
+        "normalized": "a transfer",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000143",
+        "start": 39,
+        "end": 216,
+        "text_normalized": "bearer partial debentures of domestic debtors with a nominal amount of at least 50% of the provision amount shown in the balance sheet at the end of the preceding financial year",
+        "text": "bearer partial debentures of domestic debtors with a nominal amount of at least 50% of the provision amount shown in the balance sheet at the end of the preceding financial year",
+        "normalized": "bearer partial debentures of domestic debtors with a nominal amount of at least 50% of the provision amount shown in the balance sheet at the end of the preceding financial year",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000195",
+        "start": 35,
+        "end": 56,
+        "text_normalized": "the housing applicant",
+        "text": "the housing applicant",
+        "normalized": "the housing applicant",
+        "contained_in_B0_condition": true,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000285",
+        "start": 152,
+        "end": 161,
+        "text_normalized": "that rule",
+        "text": "that rule",
+        "normalized": "that rule",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000285",
+        "start": 184,
+        "end": 205,
+        "text_normalized": "the mileage allowance",
+        "text": "The mileage allowance",
+        "normalized": "the mileage allowance",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000417",
+        "start": 22,
+        "end": 56,
+        "text_normalized": "the person performing the activity",
+        "text": "the person performing the activity",
+        "normalized": "the person performing the activity",
+        "contained_in_B0_condition": true,
+        "gold_overlap": true,
+        "classification": "TP_addition"
+      },
+      {
+        "sample_id": "estg_000433",
+        "start": 7,
+        "end": 23,
+        "text_normalized": "the municipality",
+        "text": "the municipality",
+        "normalized": "the municipality",
+        "contained_in_B0_condition": true,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000505",
+        "start": 73,
+        "end": 94,
+        "text_normalized": "such other emoluments",
+        "text": "such other emoluments",
+        "normalized": "such other emoluments",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000505",
+        "start": 184,
+        "end": 213,
+        "text_normalized": "a monthly wage payment period",
+        "text": "a monthly wage payment period",
+        "normalized": "a monthly wage payment period",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000659",
+        "start": 4,
+        "end": 38,
+        "text_normalized": "persons with limited tax liability",
+        "text": "Persons with limited tax liability",
+        "normalized": "persons with limited tax liability",
+        "contained_in_B0_condition": false,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000861",
+        "start": 3,
+        "end": 69,
+        "text_normalized": "a taxpayer falling under section 7(3) who has resolved to dissolve",
+        "text": "a taxpayer falling under Section 7(3) who has resolved to dissolve",
+        "normalized": "a taxpayer falling under section 7(3) who has resolved to dissolve",
+        "contained_in_B0_condition": true,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      }
+    ],
+    "condition_projected_actor_predictions": [
+      {
+        "sample_id": "estg_000098",
+        "start": 85,
+        "end": 101,
+        "text_normalized": "tax-free amounts",
+        "text": "tax-free amounts",
+        "normalized": "tax-free amounts",
+        "contained_in_B0_condition": true,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000195",
+        "start": 35,
+        "end": 56,
+        "text_normalized": "the housing applicant",
+        "text": "the housing applicant",
+        "normalized": "the housing applicant",
+        "contained_in_B0_condition": true,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000417",
+        "start": 22,
+        "end": 56,
+        "text_normalized": "the person performing the activity",
+        "text": "the person performing the activity",
+        "normalized": "the person performing the activity",
+        "contained_in_B0_condition": true,
+        "gold_overlap": true,
+        "classification": "TP_addition"
+      },
+      {
+        "sample_id": "estg_000433",
+        "start": 7,
+        "end": 23,
+        "text_normalized": "the municipality",
+        "text": "the municipality",
+        "normalized": "the municipality",
+        "contained_in_B0_condition": true,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      },
+      {
+        "sample_id": "estg_000861",
+        "start": 3,
+        "end": 69,
+        "text_normalized": "a taxpayer falling under section 7(3) who has resolved to dissolve",
+        "text": "a taxpayer falling under Section 7(3) who has resolved to dissolve",
+        "normalized": "a taxpayer falling under section 7(3) who has resolved to dissolve",
+        "contained_in_B0_condition": true,
+        "gold_overlap": false,
+        "classification": "FP_addition"
+      }
+    ],
+    "projected_tp_additions": 1,
+    "projected_fp_additions": 4,
+    "projection_precision": 0.2,
+    "samples": {
+      "estg_000206": {
+        "B0_actor_spans": [
+          {
+            "sample_id": "estg_000206",
+            "start": 602,
+            "end": 612,
+            "text_normalized": "the spouse"
+          }
+        ],
+        "C_actor_spans": [
+          {
+            "sample_id": "estg_000206",
+            "start": 602,
+            "end": 612,
+            "text_normalized": "the spouse"
+          }
+        ],
+        "Gold_actor_spans": [
+          {
+            "id": "c3_actor_1",
+            "text": "the taxpayer",
+            "normalized": "the taxpayer",
+            "start": 263,
+            "end": 275,
+            "coordinates": [
+              263,
+              275
+            ]
+          },
+          {
+            "id": "c3_actor_2",
+            "text": "the spouse",
+            "normalized": "the spouse",
+            "start": 602,
+            "end": 612,
+            "coordinates": [
+              602,
+              612
+            ]
+          }
+        ],
+        "C_only_actor_spans": [],
+        "recovered_gold": false,
+        "new_fp": false
+      },
+      "estg_000417": {
+        "B0_actor_spans": [],
+        "C_actor_spans": [
+          {
+            "sample_id": "estg_000417",
+            "start": 22,
+            "end": 56,
+            "text_normalized": "the person performing the activity"
+          }
+        ],
+        "Gold_actor_spans": [
+          {
+            "id": "c1_actor_1",
+            "text": "the person performing the activity",
+            "normalized": "the person performing the activity",
+            "start": 22,
+            "end": 56,
+            "coordinates": [
+              22,
+              56
+            ]
+          }
+        ],
+        "C_only_actor_spans": [
+          {
+            "sample_id": "estg_000417",
+            "start": 22,
+            "end": 56,
+            "text_normalized": "the person performing the activity",
+            "text": "the person performing the activity",
+            "normalized": "the person performing the activity",
+            "contained_in_B0_condition": true,
+            "gold_overlap": true,
+            "classification": "TP_addition"
+          }
+        ],
+        "recovered_gold": true,
+        "new_fp": false
+      },
+      "estg_000776": {
+        "B0_actor_spans": [],
+        "C_actor_spans": [],
+        "Gold_actor_spans": [
+          {
+            "id": "c2_actor_1",
+            "text": "the recipient",
+            "normalized": "the recipient",
+            "start": 115,
+            "end": 128,
+            "coordinates": [
+              115,
+              128
+            ]
+          }
+        ],
+        "C_only_actor_spans": [],
+        "recovered_gold": false,
+        "new_fp": false
+      }
+    }
+  },
+  "gold_review_sensitivity": {
+    "B0": {
+      "raw_evaluator_fp": 47,
+      "high_confidence_semantic_fp": 45,
+      "gold_review_candidate_fp_count": 2,
+      "gold_review_candidates": [
+        {
+          "sample_id": "estg_000037",
+          "text": "the insured person",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000716",
+          "text": "the building society",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        }
+      ]
+    },
+    "R": {
+      "raw_evaluator_fp": 35,
+      "high_confidence_semantic_fp": 32,
+      "gold_review_candidate_fp_count": 3,
+      "gold_review_candidates": [
+        {
+          "sample_id": "estg_000037",
+          "text": "the insured person",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000195",
+          "text": "the housing applicant",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000716",
+          "text": "the building society",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        }
+      ]
+    },
+    "P": {
+      "raw_evaluator_fp": 26,
+      "high_confidence_semantic_fp": 23,
+      "gold_review_candidate_fp_count": 3,
+      "gold_review_candidates": [
+        {
+          "sample_id": "estg_000037",
+          "text": "the insured person",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000659",
+          "text": "Persons with limited tax liability",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000716",
+          "text": "the building society",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        }
+      ]
+    },
+    "C": {
+      "raw_evaluator_fp": 56,
+      "high_confidence_semantic_fp": 50,
+      "gold_review_candidate_fp_count": 6,
+      "gold_review_candidates": [
+        {
+          "sample_id": "estg_000021",
+          "text": "employees in tobacco processing establishments",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000037",
+          "text": "the insured person",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000195",
+          "text": "the housing applicant",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000433",
+          "text": "the municipality",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000659",
+          "text": "Persons with limited tax liability",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        },
+        {
+          "sample_id": "estg_000716",
+          "text": "the building society",
+          "taxonomy": "FP-C_LEGAL_NORMATIVE_ROLE_BUT_GOLD_UNANNOTATED",
+          "confidence": "medium"
+        }
+      ]
+    }
+  },
+  "historical_context": {
+    "historical_repair_v1_D_full_0813": {
+      "actor_metrics": {
+        "ground_truth": 48,
+        "extracted": 86,
+        "matched_predictions": 46,
+        "matched_ground_truth": 45,
+        "misclassified": 40,
+        "missed": 3,
+        "precision": 0.5348837209302325,
+        "recall": 0.9375,
+        "f1": 0.6811451135241856
+      },
+      "tp_count": 46,
+      "fp_count": 40,
+      "fn_count": 3
+    },
+    "historical_legacy_D_full_0813": {
+      "actor_precision": 0.5487804878048781,
+      "actor_recall": 0.9166666666666666,
+      "actor_f1": 0.6865464632454924,
+      "actor_extracted": 82,
+      "actor_fp": 37
+    }
+  },
+  "safety": {
+    "gold_used_to_design_new_prompt_after_experiment_started": false,
+    "iterative_prompt_search": false,
+    "actor_lexicon_added": false,
+    "benchmark_specific_whitelist_added": false,
+    "benchmark_specific_blacklist_added": false,
+    "rules_only_predictions_used_to_alter_direct_llm": false,
+    "post_hoc_condition_to_actor_code_added": false,
+    "combined_R_P_C_prompt_run": false,
+    "formal_result_overwritten": false,
+    "no_gold_in_prompt_construction": true,
+    "no_gold_in_api_execution": true,
+    "prompts_frozen_before_scores": true
+  },
+  "recommended_next_step": "interaction experiment between supported factors"
+}

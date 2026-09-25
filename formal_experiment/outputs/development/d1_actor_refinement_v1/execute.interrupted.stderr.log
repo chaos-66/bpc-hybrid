@@ -1,0 +1,41 @@
+Traceback (most recent call last):
+  File "D:\Paper\experiment\bpc-hybrid\formal_experiment\scripts\run_actor_refinement_experiment_v1.py", line 990, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "D:\Paper\experiment\bpc-hybrid\formal_experiment\scripts\run_actor_refinement_experiment_v1.py", line 971, in main
+    summary = execute()
+  File "D:\Paper\experiment\bpc-hybrid\formal_experiment\scripts\run_actor_refinement_experiment_v1.py", line 896, in execute
+    result = _process_arm(
+        arm, samples, transport, enforce_off_peak=True)
+  File "D:\Paper\experiment\bpc-hybrid\formal_experiment\scripts\run_actor_refinement_experiment_v1.py", line 623, in _process_arm
+    call = _call_model(
+        arm, sample, transport,
+        enforce_off_peak=enforce_off_peak)
+  File "D:\Paper\experiment\bpc-hybrid\formal_experiment\scripts\run_actor_refinement_experiment_v1.py", line 402, in _call_model
+    response = transport.send(LLMRequest(
+        source_id=sid,
+    ...<2 lines>...
+        user_prompt=user,
+    ))
+  File "D:\Paper\experiment\bpc-hybrid\formal_experiment\src\bpc_hybrid\llm_client.py", line 397, in send
+    raw_body = resp.read()
+  File "D:\environment\Python\Lib\http\client.py", line 478, in read
+    return self._read_chunked(amt)
+           ~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\environment\Python\Lib\http\client.py", line 602, in _read_chunked
+    while (chunk_left := self._get_chunk_left()) is not None:
+                         ~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\environment\Python\Lib\http\client.py", line 584, in _get_chunk_left
+    chunk_left = self._read_next_chunk_size()
+  File "D:\environment\Python\Lib\http\client.py", line 544, in _read_next_chunk_size
+    line = self.fp.readline(_MAXLINE + 1)
+  File "D:\environment\Python\Lib\socket.py", line 729, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "D:\environment\Python\Lib\ssl.py", line 1304, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\environment\Python\Lib\ssl.py", line 1138, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyboardInterrupt
