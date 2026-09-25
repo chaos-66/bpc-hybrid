@@ -5575,3 +5575,35 @@
 - 仍存在 blocker：无
 - 备注：focused tests only; R5 v1 preserved
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T12:47:45.397874+00:00 - D1 span-grounding repair (opt-in repair_v1): deterministic repeated-occurrence recovery + provenance; production default stays legacy (no promotion)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：70 passed in 2.03s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`456eed36971b5f140e73f0f8e02f431332a6d5fa`；相关未提交路径：20 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：implements nearest-offset / one-to-one minimum-cost repeated-occurrence grounding, resolution_events audit, T1-T10 tests, zero-API replay d_span_grounding_repair_v1; legacy policy verified bit-exact on all 150 frozen responses
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T12:48:12.456543+00:00 - Zero-API retrospective A/B of D1 span-grounding repair on frozen D-full-0813 responses (OLD legacy vs NEW repair_v1)
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=d_span_grounding_repair_v1；阶段=Stage 2 Direct-LLM post-processing / span grounding；方法=direct_llm；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_d_span_grounding_repair_v1.py`
+- manifest：formal_experiment/outputs/development/d_span_grounding_repair_v1/manifest.json
+- 结果摘要：OLD legacy overall F1=0.7719075849; NEW repair_v1 overall F1=0.7809798253 (delta +0.0090722, P -0.0031, R +0.0190). Recovered 33/42 dropped spans (4/4 actor drops); repeated-occurrence cases 33, recovered 33, unresolved 0, ties 0. Actor F1 0.68655 -> 0.68115; actor FN 4 -> 3, recovered FN 1/4 (0.25, estg_000103). Invariance: invented=0, field_reclassification=0, text_mutation=0, old_only=0.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：3 passed in 1.74s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`456eed36971b5f140e73f0f8e02f431332a6d5fa`；相关未提交路径：22 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：development/retrospective only; no promotion; default policy remains legacy
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

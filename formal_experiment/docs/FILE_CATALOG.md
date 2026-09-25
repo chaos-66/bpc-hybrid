@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-25
-**收录文件**：3120 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：3124 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -1762,6 +1762,8 @@
 | `outputs/reports/d_full_postprocessing_ablation_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/d_no_fewshot_interface_diagnosis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/d_no_fewshot_interface_diagnosis_v1.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/d_span_grounding_repair_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/d_span_grounding_repair_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/diagnose_stage3_no_outer_gate_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/diagnose_stage3_no_outer_gate_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/direct_llm_ablation_existing_results_classified_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -2609,6 +2611,7 @@
 | `scripts/run_barrientos_paper_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_d1_prompt_factorial_ablation_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_d_full_postprocessing_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/run_d_span_grounding_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_direct_llm.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_ai_review.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/run_estg150_b0_enhanced_v10_development.py` | 活动 | Python 实现、脚本或测试 |
@@ -3028,6 +3031,7 @@
 | `tests/test_d1_r2_lock_config.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d_full_postprocessing_ablation_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_d_no_fewshot_interface_diagnosis_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_d_span_grounding_repair_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_direct_llm_ablation_classified_report_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_c1_transport_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_estg150_candidate_protocol.py` | 活动 | Python 实现、脚本或测试 |

@@ -1,0 +1,847 @@
+{
+  "schema_version": "d_span_grounding_repair@1.0.0",
+  "status": "retrospective_development_postprocessing_grounding_repair",
+  "scope": {
+    "source_arm": "D-full-0813",
+    "source_run": "barrientos-de-0813-1140-v1",
+    "sample_count": 150,
+    "model_responses_fixed_across_arms": true,
+    "new_api_calls": 0,
+    "same_adapter": true,
+    "same_gold_and_evaluator": true,
+    "only_changed_factor": "span_grounding_policy",
+    "measured_layer": "postprocessing_only",
+    "model_generation_effect_claim_allowed": false,
+    "formal_confirmatory_claim_allowed": false,
+    "promotion_authorized": false
+  },
+  "provenance": {
+    "raw_responses_path": "outputs\\development\\barrientos_ablation_suite_v2\\D-full-0813\\repeat-01\\raw_responses.jsonl",
+    "raw_responses_sha256": "b45ea6ef530c80162bd2b60fb7877c8728beabcdecc772fe8ff9e338d3bf5dce",
+    "locked_evaluation_path": "outputs\\development\\barrientos_ablation_suite_v2\\D-full-0813\\repeat-01\\evaluation.json",
+    "locked_evaluation_sha256": "0259150657253cce207ae37ed615bf8555973db037daea30532b8b0289c4e7db",
+    "locked_canonical_predictions_path": "outputs\\development\\barrientos_ablation_suite_v2\\D-full-0813\\repeat-01\\canonical_predictions.jsonl",
+    "locked_canonical_predictions_sha256": "2dc036c3c72f54e194ad9882aac5b78f2fd0e0a7f9fbdf44dc73baa31ce23195",
+    "old_canonicalizer_policy": "legacy",
+    "new_canonicalizer_policy": "repair_v1",
+    "default_policy_unchanged": "legacy",
+    "cost_metric": "abs_start_plus_abs_end",
+    "old_arm_exactly_reproduces_locked_evaluation": true
+  },
+  "prepare_telemetry": {
+    "sample_count": 150,
+    "json_parse_failures": 0,
+    "adapter_failures": 0,
+    "adapter_degraded_records": 2,
+    "adapter_spans_adapted": 727,
+    "adapter_spans_dropped": 2
+  },
+  "arms": {
+    "old_canonicalizer": {
+      "policy": "legacy",
+      "cost_metric": "abs_start_plus_abs_end",
+      "telemetry": {
+        "policy": "legacy",
+        "cost_metric": "abs_start_plus_abs_end",
+        "sample_count": 150,
+        "canonicalizer_failures": 0,
+        "canonicalizer_reanchored": 1091,
+        "canonicalizer_spans_dropped": 42,
+        "canonicalizer_clauses_dropped": 1,
+        "canonicalizer_edges_dropped": 11,
+        "unchanged_spans": 91,
+        "unresolved_spans": 42,
+        "reanchored_unique_exact": 1091,
+        "reanchored_repeated_exact": 0,
+        "repeated_occurrence_cases": 33,
+        "repeated_occurrence_recovered": 0,
+        "repeated_occurrence_unresolved": 33,
+        "tie_cases": 0,
+        "one_to_one_assignment_cases": 0,
+        "assignment_ambiguities": 0,
+        "validator_invalid_records_observed": 0,
+        "validator_rejected_records": 0,
+        "failed_records": 0,
+        "successful_records": 150,
+        "nonempty_output_records": 148,
+        "output_clause_count": 240,
+        "dropped_by_field": {
+          "action": 5,
+          "actor": 4,
+          "clause_span": 1,
+          "constraint": 7,
+          "modality": 26
+        },
+        "recovered_by_field": {},
+        "dropped_actor_spans": 4
+      },
+      "overall": {
+        "ground_truth": 1055,
+        "extracted": 946,
+        "matched_predictions": 776,
+        "matched_ground_truth": 769,
+        "misclassified": 170,
+        "missed": 286,
+        "precision": 0.8202959830866807,
+        "recall": 0.728909952606635,
+        "f1": 0.7719075848848173
+      }
+    },
+    "new_canonicalizer": {
+      "policy": "repair_v1",
+      "cost_metric": "abs_start_plus_abs_end",
+      "telemetry": {
+        "policy": "repair_v1",
+        "cost_metric": "abs_start_plus_abs_end",
+        "sample_count": 150,
+        "canonicalizer_failures": 0,
+        "canonicalizer_reanchored": 1124,
+        "canonicalizer_spans_dropped": 9,
+        "canonicalizer_clauses_dropped": 1,
+        "canonicalizer_edges_dropped": 2,
+        "unchanged_spans": 91,
+        "unresolved_spans": 9,
+        "reanchored_unique_exact": 1091,
+        "reanchored_repeated_exact": 33,
+        "repeated_occurrence_cases": 33,
+        "repeated_occurrence_recovered": 33,
+        "repeated_occurrence_unresolved": 0,
+        "tie_cases": 0,
+        "one_to_one_assignment_cases": 7,
+        "assignment_ambiguities": 0,
+        "validator_invalid_records_observed": 0,
+        "validator_rejected_records": 0,
+        "failed_records": 0,
+        "successful_records": 150,
+        "nonempty_output_records": 148,
+        "output_clause_count": 240,
+        "dropped_by_field": {
+          "clause_span": 1,
+          "modality": 9
+        },
+        "recovered_by_field": {
+          "action": 5,
+          "actor": 4,
+          "constraint": 7,
+          "modality": 17
+        },
+        "dropped_actor_spans": 0
+      },
+      "overall": {
+        "ground_truth": 1055,
+        "extracted": 979,
+        "matched_predictions": 800,
+        "matched_ground_truth": 789,
+        "misclassified": 179,
+        "missed": 266,
+        "precision": 0.8171603677221655,
+        "recall": 0.747867298578199,
+        "f1": 0.7809798253064931
+      }
+    }
+  },
+  "metric_comparison": {
+    "overall": {
+      "old": {
+        "ground_truth": 1055,
+        "extracted": 946,
+        "matched_predictions": 776,
+        "matched_ground_truth": 769,
+        "misclassified": 170,
+        "missed": 286,
+        "precision": 0.8202959830866807,
+        "recall": 0.728909952606635,
+        "f1": 0.7719075848848173
+      },
+      "new": {
+        "ground_truth": 1055,
+        "extracted": 979,
+        "matched_predictions": 800,
+        "matched_ground_truth": 789,
+        "misclassified": 179,
+        "missed": 266,
+        "precision": 0.8171603677221655,
+        "recall": 0.747867298578199,
+        "f1": 0.7809798253064931
+      },
+      "delta_precision": -0.003135615364515232,
+      "delta_recall": 0.018957345971563955,
+      "delta_f1": 0.00907224042167587
+    },
+    "per_field": {
+      "modality": {
+        "old": {
+          "ground_truth": 231,
+          "extracted": 238,
+          "matched_predictions": 231,
+          "matched_ground_truth": 200,
+          "misclassified": 7,
+          "missed": 31,
+          "precision": 0.9705882352941176,
+          "recall": 0.8658008658008658,
+          "f1": 0.9152048810926992
+        },
+        "new": {
+          "ground_truth": 231,
+          "extracted": 255,
+          "matched_predictions": 245,
+          "matched_ground_truth": 211,
+          "misclassified": 10,
+          "missed": 20,
+          "precision": 0.9607843137254902,
+          "recall": 0.9134199134199135,
+          "f1": 0.9365036231884059
+        },
+        "delta_precision": -0.009803921568627416,
+        "delta_recall": 0.04761904761904767,
+        "delta_f1": 0.021298742095706702
+      },
+      "actor": {
+        "old": {
+          "ground_truth": 48,
+          "extracted": 82,
+          "matched_predictions": 45,
+          "matched_ground_truth": 44,
+          "misclassified": 37,
+          "missed": 4,
+          "precision": 0.5487804878048781,
+          "recall": 0.9166666666666666,
+          "f1": 0.6865464632454924
+        },
+        "new": {
+          "ground_truth": 48,
+          "extracted": 86,
+          "matched_predictions": 46,
+          "matched_ground_truth": 45,
+          "misclassified": 40,
+          "missed": 3,
+          "precision": 0.5348837209302325,
+          "recall": 0.9375,
+          "f1": 0.6811451135241856
+        },
+        "delta_precision": -0.013896766874645583,
+        "delta_recall": 0.02083333333333337,
+        "delta_f1": -0.005401349721306792
+      },
+      "action": {
+        "old": {
+          "ground_truth": 247,
+          "extracted": 225,
+          "matched_predictions": 202,
+          "matched_ground_truth": 204,
+          "misclassified": 23,
+          "missed": 43,
+          "precision": 0.8977777777777778,
+          "recall": 0.8259109311740891,
+          "f1": 0.8603461594671901
+        },
+        "new": {
+          "ground_truth": 247,
+          "extracted": 230,
+          "matched_predictions": 207,
+          "matched_ground_truth": 209,
+          "misclassified": 23,
+          "missed": 38,
+          "precision": 0.9,
+          "recall": 0.8461538461538461,
+          "f1": 0.8722466960352422
+        },
+        "delta_precision": 0.0022222222222222365,
+        "delta_recall": 0.020242914979757054,
+        "delta_f1": 0.011900536568052122
+      },
+      "condition": {
+        "old": {
+          "ground_truth": 214,
+          "extracted": 138,
+          "matched_predictions": 125,
+          "matched_ground_truth": 148,
+          "misclassified": 13,
+          "missed": 66,
+          "precision": 0.9057971014492754,
+          "recall": 0.6915887850467289,
+          "f1": 0.78433035146479
+        },
+        "new": {
+          "ground_truth": 214,
+          "extracted": 138,
+          "matched_predictions": 125,
+          "matched_ground_truth": 148,
+          "misclassified": 13,
+          "missed": 66,
+          "precision": 0.9057971014492754,
+          "recall": 0.6915887850467289,
+          "f1": 0.78433035146479
+        },
+        "delta_precision": 0.0,
+        "delta_recall": 0.0,
+        "delta_f1": 0.0
+      },
+      "constraint": {
+        "old": {
+          "ground_truth": 302,
+          "extracted": 254,
+          "matched_predictions": 166,
+          "matched_ground_truth": 166,
+          "misclassified": 88,
+          "missed": 136,
+          "precision": 0.6535433070866141,
+          "recall": 0.5496688741721855,
+          "f1": 0.5971223021582733
+        },
+        "new": {
+          "ground_truth": 302,
+          "extracted": 261,
+          "matched_predictions": 170,
+          "matched_ground_truth": 169,
+          "misclassified": 91,
+          "missed": 133,
+          "precision": 0.6513409961685823,
+          "recall": 0.5596026490066225,
+          "f1": 0.6019968779138597
+        },
+        "delta_precision": -0.0022023109180318023,
+        "delta_recall": 0.009933774834437026,
+        "delta_f1": 0.004874575755586363
+      },
+      "exception": {
+        "old": {
+          "ground_truth": 13,
+          "extracted": 9,
+          "matched_predictions": 7,
+          "matched_ground_truth": 7,
+          "misclassified": 2,
+          "missed": 6,
+          "precision": 0.7777777777777778,
+          "recall": 0.5384615384615384,
+          "f1": 0.6363636363636364
+        },
+        "new": {
+          "ground_truth": 13,
+          "extracted": 9,
+          "matched_predictions": 7,
+          "matched_ground_truth": 7,
+          "misclassified": 2,
+          "missed": 6,
+          "precision": 0.7777777777777778,
+          "recall": 0.5384615384615384,
+          "f1": 0.6363636363636364
+        },
+        "delta_precision": 0.0,
+        "delta_recall": 0.0,
+        "delta_f1": 0.0
+      }
+    }
+  },
+  "grounding_telemetry": {
+    "old_dropped_spans": 42,
+    "new_dropped_spans": 9,
+    "old_actor_dropped_spans": 4,
+    "new_actor_dropped_spans": 0,
+    "recovered_spans_total": 33,
+    "recovered_actor_spans": 4,
+    "repeated_occurrence_cases": 33,
+    "repeated_occurrence_recovered": 33,
+    "repeated_occurrence_unresolved": 0,
+    "ties": 0,
+    "one_to_one_assignment_cases": 7,
+    "assignment_ambiguities": 0,
+    "per_field": {
+      "action": {
+        "old_dropped_spans": 5,
+        "new_dropped_spans": 0,
+        "recovered_spans": 5
+      },
+      "actor": {
+        "old_dropped_spans": 4,
+        "new_dropped_spans": 0,
+        "recovered_spans": 4
+      },
+      "clause_span": {
+        "old_dropped_spans": 1,
+        "new_dropped_spans": 1,
+        "recovered_spans": 0
+      },
+      "constraint": {
+        "old_dropped_spans": 7,
+        "new_dropped_spans": 0,
+        "recovered_spans": 7
+      },
+      "modality": {
+        "old_dropped_spans": 26,
+        "new_dropped_spans": 9,
+        "recovered_spans": 17
+      }
+    }
+  },
+  "semantic_invariance_audit": {
+    "samples_checked": 150,
+    "invented_semantic_spans": 0,
+    "field_reclassification": 0,
+    "text_mutation": 0,
+    "normalized_mutation": 0,
+    "id_mutation": 0,
+    "old_only_spans": 0,
+    "new_only_spans": 16,
+    "new_only_spans_explained_by_old_drops": 16,
+    "clause_span_text_mutation": 0,
+    "invented_modality_evidence": 0,
+    "old_only_modality_evidence": 0,
+    "modality_evidence_text_mutation": 0
+  },
+  "actor_attribution": {
+    "old_actor_fn": 4,
+    "new_actor_fn": 3,
+    "actor_fn_recovered_by_grounding_repair": 1,
+    "actor_fn_remaining": 3,
+    "grounding_attributable_fn_share": 0.25,
+    "recovered_actor_fn_keys": [
+      "estg_000103#0"
+    ],
+    "recovered_actor_spans": [
+      {
+        "sample_id": "estg_000082",
+        "actor_id": "a01",
+        "actor_text": "it",
+        "old_predicted_start": 100,
+        "old_predicted_end": 102,
+        "old_outcome": "unresolved",
+        "old_reason": "ambiguous_occurrence",
+        "candidate_occurrences": [
+          {
+            "start": 98,
+            "end": 100
+          },
+          {
+            "start": 133,
+            "end": 135
+          },
+          {
+            "start": 185,
+            "end": 187
+          },
+          {
+            "start": 214,
+            "end": 216
+          }
+        ],
+        "new_predicted_start": 98,
+        "new_predicted_end": 100,
+        "resolution_strategy": "nearest_original_offsets",
+        "new_outcome": "reanchored_repeated_exact",
+        "new_distance": 4,
+        "gold_overlap_after_evaluation": false
+      },
+      {
+        "sample_id": "estg_000103",
+        "actor_id": "a01",
+        "actor_text": "the tax office",
+        "old_predicted_start": 176,
+        "old_predicted_end": 190,
+        "old_outcome": "unresolved",
+        "old_reason": "ambiguous_occurrence",
+        "candidate_occurrences": [
+          {
+            "start": 34,
+            "end": 48
+          },
+          {
+            "start": 183,
+            "end": 197
+          }
+        ],
+        "new_predicted_start": 183,
+        "new_predicted_end": 197,
+        "resolution_strategy": "nearest_original_offsets",
+        "new_outcome": "reanchored_repeated_exact",
+        "new_distance": 14,
+        "gold_overlap_after_evaluation": true
+      },
+      {
+        "sample_id": "estg_000286",
+        "actor_id": "a01",
+        "actor_text": "it",
+        "old_predicted_start": 300,
+        "old_predicted_end": 302,
+        "old_outcome": "unresolved",
+        "old_reason": "ambiguous_occurrence",
+        "candidate_occurrences": [
+          {
+            "start": 320,
+            "end": 322
+          },
+          {
+            "start": 325,
+            "end": 327
+          }
+        ],
+        "new_predicted_start": 320,
+        "new_predicted_end": 322,
+        "resolution_strategy": "nearest_original_offsets",
+        "new_outcome": "reanchored_repeated_exact",
+        "new_distance": 40,
+        "gold_overlap_after_evaluation": false
+      },
+      {
+        "sample_id": "estg_000433",
+        "actor_id": "a01",
+        "actor_text": "it",
+        "old_predicted_start": 124,
+        "old_predicted_end": 126,
+        "old_outcome": "unresolved",
+        "old_reason": "ambiguous_occurrence",
+        "candidate_occurrences": [
+          {
+            "start": 20,
+            "end": 22
+          },
+          {
+            "start": 60,
+            "end": 62
+          },
+          {
+            "start": 118,
+            "end": 120
+          },
+          {
+            "start": 155,
+            "end": 157
+          }
+        ],
+        "new_predicted_start": 118,
+        "new_predicted_end": 120,
+        "resolution_strategy": "nearest_original_offsets",
+        "new_outcome": "reanchored_repeated_exact",
+        "new_distance": 12,
+        "gold_overlap_after_evaluation": false
+      }
+    ],
+    "known_cases": {
+      "estg_000037": {
+        "recovered_actor_spans": []
+      },
+      "estg_000103": {
+        "recovered_actor_spans": [
+          {
+            "sample_id": "estg_000103",
+            "actor_id": "a01",
+            "actor_text": "the tax office",
+            "old_predicted_start": 176,
+            "old_predicted_end": 190,
+            "old_outcome": "unresolved",
+            "old_reason": "ambiguous_occurrence",
+            "candidate_occurrences": [
+              {
+                "start": 34,
+                "end": 48
+              },
+              {
+                "start": 183,
+                "end": 197
+              }
+            ],
+            "new_predicted_start": 183,
+            "new_predicted_end": 197,
+            "resolution_strategy": "nearest_original_offsets",
+            "new_outcome": "reanchored_repeated_exact",
+            "new_distance": 14,
+            "gold_overlap_after_evaluation": true
+          }
+        ]
+      },
+      "estg_000036": {
+        "recovered_actor_spans": []
+      },
+      "estg_000082": {
+        "recovered_actor_spans": [
+          {
+            "sample_id": "estg_000082",
+            "actor_id": "a01",
+            "actor_text": "it",
+            "old_predicted_start": 100,
+            "old_predicted_end": 102,
+            "old_outcome": "unresolved",
+            "old_reason": "ambiguous_occurrence",
+            "candidate_occurrences": [
+              {
+                "start": 98,
+                "end": 100
+              },
+              {
+                "start": 133,
+                "end": 135
+              },
+              {
+                "start": 185,
+                "end": 187
+              },
+              {
+                "start": 214,
+                "end": 216
+              }
+            ],
+            "new_predicted_start": 98,
+            "new_predicted_end": 100,
+            "resolution_strategy": "nearest_original_offsets",
+            "new_outcome": "reanchored_repeated_exact",
+            "new_distance": 4,
+            "gold_overlap_after_evaluation": false
+          }
+        ]
+      },
+      "estg_000286": {
+        "recovered_actor_spans": [
+          {
+            "sample_id": "estg_000286",
+            "actor_id": "a01",
+            "actor_text": "it",
+            "old_predicted_start": 300,
+            "old_predicted_end": 302,
+            "old_outcome": "unresolved",
+            "old_reason": "ambiguous_occurrence",
+            "candidate_occurrences": [
+              {
+                "start": 320,
+                "end": 322
+              },
+              {
+                "start": 325,
+                "end": 327
+              }
+            ],
+            "new_predicted_start": 320,
+            "new_predicted_end": 322,
+            "resolution_strategy": "nearest_original_offsets",
+            "new_outcome": "reanchored_repeated_exact",
+            "new_distance": 40,
+            "gold_overlap_after_evaluation": false
+          }
+        ]
+      }
+    },
+    "known_case_notes": {
+      "estg_000037": "Not recovered/needed in the fixed D-full-0813 responses: the OLD canonicalizer already anchored both model-emitted 'the fund' actors ([456,464] and [507,515]) as unique in-clause exact occurrences, so no grounding loss existed for them in this response file. The historical R3 drop of these two actors is not reproduced by D-full-0813.",
+      "estg_000103": "Recovered exactly: OLD dropped the model-emitted actor at predicted [176,190] as ambiguous_occurrence; NEW nearest-offset grounding re-anchors it to [183,197], the second 'the tax office', which overlaps Gold.",
+      "estg_000036": "Not dropped in D-full-0813: the model actor was already exact.",
+      "estg_000082": "Model-emitted pronoun 'it' was dropped by OLD (ambiguous) and is recovered by NEW as a coordinate repair; it does not overlap Gold and is annotated as an actor false positive.",
+      "estg_000286": "Model-emitted pronoun 'it' was dropped by OLD (ambiguous) and is recovered by NEW as a coordinate repair; it does not overlap Gold and is annotated as an actor false positive."
+    },
+    "remaining_fn_taxonomy": {
+      "counts": {
+        "model_did_not_emit": 3
+      },
+      "examples": {
+        "model_did_not_emit": [
+          {
+            "sample_id": "estg_000206",
+            "text": "the taxpayer",
+            "start": 263,
+            "end": 275
+          },
+          {
+            "sample_id": "estg_000417",
+            "text": "the person performing the activity",
+            "start": 22,
+            "end": 56
+          },
+          {
+            "sample_id": "estg_000776",
+            "text": "the recipient",
+            "start": 115,
+            "end": 128
+          }
+        ]
+      }
+    },
+    "new_actor_false_positive_analysis": {
+      "new_actor_false_positives": 40,
+      "new_actor_pronoun_false_positives": 9,
+      "examples": [
+        {
+          "sample_id": "estg_000004",
+          "text": "A change of the fiscal year to a different closing date",
+          "start": 4,
+          "end": 59
+        },
+        {
+          "sample_id": "estg_000037",
+          "text": "the insured person",
+          "start": 70,
+          "end": 88
+        },
+        {
+          "sample_id": "estg_000039",
+          "text": "The agreement",
+          "start": 0,
+          "end": 13
+        },
+        {
+          "sample_id": "estg_000039",
+          "text": "The contributions",
+          "start": 201,
+          "end": 218
+        },
+        {
+          "sample_id": "estg_000040",
+          "text": "The contributions, together with direct benefits within the meaning of Section 3(1) item 15",
+          "start": 65,
+          "end": 156
+        },
+        {
+          "sample_id": "estg_000044",
+          "text": "This",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "sample_id": "estg_000052",
+          "text": "The contributions",
+          "start": 0,
+          "end": 17
+        },
+        {
+          "sample_id": "estg_000061",
+          "text": "it",
+          "start": 13,
+          "end": 15
+        },
+        {
+          "sample_id": "estg_000068",
+          "text": "the balance sheet value",
+          "start": 158,
+          "end": 181
+        },
+        {
+          "sample_id": "estg_000071",
+          "text": "Item 13",
+          "start": 24,
+          "end": 31
+        },
+        {
+          "sample_id": "estg_000077",
+          "text": "The funds",
+          "start": 227,
+          "end": 236
+        },
+        {
+          "sample_id": "estg_000082",
+          "text": "it",
+          "start": 98,
+          "end": 100
+        },
+        {
+          "sample_id": "estg_000083",
+          "text": "This",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "sample_id": "estg_000119",
+          "text": "This list",
+          "start": 0,
+          "end": 9
+        },
+        {
+          "sample_id": "estg_000128",
+          "text": "Section 10(2) last sentence",
+          "start": 273,
+          "end": 300
+        },
+        {
+          "sample_id": "estg_000130",
+          "text": "A transfer to tangible assets",
+          "start": 4,
+          "end": 33
+        },
+        {
+          "sample_id": "estg_000135",
+          "text": "The reserve (the tax-free amount)",
+          "start": 4,
+          "end": 37
+        },
+        {
+          "sample_id": "estg_000207",
+          "text": "they",
+          "start": 313,
+          "end": 317
+        },
+        {
+          "sample_id": "estg_000208",
+          "text": "Subsection (1)(3)",
+          "start": 193,
+          "end": 210
+        },
+        {
+          "sample_id": "estg_000209",
+          "text": "Shares issued as a result of a capital increase",
+          "start": 0,
+          "end": 47
+        }
+      ]
+    }
+  },
+  "safety": {
+    "gold_used_for_algorithm": false,
+    "rules_only_predictions_used_for_grounding": false,
+    "llm_api_calls": 0,
+    "prompt_modified": false,
+    "semantic_actor_rules_added": false,
+    "actor_inferred_from_condition": false,
+    "model_output_text_modified": false
+  },
+  "sensitivity_start_only": {
+    "role": "post_hoc_sensitivity_not_used_for_algorithm_selection",
+    "policy": "repair_v1",
+    "cost_metric": "abs_start_only",
+    "telemetry": {
+      "policy": "repair_v1",
+      "cost_metric": "abs_start_only",
+      "sample_count": 150,
+      "canonicalizer_failures": 0,
+      "canonicalizer_reanchored": 1124,
+      "canonicalizer_spans_dropped": 9,
+      "canonicalizer_clauses_dropped": 1,
+      "canonicalizer_edges_dropped": 2,
+      "unchanged_spans": 91,
+      "unresolved_spans": 9,
+      "reanchored_unique_exact": 1091,
+      "reanchored_repeated_exact": 33,
+      "repeated_occurrence_cases": 33,
+      "repeated_occurrence_recovered": 33,
+      "repeated_occurrence_unresolved": 0,
+      "tie_cases": 0,
+      "one_to_one_assignment_cases": 7,
+      "assignment_ambiguities": 0,
+      "validator_invalid_records_observed": 0,
+      "validator_rejected_records": 0,
+      "failed_records": 0,
+      "successful_records": 150,
+      "nonempty_output_records": 148,
+      "output_clause_count": 240,
+      "dropped_by_field": {
+        "clause_span": 1,
+        "modality": 9
+      },
+      "recovered_by_field": {
+        "action": 5,
+        "actor": 4,
+        "constraint": 7,
+        "modality": 17
+      },
+      "dropped_actor_spans": 0
+    },
+    "overall": {
+      "ground_truth": 1055,
+      "extracted": 979,
+      "matched_predictions": 800,
+      "matched_ground_truth": 789,
+      "misclassified": 179,
+      "missed": 266,
+      "precision": 0.8171603677221655,
+      "recall": 0.747867298578199,
+      "f1": 0.7809798253064931
+    },
+    "delta_f1_vs_new_start_end": 0.0,
+    "note": "The reported NEW arm uses the a-priori sum-of-absolute-endpoint distance because both model-provided endpoints are localisation evidence. This arm exists only as a transparency check."
+  }
+}
