@@ -61,39 +61,58 @@ def read_price_evidence() -> dict:
 
 
 def build_budget(reuse: dict, config: dict, source_doc: dict) -> dict:
-    prompt_bytes = (ROOT / rv.R5_PROMPT_REL).read_bytes()
-    specs = {r["requirement_id"]: r for r in config["requirements"]}
+    """Build the authorization budget from the exact frozen payload manifest.
+
+    The payload body-byte count is a conservative token upper bound
+    (one UTF-8 byte >= one token).  This keeps readiness and payload-freeze
+    reports on the same frozen request identities instead of using a looser
+    prompt/source envelope approximation.
+    """
+    import build_stage3_table3_r5_api_payload_freeze_v2 as payload_freeze
+
+    payload = payload_freeze.build_payload_manifest()
+    payload_rows = {r["requirement_id"]: r for r in payload["requests"]}
+    payload_budget = payload["budget_upper_bound"]
+    raw_price = payload_budget["price"]
+    price_evidence = {
+        "source": raw_price.get("source"),
+        "verified_date": raw_price.get("verified_date"),
+        "currency": "USD",
+        "snapshot_is_off_peak": False,
+        "peak_derivation": "payload freeze uses the official peak price snapshot; off-peak multiplier recorded as 0.5",
+        "peak_used_for_cap": {
+            "input_cache_hit_per_million": raw_price["per_million_peak"]["input_cache_hit"],
+            "input_cache_miss_per_million": raw_price["per_million_peak"]["input_cache_miss"],
+            "output_per_million": raw_price["per_million_peak"]["output"],
+        },
+        "reverify_before_authorized_execution": True,
+    }
     sources = {r["requirement_id"]: r for r in source_doc["requirements"]}
-    price = read_price_evidence()
-    peak = price["peak_used_for_cap"]
     rows = []
     for row in reuse["rows"]:
         if not row["core_eligible"]:
             continue
         if row["ours"]["status"] == "verified":
             continue
-        src = sources[row["requirement_id"]]
-        text_bytes = len(src["excerpt_text"].encode("utf-8"))
-        upper = max(8192, len(prompt_bytes) + text_bytes + 4096)
+        rid = row["requirement_id"]
+        src = sources[rid]
+        pr = payload_rows[rid]
         rows.append({
-            "requirement_id": row["requirement_id"],
+            "requirement_id": rid,
+            "sample_id": pr["sample_id"],
             "split": row["split"],
             "source_family_id": row["source_family_id"],
             "source_text_sha256": src["text_sha256"],
-            "source_text_utf8_bytes": text_bytes,
+            "source_text_utf8_bytes": len(src["excerpt_text"].encode("utf-8")),
             "reuse_status": row["ours"]["status"],
             "reuse_evidence_strength": row["ours"].get("reuse_evidence_strength"),
-            "input_token_upper_bound": upper,
+            "request_body_sha256": pr["request_body_sha256"],
+            "input_token_upper_bound": pr["request_body_utf8_bytes"],
             "max_output_tokens": MAX_OUTPUT_TOKENS_PER_CALL,
             "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
-            "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
-            "prompt_sha256_from_file": rv.sha_text((ROOT / rv.R5_PROMPT_REL).read_text(encoding="utf-8")),
+            "request_template": payload["prompt"]["name"],
+            "prompt_sha256_from_file": payload["prompt"]["sha256_text_normalized"],
         })
-    total_input_upper = sum(r["input_token_upper_bound"] for r in rows)
-    total_output_upper = sum(r["max_output_tokens"] for r in rows)
-    raw_cost = (total_input_upper * (peak["input_cache_miss_per_million"] or 0)
-                + total_output_upper * (peak["output_per_million"] or 0)) / 1_000_000
-    margin = math.ceil(raw_cost * 1.2 * 100) / 100
     candidate_rows = [r["requirement_id"] for r in reuse["rows"] if not r["core_eligible"]]
     return {
         "schema_version": "stage3_table3_r5_api_budget@2.0.0",
@@ -107,25 +126,30 @@ def build_budget(reuse: dict, config: dict, source_doc: dict) -> dict:
         "retry_cap": 0,
         "unique_regulation_inputs_total": len(reuse["rows"]),
         "core_requirements": sum(1 for r in reuse["rows"] if r["core_eligible"]),
-        "reused_existing_stage2_inputs": sum(1 for r in reuse["rows"] if r["core_eligible"] and r["ours"]["status"] == "verified"),
+        "reused_existing_stage2_inputs": sum(
+            1 for r in reuse["rows"] if r["core_eligible"] and r["ours"]["status"] == "verified"
+        ),
         "new_requests": len(rows),
         "candidate_assets_excluded_from_current_request_list": candidate_rows,
-        "candidate_assets_note": "the 5 non-core candidate requirements (permission/prohibition assets) are NOT in the current request list; adding them would add 5 calls and requires a future authorization",
+        "candidate_assets_note": (
+            "the 5 non-core candidate requirements (permission/prohibition assets) are NOT in the "
+            "current request list; adding them would add 5 calls and requires a future authorization"
+        ),
         "max_output_tokens_per_call": MAX_OUTPUT_TOKENS_PER_CALL,
-        "total_output_tokens_cap": total_output_upper,
-        "total_input_tokens_cap": total_input_upper,
-        "token_estimation_method": "BPE token count bounded above by request UTF-8 byte count; prompt bytes + source-text bytes + 4096-byte envelope; floor 8192",
+        "total_output_tokens_cap": payload_budget["max_output_tokens"],
+        "total_input_tokens_cap": payload_budget["max_input_tokens"],
+        "token_estimation_method": payload_budget["token_upper_bound_policy"],
         "model_identity": {
-            "id": (_gdpr7_manifest().get("model") or {}).get("id"),
-            "published_alias": (_gdpr7_manifest().get("model") or {}).get("published_alias"),
-            "prompt_name": (_gdpr7_manifest().get("model") or {}).get("prompt_name"),
-            "prompt_sha256_recorded_in_manifest": (_gdpr7_manifest().get("model") or {}).get("prompt_sha256"),
-            "prompt_sha256_from_file": rv.sha_text((ROOT / rv.R5_PROMPT_REL).read_text(encoding="utf-8")),
-            "binding_note": "model alias and prompt identity are read from the recorded gdpr7 Direct-LLM manifest; must be re-verified before an authorized run",
+            "id": payload["protocol"]["model"],
+            "published_alias": payload["protocol"]["resolved_alias"],
+            "prompt_name": payload["prompt"]["name"],
+            "prompt_sha256_recorded_in_manifest": None,
+            "prompt_sha256_from_file": payload["prompt"]["sha256_text_normalized"],
+            "binding_note": "identity comes from the frozen payload manifest; still re-verify before an authorized run",
         },
-        "price_evidence": price,
-        "cost_upper_bound_usd_without_cache_discount": round(raw_cost, 6),
-        "cost_upper_bound_usd_with_20pct_margin": margin,
+        "price_evidence": price_evidence,
+        "cost_upper_bound_usd_without_cache_discount": payload_budget["raw_cost_cap_usd"],
+        "cost_upper_bound_usd_with_20pct_margin": payload_budget["cost_cap_with_20pct_margin_usd"],
         "cost_cap_is_not_predicted_bill": True,
         "request_rows": rows,
         "method_call_owner": "Ours Direct-LLM Stage2 only; Sun Rules-Only and Winter native consume 0 API calls",
@@ -135,7 +159,6 @@ def build_budget(reuse: dict, config: dict, source_doc: dict) -> dict:
             "Any text, prompt, model-alias or price change invalidates this cap.",
         ],
     }
-
 
 def build_readiness(reuse: dict, budget: dict, config: dict, source_doc: dict) -> dict:
     s = reuse["summary"]
