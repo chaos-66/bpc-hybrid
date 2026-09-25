@@ -30,7 +30,10 @@ for path in (SRC, SCRIPTS):
         sys.path.insert(0, str(path))
 
 from bpc_hybrid.d1_schema_adapter import adapt_relay_record
-from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates
+from bpc_hybrid.d1_span_canonicalizer import (
+    POLICY_LEGACY,
+    canonicalize_record_coordinates,
+)
 from bpc_hybrid.stage2_canonical import validate_canonical
 from analyze_d_no_fewshot_interface_failure_v1 import (
     DiagnosisError,
@@ -200,7 +203,11 @@ def process_condition(
                     telemetry["failure_examples"].append(row)
                 continue
         if condition["canonicalizer"]:
-            record, audit = canonicalize_record_coordinates(record, source_text)
+            # Historical frozen replay: this script's checked-in report used
+            # the pre-promotion default. Pin legacy explicitly so promotion of
+            # repair_v1 cannot silently drift this retrospective evidence.
+            record, audit = canonicalize_record_coordinates(
+                record, source_text, policy=POLICY_LEGACY)
             telemetry["canonicalizer_reanchored"] += int(
                 audit.get("reanchored_count", 0))
             telemetry["canonicalizer_spans_dropped"] += len(

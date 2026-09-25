@@ -686,7 +686,10 @@ def parse_same_response(
     request_id so raw/canonical provenance provably match.
     """
     from bpc_hybrid.d1_schema_adapter import adapt_relay_record
-    from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates
+    from bpc_hybrid.d1_span_canonicalizer import (
+        POLICY_LEGACY,
+        canonicalize_record_coordinates,
+    )
 
     raw = (call_result.get("raw_response_content") or "").strip().strip("`")
     # mirror the artifact's safe_json_load: strip an optional leading
@@ -728,8 +731,9 @@ def parse_same_response(
                 "response_sha256": resp_sha, "request_id": request_id,
                 "canonical_record": None, "barrientos_record": None,
             }
+        # Historical frozen replay: pin the pre-promotion canonicalizer policy.
         canonical, span_audit = canonicalize_record_coordinates(
-            adapter_payload, source_text)
+            adapter_payload, source_text, policy=POLICY_LEGACY)
         if span_audit.get("status") == "failed":
             return {
                 "sample_id": sid, "request_status": "failed",

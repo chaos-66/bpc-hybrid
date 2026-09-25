@@ -500,7 +500,10 @@ def _adapt_and_canonicalize_payload(
 ]:
     """Run the existing adapter and canonicalizer on an isolated deep copy."""
     from bpc_hybrid.d1_schema_adapter import adapt_relay_record
-    from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates
+    from bpc_hybrid.d1_span_canonicalizer import (
+        POLICY_LEGACY,
+        canonicalize_record_coordinates,
+    )
 
     working = copy.deepcopy(payload)
     try:
@@ -524,8 +527,9 @@ def _adapt_and_canonicalize_payload(
         )
 
     try:
+        # Historical frozen experiment: pin the pre-promotion policy.
         canonical, span_audit = canonicalize_record_coordinates(
-            adapted, source_text)
+            adapted, source_text, policy=POLICY_LEGACY)
     except Exception as exc:  # noqa: BLE001 - persist conversion failures.
         return (
             None,

@@ -37,7 +37,10 @@ for candidate in (ROOT / "src", ROOT / "scripts"):
         sys.path.insert(0, str(candidate))
 
 from bpc_hybrid.d1_schema_adapter import adapt_relay_record  # noqa: E402
-from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates  # noqa: E402
+from bpc_hybrid.d1_span_canonicalizer import (  # noqa: E402
+    POLICY_LEGACY,
+    canonicalize_record_coordinates,
+)
 from bpc_hybrid.h1_transport import decode_chat_completion_envelope  # noqa: E402
 from bpc_hybrid.stage2_canonical import validate_canonical  # noqa: E402
 
@@ -433,7 +436,9 @@ def convert_response_content(*, sample_id: str, source_text: str, content: str,
         })
         return base
     try:
-        canonical, span_audit = canonicalize_record_coordinates(adapted, source_text)
+        # Historical frozen runner: pin the pre-promotion policy.
+        canonical, span_audit = canonicalize_record_coordinates(
+            adapted, source_text, policy=POLICY_LEGACY)
     except Exception as exc:  # noqa: BLE001
         base.update({
             "error_category": "canonicalizer_exception",

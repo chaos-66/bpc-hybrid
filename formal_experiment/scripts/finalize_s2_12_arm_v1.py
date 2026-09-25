@@ -71,6 +71,7 @@ from bpc_hybrid.s2_12_execution import (  # noqa: E402
     load_report,
     rebuild_and_verify_payloads,
 )
+from bpc_hybrid.d1_span_canonicalizer import POLICY_LEGACY  # noqa: E402
 from bpc_hybrid.s2_12_response_convert import (  # noqa: E402
     ResponseConvertError,
     direct_content_to_attempt,
@@ -352,7 +353,9 @@ def direct_attempt_from_raw(
     source_text = text_by_formal.get(sample_id)
     if not source_text:
         raise FinalizeFail(f"no resolved source text for {sample_id}")
-    attempt = direct_content_to_attempt(sample_id, content, source_text)
+    # Historical frozen S2.12 finalization: preserve the pre-promotion policy.
+    attempt = direct_content_to_attempt(
+        sample_id, content, source_text, policy=POLICY_LEGACY)
     if attempt.get("record"):
         attempt = {
             **attempt,

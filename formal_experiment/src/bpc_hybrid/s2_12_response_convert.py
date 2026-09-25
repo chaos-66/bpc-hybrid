@@ -17,7 +17,10 @@ import json
 from typing import Any, Mapping
 
 from bpc_hybrid.d1_schema_adapter import adapt_relay_record  # noqa: E402
-from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates  # noqa: E402
+from bpc_hybrid.d1_span_canonicalizer import (  # noqa: E402
+    DEFAULT_POLICY,
+    canonicalize_record_coordinates,
+)
 from bpc_hybrid.stage2_canonical import validate_canonical  # noqa: E402
 
 _FORBIDDEN_CONTENT_TERMS = ("expected_violation", "variant_id", "check_type")
@@ -78,12 +81,16 @@ def failed_attempt_row(sample_id: str, request_status: str,
 
 
 def direct_content_to_attempt(sample_id: str, content: str,
-                              source_text: str) -> dict[str, Any]:
+                              source_text: str,
+                              *,
+                              policy: str = DEFAULT_POLICY) -> dict[str, Any]:
     """Convert one raw model JSON response into a canonical attempt envelope.
 
     Returns ``{sample_id, request_status, record, error_category}`` where
     ``record`` is coordinate-only; any parse/adapt/canonicalize/validate
     failure yields an explicit error_category row (never fabricated).
+    ``policy`` defaults to the promoted production grounding policy; historical
+    frozen finalizers pin ``legacy`` explicitly.
     """
     raw = (content or "").strip()
     if not raw:
@@ -123,7 +130,8 @@ def direct_content_to_attempt(sample_id: str, content: str,
             sample_id, "ok",
             "relay_schema_adaptation_failed",
         )
-    canonical, span_audit = canonicalize_record_coordinates(adapted, source_text)
+    canonical, span_audit = canonicalize_record_coordinates(
+        adapted, source_text, policy=policy)
     if span_audit["status"] == "failed":
         return failed_attempt_row(
             sample_id, "ok", "span_canonicalization_failed"

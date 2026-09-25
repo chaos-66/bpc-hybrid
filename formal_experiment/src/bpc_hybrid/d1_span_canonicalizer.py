@@ -39,13 +39,13 @@ closed; unrecoverable field spans and clauses are dropped as before.
 
 Policies
 --------
-``policy="legacy"`` (the default) reproduces the pre-repair D1-R1 behaviour
-exactly (repeated occurrences are dropped immediately).  It stays the default
-on purpose: this round is a retrospective development ablation and must not
-promote a changed production behaviour without explicit authorization.
-``policy="repair_v1"`` opts into the new hierarchy above.  The development
-experiment ``d_span_grounding_repair_v1`` selects it explicitly for the NEW
-arm so the only changed factor is the grounding algorithm.
+``policy="legacy"`` reproduces the pre-repair D1-R1 behaviour exactly
+(repeated occurrences are dropped immediately).  Historical experiments that
+formed frozen evidence under that behaviour must pin it explicitly.
+``policy="repair_v1"`` is the promoted default: it opts into the new hierarchy
+above.  The development experiment ``d_span_grounding_repair_v1`` selected it
+explicitly for the NEW arm so the only changed factor was the grounding
+algorithm; promotion was authorized after that evidence was verified.
 
 Audit
 -----
@@ -70,8 +70,9 @@ STATUS_FAILED = "failed"
 
 POLICY_LEGACY = "legacy"
 POLICY_REPAIR = "repair_v1"
-# Not promoted: see the "Policies" note above.
-DEFAULT_POLICY = POLICY_LEGACY
+# Promoted after d_span_grounding_repair_v1 verification: see the "Policies"
+# note above. Historical frozen experiments explicitly pin POLICY_LEGACY.
+DEFAULT_POLICY = POLICY_REPAIR
 
 COST_METRIC_START_END = "abs_start_plus_abs_end"
 COST_METRIC_START_ONLY = "abs_start_only"
@@ -582,9 +583,10 @@ def canonicalize_record_coordinates(
     problems degrade the record (elements dropped, audit records every drop);
     only record-level structural violations fail closed.
 
-    ``policy`` selects ``legacy`` (default, pre-repair) or ``repair_v1``
-    (the grounding repair); ``cost_metric`` selects the repeated-occurrence
-    distance (sensitivity only; the repair default uses both endpoints).
+    ``policy`` selects ``legacy`` (historical pre-repair behaviour) or
+    ``repair_v1`` (the promoted default grounding repair); ``cost_metric``
+    selects the repeated-occurrence distance (sensitivity only; the repair
+    default uses both endpoints).
     """
     if policy not in _VALID_POLICIES:
         raise D1SpanCanonicalizationError(f"unknown policy: {policy!r}")

@@ -96,7 +96,10 @@ for candidate in (SRC, SCRIPTS):
         sys.path.insert(0, str(candidate))
 
 from bpc_hybrid.d1_schema_adapter import adapt_relay_record  # noqa: E402
-from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates  # noqa: E402
+from bpc_hybrid.d1_span_canonicalizer import (  # noqa: E402
+    POLICY_LEGACY,
+    canonicalize_record_coordinates,
+)
 from bpc_hybrid.llm_client import (  # noqa: E402
     LLMClientError,
     LLMRequest,
@@ -1483,7 +1486,9 @@ def convert_content_to_attempt(sample_id: str, content: str,
             "record": _sanitize_record(adapted) if isinstance(adapted, dict) else None,
             "error_category": "relay_schema_adaptation_failed",
         }
-    canonical, span_audit = canonicalize_record_coordinates(adapted, source_text)
+    # Historical frozen executor: pin the pre-promotion canonicalizer policy.
+    canonical, span_audit = canonicalize_record_coordinates(
+        adapted, source_text, policy=POLICY_LEGACY)
     if span_audit["status"] == "failed":
         return {
             "sample_id": sample_id,

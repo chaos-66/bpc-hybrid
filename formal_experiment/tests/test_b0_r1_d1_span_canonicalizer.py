@@ -1,11 +1,11 @@
-"""D1 span-coordinate canonicalizer tests (D1-R1 + opt-in grounding repair).
+"""D1 span-coordinate canonicalizer tests (D1-R1 + promoted grounding repair).
 
 Level 0 (exact coordinates) and Level 1 (unique exact occurrence) keep the
-pre-repair behaviour.  The opt-in ``repair_v1`` policy adds Level 2: repeated
-exact occurrences are resolved with the model's own original offsets via a
-deterministic one-to-one minimum-cost assignment; ties stay unresolved.  The
-default remains ``legacy`` (pre-repair) until promotion is explicitly
-authorized, and ``legacy`` must still reproduce the pre-repair behaviour.
+pre-repair behaviour.  The promoted default ``repair_v1`` adds Level 2:
+repeated exact occurrences are resolved with the model's own original offsets
+via a deterministic one-to-one minimum-cost assignment; ties stay unresolved.
+Historical frozen evidence pins ``legacy`` explicitly, and ``legacy`` must
+still reproduce the pre-repair behaviour.
 """
 
 from __future__ import annotations
@@ -91,7 +91,7 @@ def span(text, start, end, span_id=None, normalized=None):
 
 
 def repair(record, source, **kwargs):
-    """Run the opt-in grounding repair explicitly (the default stays legacy)."""
+    """Run the grounding repair explicitly."""
     kwargs.setdefault("policy", POLICY_REPAIR)
     return canonicalize_record_coordinates(record, source, **kwargs)
 
@@ -357,7 +357,7 @@ def test_t10_repeated_runs_are_identical():
 
 
 # ---------------------------------------------------------------------------
-# Legacy policy + no silent promotion
+# Legacy policy + promoted default
 # ---------------------------------------------------------------------------
 
 
@@ -378,7 +378,7 @@ def test_legacy_policy_still_drops_repeated_occurrence():
     assert audit["reanchored_repeated_exact"] == 0
 
 
-def test_default_policy_does_not_silently_promote_the_repair():
+def test_default_policy_is_promoted_repair_v1():
     src = "the fund must be supervised and the fund must grant benefits."
     text = "the fund"
     second = src.rindex(text)
@@ -389,13 +389,14 @@ def test_default_policy_does_not_silently_promote_the_repair():
         ])],
         src,
     )
-    assert DEFAULT_POLICY == POLICY_LEGACY
+    assert DEFAULT_POLICY == POLICY_REPAIR
     default_out, default_audit = canonicalize_record_coordinates(r, src)
-    legacy_out, legacy_audit = canonicalize_record_coordinates(r, src, policy=POLICY_LEGACY)
-    assert default_out == legacy_out
-    assert default_audit["status"] == legacy_audit["status"]
-    assert default_audit["dropped_spans"] == legacy_audit["dropped_spans"]
-    assert default_out["clauses"][0]["actors"] == []
+    repair_out, repair_audit = canonicalize_record_coordinates(
+        r, src, policy=POLICY_REPAIR)
+    assert default_out == repair_out
+    assert default_audit["status"] == repair_audit["status"]
+    assert default_audit["dropped_spans"] == repair_audit["dropped_spans"]
+    assert len(default_out["clauses"][0]["actors"]) == 2
 
 
 def test_cost_metric_parameter_is_recorded_and_start_only_runs():

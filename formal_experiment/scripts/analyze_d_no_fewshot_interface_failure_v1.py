@@ -31,7 +31,10 @@ for path in (SRC, SCRIPTS):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from bpc_hybrid.d1_span_canonicalizer import canonicalize_record_coordinates
+from bpc_hybrid.d1_span_canonicalizer import (
+    POLICY_LEGACY,
+    canonicalize_record_coordinates,
+)
 from bpc_hybrid.stage2_canonical import validate_canonical
 
 SOURCE_DIR = (
@@ -306,8 +309,9 @@ def bridge_coordinate_pair_record(
         },
         "unsupported_or_ambiguous": copy.deepcopy(unsupported),
     }
+    # Historical frozen replay: pin the pre-promotion canonicalizer policy.
     canonical, span_audit = canonicalize_record_coordinates(
-        record, source_text)
+        record, source_text, policy=POLICY_LEGACY)
     audit["canonicalizer_reanchored"] = span_audit["reanchored_count"]
     audit["canonicalizer_dropped_spans"] = len(
         span_audit.get("dropped_spans", []))
