@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
 **生成日期**：2026-09-25
-**收录文件**：3118 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**收录文件**：3120 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -930,6 +930,7 @@
 | `data/development/stage3_table3_r5_benchmark_v2/manifest.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_table3_r5_benchmark_v2/reference/candidate_assets.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_table3_r5_benchmark_v2/reference/evaluation_contract.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
+| `data/development/stage3_table3_r5_benchmark_v2/reference/fairness_contract.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_table3_r5_benchmark_v2/reference/reference_cases.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_table3_r5_benchmark_v2/requirement_disposition.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
 | `data/development/stage3_table3_r5_benchmark_v2/semantic_challenges.json` | 开发/溯源 | 机器可读配置、数据、事件或产物 |
@@ -2211,6 +2212,7 @@
 | `outputs/reports/stage3_table3_r5_requirement_disposition_v2.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_table3_r5_v1_to_v2_mapping_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_r5_validation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_table3_r5_validation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_table3_v1_paper_insert.md` | 活动 | 说明、规范或研究文档 |
