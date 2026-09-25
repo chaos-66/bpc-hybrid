@@ -1,0 +1,243 @@
+{
+  "api_budget": {
+    "calls_cap": 22,
+    "cost_upper_bound_usd_with_20pct_margin": 1.18,
+    "cost_upper_bound_usd_without_cache_discount": 0.982776,
+    "max_output_tokens_per_call": 4096,
+    "new_requests": 22,
+    "price_snapshot": {
+      "currency": "USD",
+      "off_peak_multiplier": 0.5,
+      "per_million_peak": {
+        "input_cache_hit": 0.044,
+        "input_cache_miss": 1.32,
+        "output": 3.96
+      },
+      "reverify_before_authorized_execution": true,
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "verified_date": "2026-09-23"
+    },
+    "retry_cap": 0,
+    "reused_existing_stage2_inputs": 14,
+    "total_input_tokens_cap": 474191,
+    "total_output_tokens_cap": 90112
+  },
+  "assets_completed": [
+    "source_requirements.json with 36 source-grounded requirements and SHA-256 provenance",
+    "108 core BPMN cases (36 baselines + 24 each missing_action/incorrect_actor/out_of_order)",
+    "24 semantic-challenge BPMN cases (6 condition pairs + 6 exception pairs)",
+    "inference/reference separation with opaque case IDs",
+    "split_manifest.json with seed 20260925 and family integrity",
+    "semantic_challenges.json with 4 prohibition + 4 permission + 4 definition fragments",
+    "prediction_reuse report, API budget report, readiness report, validation report"
+  ],
+  "benchmark_id": "stage3_table3_r5_benchmark_v1",
+  "boundary": "Construction reference only; not human Gold, not formal release, and no method performance claim.",
+  "core_vs_semantic_challenge": {
+    "core_baseline_controls": 36,
+    "core_cases": 108,
+    "core_not_mixed_with_challenge": true,
+    "core_variant_cases": 72,
+    "semantic_challenge_cases": 24,
+    "semantic_challenge_modality_fragments": {
+      "definition": 4,
+      "permission": 4,
+      "prohibition": 4
+    },
+    "semantic_challenge_pairs": {
+      "condition": 6,
+      "exception": 6
+    }
+  },
+  "counts": {
+    "core_baseline_controls": 36,
+    "core_cases": 108,
+    "core_variant_cases": 72,
+    "development_requirements": 12,
+    "independent_requirements": 36,
+    "semantic_challenge_cases": 24,
+    "semantic_challenge_pairs": 12,
+    "test_independent_candidate_count": 22,
+    "test_requirements": 24,
+    "variants_per_type": {
+      "incorrect_actor": 24,
+      "missing_action": 24,
+      "out_of_order": 24
+    }
+  },
+  "element_coverage": {
+    "current_support_by_element": {
+      "action": {
+        "implemented": 36
+      },
+      "actor": {
+        "implemented": 36
+      },
+      "condition": {
+        "unsupported": 36
+      },
+      "constraint": {
+        "indirect_only": 36
+      },
+      "exception": {
+        "unsupported": 36
+      },
+      "modality": {
+        "implemented": 36
+      }
+    },
+    "note": "modality+actor+action are implemented/consumed; condition and exception are unsupported truth consumers; constraint is indirect_only in the frozen three-class scorer.",
+    "presence_counts": {
+      "action": {
+        "present_records": 36
+      },
+      "actor": {
+        "present_records": 36
+      },
+      "condition": {
+        "present_records": 21
+      },
+      "constraint": {
+        "present_records": 36
+      },
+      "exception": {
+        "present_records": 20
+      },
+      "modality": {
+        "present_records": 36
+      }
+    }
+  },
+  "known_detector_issues": [
+    {
+      "actual_behavior": "frozen R4 evidence records the/Controller actor similarity around 0.4272 below theta=0.8; no normalization rule was added",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-01-actor-surface-equivalence",
+      "classification": "method_limitation",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_v1.json::conclusions.method_limitations",
+      "expected_behavior": "the controller, The controller, and Controller should normalize to one legal actor surface",
+      "notes": "Actor failures remain explainable and must not be reported as detector success."
+    },
+    {
+      "actual_behavior": "6 saved R4 candidate examples retained for local inspection; example=[{'case_id': 'case_06bacb820524', 'method_id': 'sun_b0_frozen_v1', 'rule_id': 'article35p1', 'rule_action_surface': 'carry', 'candidate_action_surface': 'Describe', 'candidate_node': 'Activity_0', 'similarity': 0.851992666721344, 'selected': False}, {'case_id': 'case_06bacb820524', 'method_id': 'sun_b0_frozen_v1', 'rule_id': 'article35p1', 'rule_action_surface': 'carry', 'candidate_action_surface': 'Describe', 'candidate_node': 'Activity_0', 'similarity': 0.851992666721344, 'selected': False}]",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-02-known-action-surface-mismatches",
+      "classification": "method_limitation",
+      "evidence_path": "outputs/development/stage3_table3_r4_targeted_v1/predictions.json + R4 targeted report",
+      "expected_behavior": "rule action surface should distinguish provide/applies, consult/requires, carry/describe rather than accept a lemma-level near match",
+      "notes": "R4 action-surface matching is retained; these pairs must be reported as known risk, not silently treated as passed."
+    },
+    {
+      "actual_behavior": "R4 mechanism report reproduces tie/same-verb wrong-object acceptance (known_limitation_reproductions)",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-03-same-action-different-object",
+      "classification": "method_limitation",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_mechanism_v1.json::known_limitation_reproductions",
+      "expected_behavior": "archive the parcel should not be satisfied by archive the invoice"
+    },
+    {
+      "actual_behavior": "The current implementation matches the literal extracted formula (which includes bs_obj in the C union) but conflicts with the prose reading that C contains actors only. This ambiguity was not silently changed in R4.",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-04-correct-actor-and-business-object",
+      "classification": "implementation_or_representation_gap",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_v1.json::actor_evidence.definition6_C_scope_check",
+      "expected_behavior": "when the correct actor and correct business object both exist, actor detection should bind them rather than treating the object as an actor candidate"
+    },
+    {
+      "actual_behavior": "R4 behavior probe order example=[['be informed', 'the restriction of processing is lifted']]; known_limitation_reproductions=2",
+      "blocks_formal_interpretation": false,
+      "check_id": "PRE-05-correct-and-reverse-order",
+      "classification": "supported_narrowly",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_mechanism_v1.json::behavior_probes",
+      "expected_behavior": "forward order is satisfiable and reversed order is detectable when a source before/prior-to edge exists",
+      "notes": "Only the scoped article18p3 before relation is proven; Winter before/prior-to remains unsupported and others may be unknown."
+    },
+    {
+      "actual_behavior": "R4 missing_action cells exist and include both TP and FN/FP; source text always mentions the action, so this is exactly the intended separation",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-06-missing-task-while-text-mentions-task",
+      "classification": "method_limited_with_observed_tp",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_v1_eval.json::methods",
+      "expected_behavior": "a missing activity should be detected even though the regulation text still mentions the action",
+      "notes": "Do not treat source-text mention as evidence of a performed task."
+    },
+    {
+      "actual_behavior": "R4 records Ours article13p3/article14p4 raw actor content but canonical actors=[] and actor_action_map=[]; this upstream loss remains",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-07-actor-lost-after-coordinate-postprocessing",
+      "classification": "upstream_loss",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_v1.json::conclusions.remaining_frozen_upstream_errors",
+      "expected_behavior": "raw actor/action evidence should survive canonicalization into the shared Stage3 interface"
+    }
+  ],
+  "method_reuse": {
+    "note": "Sun/Ours reusable counts are Stage2 regulation-input reuse only; Winter does not share Stage2.",
+    "ours": {
+      "remaining_inputs": 22,
+      "reusable_exact_inputs": 14
+    },
+    "sun": {
+      "remaining_inputs": 22,
+      "reusable_exact_inputs": 14
+    },
+    "winter": {
+      "native_full_pipeline_cases": 36,
+      "stage2_reuse_not_applicable": true
+    }
+  },
+  "pending_execution_steps": [
+    "Explicit API authorization for the 22 listed Ours Direct-LLM Stage2 requests and the stated cap",
+    "Run the exact 22 unique regulation-input requests; no per-BPMN or per-variant calls",
+    "Run Sun Rules-Only locally on the same unique regulation inputs",
+    "Run Winter native and shared Stage3 after Stage2 inputs are frozen",
+    "Freeze evaluation outputs and report core/test metrics, coverage, unknown, N/A, and semantic challenge separately",
+    "Complete human review if formal Gold publication is requested"
+  ],
+  "quota_deviations_or_gaps": [
+    "Test split has 24 requirements but only 22 exact-input independent candidates; the remaining 2 reuse existing GDPR7 predictions and are marked exposed/non-independent.",
+    "S4 contains exactly 4 independent requirements, meeting the minimum with no spare capacity.",
+    "Article 4 definition fragments are recorded with URL-level official provenance because the local Winter snapshot does not include article4.txt; they are not silently treated as locally snapshot-verified.",
+    "Condition, exception, prohibition, permission, and general deadline/quantity truth are not evaluated by the frozen three-class scorer and are excluded from the core F1 claim."
+  ],
+  "scenario_coverage": {
+    "S1": {
+      "independent_requirements": 6,
+      "name_zh": "数据收集与告知"
+    },
+    "S2": {
+      "independent_requirements": 6,
+      "name_zh": "同意获取与撤回"
+    },
+    "S3": {
+      "independent_requirements": 9,
+      "name_zh": "数据主体请求处理"
+    },
+    "S4": {
+      "independent_requirements": 4,
+      "name_zh": "控制者、处理者及第三方之间的职责或通知"
+    },
+    "S5": {
+      "independent_requirements": 6,
+      "name_zh": "风险评估与事先咨询"
+    },
+    "S6": {
+      "independent_requirements": 5,
+      "name_zh": "安全事件和泄露响应"
+    }
+  },
+  "schema_version": "stage3_table3_r5_benchmark_report@1.0.0",
+  "split": {
+    "algorithm": "group_by_requirement_family; historical R1-R4 five forced to development; exact-existing-prediction families to development; new-source families to test; no family crosses split",
+    "development_requirements": 12,
+    "seed": 20260925,
+    "test_independent_candidate_count": 22,
+    "test_requirements": 24,
+    "test_reused_or_exposed_count": 2
+  },
+  "statuses": {
+    "api": "API_AUTHORIZATION_PENDING",
+    "data": "DATA_READY",
+    "formal_release": "FORMAL_RELEASE_NOT_APPROVED",
+    "methods": "METHODS_NOT_READY"
+  }
+}

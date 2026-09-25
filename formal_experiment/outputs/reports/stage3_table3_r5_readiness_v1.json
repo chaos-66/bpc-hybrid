@@ -1,0 +1,98 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v1",
+  "boundary": "Readiness only; no method metric is claimed in this report.",
+  "budget_summary": {
+    "calls_cap": 22,
+    "cost_upper_bound_usd_with_20pct_margin": 1.18,
+    "retry_cap": 0,
+    "total_input_tokens_cap": 474191,
+    "total_output_tokens_cap": 90112
+  },
+  "can_start_formal_method_run": false,
+  "execution_blockers": [
+    "API authorization for the listed Ours Direct-LLM requests is absent.",
+    "Known detector defects in PRE-01, PRE-02, PRE-03, PRE-04, PRE-06, PRE-07 may pollute the explanation of Table 3 results.",
+    "No new Stage2/Stage3 run may be started until the method protocol and API budget are authorized."
+  ],
+  "future_execution_order": [
+    "After authorization, run exactly the 22 unique Ours Direct-LLM Stage2 requests (one per unique source text); no per-variant calls.",
+    "Reuse the exact existing Stage2 predictions listed in the reuse report for the remaining 14 unique inputs.",
+    "Run Sun Rules-Only locally and Winter native only after Stage2 inputs are frozen.",
+    "Run the shared Stage3 evaluator on the frozen inference view and report core/test metrics, coverage, unknown, N/A, and semantic challenge separately."
+  ],
+  "prechecks": [
+    {
+      "actual_behavior": "frozen R4 evidence records the/Controller actor similarity around 0.4272 below theta=0.8; no normalization rule was added",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-01-actor-surface-equivalence",
+      "classification": "method_limitation",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_v1.json::conclusions.method_limitations",
+      "expected_behavior": "the controller, The controller, and Controller should normalize to one legal actor surface",
+      "notes": "Actor failures remain explainable and must not be reported as detector success."
+    },
+    {
+      "actual_behavior": "6 saved R4 candidate examples retained for local inspection; example=[{'case_id': 'case_06bacb820524', 'method_id': 'sun_b0_frozen_v1', 'rule_id': 'article35p1', 'rule_action_surface': 'carry', 'candidate_action_surface': 'Describe', 'candidate_node': 'Activity_0', 'similarity': 0.851992666721344, 'selected': False}, {'case_id': 'case_06bacb820524', 'method_id': 'sun_b0_frozen_v1', 'rule_id': 'article35p1', 'rule_action_surface': 'carry', 'candidate_action_surface': 'Describe', 'candidate_node': 'Activity_0', 'similarity': 0.851992666721344, 'selected': False}]",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-02-known-action-surface-mismatches",
+      "classification": "method_limitation",
+      "evidence_path": "outputs/development/stage3_table3_r4_targeted_v1/predictions.json + R4 targeted report",
+      "expected_behavior": "rule action surface should distinguish provide/applies, consult/requires, carry/describe rather than accept a lemma-level near match",
+      "notes": "R4 action-surface matching is retained; these pairs must be reported as known risk, not silently treated as passed."
+    },
+    {
+      "actual_behavior": "R4 mechanism report reproduces tie/same-verb wrong-object acceptance (known_limitation_reproductions)",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-03-same-action-different-object",
+      "classification": "method_limitation",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_mechanism_v1.json::known_limitation_reproductions",
+      "expected_behavior": "archive the parcel should not be satisfied by archive the invoice"
+    },
+    {
+      "actual_behavior": "The current implementation matches the literal extracted formula (which includes bs_obj in the C union) but conflicts with the prose reading that C contains actors only. This ambiguity was not silently changed in R4.",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-04-correct-actor-and-business-object",
+      "classification": "implementation_or_representation_gap",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_v1.json::actor_evidence.definition6_C_scope_check",
+      "expected_behavior": "when the correct actor and correct business object both exist, actor detection should bind them rather than treating the object as an actor candidate"
+    },
+    {
+      "actual_behavior": "R4 behavior probe order example=[['be informed', 'the restriction of processing is lifted']]; known_limitation_reproductions=2",
+      "blocks_formal_interpretation": false,
+      "check_id": "PRE-05-correct-and-reverse-order",
+      "classification": "supported_narrowly",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_mechanism_v1.json::behavior_probes",
+      "expected_behavior": "forward order is satisfiable and reversed order is detectable when a source before/prior-to edge exists",
+      "notes": "Only the scoped article18p3 before relation is proven; Winter before/prior-to remains unsupported and others may be unknown."
+    },
+    {
+      "actual_behavior": "R4 missing_action cells exist and include both TP and FN/FP; source text always mentions the action, so this is exactly the intended separation",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-06-missing-task-while-text-mentions-task",
+      "classification": "method_limited_with_observed_tp",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_v1_eval.json::methods",
+      "expected_behavior": "a missing activity should be detected even though the regulation text still mentions the action",
+      "notes": "Do not treat source-text mention as evidence of a performed task."
+    },
+    {
+      "actual_behavior": "R4 records Ours article13p3/article14p4 raw actor content but canonical actors=[] and actor_action_map=[]; this upstream loss remains",
+      "blocks_formal_interpretation": true,
+      "check_id": "PRE-07-actor-lost-after-coordinate-postprocessing",
+      "classification": "upstream_loss",
+      "evidence_path": "outputs/reports/stage3_table3_r4_targeted_v1.json::conclusions.remaining_frozen_upstream_errors",
+      "expected_behavior": "raw actor/action evidence should survive canonicalization into the shared Stage3 interface"
+    }
+  ],
+  "reuse_summary": {
+    "new_ours_requests": 22,
+    "reused_unique_inputs": 14,
+    "unique_regulation_inputs": 36,
+    "winter_native_cases_requiring_future_stage3_run": 36
+  },
+  "schema_version": "stage3_table3_r5_readiness@1.0.0",
+  "statuses": {
+    "api": "API_AUTHORIZATION_PENDING",
+    "data": "DATA_READY",
+    "formal_release": "FORMAL_RELEASE_NOT_APPROVED",
+    "methods": "METHODS_NOT_READY"
+  }
+}

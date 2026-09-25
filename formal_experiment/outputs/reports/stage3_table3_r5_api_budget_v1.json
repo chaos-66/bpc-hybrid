@@ -1,0 +1,286 @@
+{
+  "assumptions": [
+    "Token count is conservatively bounded by request UTF-8 bytes plus a 4096-byte envelope allowance.",
+    "The request template and system prompt are the frozen D1 prompt identity with the recorded SHA-256.",
+    "No retries are authorized or budgeted.",
+    "No cache-hit discount is assumed for the cap.",
+    "Any text change, prompt change, model alias change, or price change invalidates this cap and requires a new authorization snapshot."
+  ],
+  "authorization_consumed_this_round": false,
+  "benchmark_id": "stage3_table3_r5_benchmark_v1",
+  "calls_cap": 22,
+  "cost_upper_bound_usd_with_20pct_margin": 1.18,
+  "cost_upper_bound_usd_without_cache_discount": 0.982776,
+  "max_output_tokens_per_call": 4096,
+  "method_call_owner": "Ours Direct-LLM Stage2 only; Sun Rules-Only and Winter native do not consume these API calls",
+  "new_requests": 22,
+  "price_snapshot": {
+    "currency": "USD",
+    "off_peak_multiplier": 0.5,
+    "per_million_peak": {
+      "input_cache_hit": 0.044,
+      "input_cache_miss": 1.32,
+      "output": 3.96
+    },
+    "reverify_before_authorized_execution": true,
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified_date": "2026-09-23"
+  },
+  "real_api_calls_made": 0,
+  "request_rows": [
+    {
+      "input_token_upper_bound": 21360,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S1-T1",
+      "source_text_sha256": "16a2a3b5ceb63999f1758de7f91a407c52e36eeef8d0627516e41bbb43aa5c1d",
+      "source_text_utf8_bytes": 214,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21515,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S1-T2",
+      "source_text_sha256": "c857f4424b6e5e8532d1241d4fb6745148aa56069518c1d9fe9dfc853a454491",
+      "source_text_utf8_bytes": 369,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21289,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S1-T3",
+      "source_text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f",
+      "source_text_utf8_bytes": 143,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21365,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S1-T4",
+      "source_text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e",
+      "source_text_utf8_bytes": 219,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21566,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S2-T1",
+      "source_text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68",
+      "source_text_utf8_bytes": 420,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21355,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S2-T2",
+      "source_text_sha256": "4a572b9fde1b8fd97666c3cb5925d2edd2527b4969b67ab65fb7fcf84124e267",
+      "source_text_utf8_bytes": 209,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21399,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S2-T3",
+      "source_text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f",
+      "source_text_utf8_bytes": 253,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21579,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S2-T4",
+      "source_text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b",
+      "source_text_utf8_bytes": 433,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21340,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S3-T1",
+      "source_text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb",
+      "source_text_utf8_bytes": 194,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21483,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S3-T2",
+      "source_text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb",
+      "source_text_utf8_bytes": 337,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21419,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S3-T3",
+      "source_text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d",
+      "source_text_utf8_bytes": 273,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21287,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S3-T4",
+      "source_text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e",
+      "source_text_utf8_bytes": 141,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21571,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S4-T1",
+      "source_text_sha256": "4ab0b5c456120cbbc85a045342d7eb9d850db264e4e747af4f882b8fa7513c9d",
+      "source_text_utf8_bytes": 425,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21879,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S4-T2",
+      "source_text_sha256": "e6fa8bd9e008b448d4904925e75fb86d9aa6ebecc87394c917f6967d2d03979f",
+      "source_text_utf8_bytes": 733,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 23612,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S4-T3",
+      "source_text_sha256": "81f87c45e60c30cb1134962ad3d57c1eb237f6f763197e6c8c71a2cb51185323",
+      "source_text_utf8_bytes": 2466,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21457,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S4-T4",
+      "source_text_sha256": "6d16dedab3b12954ac7972d1c6b18ce394ccd00428c3cf7f49d9832e0c2098fc",
+      "source_text_utf8_bytes": 311,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21287,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S5-T1",
+      "source_text_sha256": "d65f391cfe4f4159883a211594774f386c105d08deac35b43f2e0b777fddc47b",
+      "source_text_utf8_bytes": 141,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21382,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S5-T2",
+      "source_text_sha256": "dfbc48c5f0729dc31ce006f0a8b8d958ba1df825b086851435c703e2e67a86ea",
+      "source_text_utf8_bytes": 236,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21378,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S5-T3",
+      "source_text_sha256": "cf1e4c40ef5083d35242f540be5c68b5565145d1ea970540d76a684c3657850c",
+      "source_text_utf8_bytes": 232,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21621,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S5-T4",
+      "source_text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9",
+      "source_text_utf8_bytes": 475,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21594,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S6-T1",
+      "source_text_sha256": "7a611aab8130f0bacc05b99d03ba542cfc0c00f0af5966bc95e448c4dbfee0fd",
+      "source_text_utf8_bytes": 448,
+      "split": "test"
+    },
+    {
+      "input_token_upper_bound": 21453,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+      "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+      "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
+      "requirement_id": "R5-S6-T2",
+      "source_text_sha256": "b4eb199a1981e55f124df9ce2620678f7d2bdec0c7fef3550f101091ed55b2be",
+      "source_text_utf8_bytes": 307,
+      "split": "test"
+    }
+  ],
+  "retry_cap": 0,
+  "reused_existing_stage2_inputs": 14,
+  "schema_version": "stage3_table3_r5_api_budget@1.0.0",
+  "status": "API_AUTHORIZATION_PENDING",
+  "total_input_tokens_cap": 474191,
+  "total_output_tokens_cap": 90112,
+  "unique_regulation_inputs_total": 36,
+  "unknowns": [
+    "Provider tokenizer count is not known exactly before dispatch; the cap uses a conservative byte upper bound.",
+    "The official price page must be re-verified immediately before an authorized run.",
+    "Actual failure/extraction quality is not predicted or assumed."
+  ]
+}
