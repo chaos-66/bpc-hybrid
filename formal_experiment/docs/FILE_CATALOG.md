@@ -1,7 +1,7 @@
 # 项目逐文件目录
 
-**生成日期**：2026-09-25
-**收录文件**：3120 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
+**生成日期**：2026-09-26
+**收录文件**：3134 个（不含 `_retired/`、Git-ignored 本地产物、`.env` 与可再生缓存）
 **生成命令**：`python formal_experiment/scripts/generate_file_catalog.py`
 
 本文件只收录活动项目文件；归档仅在明确追溯时查阅，不进入默认目录。
@@ -806,6 +806,7 @@
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_19b2d6f1bfb0.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_1a2d6abc026a.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_1d6ccfc9b95c.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_1e5363aa87b5.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_1f817e0b0d37.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_1fafed22bfdd.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_1fd8d9be0c9d.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
@@ -823,9 +824,11 @@
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_2fbe69c72793.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_35ae84dddc65.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_36a5f51046f7.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_3af5fd62647b.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_3b01b9c36d0f.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_3db096abecec.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_436340192865.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_44ded3550ee5.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_47ac07c5ced4.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_4aec33c00dc8.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_4c59fee89687.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
@@ -838,6 +841,7 @@
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_6209f221b20b.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_648835a58615.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_64985e535fd0.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_64e83d36bba3.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_65628736fcec.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_661cbff65102.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_66774ccb1348.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
@@ -850,8 +854,10 @@
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_72073c61be4c.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_7396f1ecbaf2.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_7c047344bd97.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_7dcc88ac3cf1.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_806f7830225a.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_81af7889b5bb.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_83e2662c1457.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_8447fd35edc7.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_8480429a9517.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_88a2fd3f66cf.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
@@ -874,9 +880,11 @@
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_ba895d210eaf.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_bb81d68dc7f5.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_c20eeebe67dd.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_c2c28cb239bc.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_c5b585c4439f.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_c962e006a37d.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_cecd14adb006.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
+| `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_d1ab41696c03.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_d2f6fee80f4e.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_d391f7745e2d.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
 | `data/development/stage3_table3_r5_benchmark_v2/bpmn/case_d46c4dbbf7b8.bpmn` | 开发/溯源 | 流程模型或测试 fixture |
@@ -2081,6 +2089,7 @@
 | `outputs/reports/sep_c3_modular_ablation_analysis_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_modular_ablation_analysis_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_offline_check_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/sep_c3_modular_ablation_root_cause_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/sep_c3_modular_ablation_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/sep_c3_modular_ablation_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -2200,10 +2209,13 @@
 | `outputs/reports/stage3_table3_r4_targeted_validation_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_r5_api_budget_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_r5_api_budget_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_table3_r5_api_payload_freeze_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_r5_benchmark_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_r5_benchmark_v1.md` | 活动 | 说明、规范或研究文档 |
 | `outputs/reports/stage3_table3_r5_benchmark_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_r5_benchmark_v2.md` | 活动 | 说明、规范或研究文档 |
+| `outputs/reports/stage3_table3_r5_d1_duplicate_span_replay_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
+| `outputs/reports/stage3_table3_r5_order_eligibility_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_r5_prediction_reuse_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_r5_prediction_reuse_v2.json` | 活动 | 机器可读配置、数据、事件或产物 |
 | `outputs/reports/stage3_table3_r5_readiness_v1.json` | 活动 | 机器可读配置、数据、事件或产物 |
@@ -2270,7 +2282,6 @@
 | `paper/CLAIM_EVIDENCE_MATRIX.md` | 活动 | 科学主张、证据状态和解锁条件 |
 | `paper/CSCWD_POSITIONING.md` | 活动 | 说明、规范或研究文档 |
 | `paper/MENTOR_REPORT_CONTENT_2026-09.md` | 活动 | 说明、规范或研究文档 |
-| `paper/presentations/bpc_hybrid_revised_20260912.pptx` | 活动 | 项目文件 |
 | `paper/presentations/bpc_hybrid_Stage3_completed.pptx` | 活动 | 项目文件 |
 | `paper/README.md` | 活动 | 所在目录的入口说明 |
 | `paper/SIM_CASE_SECTION_v1.md` | 活动 | 说明、规范或研究文档 |
@@ -2517,8 +2528,10 @@
 | `scripts/build_stage3_reconstruction_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_repair_summary_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_table3_inputs_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage3_table3_r5_api_payload_freeze_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_table3_r5_benchmark.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_table3_r5_benchmark_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/build_stage3_table3_r5_order_closure_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_table3_r5_v2_config.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_table3_r5_v2_delivery.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_stage3_table3_v1.py` | 活动 | Python 实现、脚本或测试 |
@@ -2526,8 +2539,6 @@
 | `scripts/build_stage3_table3_v4_r2_cause_analysis.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sun_rule_only_authorization_dry_run.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_sun_stage3_threshold_sensitivity_v1.py` | 活动 | Python 实现、脚本或测试 |
-| `scripts/build_v6_factorial_arms_v1.py` | 活动 | Python 实现、脚本或测试 |
-| `scripts/build_v6_factorial_arms_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/build_v6_factorial_arms_v3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_api_env_ready_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/check_sun_baseline.py` | 活动 | Python 实现、脚本或测试 |
@@ -2597,6 +2608,7 @@
 | `scripts/reevaluate_sun_literal_v2_v10a_vs_c3.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/render_sim_case_c1_figure_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/repair_s3_real_rule_diagnostics_v1.py` | 活动 | Python 实现、脚本或测试 |
+| `scripts/replay_d1_duplicate_span_reanchor_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/restore_layer_e_adjudication_from_56d2b03.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/review_s2_11_candidates.py` | 活动 | Python 实现、脚本或测试 |
 | `scripts/review_s2_11_v2.py` | 活动 | Python 实现、脚本或测试 |
@@ -2831,6 +2843,7 @@
 | `src/bpc_hybrid/modular_refinement_prompt.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/normalization.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/prompt_loader.py` | 活动 | Python 实现、脚本或测试 |
+| `src/bpc_hybrid/role_surface.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_11_barrientos_adapter.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_11_canonical_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `src/bpc_hybrid/s2_11_canonical_v3.py` | 活动 | Python 实现、脚本或测试 |
@@ -3206,6 +3219,7 @@
 | `tests/test_stage3_reconstruction_v4.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_r5_benchmark.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_r5_benchmark_v2.py` | 活动 | Python 实现、脚本或测试 |
+| `tests/test_stage3_table3_r5_preflight_closure.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_v1.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_v2.py` | 活动 | Python 实现、脚本或测试 |
 | `tests/test_stage3_table3_v3.py` | 活动 | Python 实现、脚本或测试 |

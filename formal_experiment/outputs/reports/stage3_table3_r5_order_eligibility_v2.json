@@ -1,0 +1,223 @@
+{
+  "action_precedence_count": 7,
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "bounded_source_search": {
+    "keyword_pattern": "\\b(prior to|before|after|following|preceding|subsequent)\\b",
+    "raw_match_count": 34,
+    "search_scope": "local project GDPR article files only; prediction-blind",
+    "selected_addition_requirement_ids": [
+      "R5-S7-T1",
+      "R5-S8-T1"
+    ],
+    "selected_candidate_match_count": 3,
+    "selected_candidates": [
+      {
+        "article_file": "article40.txt",
+        "keyword": "before",
+        "snippet": "cessing activities in several Member States, the supervisory authority which is competent pursuant to Article 55 shall, before approving the draft code, amendment or extension, submit it in the procedure referred to in Article 63 to the Board which shall provide an opinion on whether t",
+        "snippet_sha256": "a3c43fae8480aef340abaeac6ca3434d6c7bdc7e2393e4d05e8de70bd053b988"
+      },
+      {
+        "article_file": "article43.txt",
+        "keyword": "after",
+        "snippet": "cles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certifi",
+        "snippet_sha256": "20503f264e558eeed0b9698fff2b22fbd09e3bf97743cdc8265f552515202e52"
+      },
+      {
+        "article_file": "article43.txt",
+        "keyword": "following",
+        "snippet": "nd renew certification. Member States shall ensure that those certification bodies are accredited by one or both of the following: the supervisory authority which is competent pursuant to Article 55 or 56. the national accreditation body named in accordance with Regulation (EC) No 765/200",
+        "snippet_sha256": "3658dd5ec9cd529531c0ea8aade697640abf6a78af12555eaba5bcccfcff2621"
+      }
+    ],
+    "source_directory": "references/winter_2020_model_check/model_check/input/regulations/gdpr",
+    "stop_condition_met": true
+  },
+  "deadline_only_unsupported_count": 1,
+  "eligibility_definition": {
+    "TYPE_A_explicit_action_precedence": "Source text explicitly orders two business actions (A before B / B after A / prior to B).",
+    "TYPE_B_trigger_precedence": "Source text places an event/receipt/request/awareness before an action; deadline arithmetic is not evaluated by current Stage 3.",
+    "TYPE_C_deadline_arithmetic_only": "Source text requires a date/time calculation that current Stage 3 cannot perform; mark unsupported/not_scored.",
+    "forbidden": [
+      "adjust eligibility using prediction results",
+      "convert deadline-only text into binary out_of_order",
+      "use Gold/reference labels to infer order"
+    ]
+  },
+  "order_requirement_count": 14,
+  "order_requirement_ids": [
+    "R5-D-01",
+    "R5-D-02",
+    "R5-D-03",
+    "R5-D-04",
+    "R5-D-05",
+    "R5-D-12",
+    "R5-S1-T3",
+    "R5-S1-T4",
+    "R5-S3-T1",
+    "R5-S3-T2",
+    "R5-S5-T4",
+    "R5-S6-T3",
+    "R5-S7-T1",
+    "R5-S8-T1"
+  ],
+  "remaining_limitation": "TYPE_B trigger precedence checks only trigger-before-action; one-month/72-hour/eight-week deadline satisfaction remains unsupported. TYPE_C requirements are not scored as out_of_order.",
+  "rows": [
+    {
+      "citation": "GDPR Article 13(3)",
+      "order_evidence": "provide information prior to further processing",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "requirement_id": "R5-D-01",
+      "scored_scope": "evaluate action precedence",
+      "source_family_id": "gdpr_art13",
+      "source_text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 14(4)",
+      "order_evidence": "provide information prior to further processing",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "requirement_id": "R5-D-02",
+      "scored_scope": "evaluate action precedence",
+      "source_family_id": "gdpr_art14",
+      "source_text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 18(3)",
+      "order_evidence": "inform before the restriction of processing is lifted",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "requirement_id": "R5-D-03",
+      "scored_scope": "evaluate action precedence",
+      "source_family_id": "gdpr_art18",
+      "source_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 35(1), first sentence",
+      "order_evidence": "carry out DPIA prior to the processing",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "requirement_id": "R5-D-04",
+      "scored_scope": "evaluate action precedence",
+      "source_family_id": "gdpr_art35",
+      "source_text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 36(1)",
+      "order_evidence": "consult supervisory authority prior to processing",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "requirement_id": "R5-D-05",
+      "scored_scope": "evaluate action precedence",
+      "source_family_id": "gdpr_art36",
+      "source_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 33(1)",
+      "order_evidence": "notify after becoming aware (72-hour deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "requirement_id": "R5-D-12",
+      "scored_scope": "evaluate only trigger precedes action; do not claim deadline satisfaction",
+      "source_family_id": "gdpr_art33",
+      "source_text_sha256": "d3327ce470720a494bfb05a72841a073e0c7bac1673f11545833dcce72ef0a65",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 14(1)",
+      "order_evidence": "provide information after obtaining personal data (one-month deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "requirement_id": "R5-S1-T3",
+      "scored_scope": "evaluate only trigger precedes action; do not claim deadline satisfaction",
+      "source_family_id": "gdpr_art14",
+      "source_text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 14(2)",
+      "order_evidence": "provide information after obtaining personal data (one-month deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "requirement_id": "R5-S1-T4",
+      "scored_scope": "evaluate only trigger precedes action; do not claim deadline satisfaction",
+      "source_family_id": "gdpr_art14",
+      "source_text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 12(3)",
+      "order_evidence": "provide response after receipt of request (one-month deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "requirement_id": "R5-S3-T1",
+      "scored_scope": "evaluate only trigger precedes action; do not claim deadline satisfaction",
+      "source_family_id": "gdpr_art12",
+      "source_text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb",
+      "split": "test"
+    },
+    {
+      "citation": "GDPR Article 12(4)",
+      "order_evidence": "inform after receipt of request (one-month deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "requirement_id": "R5-S3-T2",
+      "scored_scope": "evaluate only trigger precedes action; do not claim deadline satisfaction",
+      "source_family_id": "gdpr_art12",
+      "source_text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb",
+      "split": "test"
+    },
+    {
+      "citation": "GDPR Article 36(2)",
+      "order_evidence": "regulatory period after receipt of request (date arithmetic unsupported)",
+      "order_type": "TYPE_C_deadline_arithmetic_only",
+      "requirement_id": "R5-S5-T4",
+      "scored_scope": "unsupported_not_scored",
+      "source_family_id": "gdpr_art36",
+      "source_text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 33(2)",
+      "order_evidence": "notify controller after becoming aware (deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "requirement_id": "R5-S6-T3",
+      "scored_scope": "evaluate only trigger precedes action; do not claim deadline satisfaction",
+      "source_family_id": "gdpr_art33",
+      "source_text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+      "split": "development"
+    },
+    {
+      "citation": "GDPR Article 40(7)",
+      "order_evidence": "submit draft code before approving it",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "requirement_id": "R5-S7-T1",
+      "scored_scope": "evaluate action precedence",
+      "source_family_id": "gdpr_art40",
+      "source_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+      "split": "test"
+    },
+    {
+      "citation": "GDPR Article 43(1)",
+      "order_evidence": "issue or renew certification after informing the supervisory authority",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "requirement_id": "R5-S8-T1",
+      "scored_scope": "evaluate action precedence",
+      "source_family_id": "gdpr_art43",
+      "source_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+      "split": "test"
+    }
+  ],
+  "schema_version": "stage3_table3_r5_order_eligibility@2.0.0",
+  "status": "ORDER_ELIGIBILITY_FROZEN_SOURCE_ONLY",
+  "test_independent_order_family_count": 3,
+  "test_independent_order_family_ids": [
+    "gdpr_art12",
+    "gdpr_art40",
+    "gdpr_art43"
+  ],
+  "test_order_requirement_count": 4,
+  "test_order_requirement_ids": [
+    "R5-S3-T1",
+    "R5-S3-T2",
+    "R5-S7-T1",
+    "R5-S8-T1"
+  ],
+  "trigger_precedence_count": 6
+}

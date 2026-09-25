@@ -1,5 +1,18 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
+## 2026-09-26 修订 3.7.31：S3-TABLE3-R6 formal preflight closure（零 API）
+
+- 完成 Stage 2 冻结前提下的 Table 3 入口封板，不是最终 Table 3 运行：真实 API 调用 0，正式矩阵未跑。
+- benchmark 机器重算：38 requirements（33 core + 5 candidates）、dev/test 22/16、source families 23、cross-split 0、core cases 113、type positives missing/actor/order = 33/33/14。
+- 六要素 present：modality 38、actor 38、action 38、condition 37、constraint 38、exception 18；exception 不再引用旧的 19。
+- 修复 A13(4)/A14(5) 的 exception grounding（cross-reference text outside Stage2 input，counts_as_stage2_input=false）、A20(4) semantic value（改为真实 source text），并将 semantic challenge 拆成 method-visible facts vs evaluator-only truth；`where appropriate` 与 A20(4) challenge 标记 unsupported/not_scored。
+- Ours reuse 重算：STRONG_REUSE 5、HISTORICAL_CHAIN_REUSE 9、NOT_REUSABLE 0、current core new request 19；Sun reuse 仅 14 条弱证据（record/status），0 strong。
+- 仅两个批准接口修复：shared role-surface normalization（casefold/whitespace/leading article；controller != processor）与 D1 raw-offset duplicate re-anchor；A13(3)/A14(4) offline replay 均恢复 actor 与 actor-action relation。
+- order coverage 源侧冻结：order requirements 14，TYPE_A 7 / TYPE_B 6 / TYPE_C deadline-only unsupported 1；bounded source-only closure 新增 A40(7)、A43(1) 两个独立 test family；test independent order families = art12/art40/art43。
+- API payload freeze：19 个独立 Ours Direct-LLM 请求，model `deepseek-v4-pro` / alias `DeepSeek-V4-Pro-0813`，t=0/p=1/max_tokens=4096/retry=0/stream=false/thinking=disabled/response_format=None；payload manifest SHA256 `bd029e42ff6db8752e138827ad9861c660f1eda1b4b6dbaac8ee7715b30d3707`；peak raw cap $0.750066，+20% cap $0.91；authorization=PENDING。
+- Release 状态仍为 DATA_READY_FOR_FROZEN_SCOPE / METHODS_NOT_READY / API_AUTHORIZATION_PENDING / FORMAL_RELEASE_NOT_APPROVED；human_adjudicated=false，reference_is_gold=false。
+- Focused validation：`test_stage3_table3_r5_benchmark_v2.py`、`test_stage3_table3_r5_preflight_closure.py`、`test_b0_r1_d1_span_canonicalizer.py` 共 42 passed；R5 v2 validator structural/content pass。全局 `audit_project.py` 仍因既有非 Table-3 gates 报 fail，本轮不扩权修复。
+
 **文档版本**：3.7.30
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-25

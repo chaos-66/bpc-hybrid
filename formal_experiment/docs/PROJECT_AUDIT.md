@@ -1,5 +1,15 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
+## 当前优先级：S3-TABLE3-R6 formal preflight closure（2026-09-26，零 API）
+
+- 状态：`DATA_READY_FOR_FROZEN_SCOPE / METHODS_NOT_READY / API_AUTHORIZATION_PENDING / FORMAL_RELEASE_NOT_APPROVED`。没有真实 API 调用，没有正式 Table 3 运行，没有 Gold 发布。
+- Benchmark 重算：38 requirements = 33 core + 5 candidate；dev/test = 22/16；source families = 23；cross-split families = 0；core cases = 113；missing/actor/order positives = 33/33/14。bounded source-only order closure 新增 `R5-S7-T1` (Art 40(7)) 与 `R5-S8-T1` (Art 43(1))。
+- 六要素 present：modality 38、actor 38、action 38、condition 37、constraint 38、exception 18；exception evidence 明确拆为 Stage2 input / cross-reference outside Stage2 / shared context / not present。
+- 已批准修复：Article 13(4)/14(5) cross-reference grounding、Article 20(4) semantic correction、semantic challenge truth separation、shared role-surface normalization、D1 raw-offset duplicate re-anchor。Gold/reference 未进入 Stage2/Stage3 runtime，旧历史 manifest 未改。
+- Ours reuse：STRONG_REUSE 5、HISTORICAL_CHAIN_REUSE 9、NOT_REUSABLE 0、new core request 19。Sun reuse：weak 14、strong 0、new source 24（需本地规则抽取，不是 API）。
+- API payload freeze：`outputs/reports/stage3_table3_r5_api_payload_freeze_v2.json`，payload manifest SHA256 `bd029e42ff6db8752e138827ad9861c660f1eda1b4b6dbaac8ee7715b30d3707`；19 次独立请求；peak raw cap $0.750066、+20% cap $0.91；AUTHORIZATION = PENDING，REAL API CALLS = 0。
+- 后续：等待用户/GPT 审核 exact request list、price date与 cost cap；授权后才可执行缺失 Ours Stage2 API，然后冻结 prediction 并运行一次正式 Table 3。
+
 **更新时间**：2026-09-25
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  

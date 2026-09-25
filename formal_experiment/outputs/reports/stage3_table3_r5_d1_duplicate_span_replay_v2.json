@@ -1,0 +1,69 @@
+{
+  "method": "raw LLM start/end interval + unique_overlap/nearest_occurrence",
+  "real_api_calls_made": 0,
+  "rows": [
+    {
+      "actor_action_relation_recovered": true,
+      "actor_recovered": true,
+      "canonicalizer_audit": {
+        "dropped_edges": [],
+        "dropped_spans": [],
+        "reanchored_count": 8,
+        "status": "reanchored"
+      },
+      "duplicate_spans": [
+        {
+          "clause_index": 0,
+          "field": "actors",
+          "occurrence_count": 2,
+          "occurrence_starts": [
+            6,
+            140
+          ],
+          "raw_end": 151,
+          "raw_start": 137,
+          "span_id": "a01",
+          "text": "the controller"
+        }
+      ],
+      "raw_file": "01_gdpr_article13p3_s001.json",
+      "remaining_ambiguity": false,
+      "requirement_id": "R5-D-01",
+      "source_text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+      "status": "replayed"
+    },
+    {
+      "actor_action_relation_recovered": true,
+      "actor_recovered": true,
+      "canonicalizer_audit": {
+        "dropped_edges": [],
+        "dropped_spans": [],
+        "reanchored_count": 7,
+        "status": "reanchored"
+      },
+      "duplicate_spans": [
+        {
+          "clause_index": 0,
+          "field": "actors",
+          "occurrence_count": 2,
+          "occurrence_starts": [
+            6,
+            139
+          ],
+          "raw_end": 139,
+          "raw_start": 125,
+          "span_id": "a01",
+          "text": "the controller"
+        }
+      ],
+      "raw_file": "02_gdpr_article14p4_s001.json",
+      "remaining_ambiguity": false,
+      "requirement_id": "R5-D-02",
+      "source_text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+      "status": "replayed"
+    }
+  ],
+  "schema_version": "stage3_table3_r5_d1_duplicate_span_replay@2.0.0",
+  "used_gold": false,
+  "used_reference": false
+}
