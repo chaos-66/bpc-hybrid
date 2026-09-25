@@ -2370,15 +2370,15 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
-            "in_input": true,
-            "note": "exception clause matched in excerpt",
-            "scope": "source_excerpt",
-            "sha256": "45f8f09016e3fe36da97996cc83f7bdde4538e4379433421cd507ff29e2b5d4d",
-            "text": "child is at least 16 years old"
+            "counts_as_in_input": false,
+            "in_input": false,
+            "note": "exception_present=false",
+            "scope": "not_present",
+            "sha256": null,
+            "text": ""
           },
-          "present": true,
-          "value": "child is at least 16 years old; Member State may provide a lower age not below 13"
+          "present": false,
+          "value": ""
         },
         "modality": {
           "evidence": {

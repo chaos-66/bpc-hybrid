@@ -416,10 +416,14 @@ def build_v2_config() -> dict:
             spec["condition_text"] = text
             spec["condition_fix_basis"] = "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2."
         # Exception: never let a negated condition masquerade as an independent exception.
-        if rid in ("R5-S2-T4",):
+        if rid in ("R5-S2-T1", "R5-S2-T4"):
             spec["exception_present"] = False
             spec["exception_text"] = ""
-            spec["exception_fix_basis"] = "v1 exception was the mere negation of the condition; removed as an independent exception."
+            spec["exception_fix_basis"] = (
+                "v1 exception was the mere negation of the condition ('child at least 16' negates "
+                "'child below 16'; 'no authorising law' negates the legal basis); removed as an "
+                "independent exception per the condition-vs-exception separation rule."
+            )
 
     # A6: precise narrow excerpt for R5-S4-T3 (28(3)(a) only).
     for spec in v2["requirements"]:

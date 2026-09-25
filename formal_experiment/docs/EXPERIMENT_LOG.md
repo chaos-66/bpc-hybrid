@@ -5561,3 +5561,17 @@
 - 仍存在 blocker：无
 - 备注：R5 v1 preserved; benchmark v2 only; zero API; focused tests only (not full suite)
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T12:09:27.953915+00:00 - R5.1 follow-up: remove condition-negation pseudo-exceptions on R5-S2-T1 and R5-S2-T4 (condition/exception separation rule)
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：13 passed in 0.29s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`d71859931b63cc4fffd1170bf5abb5d3f147b13b`；相关未提交路径：20 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：focused tests only; R5 v1 preserved
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

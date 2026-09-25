@@ -83,7 +83,7 @@
 | action | 36 | 36 | 0 |
 | condition | 35 | 32 | 3 |
 | constraint | 36 | 35 | 1 |
-| exception | 19 | 18 | 1 |
+| exception | 18 | 17 | 1 |
 
 - modality/actor/action are implemented and used by the frozen scorer.
 - condition and exception truth remain **unsupported** by the frozen three-class scorer (recorded in the challenge layer).
@@ -115,6 +115,7 @@
 - condition/exception/prohibition/permission truth is still unsupported; condition/exception challenges are assets, not detector capability.
 - core test coverage is 9 requirements over 7 independent families, and only 2 test requirements are out_of_order eligible.
 - no new Stage2/Stage3 main matrix, no parameter search and no full test suite were run this round.
+- validator: structural=True, content_qualification=True (7 structural + 6 content checks).
 
 ## 8. v1 -> v2 artifact mapping
 
