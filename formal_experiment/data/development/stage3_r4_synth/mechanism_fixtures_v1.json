@@ -1,0 +1,196 @@
+{
+  "action_cases": [
+    {
+      "case_id": "be_informed_inform_normalization",
+      "domain": "privacy",
+      "expected_meets_gamma": true,
+      "expected_selected": "N1",
+      "node_specs": [
+        {
+          "label": "Inform the data subject that the processing restriction will be lifted",
+          "node_id": "N1"
+        }
+      ],
+      "rule_action": "be informed by the controller"
+    },
+    {
+      "case_id": "correct_action_missing_only_other_action",
+      "domain": "logistics",
+      "expected_meets_gamma": false,
+      "expected_selected": null,
+      "node_specs": [
+        {
+          "label": "Archive the parcel",
+          "node_id": "N1"
+        }
+      ],
+      "rule_action": "approve the invoice"
+    },
+    {
+      "case_id": "model_action_surface_missing_no_full_label_fallback",
+      "domain": "privacy",
+      "expected_candidate_reason": "model_action_missing_action_surface",
+      "expected_meets_gamma": false,
+      "expected_selected": null,
+      "node_specs": [
+        {
+          "action_surface": null,
+          "label": "Inform the data subject",
+          "node_id": "N1"
+        }
+      ],
+      "rule_action": "inform"
+    },
+    {
+      "case_id": "rule_action_surface_missing_no_full_label_fallback",
+      "domain": "privacy",
+      "expected_candidate_reason": "rule_action_missing_action_surface",
+      "expected_meets_gamma": false,
+      "expected_selected": null,
+      "node_specs": [
+        {
+          "label": "Inform the data subject",
+          "node_id": "N1"
+        }
+      ],
+      "rule_action_override": {
+        "action_surface": null,
+        "original_text": "inform the data subject"
+      }
+    },
+    {
+      "case_id": "duplicate_action_stable_id_tie",
+      "domain": "invoice",
+      "expected_meets_gamma": true,
+      "expected_selected": "N1",
+      "expected_tied": [
+        "N1",
+        "N2"
+      ],
+      "node_specs": [
+        {
+          "label": "Approve the invoice",
+          "node_id": "N2"
+        },
+        {
+          "label": "Approve the parcel",
+          "node_id": "N1"
+        }
+      ],
+      "rule_action": "approve the invoice"
+    },
+    {
+      "case_id": "same_verb_different_object_limitation",
+      "domain": "logistics",
+      "expected_limitation": "action-surface-only cannot distinguish business objects; both candidates tie on action text",
+      "expected_limitation_observed": true,
+      "expected_meets_gamma": true,
+      "expected_selected": "N1",
+      "node_specs": [
+        {
+          "label": "Archive the invoice",
+          "node_id": "N1"
+        },
+        {
+          "label": "Archive the parcel",
+          "node_id": "N2"
+        }
+      ],
+      "rule_action": "archive the parcel"
+    },
+    {
+      "case_id": "same_verb_correct_object_candidate_absent_limitation",
+      "domain": "logistics",
+      "expected_limitation": "action-surface-only accepts a same-verb wrong-object candidate when the correct-object candidate is absent",
+      "expected_limitation_observed": true,
+      "expected_meets_gamma": true,
+      "expected_selected": "N1",
+      "node_specs": [
+        {
+          "label": "Archive the invoice",
+          "node_id": "N1"
+        }
+      ],
+      "rule_action": "archive the parcel"
+    }
+  ],
+  "order_cases": [
+    {
+      "case_id": "normal_order_satisfied",
+      "domain": "logistics",
+      "expected_order_status": "satisfied",
+      "node_specs": [
+        {
+          "label": "Approve the invoice",
+          "node_id": "N1"
+        },
+        {
+          "label": "Archive the invoice",
+          "node_id": "N2"
+        }
+      ],
+      "order": [
+        "approve the invoice",
+        "archive the invoice"
+      ],
+      "reachable": {
+        "N1": [
+          "N2"
+        ]
+      }
+    },
+    {
+      "case_id": "reverse_order_violated",
+      "domain": "logistics",
+      "expected_order_status": "violated",
+      "node_specs": [
+        {
+          "label": "Approve the invoice",
+          "node_id": "N1"
+        },
+        {
+          "label": "Archive the invoice",
+          "node_id": "N2"
+        }
+      ],
+      "order": [
+        "archive the invoice",
+        "approve the invoice"
+      ],
+      "reachable": {
+        "N1": [
+          "N2"
+        ]
+      }
+    }
+  ],
+  "projection_cases": [
+    {
+      "action_text": "be informed",
+      "case_id": "article18_before_passive_projection",
+      "domain": "privacy",
+      "expect_predicate": "lifted",
+      "expected_edges": [
+        [
+          "be informed",
+          "the restriction of processing is lifted"
+        ]
+      ],
+      "field": "constraints",
+      "marker_text": "before the restriction of processing is lifted.",
+      "text": "The controller shall be informed before the restriction of processing is lifted."
+    },
+    {
+      "action_text": "be informed",
+      "case_id": "multi_predicate_projection_rejected",
+      "domain": "privacy",
+      "expect_reject_reason_contains": "multiple_top_level_event_predicates",
+      "expected_edges": [],
+      "field": "constraints",
+      "marker_text": "before the restriction is lifted and the record is archived.",
+      "text": "The controller shall be informed before the restriction is lifted and the record is archived."
+    }
+  ],
+  "schema_version": "stage3_r4_mechanism_fixtures@1.0.0",
+  "source": "independent synthetic development fixtures for R4 action-surface mechanics; not derived from the current five regulations or their BPMN labels and not part of Table 3 scoring data."
+}

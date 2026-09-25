@@ -1,0 +1,832 @@
+{
+  "backend": "r4_sm",
+  "backend_info": {
+    "backend": "r4_sm",
+    "parser": "en_core_web_sm",
+    "version": "3.8.0"
+  },
+  "behavior_probes": [
+    {
+      "actual_edges": [
+        [
+          "be informed",
+          "the restriction of processing is lifted"
+        ]
+      ],
+      "audit": {
+        "clause_id": "fixture_article18_before_passive_projection",
+        "derived_edges": [
+          {
+            "after_offsets": [
+              40,
+              79
+            ],
+            "after_text": "the restriction of processing is lifted",
+            "before_offsets": [
+              21,
+              32
+            ],
+            "before_text": "be informed",
+            "marker": "before",
+            "marker_offsets": [
+              33,
+              39
+            ],
+            "second_endpoint_branch": "local_verbal_predicate",
+            "second_endpoint_kind": "verbal",
+            "second_endpoint_predicate": "lifted",
+            "source": "derived"
+          }
+        ],
+        "markers": [
+          {
+            "edge": {
+              "after_offsets": [
+                40,
+                79
+              ],
+              "after_text": "the restriction of processing is lifted",
+              "before_offsets": [
+                21,
+                32
+              ],
+              "before_text": "be informed",
+              "marker": "before",
+              "marker_offsets": [
+                33,
+                39
+              ],
+              "second_endpoint_branch": "local_verbal_predicate",
+              "second_endpoint_kind": "verbal",
+              "second_endpoint_predicate": "lifted",
+              "source": "derived"
+            },
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 39,
+            "marker_start": 33,
+            "second_endpoint_audit": {
+              "branch": "local_verbal_predicate",
+              "global_span": [
+                40,
+                79
+              ],
+              "head_subtree_included": false,
+              "local_predicate_count": 1,
+              "local_predicates": [
+                {
+                  "dep": "ROOT",
+                  "head": "lifted",
+                  "head_pos": "VERB",
+                  "index": 6,
+                  "pos": "VERB",
+                  "text": "lifted"
+                }
+              ],
+              "local_span": [
+                1,
+                40,
+                "the restriction of processing is lifted"
+              ],
+              "marker_end": 39,
+              "predicate": {
+                "dep": "ROOT",
+                "head": "lifted",
+                "head_pos": "VERB",
+                "index": 6,
+                "pos": "VERB",
+                "text": "lifted"
+              },
+              "predicate_global_span": [
+                73,
+                79
+              ],
+              "segment": " the restriction of processing is lifted.",
+              "segment_global_start": 39,
+              "selected_span": {
+                "end": 80,
+                "start": 33
+              },
+              "subtree_token_count": 8
+            },
+            "span_end": 80,
+            "span_id": "c1",
+            "span_length": 47,
+            "span_start": 33
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [],
+        "status": "derived"
+      },
+      "case_id": "article18_before_passive_projection",
+      "expected_edges": [
+        [
+          "be informed",
+          "the restriction of processing is lifted"
+        ]
+      ],
+      "kind": "projection",
+      "passed": true,
+      "rejection_reason": null
+    },
+    {
+      "actual_edges": [],
+      "audit": {
+        "clause_id": "fixture_multi_predicate_projection_rejected",
+        "derived_edges": [],
+        "markers": [
+          {
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 39,
+            "marker_start": 33,
+            "reason": "multiple_top_level_event_predicates",
+            "second_endpoint_audit": {
+              "branch": "local_rejected",
+              "local_predicate_count": 2,
+              "local_predicates": [
+                {
+                  "dep": "ROOT",
+                  "head": "lifted",
+                  "head_pos": "VERB",
+                  "index": 4,
+                  "pos": "VERB",
+                  "text": "lifted"
+                },
+                {
+                  "dep": "conj",
+                  "head": "lifted",
+                  "head_pos": "VERB",
+                  "index": 9,
+                  "pos": "VERB",
+                  "text": "archived"
+                }
+              ],
+              "reason": "multiple_top_level_event_predicates",
+              "segment": " the restriction is lifted and the record is archived.",
+              "segment_global_start": 39
+            },
+            "span_end": 93,
+            "span_id": "c1",
+            "span_length": 60,
+            "span_start": 33
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [
+          {
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 39,
+            "marker_start": 33,
+            "reason": "multiple_top_level_event_predicates",
+            "second_endpoint_audit": {
+              "branch": "local_rejected",
+              "local_predicate_count": 2,
+              "local_predicates": [
+                {
+                  "dep": "ROOT",
+                  "head": "lifted",
+                  "head_pos": "VERB",
+                  "index": 4,
+                  "pos": "VERB",
+                  "text": "lifted"
+                },
+                {
+                  "dep": "conj",
+                  "head": "lifted",
+                  "head_pos": "VERB",
+                  "index": 9,
+                  "pos": "VERB",
+                  "text": "archived"
+                }
+              ],
+              "reason": "multiple_top_level_event_predicates",
+              "segment": " the restriction is lifted and the record is archived.",
+              "segment_global_start": 39
+            },
+            "span_end": 93,
+            "span_id": "c1",
+            "span_length": 60,
+            "span_start": 33
+          }
+        ],
+        "status": "no_edge"
+      },
+      "case_id": "multi_predicate_projection_rejected",
+      "expected_edges": [],
+      "kind": "projection",
+      "passed": true,
+      "rejection_reason": "multiple_top_level_event_predicates"
+    },
+    {
+      "actual_selected": "N1",
+      "best_similarity": 1.0,
+      "candidates": [
+        {
+          "candidate_action_match_text": "Inform",
+          "candidate_action_surface": "Inform",
+          "candidate_business_object_surface": "the data",
+          "candidate_legacy_match_source_text": "Inform the data",
+          "candidate_matching_text": "inform",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Inform the data subject that the processing restriction will be lifted",
+          "reason": null,
+          "rule_action_surface": "informed",
+          "rule_legacy_match_source_text": "informed",
+          "selected": true,
+          "similarity": 1.0,
+          "tied": true
+        }
+      ],
+      "capability_accepted": true,
+      "case_id": "be_informed_inform_normalization",
+      "expected_selected": "N1",
+      "kind": "action",
+      "known_limitation": null,
+      "limitation_observed": null,
+      "meets_gamma": true,
+      "passed": true,
+      "rule_action": "be informed by the controller",
+      "rule_action_surface": "informed",
+      "tied": [
+        "N1"
+      ]
+    },
+    {
+      "actual_selected": "N1",
+      "best_similarity": 0.6047353744506836,
+      "candidates": [
+        {
+          "candidate_action_match_text": "Archive",
+          "candidate_action_surface": "Archive",
+          "candidate_business_object_surface": "the parcel",
+          "candidate_legacy_match_source_text": "Archive the parcel",
+          "candidate_matching_text": "archive",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Archive the parcel",
+          "reason": null,
+          "rule_action_surface": "approve",
+          "rule_legacy_match_source_text": "approve the invoice",
+          "selected": true,
+          "similarity": 0.6047353744506836,
+          "tied": true
+        }
+      ],
+      "capability_accepted": true,
+      "case_id": "correct_action_missing_only_other_action",
+      "expected_selected": null,
+      "kind": "action",
+      "known_limitation": null,
+      "limitation_observed": null,
+      "meets_gamma": false,
+      "passed": true,
+      "rule_action": "approve the invoice",
+      "rule_action_surface": "approve",
+      "tied": [
+        "N1"
+      ]
+    },
+    {
+      "actual_selected": null,
+      "best_similarity": 0.0,
+      "candidates": [
+        {
+          "candidate_action_match_text": null,
+          "candidate_action_surface": null,
+          "candidate_business_object_surface": null,
+          "candidate_legacy_match_source_text": null,
+          "candidate_matching_text": null,
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Inform the data subject",
+          "reason": "model_action_missing_action_surface",
+          "rule_action_surface": "inform",
+          "rule_legacy_match_source_text": "inform",
+          "selected": false,
+          "similarity": null,
+          "tied": false
+        }
+      ],
+      "capability_accepted": true,
+      "case_id": "model_action_surface_missing_no_full_label_fallback",
+      "expected_selected": null,
+      "kind": "action",
+      "known_limitation": null,
+      "limitation_observed": null,
+      "meets_gamma": false,
+      "passed": true,
+      "rule_action": "inform",
+      "rule_action_surface": "inform",
+      "tied": []
+    },
+    {
+      "actual_selected": null,
+      "best_similarity": 0.0,
+      "candidates": [
+        {
+          "candidate_action_match_text": "Inform",
+          "candidate_action_surface": "Inform",
+          "candidate_business_object_surface": "the data subject",
+          "candidate_legacy_match_source_text": "Inform the data subject",
+          "candidate_matching_text": "inform",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Inform the data subject",
+          "reason": "rule_action_missing_action_surface",
+          "rule_action_surface": null,
+          "rule_legacy_match_source_text": null,
+          "selected": false,
+          "similarity": null,
+          "tied": false
+        }
+      ],
+      "capability_accepted": true,
+      "case_id": "rule_action_surface_missing_no_full_label_fallback",
+      "expected_selected": null,
+      "kind": "action",
+      "known_limitation": null,
+      "limitation_observed": null,
+      "meets_gamma": false,
+      "passed": true,
+      "rule_action": "inform the data subject",
+      "rule_action_surface": null,
+      "tied": []
+    },
+    {
+      "actual_selected": "N1",
+      "best_similarity": 1.0,
+      "candidates": [
+        {
+          "candidate_action_match_text": "Approve",
+          "candidate_action_surface": "Approve",
+          "candidate_business_object_surface": "the parcel",
+          "candidate_legacy_match_source_text": "Approve the parcel",
+          "candidate_matching_text": "approve",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Approve the parcel",
+          "reason": null,
+          "rule_action_surface": "approve",
+          "rule_legacy_match_source_text": "approve the invoice",
+          "selected": true,
+          "similarity": 1.0,
+          "tied": true
+        },
+        {
+          "candidate_action_match_text": "Approve",
+          "candidate_action_surface": "Approve",
+          "candidate_business_object_surface": "the invoice",
+          "candidate_legacy_match_source_text": "Approve the invoice",
+          "candidate_matching_text": "approve",
+          "node_id": "N2",
+          "node_type": "activity",
+          "original_label": "Approve the invoice",
+          "reason": null,
+          "rule_action_surface": "approve",
+          "rule_legacy_match_source_text": "approve the invoice",
+          "selected": false,
+          "similarity": 1.0,
+          "tied": true
+        }
+      ],
+      "capability_accepted": true,
+      "case_id": "duplicate_action_stable_id_tie",
+      "expected_selected": "N1",
+      "kind": "action",
+      "known_limitation": null,
+      "limitation_observed": null,
+      "meets_gamma": true,
+      "passed": true,
+      "rule_action": "approve the invoice",
+      "rule_action_surface": "approve",
+      "tied": [
+        "N1",
+        "N2"
+      ]
+    },
+    {
+      "actual_selected": "N1",
+      "best_similarity": 1.0,
+      "candidates": [
+        {
+          "candidate_action_match_text": "Archive",
+          "candidate_action_surface": "Archive",
+          "candidate_business_object_surface": "the invoice",
+          "candidate_legacy_match_source_text": "Archive the invoice",
+          "candidate_matching_text": "archive",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Archive the invoice",
+          "reason": null,
+          "rule_action_surface": "archive",
+          "rule_legacy_match_source_text": "archive the parcel",
+          "selected": true,
+          "similarity": 1.0,
+          "tied": true
+        },
+        {
+          "candidate_action_match_text": "Archive",
+          "candidate_action_surface": "Archive",
+          "candidate_business_object_surface": "the parcel",
+          "candidate_legacy_match_source_text": "Archive the parcel",
+          "candidate_matching_text": "archive",
+          "node_id": "N2",
+          "node_type": "activity",
+          "original_label": "Archive the parcel",
+          "reason": null,
+          "rule_action_surface": "archive",
+          "rule_legacy_match_source_text": "archive the parcel",
+          "selected": false,
+          "similarity": 1.0,
+          "tied": true
+        }
+      ],
+      "capability_accepted": false,
+      "case_id": "same_verb_different_object_limitation",
+      "expected_selected": "N1",
+      "kind": "action",
+      "known_limitation": "action-surface-only cannot distinguish business objects; both candidates tie on action text",
+      "limitation_observed": true,
+      "meets_gamma": true,
+      "passed": true,
+      "rule_action": "archive the parcel",
+      "rule_action_surface": "archive",
+      "tied": [
+        "N1",
+        "N2"
+      ]
+    },
+    {
+      "actual_selected": "N1",
+      "best_similarity": 1.0,
+      "candidates": [
+        {
+          "candidate_action_match_text": "Archive",
+          "candidate_action_surface": "Archive",
+          "candidate_business_object_surface": "the invoice",
+          "candidate_legacy_match_source_text": "Archive the invoice",
+          "candidate_matching_text": "archive",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Archive the invoice",
+          "reason": null,
+          "rule_action_surface": "archive",
+          "rule_legacy_match_source_text": "archive the parcel",
+          "selected": true,
+          "similarity": 1.0,
+          "tied": true
+        }
+      ],
+      "capability_accepted": false,
+      "case_id": "same_verb_correct_object_candidate_absent_limitation",
+      "expected_selected": "N1",
+      "kind": "action",
+      "known_limitation": "action-surface-only accepts a same-verb wrong-object candidate when the correct-object candidate is absent",
+      "limitation_observed": true,
+      "meets_gamma": true,
+      "passed": true,
+      "rule_action": "archive the parcel",
+      "rule_action_surface": "archive",
+      "tied": [
+        "N1"
+      ]
+    },
+    {
+      "actual_status": "satisfied",
+      "case_id": "normal_order_satisfied",
+      "endpoint_action_surfaces": [
+        "approve",
+        "archive"
+      ],
+      "expected": "satisfied",
+      "kind": "order",
+      "passed": true,
+      "raw": {
+        "denominator": 1,
+        "details": [
+          {
+            "after_activity": "N2",
+            "backward_reachable": false,
+            "before_activity": "N1",
+            "constraint": [
+              "approve the invoice",
+              "archive the invoice"
+            ],
+            "forward_reachable": true,
+            "mapped": true,
+            "satisfied": true
+          }
+        ],
+        "satisfied": 1,
+        "score": 0.0,
+        "violations": 0
+      }
+    },
+    {
+      "actual_status": "violated",
+      "case_id": "reverse_order_violated",
+      "endpoint_action_surfaces": [
+        "archive",
+        "approve"
+      ],
+      "expected": "violated",
+      "kind": "order",
+      "passed": true,
+      "raw": {
+        "denominator": 1,
+        "details": [
+          {
+            "after_activity": "N1",
+            "backward_reachable": true,
+            "before_activity": "N2",
+            "constraint": [
+              "archive the invoice",
+              "approve the invoice"
+            ],
+            "forward_reachable": false,
+            "mapped": true,
+            "satisfied": false
+          }
+        ],
+        "satisfied": 0,
+        "score": 1.0,
+        "violations": 1
+      }
+    }
+  ],
+  "capability_acceptance_note": "Known-limitation probes are regression/development checks only; they are not counted as successful recognition capability.",
+  "implementation_contract_checks": [
+    {
+      "check": "action_comparison_uses_action_surface_not_legacy_join",
+      "evidence": {
+        "candidates": [
+          {
+            "candidate_action_match_text": "Approve",
+            "candidate_action_surface": "Approve",
+            "candidate_business_object_surface": "the invoice",
+            "candidate_legacy_match_source_text": "Approve the invoice",
+            "candidate_matching_text": "approve",
+            "node_id": "N1",
+            "node_type": "activity",
+            "original_label": "Approve the invoice",
+            "reason": null,
+            "rule_action_surface": "approve",
+            "rule_legacy_match_source_text": "approve the invoice",
+            "selected": true,
+            "similarity": 1.0,
+            "tied": true
+          }
+        ],
+        "legacy_match_source_text": "Approve the invoice",
+        "selected": "N1"
+      },
+      "passed": true
+    },
+    {
+      "check": "missing_model_action_surface_does_not_fallback_to_full_label",
+      "evidence": {
+        "rows": [
+          {
+            "candidate_action_match_text": null,
+            "candidate_action_surface": null,
+            "candidate_business_object_surface": null,
+            "candidate_legacy_match_source_text": null,
+            "candidate_matching_text": null,
+            "node_id": "N1",
+            "node_type": "activity",
+            "original_label": "Inform the data subject",
+            "reason": "model_action_missing_action_surface",
+            "rule_action_surface": "inform",
+            "rule_legacy_match_source_text": "inform",
+            "selected": false,
+            "similarity": null,
+            "tied": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "check": "missing_rule_action_surface_does_not_fallback_to_full_label",
+      "evidence": {
+        "rows": [
+          {
+            "candidate_action_match_text": "Inform",
+            "candidate_action_surface": "Inform",
+            "candidate_business_object_surface": "the data subject",
+            "candidate_legacy_match_source_text": "Inform the data subject",
+            "candidate_matching_text": "inform",
+            "node_id": "N1",
+            "node_type": "activity",
+            "original_label": "Inform the data subject",
+            "reason": "rule_action_missing_action_surface",
+            "rule_action_surface": null,
+            "rule_legacy_match_source_text": null,
+            "selected": false,
+            "similarity": null,
+            "tied": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "check": "def4_def5_def6_def7_share_action_comparison_function",
+      "evidence": {
+        "tracked_best_action_match_calls": {
+          "after_def4": 1,
+          "after_def5": 2,
+          "after_def6": 5,
+          "after_def7": 4
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "business_object_surface_retained_for_def6_candidate_scope",
+      "evidence": {
+        "business_objects": [
+          {
+            "activity_id": "N1",
+            "match_source_text": "the data",
+            "matching_text": "the datum",
+            "object": "the data",
+            "source": "fixture_model_node"
+          }
+        ],
+        "process_actor_candidates": [
+          {
+            "candidate_actual_comparison_lemma": "FixtureActor",
+            "candidate_actual_comparison_text": "FixtureActor",
+            "candidate_original_text": "FixtureActor",
+            "entry_action_evidence": [
+              {
+                "action_similarity_raw": 1.0,
+                "rule_action_original_text": "inform",
+                "rule_action_surface": "inform",
+                "rule_actor": "Controller"
+              }
+            ],
+            "entry_action_gate": "similarity_above_gamma",
+            "entry_action_similarity_raw": 1.0,
+            "entry_rule_action_original_text": "inform",
+            "entry_rule_action_surface": "inform",
+            "entry_rule_actor": "Controller",
+            "gamma": 0.8,
+            "kind": "fixture_pool",
+            "model_action_original_label": "Inform the data",
+            "model_action_surface": "Inform",
+            "node_id": "N1",
+            "node_type": "activity",
+            "theta": 0.8
+          },
+          {
+            "candidate_actual_comparison_lemma": "the datum",
+            "candidate_actual_comparison_text": "the data",
+            "candidate_original_text": "the data",
+            "entry_action_evidence": [
+              {
+                "action_similarity_raw": 1.0,
+                "rule_action_original_text": "inform",
+                "rule_action_surface": "inform",
+                "rule_actor": "Controller"
+              }
+            ],
+            "entry_action_gate": "similarity_above_gamma",
+            "entry_action_similarity_raw": 1.0,
+            "entry_rule_action_original_text": "inform",
+            "entry_rule_action_surface": "inform",
+            "entry_rule_actor": "Controller",
+            "gamma": 0.8,
+            "kind": "business_object",
+            "model_action_original_label": "Inform the data",
+            "model_action_surface": "Inform",
+            "node_id": "N1",
+            "node_type": "activity",
+            "theta": 0.8
+          }
+        ]
+      },
+      "passed": true
+    }
+  ],
+  "known_limitation_reproductions": [
+    {
+      "actual_selected": "N1",
+      "best_similarity": 1.0,
+      "candidates": [
+        {
+          "candidate_action_match_text": "Archive",
+          "candidate_action_surface": "Archive",
+          "candidate_business_object_surface": "the invoice",
+          "candidate_legacy_match_source_text": "Archive the invoice",
+          "candidate_matching_text": "archive",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Archive the invoice",
+          "reason": null,
+          "rule_action_surface": "archive",
+          "rule_legacy_match_source_text": "archive the parcel",
+          "selected": true,
+          "similarity": 1.0,
+          "tied": true
+        },
+        {
+          "candidate_action_match_text": "Archive",
+          "candidate_action_surface": "Archive",
+          "candidate_business_object_surface": "the parcel",
+          "candidate_legacy_match_source_text": "Archive the parcel",
+          "candidate_matching_text": "archive",
+          "node_id": "N2",
+          "node_type": "activity",
+          "original_label": "Archive the parcel",
+          "reason": null,
+          "rule_action_surface": "archive",
+          "rule_legacy_match_source_text": "archive the parcel",
+          "selected": false,
+          "similarity": 1.0,
+          "tied": true
+        }
+      ],
+      "capability_accepted": false,
+      "case_id": "same_verb_different_object_limitation",
+      "expected_selected": "N1",
+      "kind": "action",
+      "known_limitation": "action-surface-only cannot distinguish business objects; both candidates tie on action text",
+      "limitation_observed": true,
+      "meets_gamma": true,
+      "passed": true,
+      "rule_action": "archive the parcel",
+      "rule_action_surface": "archive",
+      "tied": [
+        "N1",
+        "N2"
+      ]
+    },
+    {
+      "actual_selected": "N1",
+      "best_similarity": 1.0,
+      "candidates": [
+        {
+          "candidate_action_match_text": "Archive",
+          "candidate_action_surface": "Archive",
+          "candidate_business_object_surface": "the invoice",
+          "candidate_legacy_match_source_text": "Archive the invoice",
+          "candidate_matching_text": "archive",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Archive the invoice",
+          "reason": null,
+          "rule_action_surface": "archive",
+          "rule_legacy_match_source_text": "archive the parcel",
+          "selected": true,
+          "similarity": 1.0,
+          "tied": true
+        }
+      ],
+      "capability_accepted": false,
+      "case_id": "same_verb_correct_object_candidate_absent_limitation",
+      "expected_selected": "N1",
+      "kind": "action",
+      "known_limitation": "action-surface-only accepts a same-verb wrong-object candidate when the correct-object candidate is absent",
+      "limitation_observed": true,
+      "meets_gamma": true,
+      "passed": true,
+      "rule_action": "archive the parcel",
+      "rule_action_surface": "archive",
+      "tied": [
+        "N1"
+      ]
+    }
+  ],
+  "schema_version": "stage3_r4_mechanism_check@1.0.0",
+  "self_test_failure_fixture": false,
+  "status": "pass",
+  "summary": {
+    "behavior_probes_passed": 11,
+    "behavior_probes_total": 11,
+    "failed_behavior_probes": [],
+    "failed_contract_checks": [],
+    "implementation_contract_checks_passed": 5,
+    "implementation_contract_checks_total": 5,
+    "known_limitation_reproductions_observed": 2,
+    "known_limitation_reproductions_total": 2
+  }
+}
