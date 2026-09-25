@@ -1,6 +1,6 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.28
+**文档版本**：3.7.30
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
 **最后更新**：2026-09-25
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
@@ -10,6 +10,15 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-25 修订 3.7.30：S3-TABLE3-R5.1 定向 benchmark 纠错（A/B/C/D/E）
+
+- 目标：在 R5 v1 基础上修正已定位的数据构造、划分、挑战集与复用核验问题，产出可解释、可追溯的 benchmark v2 与执行准备；不重建项目、不重做表一/表二、不写论文/PPT。
+- A/B：36 条逐条处置表；has_variants 改为逐类型资格；A1—A6 定位项处理；source_family_id 按 Article 建族、family_id 不等于 requirement_id、消除 Art 13/14/35/36/33 跨 split、暴露族留 development。修正后 31 核心 + 5 候选；105 核心案例；dev/test 22/14；21 族、0 跨 split。
+- C：六要素证据绑定与 source/context SHA；condition/exception 分开建模；挑战 BPMN 中性、无答案提示与悬空节点；例外成立=义务豁免。
+- D：修正 prepare_stage3_table3_r5_execution.py 复用判断，新增 r5_reuse_verification.py 逐条证据链核验；旧 14 条 Ours 预测全部严格验证。
+- E：按修正后唯一请求清单重算 17 次新请求、0 重试、USD 0.91 上限；5 条候选需求不在本轮清单。真实调用 0。
+- 验收：结构检查与内容资格审查分开报告；具名反例测试 13 passed；quick integrity pass。表三仍未运行，METHODS_NOT_READY 保留。
 
 ## 2026-09-25 修订 3.7.29：S3-TABLE3-R3-INTEGRATION 接线、事件谓词与 M1/M2 后端诊断
 
@@ -504,7 +513,7 @@ DS v5 的有效开发指标仍为 Macro-F1 **0.6737**、配对成功 **21/40**�
 旧诊断的 control 告警 26→24 是撤回两项判断到 unknown；缺少全局负例 Gold，不能称为总体误报率改善。
 各项验收后立即 checkpoint，继续已具备依赖的对照或写作，不设置中间日历等待。
 
-﻿## 2026-09-13 revision 3.6.61: Stage 3 v5 action-anchor consistency repair and constraint/exception failure chains (S3-SEMANTIC-GROUNDING-V5, zero API)
+## 2026-09-13 revision 3.6.61: Stage 3 v5 action-anchor consistency repair and constraint/exception failure chains (S3-SEMANTIC-GROUNDING-V5, zero API)
 
 **Scope**: inspect the frozen v2 per-item constraint/exception failures, add revision
 `s3_semantic_grounding_v5`, and reuse v2/v3/v4 predictions/manifests read-only.

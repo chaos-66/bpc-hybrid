@@ -1,0 +1,115 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "boundary": "AI-constructed, source-grounded construction reference; not human Gold and not a Table 3 result.",
+  "budget": {
+    "calls_cap_core_request_list": 17,
+    "cost_upper_bound_usd_with_20pct_margin": 0.91,
+    "new_requests": 17,
+    "price_evidence": {
+      "currency": "USD",
+      "peak_derivation": "peak = 2 x recorded off-peak; the recorded off-peak multiplier is 0.5",
+      "peak_used_for_cap": {
+        "input_cache_hit_per_million": 0.044,
+        "input_cache_miss_per_million": 1.32,
+        "output_per_million": 3.96
+      },
+      "reverify_before_authorized_execution": true,
+      "snapshot_is_off_peak": {
+        "input_cache_hit_per_million": 0.022,
+        "input_cache_miss_per_million": 0.66,
+        "output_per_million": 1.98
+      },
+      "source": "data/predictions/gdpr7_direct_llm_v1/manifest.json::pricing (recorded provider snapshot)",
+      "verified_date_recorded_in_manifest": "gdpr7_direct_llm_v3_1"
+    },
+    "retry_cap": 0,
+    "reused_existing_stage2_inputs": 14,
+    "total_input_tokens_cap": 364949,
+    "total_output_tokens_cap": 69632
+  },
+  "counts": {
+    "baseline_controls": 31,
+    "candidate_requirements": 5,
+    "core_cases": 105,
+    "core_requirements": 31,
+    "core_test_requirements": 9,
+    "development_requirements": 22,
+    "independent_requirements": 36,
+    "independent_test_source_family_ids": [
+      "gdpr_art12",
+      "gdpr_art19",
+      "gdpr_art21",
+      "gdpr_art24",
+      "gdpr_art25",
+      "gdpr_art28",
+      "gdpr_art32",
+      "gdpr_art8",
+      "gdpr_art9"
+    ],
+    "semantic_challenge_pairs": {
+      "condition": 6,
+      "exception": 6
+    },
+    "source_family_count": 21,
+    "source_family_count_by_split": {
+      "development": 12,
+      "test": 9
+    },
+    "test_requirements": 14,
+    "variants_per_type": {
+      "incorrect_actor": 31,
+      "missing_action": 31,
+      "out_of_order": 12
+    }
+  },
+  "reuse": {
+    "ours_input_changed": 0,
+    "ours_method_changed": 0,
+    "ours_new_requests": 22,
+    "ours_unverified": 0,
+    "ours_verified_reusable": 14,
+    "sun_unverified": 0,
+    "sun_verified_reusable": 14,
+    "unique_regulation_inputs": 36
+  },
+  "schema_version": "stage3_table3_r5_benchmark_report@2.0.0",
+  "six_element": {
+    "evidence_scope_counts": {
+      "action": {
+        "source_excerpt": 36
+      },
+      "actor": {
+        "declared_external_context": 4,
+        "source_excerpt": 32
+      },
+      "condition": {
+        "declared_external_context": 3,
+        "not_present": 1,
+        "source_excerpt": 32
+      },
+      "constraint": {
+        "declared_external_context": 1,
+        "source_excerpt": 35
+      },
+      "exception": {
+        "cross_reference_provided": 8,
+        "declared_external_context": 1,
+        "not_present": 17,
+        "source_excerpt": 10
+      },
+      "modality": {
+        "declared_external_context": 1,
+        "source_excerpt": 35
+      }
+    },
+    "presence_counts": {
+      "action": 36,
+      "actor": 36,
+      "condition": 35,
+      "constraint": 36,
+      "exception": 19,
+      "modality": 36
+    }
+  },
+  "status": "DATA_READY_FOR_FROZEN_SCOPE / METHODS_NOT_READY / API_AUTHORIZATION_PENDING / FORMAL_RELEASE_NOT_APPROVED"
+}

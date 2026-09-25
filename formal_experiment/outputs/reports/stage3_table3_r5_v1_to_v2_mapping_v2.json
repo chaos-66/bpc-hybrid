@@ -1,0 +1,883 @@
+{
+  "artifacts": {
+    "config": {
+      "v1": "configs/stage3_table3_r5_benchmark_v1.json",
+      "v2": "configs/stage3_table3_r5_benchmark_v2.json"
+    },
+    "data_dir": {
+      "v1": "data/development/stage3_table3_r5_benchmark_v1",
+      "v2": "data/development/stage3_table3_r5_benchmark_v2"
+    },
+    "reports": {
+      "v1": "outputs/reports/stage3_table3_r5_*_v1.json",
+      "v2": "outputs/reports/stage3_table3_r5_*_v2.json"
+    }
+  },
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "preserves_v1": true,
+  "rows": [
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor', 'out_of_order']",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 13(3)",
+      "requirement_id": "R5-D-01",
+      "review_fixes": [
+        "condition_present corrected to True (intends further processing for another purpose)."
+      ],
+      "review_issues": [],
+      "source_family_id": "gdpr_art13",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor', 'out_of_order']",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 14(4)",
+      "requirement_id": "R5-D-02",
+      "review_fixes": [
+        "condition_present corrected to True (intends further processing for another purpose)."
+      ],
+      "review_issues": [],
+      "source_family_id": "gdpr_art14",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor', 'out_of_order']",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 18(3)",
+      "requirement_id": "R5-D-03",
+      "review_fixes": [
+        "condition_present corrected to True (restriction obtained under paragraph 1)."
+      ],
+      "review_issues": [],
+      "source_family_id": "gdpr_art18",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor', 'out_of_order']"
+      ],
+      "citation": "GDPR Article 35(1), first sentence",
+      "requirement_id": "R5-D-04",
+      "review_fixes": [],
+      "review_issues": [],
+      "source_family_id": "gdpr_art35",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor', 'out_of_order']"
+      ],
+      "citation": "GDPR Article 36(1)",
+      "requirement_id": "R5-D-05",
+      "review_fixes": [],
+      "review_issues": [],
+      "source_family_id": "gdpr_art36",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor']",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 7(1)",
+      "requirement_id": "R5-D-06",
+      "review_fixes": [
+        "out_of_order marked ineligible",
+        "condition_present corrected to True (processing based on consent)."
+      ],
+      "review_issues": [
+        "order_evidence_text_is_not_order_rule"
+      ],
+      "source_family_id": "gdpr_art7",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor']"
+      ],
+      "citation": "GDPR Article 7(4)",
+      "requirement_id": "R5-D-07",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "simultaneity_not_order"
+      ],
+      "source_family_id": "gdpr_art7",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor']",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 15(1)",
+      "requirement_id": "R5-D-08",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "right_not_order_rule"
+      ],
+      "source_family_id": "gdpr_art15",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor']"
+      ],
+      "citation": "GDPR Article 16",
+      "requirement_id": "R5-D-09",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "deadline_without_explicit_trigger"
+      ],
+      "source_family_id": "gdpr_art16",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor']",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 17(1)",
+      "requirement_id": "R5-D-10",
+      "review_fixes": [
+        "out_of_order marked ineligible",
+        "condition_present corrected to True (one of the 17(1) grounds applies)."
+      ],
+      "review_issues": [
+        "deadline_without_explicit_trigger"
+      ],
+      "source_family_id": "gdpr_art17",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor']"
+      ],
+      "citation": "GDPR Article 20(1)",
+      "requirement_id": "R5-D-11",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "right_not_order_rule"
+      ],
+      "source_family_id": "gdpr_art20",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type ['missing_action', 'incorrect_actor', 'out_of_order']"
+      ],
+      "citation": "GDPR Article 33(1)",
+      "requirement_id": "R5-D-12",
+      "review_fixes": [
+        "condition_text corrected to 'a personal data breach occurs' (exception kept separate in 33(1) 'unless ... unlikely to result in a risk')."
+      ],
+      "review_issues": [
+        "condition_text_confused_with_exception"
+      ],
+      "source_family_id": "gdpr_art33",
+      "v1_has_variants": false,
+      "v1_split": "development",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "split test -> development",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 13(1)",
+      "requirement_id": "R5-S1-T1",
+      "review_fixes": [
+        "out_of_order marked ineligible (A1)",
+        "condition_present corrected to True (direct collection from the data subject)."
+      ],
+      "review_issues": [
+        "simultaneity_misread_as_order",
+        "missing_condition_flag"
+      ],
+      "source_family_id": "gdpr_art13",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "split test -> development",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 13(2)",
+      "requirement_id": "R5-S1-T2",
+      "review_fixes": [
+        "out_of_order marked ineligible (A1)",
+        "condition_present corrected to True (paragraph 1 information obligation applies)."
+      ],
+      "review_issues": [
+        "simultaneity_misread_as_order",
+        "missing_condition_flag"
+      ],
+      "source_family_id": "gdpr_art13",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "split test -> development",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 14(1)",
+      "requirement_id": "R5-S1-T3",
+      "review_fixes": [
+        "condition_present corrected to True (personal data not obtained from the data subject)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "source_family_id": "gdpr_art14",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "split test -> development",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 14(2)",
+      "requirement_id": "R5-S1-T4",
+      "review_fixes": [
+        "condition_present corrected to True (paragraph 1 indirect-collection obligation applies)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "source_family_id": "gdpr_art14",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type []"
+      ],
+      "citation": "GDPR Article 8(1)",
+      "requirement_id": "R5-S2-T1",
+      "review_fixes": [
+        "moved out of the frozen three-class core scoring; kept as semantic/candidate asset (no permission decision formula added)."
+      ],
+      "review_issues": [
+        "permission_modelled_as_positive_duty"
+      ],
+      "source_family_id": "gdpr_art8",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "candidate_semantic",
+      "v2_eligibility": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "retained (excerpt/identity unchanged)"
+      ],
+      "citation": "GDPR Article 8(2)",
+      "requirement_id": "R5-S2-T2",
+      "review_fixes": [],
+      "review_issues": [],
+      "source_family_id": "gdpr_art8",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type []"
+      ],
+      "citation": "GDPR Article 9(2)(a)",
+      "requirement_id": "R5-S2-T3",
+      "review_fixes": [
+        "moved out of core scoring (A4); kept as semantic/candidate asset; condition and legal basis documented."
+      ],
+      "review_issues": [
+        "permission_modelled_as_positive_duty",
+        "condition_and_negated_condition_confused_with_exception"
+      ],
+      "source_family_id": "gdpr_art9",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "candidate_semantic",
+      "v2_eligibility": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type []",
+        "exception_present True -> False"
+      ],
+      "citation": "GDPR Article 9(2)(b)",
+      "requirement_id": "R5-S2-T4",
+      "review_fixes": [
+        "moved out of core scoring (A4); kept as semantic/candidate asset."
+      ],
+      "review_issues": [
+        "permission_modelled_as_positive_duty",
+        "negated_condition_misstated_as_exception"
+      ],
+      "source_family_id": "gdpr_art9",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "candidate_semantic",
+      "v2_eligibility": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 12(3)",
+      "requirement_id": "R5-S3-T1",
+      "review_fixes": [
+        "condition_present corrected to True (a request under Articles 15-22 is received)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "source_family_id": "gdpr_art12",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 12(4)",
+      "requirement_id": "R5-S3-T2",
+      "review_fixes": [
+        "condition_present corrected to True (controller does not take action on the request)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "source_family_id": "gdpr_art12",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type []"
+      ],
+      "citation": "GDPR Article 21(1)",
+      "requirement_id": "R5-S3-T3",
+      "review_fixes": [
+        "moved out of core scoring (A5); Stop task removed from core; kept as semantic/candidate asset with source."
+      ],
+      "review_issues": [
+        "prohibition_cessation_modelled_as_missing_action",
+        "invented_stop_task"
+      ],
+      "source_family_id": "gdpr_art21",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "candidate_semantic",
+      "v2_eligibility": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "has_variants(all-or-nothing) -> per-type []"
+      ],
+      "citation": "GDPR Article 21(3)",
+      "requirement_id": "R5-S3-T4",
+      "review_fixes": [
+        "moved out of core scoring (A5); Cease task removed from core; kept as semantic/candidate asset with source."
+      ],
+      "review_issues": [
+        "prohibition_cessation_modelled_as_missing_action",
+        "invented_cease_task"
+      ],
+      "source_family_id": "gdpr_art21",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "candidate_semantic",
+      "v2_eligibility": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "retained (excerpt/identity unchanged)"
+      ],
+      "citation": "GDPR Article 24(1)",
+      "requirement_id": "R5-S4-T1",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "lifecycle_not_strict_order"
+      ],
+      "source_family_id": "gdpr_art24",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "retained (excerpt/identity unchanged)"
+      ],
+      "citation": "GDPR Article 25(1)",
+      "requirement_id": "R5-S4-T2",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "simultaneity_not_order"
+      ],
+      "source_family_id": "gdpr_art25",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "excerpt_mode sentence -> char_span"
+      ],
+      "citation": "GDPR Article 28(3)(a)",
+      "requirement_id": "R5-S4-T3",
+      "review_fixes": [
+        "excerpt narrowed to the 28(3)(a) sentence only (A6); precise char span recorded; processed-source status flagged; out_of_order marked ineligible."
+      ],
+      "review_issues": [
+        "excerpt_includes_subsequent_subparagraphs",
+        "condition_precondition_misread_as_order",
+        "processed_source_not_flagged"
+      ],
+      "source_family_id": "gdpr_art28",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 19",
+      "requirement_id": "R5-S4-T4",
+      "review_fixes": [
+        "condition_present corrected to True (a rectification/erasure/restriction was carried out)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "source_family_id": "gdpr_art19",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "split test -> development"
+      ],
+      "citation": "GDPR Article 35(2)",
+      "requirement_id": "R5-S5-T1",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "simultaneity_not_order"
+      ],
+      "source_family_id": "gdpr_art35",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "split test -> development"
+      ],
+      "citation": "GDPR Article 35(9)",
+      "requirement_id": "R5-S5-T2",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "implicit_preference_not_strict_order"
+      ],
+      "source_family_id": "gdpr_art35",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "split test -> development"
+      ],
+      "citation": "GDPR Article 35(11)",
+      "requirement_id": "R5-S5-T3",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "condition_not_order"
+      ],
+      "source_family_id": "gdpr_art35",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "split test -> development"
+      ],
+      "citation": "GDPR Article 36(2)",
+      "requirement_id": "R5-S5-T4",
+      "review_fixes": [
+        "condition_present corrected to True (supervisory authority is of the opinion that the intended processing would infringe)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "source_family_id": "gdpr_art36",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "retained (excerpt/identity unchanged)"
+      ],
+      "citation": "GDPR Article 32(1)",
+      "requirement_id": "R5-S6-T1",
+      "review_fixes": [
+        "out_of_order marked ineligible (A2)"
+      ],
+      "review_issues": [
+        "risk_appropriateness_misread_as_order"
+      ],
+      "source_family_id": "gdpr_art32",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "retained (excerpt/identity unchanged)"
+      ],
+      "citation": "GDPR Article 32(4)",
+      "requirement_id": "R5-S6-T2",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "prohibition_not_order"
+      ],
+      "source_family_id": "gdpr_art32",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "test"
+    },
+    {
+      "changes": [
+        "split test -> development",
+        "condition_present False -> True"
+      ],
+      "citation": "GDPR Article 33(2)",
+      "requirement_id": "R5-S6-T3",
+      "review_fixes": [
+        "condition_present corrected to True (becomes aware of a personal data breach)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "source_family_id": "gdpr_art33",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      },
+      "v2_split": "development"
+    },
+    {
+      "changes": [
+        "split test -> development"
+      ],
+      "citation": "GDPR Article 34(1)",
+      "requirement_id": "R5-S6-T4",
+      "review_fixes": [
+        "out_of_order marked ineligible (A3)"
+      ],
+      "review_issues": [
+        "undue_delay_misread_as_assessment_order",
+        "invented_assessment_task"
+      ],
+      "source_family_id": "gdpr_art34",
+      "v1_has_variants": true,
+      "v1_split": "test",
+      "v2_disposition": "core",
+      "v2_eligibility": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      },
+      "v2_split": "development"
+    }
+  ],
+  "schema_version": "stage3_table3_r5_v1_to_v2_mapping@2.0.0",
+  "v1_summary": {
+    "baseline_controls": 36,
+    "core_cases": 108,
+    "development_requirements": 12,
+    "independent_requirements": 36,
+    "test_requirements": 24,
+    "variants_per_type": {
+      "incorrect_actor": 24,
+      "missing_action": 24,
+      "out_of_order": 24
+    }
+  },
+  "v2_summary": {
+    "baseline_controls": 31,
+    "candidate_requirements": 5,
+    "core_cases": 105,
+    "core_requirements": 31,
+    "development_requirements": 22,
+    "independent_requirements": 36,
+    "source_family_count": 21,
+    "test_requirements": 14,
+    "variants_per_type": {
+      "incorrect_actor": 31,
+      "missing_action": 31,
+      "out_of_order": 12
+    }
+  }
+}

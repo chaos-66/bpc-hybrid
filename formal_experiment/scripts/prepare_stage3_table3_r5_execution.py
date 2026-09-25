@@ -82,96 +82,39 @@ def r4_sample_id(rule_id: str) -> str:
 
 
 def build_reuse(config: dict, source_req: dict, gdpr7_index: dict) -> dict:
-    gdpr7_direct = load_prediction_map(ROOT / "data/predictions/gdpr7_direct_llm_v1/predictions.json")
-    gdpr7_sun = load_prediction_map(ROOT / "data/predictions/gdpr7_sun_rule_only_v1/predictions.json")
-    d1 = load_prediction_map(ROOT / "data/predictions/stage3_v4_d1_frozen_v1/predictions.json")
-    b0 = load_prediction_map(ROOT / "data/predictions/stage3_v4_b0_frozen_v1/predictions.json")
+    """Corrected R5.1 reuse judgment.
 
-    def method_entry(method: str, spec: dict, req: dict) -> dict:
-        source_kind = spec["source_kind"]
-        if method == "winter":
-            return {
-                "method": "winter",
-                "status": "native_no_stage2_prediction_required",
-                "prediction_path": None,
-                "manifest_path": "configs/winter_stage3_development_v1.json",
-                "prediction_sample_id": None,
-                "source_text_sha256": req["text_sha256"],
-                "method_version": "winter_2020_native_full_pipeline",
-                "prompt_or_rule_version": "native_Winter_Stage3",
-                "output_schema": "native_winter_process_record",
-                "coordinate_convention": "native_BPMN_process_analysis",
-                "notes": "Winter consumes the BPMN and public context directly; this is not a shared Stage2 extraction.",
-            }
-        sample_id = None
-        if source_kind == "gdpr7_input":
-            sample_id = spec.get("sample_id")
-        elif source_kind == "r4_reference":
-            sample_id = r4_sample_id(spec.get("r4_rule_id", "")) if spec.get("r4_rule_id") else None
-        if method == "ours":
-            pred = gdpr7_direct.get(sample_id) if sample_id else None
-            manifest = ROOT / "data/predictions/gdpr7_direct_llm_v1/manifest.json"
-            if pred is None:
-                pred = d1.get(sample_id) if sample_id else None
-                manifest = ROOT / "data/predictions/stage3_v4_d1_frozen_v1/manifest.json"
-            method_version = "direct_llm_gdpr7_rule_record_v1" if gdpr7_direct.get(sample_id) else "direct_llm_stage3_v4_d1_frozen_v1"
-            prompt_version = "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05"
-            model_version = "deepseek-v4-pro"
-        else:
-            pred = gdpr7_sun.get(sample_id) if sample_id else None
-            manifest = ROOT / "data/predictions/gdpr7_sun_rule_only_v1/manifest.json"
-            if pred is None:
-                pred = b0.get(sample_id) if sample_id else None
-                manifest = ROOT / "data/predictions/stage3_v4_b0_frozen_v1/manifest.json"
-            method_version = "sun_rule_only_b0_enhanced_v10a"
-            prompt_version = "no_prompt_rule_only"
-            model_version = "b0_enhanced_v10a_cpu"
-        if pred is None or sample_id is None:
-            return {
-                "method": method,
-                "status": "not_available_requires_new_stage2_run",
-                "prediction_path": None,
-                "manifest_path": str(manifest.relative_to(ROOT).as_posix()),
-                "prediction_sample_id": sample_id,
-                "source_text_sha256": req["text_sha256"],
-                "method_version": method_version,
-                "prompt_or_rule_version": prompt_version,
-                "output_schema": "stage2_prediction.schema@1.0.0",
-                "coordinate_convention": "stage2_clause_span_utf8_char_offsets",
-                "notes": "no exact existing prediction text match found; must be produced by a future authorized/scoped run",
-            }
-        record = pred.get("record") or {}
-        return {
-            "method": method,
-            "status": "reusable_exact_source_text_match",
-            "prediction_path": str((manifest.parent / "predictions.json").relative_to(ROOT).as_posix()),
-            "manifest_path": str(manifest.relative_to(ROOT).as_posix()),
-            "prediction_sample_id": sample_id,
-            "source_text_sha256": req["text_sha256"],
-            "input_binding_sha256": (pred.get("input_binding") or {}).get("expected", {}).get("source_text_sha256") if isinstance(pred.get("input_binding"), dict) else None,
-            "method_version": method_version,
-            "prompt_or_rule_version": prompt_version,
-            "model_version": model_version,
-            "output_schema": record.get("schema_version") or "1.0.0",
-            "coordinate_convention": "clause_span.start/end over UTF-8 source text; char offsets",
-            "notes": "exact source_text_sha256 and sample_id match; verified against the frozen input binding where the binding is stored",
-        }
-
-    specs = {r["requirement_id"]: r for r in config["requirements"]}
+    Delegates to the evidence-chain verifier instead of trusting the presence of
+    a sample_id or defaulting the 14 candidates to reusable.  It reads the
+    actual prediction records, manifests and frozen inputs, and checks the full
+    input identity (text + context), method/prompt/model binding and
+    schema/parse/postprocess identity.
+    """
+    import importlib
+    rv = importlib.import_module("r5_reuse_verification")
+    rep = rv.verify_reuse(config, {"requirements": source_req})
     rows = []
-    for req in source_req:
-        spec = specs[req["requirement_id"]]
-        row = {"requirement_id": req["requirement_id"], "split": req["split"], "source_kind": spec["source_kind"],
-               "source_text_sha256": req["text_sha256"], "sample_id": spec.get("sample_id") or (r4_sample_id(spec.get("r4_rule_id", "")) if spec.get("r4_rule_id") else None),
-               "methods": {"sun": method_entry("sun", spec, req), "ours": method_entry("ours", spec, req), "winter": method_entry("winter", spec, req)}}
-        row["ours_reusable"] = row["methods"]["ours"]["status"] == "reusable_exact_source_text_match"
-        rows.append(row)
-    return {"schema_version": "stage3_table3_r5_prediction_reuse@1.0.0",
-            "benchmark_id": BENCHMARK_ID,
-            "policy": "only exact source_text_sha256 + frozen sample identity counts as reuse; clause-number or article identity alone is insufficient",
-            "reused_unique_inputs": sum(1 for r in rows if r["methods"]["ours"]["status"] == "reusable_exact_source_text_match"),
-            "new_ours_requests": sum(1 for r in rows if r["methods"]["ours"]["status"] != "reusable_exact_source_text_match"),
-            "rows": rows}
+    for r in rep["rows"]:
+        ours = dict(r["ours"])
+        ours["status"] = "reusable_exact_source_text_match" if ours["status"] == "verified" else ours["status"]
+        rows.append({
+            "requirement_id": r["requirement_id"],
+            "split": r["split"],
+            "source_kind": r["source_kind"],
+            "source_text_sha256": r["source_text_sha256"],
+            "sample_id": r["ours"].get("prediction_sample_id"),
+            "methods": {"sun": r["sun"], "ours": ours, "winter": r["winter"]},
+            "ours_reusable": r["ours"]["status"] == "verified",
+        })
+    return {
+        "schema_version": "stage3_table3_r5_prediction_reuse@2.0.0",
+        "benchmark_id": config.get("benchmark_id", BENCHMARK_ID),
+        "policy": rep["policy"],
+        "status_value_set": rep["status_value_set"],
+        "reused_unique_inputs": sum(1 for r in rows if r["ours_reusable"]),
+        "new_ours_requests": sum(1 for r in rows if not r["ours_reusable"]),
+        "rows": rows,
+    }
 
 
 def build_budget(reuse: dict, source_req: dict) -> dict:

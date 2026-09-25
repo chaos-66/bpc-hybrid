@@ -1,0 +1,54 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "boundary": "Readiness only; no method metric is claimed.",
+  "budget_summary": {
+    "calls_cap_core_request_list": 17,
+    "cost_upper_bound_usd_with_20pct_margin": 0.91,
+    "retry_cap": 0,
+    "total_input_tokens_cap": 364949,
+    "total_output_tokens_cap": 69632
+  },
+  "can_start_formal_method_run": false,
+  "data_scope": {
+    "candidate_assets_out_of_scope": [
+      "R5-S2-T1",
+      "R5-S2-T3",
+      "R5-S2-T4",
+      "R5-S3-T3",
+      "R5-S3-T4"
+    ],
+    "condition_exception_truth_still_unsupported": true,
+    "core_cases": null,
+    "core_requirements": 31,
+    "frozen_core_scope": "three-class (missing_action / incorrect_actor / out_of_order) on source-grounded obligations only",
+    "permission_prohibition_assets_not_scored": true
+  },
+  "execution_blockers": [
+    "API authorization for the corrected Ours Direct-LLM request list is absent.",
+    "METHODS_NOT_READY: R4 actor-surface equivalence, action mis-matching, same-action-different-object, actor/BO candidate scope, and coordinate postprocessing were NOT fixed this round.",
+    "No new Stage2/Stage3 run may start until the method protocol and API budget are authorized."
+  ],
+  "future_execution_order": [
+    "After authorization, run exactly 17 unique Ours Direct-LLM Stage2 requests (one per unique source text); no per-variant calls.",
+    "Reuse the verified existing Stage2 predictions listed in the reuse report.",
+    "Run Sun Rules-Only locally and Winter native after Stage2 inputs are frozen.",
+    "Run shared Stage3 on the frozen inference view; report core metrics, coverage, unknown, N/A and semantic challenges separately."
+  ],
+  "reuse_summary": {
+    "ours_input_changed": 0,
+    "ours_method_changed": 0,
+    "ours_new_requests": 22,
+    "ours_unverified": 0,
+    "ours_verified_reusable": 14,
+    "sun_unverified": 0,
+    "sun_verified_reusable": 14,
+    "unique_regulation_inputs": 36
+  },
+  "schema_version": "stage3_table3_r5_readiness@2.0.0",
+  "statuses": {
+    "api": "API_AUTHORIZATION_PENDING",
+    "data": "DATA_READY_FOR_FROZEN_SCOPE",
+    "formal_release": "FORMAL_RELEASE_NOT_APPROVED",
+    "methods": "METHODS_NOT_READY"
+  }
+}

@@ -5547,3 +5547,17 @@
 - 仍存在 blocker：无
 - 备注：M2 required two pre-scoring software fixes: spaCy 3.8 Vocab lookup/dimension reporting and backend-key normalization. The first M2 output was overwritten after the explicit software failure; the successful complete M2 matrix is bound in the run manifest. M1 outputs were not rerun. Development/retrospective only.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T12:06:47.641513+00:00 - S3-TABLE3-R5.1 targeted benchmark correction: v2 config/data with per-type eligibility, source-family split, evidence-bound six elements, rewritten semantic challenges, corrected prediction reuse, recomputed budget, and structural/content validator
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：21 passed in 0.64s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`c4bd27152ce30095060c658c19cdda43dfc3ffd8`；相关未提交路径：178 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：R5 v1 preserved; benchmark v2 only; zero API; focused tests only (not full suite)
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

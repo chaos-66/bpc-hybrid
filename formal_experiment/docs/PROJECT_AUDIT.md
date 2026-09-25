@@ -9,7 +9,20 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
-## 当前优先级：S3-TABLE3-R3-INTEGRATION 接线/表示/后端诊断（2026-09-25）
+## 当前优先级：S3-TABLE3-R5.1 定向纠错与 benchmark v2（2026-09-25）
+
+- 状态：DATA_READY_FOR_FROZEN_SCOPE / METHODS_NOT_READY / API_AUTHORIZATION_PENDING / FORMAL_RELEASE_NOT_APPROVED。不是正式 Gold，不宣称表三成绩。
+- 边界：真实 LLM/API 调用 0，未读 .env，未跑新增测试集 Stage2/Stage3 主矩阵，未做参数搜索；Sun/Ours/Winter 公式、相似度后端与阈值未改；旧预测/原始回答/旧 Gold/R1—R4 结果未改；R5 v1 数据/配置/报告保留。
+- A：为 36 条要求生成逐条处置表 data/development/stage3_table3_r5_benchmark_v2/requirement_disposition.json。has_variants 全有或全无改为逐类型资格。
+- 定位项：A1 S1-T1/T2 同时性不再当顺序；A2 S6-T1 风险适当性不是顺序；A3 S6-T4 撤销评估到告知 order；A4 S2-T3/T4（及同一规则下 S2-T1）permission 移出核心评分；A5 S3-T3/T4 删除虚构 Stop/Cease 并移出核心；A6 S4-T3 摘录收窄到 28(3)(a) 句并记录 char span 与 processed source 标注。
+- B：source_family_id 按 Article 建族，family_id 不再等于 requirement_id；Art 13/14/35/36/33 跨集合问题消除；R1—R4 五条与已暴露条款族留 development；无 family 跨 split。修正后：36 条要求、31 条核心、5 条候选；105 核心案例；dev/test = 22/14；21 个来源族。
+- C：六要素逐项绑定实际输入证据或声明外部上下文，source/context/SHA 分开记录；修正遗漏 condition；跨条款 exception 文本实际提供或标记 counts_as_in_input=false；condition/exception 分开建模、挑战 BPMN 中性且无悬空节点、例外成立=义务豁免。
+- D：修正 scripts/prepare_stage3_table3_r5_execution.py 的复用判断并抽出 scripts/r5_reuse_verification.py；逐条核验。旧 14 条 Ours 预测全部经证据链验证。
+- E：v2 请求清单 17 次新 Ours Direct-LLM 调用，14 条复用；0 重试；输入 token 上限 364949、输出 69632；USD 0.91 上限。5 条候选需求不在本轮请求清单。
+- 验收器：scripts/validate_stage3_table3_r5_benchmark_v2.py 结构检查与内容资格审查分开报告；13 个具名反例测试全部通过。结构=pass，内容资格=pass。
+- 遗留：METHODS_NOT_READY；condition/exception/prohibition/permission 真值仍 unsupported；核心测试覆盖 9 条/7 族；表三运行仍缺 API 授权。
+
+## 历史优先级：S3-TABLE3-R3-INTEGRATION 接线/表示/后端诊断（2026-09-25）
 
 - 状态：M1、M2 均已完成预先冻结的一轮完整诊断矩阵与独立评价；M0 只读取已保存 R2 结果，不重跑。全部标记 development/retrospective，不是独立测试验证。
 
@@ -566,7 +579,7 @@ per-type F1（prohibited/condition/constraint/exception）：C36
 真实 v5 fallback 另待范围授权；等待时可继续 SEP-C1-A 的三阶段 I/O 和成功/失败案例写作。
 后续较早记录为历史状态，冲突时以本节及下方当前派工表为准。
 
-﻿﻿## 0. Latest v5 LLM preflight: s3_semantic_grounding_llm_v2 (2026-09-13, zero API)
+## 0. Latest v5 LLM preflight: s3_semantic_grounding_llm_v2 (2026-09-13, zero API)
 
 **Status**: READY_FOR_AUTHORIZATION_DECISION / BLOCKED_NO_MATCHING_AUTHORIZATION.
 

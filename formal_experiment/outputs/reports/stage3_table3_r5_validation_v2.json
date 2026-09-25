@@ -1,0 +1,134 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "claim_boundary": "These are construction/structure checks plus scoped content-qualification checks. Passing them does NOT prove legal semantic correctness, formal Gold status, or Table 3 performance.",
+  "content_qualification_checks": [
+    {
+      "check_id": "V2-Q-01-order-eligibility",
+      "detail": "order-eligible-without-basis=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "content",
+      "passed": true
+    },
+    {
+      "check_id": "V2-Q-02-permission-prohibition-core",
+      "detail": "violations=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "content",
+      "passed": true
+    },
+    {
+      "check_id": "V2-Q-03-element-evidence-binding",
+      "detail": "bad=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "content",
+      "passed": true
+    },
+    {
+      "check_id": "V2-Q-04-condition-flags",
+      "detail": "bad=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "content",
+      "passed": true
+    },
+    {
+      "check_id": "V2-Q-05-exception-polarity",
+      "detail": "bad=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "content",
+      "passed": true
+    },
+    {
+      "check_id": "V2-Q-06-reference-not-label-derived",
+      "detail": "bad=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "content",
+      "passed": true
+    }
+  ],
+  "content_qualification_passed": true,
+  "schema_version": "stage3_table3_r5_validation@2.0.0",
+  "status": "pass",
+  "structural_checks": [
+    {
+      "check_id": "V2-S-01-source-family-split",
+      "detail": "cross_split_families=[]",
+      "evidence": {
+        "cross": []
+      },
+      "group": "structure",
+      "passed": true
+    },
+    {
+      "check_id": "V2-S-02-development-positive-examples",
+      "detail": "dev_violation_positives={'missing_action': 22, 'incorrect_actor': 22, 'out_of_order': 10}, dev_baselines=22",
+      "evidence": {
+        "dev_baselines": 22,
+        "dev_positive": {
+          "incorrect_actor": 22,
+          "missing_action": 22,
+          "out_of_order": 10
+        }
+      },
+      "group": "structure",
+      "passed": true
+    },
+    {
+      "check_id": "V2-S-03-challenge-bpmn",
+      "detail": "bad=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "structure",
+      "passed": true
+    },
+    {
+      "check_id": "V2-S-04-inference-reference-isolation",
+      "detail": "bad=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "structure",
+      "passed": true
+    },
+    {
+      "check_id": "V2-S-05-core-reference-structure",
+      "detail": "bad=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "structure",
+      "passed": true
+    },
+    {
+      "check_id": "V2-S-06-source-integrity",
+      "detail": "bad=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "structure",
+      "passed": true
+    },
+    {
+      "check_id": "V2-S-07-budget-and-reuse",
+      "detail": "bad=[]",
+      "evidence": {
+        "bad": []
+      },
+      "group": "structure",
+      "passed": true
+    }
+  ],
+  "structural_passed": true
+}
