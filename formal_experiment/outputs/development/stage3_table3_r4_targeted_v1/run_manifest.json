@@ -1,0 +1,292 @@
+{
+  "actual_output_case_ids": [
+    "case_06bacb820524",
+    "case_0adc59ea1a26",
+    "case_0f7180438501",
+    "case_3d2aaae29b37",
+    "case_44fc51ad7da0",
+    "case_5c2cca2ca4cf",
+    "case_7dc164f81677",
+    "case_89c44a45c04d",
+    "case_8cbb7ad90a6d",
+    "case_92fe183843b7",
+    "case_9a62a7fd9853",
+    "case_aa37540e7989",
+    "case_bbe530084075",
+    "case_c4d9054721a1",
+    "case_d038f52f8cf3",
+    "case_d8a82d59687d",
+    "case_f65436fd6574",
+    "case_f8aaa652c17b",
+    "case_fb254253b6dd",
+    "case_fd4b197b953b"
+  ],
+  "actual_output_rule_ids": [
+    "article13p3",
+    "article14p4",
+    "article18p3",
+    "article35p1",
+    "article36p1"
+  ],
+  "code_sha256": {
+    "scripts/build_stage3_r3_sidecars.py": "a21e73bbb558d036fede60091b91fda65367658e518878342333e2d0391ca11f",
+    "scripts/run_stage3_table3_r3.py": "dc9f97d0502e4283e54e3534305db9330bda0ec7fcbd3c00a7e293d8e41d553d",
+    "scripts/run_stage3_table3_r4_targeted.py": "7bc838ed3d459c89a155a62ff0c11c5256460d4f041fe7ba6f25d796cc892ab0",
+    "src/bpc_hybrid/stage1_label_semantics_p2.py": "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2",
+    "src/bpc_hybrid/stage3_r3_p2_adapter_v1.py": "0f95c72ed4d7594f103c483e2c2d2cad612f6b44e8466d71daebb7207f1b8640",
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
+    "src/bpc_hybrid/sun_stage3/no_gate_checker_v1.py": "6b925e4d27a8d614733002d0adad3f45f9082dfd92c15173183ed61997edaf51",
+    "src/bpc_hybrid/sun_stage3/r3_sun_scorer.py": "643ccf36b49d078c21b3686dbf238fcdda487f424870dd64498945f411951b36",
+    "src/bpc_hybrid/sun_stage3/r4_action_surface_scorer.py": "442e2532e03fe0b645fac4e35a5cea08dc5b2924511a0c90b621a8fc0d247ada",
+    "src/bpc_hybrid/sun_stage3/static_vector_similarity_v1.py": "cc6d1c68d56566d9a4bef7f09b15c6672e6d743a4c7b644da909de98c102eef7",
+    "src/bpc_hybrid/sun_stage3/sun_scorer.py": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+    "src/bpc_hybrid/sun_stage3/temporal_projection_v4_r3.py": "34ded79bb42428dc794afd5dd46c3e7ff09f2af595bd7eeb62f53ed87977a556"
+  },
+  "command": "python formal_experiment/scripts/run_stage3_table3_r3.py --config configs/stage3_table3_r4_targeted_m1.json --out-dir outputs/development/stage3_table3_r4_targeted_v1",
+  "configuration": {
+    "action_match_policy": "r4_action_surface_only_frozen_lemma",
+    "def6_candidate_scope_unchanged": true,
+    "legacy_join_retained_for_business_object_evidence": true,
+    "outer_matching_gate_applied": false,
+    "p2_adapter": "src/bpc_hybrid/stage3_r3_p2_adapter_v1.py",
+    "p2_original_implementation": "src/bpc_hybrid/stage1_label_semantics_p2.py",
+    "similarity_backend": {
+      "actual_loaded_backend": "en_core_web_sm_spacy_text_similarity",
+      "backend": "sm",
+      "canonical_backend": "sm",
+      "configured_backend": "sm",
+      "requested_backend": "sm"
+    },
+    "sun_thresholds": {
+      "gamma": 0.8,
+      "tau": 0.8,
+      "theta": 0.8
+    },
+    "temporal_projection": {
+      "algorithm": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "dates_and_durations_not_events": "bounded nominal rejection remains in v1/v3 helper",
+      "derived_endpoints_are_not_added_to_mandatory_actions": true,
+      "event_predicate_must_be_inside_continuous_endpoint": true,
+      "local_parse_of_post_marker_complement": true,
+      "main_action_must_be_exactly_one_after_exclusion": true,
+      "marker_inside_exception_rejection": true,
+      "marker_scope": "predicted conditions and constraints spans only",
+      "markers": [
+        "before",
+        "after",
+        "prior to"
+      ],
+      "module": "src/bpc_hybrid/sun_stage3/temporal_projection_v4_r3.py",
+      "multi_marker_span_rejection": true,
+      "multiple_top_level_events_rejected": true,
+      "native_order_relations_priority": true,
+      "negation_rejection": true,
+      "nominal_branch_only_when_no_unresolved_event_predicate": true,
+      "truncated_span_rejected": true,
+      "unique_top_level_event_predicate_retained": true,
+      "version_note": "R3 event-predicate preservation; v1/v2/v3 preserved."
+    }
+  },
+  "construction_reference_read_by_runner": false,
+  "counts": {
+    "cases": 20,
+    "methods": 3,
+    "prediction_rows": 60,
+    "signals": 900
+  },
+  "dependency_versions": {
+    "python": "3.14.6",
+    "similarity_backend": {
+      "actual_loaded_backend": "en_core_web_sm_spacy_text_similarity",
+      "canonical_backend": "sm",
+      "requested_backend": "sm"
+    },
+    "spacy": "3.8.13",
+    "spacy_model": "en_core_web_sm"
+  },
+  "development_status": "development_retrospective_not_independent_test",
+  "elapsed_seconds": 5.462,
+  "git": {
+    "commit": "22b2d0a082a593081a0fc65a195a92e7bf1cdd42",
+    "dirty_paths": [
+      "M formal_experiment/data/development/human_review/stage1_gdpr7_human_correction_v1.json",
+      " M formal_experiment/outputs/reports/sep_c3_modular_ablation_v1.json",
+      " M formal_experiment/outputs/reports/sep_c3_modular_ablation_v1.md",
+      "?? .codex_worktree_c36sep/",
+      "?? .patch_exec_cmd.py",
+      "?? .run_patch_exec_cmd.cmd",
+      "?? .tmp_mod_fairness.py",
+      "?? .tmp_modality_check.py",
+      "?? .tmp_pooled_check.py",
+      "?? .tmp_pooled_five.py",
+      "?? .tmp_probe/",
+      "?? .tmp_probe2.py",
+      "?? .tmp_verify_fix.py",
+      "?? \"bpc_hybrid - 副本 (2).pptx\"",
+      "?? formal_experiment/configs/stage3_table3_r4_targeted_m1.json",
+      "?? formal_experiment/data/development/human_review/s2_11_review_decisions_v2.json.bak",
+      "?? formal_experiment/data/development/stage3_r4_synth/",
+      "?? formal_experiment/outputs/reports/s2_11_batch_import_dry_run_v3.json.bak",
+      "?? formal_experiment/outputs/reports/s2_12_execution_readiness_v3.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.manifest.json.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7.md.bak",
+      "?? formal_experiment/outputs/reports/s2_13_s3_7_transition_readiness_v7_export_index.json.bak",
+      "?? formal_experiment/outputs/reports/stage3_table3_r4_targeted_mechanism_v1.json",
+      "?? formal_experiment/outputs/reports/stage3_table3_r4_targeted_mechanism_v1.md",
+      "?? formal_experiment/paper/presentations/bpc_hybrid_revised_20260912.pptx",
+      "?? formal_experiment/scripts/build_v6_factorial_arms_v1.py",
+      "?? formal_experiment/scripts/build_v6_factorial_arms_v2.py",
+      "?? formal_experiment/scripts/evaluate_stage3_table3_r4_targeted.py",
+      "?? formal_experiment/scripts/run_stage3_r4_mechanism_check.py",
+      "?? formal_experiment/scripts/run_stage3_table3_r4_targeted.py",
+      "?? formal_experiment/src/bpc_hybrid/sun_stage3/r4_action_surface_scorer.py"
+    ]
+  },
+  "gold_read_by_runner": false,
+  "inputs": {
+    "execution_config": {
+      "path": "configs/stage3_table3_r4_targeted_m1.json",
+      "sha256": "b5a52656bfbe3c2a12b7be9e48539e50a4cbce05eb8b7fe5cce116dc0f7bd6f6"
+    },
+    "inference_view": {
+      "path": "data/development/stage3_reconstruction_v4/inference_view.json",
+      "sha256": "6248e8396ad4d8d7077b6332f51b1aa2b5de7e97188e324cb49e00bda4c1eb33"
+    },
+    "ours_predictions": {
+      "path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
+      "sha256": "be83c1c02e96037dca948450a835dd01f46c4cd9a34b8ab557e498a427d44821"
+    },
+    "p2_sidecar_index": {
+      "path": "outputs/development/stage3_table3_r3_p2_sidecars/index.json",
+      "sha256": "463c05f718d682a5878f94be48098ea16b69d9c12a14bcf10aa3138dee68b211"
+    },
+    "r2_reused_manifest": {
+      "path": "outputs/development/stage3_table3_v4_r2/run_manifest.json",
+      "sha256": "eaff286c1608128e207972da8bf5de0f72ad0a70bf69a8c473db08f17312afa8"
+    },
+    "r2_reused_predictions": {
+      "path": "outputs/development/stage3_table3_v4_r2/predictions.json",
+      "sha256": "969c5f8ae573fb9f0792b62ede1d449204a1318c9d3389315348dc2bdc3dce8b"
+    },
+    "stage2_input": {
+      "path": "data/development/stage3_reconstruction_v4/stage2_input.json",
+      "sha256": "4c934712d4e85316167136a46861084165c75969c113eca7d995de5ddaabd1f2"
+    },
+    "sun_predictions": {
+      "path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
+      "sha256": "eee1d6447bdab21d20704df64801e81aaa642e543a0bd706b0783882009c71fa"
+    }
+  },
+  "llm_api_calls": 0,
+  "methods": {
+    "ours": {
+      "action_match_policy": "r4_action_surface_only_frozen_lemma",
+      "method_id": "ours_d1_frozen_v1",
+      "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "status": "available_r4"
+    },
+    "sun": {
+      "action_match_policy": "r4_action_surface_only_frozen_lemma",
+      "method_id": "sun_b0_frozen_v1",
+      "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+      "status": "available_r4"
+    },
+    "winter": {
+      "method_id": "winter_2020_native_full_pipeline",
+      "r4_status": "reused_from_r2_not_rerun",
+      "reused_from": "outputs/development/stage3_table3_v4_r2/predictions.json",
+      "status": "available_native_reused_from_r2"
+    }
+  },
+  "network_calls": 0,
+  "order_diagnostic_policy": {
+    "categories": [
+      "no_rule_order_relation",
+      "projection_rejected_multiple_predicate",
+      "projection_rejected_span_or_projection",
+      "rule_endpoint_parse_failure",
+      "model_endpoint_missing_action_surface",
+      "candidate_below_gamma",
+      "other_mapping_or_reachability",
+      "reachability_satisfied",
+      "reachability_violated",
+      "winter_native_unsupported"
+    ],
+    "does_not_change_denominator_or_score": true,
+    "evidence_only": true
+  },
+  "outputs": {
+    "global_role_candidates": {
+      "path": "outputs/development/stage3_table3_r4_targeted_v1/global_role_candidates.json",
+      "sha256": "08212bbf5118e53ca20c7e292e2a97b081cb95dc4c58f22a3ef398e1986dfcca"
+    },
+    "predictions": {
+      "path": "outputs/development/stage3_table3_r4_targeted_v1/predictions.json",
+      "sha256": "5c483b08014cf6611490abdb7ef39c5290606ba944145161c0173097607274b7"
+    },
+    "rule_records": {
+      "path": "outputs/development/stage3_table3_r4_targeted_v1/rule_records.json",
+      "sha256": "1966840dadcb7f0ca0499e47ceda54d32ac570ff1e12dd74afc031b1f9c8d4ce"
+    },
+    "signals_matrix": {
+      "path": "outputs/development/stage3_table3_r4_targeted_v1/signals_matrix.json",
+      "sha256": "9fb389e141b86892968e611b849c085df8ca23868d1724a394b35677d450f390"
+    }
+  },
+  "post_run_metadata_repair": {
+    "new_execution_config_sha256": "b5a52656bfbe3c2a12b7be9e48539e50a4cbce05eb8b7fe5cce116dc0f7bd6f6",
+    "old_execution_config_sha256": "3ff9f38749e50530e5bc88fb32206e7ddcacde36d31e988bc6bfe0218d193f06",
+    "predictions_unchanged": true,
+    "reason": "Repaired two validation-script hash bindings (evaluator and mechanism check) after their pre-run fixes; no scoring parameter, prediction, threshold, input, or denominator changed.",
+    "repaired_paths": [
+      "scripts/evaluate_stage3_table3_r4_targeted.py",
+      "scripts/run_stage3_r4_mechanism_check.py"
+    ],
+    "stage3_not_rerun": true
+  },
+  "r4_action_matching": {
+    "business_object_surface_preserved": true,
+    "changed_input": "Sun/Ours action comparison uses action_surface on both sides",
+    "definitions_using_same_function": [
+      "Def4",
+      "Def5",
+      "Def6_internal_action_gate",
+      "Def7"
+    ],
+    "legacy_join_preserved_in_evidence_only": true,
+    "policy": "r4_action_surface_only_frozen_lemma"
+  },
+  "reused_winter": {
+    "binding_note": "R2 native Winter config and global role-candidate input reused; not rerun in R3.",
+    "source_predictions": "outputs/development/stage3_table3_v4_r2/predictions.json",
+    "source_predictions_sha256": "969c5f8ae573fb9f0792b62ede1d449204a1318c9d3389315348dc2bdc3dce8b",
+    "status": "reused_not_rerun"
+  },
+  "run_id": "stage3_table3_r4_targeted_sm_v1",
+  "schema_version": "stage3_table3_r4_targeted_sm_run@1.0.0",
+  "scope": {
+    "bpmn_count": 20,
+    "case_count": 20,
+    "claim_boundary": "checking on independently specified applicable regulation-process pairs; not end-to-end rule selection or complete GDPR F1; R4 targeted action-surface diagnostic",
+    "dataset_id": "stage3_scoped_gdpr_v4",
+    "family_count": 5,
+    "human_adjudicated": false,
+    "negative_cells_per_method": 35,
+    "not_applicable_cells_per_method": 10,
+    "positive_cells_per_method": 15,
+    "reference_is_gold": false,
+    "rule_ids": [
+      "article13p3",
+      "article14p4",
+      "article18p3",
+      "article35p1",
+      "article36p1"
+    ],
+    "scored_cells_per_method": 50,
+    "signals_per_method": 300,
+    "signals_total": 900
+  },
+  "status": "complete",
+  "task_id": "S3-TABLE3-R4-TARGETED-FIX"
+}

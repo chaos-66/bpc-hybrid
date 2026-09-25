@@ -1,0 +1,69 @@
+{
+  "action_match_policy": "r4_action_surface_only_frozen_lemma",
+  "backend": "sm",
+  "boundary": "development_retrospective_not_independent_test",
+  "counts": {
+    "ours": {
+      "fn": 9,
+      "fp": 9,
+      "not_applicable_cells": 10,
+      "tn": 14,
+      "tp": 6,
+      "unknown_negative": 12,
+      "unknown_positive": 6
+    },
+    "sun": {
+      "fn": 7,
+      "fp": 14,
+      "not_applicable_cells": 10,
+      "tn": 11,
+      "tp": 8,
+      "unknown_negative": 10,
+      "unknown_positive": 5
+    },
+    "winter": {
+      "fn": 8,
+      "fp": 6,
+      "not_applicable_cells": 10,
+      "tn": 19,
+      "tp": 7,
+      "unknown_negative": 10,
+      "unknown_positive": 5
+    }
+  },
+  "development_status": "development_retrospective_not_independent_test",
+  "gold_read_by_analysis": true,
+  "gold_read_by_inference": false,
+  "inputs": {
+    "eval_report": {
+      "path": "outputs/reports/stage3_table3_r4_targeted_v1_eval.json",
+      "sha256": "7a285696b1f033798a7b75a314e4dca926c4ee57914e1f8813f8f919f22e61d8"
+    },
+    "r4_predictions": {
+      "path": "outputs/development/stage3_table3_r4_targeted_v1/predictions.json",
+      "sha256": "5c483b08014cf6611490abdb7ef39c5290606ba944145161c0173097607274b7"
+    },
+    "reference": {
+      "path": "data/development/stage3_reconstruction_v4/construction_reference.json",
+      "sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915"
+    },
+    "run_manifest": {
+      "path": "outputs/development/stage3_table3_r4_targeted_v1/run_manifest.json",
+      "sha256": "44f861b21ba555c517c9daeed87db6f50f51a8dae23a0e163641d0cd3644d81b"
+    }
+  },
+  "no_prediction_modification": true,
+  "outputs": {
+    "json": {
+      "path": "outputs/reports/stage3_table3_r4_targeted_v1.json",
+      "sha256": "94c77a2518df37e9d38eeb7535935f2b3d67793141e2354a960001a24d356b66"
+    },
+    "markdown": {
+      "path": "outputs/reports/stage3_table3_r4_targeted_v1.md",
+      "sha256": "cb17ca2f0fc384df685cef1f9c0c3d39a4cd61f85bd40e796102b05d2cd10272"
+    }
+  },
+  "schema_version": "stage3_table3_r4_targeted_delivery_manifest@1.0.0",
+  "status": "development_retrospective_not_independent_test_complete",
+  "task_id": "S3-TABLE3-R4-TARGETED-FIX"
+}

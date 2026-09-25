@@ -1,0 +1,60 @@
+{
+  "acceptance": "needs_method_review",
+  "action_match_policy": "r4_action_surface_only_frozen_lemma",
+  "backend": "sm",
+  "counts": {
+    "ours": {
+      "fn": 9,
+      "fp": 9,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 14,
+      "tp": 6,
+      "unknown_negative": 12,
+      "unknown_positive": 6
+    },
+    "sun": {
+      "fn": 7,
+      "fp": 14,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 11,
+      "tp": 8,
+      "unknown_negative": 10,
+      "unknown_positive": 5
+    },
+    "winter": {
+      "fn": 8,
+      "fp": 6,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 19,
+      "tp": 7,
+      "unknown_negative": 10,
+      "unknown_positive": 5
+    }
+  },
+  "gold_read": false,
+  "inputs": {
+    "construction_reference": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+    "execution_config": "b5a52656bfbe3c2a12b7be9e48539e50a4cbce05eb8b7fe5cce116dc0f7bd6f6",
+    "global_role_candidates": "08212bbf5118e53ca20c7e292e2a97b081cb95dc4c58f22a3ef398e1986dfcca",
+    "predictions": "5c483b08014cf6611490abdb7ef39c5290606ba944145161c0173097607274b7",
+    "rule_records": "1966840dadcb7f0ca0499e47ceda54d32ac570ff1e12dd74afc031b1f9c8d4ce",
+    "run_manifest": "44f861b21ba555c517c9daeed87db6f50f51a8dae23a0e163641d0cd3644d81b",
+    "signals_matrix": "9fb389e141b86892968e611b849c085df8ca23868d1724a394b35677d450f390"
+  },
+  "no_prediction_modification": true,
+  "outputs": {
+    "json": {
+      "path": "outputs/reports/stage3_table3_r4_targeted_v1_eval.json",
+      "sha256": "7a285696b1f033798a7b75a314e4dca926c4ee57914e1f8813f8f919f22e61d8"
+    },
+    "markdown": {
+      "path": "outputs/reports/stage3_table3_r4_targeted_v1_eval.md",
+      "sha256": "415b2edcc4a76492813842ca99ab310e69746839228d8e997c2a4a74b87bd530"
+    }
+  },
+  "schema_version": "stage3_table3_r4_targeted_report_manifest@1.0.0",
+  "status": "needs_method_review"
+}

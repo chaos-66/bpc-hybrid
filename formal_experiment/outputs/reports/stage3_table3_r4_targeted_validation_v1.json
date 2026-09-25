@@ -1,0 +1,43 @@
+{
+  "api_calls": 0,
+  "commands": [
+    {
+      "command": "python -m pytest tests/test_stage3_r4_targeted_fix.py -q",
+      "exit_code": 0,
+      "summary": "8 passed"
+    },
+    {
+      "command": "python scripts/run_stage3_r4_mechanism_check.py --backend r4_sm --out-json outputs/reports/stage3_table3_r4_targeted_mechanism_v1.json --out-md outputs/reports/stage3_table3_r4_targeted_mechanism_v1.md",
+      "exit_code": 0,
+      "summary": "status=pass; 5/5 contract checks, 11/11 behaviour probes, 2/2 known limitations reproduced"
+    },
+    {
+      "command": "python scripts/run_stage3_r4_mechanism_check.py --backend r4_sm --self-test-failure",
+      "exit_code": 1,
+      "summary": "deliberate failure fixture detected; non-zero exit code verified"
+    },
+    {
+      "command": "python formal_experiment/scripts/audit_project.py",
+      "exit_code": 0,
+      "summary": "Integrity pass: True; ERRORS 0; BLOCKERS 0; WARNINGS 3"
+    },
+    {
+      "command": "git -c core.whitespace=-blank-at-eof diff --cached --check",
+      "exit_code": 0,
+      "summary": "no material whitespace errors; only intentional blank-at-EOF lines in two historical run-time code files are exempted by the scoped config override"
+    }
+  ],
+  "gold_read_by_inference": false,
+  "metadata_repair": {
+    "predictions_unchanged": true,
+    "reason": "Two validation-script hash bindings in the R4 config were refreshed after their pre-run fixes; the run manifest execution-config SHA was updated correspondingly. No prediction, threshold, scoring, input, or denominator changed and Stage3 was not rerun.",
+    "stage3_not_rerun": true
+  },
+  "not_run": [
+    "pytest tests (full suite)",
+    "audit_project.py --with-tests"
+  ],
+  "note": "R4 matrix was executed once (Sun/Ours rerun; Winter reused from R2). Evaluation read the reference separately after output-hash verification.",
+  "schema_version": "stage3_table3_r4_targeted_validation@1.0.0",
+  "scope": "focused R4 validation only; no full pytest tests and no audit_project.py --with-tests"
+}
