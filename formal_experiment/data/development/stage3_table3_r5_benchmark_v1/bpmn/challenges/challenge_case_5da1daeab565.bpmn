@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions" targetNamespace="urn:bpc:table3:r5:challenge">
+  <collaboration id="Collaboration">
+    <participant id="Participant" name="Supervisory Authority" processRef="Process" />
+  </collaboration>
+  <process id="Process" name="Supervisory Authority" isExecutable="false">
+    <laneSet id="LaneSet">
+      <lane id="Lane_Actor" name="Supervisory Authority">
+        <flowNodeRef>Start</flowNodeRef>
+        <flowNodeRef>Gateway_Applicability</flowNodeRef>
+        <flowNodeRef>Activity_0</flowNodeRef>
+        <flowNodeRef>End</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="Start" name="The supervisory authority must provide written advice within up to eight weeks of a consultation request. (condition/exception not true)" />
+    <exclusiveGateway id="Gateway_Applicability" name="exception" />
+    <task id="Activity_0" name="Receive the controller consultation request" />
+    <task id="Activity_2" name="Record any extension and reasons" />
+    <endEvent id="End" />
+    <sequenceFlow id="Flow_Start_Gateway" sourceRef="Start" targetRef="Gateway_Applicability" />
+    <sequenceFlow id="Flow_Gateway_Activity_0" sourceRef="Gateway_Applicability" targetRef="Activity_0" />
+    <sequenceFlow id="Flow_Activity_0_End" sourceRef="Activity_0" targetRef="End" />
+  </process>
+</definitions>

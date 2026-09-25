@@ -1,0 +1,4147 @@
+{
+  "cases": [
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_013a8b7a316f",
+      "citation": "GDPR Article 21(1)",
+      "family_id": "R5-S3-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S3-T3",
+      "source_text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_04c5f8ed0a49",
+      "citation": "GDPR Article 14(2)",
+      "family_id": "R5-S1-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S1-T4",
+      "source_text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_050ad43a982c",
+      "citation": "GDPR Article 8(2)",
+      "family_id": "R5-S2-T2",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S2-T2",
+      "source_text_sha256": "4a572b9fde1b8fd97666c3cb5925d2edd2527b4969b67ab65fb7fcf84124e267",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_08d024af628d",
+      "citation": "GDPR Article 32(4)",
+      "family_id": "R5-S6-T2",
+      "mutation_observed": {
+        "actor": "Controller and Processor",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S6-T2",
+      "source_text_sha256": "b4eb199a1981e55f124df9ce2620678f7d2bdec0c7fef3550f101091ed55b2be",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_0c4ef0c44cb6",
+      "citation": "GDPR Article 33(2)",
+      "family_id": "R5-S6-T3",
+      "mutation_observed": {
+        "actor": "Processor",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S6-T3",
+      "source_text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_0e5cdc8ef7d8",
+      "citation": "GDPR Article 36(2)",
+      "family_id": "R5-S5-T4",
+      "mutation_observed": {
+        "actor": "Supervisory Authority",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S5-T4",
+      "source_text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_0ed90f789b18",
+      "citation": "GDPR Article 8(2)",
+      "family_id": "R5-S2-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S2-T2",
+      "source_text_sha256": "4a572b9fde1b8fd97666c3cb5925d2edd2527b4969b67ab65fb7fcf84124e267",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_0fa468efbde5",
+      "citation": "GDPR Article 32(1)",
+      "family_id": "R5-S6-T1",
+      "mutation_observed": {
+        "actor": "Controller and Processor",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S6-T1",
+      "source_text_sha256": "7a611aab8130f0bacc05b99d03ba542cfc0c00f0af5966bc95e448c4dbfee0fd",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_123f8dc137a3",
+      "citation": "GDPR Article 36(2)",
+      "family_id": "R5-S5-T4",
+      "mutation_observed": {
+        "actor": "Supervisory Authority",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S5-T4",
+      "source_text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_14eb48e20d33",
+      "citation": "GDPR Article 9(2)(b)",
+      "family_id": "R5-S2-T4",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S2-T4",
+      "source_text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_15f1db1da69e",
+      "citation": "GDPR Article 21(1)",
+      "family_id": "R5-S3-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S3-T3",
+      "source_text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_1c8d0a6f3263",
+      "citation": "GDPR Article 21(3)",
+      "family_id": "R5-S3-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S3-T4",
+      "source_text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_1f6def9a943d",
+      "citation": "GDPR Article 14(1)",
+      "family_id": "R5-S1-T3",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S1-T3",
+      "source_text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_21fb110bed10",
+      "citation": "GDPR Article 9(2)(a)",
+      "family_id": "R5-S2-T3",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S2-T3",
+      "source_text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_2599e6d59e3a",
+      "citation": "GDPR Article 12(3)",
+      "family_id": "R5-S3-T1",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S3-T1",
+      "source_text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_2831bf5ed756",
+      "citation": "GDPR Article 8(1)",
+      "family_id": "R5-S2-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S2-T1",
+      "source_text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_2bbd7ccf8503",
+      "citation": "GDPR Article 12(3)",
+      "family_id": "R5-S3-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S3-T1",
+      "source_text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_2dfa3a0c76fb",
+      "citation": "GDPR Article 24(1)",
+      "family_id": "R5-S4-T1",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S4-T1",
+      "source_text_sha256": "4ab0b5c456120cbbc85a045342d7eb9d850db264e4e747af4f882b8fa7513c9d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_2fcdc6389804",
+      "citation": "GDPR Article 8(1)",
+      "family_id": "R5-S2-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S2-T1",
+      "source_text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_35a7f4d663a7",
+      "citation": "GDPR Article 7(1)",
+      "family_id": "R5-D-06",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-06",
+      "source_text_sha256": "e00763881eb6ffcb71cd7f3dfda726448d24731fa06d9b217e2dce6dd00bce87",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_3a8fbafabe90",
+      "citation": "GDPR Article 8(2)",
+      "family_id": "R5-S2-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_2",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S2-T2",
+      "source_text_sha256": "4a572b9fde1b8fd97666c3cb5925d2edd2527b4969b67ab65fb7fcf84124e267",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_3b0763b536c4",
+      "citation": "GDPR Article 21(1)",
+      "family_id": "R5-S3-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S3-T3",
+      "source_text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_414f0195e59d",
+      "citation": "GDPR Article 12(3)",
+      "family_id": "R5-S3-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S3-T1",
+      "source_text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_4173ecebe44a",
+      "citation": "GDPR Article 14(1)",
+      "family_id": "R5-S1-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S1-T3",
+      "source_text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_43f284cd4024",
+      "citation": "GDPR Article 14(2)",
+      "family_id": "R5-S1-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S1-T4",
+      "source_text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_442d471284a5",
+      "citation": "GDPR Article 14(2)",
+      "family_id": "R5-S1-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S1-T4",
+      "source_text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_4be9f6a3b177",
+      "citation": "GDPR Article 35(11)",
+      "family_id": "R5-S5-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S5-T3",
+      "source_text_sha256": "cf1e4c40ef5083d35242f540be5c68b5565145d1ea970540d76a684c3657850c",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_4c3d94744653",
+      "citation": "GDPR Article 21(1)",
+      "family_id": "R5-S3-T3",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S3-T3",
+      "source_text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_4cf3efd8e95d",
+      "citation": "GDPR Article 9(2)(a)",
+      "family_id": "R5-S2-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_2",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S2-T3",
+      "source_text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_4ddce8e76fd1",
+      "citation": "GDPR Article 24(1)",
+      "family_id": "R5-S4-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S4-T1",
+      "source_text_sha256": "4ab0b5c456120cbbc85a045342d7eb9d850db264e4e747af4f882b8fa7513c9d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_4f589b24ee99",
+      "citation": "GDPR Article 35(11)",
+      "family_id": "R5-S5-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S5-T3",
+      "source_text_sha256": "cf1e4c40ef5083d35242f540be5c68b5565145d1ea970540d76a684c3657850c",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_4f83ef2446fd",
+      "citation": "GDPR Article 19",
+      "family_id": "R5-S4-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S4-T4",
+      "source_text_sha256": "6d16dedab3b12954ac7972d1c6b18ce394ccd00428c3cf7f49d9832e0c2098fc",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_5058bf9b557c",
+      "citation": "GDPR Article 14(1)",
+      "family_id": "R5-S1-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S1-T3",
+      "source_text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_54b204711deb",
+      "citation": "GDPR Article 13(2)",
+      "family_id": "R5-S1-T2",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S1-T2",
+      "source_text_sha256": "c857f4424b6e5e8532d1241d4fb6745148aa56069518c1d9fe9dfc853a454491",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_54e374bbf0b5",
+      "citation": "GDPR Article 32(1)",
+      "family_id": "R5-S6-T1",
+      "mutation_observed": {
+        "actor": "Controller and Processor",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S6-T1",
+      "source_text_sha256": "7a611aab8130f0bacc05b99d03ba542cfc0c00f0af5966bc95e448c4dbfee0fd",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_59814e8ab552",
+      "citation": "GDPR Article 12(4)",
+      "family_id": "R5-S3-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S3-T2",
+      "source_text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_5a0ce3069e8e",
+      "citation": "GDPR Article 16",
+      "family_id": "R5-D-09",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-09",
+      "source_text_sha256": "1ae6c72eb70eb6b75ce1c88d6d50adbfd098ce38eab56c892f31d07b353adbe1",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_5ea0690ab1c6",
+      "citation": "GDPR Article 34(1)",
+      "family_id": "R5-S6-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S6-T4",
+      "source_text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_5ebf9f96541d",
+      "citation": "GDPR Article 13(2)",
+      "family_id": "R5-S1-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S1-T2",
+      "source_text_sha256": "c857f4424b6e5e8532d1241d4fb6745148aa56069518c1d9fe9dfc853a454491",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_5f3a705ee021",
+      "citation": "GDPR Article 19",
+      "family_id": "R5-S4-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S4-T4",
+      "source_text_sha256": "6d16dedab3b12954ac7972d1c6b18ce394ccd00428c3cf7f49d9832e0c2098fc",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_62a8ff1004c8",
+      "citation": "GDPR Article 35(9)",
+      "family_id": "R5-S5-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S5-T2",
+      "source_text_sha256": "dfbc48c5f0729dc31ce006f0a8b8d958ba1df825b086851435c703e2e67a86ea",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_66c80de20348",
+      "citation": "GDPR Article 35(11)",
+      "family_id": "R5-S5-T3",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S5-T3",
+      "source_text_sha256": "cf1e4c40ef5083d35242f540be5c68b5565145d1ea970540d76a684c3657850c",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_6850206622f7",
+      "citation": "GDPR Article 13(2)",
+      "family_id": "R5-S1-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S1-T2",
+      "source_text_sha256": "c857f4424b6e5e8532d1241d4fb6745148aa56069518c1d9fe9dfc853a454491",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_6856fe0ac550",
+      "citation": "GDPR Article 9(2)(b)",
+      "family_id": "R5-S2-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S2-T4",
+      "source_text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_6badca3be95a",
+      "citation": "GDPR Article 13(1)",
+      "family_id": "R5-S1-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S1-T1",
+      "source_text_sha256": "16a2a3b5ceb63999f1758de7f91a407c52e36eeef8d0627516e41bbb43aa5c1d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_6d7fb2ef3b8e",
+      "citation": "GDPR Article 34(1)",
+      "family_id": "R5-S6-T4",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S6-T4",
+      "source_text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_72e2a09fc480",
+      "citation": "GDPR Article 14(2)",
+      "family_id": "R5-S1-T4",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S1-T4",
+      "source_text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_7b4eaca6a9ac",
+      "citation": "GDPR Article 19",
+      "family_id": "R5-S4-T4",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S4-T4",
+      "source_text_sha256": "6d16dedab3b12954ac7972d1c6b18ce394ccd00428c3cf7f49d9832e0c2098fc",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_7bb39af7dfec",
+      "citation": "GDPR Article 32(1)",
+      "family_id": "R5-S6-T1",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S6-T1",
+      "source_text_sha256": "7a611aab8130f0bacc05b99d03ba542cfc0c00f0af5966bc95e448c4dbfee0fd",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_828064f80a2a",
+      "citation": "GDPR Article 19",
+      "family_id": "R5-S4-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S4-T4",
+      "source_text_sha256": "6d16dedab3b12954ac7972d1c6b18ce394ccd00428c3cf7f49d9832e0c2098fc",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_8375743198a9",
+      "citation": "GDPR Article 14(4)",
+      "family_id": "R5-D-02",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-02",
+      "source_text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_88731056e592",
+      "citation": "GDPR Article 33(1)",
+      "family_id": "R5-D-12",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-12",
+      "source_text_sha256": "d3327ce470720a494bfb05a72841a073e0c7bac1673f11545833dcce72ef0a65",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_8988cad701a3",
+      "citation": "GDPR Article 12(4)",
+      "family_id": "R5-S3-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S3-T2",
+      "source_text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_8a24c25c45dd",
+      "citation": "GDPR Article 25(1)",
+      "family_id": "R5-S4-T2",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S4-T2",
+      "source_text_sha256": "e6fa8bd9e008b448d4904925e75fb86d9aa6ebecc87394c917f6967d2d03979f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_8b7e8c6948a1",
+      "citation": "GDPR Article 33(2)",
+      "family_id": "R5-S6-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S6-T3",
+      "source_text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_8f0f05b1ffa7",
+      "citation": "GDPR Article 28(3)(a)",
+      "family_id": "R5-S4-T3",
+      "mutation_observed": {
+        "actor": "Processor",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S4-T3",
+      "source_text_sha256": "81f87c45e60c30cb1134962ad3d57c1eb237f6f763197e6c8c71a2cb51185323",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_910e4ce3ac76",
+      "citation": "GDPR Article 35(9)",
+      "family_id": "R5-S5-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S5-T2",
+      "source_text_sha256": "dfbc48c5f0729dc31ce006f0a8b8d958ba1df825b086851435c703e2e67a86ea",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_91efcc59893f",
+      "citation": "GDPR Article 24(1)",
+      "family_id": "R5-S4-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_2",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S4-T1",
+      "source_text_sha256": "4ab0b5c456120cbbc85a045342d7eb9d850db264e4e747af4f882b8fa7513c9d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_923d2ce84a43",
+      "citation": "GDPR Article 24(1)",
+      "family_id": "R5-S4-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S4-T1",
+      "source_text_sha256": "4ab0b5c456120cbbc85a045342d7eb9d850db264e4e747af4f882b8fa7513c9d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_9671f1cf8f02",
+      "citation": "GDPR Article 8(2)",
+      "family_id": "R5-S2-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S2-T2",
+      "source_text_sha256": "4a572b9fde1b8fd97666c3cb5925d2edd2527b4969b67ab65fb7fcf84124e267",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_9897aa859cfd",
+      "citation": "GDPR Article 15(1)",
+      "family_id": "R5-D-08",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-08",
+      "source_text_sha256": "4d55a1fb6743e546ba673fe377a388638f99a50ac240d482a0d2c394ce3256ac",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_98d4a79f6fe9",
+      "citation": "GDPR Article 8(1)",
+      "family_id": "R5-S2-T1",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S2-T1",
+      "source_text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_9a0560736a4b",
+      "citation": "GDPR Article 35(9)",
+      "family_id": "R5-S5-T2",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S5-T2",
+      "source_text_sha256": "dfbc48c5f0729dc31ce006f0a8b8d958ba1df825b086851435c703e2e67a86ea",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_a4a62743f5b3",
+      "citation": "GDPR Article 13(1)",
+      "family_id": "R5-S1-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S1-T1",
+      "source_text_sha256": "16a2a3b5ceb63999f1758de7f91a407c52e36eeef8d0627516e41bbb43aa5c1d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_a5a69234e312",
+      "citation": "GDPR Article 34(1)",
+      "family_id": "R5-S6-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S6-T4",
+      "source_text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_a979d6e99678",
+      "citation": "GDPR Article 34(1)",
+      "family_id": "R5-S6-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S6-T4",
+      "source_text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_a994ef267f6b",
+      "citation": "GDPR Article 21(3)",
+      "family_id": "R5-S3-T4",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S3-T4",
+      "source_text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_aa9e86f22ef0",
+      "citation": "GDPR Article 36(2)",
+      "family_id": "R5-S5-T4",
+      "mutation_observed": {
+        "actor": "Supervisory Authority",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S5-T4",
+      "source_text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_aaf61828b02b",
+      "citation": "GDPR Article 33(2)",
+      "family_id": "R5-S6-T3",
+      "mutation_observed": {
+        "actor": "Processor",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S6-T3",
+      "source_text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_b10725eb5283",
+      "citation": "GDPR Article 32(4)",
+      "family_id": "R5-S6-T2",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S6-T2",
+      "source_text_sha256": "b4eb199a1981e55f124df9ce2620678f7d2bdec0c7fef3550f101091ed55b2be",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_b1a3be8ff7a8",
+      "citation": "GDPR Article 8(1)",
+      "family_id": "R5-S2-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_2",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S2-T1",
+      "source_text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_b24146c8a3c5",
+      "citation": "GDPR Article 9(2)(a)",
+      "family_id": "R5-S2-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S2-T3",
+      "source_text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_b361e2e6a629",
+      "citation": "GDPR Article 25(1)",
+      "family_id": "R5-S4-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_2",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S4-T2",
+      "source_text_sha256": "e6fa8bd9e008b448d4904925e75fb86d9aa6ebecc87394c917f6967d2d03979f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_b3a8d0df12af",
+      "citation": "GDPR Article 36(1)",
+      "family_id": "R5-D-05",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-05",
+      "source_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_b3c2ab4c4aa9",
+      "citation": "GDPR Article 35(2)",
+      "family_id": "R5-S5-T1",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S5-T1",
+      "source_text_sha256": "d65f391cfe4f4159883a211594774f386c105d08deac35b43f2e0b777fddc47b",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_b3eda683c740",
+      "citation": "GDPR Article 14(1)",
+      "family_id": "R5-S1-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S1-T3",
+      "source_text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_b7b4d206274d",
+      "citation": "GDPR Article 12(3)",
+      "family_id": "R5-S3-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S3-T1",
+      "source_text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_b95e2ac677ee",
+      "citation": "GDPR Article 12(4)",
+      "family_id": "R5-S3-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S3-T2",
+      "source_text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_bc7e38f1c2db",
+      "citation": "GDPR Article 35(2)",
+      "family_id": "R5-S5-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S5-T1",
+      "source_text_sha256": "d65f391cfe4f4159883a211594774f386c105d08deac35b43f2e0b777fddc47b",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_c11d200561fb",
+      "citation": "GDPR Article 32(1)",
+      "family_id": "R5-S6-T1",
+      "mutation_observed": {
+        "actor": "Controller and Processor",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S6-T1",
+      "source_text_sha256": "7a611aab8130f0bacc05b99d03ba542cfc0c00f0af5966bc95e448c4dbfee0fd",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_c200a76f0f49",
+      "citation": "GDPR Article 13(2)",
+      "family_id": "R5-S1-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S1-T2",
+      "source_text_sha256": "c857f4424b6e5e8532d1241d4fb6745148aa56069518c1d9fe9dfc853a454491",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_c389b8b37369",
+      "citation": "GDPR Article 28(3)(a)",
+      "family_id": "R5-S4-T3",
+      "mutation_observed": {
+        "actor": "Processor",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S4-T3",
+      "source_text_sha256": "81f87c45e60c30cb1134962ad3d57c1eb237f6f763197e6c8c71a2cb51185323",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_c61c8656a4a3",
+      "citation": "GDPR Article 35(9)",
+      "family_id": "R5-S5-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_2",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S5-T2",
+      "source_text_sha256": "dfbc48c5f0729dc31ce006f0a8b8d958ba1df825b086851435c703e2e67a86ea",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_c62f115d4d72",
+      "citation": "GDPR Article 21(3)",
+      "family_id": "R5-S3-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S3-T4",
+      "source_text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_cc5cba0d0790",
+      "citation": "GDPR Article 35(11)",
+      "family_id": "R5-S5-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S5-T3",
+      "source_text_sha256": "cf1e4c40ef5083d35242f540be5c68b5565145d1ea970540d76a684c3657850c",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_cc8319977963",
+      "citation": "GDPR Article 13(1)",
+      "family_id": "R5-S1-T1",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S1-T1",
+      "source_text_sha256": "16a2a3b5ceb63999f1758de7f91a407c52e36eeef8d0627516e41bbb43aa5c1d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_d432bfe7f87e",
+      "citation": "GDPR Article 20(1)",
+      "family_id": "R5-D-11",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-11",
+      "source_text_sha256": "5b63ec29d24bd77cbe3cc19136ae1b0c30f5378d28a25aebc101260d2e0023ca",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_d494d4a78b69",
+      "citation": "GDPR Article 36(2)",
+      "family_id": "R5-S5-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S5-T4",
+      "source_text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_d6eaecc968c4",
+      "citation": "GDPR Article 21(3)",
+      "family_id": "R5-S3-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S3-T4",
+      "source_text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_db70e96561e3",
+      "citation": "GDPR Article 12(4)",
+      "family_id": "R5-S3-T2",
+      "mutation_observed": {
+        "actor": "Data subject",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S3-T2",
+      "source_text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_db73cb32c9f0",
+      "citation": "GDPR Article 25(1)",
+      "family_id": "R5-S4-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S4-T2",
+      "source_text_sha256": "e6fa8bd9e008b448d4904925e75fb86d9aa6ebecc87394c917f6967d2d03979f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_dd9fbcaf262d",
+      "citation": "GDPR Article 25(1)",
+      "family_id": "R5-S4-T2",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S4-T2",
+      "source_text_sha256": "e6fa8bd9e008b448d4904925e75fb86d9aa6ebecc87394c917f6967d2d03979f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_df8b1ca113bc",
+      "citation": "GDPR Article 32(4)",
+      "family_id": "R5-S6-T2",
+      "mutation_observed": {
+        "actor": "Controller and Processor",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S6-T2",
+      "source_text_sha256": "b4eb199a1981e55f124df9ce2620678f7d2bdec0c7fef3550f101091ed55b2be",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_e46f25fa92fb",
+      "citation": "GDPR Article 35(1), first sentence",
+      "family_id": "R5-D-04",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-04",
+      "source_text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_e481d93bb93b",
+      "citation": "GDPR Article 9(2)(b)",
+      "family_id": "R5-S2-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S2-T4",
+      "source_text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_e4fac649d789",
+      "citation": "GDPR Article 13(1)",
+      "family_id": "R5-S1-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S1-T1",
+      "source_text_sha256": "16a2a3b5ceb63999f1758de7f91a407c52e36eeef8d0627516e41bbb43aa5c1d",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_e5a35832c7ee",
+      "citation": "GDPR Article 13(3)",
+      "family_id": "R5-D-01",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-01",
+      "source_text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_e6582adcf718",
+      "citation": "GDPR Article 33(2)",
+      "family_id": "R5-S6-T3",
+      "mutation_observed": {
+        "actor": "Processor",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S6-T3",
+      "source_text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_e71d5cc861dd",
+      "citation": "GDPR Article 17(1)",
+      "family_id": "R5-D-10",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-10",
+      "source_text_sha256": "ffce4b993017dcb956e232f8d9afc93daa5f6ab08ecd4c72f06b4427796f8be2",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_e775989c1eb7",
+      "citation": "GDPR Article 28(3)(a)",
+      "family_id": "R5-S4-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_not_required",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S4-T3",
+      "source_text_sha256": "81f87c45e60c30cb1134962ad3d57c1eb237f6f763197e6c8c71a2cb51185323",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_ea2a879f0629",
+      "citation": "GDPR Article 9(2)(a)",
+      "family_id": "R5-S2-T3",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S2-T3",
+      "source_text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action"
+      ],
+      "case_id": "case_ea7ef4dfcf0a",
+      "citation": "GDPR Article 32(4)",
+      "family_id": "R5-S6-T2",
+      "mutation_observed": {
+        "actor": "Controller and Processor",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_absent",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S6-T2",
+      "source_text_sha256": "b4eb199a1981e55f124df9ce2620678f7d2bdec0c7fef3550f101091ed55b2be",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_eed89e7f371b",
+      "citation": "GDPR Article 35(2)",
+      "family_id": "R5-S5-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S5-T1",
+      "source_text_sha256": "d65f391cfe4f4159883a211594774f386c105d08deac35b43f2e0b777fddc47b",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_f086339f6881",
+      "citation": "GDPR Article 18(3)",
+      "family_id": "R5-D-03",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-03",
+      "source_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_f215d3d5b6ff",
+      "citation": "GDPR Article 9(2)(b)",
+      "family_id": "R5-S2-T4",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_2",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S2-T4",
+      "source_text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_f43de5aa30fc",
+      "citation": "GDPR Article 35(2)",
+      "family_id": "R5-S5-T1",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_2",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S5-T1",
+      "source_text_sha256": "d65f391cfe4f4159883a211594774f386c105d08deac35b43f2e0b777fddc47b",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_f5004536843b",
+      "citation": "GDPR Article 28(3)(a)",
+      "family_id": "R5-S4-T3",
+      "mutation_observed": {
+        "actor": "Processor",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_reversed"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S4-T3",
+      "source_text_sha256": "81f87c45e60c30cb1134962ad3d57c1eb237f6f763197e6c8c71a2cb51185323",
+      "split": "test",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
+      "applicable_checks": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "case_id": "case_fd58de5533da",
+      "citation": "GDPR Article 7(4)",
+      "family_id": "R5-D-07",
+      "mutation_observed": {
+        "actor": "Controller",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reason_codes": {
+        "incorrect_actor": "actor_surface_matches_or_na",
+        "missing_action": "mandatory_activity_present_or_na",
+        "out_of_order": "source_order_pair_preserved_or_na"
+      },
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-D-07",
+      "source_text_sha256": "7a5c82e05e06aed5e174c23dbbcea4a8e7b9916f0cae5695f6f5f43daad20619",
+      "split": "development",
+      "structural_validation": "passed",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    }
+  ],
+  "human_adjudicated": false,
+  "reference_is_gold": false,
+  "schema_version": "stage3_table3_r5_reference_cases@1.0.0"
+}

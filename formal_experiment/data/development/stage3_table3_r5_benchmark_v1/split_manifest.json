@@ -1,0 +1,265 @@
+{
+  "algorithm": "group_by_requirement_family; force historical R1-R4 five to development; exact Stage2-prediction families to development; new-source families to test; no family crosses split; seed is recorded for deterministic group ordering and future re-derivation",
+  "development_requirement_ids": [
+    "R5-D-01",
+    "R5-D-02",
+    "R5-D-03",
+    "R5-D-04",
+    "R5-D-05",
+    "R5-D-06",
+    "R5-D-07",
+    "R5-D-08",
+    "R5-D-09",
+    "R5-D-10",
+    "R5-D-11",
+    "R5-D-12"
+  ],
+  "groups": [
+    {
+      "family_id": "R5-D-01",
+      "requirement_id": "R5-D-01",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-02",
+      "requirement_id": "R5-D-02",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-03",
+      "requirement_id": "R5-D-03",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-04",
+      "requirement_id": "R5-D-04",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-05",
+      "requirement_id": "R5-D-05",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-06",
+      "requirement_id": "R5-D-06",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-07",
+      "requirement_id": "R5-D-07",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-08",
+      "requirement_id": "R5-D-08",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-09",
+      "requirement_id": "R5-D-09",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-10",
+      "requirement_id": "R5-D-10",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-11",
+      "requirement_id": "R5-D-11",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-D-12",
+      "requirement_id": "R5-D-12",
+      "split": "development",
+      "variant_count": 1
+    },
+    {
+      "family_id": "R5-S1-T1",
+      "requirement_id": "R5-S1-T1",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S1-T2",
+      "requirement_id": "R5-S1-T2",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S1-T3",
+      "requirement_id": "R5-S1-T3",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S1-T4",
+      "requirement_id": "R5-S1-T4",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S2-T1",
+      "requirement_id": "R5-S2-T1",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S2-T2",
+      "requirement_id": "R5-S2-T2",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S2-T3",
+      "requirement_id": "R5-S2-T3",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S2-T4",
+      "requirement_id": "R5-S2-T4",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S3-T1",
+      "requirement_id": "R5-S3-T1",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S3-T2",
+      "requirement_id": "R5-S3-T2",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S3-T3",
+      "requirement_id": "R5-S3-T3",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S3-T4",
+      "requirement_id": "R5-S3-T4",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S4-T1",
+      "requirement_id": "R5-S4-T1",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S4-T2",
+      "requirement_id": "R5-S4-T2",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S4-T3",
+      "requirement_id": "R5-S4-T3",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S4-T4",
+      "requirement_id": "R5-S4-T4",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S5-T1",
+      "requirement_id": "R5-S5-T1",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S5-T2",
+      "requirement_id": "R5-S5-T2",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S5-T3",
+      "requirement_id": "R5-S5-T3",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S5-T4",
+      "requirement_id": "R5-S5-T4",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S6-T1",
+      "requirement_id": "R5-S6-T1",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S6-T2",
+      "requirement_id": "R5-S6-T2",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S6-T3",
+      "requirement_id": "R5-S6-T3",
+      "split": "test",
+      "variant_count": 4
+    },
+    {
+      "family_id": "R5-S6-T4",
+      "requirement_id": "R5-S6-T4",
+      "split": "test",
+      "variant_count": 4
+    }
+  ],
+  "schema_version": "stage3_table3_r5_split_manifest@1.0.0",
+  "seed": 20260925,
+  "test_independent_candidate_count": 22,
+  "test_requirement_ids": [
+    "R5-S1-T1",
+    "R5-S1-T2",
+    "R5-S1-T3",
+    "R5-S1-T4",
+    "R5-S2-T1",
+    "R5-S2-T2",
+    "R5-S2-T3",
+    "R5-S2-T4",
+    "R5-S3-T1",
+    "R5-S3-T2",
+    "R5-S3-T3",
+    "R5-S3-T4",
+    "R5-S4-T1",
+    "R5-S4-T2",
+    "R5-S4-T3",
+    "R5-S4-T4",
+    "R5-S5-T1",
+    "R5-S5-T2",
+    "R5-S5-T3",
+    "R5-S5-T4",
+    "R5-S6-T1",
+    "R5-S6-T2",
+    "R5-S6-T3",
+    "R5-S6-T4"
+  ],
+  "test_reused_or_exposed_count": 2
+}

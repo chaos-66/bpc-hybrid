@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions" targetNamespace="urn:bpc:table3:r5:challenge">
+  <collaboration id="Collaboration">
+    <participant id="Participant" name="Processor" processRef="Process" />
+  </collaboration>
+  <process id="Process" name="Processor" isExecutable="false">
+    <laneSet id="LaneSet">
+      <lane id="Lane_Actor" name="Processor">
+        <flowNodeRef>Start</flowNodeRef>
+        <flowNodeRef>Gateway_Applicability</flowNodeRef>
+        <flowNodeRef>Activity_0</flowNodeRef>
+        <flowNodeRef>End</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="Start" name="The processor must process personal data only on documented controller instructions. (condition/exception not true)" />
+    <exclusiveGateway id="Gateway_Applicability" name="condition" />
+    <task id="Activity_0" name="Receive documented processing instructions from the controller" />
+    <task id="Activity_2" name="Report any instruction that appears to infringe data-protection law" />
+    <endEvent id="End" />
+    <sequenceFlow id="Flow_Start_Gateway" sourceRef="Start" targetRef="Gateway_Applicability" />
+    <sequenceFlow id="Flow_Gateway_Activity_0" sourceRef="Gateway_Applicability" targetRef="Activity_0" />
+    <sequenceFlow id="Flow_Activity_0_End" sourceRef="Activity_0" targetRef="End" />
+  </process>
+</definitions>

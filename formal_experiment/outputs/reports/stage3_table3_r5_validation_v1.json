@@ -1,0 +1,158 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v1",
+  "check_count": 24,
+  "checks": [
+    {
+      "check_id": "V-01-requirement-count",
+      "detail": "independent requirements=36",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-02-baseline-core-count",
+      "detail": "baselines=36, core_cases=108",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-03-variant-counts",
+      "detail": "{\"incorrect_actor\": 24, \"missing_action\": 24, \"out_of_order\": 24}",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-04-scenario-minimum",
+      "detail": "{\"S1\": 6, \"S2\": 6, \"S3\": 9, \"S4\": 4, \"S5\": 6, \"S6\": 5}",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-05-element-minimum",
+      "detail": "{\"action\": 36, \"actor\": 36, \"condition\": 21, \"constraint\": 36, \"exception\": 20, \"modality\": 36}",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-06-split-integrity",
+      "detail": "dev=12, test=24, independent_test=22",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-07-historical-five-dev",
+      "detail": "R5-D-01..05 are forced development",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-08-source-hashes",
+      "detail": "all source excerpt SHA-256 values recompute",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-09-source-unique",
+      "detail": "no duplicated source text SHA across independent requirements",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-10-source-provenance",
+      "detail": "all records carry URL, document version, citation, and continuous text",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-11-reference-case-set",
+      "detail": "reference=108 inference=108",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-12-single-violation",
+      "detail": "each non-baseline case has exactly one violated check",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-13-missing-action-na",
+      "detail": "missing_action variants mark actor/order checks not_applicable",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-14-inference-isolation",
+      "detail": "inference rows expose no answer-bearing keys",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-15-inference-text-isolation",
+      "detail": "inference JSON does not contain mutation/answer vocabulary",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-16-case-id-isolation",
+      "detail": "case ids are opaque",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-17-semantic-separate",
+      "detail": "{\"definition\": 4, \"permission\": 4, \"prohibition\": 4}",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-18-semantic-pairs",
+      "detail": "6 condition + 6 exception pairs",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-19-bpmn-structural-mutation",
+      "detail": "bad=0",
+      "evidence": {
+        "bad_examples": []
+      },
+      "passed": true
+    },
+    {
+      "check_id": "V-20-stage1-bpmn-valid",
+      "detail": "bad=0",
+      "evidence": {
+        "bad_examples": []
+      },
+      "passed": true
+    },
+    {
+      "check_id": "V-21-family-split-integrity",
+      "detail": "cross-split families=0",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-22-reuse-arithmetic",
+      "detail": "reused=14, new=22",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-23-budget-unit-not-bpmn-count",
+      "detail": "calls_cap=22, core_cases=108",
+      "evidence": {},
+      "passed": true
+    },
+    {
+      "check_id": "V-24-budget-cap",
+      "detail": "cost_cap=1.18",
+      "evidence": {},
+      "passed": true
+    }
+  ],
+  "failed": [],
+  "passed_count": 24,
+  "schema_version": "stage3_table3_r5_validation@1.0.0",
+  "status": "pass"
+}
