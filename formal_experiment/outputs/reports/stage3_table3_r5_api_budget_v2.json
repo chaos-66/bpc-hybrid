@@ -22,6 +22,14 @@
   "cost_upper_bound_usd_without_cache_discount": 0.757475,
   "max_output_tokens_per_call": 4096,
   "method_call_owner": "Ours Direct-LLM Stage2 only; Sun Rules-Only and Winter native consume 0 API calls",
+  "model_identity": {
+    "binding_note": "model alias and prompt identity are read from the recorded gdpr7 Direct-LLM manifest; must be re-verified before an authorized run",
+    "id": "deepseek-v4-pro",
+    "prompt_name": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
+    "prompt_sha256_from_file": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "prompt_sha256_recorded_in_manifest": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "published_alias": "DeepSeek-V4-Pro-0813"
+  },
   "new_requests": 17,
   "price_evidence": {
     "currency": "USD",

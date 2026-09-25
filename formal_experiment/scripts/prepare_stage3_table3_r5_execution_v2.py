@@ -33,6 +33,10 @@ def write_json(path: Path, value) -> None:
                     encoding="utf-8", newline="\n")
 
 
+def _gdpr7_manifest() -> dict:
+    return load_json(ROOT / "data/predictions/gdpr7_direct_llm_v1/manifest.json")
+
+
 def read_price_evidence() -> dict:
     """Read the recorded provider price snapshot from the actual gdpr7 manifest."""
     manifest = load_json(ROOT / "data/predictions/gdpr7_direct_llm_v1/manifest.json")
@@ -110,6 +114,14 @@ def build_budget(reuse: dict, config: dict, source_doc: dict) -> dict:
         "total_output_tokens_cap": total_output_upper,
         "total_input_tokens_cap": total_input_upper,
         "token_estimation_method": "BPE token count bounded above by request UTF-8 byte count; prompt bytes + source-text bytes + 4096-byte envelope; floor 8192",
+        "model_identity": {
+            "id": (_gdpr7_manifest().get("model") or {}).get("id"),
+            "published_alias": (_gdpr7_manifest().get("model") or {}).get("published_alias"),
+            "prompt_name": (_gdpr7_manifest().get("model") or {}).get("prompt_name"),
+            "prompt_sha256_recorded_in_manifest": (_gdpr7_manifest().get("model") or {}).get("prompt_sha256"),
+            "prompt_sha256_from_file": rv.sha_bytes((ROOT / rv.R5_PROMPT_REL).read_bytes()),
+            "binding_note": "model alias and prompt identity are read from the recorded gdpr7 Direct-LLM manifest; must be re-verified before an authorized run",
+        },
         "price_evidence": price,
         "cost_upper_bound_usd_without_cache_discount": round(raw_cost, 6),
         "cost_upper_bound_usd_with_20pct_margin": margin,
