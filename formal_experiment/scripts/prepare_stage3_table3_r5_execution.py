@@ -396,6 +396,7 @@ def build_benchmark_report(config: dict, source_doc: dict, manifest: dict, seman
         reusable = sum(1 for row in reuse["rows"] if row["methods"][method]["status"] == "reusable_exact_source_text_match")
         return {"reusable_exact_inputs": reusable, "remaining_inputs": len(reuse["rows"]) - reusable}
     semantic_pair_count = len(semantic["pairs"])
+    fairness = load_json(OUT / "reference/fairness_contract.json")
     report = {
         "schema_version": "stage3_table3_r5_benchmark_report@1.0.0",
         "benchmark_id": BENCHMARK_ID,
@@ -461,6 +462,7 @@ def build_benchmark_report(config: dict, source_doc: dict, manifest: dict, seman
             "cost_upper_bound_usd_with_20pct_margin": budget["cost_upper_bound_usd_with_20pct_margin"],
             "price_snapshot": budget["price_snapshot"],
         },
+        "fairness_contract": fairness,
         "known_detector_issues": prechecks,
         "quota_deviations_or_gaps": [
             f"Test split has {manifest['test_requirements']} requirements but only {manifest['test_independent_candidate_count']} exact-input independent candidates; the remaining {manifest['test_requirements'] - manifest['test_independent_candidate_count']} reuse existing GDPR7 predictions and are marked exposed/non-independent.",

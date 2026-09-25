@@ -599,6 +599,14 @@ def build() -> dict[str, bytes]:
             "excerpt_mode": spec["excerpt_mode"],
             "excerpt_text_sha256": source["text_sha256"],
         }
+        source["applicability_scope"] = source.get("context_text") or spec["business_scenario_en"]
+        unrepresented = []
+        if spec.get("condition_present"):
+            unrepresented.append("condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it")
+        if spec.get("exception_present"):
+            unrepresented.append("exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it")
+        source["unrepresented_business_facts"] = unrepresented or ["none beyond the modelled BPMN activities, actor/lane, and sequence flows"]
+        source["core_reference_scope_boundary"] = "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance"
         source["split"] = spec["split"]
         source["scenario_id"] = spec["scenario_id"]
         source["scenario_zh"] = spec["scenario_zh"]
@@ -773,6 +781,40 @@ def build() -> dict[str, bytes]:
         "test_reused_or_exposed_count": sum(1 for s in source_requirements if s["split"] == "test" and not s["independent_test_candidate"]),
     }
     artifacts["split_manifest.json"] = encoded(split_manifest)
+
+    artifacts["reference/fairness_contract.json"] = encoded({
+        "schema_version": "stage3_table3_r5_fairness_contract@1.0.0",
+        "status": "frozen_before_method_run",
+        "sun_and_ours": {
+            "same_raw_regulation": True,
+            "same_bpmn_and_public_context": True,
+            "same_process_side_parsing": True,
+            "same_stage2_to_stage3_interface": True,
+            "same_stage3_implementation_parameters_and_candidate_rules": True,
+            "same_rule_applicability_handling": True,
+            "same_evaluation_scope_reference_labels_unknown_and_na_rules": True,
+            "only_difference": "the respective Stage2 method and inherent output handling",
+            "information_loss_must_be_reported_separately": True,
+        },
+        "semantic_vs_format_error": {
+            "do_not_treat_ours_format_errors_as_a_complete_denial_of_semantic_content": True,
+            "do_not_repair_ours_answers_from_reference": True,
+            "report_semantic_prediction_errors_separately_from_coordinate_or_format_loss": True,
+        },
+        "winter": {
+            "same_raw_input_public_business_information_and_evaluation_standard": True,
+            "preserves_native_method_required_processing": True,
+            "not_same_stage1_stage3_as_sun_ours": True,
+            "not_replaced_by_sun_detector": True,
+            "unsupported_capabilities_reported_as_unsupported_or_unknown": True,
+        },
+        "role_mapping": {
+            "unified_frozen_dictionary_required_before_prediction": True,
+            "dictionary_available_to_all_methods": True,
+            "forbidden": ["derive_mapping_from_reference_labels", "reverse_map_from_mutated_wrong_actor", "method_specific_favourable_dictionary", "merge_genuinely_distinct_roles"],
+            "this_round": "interface contract and asset boundary only; R4 actor formula is not changed",
+        },
+    })
 
     manifest = {
         "schema_version": "stage3_table3_r5_build_manifest@1.0.0",

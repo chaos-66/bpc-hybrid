@@ -4,6 +4,7 @@
   "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
   "requirements": [
     {
+      "applicability_scope": "Further processing of directly collected personal data requires prior notice.",
       "article": 13,
       "business_scenario_en": "Further processing of directly collected personal data requires prior notice.",
       "business_scenario_zh": "直接收集后拟进一步处理，须在进一步处理前告知新目的。",
@@ -23,6 +24,7 @@
       ],
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -124,9 +126,13 @@
           "Carry out further processing for the other purpose"
         ]
       },
-      "text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa"
+      "text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+      "unrepresented_business_facts": [
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Further processing of indirectly obtained personal data requires prior notice.",
       "article": 14,
       "business_scenario_en": "Further processing of indirectly obtained personal data requires prior notice.",
       "business_scenario_zh": "间接收集后拟进一步处理，须在进一步处理前告知新目的。",
@@ -167,6 +173,7 @@
       ],
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -268,9 +275,13 @@
           "Carry out further processing for the other purpose"
         ]
       },
-      "text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5"
+      "text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+      "unrepresented_business_facts": [
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller must inform the data subject before lifting a processing restriction.",
       "article": 18,
       "business_scenario_en": "The controller must inform the data subject before lifting a processing restriction.",
       "business_scenario_zh": "解除处理限制前，控制者须告知数据主体。",
@@ -282,6 +293,7 @@
       "context_ref": [],
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -383,9 +395,13 @@
           "Lift the restriction of processing"
         ]
       },
-      "text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f"
+      "text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+      "unrepresented_business_facts": [
+        "none beyond the modelled BPMN activities, actor/lane, and sequence flows"
+      ]
     },
     {
+      "applicability_scope": "High-risk processing requires a prior DPIA.",
       "article": 35,
       "business_scenario_en": "High-risk processing requires a prior DPIA.",
       "business_scenario_zh": "高风险处理前，控制者须开展数据保护影响评估。",
@@ -397,6 +413,7 @@
       "context_ref": [],
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -498,9 +515,13 @@
           "Begin the assessed processing operations"
         ]
       },
-      "text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e"
+      "text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Prior consultation is required when high residual risk remains.",
       "article": 36,
       "business_scenario_en": "Prior consultation is required when high residual risk remains.",
       "business_scenario_zh": "评估显示无缓解措施时仍有高风险，控制者须事先咨询监管机构。",
@@ -512,6 +533,7 @@
       "context_ref": [],
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -613,9 +635,13 @@
           "Start the proposed processing"
         ]
       },
-      "text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52"
+      "text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller must be able to demonstrate consent.",
       "article": 7,
       "business_scenario_en": "The controller must be able to demonstrate consent.",
       "business_scenario_zh": "基于同意处理时，控制者须能够证明数据主体已同意。",
@@ -627,6 +653,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -729,9 +756,13 @@
           "Store the consent evidence"
         ]
       },
-      "text_sha256": "e00763881eb6ffcb71cd7f3dfda726448d24731fa06d9b217e2dce6dd00bce87"
+      "text_sha256": "e00763881eb6ffcb71cd7f3dfda726448d24731fa06d9b217e2dce6dd00bce87",
+      "unrepresented_business_facts": [
+        "none beyond the modelled BPMN activities, actor/lane, and sequence flows"
+      ]
     },
     {
+      "applicability_scope": "Freely given consent assessment must consider conditional service provision.",
       "article": 7,
       "business_scenario_en": "Freely given consent assessment must consider conditional service provision.",
       "business_scenario_zh": "评估同意是否自由作出时，须考虑服务附条件于非必要处理的情形。",
@@ -743,6 +774,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -845,9 +877,13 @@
           "Record the assessment of free consent"
         ]
       },
-      "text_sha256": "7a5c82e05e06aed5e174c23dbbcea4a8e7b9916f0cae5695f6f5f43daad20619"
+      "text_sha256": "7a5c82e05e06aed5e174c23dbbcea4a8e7b9916f0cae5695f6f5f43daad20619",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The data subject has a right of access and confirmation.",
       "article": 15,
       "business_scenario_en": "The data subject has a right of access and confirmation.",
       "business_scenario_zh": "数据主体有权获得是否处理其个人数据的确认及访问。",
@@ -859,6 +895,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -961,9 +998,13 @@
           "Provide the required access information"
         ]
       },
-      "text_sha256": "4d55a1fb6743e546ba673fe377a388638f99a50ac240d482a0d2c394ce3256ac"
+      "text_sha256": "4d55a1fb6743e546ba673fe377a388638f99a50ac240d482a0d2c394ce3256ac",
+      "unrepresented_business_facts": [
+        "none beyond the modelled BPMN activities, actor/lane, and sequence flows"
+      ]
     },
     {
+      "applicability_scope": "The data subject has a right to rectification without undue delay.",
       "article": 16,
       "business_scenario_en": "The data subject has a right to rectification without undue delay.",
       "business_scenario_zh": "数据主体有权要求控制者及时更正不准确个人数据。",
@@ -975,6 +1016,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -1077,9 +1119,13 @@
           "Confirm the rectification to the data subject"
         ]
       },
-      "text_sha256": "1ae6c72eb70eb6b75ce1c88d6d50adbfd098ce38eab56c892f31d07b353adbe1"
+      "text_sha256": "1ae6c72eb70eb6b75ce1c88d6d50adbfd098ce38eab56c892f31d07b353adbe1",
+      "unrepresented_business_facts": [
+        "none beyond the modelled BPMN activities, actor/lane, and sequence flows"
+      ]
     },
     {
+      "applicability_scope": "The controller must erase personal data without undue delay when a ground applies.",
       "article": 17,
       "business_scenario_en": "The controller must erase personal data without undue delay when a ground applies.",
       "business_scenario_zh": "存在法定事由时，控制者须及时删除个人数据。",
@@ -1091,6 +1137,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -1193,9 +1240,13 @@
           "Record the erasure decision"
         ]
       },
-      "text_sha256": "ffce4b993017dcb956e232f8d9afc93daa5f6ab08ecd4c72f06b4427796f8be2"
+      "text_sha256": "ffce4b993017dcb956e232f8d9afc93daa5f6ab08ecd4c72f06b4427796f8be2",
+      "unrepresented_business_facts": [
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Data portability requires a machine-readable format when conditions are met.",
       "article": 20,
       "business_scenario_en": "Data portability requires a machine-readable format when conditions are met.",
       "business_scenario_zh": "符合条件时，控制者须以结构化、通用、机器可读格式提供个人数据。",
@@ -1207,6 +1258,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -1309,9 +1361,14 @@
           "Transmit the data to another controller without hindrance"
         ]
       },
-      "text_sha256": "5b63ec29d24bd77cbe3cc19136ae1b0c30f5378d28a25aebc101260d2e0023ca"
+      "text_sha256": "5b63ec29d24bd77cbe3cc19136ae1b0c30f5378d28a25aebc101260d2e0023ca",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller must notify the supervisory authority of a breach within 72 hours where feasible.",
       "article": 33,
       "business_scenario_en": "The controller must notify the supervisory authority of a breach within 72 hours where feasible.",
       "business_scenario_zh": "发生个人数据泄露时，控制者须在知悉后及时且不迟于72小时通知监管机构。",
@@ -1323,6 +1380,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -1425,9 +1483,14 @@
           "Document the notification or reasons for delay"
         ]
       },
-      "text_sha256": "d3327ce470720a494bfb05a72841a073e0c7bac1673f11545833dcce72ef0a65"
+      "text_sha256": "d3327ce470720a494bfb05a72841a073e0c7bac1673f11545833dcce72ef0a65",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Direct collection requires specified information at the time of collection.",
       "article": 13,
       "business_scenario_en": "Direct collection requires specified information at the time of collection.",
       "business_scenario_zh": "直接从数据主体收集个人数据时，须在收集时提供规定告知信息。",
@@ -1436,6 +1499,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -1537,9 +1601,13 @@
           "Record completion of the transparency notice"
         ]
       },
-      "text_sha256": "16a2a3b5ceb63999f1758de7f91a407c52e36eeef8d0627516e41bbb43aa5c1d"
+      "text_sha256": "16a2a3b5ceb63999f1758de7f91a407c52e36eeef8d0627516e41bbb43aa5c1d",
+      "unrepresented_business_facts": [
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Further transparency information must also be provided at the time of direct collection.",
       "article": 13,
       "business_scenario_en": "Further transparency information must also be provided at the time of direct collection.",
       "business_scenario_zh": "直接收集时，还须在收集时提供进一步公平透明处理信息。",
@@ -1548,6 +1616,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -1649,9 +1718,13 @@
           "Record completion of the further information notice"
         ]
       },
-      "text_sha256": "c857f4424b6e5e8532d1241d4fb6745148aa56069518c1d9fe9dfc853a454491"
+      "text_sha256": "c857f4424b6e5e8532d1241d4fb6745148aa56069518c1d9fe9dfc853a454491",
+      "unrepresented_business_facts": [
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
       "article": 14,
       "business_scenario_en": "Indirect collection requires information within one month.",
       "business_scenario_zh": "间接收集个人数据时，须在合理期限内且最迟一个月内告知数据主体。",
@@ -1666,6 +1739,7 @@
       },
       "context_sha256": "bf9cb5977a41103664d4bce95f889ac6c5decc316f63af95826591e4134b4764",
       "context_text": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -1767,9 +1841,13 @@
           "Record the one-month response deadline"
         ]
       },
-      "text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f"
+      "text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f",
+      "unrepresented_business_facts": [
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
       "article": 14,
       "business_scenario_en": "Further transparency information from indirect sources is also time-bound.",
       "business_scenario_zh": "间接收集时，还须在法定期限内提供进一步公平透明处理信息。",
@@ -1784,6 +1862,7 @@
       },
       "context_sha256": "bf9cb5977a41103664d4bce95f889ac6c5decc316f63af95826591e4134b4764",
       "context_text": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -1885,9 +1964,13 @@
           "Log the information delivery"
         ]
       },
-      "text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e"
+      "text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e",
+      "unrepresented_business_facts": [
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Child consent for information society services depends on age and parental authorisation.",
       "article": 8,
       "business_scenario_en": "Child consent for information society services depends on age and parental authorisation.",
       "business_scenario_zh": "向儿童提供信息社会服务时，须根据年龄取得本人或监护人同意。",
@@ -1896,6 +1979,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -1997,9 +2081,14 @@
           "Process the child personal data for the information society service"
         ]
       },
-      "text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68"
+      "text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller must make reasonable efforts to verify parental authorisation.",
       "article": 8,
       "business_scenario_en": "The controller must make reasonable efforts to verify parental authorisation.",
       "business_scenario_zh": "儿童同意场景下，控制者须尽合理努力核验监护人同意。",
@@ -2008,6 +2097,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -2109,9 +2199,13 @@
           "Process the child personal data"
         ]
       },
-      "text_sha256": "4a572b9fde1b8fd97666c3cb5925d2edd2527b4969b67ab65fb7fcf84124e267"
+      "text_sha256": "4a572b9fde1b8fd97666c3cb5925d2edd2527b4969b67ab65fb7fcf84124e267",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Special-category processing requires explicit consent unless law prohibits it.",
       "article": 9,
       "business_scenario_en": "Special-category processing requires explicit consent unless law prohibits it.",
       "business_scenario_zh": "处理特殊类别数据须取得数据主体明确同意。",
@@ -2120,6 +2214,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -2221,9 +2316,14 @@
           "Process the special-category personal data"
         ]
       },
-      "text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f"
+      "text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Employment-law processing of special-category data requires a lawful basis and safeguards.",
       "article": 9,
       "business_scenario_en": "Employment-law processing of special-category data requires a lawful basis and safeguards.",
       "business_scenario_zh": "基于雇佣或社会保障法处理特殊类别数据须有法定依据和保障。",
@@ -2232,6 +2332,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -2333,9 +2434,14 @@
           "Process the special-category personal data"
         ]
       },
-      "text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b"
+      "text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller must respond to data subject requests within one month.",
       "article": 12,
       "business_scenario_en": "The controller must respond to data subject requests within one month.",
       "business_scenario_zh": "控制者须在收到请求后一个月内告知所采取的行动。",
@@ -2344,6 +2450,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -2445,9 +2552,13 @@
           "Archive the request response record"
         ]
       },
-      "text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb"
+      "text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb",
+      "unrepresented_business_facts": [
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Refusal to act must be explained within one month with remedies.",
       "article": 12,
       "business_scenario_en": "Refusal to act must be explained within one month with remedies.",
       "business_scenario_zh": "不处理请求时，须在一个月内告知理由和救济途径。",
@@ -2456,6 +2567,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -2557,9 +2669,13 @@
           "Record the complaint and judicial remedy information"
         ]
       },
-      "text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb"
+      "text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb",
+      "unrepresented_business_facts": [
+        "none beyond the modelled BPMN activities, actor/lane, and sequence flows"
+      ]
     },
     {
+      "applicability_scope": "The data subject shall have the right to object, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions.",
       "article": 21,
       "business_scenario_en": "Objection requires the controller to stop processing unless compelling grounds exist.",
       "business_scenario_zh": "数据主体基于自身情况反对处理时，控制者原则须停止处理。",
@@ -2574,6 +2690,7 @@
       },
       "context_sha256": "f880b915a8e86e3b390911a022c13906cf993e8482b2968dd85dc2bd020dd95e",
       "context_text": "The data subject shall have the right to object, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions.",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -2675,9 +2792,14 @@
           "Document the assessment of compelling grounds"
         ]
       },
-      "text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d"
+      "text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "An objection to direct marketing requires cessation of that processing.",
       "article": 21,
       "business_scenario_en": "An objection to direct marketing requires cessation of that processing.",
       "business_scenario_zh": "数据主体反对直接营销时，须停止为直接营销处理个人数据。",
@@ -2686,6 +2808,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -2787,9 +2910,13 @@
           "Record the marketing suppression"
         ]
       },
-      "text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e"
+      "text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller must implement and review compliance measures.",
       "article": 24,
       "business_scenario_en": "The controller must implement and review compliance measures.",
       "business_scenario_zh": "控制者须实施适当技术组织措施并定期审查更新。",
@@ -2798,6 +2925,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -2899,9 +3027,13 @@
           "Review and update the implemented measures where necessary"
         ]
       },
-      "text_sha256": "4ab0b5c456120cbbc85a045342d7eb9d850db264e4e747af4f882b8fa7513c9d"
+      "text_sha256": "4ab0b5c456120cbbc85a045342d7eb9d850db264e4e747af4f882b8fa7513c9d",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Data protection by design must be implemented at design time and during processing.",
       "article": 25,
       "business_scenario_en": "Data protection by design must be implemented at design time and during processing.",
       "business_scenario_zh": "控制者须在确定处理方式时及处理过程中落实数据保护设计。",
@@ -2910,6 +3042,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -3011,9 +3144,13 @@
           "Carry out the processing operations"
         ]
       },
-      "text_sha256": "e6fa8bd9e008b448d4904925e75fb86d9aa6ebecc87394c917f6967d2d03979f"
+      "text_sha256": "e6fa8bd9e008b448d4904925e75fb86d9aa6ebecc87394c917f6967d2d03979f",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The processor must process personal data only on documented controller instructions.",
       "article": 28,
       "business_scenario_en": "The processor must process personal data only on documented controller instructions.",
       "business_scenario_zh": "处理者须仅按控制者书面指示处理个人数据。",
@@ -3022,6 +3159,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -3123,9 +3261,14 @@
           "Report any instruction that appears to infringe data-protection law"
         ]
       },
-      "text_sha256": "81f87c45e60c30cb1134962ad3d57c1eb237f6f763197e6c8c71a2cb51185323"
+      "text_sha256": "81f87c45e60c30cb1134962ad3d57c1eb237f6f763197e6c8c71a2cb51185323",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller must notify recipients of rectification, erasure, or restriction.",
       "article": 19,
       "business_scenario_en": "The controller must notify recipients of rectification, erasure, or restriction.",
       "business_scenario_zh": "更正、删除或限制处理后，控制者须通知接收方。",
@@ -3134,6 +3277,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -3235,9 +3379,13 @@
           "Inform the data subject about those recipients on request"
         ]
       },
-      "text_sha256": "6d16dedab3b12954ac7972d1c6b18ce394ccd00428c3cf7f49d9832e0c2098fc"
+      "text_sha256": "6d16dedab3b12954ac7972d1c6b18ce394ccd00428c3cf7f49d9832e0c2098fc",
+      "unrepresented_business_facts": [
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller must seek DPO advice when carrying out a DPIA.",
       "article": 35,
       "business_scenario_en": "The controller must seek DPO advice when carrying out a DPIA.",
       "business_scenario_zh": "开展数据保护影响评估时，控制者须征求数据保护官意见。",
@@ -3246,6 +3394,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -3347,9 +3496,13 @@
           "Finalise the data protection impact assessment"
         ]
       },
-      "text_sha256": "d65f391cfe4f4159883a211594774f386c105d08deac35b43f2e0b777fddc47b"
+      "text_sha256": "d65f391cfe4f4159883a211594774f386c105d08deac35b43f2e0b777fddc47b",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller should seek data-subject views on intended processing where appropriate.",
       "article": 35,
       "business_scenario_en": "The controller should seek data-subject views on intended processing where appropriate.",
       "business_scenario_zh": "适当情况下，控制者应就预期处理征求数据主体意见。",
@@ -3358,6 +3511,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -3459,9 +3613,14 @@
           "Carry out the intended processing"
         ]
       },
-      "text_sha256": "dfbc48c5f0729dc31ce006f0a8b8d958ba1df825b086851435c703e2e67a86ea"
+      "text_sha256": "dfbc48c5f0729dc31ce006f0a8b8d958ba1df825b086851435c703e2e67a86ea",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller must review the DPIA when risk changes.",
       "article": 35,
       "business_scenario_en": "The controller must review the DPIA when risk changes.",
       "business_scenario_zh": "风险变化时，控制者须审查处理是否符合数据保护影响评估。",
@@ -3470,6 +3629,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -3571,9 +3731,13 @@
           "Update safeguards based on the review"
         ]
       },
-      "text_sha256": "cf1e4c40ef5083d35242f540be5c68b5565145d1ea970540d76a684c3657850c"
+      "text_sha256": "cf1e4c40ef5083d35242f540be5c68b5565145d1ea970540d76a684c3657850c",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The supervisory authority must provide written advice within up to eight weeks of a consultation request.",
       "article": 36,
       "business_scenario_en": "The supervisory authority must provide written advice within up to eight weeks of a consultation request.",
       "business_scenario_zh": "监管机构收到事先咨询请求后，应在最长八周内提供书面意见。",
@@ -3582,6 +3746,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -3683,9 +3848,14 @@
           "Record any extension and reasons"
         ]
       },
-      "text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9"
+      "text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The controller and processor must implement risk-appropriate security measures.",
       "article": 32,
       "business_scenario_en": "The controller and processor must implement risk-appropriate security measures.",
       "business_scenario_zh": "控制者和处理者须实施与风险相适应的安全措施。",
@@ -3694,6 +3864,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -3795,9 +3966,13 @@
           "Review the effectiveness of the security measures"
         ]
       },
-      "text_sha256": "7a611aab8130f0bacc05b99d03ba542cfc0c00f0af5966bc95e448c4dbfee0fd"
+      "text_sha256": "7a611aab8130f0bacc05b99d03ba542cfc0c00f0af5966bc95e448c4dbfee0fd",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "Authorised personnel must process personal data only on controller instructions.",
       "article": 32,
       "business_scenario_en": "Authorised personnel must process personal data only on controller instructions.",
       "business_scenario_zh": "控制者和处理者须确保授权人员仅按指示处理个人数据。",
@@ -3806,6 +3981,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -3907,9 +4083,14 @@
           "Review access and processing compliance"
         ]
       },
-      "text_sha256": "b4eb199a1981e55f124df9ce2620678f7d2bdec0c7fef3550f101091ed55b2be"
+      "text_sha256": "b4eb199a1981e55f124df9ce2620678f7d2bdec0c7fef3550f101091ed55b2be",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     },
     {
+      "applicability_scope": "The processor must notify the controller of a breach without undue delay.",
       "article": 33,
       "business_scenario_en": "The processor must notify the controller of a breach without undue delay.",
       "business_scenario_zh": "处理者知悉个人数据泄露后，须及时通知控制者。",
@@ -3921,6 +4102,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -4023,9 +4205,13 @@
           "Record the processor notification"
         ]
       },
-      "text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2"
+      "text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+      "unrepresented_business_facts": [
+        "none beyond the modelled BPMN activities, actor/lane, and sequence flows"
+      ]
     },
     {
+      "applicability_scope": "High-risk breaches must be communicated to data subjects without undue delay.",
       "article": 34,
       "business_scenario_en": "High-risk breaches must be communicated to data subjects without undue delay.",
       "business_scenario_zh": "泄露可能对数据主体权利自由造成高风险时，控制者须及时告知数据主体。",
@@ -4037,6 +4223,7 @@
       "context_ref": null,
       "context_sha256": null,
       "context_text": "",
+      "core_reference_scope_boundary": "core reference states score presence, actor surface, and source-order pair only; condition/exception truth is not silently scored as compliance",
       "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
       "elements": {
         "action": {
@@ -4139,7 +4326,11 @@
           "Record the communication"
         ]
       },
-      "text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5"
+      "text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5",
+      "unrepresented_business_facts": [
+        "condition truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it",
+        "exception truth is supplied as public applicability context; the core BPMN gateway records the check but does not branch on it"
+      ]
     }
   ],
   "schema_version": "stage3_table3_r5_source_requirements@1.0.0",
