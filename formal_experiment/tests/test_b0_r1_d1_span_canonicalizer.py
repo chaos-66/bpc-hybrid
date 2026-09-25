@@ -189,3 +189,31 @@ def test_dangling_edge_with_null_actor_id_is_kept() -> None:
     out, audit = canonicalize_record_coordinates(r, SRC)
     assert audit["status"] == STATUS_UNCHANGED
     assert out["clauses"][0]["actor_action_map"] == [{"actor_id": None, "action_id": "p01"}]
+
+
+def test_duplicate_span_unique_overlap_reanchors_second_occurrence() -> None:
+    src = "the taxpayer and the taxpayer file."
+    first = src.index("the taxpayer")
+    second = src.index("the taxpayer", first + 1)
+    r = record({"text": src, "start": 0, "end": len(src)},
+               actors=[{"id": "a01", "text": "the taxpayer", "start": second + 1,
+                        "end": second + 13, "normalized": "taxpayer"}])
+    r["source_text"] = src
+    r["clauses"][0]["modality"]["evidence"] = [{"text": "file", "start": src.index("file"), "end": src.index("file") + 4}]
+    out, audit = canonicalize_record_coordinates(r, src)
+    assert audit["dropped_spans"] == []
+    assert out["clauses"][0]["actors"][0]["start"] == second
+
+
+def test_duplicate_span_unique_nearest_boundary_reanchors_second_occurrence() -> None:
+    src = "go alpha beta now alpha beta end"
+    first = src.index("alpha beta")
+    second = src.index("alpha beta", first + 1)
+    r = record({"text": src, "start": 0, "end": len(src)},
+               actors=[{"id": "a01", "text": "alpha beta", "start": second - 1,
+                        "end": second, "normalized": "alpha beta"}])
+    r["source_text"] = src
+    r["clauses"][0]["modality"]["evidence"] = [{"text": "now", "start": src.index("now"), "end": src.index("now") + 3}]
+    out, audit = canonicalize_record_coordinates(r, src)
+    assert audit["dropped_spans"] == []
+    assert out["clauses"][0]["actors"][0]["start"] == second

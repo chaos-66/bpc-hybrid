@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from bpc_hybrid.role_surface import normalize_role_surface
+
 
 class SunScorer:
     def __init__(self, sim, tau: float, gamma: float, theta: float, nlp=None):
@@ -84,6 +86,16 @@ class SunScorer:
         best_name = None
         best_kind = None
         rule_lemma = self._lemma(rule_actor)
+        rule_surface = normalize_role_surface(rule_actor)
+        # Approved shared surface normalization is checked first for BOTH
+        # methods.  It is exact after casefold/whitespace/leading-article
+        # stripping only; controller and processor remain distinct.
+        for actor in model.actors:
+            if normalize_role_surface(actor) == rule_surface:
+                return actor, 1.0, model.actor_sources.get(actor, "actor")
+        for bo in model.business_objects:
+            if normalize_role_surface(bo["object"]) == rule_surface:
+                return bo["object"], 1.0, "business_object"
         # actors first (pool/lane names), then business objects
         for actor in model.actors:
             score = self.sim.text_pair(rule_lemma, self._lemma(actor))
@@ -183,8 +195,12 @@ class SunScorer:
             return unavailable("no_matching_process_actor", len(r_set))
         details = []
         for actor in r_set:
-            minimum = min(self.sim.text_pair(self._lemma(actor), self._lemma(c))
-                          for c in c_set)
+            actor_surface = normalize_role_surface(actor)
+            minimum = min(
+                1.0 if normalize_role_surface(c) == actor_surface
+                else self.sim.text_pair(self._lemma(actor), self._lemma(c))
+                for c in c_set
+            )
             details.append({"rule_actor": actor,
                             "min_process_actor_similarity": round(minimum, 4),
                             "exists_low_similarity": minimum < self.theta,

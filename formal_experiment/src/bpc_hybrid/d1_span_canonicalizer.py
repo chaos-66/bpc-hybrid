@@ -8,9 +8,11 @@ this module re-anchors a span to the UNIQUE exact occurrence of its text:
 
 * if ``text == source_text[start:end]`` the span is already valid and is
   left untouched (status ``unchanged``);
-* otherwise the span's exact text must occur exactly once in the window
-  (the clause for field spans, the whole source for clause spans) and the
-  span is re-anchored there (status ``reanchored``).
+* otherwise the span is re-anchored using, in order: a unique exact
+  occurrence; a unique maximum-overlap occurrence chosen by the raw predicted
+  interval; or a unique nearest occurrence within one span length.  If the
+  raw interval cannot break the tie, the span remains ambiguous and is
+  dropped (status ``reanchored`` only for a unique selection).
 
 Empty-vs-error policy (user decision 2026-08-05: empty is legal; the six
 semantic elements may be partially empty; Gold does not imply every element
@@ -63,6 +65,45 @@ def _occurrences(needle: str, source_text: str, window_start: int, window_end: i
     return starts
 
 
+def _interval_gap(raw_start: int, raw_end: int, occ_start: int, occ_end: int) -> int:
+    """Return 0 for overlap/touch, otherwise the number of characters between."""
+    if raw_end <= occ_start:
+        return occ_start - raw_end
+    if occ_end <= raw_start:
+        return raw_start - occ_end
+    return 0
+
+
+def _select_occurrence(starts: list[int], raw_start: int, raw_end: int, text_len: int) -> int | None:
+    """Use the raw predicted interval only to break duplicate-text ambiguity.
+
+    Selection is deliberately narrow: a unique maximum overlap wins; if there
+    is no overlap, a unique nearest interval within one span-length wins.  All
+    ties remain ambiguous and are dropped by the caller.  Gold/reference labels
+    are never consulted.
+    """
+    if len(starts) == 1:
+        return starts[0]
+    metrics: list[tuple[int, int, int, int]] = []
+    for occ_start in starts:
+        occ_end = occ_start + text_len
+        overlap = max(0, min(raw_end, occ_end) - max(raw_start, occ_start))
+        gap = _interval_gap(raw_start, raw_end, occ_start, occ_end)
+        metrics.append((overlap, gap, occ_start, occ_end))
+    max_overlap = max(m[0] for m in metrics)
+    if max_overlap > 0:
+        top = [m for m in metrics if m[0] == max_overlap]
+        if len(top) == 1:
+            return top[0][2]
+        return None
+    min_gap = min(m[1] for m in metrics)
+    if min_gap <= text_len:
+        closest = [m for m in metrics if m[1] == min_gap]
+        if len(closest) == 1:
+            return closest[0][2]
+    return None
+
+
 def _reanchor_span(span: Mapping[str, Any], source_text: str, window_start: int, window_end: int) -> tuple[Mapping[str, Any], str]:
     """Return (fixed_span, outcome) for one span against a text window."""
     text = span.get("text")
@@ -75,11 +116,14 @@ def _reanchor_span(span: Mapping[str, Any], source_text: str, window_start: int,
     if 0 <= start < end <= len(source_text) and source_text[start:end] == text:
         return span, STATUS_UNCHANGED
     starts = _occurrences(text, source_text, window_start, window_end)
-    if len(starts) != 1:
-        return span, ("zero_occurrence" if not starts else "ambiguous_occurrence")
+    if not starts:
+        return span, "zero_occurrence"
+    selected = _select_occurrence(starts, start, end, len(text))
+    if selected is None:
+        return span, "ambiguous_occurrence"
     fixed = dict(span)
-    fixed["start"] = starts[0]
-    fixed["end"] = starts[0] + len(text)
+    fixed["start"] = selected
+    fixed["end"] = selected + len(text)
     return fixed, STATUS_REANCHORED
 
 
