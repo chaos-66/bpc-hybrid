@@ -301,6 +301,11 @@ def _load_reused_winter(r2_out_dir: Path) -> tuple[dict[str, Any], dict[str, Any
     return rows, manifest
 
 
+def _spacy_vector_size(nlp: Any) -> int:
+    vocab = getattr(nlp, "vocab", None)
+    return int(getattr(nlp, "vector_size", None) or getattr(vocab, "vectors_length", 0) or 0)
+
+
 def _load_lg_model(lg_model_path: str | None, lg_model_name: str):
     import spacy  # type: ignore
 
@@ -365,7 +370,7 @@ def run(*, config_path: Path, out_dir: Path, sidecar_index: Path = DEFAULT_SIDEC
             "model_version": model_version,
             "model_path": model_path_record,
             "resource_sha256": resource_sha,
-            "vector_dimension": int(getattr(nlp_lg, "vector_size", 0) or 0),
+            "vector_dimension": _spacy_vector_size(nlp_lg),
         }
 
     state = {"sidecar_paths": sidecar_paths}

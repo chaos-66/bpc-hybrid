@@ -5515,3 +5515,17 @@
 - 仍存在 blocker：无
 - 备注：M1 scoring required two software-path reruns: first relative out_dir failed in R1 relative_to, then missing inference_view manifest binding; both were fixed before the successful complete run. M1 metrics are development/retrospective.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T06:27:48.438903+00:00 - S3-TABLE3-R3 software fix before M2: static-vector dimension/vocab lookup and M2 resource binding
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：8 passed in 4.21s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`3a8c0231be7fde1cf3d0d4d6bd3eb5e0beb37b24`；相关未提交路径：23 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：M2 had not yet been scored. Fixed spaCy 3.8 Vocab lookup (vocab[key], not vocab.get), derived vector dimension from vocab.vectors_length (300), and bound official en_core_web_lg 3.8.0 wheel/model SHA in the M2 config. M1 frozen config/outputs are unchanged.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

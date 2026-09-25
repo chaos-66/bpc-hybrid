@@ -53,18 +53,18 @@
     "scripts/build_stage3_r3_sidecars.py": "a21e73bbb558d036fede60091b91fda65367658e518878342333e2d0391ca11f",
     "scripts/evaluate_stage3_table3_r3.py": "8d1eef2f5a67f98f2426afbba0199ebfba66f74c1c41cce99694a1c2daf73c5d",
     "scripts/prepare_stage3_execution_v4.py": "bceec17c04980b97c4a40694e30f7bca98eacaca07c22edd142d910c02787298",
-    "scripts/run_stage3_r3_mechanism_check.py": "ee561ca4b12198149af14277ec07a70dd8f08ded846aa761937b7ecf0d817629",
-    "scripts/run_stage3_table3_r3.py": "bef8a3016abc7d8c2a77ac724252bfb28e5430093db15f5f439d8cc23c30fbdd",
+    "scripts/run_stage3_r3_mechanism_check.py": "6cdefd172f917e1699ca1aaf93f631027cde7d649da0c883ec77dd18dfa180d6",
+    "scripts/run_stage3_table3_r3.py": "7fec53710ff33adc1588bb38a84ec2ad33b8e98cf18a68b4e9606b247f7a00d9",
     "src/bpc_hybrid/stage1_label_semantics_p2.py": "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2",
     "src/bpc_hybrid/stage3_r3_p2_adapter_v1.py": "0f95c72ed4d7594f103c483e2c2d2cad612f6b44e8466d71daebb7207f1b8640",
     "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
     "src/bpc_hybrid/sun_stage3/order_failure_diagnostics_v1.py": "361da40dc66ea791a3ad9d87881866d840fe3383897cb2f2e935c54ae9050e8b",
     "src/bpc_hybrid/sun_stage3/r3_sun_scorer.py": "643ccf36b49d078c21b3686dbf238fcdda487f424870dd64498945f411951b36",
-    "src/bpc_hybrid/sun_stage3/static_vector_similarity_v1.py": "6cfb65cc78dbdbd715002660bf7f1715119799405dfd2e253acf9e8d08d3884f",
+    "src/bpc_hybrid/sun_stage3/static_vector_similarity_v1.py": "cc6d1c68d56566d9a4bef7f09b15c6672e6d743a4c7b644da909de98c102eef7",
     "src/bpc_hybrid/sun_stage3/sun_scorer.py": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
     "src/bpc_hybrid/sun_stage3/temporal_projection_v3.py": "2eec05cdbda3cee8c1721c265bafb734314522fc28a65241a5ff60eaa43542ca",
     "src/bpc_hybrid/sun_stage3/temporal_projection_v4_r3.py": "34ded79bb42428dc794afd5dd46c3e7ff09f2af595bd7eeb62f53ed87977a556",
-    "tests/test_stage3_r3_integration.py": "60a133d720915411d5ebe0bae6900b36d39155d1a812609e9418b1c095b53fc1"
+    "tests/test_stage3_r3_integration.py": "52b64d96b57c196110f8160d50db9e14d7052397e9d84b8346dc2df0eb4849b2"
   },
   "inference_reference_forbidden": {
     "action": "do_not_open_or_hash_in_inference_process",
@@ -160,10 +160,14 @@
   "similarity": {
     "backend": "en_core_web_lg_static_vector_mean_cosine",
     "cosine_clipped_zero_one": true,
+    "independent_cache_note": "Downloaded wheel and extracted model live outside Git; weights/cache are not committed.",
     "lg_vectors_only": true,
+    "model_license": "MIT (meta.json; LICENSE file present in extracted model)",
     "model_name": "en_core_web_lg",
-    "model_resource_sha256": null,
+    "model_resource_sha256": "cdfe8653ce0102fdd6bc7df6c8cfe87ee142ff0d10c2ab0ea94f0815f4f97883",
+    "model_source_url": "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl",
     "model_version": "3.8.0",
+    "model_wheel_sha256": "293e9547a655b25499198ab15a525b05b9407a75f10255e405e8c3854329ab63",
     "no_fallback_on_unavailable_evidence": true,
     "sm_parser_and_lemma_unchanged": true,
     "vector_mean": true

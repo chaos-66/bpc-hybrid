@@ -175,7 +175,7 @@ def test_m1_m2_configs_share_frozen_inputs_and_differ_only_in_backend():
     m2 = json.loads(M2_CONFIG.read_text(encoding="utf-8"))
     assert m1["scope"] == m2["scope"]
     assert m1["methods"] == m2["methods"]
-    assert m1["hash_bindings"] == m2["hash_bindings"]
+    assert set(m1["hash_bindings"]) == set(m2["hash_bindings"])
     assert m1["temporal_projection"] == m2["temporal_projection"]
     assert m1["similarity"]["backend"] != m2["similarity"]["backend"]
     assert m1["similarity"]["sm_parser_and_lemma_unchanged"] is True

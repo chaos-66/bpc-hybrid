@@ -145,7 +145,7 @@ def run(backend: str, *, lg_model_path: str | None = None,
             "parser": "en_core_web_sm",
             "vector_model": "en_core_web_lg",
             "version": str(nlp_lg.meta.get("version", "")),
-            "dimension": int(getattr(nlp_lg, "vector_size", 0) or 0),
+            "dimension": int(getattr(nlp_lg, "vector_size", None) or getattr(getattr(nlp_lg, "vocab", None), "vectors_length", 0) or 0),
         }
     else:
         raise ValueError(f"unknown backend: {backend}")

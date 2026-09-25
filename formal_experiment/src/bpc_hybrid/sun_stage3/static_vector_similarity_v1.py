@@ -42,7 +42,12 @@ class StaticVectorSimilarity:
         self.model_path = model_path
         self.model_version = model_version or str(getattr(nlp_vectors, "meta", {}).get("version", ""))
         self.resource_sha256 = resource_sha256
-        self.vector_dimension = int(getattr(nlp_vectors, "vector_size", 0) or 0)
+        vocab = getattr(nlp_vectors, "vocab", None)
+        self.vector_dimension = int(
+            getattr(nlp_vectors, "vector_size", None)
+            or getattr(vocab, "vectors_length", 0)
+            or 0
+        )
         self._cache: dict[str, dict[str, Any]] = {}
 
     def _token_lookup(self, token: Any) -> tuple[Any | None, str | None, int]:
@@ -54,7 +59,10 @@ class StaticVectorSimilarity:
         if lower and lower not in candidates:
             candidates.append(lower)
         for key in candidates:
-            lex = self.nlp_vectors.vocab.get(key)
+            try:
+                lex = self.nlp_vectors.vocab[key]
+            except Exception:
+                continue
             if lex is None or not getattr(lex, "has_vector", False):
                 continue
             vector = getattr(lex, "vector", None)
