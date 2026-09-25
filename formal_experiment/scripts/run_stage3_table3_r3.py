@@ -320,6 +320,9 @@ def _load_lg_model(lg_model_path: str | None, lg_model_name: str):
 def run(*, config_path: Path, out_dir: Path, sidecar_index: Path = DEFAULT_SIDECAR_INDEX,
         nlp_model: str = "en_core_web_sm", lg_model_path: str | None = None,
         lg_model_name: str = "en_core_web_lg", overwrite: bool = False) -> dict[str, Any]:
+    config_path = Path(config_path).resolve()
+    out_dir = Path(out_dir).resolve()
+    sidecar_index = Path(sidecar_index).resolve()
     cfg = _load_json(config_path)
     backend = str((cfg.get("similarity") or {}).get("backend") or "sm")
     r2_out_dir = ROOT / str(cfg["m0_reused_r2"]["out_dir"])
