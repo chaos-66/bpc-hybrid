@@ -69,6 +69,7 @@
         "prediction_path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article13p3_s001",
         "reasons": [],
+        "reuse_evidence_strength": "STRONG_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-01",
@@ -78,12 +79,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/stage3_v4_b0_frozen_v1/manifest.json",
         "prediction_path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article13p3_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -159,6 +162,7 @@
         "prediction_path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article14p4_s001",
         "reasons": [],
+        "reuse_evidence_strength": "STRONG_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-02",
@@ -168,12 +172,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/stage3_v4_b0_frozen_v1/manifest.json",
         "prediction_path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article14p4_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -249,6 +255,7 @@
         "prediction_path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article18p3_s001",
         "reasons": [],
+        "reuse_evidence_strength": "STRONG_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-03",
@@ -258,12 +265,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/stage3_v4_b0_frozen_v1/manifest.json",
         "prediction_path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article18p3_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -339,6 +348,7 @@
         "prediction_path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article35p1_s001",
         "reasons": [],
+        "reuse_evidence_strength": "STRONG_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-04",
@@ -348,12 +358,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/stage3_v4_b0_frozen_v1/manifest.json",
         "prediction_path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article35p1_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -429,6 +441,7 @@
         "prediction_path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article36p1_s001",
         "reasons": [],
+        "reuse_evidence_strength": "STRONG_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-05",
@@ -438,12 +451,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/stage3_v4_b0_frozen_v1/manifest.json",
         "prediction_path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
         "prediction_sample_id": "gdpr_article36p1_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -518,6 +533,7 @@
         "prediction_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
         "prediction_sample_id": "gdpr_article7_s001",
         "reasons": [],
+        "reuse_evidence_strength": "HISTORICAL_CHAIN_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-06",
@@ -527,12 +543,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/gdpr7_sun_rule_only_v1/manifest.json",
         "prediction_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
         "prediction_sample_id": "gdpr_article7_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -607,6 +625,7 @@
         "prediction_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
         "prediction_sample_id": "gdpr_article7_s008",
         "reasons": [],
+        "reuse_evidence_strength": "HISTORICAL_CHAIN_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-07",
@@ -616,12 +635,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/gdpr7_sun_rule_only_v1/manifest.json",
         "prediction_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
         "prediction_sample_id": "gdpr_article7_s008",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -696,6 +717,7 @@
         "prediction_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
         "prediction_sample_id": "gdpr_article15_s001",
         "reasons": [],
+        "reuse_evidence_strength": "HISTORICAL_CHAIN_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-08",
@@ -705,12 +727,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/gdpr7_sun_rule_only_v1/manifest.json",
         "prediction_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
         "prediction_sample_id": "gdpr_article15_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -785,6 +809,7 @@
         "prediction_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
         "prediction_sample_id": "gdpr_article16_s001",
         "reasons": [],
+        "reuse_evidence_strength": "HISTORICAL_CHAIN_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-09",
@@ -794,12 +819,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/gdpr7_sun_rule_only_v1/manifest.json",
         "prediction_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
         "prediction_sample_id": "gdpr_article16_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -874,6 +901,7 @@
         "prediction_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
         "prediction_sample_id": "gdpr_article17_s001",
         "reasons": [],
+        "reuse_evidence_strength": "HISTORICAL_CHAIN_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-10",
@@ -883,12 +911,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/gdpr7_sun_rule_only_v1/manifest.json",
         "prediction_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
         "prediction_sample_id": "gdpr_article17_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -963,6 +993,7 @@
         "prediction_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
         "prediction_sample_id": "gdpr_article20_s001",
         "reasons": [],
+        "reuse_evidence_strength": "HISTORICAL_CHAIN_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-11",
@@ -972,12 +1003,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/gdpr7_sun_rule_only_v1/manifest.json",
         "prediction_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
         "prediction_sample_id": "gdpr_article20_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -1052,6 +1085,7 @@
         "prediction_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
         "prediction_sample_id": "gdpr_article33_s001",
         "reasons": [],
+        "reuse_evidence_strength": "HISTORICAL_CHAIN_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-D-12",
@@ -1061,12 +1095,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/gdpr7_sun_rule_only_v1/manifest.json",
         "prediction_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
         "prediction_sample_id": "gdpr_article33_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -1087,6 +1123,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S1-T1",
@@ -1119,6 +1156,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S1-T2",
@@ -1151,6 +1189,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S1-T3",
@@ -1183,6 +1222,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S1-T4",
@@ -1215,6 +1255,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S2-T1",
@@ -1247,6 +1288,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S2-T2",
@@ -1279,6 +1321,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S2-T3",
@@ -1311,6 +1354,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S2-T4",
@@ -1343,6 +1387,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S3-T1",
@@ -1375,6 +1420,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S3-T2",
@@ -1407,6 +1453,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S3-T3",
@@ -1439,6 +1486,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S3-T4",
@@ -1471,6 +1519,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S4-T1",
@@ -1503,6 +1552,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S4-T2",
@@ -1535,6 +1585,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S4-T3",
@@ -1567,6 +1618,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S4-T4",
@@ -1599,6 +1651,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S5-T1",
@@ -1631,6 +1684,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S5-T2",
@@ -1663,6 +1717,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S5-T3",
@@ -1695,6 +1750,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S5-T4",
@@ -1727,6 +1783,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S6-T1",
@@ -1759,6 +1816,7 @@
         "reasons": [
           "new_source_no_prior_ours_prediction"
         ],
+        "reuse_evidence_strength": null,
         "status": "not_available_requires_new_stage2_run"
       },
       "requirement_id": "R5-S6-T2",
@@ -1845,6 +1903,7 @@
         "prediction_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
         "prediction_sample_id": "gdpr_article33_s003",
         "reasons": [],
+        "reuse_evidence_strength": "HISTORICAL_CHAIN_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-S6-T3",
@@ -1854,12 +1913,14 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/gdpr7_sun_rule_only_v1/manifest.json",
         "prediction_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
         "prediction_sample_id": "gdpr_article33_s003",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
       },
       "winter": {
@@ -1934,6 +1995,7 @@
         "prediction_path": "data/predictions/gdpr7_direct_llm_v1/predictions.json",
         "prediction_sample_id": "gdpr_article34_s001",
         "reasons": [],
+        "reuse_evidence_strength": "HISTORICAL_CHAIN_REUSE",
         "status": "verified"
       },
       "requirement_id": "R5-S6-T4",
@@ -1943,13 +2005,81 @@
       "split": "development",
       "sun": {
         "evidence": {
+          "evidence_note": "record and request_status only; not Ours-equivalent identity chain",
           "request_status": "ok"
         },
         "manifest_path": "data/predictions/gdpr7_sun_rule_only_v1/manifest.json",
         "prediction_path": "data/predictions/gdpr7_sun_rule_only_v1/predictions.json",
         "prediction_sample_id": "gdpr_article34_s001",
         "reasons": [],
+        "reuse_evidence_strength": "WEAK_REUSE",
         "status": "verified"
+      },
+      "winter": {
+        "manifest_path": "configs/winter_stage3_development_v1.json",
+        "note": "Winter consumes the BPMN and public context natively",
+        "status": "native_no_stage2_prediction_required"
+      }
+    },
+    {
+      "context_text_sha256": null,
+      "core_eligible": true,
+      "ours": {
+        "checks": {},
+        "evidence": {},
+        "manifest_path": null,
+        "prediction_path": null,
+        "prediction_sample_id": null,
+        "reasons": [
+          "new_source_no_prior_ours_prediction"
+        ],
+        "reuse_evidence_strength": null,
+        "status": "not_available_requires_new_stage2_run"
+      },
+      "requirement_id": "R5-S7-T1",
+      "source_family_id": "gdpr_art40",
+      "source_kind": "new_article",
+      "source_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+      "split": "test",
+      "sun": {
+        "evidence": {},
+        "reasons": [
+          "new_source_no_prior_sun_prediction"
+        ],
+        "status": "not_available_requires_new_stage2_run"
+      },
+      "winter": {
+        "manifest_path": "configs/winter_stage3_development_v1.json",
+        "note": "Winter consumes the BPMN and public context natively",
+        "status": "native_no_stage2_prediction_required"
+      }
+    },
+    {
+      "context_text_sha256": null,
+      "core_eligible": true,
+      "ours": {
+        "checks": {},
+        "evidence": {},
+        "manifest_path": null,
+        "prediction_path": null,
+        "prediction_sample_id": null,
+        "reasons": [
+          "new_source_no_prior_ours_prediction"
+        ],
+        "reuse_evidence_strength": null,
+        "status": "not_available_requires_new_stage2_run"
+      },
+      "requirement_id": "R5-S8-T1",
+      "source_family_id": "gdpr_art43",
+      "source_kind": "new_article",
+      "source_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+      "split": "test",
+      "sun": {
+        "evidence": {},
+        "reasons": [
+          "new_source_no_prior_sun_prediction"
+        ],
+        "status": "not_available_requires_new_stage2_run"
       },
       "winter": {
         "manifest_path": "configs/winter_stage3_development_v1.json",
@@ -1967,13 +2097,21 @@
     "verified"
   ],
   "summary": {
+    "core_eligible_requirements": 33,
+    "ours_historical_chain_reuse": 9,
     "ours_input_changed": 0,
     "ours_method_changed": 0,
-    "ours_new_requests": 22,
+    "ours_new_requests": 24,
+    "ours_new_requests_core": 19,
+    "ours_new_requests_total": 24,
+    "ours_not_reusable": 0,
+    "ours_strong_reuse": 5,
     "ours_unverified": 0,
     "ours_verified_reusable": 14,
+    "sun_strong_reuse": 0,
     "sun_unverified": 0,
     "sun_verified_reusable": 14,
-    "unique_regulation_inputs": 36
+    "sun_weak_reuse": 14,
+    "unique_regulation_inputs": 38
   }
 }

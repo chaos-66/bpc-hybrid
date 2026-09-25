@@ -82,11 +82,12 @@ def build_budget(reuse: dict, config: dict, source_doc: dict) -> dict:
             "source_text_sha256": src["text_sha256"],
             "source_text_utf8_bytes": text_bytes,
             "reuse_status": row["ours"]["status"],
+            "reuse_evidence_strength": row["ours"].get("reuse_evidence_strength"),
             "input_token_upper_bound": upper,
             "max_output_tokens": MAX_OUTPUT_TOKENS_PER_CALL,
             "request_unit": "one unique regulation input; all BPMN variants for this requirement reuse this extraction",
             "request_template": "direct_llm_sun_record_prompt_v6_d1r1_2026_08_05",
-            "prompt_sha256_from_file": rv.sha_bytes((ROOT / rv.R5_PROMPT_REL).read_bytes()),
+            "prompt_sha256_from_file": rv.sha_text((ROOT / rv.R5_PROMPT_REL).read_text(encoding="utf-8")),
         })
     total_input_upper = sum(r["input_token_upper_bound"] for r in rows)
     total_output_upper = sum(r["max_output_tokens"] for r in rows)
@@ -119,7 +120,7 @@ def build_budget(reuse: dict, config: dict, source_doc: dict) -> dict:
             "published_alias": (_gdpr7_manifest().get("model") or {}).get("published_alias"),
             "prompt_name": (_gdpr7_manifest().get("model") or {}).get("prompt_name"),
             "prompt_sha256_recorded_in_manifest": (_gdpr7_manifest().get("model") or {}).get("prompt_sha256"),
-            "prompt_sha256_from_file": rv.sha_bytes((ROOT / rv.R5_PROMPT_REL).read_bytes()),
+            "prompt_sha256_from_file": rv.sha_text((ROOT / rv.R5_PROMPT_REL).read_text(encoding="utf-8")),
             "binding_note": "model alias and prompt identity are read from the recorded gdpr7 Direct-LLM manifest; must be re-verified before an authorized run",
         },
         "price_evidence": price,

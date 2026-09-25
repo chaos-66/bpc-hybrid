@@ -1,6 +1,6 @@
 {
   "benchmark_id": "stage3_table3_r5_benchmark_v2",
-  "count": 36,
+  "count": 38,
   "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
   "requirements": [
     {
@@ -27,10 +27,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "dea7111a8406e27cfc8bf5f49c5d40898402b0b584b3285f069170a36f9eec31",
+            "stage2_input_scope": "stage2_model_input",
             "text": "information"
           },
           "present": true,
@@ -39,10 +41,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -51,10 +55,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "e6987132857c969c9d91adba87826a1061fee9c81442ed07e7e13f3b55a76909",
+            "stage2_input_scope": "stage2_model_input",
             "text": "for a purpose other than that for which the"
           },
           "present": true,
@@ -63,10 +69,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "17d85177436376a737a5f3b74864a10504709afe0e8adb863c38e3bf820882dc",
+            "stage2_input_scope": "stage2_model_input",
             "text": "prior to that further processing"
           },
           "present": true,
@@ -74,12 +82,25 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
-            "in_input": true,
-            "note": "exception clause matched in excerpt",
-            "scope": "source_excerpt",
-            "sha256": "8bf4d8b71e25b87c3aa3776b5d1cacfafeba27de2206b331b1d1a7a09398cd3a",
-            "text": "the data subject"
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
+            "cross_reference": {
+              "paragraph_label": "art13(4)",
+              "provided_to_task": true,
+              "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+              "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+              "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+              "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information.",
+              "text_sha256": "e5cdef5612486ff2eec10788d56439f6829395a99ea847b1a4d90b59dca93e6f"
+            },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
+            "in_input": false,
+            "note": "exception depends on art13(4); the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
+            "sha256": "e5cdef5612486ff2eec10788d56439f6829395a99ea847b1a4d90b59dca93e6f",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
+            "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information."
           },
           "present": true,
           "value": "the data subject already has the information under Article 13(4)"
@@ -87,10 +108,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -126,7 +149,7 @@
         "locator": "Where the controller intends to further process",
         "paragraph": "3",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
         "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -136,7 +159,7 @@
       "paragraph": "3",
       "requirement_id": "R5-D-01",
       "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-      "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+      "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
       "source_family_id": "gdpr_art13",
       "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
       "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
@@ -192,10 +215,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "dea7111a8406e27cfc8bf5f49c5d40898402b0b584b3285f069170a36f9eec31",
+            "stage2_input_scope": "stage2_model_input",
             "text": "information"
           },
           "present": true,
@@ -204,10 +229,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -216,10 +243,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "e6987132857c969c9d91adba87826a1061fee9c81442ed07e7e13f3b55a76909",
+            "stage2_input_scope": "stage2_model_input",
             "text": "for a purpose other than that for which the"
           },
           "present": true,
@@ -228,10 +257,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "17d85177436376a737a5f3b74864a10504709afe0e8adb863c38e3bf820882dc",
+            "stage2_input_scope": "stage2_model_input",
             "text": "prior to that further processing"
           },
           "present": true,
@@ -239,12 +270,25 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
-            "in_input": true,
-            "note": "exception clause matched in excerpt",
-            "scope": "source_excerpt",
-            "sha256": "8bf4d8b71e25b87c3aa3776b5d1cacfafeba27de2206b331b1d1a7a09398cd3a",
-            "text": "the data subject"
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
+            "cross_reference": {
+              "paragraph_label": "art14(5)",
+              "provided_to_task": true,
+              "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+              "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+              "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+              "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information.",
+              "text_sha256": "a3cab46ec401e03bdead4c75db0fc5c3595296c3aa58d90ea3ccda1d54cd1888"
+            },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
+            "in_input": false,
+            "note": "exception depends on art14(5); the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
+            "sha256": "a3cab46ec401e03bdead4c75db0fc5c3595296c3aa58d90ea3ccda1d54cd1888",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
+            "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information."
           },
           "present": true,
           "value": "the data subject already has the information or Article 14(5) applies"
@@ -252,10 +296,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -291,7 +337,7 @@
         "locator": "Where the controller intends to further process",
         "paragraph": "4",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
         "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -301,7 +347,7 @@
       "paragraph": "4",
       "requirement_id": "R5-D-02",
       "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-      "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+      "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
       "source_family_id": "gdpr_art14",
       "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
       "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
@@ -328,10 +374,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "ea257421aa4a9af64bceca8104a3d62cc63529053fc92e88a9e557ed823b007f",
+            "stage2_input_scope": "stage2_model_input",
             "text": "restriction"
           },
           "present": true,
@@ -340,10 +388,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -352,10 +402,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "ee18eb9011f4a8a3375771c2fb5ced242b1c36130a7169832b52cd2a388511e7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "has obtained restriction of processing pursuant to"
           },
           "present": true,
@@ -364,10 +416,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "7458a32bb5f513e191755250174d51d66e0e24c76bc3dd0193e2e93f4351e157",
+            "stage2_input_scope": "stage2_model_input",
             "text": "before the restriction of processing is lifted"
           },
           "present": true,
@@ -376,10 +430,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -388,10 +444,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -427,7 +485,7 @@
         "locator": "A data subject who has obtained restriction",
         "paragraph": "3",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article18.txt",
         "source_file_sha256": "7b1015297c6f023e39ce2cb8d74ef942a2d72dbbe804cfac73c6295dcb0693b9",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -437,7 +495,7 @@
       "paragraph": "3",
       "requirement_id": "R5-D-03",
       "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-      "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+      "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
       "source_family_id": "gdpr_art18",
       "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article18.txt",
       "source_file_sha256": "7b1015297c6f023e39ce2cb8d74ef942a2d72dbbe804cfac73c6295dcb0693b9",
@@ -464,10 +522,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "433c3507c372d907a357bb02e4632eebc85431812c03aa44ac31b6a66dc26e91",
+            "stage2_input_scope": "stage2_model_input",
             "text": "protection"
           },
           "present": true,
@@ -476,10 +536,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -488,10 +550,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "c4881ff66b84d43a4faab8d196a0ce1abbb6fe90692f0619da6973d3ced95b3d",
+            "stage2_input_scope": "stage2_model_input",
             "text": "likely to result in"
           },
           "present": true,
@@ -500,10 +564,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "362892c31e4ef2615fae48097a1006999f0097a0a9342870afc1851ebb7e2afe",
+            "stage2_input_scope": "stage2_model_input",
             "text": "prior to the processing"
           },
           "present": true,
@@ -512,10 +578,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -524,10 +592,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -561,7 +631,7 @@
         "locator": "Where a type of processing in particular using new technologies",
         "paragraph": "1",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
         "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -571,7 +641,7 @@
       "paragraph": "1",
       "requirement_id": "R5-D-04",
       "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-      "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+      "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
       "source_family_id": "gdpr_art35",
       "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
       "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
@@ -598,10 +668,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "f03f189e58b6097737824c7d7a2228486f3f23956e66bd7d62cdb264ebfa8fe9",
+            "stage2_input_scope": "stage2_model_input",
             "text": "supervisory"
           },
           "present": true,
@@ -610,10 +682,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -622,10 +696,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "fc209a7bae18991729db5fd6e0bbc820a9fada495de24b21903b432429f014e1",
+            "stage2_input_scope": "stage2_model_input",
             "text": "high risk in the absence of"
           },
           "present": true,
@@ -634,10 +710,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "555510d22af4040b2e2d238b81b361b41e1d6c326035f10f624b8e9d5239e90e",
+            "stage2_input_scope": "stage2_model_input",
             "text": "prior to processing"
           },
           "present": true,
@@ -646,10 +724,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -658,10 +738,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -695,7 +777,7 @@
         "locator": "The controller shall consult the supervisory authority prior to processing",
         "paragraph": "1",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
         "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -705,7 +787,7 @@
       "paragraph": "1",
       "requirement_id": "R5-D-05",
       "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-      "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+      "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
       "source_family_id": "gdpr_art36",
       "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
       "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
@@ -732,10 +814,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "a65dd3628de58bb9f3eeac7e3fbc8508cd45e0c550cabd97271bba4e272719d0",
+            "stage2_input_scope": "stage2_model_input",
             "text": "demonstrate"
           },
           "present": true,
@@ -744,10 +828,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -756,10 +842,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "ddda95419e10d5c232266226d18cf4d9648c98c519e1c63952385d6fd0cfb387",
+            "stage2_input_scope": "stage2_model_input",
             "text": "processing is based on consent"
           },
           "present": true,
@@ -768,10 +856,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "bfd3df9a6a706b369effa55b4c57b977575b70f895b4a75c7ffe05a25b8b46e0",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall be able to demonstrate that the data subject has consented"
           },
           "present": true,
@@ -780,10 +870,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -792,10 +884,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -872,10 +966,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "3509fd899235fb8b76046da8694049fd16b0e5539a64dce3ae64691cdcf33f4c",
+            "stage2_input_scope": "stage2_model_input",
             "text": "whether"
           },
           "present": true,
@@ -884,6 +980,7 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 7(4)",
               "text": "Controller",
@@ -893,6 +990,7 @@
             "note": "actor role from provision/role model",
             "scope": "declared_external_context",
             "sha256": "31df66dc9f060166a41ac9f707a822d9684835ddebf052c0c102293e7ff07c4f",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "Controller"
           },
           "present": true,
@@ -901,10 +999,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "9725811b5c366434b60d76c9e6f88fc9e2d2135af25d51b394cc40ec25f14812",
+            "stage2_input_scope": "stage2_model_input",
             "text": "performance of a contract"
           },
           "present": true,
@@ -913,10 +1013,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "b6a7f3c29c259cda6057f5f54a51a1837e05a3e1f4a6c2b6b5982265abd2892e",
+            "stage2_input_scope": "stage2_model_input",
             "text": "when assessing whether consent is freely given"
           },
           "present": true,
@@ -925,10 +1027,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -937,10 +1041,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -1018,10 +1124,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "93cdccc66f8c7f8e670f513593663b243eb1e219766844ba75472272e01a2d6f",
+            "stage2_input_scope": "stage2_model_input",
             "text": "confirmation"
           },
           "present": true,
@@ -1030,10 +1138,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -1042,10 +1152,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "b524ec163905f5f6973555a55d8f2276a0188c341bbc5e0c1618fc44d2ee6b66",
+            "stage2_input_scope": "stage2_model_input",
             "text": "personal data concerning"
           },
           "present": true,
@@ -1054,10 +1166,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "b4e16b976ed02e9bf85dd82d628b50733eb08436ba8233c304b6848bda2c501e",
+            "stage2_input_scope": "stage2_model_input",
             "text": "the data subject shall have the right to obtain from the controller confirmation"
           },
           "present": true,
@@ -1066,10 +1180,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -1078,10 +1194,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "7ca68a183d92ffc1df1853520cca870dc550300a326f03b95e57a6e0374b0bd4",
+            "stage2_input_scope": "stage2_model_input",
             "text": "right to"
           },
           "present": true,
@@ -1157,10 +1275,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "6f14ae9826c092f1cfbfcaeea7770553f927f49c60caed0de3f8d2d36f31dab6",
+            "stage2_input_scope": "stage2_model_input",
             "text": "inaccurate"
           },
           "present": true,
@@ -1169,10 +1289,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -1181,10 +1303,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "condition_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -1193,10 +1317,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "d04f7ae40a8b7e2f00217d7f39a8e5a0d4717ca9b050aa96de0a31788f7a65ee",
+            "stage2_input_scope": "stage2_model_input",
             "text": "without undue delay"
           },
           "present": true,
@@ -1205,10 +1331,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -1217,10 +1345,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "7ca68a183d92ffc1df1853520cca870dc550300a326f03b95e57a6e0374b0bd4",
+            "stage2_input_scope": "stage2_model_input",
             "text": "right to"
           },
           "present": true,
@@ -1296,10 +1426,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "4a0a339b0c6d0553897752a84115adc81c75812e1743eb2519258e5000f70deb",
+            "stage2_input_scope": "stage2_model_input",
             "text": "personal"
           },
           "present": true,
@@ -1308,10 +1440,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -1320,10 +1454,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "28b6f04107ef3f1120975abf58ca8d08d20243beea929999b203f0add941fe16",
+            "stage2_input_scope": "stage2_model_input",
             "text": "one of the"
           },
           "present": true,
@@ -1332,10 +1468,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "d04f7ae40a8b7e2f00217d7f39a8e5a0d4717ca9b050aa96de0a31788f7a65ee",
+            "stage2_input_scope": "stage2_model_input",
             "text": "without undue delay"
           },
           "present": true,
@@ -1343,7 +1481,8 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "cross_reference": {
               "paragraph_label": "art17(3)",
               "provided_to_task": true,
@@ -1353,10 +1492,13 @@
               "text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information.",
               "text_sha256": "4a3bbbe4784529c72b889105bb865fa57c3ff83fa7e5724b5836118e85a63c70"
             },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
             "in_input": false,
-            "note": "exception lives in art17(3); full text actually provided to the task",
-            "scope": "cross_reference_provided",
+            "note": "exception depends on art17(3); the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
             "sha256": "4a3bbbe4784529c72b889105bb865fa57c3ff83fa7e5724b5836118e85a63c70",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
             "text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information."
           },
           "present": true,
@@ -1365,10 +1507,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "7ca68a183d92ffc1df1853520cca870dc550300a326f03b95e57a6e0374b0bd4",
+            "stage2_input_scope": "stage2_model_input",
             "text": "right to"
           },
           "present": true,
@@ -1445,10 +1589,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "71d6a37fa41aba8789868f45be4dfa89f0ad81e93aca9e8b8f1be8abba972ca4",
+            "stage2_input_scope": "stage2_model_input",
             "text": "structured"
           },
           "present": true,
@@ -1457,10 +1603,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -1469,10 +1617,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "38511f59ea4c0b56afd23eed172e0f73dfbc802f211ff171f9822da5a6ca7075",
+            "stage2_input_scope": "stage2_model_input",
             "text": "carried out by automated means"
           },
           "present": true,
@@ -1481,10 +1631,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "1ae7724d1ba88890bda805aba7c86feb3fdc36f016c4df79ff7b9cb62fba6366",
+            "stage2_input_scope": "stage2_model_input",
             "text": "the data subject shall have the right to receive the personal data"
           },
           "present": true,
@@ -1492,7 +1644,8 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "cross_reference": {
               "paragraph_label": "art20(4)",
               "provided_to_task": true,
@@ -1502,22 +1655,27 @@
               "text": "The right referred to in paragraph 1 shall not adversely affect the rights and freedoms of others.",
               "text_sha256": "571228cb39ab5edbc78002c907e66f0d5f3cfb9b6e19b3abe4d7f15ecb91f43b"
             },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
             "in_input": false,
-            "note": "exception lives in art20(4); full text actually provided to the task",
-            "scope": "cross_reference_provided",
+            "note": "exception depends on art20(4); the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
             "sha256": "571228cb39ab5edbc78002c907e66f0d5f3cfb9b6e19b3abe4d7f15ecb91f43b",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
             "text": "The right referred to in paragraph 1 shall not adversely affect the rights and freedoms of others."
           },
           "present": true,
-          "value": "Article 20(4) public-interest or official-authority exception"
+          "value": "The right referred to in paragraph 1 shall not adversely affect the rights and freedoms of others."
         },
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "7ca68a183d92ffc1df1853520cca870dc550300a326f03b95e57a6e0374b0bd4",
+            "stage2_input_scope": "stage2_model_input",
             "text": "right to"
           },
           "present": true,
@@ -1593,10 +1751,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "f03f189e58b6097737824c7d7a2228486f3f23956e66bd7d62cdb264ebfa8fe9",
+            "stage2_input_scope": "stage2_model_input",
             "text": "supervisory"
           },
           "present": true,
@@ -1605,10 +1765,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -1617,10 +1779,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "ddd8bd8d16c3a55c042c1b494507ab52399a3284103cb57d4e62d1404badcd15",
+            "stage2_input_scope": "stage2_model_input",
             "text": "a personal data breach"
           },
           "present": true,
@@ -1629,10 +1793,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "c58e37575a3e9db92e9dfbfa7d6f90eb1edf7aa48db8dbdddddc18a9932ea9fa",
+            "stage2_input_scope": "stage2_model_input",
             "text": "without undue delay and where feasible not later than 72 hours after having become aware"
           },
           "present": true,
@@ -1641,10 +1807,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
-            "note": "exception clause matched in excerpt",
+            "note": "long exception overlap matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "a0db37fab58c5f4775f4886c74e8dca893883f126ade257b3436d6f170c20b09",
+            "stage2_input_scope": "stage2_model_input",
             "text": "unlikely to result in a risk to"
           },
           "present": true,
@@ -1653,10 +1821,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -1729,10 +1899,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "dea7111a8406e27cfc8bf5f49c5d40898402b0b584b3285f069170a36f9eec31",
+            "stage2_input_scope": "stage2_model_input",
             "text": "information"
           },
           "present": true,
@@ -1741,10 +1913,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -1753,10 +1927,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "8d56ad1d907f2de7c32acc22eee61df1e9467a874498c1e1a7c5146e8c03c5e8",
+            "stage2_input_scope": "stage2_model_input",
             "text": "personal data relating to a data subject are collected from the data subject"
           },
           "present": true,
@@ -1765,10 +1941,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "7e9bc37d85ebfd0492019a42e8b37fcbfc3b2920189faea310964fa28431cb32",
+            "stage2_input_scope": "stage2_model_input",
             "text": "at the time when personal data are obtained"
           },
           "present": true,
@@ -1776,7 +1954,8 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "cross_reference": {
               "paragraph_label": "art13(4)",
               "provided_to_task": true,
@@ -1786,10 +1965,13 @@
               "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information.",
               "text_sha256": "e5cdef5612486ff2eec10788d56439f6829395a99ea847b1a4d90b59dca93e6f"
             },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
             "in_input": false,
-            "note": "exception lives in art13(4); full text actually provided to the task",
-            "scope": "cross_reference_provided",
+            "note": "exception depends on art13(4); the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
             "sha256": "e5cdef5612486ff2eec10788d56439f6829395a99ea847b1a4d90b59dca93e6f",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
             "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information."
           },
           "present": true,
@@ -1798,10 +1980,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -1872,10 +2056,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "dea7111a8406e27cfc8bf5f49c5d40898402b0b584b3285f069170a36f9eec31",
+            "stage2_input_scope": "stage2_model_input",
             "text": "information"
           },
           "present": true,
@@ -1884,10 +2070,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -1896,10 +2084,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "19fa5b4e8ae1cc4dbdb417d71b73254da326939cab9f8b53733d5bb49d3fe959",
+            "stage2_input_scope": "stage2_model_input",
             "text": "paragraph 1"
           },
           "present": true,
@@ -1908,10 +2098,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "7e9bc37d85ebfd0492019a42e8b37fcbfc3b2920189faea310964fa28431cb32",
+            "stage2_input_scope": "stage2_model_input",
             "text": "at the time when personal data are obtained"
           },
           "present": true,
@@ -1919,7 +2111,8 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "cross_reference": {
               "paragraph_label": "art13(4)",
               "provided_to_task": true,
@@ -1929,10 +2122,13 @@
               "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information.",
               "text_sha256": "e5cdef5612486ff2eec10788d56439f6829395a99ea847b1a4d90b59dca93e6f"
             },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
             "in_input": false,
-            "note": "exception lives in art13(4); full text actually provided to the task",
-            "scope": "cross_reference_provided",
+            "note": "exception depends on art13(4); the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
             "sha256": "e5cdef5612486ff2eec10788d56439f6829395a99ea847b1a4d90b59dca93e6f",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
             "text": "Paragraphs 1, 2 and 3 shall not apply where and insofar as the data subject already has the information."
           },
           "present": true,
@@ -1941,10 +2137,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -2022,10 +2220,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "dea7111a8406e27cfc8bf5f49c5d40898402b0b584b3285f069170a36f9eec31",
+            "stage2_input_scope": "stage2_model_input",
             "text": "information"
           },
           "present": true,
@@ -2034,10 +2234,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -2046,10 +2248,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "bdf71012b58e0c06655370aac6ae29b27e1b768482df9a27dc3a8b3948f4f1de",
+            "stage2_input_scope": "stage2_model_input",
             "text": "personal data have not been obtained from the data subject"
           },
           "present": true,
@@ -2058,10 +2262,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "d85533ba786e27667c68f55c37f3d5a70d6cd7a1e1157262ac3353dd6b11b193",
+            "stage2_input_scope": "stage2_model_input",
             "text": "personal data"
           },
           "present": true,
@@ -2069,7 +2275,8 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "cross_reference": {
               "paragraph_label": "art14(5)",
               "provided_to_task": true,
@@ -2079,10 +2286,13 @@
               "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information.",
               "text_sha256": "a3cab46ec401e03bdead4c75db0fc5c3595296c3aa58d90ea3ccda1d54cd1888"
             },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
             "in_input": false,
-            "note": "exception lives in art14(5); full text actually provided to the task",
-            "scope": "cross_reference_provided",
+            "note": "exception depends on art14(5); the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
             "sha256": "a3cab46ec401e03bdead4c75db0fc5c3595296c3aa58d90ea3ccda1d54cd1888",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
             "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information."
           },
           "present": true,
@@ -2091,10 +2301,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -2170,10 +2382,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "dea7111a8406e27cfc8bf5f49c5d40898402b0b584b3285f069170a36f9eec31",
+            "stage2_input_scope": "stage2_model_input",
             "text": "information"
           },
           "present": true,
@@ -2182,10 +2396,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -2194,10 +2410,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "19fa5b4e8ae1cc4dbdb417d71b73254da326939cab9f8b53733d5bb49d3fe959",
+            "stage2_input_scope": "stage2_model_input",
             "text": "paragraph 1"
           },
           "present": true,
@@ -2206,6 +2424,7 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 14(2)",
               "text": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
@@ -2215,6 +2434,7 @@
             "note": "constraint supplied as declared external context",
             "scope": "declared_external_context",
             "sha256": "bf9cb5977a41103664d4bce95f889ac6c5decc316f63af95826591e4134b4764",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed."
           },
           "present": true,
@@ -2222,7 +2442,8 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "cross_reference": {
               "paragraph_label": "art14(5)",
               "provided_to_task": true,
@@ -2232,10 +2453,13 @@
               "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information.",
               "text_sha256": "a3cab46ec401e03bdead4c75db0fc5c3595296c3aa58d90ea3ccda1d54cd1888"
             },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
             "in_input": false,
-            "note": "exception lives in art14(5); full text actually provided to the task",
-            "scope": "cross_reference_provided",
+            "note": "exception depends on art14(5); the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
             "sha256": "a3cab46ec401e03bdead4c75db0fc5c3595296c3aa58d90ea3ccda1d54cd1888",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
             "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information."
           },
           "present": true,
@@ -2244,10 +2468,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -2318,10 +2544,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "5c4d3502bd63c30aceaefd2b00553d83cb7cd7f30b01ef508783649242bc5446",
+            "stage2_input_scope": "stage2_model_input",
             "text": "parental"
           },
           "present": true,
@@ -2330,6 +2558,7 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 8(1)",
               "text": "Controller",
@@ -2339,6 +2568,7 @@
             "note": "actor role from provision/role model",
             "scope": "declared_external_context",
             "sha256": "31df66dc9f060166a41ac9f707a822d9684835ddebf052c0c102293e7ff07c4f",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "Controller"
           },
           "present": true,
@@ -2347,10 +2577,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "9e8d580b2d6619dd6ceecb95a7e3f84d9fe450a12c99cf9fb71696b769a58f2e",
+            "stage2_input_scope": "stage2_model_input",
             "text": "child is below"
           },
           "present": true,
@@ -2359,10 +2591,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "82f926779431aee713d3394bb95edf3cfdc13c33fd59dd98ce7c6dd2cf81a04e",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall be lawful only if and to the extent that consent is given or authorised"
           },
           "present": true,
@@ -2371,10 +2605,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -2383,10 +2619,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -2457,10 +2695,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "53bc5c9386ea143b4bebb956bbd73f8e364c8ec03dffbf4941466362bc06df51",
+            "stage2_input_scope": "stage2_model_input",
             "text": "reasonable"
           },
           "present": true,
@@ -2469,10 +2709,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -2481,10 +2723,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "50e22bae76ef7c6c76e201eb183ca30f4ae70b17414c90265d25177dae2e7335",
+            "stage2_input_scope": "stage2_model_input",
             "text": "given or authorised by the holder of parental responsibility"
           },
           "present": true,
@@ -2493,10 +2737,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "f950fd7d4442e010650f4663543e835ecb66e9bbc61d08ffa341bbd37afb81f1",
+            "stage2_input_scope": "stage2_model_input",
             "text": "verify in such cases that consent is given or authorised"
           },
           "present": true,
@@ -2505,10 +2751,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -2517,10 +2765,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -2585,10 +2835,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "3b283e93debf035e990dfce1f21468476dc57c69313c5574f43ad1a185840277",
+            "stage2_input_scope": "stage2_model_input",
             "text": "explicit"
           },
           "present": true,
@@ -2597,6 +2849,7 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 9(2)(a)",
               "text": "Controller",
@@ -2606,6 +2859,7 @@
             "note": "actor role from provision/role model",
             "scope": "declared_external_context",
             "sha256": "31df66dc9f060166a41ac9f707a822d9684835ddebf052c0c102293e7ff07c4f",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "Controller"
           },
           "present": true,
@@ -2614,6 +2868,7 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 9(2)(a)",
               "text": "special-category data are processed",
@@ -2623,6 +2878,7 @@
             "note": "condition paraphrase; literal clause not in the retrieved excerpt",
             "scope": "declared_external_context",
             "sha256": "8d146bdb1a94cda274d6bc788564388c80dcfcb491da16e383ee94f30a88d19e",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "special-category data are processed"
           },
           "present": true,
@@ -2631,10 +2887,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "ea084743f8958d0836c0fa3104d603b9109998010f75223caefd208e0edb2ca4",
+            "stage2_input_scope": "stage2_model_input",
             "text": "has given explicit consent to the processing of those personal data"
           },
           "present": true,
@@ -2643,10 +2901,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
-            "note": "exception clause matched in excerpt",
+            "note": "long exception overlap matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "82554bed6588154d501b58899a2c642cf417dc68c80beca33ca17658dca91f76",
+            "stage2_input_scope": "stage2_model_input",
             "text": "union or member state law"
           },
           "present": true,
@@ -2655,10 +2915,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "ee4d988c65de860fabbfbcd27f73d50bbebe3fba37fe419284f4811389c30bdc",
+            "stage2_input_scope": "stage2_model_input",
             "text": "may"
           },
           "present": true,
@@ -2731,10 +2993,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "d867c55b793d0858a46441c618c08a7635e998cb6e08a687683751becffac0d0",
+            "stage2_input_scope": "stage2_model_input",
             "text": "collective"
           },
           "present": true,
@@ -2743,10 +3007,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -2755,10 +3021,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "bfd4ea09fac6653671f275bae05e8def15bcba7016b146d8b3ca88e30c91adb4",
+            "stage2_input_scope": "stage2_model_input",
             "text": "social protection law"
           },
           "present": true,
@@ -2767,10 +3035,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "7aa3afe142dcd81314ee8e9198a62c766d36b468ebe94e767b8a1438a6ea6008",
+            "stage2_input_scope": "stage2_model_input",
             "text": "in so far as it is authorised by union or member state law or a collective agreement"
           },
           "present": true,
@@ -2779,10 +3049,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -2791,6 +3063,7 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 9(2)(b)",
               "text": "permission",
@@ -2800,6 +3073,7 @@
             "note": "modality taken from the provision type",
             "scope": "declared_external_context",
             "sha256": "fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "permission"
           },
           "present": true,
@@ -2871,10 +3145,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "405abc33f5f3b06b881c7330aab9bf808b29801e9d5f6d0848336867d6e6edcb",
+            "stage2_input_scope": "stage2_model_input",
             "text": "provide"
           },
           "present": true,
@@ -2883,10 +3159,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -2895,10 +3173,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "b63d4d0097458e5863f5a5926618b9f432019122c8ef67051d49fd5a99224d38",
+            "stage2_input_scope": "stage2_model_input",
             "text": "a request under articles 15 to 22"
           },
           "present": true,
@@ -2907,10 +3187,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "7acc38dc494566adb1c5c0fd9adcfde3192238777f23ba9d48e27463667da0a1",
+            "stage2_input_scope": "stage2_model_input",
             "text": "without undue delay and in any event within one month of receipt of the request"
           },
           "present": true,
@@ -2918,7 +3200,8 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "cross_reference": {
               "paragraph_label": "art12(3)-extension",
               "provided_to_task": true,
@@ -2928,10 +3211,13 @@
               "text": "That period may be extended by two further months where necessary, taking into account the complexity and number of the requests.",
               "text_sha256": "6bce89d77f5a9d9e6ff2b0a934cf754f219ff7caad6fa7d0ad6fa4116185a1bf"
             },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
             "in_input": false,
-            "note": "exception lives in art12(3)-extension; full text actually provided to the task",
-            "scope": "cross_reference_provided",
+            "note": "exception depends on art12(3)-extension; the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
             "sha256": "6bce89d77f5a9d9e6ff2b0a934cf754f219ff7caad6fa7d0ad6fa4116185a1bf",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
             "text": "That period may be extended by two further months where necessary, taking into account the complexity and number of the requests."
           },
           "present": true,
@@ -2940,10 +3226,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -3012,10 +3300,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "a9491f4c1bf7b0cffbadcba2db8f028e4b3f2867cb59e1f3a0bc1968f3c51242",
+            "stage2_input_scope": "stage2_model_input",
             "text": "subject"
           },
           "present": true,
@@ -3024,10 +3314,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -3036,10 +3328,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "22d141adc60d041e4fef76b6637ffce127f62db855fcc0212081552a6b18ab8a",
+            "stage2_input_scope": "stage2_model_input",
             "text": "the controller does not take action on the request of the data subject"
           },
           "present": true,
@@ -3048,10 +3342,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "f851c4d708394432a6af9c2ef2138f85944c16f63ace25c90e7433d1de377c61",
+            "stage2_input_scope": "stage2_model_input",
             "text": "without delay and at the latest within one month of receipt of the request"
           },
           "present": true,
@@ -3060,10 +3356,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -3072,10 +3370,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -3151,10 +3451,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "0a63dd9aa0a90420bef07f7cd5411b183caca9cb3150cf19733a0316f5335858",
+            "stage2_input_scope": "stage2_model_input",
             "text": "processing"
           },
           "present": true,
@@ -3163,10 +3465,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -3175,6 +3479,7 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 21(1)",
               "text": "The data subject shall have the right to object, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions.",
@@ -3184,6 +3489,7 @@
             "note": "condition supplied as declared external applicability context",
             "scope": "declared_external_context",
             "sha256": "f880b915a8e86e3b390911a022c13906cf993e8482b2968dd85dc2bd020dd95e",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "The data subject shall have the right to object, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions."
           },
           "present": true,
@@ -3192,10 +3498,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "f6157d712b3fc1dbde4a823d7bfc2a3b2b7f4ba7d9782d98abb1695b732295c8",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall no longer process the personal data unless"
           },
           "present": true,
@@ -3203,12 +3511,20 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
-            "in_input": true,
-            "note": "exception clause matched in excerpt",
-            "scope": "source_excerpt",
-            "sha256": "81e54a71c2f2c536fe8f5c25e18a2b430117965846c13a2d7935d44d578beead",
-            "text": "compelling legitimate grounds"
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
+            "declared_source": {
+              "citation": "GDPR Article 21(1)",
+              "text": "The data subject shall have the right to object, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions.",
+              "type": "common_context"
+            },
+            "fully_source_grounded_in_stage2_input": false,
+            "in_input": false,
+            "note": "exception is a cross-reference/paraphrase whose full text is not present in the Stage2 input; must NOT be counted as Stage2 input",
+            "scope": "declared_external_context",
+            "sha256": "5c40600a3786ec01187bf8edc99a81d90e1f295a4a1614b7553a385e85a86615",
+            "stage2_input_scope": "shared_public_task_context",
+            "text": "compelling legitimate grounds override the data subject interests or legal claims require processing"
           },
           "present": true,
           "value": "compelling legitimate grounds override the data subject interests or legal claims require processing"
@@ -3216,10 +3532,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "fd9305af828d9dec9922c6e0078b979717e557505e1b0e0d610c5d132046d5a7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "no longer"
           },
           "present": true,
@@ -3275,7 +3593,8 @@
       "split": "test",
       "text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d",
       "unrepresented_business_facts": [
-        "condition"
+        "condition",
+        "exception"
       ]
     },
     {
@@ -3291,10 +3610,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "0a63dd9aa0a90420bef07f7cd5411b183caca9cb3150cf19733a0316f5335858",
+            "stage2_input_scope": "stage2_model_input",
             "text": "processing"
           },
           "present": true,
@@ -3303,6 +3624,7 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 21(3)",
               "text": "Controller",
@@ -3312,6 +3634,7 @@
             "note": "actor role from provision/role model",
             "scope": "declared_external_context",
             "sha256": "31df66dc9f060166a41ac9f707a822d9684835ddebf052c0c102293e7ff07c4f",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "Controller"
           },
           "present": true,
@@ -3320,10 +3643,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "209dc5ea31ba0ba624021320b882abc8791cc5dc28100b5199e4152cbf2849c7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "for direct marketing"
           },
           "present": true,
@@ -3332,10 +3657,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "a58881f75a6956ba5f6c8276deabf921ce48325a8c061433238c018bf81bc1fe",
+            "stage2_input_scope": "stage2_model_input",
             "text": "the personal data shall no longer be processed for such purposes"
           },
           "present": true,
@@ -3344,10 +3671,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -3356,10 +3685,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "fd9305af828d9dec9922c6e0078b979717e557505e1b0e0d610c5d132046d5a7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "no longer"
           },
           "present": true,
@@ -3431,10 +3762,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "30fc57f674fcf9c51c4549621348133e916d96e232097fc0236302e6fa35cb56",
+            "stage2_input_scope": "stage2_model_input",
             "text": "organisational"
           },
           "present": true,
@@ -3443,10 +3776,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -3455,10 +3790,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "f5715de4a688d1040b68655b0505032a6448f0932c38aae862191d263bf34d42",
+            "stage2_input_scope": "stage2_model_input",
             "text": "the risks of varying likelihood and severity"
           },
           "present": true,
@@ -3467,10 +3804,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "8d85df8d370fa604327175beeb16fcfa5aa354e92813624f6c3598fd8354e252",
+            "stage2_input_scope": "stage2_model_input",
             "text": "those measures shall be reviewed and updated where necessary"
           },
           "present": true,
@@ -3479,10 +3818,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -3491,10 +3832,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -3563,10 +3906,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "433c3507c372d907a357bb02e4632eebc85431812c03aa44ac31b6a66dc26e91",
+            "stage2_input_scope": "stage2_model_input",
             "text": "protection"
           },
           "present": true,
@@ -3575,10 +3920,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -3587,10 +3934,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "696c9da886364473179823d5426a74093537a1a9139cc50c025dcd702d2754fc",
+            "stage2_input_scope": "stage2_model_input",
             "text": "state of the art"
           },
           "present": true,
@@ -3599,10 +3948,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "23ca1ab336ab1ce69cc8bb7ba83a8c77b29c5e1249bf994674e267b979ebfdeb",
+            "stage2_input_scope": "stage2_model_input",
             "text": "both at the time of the determination of the means for processing and at the time of the processing itself"
           },
           "present": true,
@@ -3611,10 +3962,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -3623,10 +3976,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -3698,10 +4053,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "238fa28a94976c7da14563bc873c2729bd5cd325389085bb4c6dd0de28923590",
+            "stage2_input_scope": "stage2_model_input",
             "text": "instructions"
           },
           "present": true,
@@ -3710,10 +4067,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "d825be6ffd4c9a27a8cc2f26e4a3b95bc87a8f43289ca467d064d544c509f8eb",
+            "stage2_input_scope": "stage2_model_input",
             "text": "processor"
           },
           "present": true,
@@ -3722,10 +4081,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "86cb56b3bcaa6c78ad22676ee9655537b43d7d362bd404481d8f8f7cc2c6ecba",
+            "stage2_input_scope": "stage2_model_input",
             "text": "unless required to do so by union or member state law"
           },
           "present": true,
@@ -3734,10 +4095,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "7896b23263195e37117ae02fe6ad7ec040296db267e414f1c0f9c5218a5c727e",
+            "stage2_input_scope": "stage2_model_input",
             "text": "only on documented instructions from the controller"
           },
           "present": true,
@@ -3746,10 +4109,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
-            "note": "exception clause matched in excerpt",
+            "note": "long exception overlap matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "8020475989aee2ed828cc197912dc2f8f785f3d34604ce6b2d3acf9dc51e10a8",
+            "stage2_input_scope": "stage2_model_input",
             "text": "legal requirement before processing unless"
           },
           "present": true,
@@ -3758,10 +4123,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -3835,10 +4202,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "7d22d390ec67d1aa03eca9ca45884b3c83a0595d0c152d93dea473052383444c",
+            "stage2_input_scope": "stage2_model_input",
             "text": "communicate"
           },
           "present": true,
@@ -3847,10 +4216,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -3859,10 +4230,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "442aac7424541e570a20dfbbd9e1f8bf1c46b5070ec0d1da93a4fa0fa581ac40",
+            "stage2_input_scope": "stage2_model_input",
             "text": "or restriction of processing"
           },
           "present": true,
@@ -3871,10 +4244,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "85e1a2e80fecaaddb75e74408170b525108ad5bcde26dea2f3798d5b59e5ff0c",
+            "stage2_input_scope": "stage2_model_input",
             "text": "the controller shall communicate any rectification or erasure of personal data or restriction"
           },
           "present": true,
@@ -3883,10 +4258,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
-            "note": "exception clause matched in excerpt",
+            "note": "long exception overlap matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "8c540b376640ee3db86b53603a463b2d09f70b56873dab587902eba6a8501c96",
+            "stage2_input_scope": "stage2_model_input",
             "text": "proves impossible or involves disproportionate effort"
           },
           "present": true,
@@ -3895,10 +4272,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -3967,10 +4346,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "433c3507c372d907a357bb02e4632eebc85431812c03aa44ac31b6a66dc26e91",
+            "stage2_input_scope": "stage2_model_input",
             "text": "protection"
           },
           "present": true,
@@ -3979,10 +4360,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -3991,6 +4374,7 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 35(2)",
               "text": "a DPO is designated",
@@ -4000,6 +4384,7 @@
             "note": "condition paraphrase; literal clause not in the retrieved excerpt",
             "scope": "declared_external_context",
             "sha256": "c11a359ee642b7bc0eb9b63d3a25ea15c98d8dbdefb739b6d10a925484f8e5df",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "a DPO is designated"
           },
           "present": true,
@@ -4008,10 +4393,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "8af875c9cb64427157d00a3fe63eb011f07289b0b18a0e52421762f07c266efa",
+            "stage2_input_scope": "stage2_model_input",
             "text": "when carrying out a data protection impact assessment"
           },
           "present": true,
@@ -4020,10 +4407,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -4032,10 +4421,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -4106,10 +4497,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "22d19eff52348144d5b13429b919a56ee21adbe320d81bd12d1a49fc4a16bbbb",
+            "stage2_input_scope": "stage2_model_input",
             "text": "representatives"
           },
           "present": true,
@@ -4118,10 +4511,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -4130,10 +4525,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "ea8aa01a2afa9ef388d940f52c196112dba38b129eeb44540d81f48738db8c62",
+            "stage2_input_scope": "stage2_model_input",
             "text": "without prejudice to"
           },
           "present": true,
@@ -4142,10 +4539,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "fcb592120d0f72f43daa5262eb8c38e462e51708d26c0588607745224f41fd91",
+            "stage2_input_scope": "stage2_model_input",
             "text": "seek the views of data subjects or their representatives on the intended processing"
           },
           "present": true,
@@ -4154,10 +4553,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
-            "note": "exception clause matched in excerpt",
+            "note": "long exception overlap matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "abf28d88c523c1f89e581d575cbbc774dc8e1eb3360d5f16fab4c57b5840316e",
+            "stage2_input_scope": "stage2_model_input",
             "text": "protection of commercial or public interests or"
           },
           "present": true,
@@ -4166,10 +4567,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -4238,10 +4641,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "c97ace4c8fef2cee8fa0f3c9f52aab18dbd4f42438afe362ffb8f75ce4c04b84",
+            "stage2_input_scope": "stage2_model_input",
             "text": "review"
           },
           "present": true,
@@ -4250,10 +4655,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -4262,10 +4669,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "58923f10c901c0f0a4b56f3ae413d4c64c403fb02f5c178b95acb5dfdd7a38d1",
+            "stage2_input_scope": "stage2_model_input",
             "text": "risk represented by processing operations"
           },
           "present": true,
@@ -4274,10 +4683,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "e27c567c2573adffa9e9e90b27e6696c63ccaa0ab00404d9e5ed2c2a1f663e80",
+            "stage2_input_scope": "stage2_model_input",
             "text": "at least when there is a change of the risk represented by processing operations"
           },
           "present": true,
@@ -4286,10 +4697,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -4298,10 +4711,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -4370,10 +4785,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -4382,10 +4799,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "f03f189e58b6097737824c7d7a2228486f3f23956e66bd7d62cdb264ebfa8fe9",
+            "stage2_input_scope": "stage2_model_input",
             "text": "supervisory"
           },
           "present": true,
@@ -4394,10 +4813,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "fdc4a00f20790ce578acee77ac282f1da204571af8311e0afef2ca2a6f0346d3",
+            "stage2_input_scope": "stage2_model_input",
             "text": "the supervisory authority is of the opinion that the intended processing"
           },
           "present": true,
@@ -4406,10 +4827,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "ea027aab43d2e3277cc89c9a620eb9bf72c502a5b972231bf5b8e86518a06546",
+            "stage2_input_scope": "stage2_model_input",
             "text": "within period of up to eight weeks of receipt of the request"
           },
           "present": true,
@@ -4417,7 +4840,8 @@
         },
         "exception": {
           "evidence": {
-            "counts_as_in_input": true,
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "cross_reference": {
               "paragraph_label": "art36(2)-extension",
               "provided_to_task": true,
@@ -4427,10 +4851,13 @@
               "text": "That period may be extended by six weeks, taking into account the complexity of the intended processing.",
               "text_sha256": "3fb10fd298c08bf439f43f6a6983289d4a6a5f03c4ef2e0b8c49803a45776a87"
             },
+            "cross_reference_only": true,
+            "fully_source_grounded_in_stage2_input": false,
             "in_input": false,
-            "note": "exception lives in art36(2)-extension; full text actually provided to the task",
-            "scope": "cross_reference_provided",
+            "note": "exception depends on art36(2)-extension; the cross-reference text is available outside the final Stage2 model input and must not be counted as Stage2 input",
+            "scope": "cross_reference_text_outside_stage2_input",
             "sha256": "3fb10fd298c08bf439f43f6a6983289d4a6a5f03c4ef2e0b8c49803a45776a87",
+            "stage2_input_scope": "cross_reference_text_not_in_stage2_input",
             "text": "That period may be extended by six weeks, taking into account the complexity of the intended processing."
           },
           "present": true,
@@ -4439,10 +4866,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -4511,10 +4940,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "30fc57f674fcf9c51c4549621348133e916d96e232097fc0236302e6fa35cb56",
+            "stage2_input_scope": "stage2_model_input",
             "text": "organisational"
           },
           "present": true,
@@ -4523,10 +4954,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -4535,10 +4968,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "d5a1b7fa0bec3dfe7baaa1019c36aa8be5af6deff3f380b6e3b2f7b09999d7f5",
+            "stage2_input_scope": "stage2_model_input",
             "text": "risk of varying likelihood and severity for"
           },
           "present": true,
@@ -4547,10 +4982,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "ea54b83c6df69730019ac910ea3e3d2bca1a25689a38f9477093d02cd374351e",
+            "stage2_input_scope": "stage2_model_input",
             "text": "to ensure a level of security appropriate to the risk"
           },
           "present": true,
@@ -4559,10 +4996,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -4571,10 +5010,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -4643,10 +5084,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "238fa28a94976c7da14563bc873c2729bd5cd325389085bb4c6dd0de28923590",
+            "stage2_input_scope": "stage2_model_input",
             "text": "instructions"
           },
           "present": true,
@@ -4655,10 +5098,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -4667,10 +5112,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "5b96266bd61ca943df26fc39fbb9c6d5f83e2612075bfeee8ef7bcd035ab6905",
+            "stage2_input_scope": "stage2_model_input",
             "text": "has access to personal data"
           },
           "present": true,
@@ -4679,10 +5126,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "e2da3c2a17785327f2f47bf6be64190d32afd5744ee844567261d0c1c81d0060",
+            "stage2_input_scope": "stage2_model_input",
             "text": "does not process them except on instructions from the controller"
           },
           "present": true,
@@ -4691,11 +5140,13 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
-            "note": "exception clause matched in excerpt",
+            "note": "full exception semantic value present in excerpt",
             "scope": "source_excerpt",
-            "sha256": "8db0d1a42a082b8efc8e6fdfb8ffd40e7b3e6ef06fbd0e8ec008dd94d50a7872",
-            "text": "required to do so by union or member state law"
+            "sha256": "5cac5c4eb14daea2947b72d34760fb1a0322801803a883728b53cdcd342207c3",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "required to do so by Union or Member State law"
           },
           "present": true,
           "value": "required to do so by Union or Member State law"
@@ -4703,10 +5154,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -4778,10 +5231,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -4790,10 +5245,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "d825be6ffd4c9a27a8cc2f26e4a3b95bc87a8f43289ca467d064d544c509f8eb",
+            "stage2_input_scope": "stage2_model_input",
             "text": "processor"
           },
           "present": true,
@@ -4802,10 +5259,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "c922164b6aa564158b7f7a8f3d56b86a58d8131febfdd756b9a58b2559f7baf9",
+            "stage2_input_scope": "stage2_model_input",
             "text": "aware of a personal data breach"
           },
           "present": true,
@@ -4814,10 +5273,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "5e41dbe6f7a6ba5c0988b8c0ca7c6da35dc45702b6c1e823b1703f7369167758",
+            "stage2_input_scope": "stage2_model_input",
             "text": "without undue delay after becoming aware of a personal data breach"
           },
           "present": true,
@@ -4826,10 +5287,12 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "in_input": false,
             "note": "exception_present=false",
             "scope": "not_present",
             "sha256": null,
+            "stage2_input_scope": "absent",
             "text": ""
           },
           "present": false,
@@ -4838,10 +5301,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -4917,10 +5382,12 @@
         "action": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "mandatory action verb matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "7d22d390ec67d1aa03eca9ca45884b3c83a0595d0c152d93dea473052383444c",
+            "stage2_input_scope": "stage2_model_input",
             "text": "communicate"
           },
           "present": true,
@@ -4929,10 +5396,12 @@
         "actor": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "actor surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "c1472135b14c77c8bef98e73f70208325fa0dcf1e6bd668ae9b31a9cea295fe7",
+            "stage2_input_scope": "stage2_model_input",
             "text": "controller"
           },
           "present": true,
@@ -4941,10 +5410,12 @@
         "condition": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "condition clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "c4881ff66b84d43a4faab8d196a0ce1abbb6fe90692f0619da6973d3ced95b3d",
+            "stage2_input_scope": "stage2_model_input",
             "text": "likely to result in"
           },
           "present": true,
@@ -4953,10 +5424,12 @@
         "constraint": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "constraint clause matched in excerpt",
             "scope": "source_excerpt",
             "sha256": "d04f7ae40a8b7e2f00217d7f39a8e5a0d4717ca9b050aa96de0a31788f7a65ee",
+            "stage2_input_scope": "stage2_model_input",
             "text": "without undue delay"
           },
           "present": true,
@@ -4965,15 +5438,18 @@
         "exception": {
           "evidence": {
             "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
             "declared_source": {
               "citation": "GDPR Article 34(1)",
               "text": "Article 34(3) exceptions may apply",
               "type": "provision_citation"
             },
+            "fully_source_grounded_in_stage2_input": false,
             "in_input": false,
-            "note": "exception is a cross-reference whose text was NOT provided; must NOT be counted as in-input",
+            "note": "exception is a cross-reference/paraphrase whose full text is not present in the Stage2 input; must NOT be counted as Stage2 input",
             "scope": "declared_external_context",
             "sha256": "3354c500205ac44f884f172a6452f3023c54c26d5e7df15c533b453ce71ac53f",
+            "stage2_input_scope": "shared_public_task_context",
             "text": "Article 34(3) exceptions may apply"
           },
           "present": true,
@@ -4982,10 +5458,12 @@
         "modality": {
           "evidence": {
             "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
             "in_input": true,
             "note": "modal surface in excerpt",
             "scope": "source_excerpt",
             "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
             "text": "shall"
           },
           "present": true,
@@ -5047,6 +5525,290 @@
       "unrepresented_business_facts": [
         "exception"
       ]
+    },
+    {
+      "article": 40,
+      "char_span": null,
+      "citation": "GDPR Article 40(7)",
+      "context_ref": null,
+      "context_sha256": null,
+      "context_text": "",
+      "core_eligible": true,
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "elements": {
+        "action": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "mandatory action verb matched in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "8b64d4c90d04e5f39fa8eec59c3bac0b98a611b52c64f42b709486373fd0c9ba",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "approving"
+          },
+          "present": true,
+          "value": "Submit the draft code to the Board before approving it"
+        },
+        "actor": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "actor surface in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "f03f189e58b6097737824c7d7a2228486f3f23956e66bd7d62cdb264ebfa8fe9",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "supervisory"
+          },
+          "present": true,
+          "value": "Supervisory authority"
+        },
+        "condition": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "condition clause matched in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "155cb47c4a6c4c717f69dc0b1fb294c4a82e7bdd8a945975b9eba706b5a7384e",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "a draft code of conduct relates to processing activities in several member states"
+          },
+          "present": true,
+          "value": "a draft code of conduct relates to processing activities in several Member States"
+        },
+        "constraint": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "constraint clause matched in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "f4d9655d6b979589abbeb395b69d21e33042a1e3f799e067a0a0e16bf0b36a74",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "before approving the draft code amendment or extension"
+          },
+          "present": true,
+          "value": "before approving the draft code, amendment or extension"
+        },
+        "exception": {
+          "evidence": {
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
+            "in_input": false,
+            "note": "exception_present=false",
+            "scope": "not_present",
+            "sha256": null,
+            "stage2_input_scope": "absent",
+            "text": ""
+          },
+          "present": false,
+          "value": ""
+        },
+        "modality": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "modal surface in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "shall"
+          },
+          "present": true,
+          "value": "obligation"
+        }
+      },
+      "eligibility": {
+        "basis": {
+          "incorrect_actor": "The duty is on the competent supervisory authority, not on the Board.",
+          "missing_action": "Article 40(7) imposes a positive duty to submit the multi-State draft to the Board.",
+          "out_of_order": "Explicit action precedence: submit the draft 'before approving' it."
+        },
+        "disposition": "core",
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true,
+        "review_fixes": [
+          "added_by_bounded_source_only_order_closure"
+        ],
+        "review_issues": []
+      },
+      "evidence_location": {
+        "article": 40,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 40(7)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+        "locator": "Where a draft code of conduct relates to processing activities in several Member States",
+        "paragraph": "7",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article40.txt",
+        "source_dataset_sha256": "9e04aae537952eb634896c198de2807923be3fb60d6d767d408fdd64c8460ae7",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article40.txt",
+        "source_file_sha256": "9e04aae537952eb634896c198de2807923be3fb60d6d767d408fdd64c8460ae7",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_text": "Where a draft code of conduct relates to processing activities in several Member States, the supervisory authority which is competent pursuant to Article 55 shall, before approving the draft code, amendment or extension, submit it in the procedure referred to in Article 63 to the Board which shall provide an opinion on whether the draft code, amendment or extension complies with this Regulation or, in the situation referred to in paragraph 3 of this Article, provides appropriate safeguards.",
+      "exposure_status": "no_prior_exposure_found",
+      "paragraph": "7",
+      "requirement_id": "R5-S7-T1",
+      "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article40.txt",
+      "source_dataset_sha256": "9e04aae537952eb634896c198de2807923be3fb60d6d767d408fdd64c8460ae7",
+      "source_family_id": "gdpr_art40",
+      "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article40.txt",
+      "source_file_sha256": "9e04aae537952eb634896c198de2807923be3fb60d6d767d408fdd64c8460ae7",
+      "source_kind": "new_article",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "split": "test",
+      "text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+      "unrepresented_business_facts": []
+    },
+    {
+      "article": 43,
+      "char_span": null,
+      "citation": "GDPR Article 43(1)",
+      "context_ref": null,
+      "context_sha256": null,
+      "context_text": "",
+      "core_eligible": true,
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "elements": {
+        "action": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "mandatory action verb matched in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "b00a6c108553e242e3d69c510fcff6382f875613a5feac011254132fb1460a04",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "certification"
+          },
+          "present": true,
+          "value": "Issue or renew the certification after informing"
+        },
+        "actor": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "actor surface in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "b00a6c108553e242e3d69c510fcff6382f875613a5feac011254132fb1460a04",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "certification"
+          },
+          "present": true,
+          "value": "Certification body"
+        },
+        "condition": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "condition clause matched in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "30c45118897c4d33e4c38641c4fe1fd00066d27ccc20695ec6649bf3825f4702",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "have an appropriate level of expertise in relation to data protection"
+          },
+          "present": true,
+          "value": "certification bodies have an appropriate level of expertise in relation to data protection"
+        },
+        "constraint": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "constraint clause matched in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "b4562a83f914535bdef38da26dc6ba26f97e33b4edda088049ed1d427c97d839",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "after informing the supervisory authority in order to allow it to exercise its powers pursuant to point h of article 58 2 where necessary"
+          },
+          "present": true,
+          "value": "after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary"
+        },
+        "exception": {
+          "evidence": {
+            "counts_as_in_input": false,
+            "counts_as_stage2_input": false,
+            "in_input": false,
+            "note": "exception_present=false",
+            "scope": "not_present",
+            "sha256": null,
+            "stage2_input_scope": "absent",
+            "text": ""
+          },
+          "present": false,
+          "value": ""
+        },
+        "modality": {
+          "evidence": {
+            "counts_as_in_input": true,
+            "counts_as_stage2_input": true,
+            "in_input": true,
+            "note": "modal surface in excerpt",
+            "scope": "source_excerpt",
+            "sha256": "56ee5b508706bf2de91712d85d6d1e11ddbff01949142ed6e8c22e3b1bed1c71",
+            "stage2_input_scope": "stage2_model_input",
+            "text": "shall"
+          },
+          "present": true,
+          "value": "obligation"
+        }
+      },
+      "eligibility": {
+        "basis": {
+          "incorrect_actor": "The duty is on the certification body, not on the supervisory authority.",
+          "missing_action": "Article 43(1) imposes a positive duty to issue and renew certification.",
+          "out_of_order": "Explicit action precedence: certification is issued or renewed 'after informing' the supervisory authority."
+        },
+        "disposition": "core",
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true,
+        "review_fixes": [
+          "added_by_bounded_source_only_order_closure"
+        ],
+        "review_issues": []
+      },
+      "evidence_location": {
+        "article": 43,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 43(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+        "locator": "certification bodies which have an appropriate level of expertise",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article43.txt",
+        "source_dataset_sha256": "f71799eca33eb2a1755b926e79b4df19aa6159204cded7b6d51406a9eb8ae6d4",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article43.txt",
+        "source_file_sha256": "f71799eca33eb2a1755b926e79b4df19aa6159204cded7b6d51406a9eb8ae6d4",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification.",
+      "exposure_status": "no_prior_exposure_found",
+      "paragraph": "1",
+      "requirement_id": "R5-S8-T1",
+      "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article43.txt",
+      "source_dataset_sha256": "f71799eca33eb2a1755b926e79b4df19aa6159204cded7b6d51406a9eb8ae6d4",
+      "source_family_id": "gdpr_art43",
+      "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article43.txt",
+      "source_file_sha256": "f71799eca33eb2a1755b926e79b4df19aa6159204cded7b6d51406a9eb8ae6d4",
+      "source_kind": "new_article",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "split": "test",
+      "text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+      "unrepresented_business_facts": []
     }
   ],
   "schema_version": "stage3_table3_r5_source_requirements@2.0.0",

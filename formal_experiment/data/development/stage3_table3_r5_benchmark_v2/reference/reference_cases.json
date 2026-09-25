@@ -378,6 +378,40 @@
       "variant": "missing_action"
     },
     {
+      "case_id": "case_1e5363aa87b5",
+      "citation": "GDPR Article 40(7)",
+      "ineligible_types": [],
+      "mutation_observed": {
+        "actor": "Supervisory authority",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S7-T1",
+      "scored_types": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "source_family_id": "gdpr_art40",
+      "source_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+      "split": "test",
+      "target_node": "Activity_1",
+      "variant": "baseline"
+    },
+    {
       "case_id": "case_1f817e0b0d37",
       "citation": "GDPR Article 34(1)",
       "ineligible_types": [
@@ -957,6 +991,40 @@
       "variant": "missing_action"
     },
     {
+      "case_id": "case_3af5fd62647b",
+      "citation": "GDPR Article 43(1)",
+      "ineligible_types": [],
+      "mutation_observed": {
+        "actor": "Certification body",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_1",
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S8-T1",
+      "scored_types": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "source_family_id": "gdpr_art43",
+      "source_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+      "split": "test",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
       "case_id": "case_3b01b9c36d0f",
       "citation": "GDPR Article 13(3)",
       "ineligible_types": [],
@@ -1059,6 +1127,40 @@
       "split": "development",
       "target_node": "Activity_1",
       "variant": "baseline"
+    },
+    {
+      "case_id": "case_44ded3550ee5",
+      "citation": "GDPR Article 43(1)",
+      "ineligible_types": [],
+      "mutation_observed": {
+        "actor": "Supervisory authority",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S8-T1",
+      "scored_types": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "source_family_id": "gdpr_art43",
+      "source_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+      "split": "test",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
     },
     {
       "case_id": "case_47ac07c5ced4",
@@ -1475,6 +1577,39 @@
       "variant": "missing_action"
     },
     {
+      "case_id": "case_64e83d36bba3",
+      "citation": "GDPR Article 40(7)",
+      "ineligible_types": [],
+      "mutation_observed": {
+        "actor": "Supervisory authority",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S7-T1",
+      "scored_types": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "source_family_id": "gdpr_art40",
+      "source_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+      "split": "test",
+      "target_node": null,
+      "variant": "missing_action"
+    },
+    {
       "case_id": "case_65628736fcec",
       "citation": "GDPR Article 7(1)",
       "ineligible_types": [
@@ -1886,6 +2021,40 @@
       "variant": "missing_action"
     },
     {
+      "case_id": "case_7dcc88ac3cf1",
+      "citation": "GDPR Article 40(7)",
+      "ineligible_types": [],
+      "mutation_observed": {
+        "actor": "Supervisory authority",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_2",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "R5-S7-T1",
+      "scored_types": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "source_family_id": "gdpr_art40",
+      "source_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+      "split": "test",
+      "target_node": "Activity_1",
+      "variant": "out_of_order"
+    },
+    {
       "case_id": "case_806f7830225a",
       "citation": "GDPR Article 14(1)",
       "ineligible_types": [],
@@ -1952,6 +2121,40 @@
       "split": "test",
       "target_node": "Activity_1",
       "variant": "incorrect_actor"
+    },
+    {
+      "case_id": "case_83e2662c1457",
+      "citation": "GDPR Article 43(1)",
+      "ineligible_types": [],
+      "mutation_observed": {
+        "actor": "Certification body",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reference_states": {
+        "incorrect_actor": "satisfied",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S8-T1",
+      "scored_types": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "source_family_id": "gdpr_art43",
+      "source_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+      "split": "test",
+      "target_node": "Activity_1",
+      "variant": "baseline"
     },
     {
       "case_id": "case_8447fd35edc7",
@@ -2707,6 +2910,40 @@
       "variant": "baseline"
     },
     {
+      "case_id": "case_c2c28cb239bc",
+      "citation": "GDPR Article 40(7)",
+      "ineligible_types": [],
+      "mutation_observed": {
+        "actor": "Board",
+        "mandatory_present": true,
+        "sequence": [
+          "Activity_0",
+          "Activity_1",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_1",
+        "Activity_2"
+      ],
+      "reference_states": {
+        "incorrect_actor": "violated",
+        "missing_action": "satisfied",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "R5-S7-T1",
+      "scored_types": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "source_family_id": "gdpr_art40",
+      "source_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+      "split": "test",
+      "target_node": "Activity_1",
+      "variant": "incorrect_actor"
+    },
+    {
       "case_id": "case_c5b585c4439f",
       "citation": "GDPR Article 33(1)",
       "ineligible_types": [],
@@ -2807,6 +3044,39 @@
       "split": "development",
       "target_node": "Activity_1",
       "variant": "out_of_order"
+    },
+    {
+      "case_id": "case_d1ab41696c03",
+      "citation": "GDPR Article 43(1)",
+      "ineligible_types": [],
+      "mutation_observed": {
+        "actor": "Certification body",
+        "mandatory_present": false,
+        "sequence": [
+          "Activity_0",
+          "Activity_2"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "violated",
+        "out_of_order": "not_applicable"
+      },
+      "requirement_id": "R5-S8-T1",
+      "scored_types": [
+        "missing_action",
+        "incorrect_actor",
+        "out_of_order"
+      ],
+      "source_family_id": "gdpr_art43",
+      "source_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+      "split": "test",
+      "target_node": null,
+      "variant": "missing_action"
     },
     {
       "case_id": "case_d2f6fee80f4e",

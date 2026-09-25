@@ -179,15 +179,43 @@ def check_element_evidence(bundle: dict) -> dict:
                 src_tokens = set(norm_tokens(s["excerpt_text"]))
                 if not ev_tokens or not ev_tokens.issubset(src_tokens):
                     bad.append((s["requirement_id"], name, "source_excerpt_evidence_not_in_excerpt"))
-            elif scope == "cross_reference_provided":
-                if not e.get("cross_reference") or not e["cross_reference"].get("provided_to_task"):
-                    bad.append((s["requirement_id"], name, "cross_reference_not_provided"))
+                if e.get("counts_as_stage2_input") is not True:
+                    bad.append((s["requirement_id"], name, "source_excerpt_not_stage2_input"))
+            elif scope == "cross_reference_text_outside_stage2_input":
+                cross = e.get("cross_reference") or {}
+                if not cross.get("provided_to_task"):
+                    bad.append((s["requirement_id"], name, "cross_reference_text_not_marked_provided_outside_stage2"))
+                if e.get("counts_as_stage2_input") is not False or e.get("in_input") is not False:
+                    bad.append((s["requirement_id"], name, "cross_reference_falsely_counted_as_stage2_input"))
+                if not e.get("fully_source_grounded_in_stage2_input") is False:
+                    bad.append((s["requirement_id"], name, "cross_reference_grounding_flag_wrong"))
             elif scope == "declared_external_context":
                 if not e.get("declared_source"):
                     bad.append((s["requirement_id"], name, "declared_external_without_source"))
+                if e.get("counts_as_stage2_input") is not False:
+                    bad.append((s["requirement_id"], name, "external_context_falsely_counted_as_stage2_input"))
             else:
                 bad.append((s["requirement_id"], name, f"unknown_scope:{scope}"))
     return {"check_id": "V2-Q-03-element-evidence-binding", "group": "content", "passed": not bad,
+            "detail": f"bad={bad[:20]}", "evidence": {"bad": bad}}
+
+
+def check_stage2_input_separation(bundle: dict) -> dict:
+    """Regression guard: only source_excerpt may be counted as Stage2 input."""
+    bad = []
+    for s in bundle["source"]["requirements"]:
+        for name, payload in s["elements"].items():
+            e = payload["evidence"]
+            scope = e.get("scope")
+            stage2_scope = e.get("stage2_input_scope")
+            counts = e.get("counts_as_stage2_input")
+            if scope == "source_excerpt":
+                if not (counts is True and stage2_scope == "stage2_model_input"):
+                    bad.append((s["requirement_id"], name, "source_not_stage2"))
+            else:
+                if counts is not False or stage2_scope == "stage2_model_input":
+                    bad.append((s["requirement_id"], name, f"non_source_counted_as_stage2:{scope}"))
+    return {"check_id": "V2-Q-06-stage2-input-separation", "group": "content", "passed": not bad,
             "detail": f"bad={bad[:20]}", "evidence": {"bad": bad}}
 
 
@@ -203,27 +231,42 @@ def check_condition_flags(bundle: dict) -> dict:
             "detail": f"bad={bad}", "evidence": {"bad": bad}}
 
 
+EVALUATOR_ONLY_TRUTH_KEYS = {
+    "condition_holds", "exception_applies", "duty_in_force", "outcome",
+    "reference_semantics", "article_17_3_exception_applies",
+    "article_20_4_exception_applies",
+}
+
+
 def check_exception_polarity(bundle: dict) -> dict:
     bad = []
     for pair in bundle["semantic"]["pairs"]:
         kind = pair["pair_kind"]
         for c in pair["cases"]:
-            facts = c["applicability_facts"]
-            outcome = c["reference"]["outcome"]
-            duty = c["reference"]["duty_in_force"]
+            visible = c.get("method_visible_facts") or {}
+            truth = c.get("evaluator_only_truth") or {}
+            overlap = EVALUATOR_ONLY_TRUTH_KEYS & set(visible)
+            if overlap:
+                bad.append((pair["pair_id"], f"evaluator_truth_in_method_visible:{sorted(overlap)}"))
+            if pair.get("scoring_disposition") == "unsupported_not_scored":
+                if truth.get("outcome") != "not_scored":
+                    bad.append((pair["pair_id"], "unsupported_pair_scored"))
+                continue
+            outcome = truth.get("outcome")
+            duty = truth.get("duty_in_force")
             if kind == "condition":
-                if "exception_applies" in facts:
+                if "exception_applies" in visible:
                     bad.append((pair["pair_id"], "condition_pair_uses_exception_fact"))
-                if facts.get("condition_holds") is True and outcome != "violation":
+                if truth.get("condition_holds") is True and outcome != "violation":
                     bad.append((pair["pair_id"], "condition_true_not_violation"))
-                if facts.get("condition_holds") is False and outcome != "not_applicable":
+                if truth.get("condition_holds") is False and outcome != "not_applicable":
                     bad.append((pair["pair_id"], "condition_false_not_na"))
             else:
-                if facts.get("exception_applies") is True and outcome != "exempted":
+                if truth.get("exception_applies") is True and outcome != "exempted":
                     bad.append((pair["pair_id"], "exception_true_not_exempted"))
-                if facts.get("exception_applies") is False and outcome != "violation":
+                if truth.get("exception_applies") is False and outcome != "violation":
                     bad.append((pair["pair_id"], "exception_false_not_violation"))
-                if facts.get("exception_applies") is True and duty is not False:
+                if truth.get("exception_applies") is True and duty is not False:
                     bad.append((pair["pair_id"], "exception_true_but_duty_in_force"))
     return {"check_id": "V2-Q-05-exception-polarity", "group": "content", "passed": not bad,
             "detail": f"bad={bad}", "evidence": {"bad": bad}}
@@ -388,7 +431,7 @@ STRUCTURAL_CHECKS = [check_family_split, check_dev_positive_examples, check_chal
                      check_budget_and_reuse]
 CONTENT_CHECKS = [check_order_eligibility, check_permission_prohibition_not_scored,
                   check_element_evidence, check_condition_flags, check_exception_polarity,
-                  check_no_mutation_label_reference]
+                  check_no_mutation_label_reference, check_stage2_input_separation]
 
 
 def validate(bundle: dict | None = None) -> tuple[bool, dict]:

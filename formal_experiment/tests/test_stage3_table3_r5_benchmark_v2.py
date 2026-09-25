@@ -91,11 +91,20 @@ def test_counterexample_challenge_dangling_task_is_caught():
 def test_counterexample_exception_polarity_is_caught():
     b = bundle()
     for pair in b["semantic"]["pairs"]:
+        if pair.get("scoring_disposition") == "unsupported_not_scored":
+            continue
         if pair["pair_kind"] == "exception":
             for c in pair["cases"]:
-                if c["applicability_facts"].get("exception_applies") is True:
-                    c["reference"]["outcome"] = "violation"  # wrong: exception true must exempt
-                    c["reference"]["duty_in_force"] = True
+                if c["evaluator_only_truth"].get("exception_applies") is True:
+                    c["evaluator_only_truth"]["outcome"] = "violation"  # wrong: exception true must exempt
+                    c["evaluator_only_truth"]["duty_in_force"] = True
+    assert not v.check_exception_polarity(b)["passed"]
+
+
+def test_counterexample_evaluator_truth_in_method_visible_is_caught():
+    b = bundle()
+    first = b["semantic"]["pairs"][0]["cases"][0]
+    first["method_visible_facts"]["condition_holds"] = True
     assert not v.check_exception_polarity(b)["passed"]
 
 

@@ -2,11 +2,11 @@
   "benchmark_id": "stage3_table3_r5_benchmark_v2",
   "boundary": "Readiness only; no method metric is claimed.",
   "budget_summary": {
-    "calls_cap_core_request_list": 17,
-    "cost_upper_bound_usd_with_20pct_margin": 0.91,
+    "calls_cap_core_request_list": 19,
+    "cost_upper_bound_usd_with_20pct_margin": 1.03,
     "retry_cap": 0,
-    "total_input_tokens_cap": 364949,
-    "total_output_tokens_cap": 69632
+    "total_input_tokens_cap": 414769,
+    "total_output_tokens_cap": 77824
   },
   "can_start_formal_method_run": false,
   "data_scope": {
@@ -19,7 +19,7 @@
     ],
     "condition_exception_truth_still_unsupported": true,
     "core_cases": null,
-    "core_requirements": 31,
+    "core_requirements": 33,
     "frozen_core_scope": "three-class (missing_action / incorrect_actor / out_of_order) on source-grounded obligations only",
     "permission_prohibition_assets_not_scored": true
   },
@@ -29,20 +29,28 @@
     "No new Stage2/Stage3 run may start until the method protocol and API budget are authorized."
   ],
   "future_execution_order": [
-    "After authorization, run exactly 17 unique Ours Direct-LLM Stage2 requests (one per unique source text); no per-variant calls.",
+    "After authorization, run exactly 19 unique Ours Direct-LLM Stage2 requests (one per unique source text); no per-variant calls.",
     "Reuse the verified existing Stage2 predictions listed in the reuse report.",
     "Run Sun Rules-Only locally and Winter native after Stage2 inputs are frozen.",
     "Run shared Stage3 on the frozen inference view; report core metrics, coverage, unknown, N/A and semantic challenges separately."
   ],
   "reuse_summary": {
+    "core_eligible_requirements": 33,
+    "ours_historical_chain_reuse": 9,
     "ours_input_changed": 0,
     "ours_method_changed": 0,
-    "ours_new_requests": 22,
+    "ours_new_requests": 24,
+    "ours_new_requests_core": 19,
+    "ours_new_requests_total": 24,
+    "ours_not_reusable": 0,
+    "ours_strong_reuse": 5,
     "ours_unverified": 0,
     "ours_verified_reusable": 14,
+    "sun_strong_reuse": 0,
     "sun_unverified": 0,
     "sun_verified_reusable": 14,
-    "unique_regulation_inputs": 36
+    "sun_weak_reuse": 14,
+    "unique_regulation_inputs": 38
   },
   "schema_version": "stage3_table3_r5_readiness@2.0.0",
   "statuses": {

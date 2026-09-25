@@ -15,7 +15,7 @@
     "split",
     "exposure_status"
   ],
-  "count": 36,
+  "count": 38,
   "rows": [
     {
       "current_order": {
@@ -50,7 +50,7 @@
         "locator": "Where the controller intends to further process",
         "paragraph": "3",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
         "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -115,7 +115,7 @@
         "locator": "Where the controller intends to further process",
         "paragraph": "4",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
         "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -180,7 +180,7 @@
         "locator": "A data subject who has obtained restriction",
         "paragraph": "3",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article18.txt",
         "source_file_sha256": "7b1015297c6f023e39ce2cb8d74ef942a2d72dbbe804cfac73c6295dcb0693b9",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -245,7 +245,7 @@
         "locator": "Where a type of processing in particular using new technologies",
         "paragraph": "1",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
         "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -308,7 +308,7 @@
         "locator": "The controller shall consult the supervisory authority prior to processing",
         "paragraph": "1",
         "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
-        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_dataset_sha256": "a14724d21d857dfda23ef51ab77096606c52144a1533040a3a46a69049e18501",
         "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
         "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
         "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
@@ -2236,6 +2236,124 @@
         "incorrect_actor": true,
         "missing_action": true,
         "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "before approving the draft code, amendment or extension",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Receive the multi-State draft code of conduct",
+        "Submit the draft code to the Board before approving it",
+        "Approve the draft code, amendment or extension"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the competent supervisory authority, not on the Board.",
+        "missing_action": "Article 40(7) imposes a positive duty to submit the multi-State draft to the Board.",
+        "out_of_order": "Explicit action precedence: submit the draft 'before approving' it."
+      },
+      "evidence_location": {
+        "article": 40,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 40(7)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+        "locator": "Where a draft code of conduct relates to processing activities in several Member States",
+        "paragraph": "7",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article40.txt",
+        "source_dataset_sha256": "9e04aae537952eb634896c198de2807923be3fb60d6d767d408fdd64c8460ae7",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article40.txt",
+        "source_file_sha256": "9e04aae537952eb634896c198de2807923be3fb60d6d767d408fdd64c8460ae7",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where a draft code of conduct relates to processing activities in several Member States, the supervisory authority which is competent pursuant to Article 55 shall, before approving the draft code, amendment or extension, submit it in the procedure referred to in Article 63 to the Board which shall provide an opinion on whether the draft code, amendment or extension complies with this Regulation or, in the situation referred to in paragraph 3 of this Article, provides appropriate safeguards.",
+        "excerpt_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "added_by_bounded_source_only_order_closure"
+      ],
+      "problem_category": [
+        "none_found"
+      ],
+      "requirement_id": "R5-S7-T1",
+      "source_family_id": "gdpr_art40",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "after informing the supervisory authority",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Inform the supervisory authority",
+        "Issue or renew the certification after informing",
+        "Record the certification decision"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the certification body, not on the supervisory authority.",
+        "missing_action": "Article 43(1) imposes a positive duty to issue and renew certification.",
+        "out_of_order": "Explicit action precedence: certification is issued or renewed 'after informing' the supervisory authority."
+      },
+      "evidence_location": {
+        "article": 43,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 43(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+        "locator": "certification bodies which have an appropriate level of expertise",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article43.txt",
+        "source_dataset_sha256": "f71799eca33eb2a1755b926e79b4df19aa6159204cded7b6d51406a9eb8ae6d4",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article43.txt",
+        "source_file_sha256": "f71799eca33eb2a1755b926e79b4df19aa6159204cded7b6d51406a9eb8ae6d4",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification.",
+        "excerpt_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "added_by_bounded_source_only_order_closure"
+      ],
+      "problem_category": [
+        "none_found"
+      ],
+      "requirement_id": "R5-S8-T1",
+      "source_family_id": "gdpr_art43",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
       }
     }
   ],

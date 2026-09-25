@@ -238,14 +238,28 @@ def annotate_elements(spec: dict, source: dict) -> dict:
     action = spec["tasks"][spec["mandatory_index"]]
     citation = spec["citation"]
 
+    def _stage2_scope(scope: str) -> str:
+        return {
+            "source_excerpt": "stage2_model_input",
+            "declared_external_context": "shared_public_task_context",
+            "cross_reference_text_outside_stage2_input": "cross_reference_text_not_in_stage2_input",
+            "not_present": "absent",
+            "not_provided": "absent",
+        }.get(scope, "other_not_stage2_input")
+
     def ev(scope: str, text: str, note: str, declared_source: dict | None = None) -> dict:
         payload = {
             "scope": scope,
+            "stage2_input_scope": _stage2_scope(scope),
             "text": text,
             "sha256": sha_text(text) if text else None,
             "note": note,
-            "in_input": scope in ("source_excerpt",),
-            "counts_as_in_input": scope in ("source_excerpt",),
+            "in_input": scope == "source_excerpt",
+            # Compatibility field: ONLY true for text actually placed in the
+            # final Stage2 API payload.  Context/evaluator material is never
+            # counted as Stage2 input.
+            "counts_as_in_input": scope == "source_excerpt",
+            "counts_as_stage2_input": scope == "source_excerpt",
         }
         if declared_source:
             payload["declared_source"] = declared_source
@@ -314,21 +328,33 @@ def annotate_elements(spec: dict, source: dict) -> dict:
     # exception
     exc = spec.get("exception_text", "")
     if spec.get("exception_present"):
-        m = best_ngram_evidence(excerpt, exc, 2)
-        if m:
-            exception = ev("source_excerpt", m, "exception clause matched in excerpt")
-            exception["counts_as_in_input"] = True
+        full_match = bool(exc) and normalized_ws(exc).lower() in normalized_ws(excerpt).lower()
+        if full_match:
+            exception = ev("source_excerpt", exc, "full exception semantic value present in excerpt")
         else:
             cross = exception_crossref_source_cached(spec["requirement_id"])
             if cross:
-                exception = ev("cross_reference_provided", cross["text"],
-                               f"exception lives in {cross['paragraph_label']}; full text actually provided to the task")
-                exception["counts_as_in_input"] = True
+                exception = ev(
+                    "cross_reference_text_outside_stage2_input",
+                    cross["text"],
+                    (f"exception depends on {cross['paragraph_label']}; the cross-reference text is "
+                     "available outside the final Stage2 model input and must not be counted as Stage2 input"),
+                )
                 exception["cross_reference"] = cross
+                exception["cross_reference_only"] = True
+                exception["fully_source_grounded_in_stage2_input"] = False
             else:
-                exception = external(
-                    "exception is a cross-reference whose text was NOT provided; must NOT be counted as in-input", exc)
-                exception["counts_as_in_input"] = False
+                # A short generic n-gram must never ground a cross-reference or
+                # an otherwise unsupported legal exception.  Keep only a long
+                # exact overlap; otherwise record it as external/unsupported.
+                m = best_ngram_evidence(excerpt, exc, 4)
+                if m and len(_norm_tokens(m)) >= 4:
+                    exception = ev("source_excerpt", m, "long exception overlap matched in excerpt")
+                else:
+                    exception = external(
+                        "exception is a cross-reference/paraphrase whose full text is not present in the Stage2 input; "
+                        "must NOT be counted as Stage2 input", exc)
+                    exception["fully_source_grounded_in_stage2_input"] = False
     else:
         exception = ev("not_present", "", "exception_present=false")
 
@@ -448,8 +474,8 @@ FACT_SPEC = {
         {"data_subject_already_has_the_information": True},
     ),
     ("exception", "R5-D-10"): (
-        {"article_17_3_exception_applies": False},
-        {"article_17_3_exception_applies": True},
+        {"processing_necessary_for_exercise_of_freedom_of_expression_and_information": False},
+        {"processing_necessary_for_exercise_of_freedom_of_expression_and_information": True},
     ),
     ("exception", "R5-D-11"): (
         {"article_20_4_exception_applies": False},
@@ -552,24 +578,58 @@ def build_semantic_challenges_v2(config: dict, core_specs: dict, sources: dict) 
             artifacts[pb] = raw
             concrete = FACT_SPEC.get((kind, rid), (
                 {"applicability_condition_holds": True}, {"applicability_condition_holds": False}))
-            if kind == "condition":
-                fact_a = {"condition_holds": True, **concrete[0]}
-                fact_b = {"condition_holds": False, **concrete[1]}
-                ref_a = {"duty_in_force": True, "outcome": "violation",
-                         "note": "condition true -> requirement applicable; mandatory action not performed"}
-                ref_b = {"duty_in_force": False, "outcome": "not_applicable",
-                         "note": "condition false -> requirement not applicable; the same omission is not a violation"}
-                semantics_a = "condition_true_duty_in_force_and_action_absent"
-                semantics_b = "condition_false_requirement_not_applicable"
+            unsupported = (kind, rid) in {
+                ("condition", "R5-S5-T2"),  # "where appropriate": no objective method-visible truth
+                ("exception", "R5-D-11"),   # Article 20(4) is a legal limitation, not a core exception truth
+            }
+            semantics_a = (
+                "condition_true_duty_in_force_and_action_absent"
+                if kind == "condition"
+                else "exception_not_applied_duty_in_force_and_action_absent"
+            )
+            semantics_b = (
+                "condition_false_requirement_not_applicable"
+                if kind == "condition"
+                else "exception_applied_obligation_exempted"
+            )
+            if unsupported:
+                visible_a = {}
+                visible_b = {}
+                truth_a = {
+                    "outcome": "not_scored",
+                    "duty_in_force": None,
+                    "reference_semantics": "unsupported_no_objective_method_visible_fact",
+                }
+                truth_b = dict(truth_a)
             else:
-                fact_a = {"exception_applies": False, **concrete[0]}
-                fact_b = {"exception_applies": True, **concrete[1]}
-                ref_a = {"duty_in_force": True, "outcome": "violation",
-                         "note": "no exception -> duty in force; mandatory action not performed"}
-                ref_b = {"duty_in_force": False, "outcome": "exempted",
-                         "note": "exception applies -> obligation exempted; the same omission is not a violation"}
-                semantics_a = "exception_not_applied_duty_in_force_and_action_absent"
-                semantics_b = "exception_applied_obligation_exempted"
+                visible_a = dict(concrete[0])
+                visible_b = dict(concrete[1])
+                if kind == "condition":
+                    truth_a = {
+                        "condition_holds": True,
+                        "duty_in_force": True,
+                        "outcome": "violation",
+                        "reference_semantics": semantics_a,
+                    }
+                    truth_b = {
+                        "condition_holds": False,
+                        "duty_in_force": False,
+                        "outcome": "not_applicable",
+                        "reference_semantics": semantics_b,
+                    }
+                else:
+                    truth_a = {
+                        "exception_applies": False,
+                        "duty_in_force": True,
+                        "outcome": "violation",
+                        "reference_semantics": semantics_a,
+                    }
+                    truth_b = {
+                        "exception_applies": True,
+                        "duty_in_force": False,
+                        "outcome": "exempted",
+                        "reference_semantics": semantics_b,
+                    }
             cross = None
             if kind == "exception":
                 cross = (annotate_elements(spec, source)["exception"]["evidence"].get("cross_reference"))
@@ -579,28 +639,49 @@ def build_semantic_challenges_v2(config: dict, core_specs: dict, sources: dict) 
                 "provision_type": "condition" if kind == "condition" else "exception",
                 "cross_reference": cross,
             }
-            pairs.append({
+            pair = {
                 "pair_id": f"{kind.upper()}_PAIR_{idx:02d}",
                 "pair_kind": kind,
                 "requirement_id": rid,
                 "citation": spec["citation"],
                 "evaluated_behavior": "mandatory action not performed (identical in both cases)",
-                "changed_factor": "applicability facts only",
+                "changed_factor": "method-visible applicability facts only",
                 "source_evidence": {
                     "citation": spec["citation"],
                     "condition_text": spec.get("condition_text", ""),
                     "exception_text": spec.get("exception_text", ""),
                     "cross_reference": cross,
                 },
+                "scoring_disposition": (
+                    "unsupported_not_scored" if unsupported else "scored_separate_from_core_f1"
+                ),
+                "unsupported_reason": (
+                    "no_objective_source_grounded_method_visible_fact_can_decide_this_legal_judgment"
+                    if unsupported else None
+                ),
+                "truth_separation": {
+                    "method_visible_facts_key": "method_visible_facts",
+                    "evaluator_only_truth_key": "evaluator_only_truth",
+                    "evaluator_keys_present_in_method_visible": False,
+                },
                 "cases": [
-                    {"case_id": case_a, "bpmn_path": pa, "applicability_facts": fact_a,
-                     "fact_source": fact_source,
-                     "reference": ref_a, "reference_semantics": semantics_a},
-                    {"case_id": case_b, "bpmn_path": pb, "applicability_facts": fact_b,
-                     "fact_source": fact_source,
-                     "reference": ref_b, "reference_semantics": semantics_b},
+                    {
+                        "case_id": case_a,
+                        "bpmn_path": pa,
+                        "method_visible_facts": visible_a,
+                        "evaluator_only_truth": truth_a,
+                        "fact_source": fact_source,
+                    },
+                    {
+                        "case_id": case_b,
+                        "bpmn_path": pb,
+                        "method_visible_facts": visible_b,
+                        "evaluator_only_truth": truth_b,
+                        "fact_source": fact_source,
+                    },
                 ],
-            })
+            }
+            pairs.append(pair)
     return {
         "schema_version": "stage3_table3_r5_semantic_challenges@2.0.0",
         "status": "constructed_separate_from_core_f1",
@@ -940,11 +1021,16 @@ def build() -> dict[str, bytes]:
     element_counts = {k: sum(1 for s in source_requirements if s["elements"][k]["present"])
                       for k in ["modality", "actor", "action", "condition", "constraint", "exception"]}
     evidence_scope_counts: dict[str, dict[str, int]] = {}
+    stage2_input_scope_counts: dict[str, dict[str, int]] = {}
     for k in ["modality", "actor", "action", "condition", "constraint", "exception"]:
         evidence_scope_counts[k] = {}
+        stage2_input_scope_counts[k] = {}
         for s in source_requirements:
-            scope = s["elements"][k]["evidence"]["scope"]
+            e = s["elements"][k]["evidence"]
+            scope = e["scope"]
             evidence_scope_counts[k][scope] = evidence_scope_counts[k].get(scope, 0) + 1
+            s2scope = e.get("stage2_input_scope", "other_not_stage2_input")
+            stage2_input_scope_counts[k][s2scope] = stage2_input_scope_counts[k].get(s2scope, 0) + 1
     scenario_counts: dict[str, int] = {}
     for s in source_requirements:
         sc = next(x["scenario_id"] for x in specs if x["requirement_id"] == s["requirement_id"])
@@ -978,6 +1064,7 @@ def build() -> dict[str, bytes]:
         "cross_split_families": cross,
         "element_coverage": element_counts,
         "element_evidence_scope_counts": evidence_scope_counts,
+        "element_stage2_input_scope_counts": stage2_input_scope_counts,
         "scenario_counts": scenario_counts,
         "semantic_challenge_modality_fragment_counts": semantic["modality_fragment_counts"],
         "semantic_challenge_pair_counts": {

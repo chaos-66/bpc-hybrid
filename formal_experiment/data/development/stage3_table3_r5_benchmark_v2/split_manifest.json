@@ -38,7 +38,9 @@
     "R5-S6-T1",
     "R5-S6-T2",
     "R5-S6-T3",
-    "R5-S6-T4"
+    "R5-S6-T4",
+    "R5-S7-T1",
+    "R5-S8-T1"
   ],
   "cross_split_families": [],
   "development_requirement_ids": [
@@ -239,6 +241,22 @@
       "split": "development"
     },
     {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S7-T1"
+      ],
+      "source_family_id": "gdpr_art40",
+      "split": "test"
+    },
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S8-T1"
+      ],
+      "source_family_id": "gdpr_art43",
+      "split": "test"
+    },
+    {
       "exposed": true,
       "requirement_ids": [
         "R5-D-06",
@@ -274,6 +292,8 @@
     "gdpr_art25",
     "gdpr_art28",
     "gdpr_art32",
+    "gdpr_art40",
+    "gdpr_art43",
     "gdpr_art8",
     "gdpr_art9"
   ],
@@ -294,6 +314,8 @@
     "R5-S4-T3",
     "R5-S4-T4",
     "R5-S6-T1",
-    "R5-S6-T2"
+    "R5-S6-T2",
+    "R5-S7-T1",
+    "R5-S8-T1"
   ]
 }

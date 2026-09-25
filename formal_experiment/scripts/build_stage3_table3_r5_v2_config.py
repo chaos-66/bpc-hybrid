@@ -415,6 +415,14 @@ def build_v2_config() -> dict:
             spec["condition_present"] = present
             spec["condition_text"] = text
             spec["condition_fix_basis"] = "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2."
+        if rid == "R5-D-11":
+            spec["exception_text"] = (
+                "The right referred to in paragraph 1 shall not adversely affect the rights and freedoms of others."
+            )
+            spec["exception_fix_basis"] = (
+                "Corrected from the unsupported 'Article 20(4) public-interest or official-authority exception' "
+                "to the actual Article 20(4) source text in the local processed snapshot."
+            )
         # Exception: never let a negated condition masquerade as an independent exception.
         if rid in ("R5-S2-T1", "R5-S2-T4"):
             spec["exception_present"] = False
@@ -441,6 +449,115 @@ def build_v2_config() -> dict:
                 "has been whitespace-normalised and split into separate enumerated items; the excerpt is a contiguous "
                 "substring of that processed file, not a claim of official OJ byte identity."
             )
+
+    # Bounded source-only order-closure additions (2026-09-26, zero API,
+    # prediction-blind).  Two unexposed Article families with explicit
+    # action-precedence source text are added as test requirements; the
+    # bounded search stops at two additional independent families.
+    v2["requirements"].extend([
+        {
+            "actor_required": "Supervisory authority",
+            "actor_wrong": "Board",
+            "article": 40,
+            "business_scenario_en": "A multi-State draft code of conduct must be submitted to the Board before it is approved.",
+            "business_scenario_zh": "涉及多个成员国的行为准则草案须在批准前提交给欧盟数据保护委员会。",
+            "citation": "GDPR Article 40(7)",
+            "condition_present": True,
+            "condition_text": "a draft code of conduct relates to processing activities in several Member States",
+            "constraint_present": True,
+            "constraint_text": "before approving the draft code, amendment or extension",
+            "core_eligible": True,
+            "disposition": "core",
+            "eligibility_basis": {
+                "incorrect_actor": "The duty is on the competent supervisory authority, not on the Board.",
+                "missing_action": "Article 40(7) imposes a positive duty to submit the multi-State draft to the Board.",
+                "out_of_order": "Explicit action precedence: submit the draft 'before approving' it.",
+            },
+            "eligible_incorrect_actor": True,
+            "eligible_missing_action": True,
+            "eligible_out_of_order": True,
+            "exception_present": False,
+            "exception_text": "",
+            "excerpt_mode": "sentence",
+            "exposure_status": "no_prior_exposure_found",
+            "has_variants_v1_legacy": False,
+            "historical_development": False,
+            "mandatory_index": 1,
+            "modality": "obligation",
+            "normative_content": "Competent supervisory authority must submit a multi-State draft code to the Board before approving it.",
+            "order_evidence": "before approving the draft code, amendment or extension",
+            "order_pair": [1, 2],
+            "paragraph": "7",
+            "r4_rule_id": None,
+            "requirement_id": "R5-S7-T1",
+            "review_fixes": ["added_by_bounded_source_only_order_closure"],
+            "review_issues": [],
+            "sample_id": None,
+            "scenario_id": "S7",
+            "scenario_zh": "行为准则审批程序",
+            "source_family_id": "gdpr_art40",
+            "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+            "source_kind": "new_article",
+            "source_locator": "Where a draft code of conduct relates to processing activities in several Member States",
+            "split": "test",
+            "tasks": [
+                "Receive the multi-State draft code of conduct",
+                "Submit the draft code to the Board before approving it",
+                "Approve the draft code, amendment or extension",
+            ],
+        },
+        {
+            "actor_required": "Certification body",
+            "actor_wrong": "Supervisory authority",
+            "article": 43,
+            "business_scenario_en": "A certification body must inform the supervisory authority before issuing or renewing certification.",
+            "business_scenario_zh": "认证机构须在签发或续期认证前告知监管机构。",
+            "citation": "GDPR Article 43(1)",
+            "condition_present": True,
+            "condition_text": "certification bodies have an appropriate level of expertise in relation to data protection",
+            "constraint_present": True,
+            "constraint_text": "after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary",
+            "core_eligible": True,
+            "disposition": "core",
+            "eligibility_basis": {
+                "incorrect_actor": "The duty is on the certification body, not on the supervisory authority.",
+                "missing_action": "Article 43(1) imposes a positive duty to issue and renew certification.",
+                "out_of_order": "Explicit action precedence: certification is issued or renewed 'after informing' the supervisory authority.",
+            },
+            "eligible_incorrect_actor": True,
+            "eligible_missing_action": True,
+            "eligible_out_of_order": True,
+            "exception_present": False,
+            "exception_text": "",
+            "excerpt_mode": "sentence",
+            "exposure_status": "no_prior_exposure_found",
+            "has_variants_v1_legacy": False,
+            "historical_development": False,
+            "mandatory_index": 1,
+            "modality": "obligation",
+            "normative_content": "Certification body must inform the supervisory authority before issuing or renewing certification.",
+            "order_evidence": "after informing the supervisory authority",
+            "order_pair": [0, 1],
+            "paragraph": "1",
+            "r4_rule_id": None,
+            "requirement_id": "R5-S8-T1",
+            "review_fixes": ["added_by_bounded_source_only_order_closure"],
+            "review_issues": [],
+            "sample_id": None,
+            "scenario_id": "S8",
+            "scenario_zh": "认证机构程序",
+            "source_family_id": "gdpr_art43",
+            "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+            "source_kind": "new_article",
+            "source_locator": "certification bodies which have an appropriate level of expertise",
+            "split": "test",
+            "tasks": [
+                "Inform the supervisory authority",
+                "Issue or renew the certification after informing",
+                "Record the certification decision",
+            ],
+        },
+    ])
 
     # Source-family split assignment (deterministic, no algorithm seed magic).
     exposed_prefixes = {

@@ -97,14 +97,14 @@ def _ours_r4_reference(spec: dict, src: dict, sample_id: str | None, evidence: d
             "passed": pred.get("canonical_validation_status") in ("passed", "ok", "valid", None) and pred.get("canonical_validation_status") is not None,
             "kind": "evidence",
         }
-    pred_sha = sha_bytes(pred_path.read_bytes())
+    pred_sha = sha_text(pred_path.read_text(encoding="utf-8"))
     ev["prediction_file_sha256"] = pred_sha
     ev["manifest_output_predictions_sha256"] = ((manifest.get("outputs") or {}).get("predictions") or {}).get("sha256")
     checks["output_binding_predictions_sha"] = {
         "passed": ((manifest.get("outputs") or {}).get("predictions") or {}).get("sha256") == pred_sha,
         "kind": "evidence",
     }
-    prompt_sha_computed = sha_bytes((ROOT / R5_PROMPT_REL).read_bytes())
+    prompt_sha_computed = sha_text((ROOT / R5_PROMPT_REL).read_text(encoding="utf-8"))
     ev["prompt_sha256_computed"] = prompt_sha_computed
     ev["manifest_prompt_sha256"] = ((manifest.get("preflight") or {}).get("prompt_sha256"))
     checks["prompt_binding"] = {"passed": ev["manifest_prompt_sha256"] == prompt_sha_computed, "kind": "method"}
@@ -113,7 +113,11 @@ def _ours_r4_reference(spec: dict, src: dict, sample_id: str | None, evidence: d
     checks["no_new_context_added"] = {"passed": not (src.get("context_text") or ""), "kind": "input"}
     status, reasons = _first_status(required=True, checks=checks)
     checks_out.update(checks)
+    strength = "STRONG_REUSE" if status == "verified" else (
+        "NOT_REUSABLE" if status.startswith("not_reusable") else
+        "NOT_AVAILABLE_REQUIRES_NEW_STAGE2_RUN")
     return {"status": status, "reasons": reasons, "evidence": ev,
+            "reuse_evidence_strength": strength,
             "prediction_path": str(pred_path.relative_to(ROOT).as_posix()),
             "manifest_path": str(manifest_path.relative_to(ROOT).as_posix()),
             "prediction_sample_id": sample_id}
@@ -153,7 +157,7 @@ def _ours_gdpr7(spec: dict, src: dict, sample_id: str | None, evidence: dict, ch
         "kind": "evidence",
     }
     checks["schema_matches_manifest"] = {"passed": pred_doc.get("schema_version") == manifest.get("schema"), "kind": "evidence"}
-    prompt_sha_computed = sha_bytes((ROOT / R5_PROMPT_REL).read_bytes())
+    prompt_sha_computed = sha_text((ROOT / R5_PROMPT_REL).read_text(encoding="utf-8"))
     ev["prompt_sha256_computed"] = prompt_sha_computed
     ev["manifest_prompt_sha256"] = ((manifest.get("model") or {}).get("prompt_sha256"))
     checks["prompt_binding"] = {"passed": ev["manifest_prompt_sha256"] == prompt_sha_computed, "kind": "method"}
@@ -162,13 +166,17 @@ def _ours_gdpr7(spec: dict, src: dict, sample_id: str | None, evidence: dict, ch
     # output binding: declared capsule path + schema; no explicit output sha in manifest
     capsule = (manifest.get("arm_capsule") or {}).get("path")
     ev["declared_capsule_path"] = capsule
-    ev["prediction_file_sha256"] = sha_bytes(pred_path.read_bytes())
+    ev["prediction_file_sha256"] = sha_text(pred_path.read_text(encoding="utf-8"))
     checks["output_capsule_declared"] = {"passed": capsule == "data/predictions/gdpr7_direct_llm_v1", "kind": "evidence"}
     ev["output_binding_strength"] = "declared_capsule_path_and_schema_no_explicit_output_hash"
     checks["no_new_context_added"] = {"passed": not (src.get("context_text") or ""), "kind": "input"}
     status, reasons = _first_status(required=True, checks=checks)
     checks_out.update(checks)
+    strength = "HISTORICAL_CHAIN_REUSE" if status == "verified" else (
+        "NOT_REUSABLE" if status.startswith("not_reusable") else
+        "NOT_AVAILABLE_REQUIRES_NEW_STAGE2_RUN")
     return {"status": status, "reasons": reasons, "evidence": ev,
+            "reuse_evidence_strength": strength,
             "prediction_path": str(pred_path.relative_to(ROOT).as_posix()),
             "manifest_path": str(manifest_path.relative_to(ROOT).as_posix()),
             "prediction_sample_id": sample_id}
@@ -192,7 +200,9 @@ def _sun(source_kind: str, spec: dict, src: dict, sample_id: str | None) -> dict
               "request_status_ok": {"passed": pred.get("request_status") in ("ok", "completed", "success"), "kind": "evidence"}}
     status, reasons = _first_status(required=True, checks=checks)
     return {"status": status, "reasons": reasons,
-            "evidence": {"request_status": pred.get("request_status")},
+            "reuse_evidence_strength": ("WEAK_REUSE" if status == "verified" else "NOT_AVAILABLE_OR_UNVERIFIED"),
+            "evidence": {"request_status": pred.get("request_status"),
+                         "evidence_note": "record and request_status only; not Ours-equivalent identity chain"},
             "prediction_path": str(pred_path.relative_to(ROOT).as_posix()),
             "manifest_path": str(manifest_path.relative_to(ROOT).as_posix()),
             "prediction_sample_id": sample_id}
@@ -225,6 +235,7 @@ def verify_reuse(config: dict, source_req: dict) -> dict:
             "source_text_sha256": src["text_sha256"],
             "context_text_sha256": src.get("context_sha256"),
             "ours": {"status": ours["status"], "reasons": ours.get("reasons", []), "evidence": ours.get("evidence", {}),
+                     "reuse_evidence_strength": ours.get("reuse_evidence_strength"),
                      "prediction_path": ours.get("prediction_path"), "manifest_path": ours.get("manifest_path"),
                      "prediction_sample_id": ours.get("prediction_sample_id"), "checks": checks},
             "sun": sun,
@@ -245,12 +256,34 @@ def verify_reuse(config: dict, source_req: dict) -> dict:
         "status_value_set": sorted(STATUSES),
         "summary": {
             "unique_regulation_inputs": len(rows),
+            "core_eligible_requirements": sum(1 for r in rows if r["core_eligible"]),
             "ours_verified_reusable": count("ours", "verified"),
+            "ours_strong_reuse": sum(
+                1 for r in rows if r["ours"].get("reuse_evidence_strength") == "STRONG_REUSE"
+            ),
+            "ours_historical_chain_reuse": sum(
+                1 for r in rows
+                if r["ours"].get("reuse_evidence_strength") == "HISTORICAL_CHAIN_REUSE"
+            ),
+            "ours_not_reusable": sum(
+                1 for r in rows if r["ours"].get("reuse_evidence_strength") == "NOT_REUSABLE"
+            ),
             "ours_new_requests": count("ours", "not_available_requires_new_stage2_run"),
+            "ours_new_requests_total": count("ours", "not_available_requires_new_stage2_run"),
+            "ours_new_requests_core": sum(
+                1 for r in rows if r["core_eligible"] and
+                r["ours"]["status"] == "not_available_requires_new_stage2_run"
+            ),
             "ours_input_changed": count("ours", "not_reusable_input_changed"),
             "ours_method_changed": count("ours", "not_reusable_method_changed"),
             "ours_unverified": count("ours", "unverified_missing_evidence"),
             "sun_verified_reusable": count("sun", "verified"),
+            "sun_strong_reuse": sum(
+                1 for r in rows if r["sun"].get("reuse_evidence_strength") == "STRONG_REUSE"
+            ),
+            "sun_weak_reuse": sum(
+                1 for r in rows if r["sun"].get("reuse_evidence_strength") == "WEAK_REUSE"
+            ),
             "sun_unverified": count("sun", "unverified_missing_evidence"),
         },
         "rows": rows,

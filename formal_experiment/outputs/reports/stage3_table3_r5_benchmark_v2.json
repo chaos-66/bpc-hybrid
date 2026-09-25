@@ -2,9 +2,9 @@
   "benchmark_id": "stage3_table3_r5_benchmark_v2",
   "boundary": "AI-constructed, source-grounded construction reference; not human Gold and not a Table 3 result.",
   "budget": {
-    "calls_cap_core_request_list": 17,
-    "cost_upper_bound_usd_with_20pct_margin": 0.91,
-    "new_requests": 17,
+    "calls_cap_core_request_list": 19,
+    "cost_upper_bound_usd_with_20pct_margin": 1.03,
+    "new_requests": 19,
     "price_evidence": {
       "currency": "USD",
       "peak_derivation": "peak = 2 x recorded off-peak; the recorded off-peak multiplier is 0.5",
@@ -24,17 +24,17 @@
     },
     "retry_cap": 0,
     "reused_existing_stage2_inputs": 14,
-    "total_input_tokens_cap": 364949,
-    "total_output_tokens_cap": 69632
+    "total_input_tokens_cap": 414769,
+    "total_output_tokens_cap": 77824
   },
   "counts": {
-    "baseline_controls": 31,
+    "baseline_controls": 33,
     "candidate_requirements": 5,
-    "core_cases": 105,
-    "core_requirements": 31,
-    "core_test_requirements": 9,
+    "core_cases": 113,
+    "core_requirements": 33,
+    "core_test_requirements": 11,
     "development_requirements": 22,
-    "independent_requirements": 36,
+    "independent_requirements": 38,
     "independent_test_source_family_ids": [
       "gdpr_art12",
       "gdpr_art19",
@@ -43,6 +43,8 @@
       "gdpr_art25",
       "gdpr_art28",
       "gdpr_art32",
+      "gdpr_art40",
+      "gdpr_art43",
       "gdpr_art8",
       "gdpr_art9"
     ],
@@ -50,65 +52,73 @@
       "condition": 6,
       "exception": 6
     },
-    "source_family_count": 21,
+    "source_family_count": 23,
     "source_family_count_by_split": {
       "development": 12,
-      "test": 9
+      "test": 11
     },
-    "test_requirements": 14,
+    "test_requirements": 16,
     "variants_per_type": {
-      "incorrect_actor": 31,
-      "missing_action": 31,
-      "out_of_order": 12
+      "incorrect_actor": 33,
+      "missing_action": 33,
+      "out_of_order": 14
     }
   },
   "reuse": {
+    "core_eligible_requirements": 33,
+    "ours_historical_chain_reuse": 9,
     "ours_input_changed": 0,
     "ours_method_changed": 0,
-    "ours_new_requests": 22,
+    "ours_new_requests": 24,
+    "ours_new_requests_core": 19,
+    "ours_new_requests_total": 24,
+    "ours_not_reusable": 0,
+    "ours_strong_reuse": 5,
     "ours_unverified": 0,
     "ours_verified_reusable": 14,
+    "sun_strong_reuse": 0,
     "sun_unverified": 0,
     "sun_verified_reusable": 14,
-    "unique_regulation_inputs": 36
+    "sun_weak_reuse": 14,
+    "unique_regulation_inputs": 38
   },
   "schema_version": "stage3_table3_r5_benchmark_report@2.0.0",
   "six_element": {
     "evidence_scope_counts": {
       "action": {
-        "source_excerpt": 36
+        "source_excerpt": 38
       },
       "actor": {
         "declared_external_context": 4,
-        "source_excerpt": 32
+        "source_excerpt": 34
       },
       "condition": {
         "declared_external_context": 3,
         "not_present": 1,
-        "source_excerpt": 32
+        "source_excerpt": 34
       },
       "constraint": {
         "declared_external_context": 1,
-        "source_excerpt": 35
+        "source_excerpt": 37
       },
       "exception": {
-        "cross_reference_provided": 8,
-        "declared_external_context": 1,
-        "not_present": 18,
-        "source_excerpt": 9
+        "cross_reference_text_outside_stage2_input": 10,
+        "declared_external_context": 2,
+        "not_present": 20,
+        "source_excerpt": 6
       },
       "modality": {
         "declared_external_context": 1,
-        "source_excerpt": 35
+        "source_excerpt": 37
       }
     },
     "presence_counts": {
-      "action": 36,
-      "actor": 36,
-      "condition": 35,
-      "constraint": 36,
+      "action": 38,
+      "actor": 38,
+      "condition": 37,
+      "constraint": 38,
       "exception": 18,
-      "modality": 36
+      "modality": 38
     }
   },
   "status": "DATA_READY_FOR_FROZEN_SCOPE / METHODS_NOT_READY / API_AUTHORIZATION_PENDING / FORMAL_RELEASE_NOT_APPROVED"
