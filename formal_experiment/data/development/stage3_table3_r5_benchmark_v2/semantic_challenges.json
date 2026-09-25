@@ -1,0 +1,898 @@
+{
+  "bpmn_has_no_direct_applicability_answer_text": true,
+  "condition_exception_separately_modelled": true,
+  "each_pair_same_evaluated_behavior": true,
+  "exception_true_means_obligation_exempted": true,
+  "fragments": [
+    {
+      "article": 9,
+      "citation": "GDPR Article 9(1)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-PRO-01",
+      "modality": "prohibition",
+      "raw_text": "Processing of personal data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, and the processing of genetic data, biometric data for the purpose of uniquely identifying a natural person, data concerning health or data concerning a natural person's sex life or sexual orientation shall be prohibited. Paragraph 1 shall not apply if one of the following applies: The data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject; Processing is necessary for the purposes of carrying out the obligations and exercising specific rights of the controller or of the data subject in the field of employment and social security and social protection law in so far as it is authorised by Union or Member State law or a collective agreement pursuant to Member State law providing for appropriate safeguards for the fundamental rights and the interests of the data subject; Processing is necessary to protect the vital interests of the data subject or of another natural person where the data subject is physically or legally incapable of giving consent; Processing is carried out in the course of its legitimate activities with appropriate safeguards by a foundation, association or any other not-for-profit body with a political, philosophical, religious or trade union aim and on condition that the processing relates solely to the members or to former members of the body or to persons who have regular contact with it in connection with its purposes and that the personal data are not disclosed outside that body without the consent of the data subjects; Processing relates to personal data which are manifestly made public by the data subject; Processing is necessary for the establishment, exercise or defence of legal claims or whenever courts are acting in their judicial capacity; Processing is necessary for reasons of substantial public interest, on the basis of Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject; Processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3; Processing is necessary for reasons of public interest in the area of public health, such as protecting against serious cross-border threats to health or ensuring high standards of quality and safety of health care and of medicinal products or medical devices, on the basis of Union or Member State law which provides for suitable and specific measures to safeguard the rights and freedoms of the data subject, in particular professional secrecy; Processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject. Personal data referred to in paragraph 1 may be processed for the purposes referred to in point (h) of paragraph 2 when those data are processed by or under the responsibility of a professional subject to the obligation of professional secrecy under Union or Member State law or rules established by national competent bodies or by another person also subject to an obligation of secrecy under Union or Member State law or rules established by national competent bodies. Member States may maintain or introduce further conditions, including limitations, with regard to the processing of genetic data, biometric data or data concerning health.",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "96147122afabeb2ecb8ba36fb72b27deceb58ff1760c642c7d31bdb9bc85ce5c"
+    },
+    {
+      "article": 28,
+      "citation": "GDPR Article 28(2)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-PRO-02",
+      "modality": "prohibition",
+      "raw_text": "The processor shall not engage another processor without prior specific or general written authorisation of the controller.",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "6901e6c8653c9582022b102f783fc6db840642886c6be9fab69c091ec5a2e308"
+    },
+    {
+      "article": 22,
+      "citation": "GDPR Article 22(1)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-PRO-03",
+      "modality": "prohibition",
+      "raw_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her.",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "bb790f71f3fb93814ca7fe7d01f304eaa82acadc867dbfc8bfd724fe1cb04e1e"
+    },
+    {
+      "article": 5,
+      "citation": "GDPR Article 5(1)(b)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-PRO-04",
+      "modality": "prohibition",
+      "raw_text": "Personal data shall be collected for specified, explicit and legitimate purposes and not further processed in a manner that is incompatible with those purposes. further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes shall, in accordance with Article 89(1), not be considered to be incompatible with the initial purposes (‘purpose limitation’).",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "af1d2985dc9cd4f179552b81b3cdbf06230d35a1213041cf5c0913e1a04d8448"
+    },
+    {
+      "article": 6,
+      "citation": "GDPR Article 6(1)(a)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-PER-01",
+      "modality": "permission",
+      "raw_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes.",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "ce0e6b4fb1fbb6f67a1f9c1f4b4b03c956853763ea9786c678f17970ca059a21"
+    },
+    {
+      "article": 9,
+      "citation": "GDPR Article 9(2)(a)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-PER-02",
+      "modality": "permission",
+      "raw_text": "The data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f"
+    },
+    {
+      "article": 46,
+      "citation": "GDPR Article 46(1)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-PER-03",
+      "modality": "permission",
+      "raw_text": "In the absence of a decision pursuant to Article 45(3), a controller or processor may transfer personal data to a third country or an international organisation only if the controller or processor has provided appropriate safeguards, and on condition that enforceable data subject rights and effective legal remedies for data subjects are available.",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "68625be7f91d2fa7cb07733536df2f193272e3a0752452a0afef449dec7f6783"
+    },
+    {
+      "article": 49,
+      "citation": "GDPR Article 49(1)(a)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-PER-04",
+      "modality": "permission",
+      "raw_text": "In the absence of an adequacy decision pursuant to Article 45(3), or of appropriate safeguards pursuant to Article 46, including binding corporate rules, a transfer or a set of transfers of personal data to a third country or an international organisation shall take place only if the data subject has explicitly consented to the proposed transfer, after having been informed of the possible risks of such transfers for the data subject due to the absence of an adequacy decision and appropriate safeguards.",
+      "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "ea226993b6ff8241a23ab2747b81e07aaff15e3513cc0ed2c6a9a6c54213e446"
+    },
+    {
+      "article": 4,
+      "citation": "GDPR Article 4(1)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-DEF-01",
+      "modality": "definition",
+      "raw_text": "'Personal data' means any information relating to an identified or identifiable natural person ('data subject'); an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person.",
+      "source_status": "official_text_not_in_local_winter_snapshot; URL-level provenance; verify before formal Gold",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "c1157989dfe21b250eff08e14a7b3052ddff053171f7818baa00f902e5acfe0f"
+    },
+    {
+      "article": 4,
+      "citation": "GDPR Article 4(2)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-DEF-02",
+      "modality": "definition",
+      "raw_text": "'Processing' means any operation or set of operations which is performed on personal data or on sets of personal data, whether or not by automated means, such as collection, recording, organisation, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction.",
+      "source_status": "official_text_not_in_local_winter_snapshot; URL-level provenance; verify before formal Gold",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "690d2612e3d7b975262d97563a26a6a62c0767a287fc921372e5c3a83c70f77a"
+    },
+    {
+      "article": 4,
+      "citation": "GDPR Article 4(7)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-DEF-03",
+      "modality": "definition",
+      "raw_text": "'Controller' means the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data; where the purposes and means of such processing are determined by Union or Member State law, the controller or the specific criteria for its nomination may be provided for by Union or Member State law.",
+      "source_status": "official_text_not_in_local_winter_snapshot; URL-level provenance; verify before formal Gold",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "eb834e9b94879f3205c29a7fc6d66b8b2b6b18db2ef1e8597038078563f6a3bc"
+    },
+    {
+      "article": 4,
+      "citation": "GDPR Article 4(8)",
+      "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+      "fragment_id": "FR-DEF-04",
+      "modality": "definition",
+      "raw_text": "'Processor' means a natural or legal person, public authority, agency or other body which processes personal data on behalf of the controller.",
+      "source_status": "official_text_not_in_local_winter_snapshot; URL-level provenance; verify before formal Gold",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+      "text_sha256": "8c391c7524746d79399cac726bece9c7c4949c9c559b89ed67b159072e5a51d5"
+    }
+  ],
+  "modality_fragment_counts": {
+    "definition": 4,
+    "permission": 4,
+    "prohibition": 4
+  },
+  "not_mixed_with_core_f1": true,
+  "pairs": [
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "collection_channel": "direct",
+            "condition_holds": true,
+            "data_collected_directly_from_data_subject": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_6babb717a4f6.bpmn",
+          "case_id": "challenge_case_6babb717a4f6",
+          "fact_source": {
+            "citation": "GDPR Article 13(1)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "personal data relating to a data subject are collected from the data subject"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "condition true -> requirement applicable; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "condition_true_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "collection_channel": "indirect",
+            "condition_holds": false,
+            "data_collected_directly_from_data_subject": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_26abc7a467d3.bpmn",
+          "case_id": "challenge_case_26abc7a467d3",
+          "fact_source": {
+            "citation": "GDPR Article 13(1)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "personal data relating to a data subject are collected from the data subject"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "condition false -> requirement not applicable; the same omission is not a violation",
+            "outcome": "not_applicable"
+          },
+          "reference_semantics": "condition_false_requirement_not_applicable"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 13(1)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "CONDITION_PAIR_01",
+      "pair_kind": "condition",
+      "requirement_id": "R5-S1-T1",
+      "source_evidence": {
+        "citation": "GDPR Article 13(1)",
+        "condition_text": "personal data relating to a data subject are collected from the data subject",
+        "cross_reference": null,
+        "exception_text": "Article 13(4) already-has-information exception"
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "child_age": 14,
+            "condition_holds": true,
+            "parental_authorisation_given_or_authorised": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_2fff76e0f25f.bpmn",
+          "case_id": "challenge_case_2fff76e0f25f",
+          "fact_source": {
+            "citation": "GDPR Article 8(2)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "consent was given or authorised by the holder of parental responsibility"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "condition true -> requirement applicable; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "condition_true_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "child_age": 17,
+            "condition_holds": false,
+            "parental_authorisation_given_or_authorised": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_76cd194778cc.bpmn",
+          "case_id": "challenge_case_76cd194778cc",
+          "fact_source": {
+            "citation": "GDPR Article 8(2)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "consent was given or authorised by the holder of parental responsibility"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "condition false -> requirement not applicable; the same omission is not a violation",
+            "outcome": "not_applicable"
+          },
+          "reference_semantics": "condition_false_requirement_not_applicable"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 8(2)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "CONDITION_PAIR_02",
+      "pair_kind": "condition",
+      "requirement_id": "R5-S2-T2",
+      "source_evidence": {
+        "citation": "GDPR Article 8(2)",
+        "condition_text": "consent was given or authorised by the holder of parental responsibility",
+        "cross_reference": null,
+        "exception_text": ""
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "condition_holds": true,
+            "request_under_articles_15_to_22_received": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_64be50ad4a1f.bpmn",
+          "case_id": "challenge_case_64be50ad4a1f",
+          "fact_source": {
+            "citation": "GDPR Article 12(3)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "a request under Articles 15 to 22 is received"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "condition true -> requirement applicable; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "condition_true_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "condition_holds": false,
+            "request_under_articles_15_to_22_received": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_bdf426f03088.bpmn",
+          "case_id": "challenge_case_bdf426f03088",
+          "fact_source": {
+            "citation": "GDPR Article 12(3)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "a request under Articles 15 to 22 is received"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "condition false -> requirement not applicable; the same omission is not a violation",
+            "outcome": "not_applicable"
+          },
+          "reference_semantics": "condition_false_requirement_not_applicable"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 12(3)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "CONDITION_PAIR_03",
+      "pair_kind": "condition",
+      "requirement_id": "R5-S3-T1",
+      "source_evidence": {
+        "citation": "GDPR Article 12(3)",
+        "condition_text": "a request under Articles 15 to 22 is received",
+        "cross_reference": null,
+        "exception_text": "extension by two further months is possible with reasons"
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "condition_holds": true,
+            "seeking_views_of_data_subjects_is_appropriate": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_c9a112db1746.bpmn",
+          "case_id": "challenge_case_c9a112db1746",
+          "fact_source": {
+            "citation": "GDPR Article 35(9)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "where appropriate, without prejudice to commercial/public interests or security"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "condition true -> requirement applicable; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "condition_true_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "condition_holds": false,
+            "seeking_views_of_data_subjects_is_appropriate": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_295a43555967.bpmn",
+          "case_id": "challenge_case_295a43555967",
+          "fact_source": {
+            "citation": "GDPR Article 35(9)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "where appropriate, without prejudice to commercial/public interests or security"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "condition false -> requirement not applicable; the same omission is not a violation",
+            "outcome": "not_applicable"
+          },
+          "reference_semantics": "condition_false_requirement_not_applicable"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 35(9)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "CONDITION_PAIR_04",
+      "pair_kind": "condition",
+      "requirement_id": "R5-S5-T2",
+      "source_evidence": {
+        "citation": "GDPR Article 35(9)",
+        "condition_text": "where appropriate, without prejudice to commercial/public interests or security",
+        "cross_reference": null,
+        "exception_text": "protection of commercial or public interests or security of processing operations"
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "breach_likely_to_result_in_high_risk": true,
+            "condition_holds": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_383bec7b94b0.bpmn",
+          "case_id": "challenge_case_383bec7b94b0",
+          "fact_source": {
+            "citation": "GDPR Article 34(1)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "breach likely to result in high risk to rights and freedoms"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "condition true -> requirement applicable; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "condition_true_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "breach_likely_to_result_in_high_risk": false,
+            "condition_holds": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_f3152d784687.bpmn",
+          "case_id": "challenge_case_f3152d784687",
+          "fact_source": {
+            "citation": "GDPR Article 34(1)",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "breach likely to result in high risk to rights and freedoms"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "condition false -> requirement not applicable; the same omission is not a violation",
+            "outcome": "not_applicable"
+          },
+          "reference_semantics": "condition_false_requirement_not_applicable"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 34(1)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "CONDITION_PAIR_05",
+      "pair_kind": "condition",
+      "requirement_id": "R5-S6-T4",
+      "source_evidence": {
+        "citation": "GDPR Article 34(1)",
+        "condition_text": "breach likely to result in high risk to rights and freedoms",
+        "cross_reference": null,
+        "exception_text": "Article 34(3) exceptions may apply"
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "condition_holds": true,
+            "processing_likely_to_result_in_high_risk": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_6503ca32105b.bpmn",
+          "case_id": "challenge_case_6503ca32105b",
+          "fact_source": {
+            "citation": "GDPR Article 35(1), first sentence",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "processing likely to result in high risk to rights and freedoms"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "condition true -> requirement applicable; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "condition_true_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "condition_holds": false,
+            "processing_likely_to_result_in_high_risk": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_36218aca1e98.bpmn",
+          "case_id": "challenge_case_36218aca1e98",
+          "fact_source": {
+            "citation": "GDPR Article 35(1), first sentence",
+            "cross_reference": null,
+            "provision_type": "condition",
+            "text": "processing likely to result in high risk to rights and freedoms"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "condition false -> requirement not applicable; the same omission is not a violation",
+            "outcome": "not_applicable"
+          },
+          "reference_semantics": "condition_false_requirement_not_applicable"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 35(1), first sentence",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "CONDITION_PAIR_06",
+      "pair_kind": "condition",
+      "requirement_id": "R5-D-04",
+      "source_evidence": {
+        "citation": "GDPR Article 35(1), first sentence",
+        "condition_text": "processing likely to result in high risk to rights and freedoms",
+        "cross_reference": null,
+        "exception_text": ""
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "data_subject_already_has_the_information": false,
+            "exception_applies": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_93374a3b1754.bpmn",
+          "case_id": "challenge_case_93374a3b1754",
+          "fact_source": {
+            "citation": "GDPR Article 13(3)",
+            "cross_reference": null,
+            "provision_type": "exception",
+            "text": "the controller intends to further process for a purpose other than that for which the data were collected"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "no exception -> duty in force; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "exception_not_applied_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "data_subject_already_has_the_information": true,
+            "exception_applies": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_9492211865b6.bpmn",
+          "case_id": "challenge_case_9492211865b6",
+          "fact_source": {
+            "citation": "GDPR Article 13(3)",
+            "cross_reference": null,
+            "provision_type": "exception",
+            "text": "the controller intends to further process for a purpose other than that for which the data were collected"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "exception applies -> obligation exempted; the same omission is not a violation",
+            "outcome": "exempted"
+          },
+          "reference_semantics": "exception_applied_obligation_exempted"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 13(3)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "EXCEPTION_PAIR_01",
+      "pair_kind": "exception",
+      "requirement_id": "R5-D-01",
+      "source_evidence": {
+        "citation": "GDPR Article 13(3)",
+        "condition_text": "the controller intends to further process for a purpose other than that for which the data were collected",
+        "cross_reference": null,
+        "exception_text": "the data subject already has the information under Article 13(4)"
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "data_subject_already_has_the_information": false,
+            "exception_applies": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_20ad312702f7.bpmn",
+          "case_id": "challenge_case_20ad312702f7",
+          "fact_source": {
+            "citation": "GDPR Article 14(1)",
+            "cross_reference": {
+              "paragraph_label": "art14(5)",
+              "provided_to_task": true,
+              "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+              "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+              "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+              "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information.",
+              "text_sha256": "a3cab46ec401e03bdead4c75db0fc5c3595296c3aa58d90ea3ccda1d54cd1888"
+            },
+            "provision_type": "exception",
+            "text": "personal data have not been obtained from the data subject"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "no exception -> duty in force; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "exception_not_applied_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "data_subject_already_has_the_information": true,
+            "exception_applies": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_35caf2155b7d.bpmn",
+          "case_id": "challenge_case_35caf2155b7d",
+          "fact_source": {
+            "citation": "GDPR Article 14(1)",
+            "cross_reference": {
+              "paragraph_label": "art14(5)",
+              "provided_to_task": true,
+              "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+              "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+              "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+              "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information.",
+              "text_sha256": "a3cab46ec401e03bdead4c75db0fc5c3595296c3aa58d90ea3ccda1d54cd1888"
+            },
+            "provision_type": "exception",
+            "text": "personal data have not been obtained from the data subject"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "exception applies -> obligation exempted; the same omission is not a violation",
+            "outcome": "exempted"
+          },
+          "reference_semantics": "exception_applied_obligation_exempted"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 14(1)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "EXCEPTION_PAIR_02",
+      "pair_kind": "exception",
+      "requirement_id": "R5-S1-T3",
+      "source_evidence": {
+        "citation": "GDPR Article 14(1)",
+        "condition_text": "personal data have not been obtained from the data subject",
+        "cross_reference": {
+          "paragraph_label": "art14(5)",
+          "provided_to_task": true,
+          "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+          "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+          "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+          "text": "Paragraphs 1 to 4 shall not apply where the data subject already has the information.",
+          "text_sha256": "a3cab46ec401e03bdead4c75db0fc5c3595296c3aa58d90ea3ccda1d54cd1888"
+        },
+        "exception_text": "Article 14(5) exceptions may apply"
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "article_17_3_exception_applies": false,
+            "exception_applies": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_73266ff3cfcf.bpmn",
+          "case_id": "challenge_case_73266ff3cfcf",
+          "fact_source": {
+            "citation": "GDPR Article 17(1)",
+            "cross_reference": {
+              "paragraph_label": "art17(3)",
+              "provided_to_task": true,
+              "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article17.txt",
+              "source_file_sha256": "4dcd57854e4dfb62097533fe0aa9e7171565f34e5e25ba5399c292f881196ff3",
+              "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+              "text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information.",
+              "text_sha256": "4a3bbbe4784529c72b889105bb865fa57c3ff83fa7e5724b5836118e85a63c70"
+            },
+            "provision_type": "exception",
+            "text": "one of the Article 17(1) erasure grounds applies"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "no exception -> duty in force; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "exception_not_applied_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "article_17_3_exception_applies": true,
+            "exception_applies": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_d69c9aa2a9e1.bpmn",
+          "case_id": "challenge_case_d69c9aa2a9e1",
+          "fact_source": {
+            "citation": "GDPR Article 17(1)",
+            "cross_reference": {
+              "paragraph_label": "art17(3)",
+              "provided_to_task": true,
+              "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article17.txt",
+              "source_file_sha256": "4dcd57854e4dfb62097533fe0aa9e7171565f34e5e25ba5399c292f881196ff3",
+              "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+              "text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information.",
+              "text_sha256": "4a3bbbe4784529c72b889105bb865fa57c3ff83fa7e5724b5836118e85a63c70"
+            },
+            "provision_type": "exception",
+            "text": "one of the Article 17(1) erasure grounds applies"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "exception applies -> obligation exempted; the same omission is not a violation",
+            "outcome": "exempted"
+          },
+          "reference_semantics": "exception_applied_obligation_exempted"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 17(1)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "EXCEPTION_PAIR_03",
+      "pair_kind": "exception",
+      "requirement_id": "R5-D-10",
+      "source_evidence": {
+        "citation": "GDPR Article 17(1)",
+        "condition_text": "one of the Article 17(1) erasure grounds applies",
+        "cross_reference": {
+          "paragraph_label": "art17(3)",
+          "provided_to_task": true,
+          "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article17.txt",
+          "source_file_sha256": "4dcd57854e4dfb62097533fe0aa9e7171565f34e5e25ba5399c292f881196ff3",
+          "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+          "text": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information.",
+          "text_sha256": "4a3bbbe4784529c72b889105bb865fa57c3ff83fa7e5724b5836118e85a63c70"
+        },
+        "exception_text": "Article 17(3) exceptions may apply"
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "article_20_4_exception_applies": false,
+            "exception_applies": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_8a2639480442.bpmn",
+          "case_id": "challenge_case_8a2639480442",
+          "fact_source": {
+            "citation": "GDPR Article 20(1)",
+            "cross_reference": {
+              "paragraph_label": "art20(4)",
+              "provided_to_task": true,
+              "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article20.txt",
+              "source_file_sha256": "6692690d019232236d9a9814491387143900c73cd043648b5dc02a6a3ed867e1",
+              "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+              "text": "The right referred to in paragraph 1 shall not adversely affect the rights and freedoms of others.",
+              "text_sha256": "571228cb39ab5edbc78002c907e66f0d5f3cfb9b6e19b3abe4d7f15ecb91f43b"
+            },
+            "provision_type": "exception",
+            "text": "processing based on consent or contract and carried out by automated means"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "no exception -> duty in force; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "exception_not_applied_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "article_20_4_exception_applies": true,
+            "exception_applies": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_62b198716abf.bpmn",
+          "case_id": "challenge_case_62b198716abf",
+          "fact_source": {
+            "citation": "GDPR Article 20(1)",
+            "cross_reference": {
+              "paragraph_label": "art20(4)",
+              "provided_to_task": true,
+              "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article20.txt",
+              "source_file_sha256": "6692690d019232236d9a9814491387143900c73cd043648b5dc02a6a3ed867e1",
+              "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+              "text": "The right referred to in paragraph 1 shall not adversely affect the rights and freedoms of others.",
+              "text_sha256": "571228cb39ab5edbc78002c907e66f0d5f3cfb9b6e19b3abe4d7f15ecb91f43b"
+            },
+            "provision_type": "exception",
+            "text": "processing based on consent or contract and carried out by automated means"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "exception applies -> obligation exempted; the same omission is not a violation",
+            "outcome": "exempted"
+          },
+          "reference_semantics": "exception_applied_obligation_exempted"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 20(1)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "EXCEPTION_PAIR_04",
+      "pair_kind": "exception",
+      "requirement_id": "R5-D-11",
+      "source_evidence": {
+        "citation": "GDPR Article 20(1)",
+        "condition_text": "processing based on consent or contract and carried out by automated means",
+        "cross_reference": {
+          "paragraph_label": "art20(4)",
+          "provided_to_task": true,
+          "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article20.txt",
+          "source_file_sha256": "6692690d019232236d9a9814491387143900c73cd043648b5dc02a6a3ed867e1",
+          "source_status": "processed_local_winter_snapshot_not_official_verbatim",
+          "text": "The right referred to in paragraph 1 shall not adversely affect the rights and freedoms of others.",
+          "text_sha256": "571228cb39ab5edbc78002c907e66f0d5f3cfb9b6e19b3abe4d7f15ecb91f43b"
+        },
+        "exception_text": "Article 20(4) public-interest or official-authority exception"
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "breach_unlikely_to_result_in_a_risk": false,
+            "exception_applies": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_9396afe2eb1f.bpmn",
+          "case_id": "challenge_case_9396afe2eb1f",
+          "fact_source": {
+            "citation": "GDPR Article 33(1)",
+            "cross_reference": null,
+            "provision_type": "exception",
+            "text": "a personal data breach occurs"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "no exception -> duty in force; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "exception_not_applied_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "breach_unlikely_to_result_in_a_risk": true,
+            "exception_applies": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_5e088182bc13.bpmn",
+          "case_id": "challenge_case_5e088182bc13",
+          "fact_source": {
+            "citation": "GDPR Article 33(1)",
+            "cross_reference": null,
+            "provision_type": "exception",
+            "text": "a personal data breach occurs"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "exception applies -> obligation exempted; the same omission is not a violation",
+            "outcome": "exempted"
+          },
+          "reference_semantics": "exception_applied_obligation_exempted"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 33(1)",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "EXCEPTION_PAIR_05",
+      "pair_kind": "exception",
+      "requirement_id": "R5-D-12",
+      "source_evidence": {
+        "citation": "GDPR Article 33(1)",
+        "condition_text": "a personal data breach occurs",
+        "cross_reference": null,
+        "exception_text": "breach unlikely to result in a risk to rights and freedoms"
+      }
+    },
+    {
+      "cases": [
+        {
+          "applicability_facts": {
+            "communication_impossible_or_disproportionate_effort": false,
+            "exception_applies": false
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_0c420ccce8e5.bpmn",
+          "case_id": "challenge_case_0c420ccce8e5",
+          "fact_source": {
+            "citation": "GDPR Article 19",
+            "cross_reference": null,
+            "provision_type": "exception",
+            "text": "a rectification, erasure or restriction of processing has been carried out under Articles 16, 17(1) or 18"
+          },
+          "reference": {
+            "duty_in_force": true,
+            "note": "no exception -> duty in force; mandatory action not performed",
+            "outcome": "violation"
+          },
+          "reference_semantics": "exception_not_applied_duty_in_force_and_action_absent"
+        },
+        {
+          "applicability_facts": {
+            "communication_impossible_or_disproportionate_effort": true,
+            "exception_applies": true
+          },
+          "bpmn_path": "bpmn/challenges/challenge_case_f04e9f006ed8.bpmn",
+          "case_id": "challenge_case_f04e9f006ed8",
+          "fact_source": {
+            "citation": "GDPR Article 19",
+            "cross_reference": null,
+            "provision_type": "exception",
+            "text": "a rectification, erasure or restriction of processing has been carried out under Articles 16, 17(1) or 18"
+          },
+          "reference": {
+            "duty_in_force": false,
+            "note": "exception applies -> obligation exempted; the same omission is not a violation",
+            "outcome": "exempted"
+          },
+          "reference_semantics": "exception_applied_obligation_exempted"
+        }
+      ],
+      "changed_factor": "applicability facts only",
+      "citation": "GDPR Article 19",
+      "evaluated_behavior": "mandatory action not performed (identical in both cases)",
+      "pair_id": "EXCEPTION_PAIR_06",
+      "pair_kind": "exception",
+      "requirement_id": "R5-S4-T4",
+      "source_evidence": {
+        "citation": "GDPR Article 19",
+        "condition_text": "a rectification, erasure or restriction of processing has been carried out under Articles 16, 17(1) or 18",
+        "cross_reference": null,
+        "exception_text": "communication proves impossible or involves disproportionate effort"
+      }
+    }
+  ],
+  "schema_version": "stage3_table3_r5_semantic_challenges@2.0.0",
+  "status": "constructed_separate_from_core_f1"
+}

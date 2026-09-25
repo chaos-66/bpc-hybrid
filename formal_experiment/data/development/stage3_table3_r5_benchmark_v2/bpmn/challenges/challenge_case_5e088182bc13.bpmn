@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions" targetNamespace="urn:bpc:table3:r5:v2:challenge">
+  <collaboration id="Collaboration">
+    <participant id="Participant" name="Controller" processRef="Process" />
+  </collaboration>
+  <process id="Process" name="Business process" isExecutable="false">
+    <laneSet id="LaneSet">
+      <lane id="Lane_Actor" name="Controller">
+        <flowNodeRef>Start</flowNodeRef>
+        <flowNodeRef>Activity_0</flowNodeRef>
+        <flowNodeRef>Activity_2</flowNodeRef>
+        <flowNodeRef>End</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="Start" name="Request or event received" />
+    <task id="Activity_0" name="Become aware of the personal data breach" />
+    <task id="Activity_2" name="Document the notification or reasons for delay" />
+    <endEvent id="End" name="Process ends" />
+    <sequenceFlow id="Flow_0" sourceRef="Start" targetRef="Activity_0" />
+    <sequenceFlow id="Flow_1" sourceRef="Activity_0" targetRef="Activity_2" />
+    <sequenceFlow id="Flow_2" sourceRef="Activity_2" targetRef="End" />
+  </process>
+</definitions>
