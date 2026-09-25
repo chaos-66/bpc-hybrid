@@ -1,0 +1,227 @@
+{
+  "schema_version": "stage3_r3_mechanism_fixtures@1.0.0",
+  "source": "independent synthetic development fixtures; logistics and invoice domains; not derived from the current five regulations or their BPMN labels",
+  "projection_cases": [
+    {
+      "case_id": "logi_active_after",
+      "domain": "logistics",
+      "text": "The warehouse scans the parcel after the parcel arrives at the dock.",
+      "action_text": "scans the parcel",
+      "field": "constraints",
+      "marker_text": "after the parcel arrives at the dock.",
+      "expected_edges": [
+        [
+          "the parcel arrives at the dock",
+          "scans the parcel"
+        ]
+      ],
+      "expect_predicate": "arrives"
+    },
+    {
+      "case_id": "invoice_before_passive",
+      "domain": "invoice",
+      "text": "The invoice must be approved before the payment is dispatched.",
+      "action_text": "be approved",
+      "field": "constraints",
+      "marker_text": "before the payment is dispatched.",
+      "expected_edges": [
+        [
+          "be approved",
+          "the payment is dispatched"
+        ]
+      ],
+      "expect_predicate": "dispatched"
+    },
+    {
+      "case_id": "invoice_prior_to_passive",
+      "domain": "invoice",
+      "text": "The controller must act prior to the restriction of processing being lifted.",
+      "action_text": "act",
+      "field": "constraints",
+      "marker_text": "prior to the restriction of processing being lifted.",
+      "expected_edges": [
+        [
+          "act",
+          "the restriction of processing being lifted"
+        ]
+      ],
+      "expect_predicate": "lifted"
+    },
+    {
+      "case_id": "logi_nominal_processing",
+      "domain": "logistics",
+      "text": "The controller shall consult the authority before processing.",
+      "action_text": "consult the authority",
+      "field": "constraints",
+      "marker_text": "before processing.",
+      "expected_edges": [
+        [
+          "consult the authority",
+          "processing"
+        ]
+      ],
+      "expect_predicate": null
+    },
+    {
+      "case_id": "invoice_date_duration_rejected",
+      "domain": "invoice",
+      "text": "The controller shall retain the record before 30 days.",
+      "action_text": "retain the record",
+      "field": "constraints",
+      "marker_text": "before 30 days.",
+      "expected_edges": [],
+      "expect_reject_reason_contains": "date_time_quantity"
+    },
+    {
+      "case_id": "logi_truncated_span_rejected",
+      "domain": "logistics",
+      "text": "The controller shall act before the parcel and",
+      "action_text": "act",
+      "field": "constraints",
+      "marker_text": "before the parcel and",
+      "expected_edges": [],
+      "expect_reject_reason_contains": "truncated_selected_span"
+    },
+    {
+      "case_id": "logi_multiple_events_rejected",
+      "domain": "logistics",
+      "text": "The controller shall act before the parcel is dispatched and the invoice is archived.",
+      "action_text": "act",
+      "field": "constraints",
+      "marker_text": "before the parcel is dispatched and the invoice is archived.",
+      "expected_edges": [],
+      "expect_reject_reason_contains": "multiple_top_level_event_predicates"
+    },
+    {
+      "case_id": "invoice_negated_marker_rejected",
+      "domain": "invoice",
+      "text": "The controller shall not act before the payment is dispatched.",
+      "action_text": "act",
+      "field": "constraints",
+      "marker_text": "before the payment is dispatched.",
+      "expected_edges": [],
+      "expect_reject_reason_contains": "dependency_neg_ancestor"
+    }
+  ],
+  "matching_cases": [
+    {
+      "case_id": "same_object_different_action",
+      "domain": "invoice",
+      "node_specs": [
+        {
+          "node_id": "N2",
+          "label": "Archive the invoice"
+        },
+        {
+          "node_id": "N1",
+          "label": "Approve the invoice"
+        }
+      ],
+      "rule_action": "approve the invoice",
+      "expected_selected": "N1",
+      "expected_not_selected": [
+        "N2"
+      ]
+    },
+    {
+      "case_id": "same_action_different_object",
+      "domain": "logistics",
+      "node_specs": [
+        {
+          "node_id": "N1",
+          "label": "Archive the invoice"
+        },
+        {
+          "node_id": "N2",
+          "label": "Archive the parcel"
+        }
+      ],
+      "rule_action": "archive the parcel",
+      "expected_selected": "N2",
+      "expected_not_selected": [
+        "N1"
+      ]
+    },
+    {
+      "case_id": "duplicate_node_names_stable_id",
+      "domain": "invoice",
+      "node_specs": [
+        {
+          "node_id": "N2",
+          "label": "Approve the invoice"
+        },
+        {
+          "node_id": "N1",
+          "label": "Approve the invoice"
+        }
+      ],
+      "rule_action": "approve the invoice",
+      "expected_selected": "N1",
+      "expected_tied": [
+        "N1",
+        "N2"
+      ]
+    },
+    {
+      "case_id": "normal_order_satisfied",
+      "domain": "logistics",
+      "node_specs": [
+        {
+          "node_id": "N1",
+          "label": "Approve the invoice"
+        },
+        {
+          "node_id": "N2",
+          "label": "Archive the invoice"
+        }
+      ],
+      "reachable": {
+        "N1": [
+          "N2"
+        ]
+      },
+      "order": [
+        "approve the invoice",
+        "archive the invoice"
+      ],
+      "expected_order_status": "satisfied"
+    },
+    {
+      "case_id": "reverse_order_violated",
+      "domain": "logistics",
+      "node_specs": [
+        {
+          "node_id": "N1",
+          "label": "Approve the invoice"
+        },
+        {
+          "node_id": "N2",
+          "label": "Archive the invoice"
+        }
+      ],
+      "reachable": {
+        "N1": [
+          "N2"
+        ]
+      },
+      "order": [
+        "archive the invoice",
+        "approve the invoice"
+      ],
+      "expected_order_status": "violated"
+    },
+    {
+      "case_id": "p2_imperative_vocab_limitation_scan",
+      "domain": "logistics",
+      "node_specs": [
+        {
+          "node_id": "N1",
+          "label": "Scan the parcel"
+        }
+      ],
+      "rule_action": "scan the parcel",
+      "expected_selected": "N1",
+      "expected_limitation": "Frozen P2 imperative handling does not recognise capitalized 'Scan' as a verb root, so the model-side business object is lost. This is a P2 vocabulary limitation, not a scorer or projection bug; the observed non-match is retained."
+    }
+  ]
+}

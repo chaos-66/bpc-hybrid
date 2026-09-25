@@ -1,0 +1,45 @@
+{
+  "schema_version": "stage3_table3_r3_input_contract@1.0.0",
+  "task_id": "S3-TABLE3-R3-INTEGRATION",
+  "status": "frozen_for_development_diagnosis",
+  "purpose": "Authorize offline P2-derived model-side semantics for the current 20 R2 development BPMN files without rewriting or broadening the original P2 whitelist or claiming that the original P2 formal run covered these files.",
+  "original_p2": {
+    "module": "src/bpc_hybrid/stage1_label_semantics_p2.py",
+    "config": "configs/stage1_label_p2_v1.json",
+    "schema": "configs/schemas/stage1_label_semantics_p2.schema.json",
+    "verb_resource": "configs/resources/english_verb_roots_v1.json",
+    "original_whitelist_is_unchanged": true,
+    "original_whitelist": [
+      "data/input/stage1_stage3/gdpr7/",
+      "configs/datasets/stage1_stage3_gdpr7_v1.json",
+      "data/development/human_review/stage1_gdpr7_process_records_v1.json",
+      "configs/stage1_label_p2_v1.json",
+      "configs/schemas/stage1_label_semantics_p2.schema.json"
+    ],
+    "note": "R3 imports and calls the frozen implementation; it does not edit the P2 config whitelist or re-run the original P2 formal inference."
+  },
+  "r3_authorized_inputs": {
+    "bpmn_dir": "data/development/stage3_reconstruction_v4/bpmn/",
+    "inference_view": "data/development/stage3_reconstruction_v4/inference_view.json",
+    "case_count": 20,
+    "activity_and_event_derivation": "offline_p2_activity_renderer_plus_r3_named_event_extension",
+    "container": "outputs/development/stage3_table3_r3_p2_sidecars/",
+    "claim_boundary": "This authorizes offline derivation for the current R2 development corpus only. It is not an independent test set, not a re-run of the original P2 formal evaluation, and not evidence that P2 was trained or validated on these files."
+  },
+  "scope_limits": {
+    "new_llm_api_calls": 0,
+    "new_human_gold": false,
+    "reference_read_by_inference": false,
+    "rules_or_labels_rewritten_to_fit_extraction": false,
+    "candidate_actions_added_from_full_regulation_text": false
+  },
+  "required_evidence": {
+    "per_model_sidecar": true,
+    "bpmn_sha256": true,
+    "process_record_sha256": true,
+    "p2_code_sha256": true,
+    "p2_config_sha256": true,
+    "p2_runtime_sha256": true,
+    "extension_note": "The original P2 sidecar covered activities only. R3 extends the same frozen label analysis to named events."
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "action_actor_names": {
+    "Activity_0": [
+      "Controller"
+    ],
+    "Activity_1": [
+      "Controller"
+    ],
+    "Activity_2": [
+      "Controller"
+    ],
+    "Activity_3": [
+      "Controller"
+    ],
+    "End": [
+      "Controller"
+    ],
+    "Start": [
+      "Controller"
+    ]
+  },
+  "actor_sources": {
+    "Controller": "pool_fallback_single_lane"
+  },
+  "actors": [
+    "Controller"
+  ],
+  "bpmn_path": "D:/Paper/experiment/bpc-hybrid/formal_experiment/data/development/stage3_reconstruction_v4/bpmn/case_aa37540e7989.bpmn",
+  "bpmn_sha256": "2e393e62c81e00ee71da41bd28f7774c2619dd158c72d657a3726d5239b37dfc",
+  "business_objects": [
+    {
+      "activity_id": "Activity_0",
+      "match_source_text": "the envisaged high risk processing",
+      "matching_text": "the envisage high risk processing",
+      "object": "the envisaged high risk processing",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Activity_1",
+      "match_source_text": "the data protection impact assessment the envisaged processing",
+      "matching_text": "the data protection impact assessment the envisage processing",
+      "object": "the data protection impact assessment the envisaged processing",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Activity_2",
+      "match_source_text": "the assessed processing operations",
+      "matching_text": "the assess processing operation",
+      "object": "the assessed processing operations",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Activity_3",
+      "match_source_text": "the assessment reference",
+      "matching_text": "the assessment reference",
+      "object": "the assessment reference",
+      "source": "frozen_p2_activity"
+    }
+  ],
+  "case_id": "case_aa37540e7989",
+  "extension_note": "R3 extends the original P2 activity-only sidecar to named events. The event branch calls the same frozen P2 label analysis; it does not claim that the original P2 formal run covered these events.",
+  "nodes": [
+    {
+      "action_surface": "Describe",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": "the envisaged high risk processing",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Describe the envisaged high risk processing",
+      "matching_text": "describe the envisage high risk processing",
+      "node_id": "Activity_0",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Describe the envisaged high-risk processing"
+    },
+    {
+      "action_surface": "Carry",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": "the data protection impact assessment the envisaged processing",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Carry the data protection impact assessment the envisaged processing",
+      "matching_text": "carry the data protection impact assessment the envisage processing",
+      "node_id": "Activity_1",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Carry out the data protection impact assessment of the envisaged processing"
+    },
+    {
+      "action_surface": "Begin",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": "the assessed processing operations",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Begin the assessed processing operations",
+      "matching_text": "begin the assess processing operation",
+      "node_id": "Activity_2",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Begin the assessed processing operations"
+    },
+    {
+      "action_surface": "Store",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": "the assessment reference",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Store the assessment reference",
+      "matching_text": "store the assessment reference",
+      "node_id": "Activity_3",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Store the assessment reference"
+    },
+    {
+      "action_surface": null,
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": null,
+      "label_status": "empty_label",
+      "lane_labels": [],
+      "match_source_text": null,
+      "matching_text": null,
+      "node_id": "End",
+      "node_type": "event",
+      "parse_error": "empty_text",
+      "parse_source": "r3_p2_event_extension",
+      "parse_status": "empty_text",
+      "raw_label": ""
+    },
+    {
+      "action_surface": "required",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": null,
+      "label_status": "verb_style_action_only",
+      "lane_labels": [],
+      "match_source_text": "required",
+      "matching_text": "require",
+      "node_id": "Start",
+      "node_type": "event",
+      "parse_error": null,
+      "parse_source": "r3_p2_event_extension",
+      "parse_status": "parsed",
+      "raw_label": "High-risk processing proposed; data protection impact assessment required"
+    }
+  ],
+  "p2_assets": {
+    "code_path": "src/bpc_hybrid/stage1_label_semantics_p2.py",
+    "code_sha256": "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2",
+    "config_path": "configs/stage1_label_p2_v1.json",
+    "config_sha256": "59ac4e8ec2b02632366cac229b5538c4f243910f6a371b5e14e1be65817cc49d",
+    "method": {
+      "baseline": "P2",
+      "language": "en",
+      "learned_model": true,
+      "name": "stage1_label_p2_linguistic",
+      "runtime": {
+        "model": "en_core_web_sm",
+        "model_dir_sha256": "f5c9433ca389d21da684983f431a8294ef78e3f48ea91d901318c716cc4e52ae",
+        "model_version": "3.8.0",
+        "package": "spacy",
+        "version": "3.8.13"
+      },
+      "version": "stage1_label_p2@1.0.0"
+    },
+    "runtime": {
+      "model": "en_core_web_sm",
+      "model_dir_sha256": "f5c9433ca389d21da684983f431a8294ef78e3f48ea91d901318c716cc4e52ae",
+      "model_version": "3.8.0",
+      "package": "spacy",
+      "version": "3.8.13"
+    },
+    "schema_path": "configs/schemas/stage1_label_semantics_p2.schema.json",
+    "schema_sha256": "5473a28b0682d9ced4e4ad8f1016d19db5663734d311fc2845f23862f2f0bd39",
+    "verb_resource_path": "configs/resources/english_verb_roots_v1.json",
+    "verb_resource_sha256": "10d04b816c413b5082802364b87f66b6f1ac93a16a7df114246c041566c7af44"
+  },
+  "process_id": "Process",
+  "process_record_sha256": "99f8a4032e7f371624f9846fc82827993787db2c7d253152ed0686a26fb85b59",
+  "reachable": {
+    "Activity_0": [
+      "Activity_1",
+      "Activity_2",
+      "Activity_3",
+      "End"
+    ],
+    "Activity_1": [
+      "Activity_2",
+      "Activity_3",
+      "End"
+    ],
+    "Activity_2": [
+      "Activity_3",
+      "End"
+    ],
+    "Activity_3": [
+      "End"
+    ],
+    "Start": [
+      "Activity_0",
+      "Activity_1",
+      "Activity_2",
+      "Activity_3",
+      "End"
+    ]
+  },
+  "safety": {
+    "gold_read": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "reference_read": false
+  },
+  "schema_version": "stage3_r3_p2_model_sidecar@1.0.0",
+  "tie_break": "ascending_node_id"
+}

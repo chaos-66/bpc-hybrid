@@ -1,0 +1,235 @@
+{
+  "action_actor_names": {
+    "Activity_0": [
+      "Controller"
+    ],
+    "Activity_1": [
+      "Controller"
+    ],
+    "Activity_2": [
+      "Controller"
+    ],
+    "Activity_3": [
+      "Controller"
+    ],
+    "End": [
+      "Controller"
+    ],
+    "Start": [
+      "Controller"
+    ]
+  },
+  "actor_sources": {
+    "Controller": "pool_fallback_single_lane"
+  },
+  "actors": [
+    "Controller"
+  ],
+  "bpmn_path": "D:/Paper/experiment/bpc-hybrid/formal_experiment/data/development/stage3_reconstruction_v4/bpmn/case_92fe183843b7.bpmn",
+  "bpmn_sha256": "b9d84bc7fb6104cc1a4ae7b3d000594d95c1161300cae1c72d904a70447f6a1c",
+  "business_objects": [
+    {
+      "activity_id": "Activity_0",
+      "match_source_text": "the impact assessment requiring consultation",
+      "matching_text": "the impact assessment require consultation",
+      "object": "the impact assessment requiring consultation",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Activity_1",
+      "match_source_text": "the supervisory authority the proposed processing",
+      "matching_text": "the supervisory authority the propose processing",
+      "object": "the supervisory authority the proposed processing",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Activity_2",
+      "match_source_text": "the proposed processing",
+      "matching_text": "the propose processing",
+      "object": "the proposed processing",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Activity_3",
+      "match_source_text": "the consultation record",
+      "matching_text": "the consultation record",
+      "object": "the consultation record",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Start",
+      "match_source_text": "prior consultation",
+      "matching_text": "prior consultation",
+      "object": "prior consultation",
+      "source": "r3_p2_event_extension"
+    }
+  ],
+  "case_id": "case_92fe183843b7",
+  "extension_note": "R3 extends the original P2 activity-only sidecar to named events. The event branch calls the same frozen P2 label analysis; it does not claim that the original P2 formal run covered these events.",
+  "nodes": [
+    {
+      "action_surface": "Review",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": "the impact assessment requiring consultation",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Review the impact assessment requiring consultation",
+      "matching_text": "review the impact assessment require consultation",
+      "node_id": "Activity_0",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Review the impact assessment requiring consultation"
+    },
+    {
+      "action_surface": "Consult",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": "the supervisory authority the proposed processing",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Consult the supervisory authority the proposed processing",
+      "matching_text": "consult the supervisory authority the propose processing",
+      "node_id": "Activity_1",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Consult the supervisory authority about the proposed processing"
+    },
+    {
+      "action_surface": "Start",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": "the proposed processing",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Start the proposed processing",
+      "matching_text": "start the propose processing",
+      "node_id": "Activity_2",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Start the proposed processing"
+    },
+    {
+      "action_surface": "Retain",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": "the consultation record",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Retain the consultation record",
+      "matching_text": "retain the consultation record",
+      "node_id": "Activity_3",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Retain the consultation record"
+    },
+    {
+      "action_surface": null,
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": null,
+      "label_status": "empty_label",
+      "lane_labels": [],
+      "match_source_text": null,
+      "matching_text": null,
+      "node_id": "End",
+      "node_type": "event",
+      "parse_error": "empty_text",
+      "parse_source": "r3_p2_event_extension",
+      "parse_status": "empty_text",
+      "raw_label": ""
+    },
+    {
+      "action_surface": "requires",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Controller",
+      "business_object_surface": "prior consultation",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "requires prior consultation",
+      "matching_text": "require prior consultation",
+      "node_id": "Start",
+      "node_type": "event",
+      "parse_error": null,
+      "parse_source": "r3_p2_event_extension",
+      "parse_status": "parsed",
+      "raw_label": "Impact assessment completed; high risk without mitigation requires prior consultation"
+    }
+  ],
+  "p2_assets": {
+    "code_path": "src/bpc_hybrid/stage1_label_semantics_p2.py",
+    "code_sha256": "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2",
+    "config_path": "configs/stage1_label_p2_v1.json",
+    "config_sha256": "59ac4e8ec2b02632366cac229b5538c4f243910f6a371b5e14e1be65817cc49d",
+    "method": {
+      "baseline": "P2",
+      "language": "en",
+      "learned_model": true,
+      "name": "stage1_label_p2_linguistic",
+      "runtime": {
+        "model": "en_core_web_sm",
+        "model_dir_sha256": "f5c9433ca389d21da684983f431a8294ef78e3f48ea91d901318c716cc4e52ae",
+        "model_version": "3.8.0",
+        "package": "spacy",
+        "version": "3.8.13"
+      },
+      "version": "stage1_label_p2@1.0.0"
+    },
+    "runtime": {
+      "model": "en_core_web_sm",
+      "model_dir_sha256": "f5c9433ca389d21da684983f431a8294ef78e3f48ea91d901318c716cc4e52ae",
+      "model_version": "3.8.0",
+      "package": "spacy",
+      "version": "3.8.13"
+    },
+    "schema_path": "configs/schemas/stage1_label_semantics_p2.schema.json",
+    "schema_sha256": "5473a28b0682d9ced4e4ad8f1016d19db5663734d311fc2845f23862f2f0bd39",
+    "verb_resource_path": "configs/resources/english_verb_roots_v1.json",
+    "verb_resource_sha256": "10d04b816c413b5082802364b87f66b6f1ac93a16a7df114246c041566c7af44"
+  },
+  "process_id": "Process",
+  "process_record_sha256": "988d2ac4b03073aef71c8a73dfa162208dc0793dd1330f9ed1cea213450338b2",
+  "reachable": {
+    "Activity_0": [
+      "Activity_1",
+      "Activity_2",
+      "Activity_3",
+      "End"
+    ],
+    "Activity_1": [
+      "Activity_3",
+      "End"
+    ],
+    "Activity_2": [
+      "Activity_1",
+      "Activity_3",
+      "End"
+    ],
+    "Activity_3": [
+      "End"
+    ],
+    "Start": [
+      "Activity_0",
+      "Activity_1",
+      "Activity_2",
+      "Activity_3",
+      "End"
+    ]
+  },
+  "safety": {
+    "gold_read": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "reference_read": false
+  },
+  "schema_version": "stage3_r3_p2_model_sidecar@1.0.0",
+  "tie_break": "ascending_node_id"
+}

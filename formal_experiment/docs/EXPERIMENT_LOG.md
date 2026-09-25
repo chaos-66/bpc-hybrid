@@ -5483,3 +5483,17 @@
 - 仍存在 blocker：无
 - 备注：Reused stage3_v4_d1_frozen_v1; no API; table 3 still not accepted.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T05:42:44.340248+00:00 - S3-TABLE3-R3-INTEGRATION freeze implementation, configs, P2 sidecars, synthetic fixtures
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：8 passed in 4.22s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`064f81b328ab0f1f6930cad4da294c576ce7aa36`；相关未提交路径：49 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：R3 adapter, projection v4, sm/lg backend configs, frozen synthetic development fixtures; no reference/Gold/API read.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

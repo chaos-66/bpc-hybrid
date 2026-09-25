@@ -1,0 +1,228 @@
+{
+  "action_actor_names": {
+    "Activity_0": [
+      "Data subject"
+    ],
+    "Activity_1": [
+      "Data subject"
+    ],
+    "Activity_2": [
+      "Data subject"
+    ],
+    "Activity_3": [
+      "Data subject"
+    ],
+    "End": [
+      "Data subject"
+    ],
+    "Start": [
+      "Data subject"
+    ]
+  },
+  "actor_sources": {
+    "Data subject": "pool_fallback_single_lane"
+  },
+  "actors": [
+    "Data subject"
+  ],
+  "bpmn_path": "D:/Paper/experiment/bpc-hybrid/formal_experiment/data/development/stage3_reconstruction_v4/bpmn/case_d038f52f8cf3.bpmn",
+  "bpmn_sha256": "573695002d52136b882a3080048d5402a7ab29361a19b90b7cc529299985dc48",
+  "business_objects": [
+    {
+      "activity_id": "Activity_0",
+      "match_source_text": "the decision lift the restriction",
+      "matching_text": "the decision lift the restriction",
+      "object": "the decision lift the restriction",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Activity_1",
+      "match_source_text": "the data",
+      "matching_text": "the datum",
+      "object": "the data",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Activity_2",
+      "match_source_text": "the restriction processing",
+      "matching_text": "the restriction processing",
+      "object": "the restriction processing",
+      "source": "frozen_p2_activity"
+    },
+    {
+      "activity_id": "Activity_3",
+      "match_source_text": "the restriction handling record",
+      "matching_text": "the restriction handle record",
+      "object": "the restriction handling record",
+      "source": "frozen_p2_activity"
+    }
+  ],
+  "case_id": "case_d038f52f8cf3",
+  "extension_note": "R3 extends the original P2 activity-only sidecar to named events. The event branch calls the same frozen P2 label analysis; it does not claim that the original P2 formal run covered these events.",
+  "nodes": [
+    {
+      "action_surface": "Record",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Data subject",
+      "business_object_surface": "the decision lift the restriction",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Record the decision lift the restriction",
+      "matching_text": "record the decision lift the restriction",
+      "node_id": "Activity_0",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Record the decision to lift the restriction"
+    },
+    {
+      "action_surface": "Inform",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Data subject",
+      "business_object_surface": "the data",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Inform the data",
+      "matching_text": "inform the datum",
+      "node_id": "Activity_1",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Inform the data subject that the processing restriction will be lifted"
+    },
+    {
+      "action_surface": "Lift",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Data subject",
+      "business_object_surface": "the restriction processing",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Lift the restriction processing",
+      "matching_text": "lift the restriction processing",
+      "node_id": "Activity_2",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Lift the restriction of processing"
+    },
+    {
+      "action_surface": "Archive",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Data subject",
+      "business_object_surface": "the restriction handling record",
+      "label_status": "verb_style_action_object",
+      "lane_labels": [],
+      "match_source_text": "Archive the restriction handling record",
+      "matching_text": "archive the restriction handle record",
+      "node_id": "Activity_3",
+      "node_type": "activity",
+      "parse_error": null,
+      "parse_source": "frozen_p2_activity",
+      "parse_status": "parsed",
+      "raw_label": "Archive the restriction handling record"
+    },
+    {
+      "action_surface": null,
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Data subject",
+      "business_object_surface": null,
+      "label_status": "empty_label",
+      "lane_labels": [],
+      "match_source_text": null,
+      "matching_text": null,
+      "node_id": "End",
+      "node_type": "event",
+      "parse_error": "empty_text",
+      "parse_source": "r3_p2_event_extension",
+      "parse_status": "empty_text",
+      "raw_label": ""
+    },
+    {
+      "action_surface": "confirmed",
+      "actor_status": "pool_fallback_single_lane",
+      "actor_surface": "Data subject",
+      "business_object_surface": null,
+      "label_status": "verb_style_action_only",
+      "lane_labels": [],
+      "match_source_text": "confirmed",
+      "matching_text": "confirm",
+      "node_id": "Start",
+      "node_type": "event",
+      "parse_error": null,
+      "parse_source": "r3_p2_event_extension",
+      "parse_status": "parsed",
+      "raw_label": "Processing restricted under Article 18(1); grounds for lifting restriction confirmed"
+    }
+  ],
+  "p2_assets": {
+    "code_path": "src/bpc_hybrid/stage1_label_semantics_p2.py",
+    "code_sha256": "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2",
+    "config_path": "configs/stage1_label_p2_v1.json",
+    "config_sha256": "59ac4e8ec2b02632366cac229b5538c4f243910f6a371b5e14e1be65817cc49d",
+    "method": {
+      "baseline": "P2",
+      "language": "en",
+      "learned_model": true,
+      "name": "stage1_label_p2_linguistic",
+      "runtime": {
+        "model": "en_core_web_sm",
+        "model_dir_sha256": "f5c9433ca389d21da684983f431a8294ef78e3f48ea91d901318c716cc4e52ae",
+        "model_version": "3.8.0",
+        "package": "spacy",
+        "version": "3.8.13"
+      },
+      "version": "stage1_label_p2@1.0.0"
+    },
+    "runtime": {
+      "model": "en_core_web_sm",
+      "model_dir_sha256": "f5c9433ca389d21da684983f431a8294ef78e3f48ea91d901318c716cc4e52ae",
+      "model_version": "3.8.0",
+      "package": "spacy",
+      "version": "3.8.13"
+    },
+    "schema_path": "configs/schemas/stage1_label_semantics_p2.schema.json",
+    "schema_sha256": "5473a28b0682d9ced4e4ad8f1016d19db5663734d311fc2845f23862f2f0bd39",
+    "verb_resource_path": "configs/resources/english_verb_roots_v1.json",
+    "verb_resource_sha256": "10d04b816c413b5082802364b87f66b6f1ac93a16a7df114246c041566c7af44"
+  },
+  "process_id": "Process",
+  "process_record_sha256": "bc12e56e4ce1547ee45f6aa7de757827405fdc3b5e94b3789a7881f2ae54d20f",
+  "reachable": {
+    "Activity_0": [
+      "Activity_1",
+      "Activity_2",
+      "Activity_3",
+      "End"
+    ],
+    "Activity_1": [
+      "Activity_2",
+      "Activity_3",
+      "End"
+    ],
+    "Activity_2": [
+      "Activity_3",
+      "End"
+    ],
+    "Activity_3": [
+      "End"
+    ],
+    "Start": [
+      "Activity_0",
+      "Activity_1",
+      "Activity_2",
+      "Activity_3",
+      "End"
+    ]
+  },
+  "safety": {
+    "gold_read": false,
+    "llm_api_called": false,
+    "network_called": false,
+    "reference_read": false
+  },
+  "schema_version": "stage3_r3_p2_model_sidecar@1.0.0",
+  "tie_break": "ascending_node_id"
+}

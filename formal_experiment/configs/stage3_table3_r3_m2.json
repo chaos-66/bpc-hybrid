@@ -1,0 +1,222 @@
+{
+  "d1_llm": {
+    "authorization_path": "configs/authorization/stage3_d1_v4_user_authorization_v1.json",
+    "calls_cap": 5,
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "max_output_tokens_per_call": 4096,
+    "model": "deepseek-v4-pro",
+    "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
+    "registry_sha256": "31f3358d089611b85a4a50d36444a4c59f6d965abbf0b8770aeb73db13642749",
+    "retry_cap": 0,
+    "total_budget_usd_cap": 8.02,
+    "total_output_tokens_cap": 20480
+  },
+  "development_status": "development_retrospective_not_independent_test",
+  "evaluation": {
+    "markdown_min_decimals": 4,
+    "not_applicable_policy": "excluded_from_main_denominator_diagnostic_only",
+    "precision_null_when_no_predicted_positive": true,
+    "report_unrounded_json": true,
+    "states": [
+      "violated",
+      "satisfied",
+      "unknown"
+    ],
+    "types": [
+      "missing_action",
+      "incorrect_actor",
+      "out_of_order"
+    ],
+    "unknown_policy": {
+      "reference_not_applicable": "excluded",
+      "reference_satisfied": "unknown_counted_as_unknown_negative_not_TN",
+      "reference_violated": "unknown_counted_as_FN_and_unknown_positive"
+    }
+  },
+  "git_baseline": "67ef832421dd0920fdc5f62f11cf615fca878893d",
+  "hash_bindings": {
+    "configs/resources/english_verb_roots_v1.json": "10d04b816c413b5082802364b87f66b6f1ac93a16a7df114246c041566c7af44",
+    "configs/schemas/stage1_label_semantics_p2.schema.json": "5473a28b0682d9ced4e4ad8f1016d19db5663734d311fc2845f23862f2f0bd39",
+    "configs/stage1_label_p2_v1.json": "59ac4e8ec2b02632366cac229b5538c4f243910f6a371b5e14e1be65817cc49d",
+    "configs/stage3_table3_r3_input_contract_v1.json": "7eef7cb22516210d31964f245d05bc1bd778690e0e54bd8bd4d7b5c575667ad9",
+    "configs/sun_stage3_development_v1.json": "3ef60d5bda1e5103486d5269cd3740330e911c1b912367d822c7dbab729714c4",
+    "configs/winter_stage3_development_v1.json": "45635b7108410309356545ea79d498cfa0481ba516cc2676d6c08cecd30fdb12",
+    "data/development/stage3_r3_synth/mechanism_fixtures_v1.json": "e4a5213603925d431fb6f1f937b2c8cb7c01f33aa4f74d58732833aabd265163",
+    "data/development/stage3_reconstruction_v4/inference_view.json": "6248e8396ad4d8d7077b6332f51b1aa2b5de7e97188e324cb49e00bda4c1eb33",
+    "data/development/stage3_reconstruction_v4/manifest.json": "e49980ef7e4fcfdb39d770082706433cf22fe143cf97cf24f2c39e555013d501",
+    "data/development/stage3_reconstruction_v4/stage2_input.json": "4c934712d4e85316167136a46861084165c75969c113eca7d995de5ddaabd1f2",
+    "data/predictions/stage3_v4_b0_frozen_v1/predictions.json": "eee1d6447bdab21d20704df64801e81aaa642e543a0bd706b0783882009c71fa",
+    "outputs/development/stage3_table3_r3_p2_sidecars/index.json": "463c05f718d682a5878f94be48098ea16b69d9c12a14bcf10aa3138dee68b211",
+    "outputs/development/stage3_table3_v4_r2/predictions.json": "969c5f8ae573fb9f0792b62ede1d449204a1318c9d3389315348dc2bdc3dce8b",
+    "outputs/development/stage3_table3_v4_r2/run_manifest.json": "eaff286c1608128e207972da8bf5de0f72ad0a70bf69a8c473db08f17312afa8",
+    "outputs/reports/stage3_d1_preflight_v4.json": "b79cae69bd295d1be933eb4109a44c5a88ca8579ee646833d59dd5d0411020c5",
+    "scripts/build_stage3_r3_sidecars.py": "a21e73bbb558d036fede60091b91fda65367658e518878342333e2d0391ca11f",
+    "scripts/evaluate_stage3_table3_r3.py": "8d1eef2f5a67f98f2426afbba0199ebfba66f74c1c41cce99694a1c2daf73c5d",
+    "scripts/prepare_stage3_execution_v4.py": "bceec17c04980b97c4a40694e30f7bca98eacaca07c22edd142d910c02787298",
+    "scripts/run_stage3_r3_mechanism_check.py": "ee561ca4b12198149af14277ec07a70dd8f08ded846aa761937b7ecf0d817629",
+    "scripts/run_stage3_table3_r3.py": "d701191bf2311c202362489ee112b533f00743d57bb163ea67e4802780eac7dc",
+    "src/bpc_hybrid/stage1_label_semantics_p2.py": "c95910efe80992e0b49be7859e9c9a7b48493e9c794472ed86bcb129d2a5a3c2",
+    "src/bpc_hybrid/stage3_r3_p2_adapter_v1.py": "0f95c72ed4d7594f103c483e2c2d2cad612f6b44e8466d71daebb7207f1b8640",
+    "src/bpc_hybrid/sun_stage3/gdpr_capsule_converter.py": "e7110c2c1ecab56f6124d918b340639e7affd17b6f253f3c525780a4f3a96436",
+    "src/bpc_hybrid/sun_stage3/order_failure_diagnostics_v1.py": "361da40dc66ea791a3ad9d87881866d840fe3383897cb2f2e935c54ae9050e8b",
+    "src/bpc_hybrid/sun_stage3/r3_sun_scorer.py": "643ccf36b49d078c21b3686dbf238fcdda487f424870dd64498945f411951b36",
+    "src/bpc_hybrid/sun_stage3/static_vector_similarity_v1.py": "6cfb65cc78dbdbd715002660bf7f1715119799405dfd2e253acf9e8d08d3884f",
+    "src/bpc_hybrid/sun_stage3/sun_scorer.py": "b05b5995a60a1fc748244b854e1649cdc90b075c0d5ea5223b2a3e0fff569b7b",
+    "src/bpc_hybrid/sun_stage3/temporal_projection_v3.py": "2eec05cdbda3cee8c1721c265bafb734314522fc28a65241a5ff60eaa43542ca",
+    "src/bpc_hybrid/sun_stage3/temporal_projection_v4_r3.py": "34ded79bb42428dc794afd5dd46c3e7ff09f2af595bd7eeb62f53ed87977a556",
+    "tests/test_stage3_r3_integration.py": "60a133d720915411d5ebe0bae6900b36d39155d1a812609e9418b1c095b53fc1"
+  },
+  "inference_reference_forbidden": {
+    "action": "do_not_open_or_hash_in_inference_process",
+    "paths": [
+      "data/development/stage3_reconstruction_v4/construction_reference.json"
+    ]
+  },
+  "m0_reused_r2": {
+    "out_dir": "outputs/development/stage3_table3_v4_r2",
+    "predictions_path": "outputs/development/stage3_table3_v4_r2/predictions.json",
+    "predictions_sha256": "969c5f8ae573fb9f0792b62ede1d449204a1318c9d3389315348dc2bdc3dce8b",
+    "report_path": "outputs/reports/stage3_table3_v4_r2.json",
+    "report_sha256": "947667e858b2db1bd35560ea9232590ce0a57661ef1d6fec1a4ca0131a72bdac",
+    "reuse_scope": "Winter native result only; M0 report is read for comparison, not rerun.",
+    "run_manifest_path": "outputs/development/stage3_table3_v4_r2/run_manifest.json",
+    "run_manifest_sha256": "eaff286c1608128e207972da8bf5de0f72ad0a70bf69a8c473db08f17312afa8"
+  },
+  "methods": {
+    "ours": {
+      "expected_schema": "gdpr7_direct_llm_predictions@1.0.0",
+      "label": "Ours (Direct-LLM Stage 2 + same Sun Stage 3)",
+      "method_id": "ours_d1_frozen_v1",
+      "order_relation_source": "temporal_projection_v3_plus_valid_native_edges",
+      "predictions_path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
+      "stage2_kind": "direct_llm"
+    },
+    "sun": {
+      "expected_schema": "gdpr7_sun_rule_only_predictions@1.0.0",
+      "label": "Sun (Rules-Only Stage 2 + Sun Stage 3)",
+      "method_id": "sun_b0_frozen_v1",
+      "order_relation_source": "temporal_projection_v3_plus_valid_native_edges",
+      "predictions_path": "data/predictions/stage3_v4_b0_frozen_v1/predictions.json",
+      "stage2_kind": "rules_only"
+    },
+    "winter": {
+      "delta": 0.8,
+      "gamma": 0.4,
+      "label": "Winter (native full pipeline)",
+      "method_id": "winter_2020_native_full_pipeline",
+      "order_relation_source": "native_winter_rule_side_flows_only",
+      "reachability_mode": "REACHABILITY_CORRECTED",
+      "stage2_kind": "native_regulation_text"
+    }
+  },
+  "notes": "R3 frozen diagnosis configuration. Sun/Ours share P2-derived matching views and the R3 event projection v4. Winter is reused from the hashed R2 native output and is never rerun here.",
+  "p2_adapter": {
+    "activity_source": "frozen_p2_activity_renderer",
+    "adapter_module": "src/bpc_hybrid/stage3_r3_p2_adapter_v1.py",
+    "event_source": "r3_named_event_extension_same_frozen_label_logic",
+    "frozen_p2_config": "configs/stage1_label_p2_v1.json",
+    "frozen_p2_module": "src/bpc_hybrid/stage1_label_semantics_p2.py",
+    "input_contract": "configs/stage3_table3_r3_input_contract_v1.json",
+    "matching_text_rule": "join_nonempty_action_surface_then_business_object_surface_then_frozen_lemma",
+    "model_side_asset": "outputs/development/stage3_table3_r3_p2_sidecars/index.json"
+  },
+  "p2_sidecar_index": {
+    "path": "outputs/development/stage3_table3_r3_p2_sidecars/index.json",
+    "sha256": "463c05f718d682a5878f94be48098ea16b69d9c12a14bcf10aa3138dee68b211"
+  },
+  "reference_identity": {
+    "human_adjudicated": false,
+    "is_gold": false,
+    "name": "AI construction reference"
+  },
+  "reference_precheck": {
+    "expected_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+    "path": "data/development/stage3_reconstruction_v4/construction_reference.json",
+    "reader": "scripts/evaluate_stage3_table3_v4_r2.py"
+  },
+  "schema_version": "stage3_table3_r3_execution@1.0.0",
+  "scope": {
+    "bpmn_count": 20,
+    "case_count": 20,
+    "claim_boundary": "checking on independently specified applicable regulation-process pairs; not end-to-end rule selection or complete GDPR F1",
+    "dataset_id": "stage3_scoped_gdpr_v4",
+    "family_count": 5,
+    "human_adjudicated": false,
+    "negative_cells_per_method": 35,
+    "not_applicable_cells_per_method": 10,
+    "positive_cells_per_method": 15,
+    "reference_is_gold": false,
+    "rule_ids": [
+      "article13p3",
+      "article14p4",
+      "article18p3",
+      "article35p1",
+      "article36p1"
+    ],
+    "scored_cells_per_method": 50,
+    "signals_per_method": 300,
+    "signals_total": 900
+  },
+  "similarity": {
+    "backend": "en_core_web_lg_static_vector_mean_cosine",
+    "cosine_clipped_zero_one": true,
+    "lg_vectors_only": true,
+    "model_name": "en_core_web_lg",
+    "model_resource_sha256": null,
+    "model_version": "3.8.0",
+    "no_fallback_on_unavailable_evidence": true,
+    "sm_parser_and_lemma_unchanged": true,
+    "vector_mean": true
+  },
+  "status": "frozen_before_r2_real_run",
+  "sun_scorer": {
+    "gamma": 0.8,
+    "matching_ranking_used_for": "diagnostic_only",
+    "outer_matching_gate_applied": false,
+    "path": "src/bpc_hybrid/sun_stage3/sun_scorer.py",
+    "similarity_backend": {
+      "model": "en_core_web_sm",
+      "package": "spacy"
+    },
+    "tau": 0.8,
+    "theta": 0.8
+  },
+  "task_id": "S3-TABLE3-R3-INTEGRATION-M2",
+  "temporal_projection": {
+    "algorithm": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+    "dates_and_durations_not_events": "bounded nominal rejection remains in v1/v3 helper",
+    "derived_endpoints_are_not_added_to_mandatory_actions": true,
+    "event_predicate_must_be_inside_continuous_endpoint": true,
+    "local_parse_of_post_marker_complement": true,
+    "main_action_must_be_exactly_one_after_exclusion": true,
+    "marker_inside_exception_rejection": true,
+    "marker_scope": "predicted conditions and constraints spans only",
+    "markers": [
+      "before",
+      "after",
+      "prior to"
+    ],
+    "module": "src/bpc_hybrid/sun_stage3/temporal_projection_v4_r3.py",
+    "multi_marker_span_rejection": true,
+    "multiple_top_level_events_rejected": true,
+    "native_order_relations_priority": true,
+    "negation_rejection": true,
+    "nominal_branch_only_when_no_unresolved_event_predicate": true,
+    "truncated_span_rejected": true,
+    "unique_top_level_event_predicate_retained": true,
+    "version_note": "R3 event-predicate preservation; v1/v2/v3 preserved."
+  },
+  "winter_global_roles": {
+    "forbidden": "reference, error type, pair/control/family, role-case mapping",
+    "normalization": "lower/strip unique",
+    "path": "outputs/development/stage3_table3_v4_r2/global_role_candidates.json",
+    "source": "inference_view items only"
+  },
+  "winter_native": {
+    "config_path": "configs/winter_stage3_development_v1.json",
+    "delta": 0.8,
+    "gamma": 0.4,
+    "reachability_mode": "REACHABILITY_CORRECTED",
+    "unknown_when_no_rule_side_flow": true
+  }
+}
