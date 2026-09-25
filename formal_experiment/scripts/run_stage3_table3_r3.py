@@ -322,6 +322,13 @@ def _load_lg_model(lg_model_path: str | None, lg_model_name: str):
     return nlp_lg, model_path_record, model_version, resource_sha
 
 
+def _normalize_backend(value: Any) -> str:
+    text = str(value or "sm").strip().lower()
+    if text in {"static_vector_lg", "en_core_web_lg_static_vector_mean_cosine", "m2_static_vector_lg"}:
+        return "static_vector_lg"
+    return "sm"
+
+
 def run(*, config_path: Path, out_dir: Path, sidecar_index: Path = DEFAULT_SIDECAR_INDEX,
         nlp_model: str = "en_core_web_sm", lg_model_path: str | None = None,
         lg_model_name: str = "en_core_web_lg", overwrite: bool = False) -> dict[str, Any]:
@@ -329,7 +336,8 @@ def run(*, config_path: Path, out_dir: Path, sidecar_index: Path = DEFAULT_SIDEC
     out_dir = Path(out_dir).resolve()
     sidecar_index = Path(sidecar_index).resolve()
     cfg = _load_json(config_path)
-    backend = str((cfg.get("similarity") or {}).get("backend") or "sm")
+    backend_raw = str((cfg.get("similarity") or {}).get("backend") or "sm")
+    backend = _normalize_backend(backend_raw)
     r2_out_dir = ROOT / str(cfg["m0_reused_r2"]["out_dir"])
     sidecar_index_doc, sidecars, sidecar_paths = _load_sidecars(sidecar_index)
     if cfg.get("p2_sidecar_index", {}).get("sha256") not in (None, "", _sha_file(sidecar_index)):
@@ -350,7 +358,7 @@ def run(*, config_path: Path, out_dir: Path, sidecar_index: Path = DEFAULT_SIDEC
     r1.SCHEMA_VERSION = f"stage3_table3_r3_{backend}_predictions@1.0.0"
 
     import bpc_hybrid.winter_stage3.winter_similarity as winter_similarity_module
-    vector_model_info: dict[str, Any] = {"backend": "sm"}
+    vector_model_info: dict[str, Any] = {"backend": "sm", "configured_backend": backend_raw}
     if backend == "static_vector_lg":
         nlp_lg, model_path_record, model_version, resource_sha = _load_lg_model(lg_model_path, lg_model_name)
 
@@ -366,6 +374,7 @@ def run(*, config_path: Path, out_dir: Path, sidecar_index: Path = DEFAULT_SIDEC
         winter_similarity_module.WinterSimilarity = _M2SimilarityFactory
         vector_model_info = {
             "backend": "static_vector_lg",
+            "configured_backend": backend_raw,
             "model_name": lg_model_name,
             "model_version": model_version,
             "model_path": model_path_record,
