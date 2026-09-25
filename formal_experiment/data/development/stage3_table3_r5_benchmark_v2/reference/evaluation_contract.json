@@ -1,0 +1,21 @@
+{
+  "candidate_assets_not_pooled": true,
+  "core_and_semantic_challenge_not_pooled": true,
+  "coverage_formula": "(scored_cells - unknown_positive - unknown_negative) / scored_cells",
+  "ineligible_types_never_scored": true,
+  "negative_definition": "reference_states[type] == satisfied",
+  "negative_unknown_recorded_separately_not_tn": true,
+  "not_applicable_handling": "exclude from denominator according to fixed reference states",
+  "not_scored_handling": "exclude from denominator (type not eligible for that requirement)",
+  "per_violation_type_reporting": [
+    "missing_action",
+    "incorrect_actor",
+    "out_of_order"
+  ],
+  "positive_definition": "reference_states[type] == violated",
+  "positive_unknown_counts_as_fn": true,
+  "schema_version": "stage3_table3_r5_evaluation_contract@2.0.0",
+  "status": "frozen_before_test_results",
+  "unrun_metric": null,
+  "unrun_metric_policy": "null, never 0"
+}

@@ -1,0 +1,329 @@
+{
+  "items": [
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The data subject has a right of access and confirmation.",
+      "business_scenario_zh": "数据主体有权获得是否处理其个人数据的确认及访问。",
+      "common_context_id": "ctx_02d53875e8c5",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Authorised personnel must process personal data only on controller instructions.",
+      "business_scenario_zh": "控制者和处理者须确保授权人员仅按指示处理个人数据。",
+      "common_context_id": "ctx_10cd8f3228f6",
+      "roles": {
+        "actor_required": "Controller and Processor"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Further processing of indirectly obtained personal data requires prior notice.",
+      "business_scenario_zh": "间接收集后拟进一步处理，须在进一步处理前告知新目的。",
+      "common_context_id": "ctx_131803daaee1",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The supervisory authority must provide written advice within up to eight weeks of a consultation request.",
+      "business_scenario_zh": "监管机构收到事先咨询请求后，应在最长八周内提供书面意见。",
+      "common_context_id": "ctx_185f2710aa4c",
+      "roles": {
+        "actor_required": "Supervisory Authority"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The processor must process personal data only on documented controller instructions.",
+      "business_scenario_zh": "处理者须仅按控制者书面指示处理个人数据。",
+      "common_context_id": "ctx_1e6d5b98ea9a",
+      "roles": {
+        "actor_required": "Processor"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The processor must notify the controller of a breach without undue delay.",
+      "business_scenario_zh": "处理者知悉个人数据泄露后，须及时通知控制者。",
+      "common_context_id": "ctx_1ff7a700e3a6",
+      "roles": {
+        "actor_required": "Processor"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must implement and review compliance measures.",
+      "business_scenario_zh": "控制者须实施适当技术组织措施并定期审查更新。",
+      "common_context_id": "ctx_2146559c7e4a",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must respond to data subject requests within one month.",
+      "business_scenario_zh": "控制者须在收到请求后一个月内告知所采取的行动。",
+      "common_context_id": "ctx_2495ddf7b84b",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "An objection to direct marketing requires cessation of that processing.",
+      "business_scenario_zh": "数据主体反对直接营销时，须停止为直接营销处理个人数据。",
+      "common_context_id": "ctx_4464b4814fa1",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Data portability requires a machine-readable format when conditions are met.",
+      "business_scenario_zh": "符合条件时，控制者须以结构化、通用、机器可读格式提供个人数据。",
+      "common_context_id": "ctx_468e65928623",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "High-risk breaches must be communicated to data subjects without undue delay.",
+      "business_scenario_zh": "泄露可能对数据主体权利自由造成高风险时，控制者须及时告知数据主体。",
+      "common_context_id": "ctx_4eaccbf5d927",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The data subject has a right to rectification without undue delay.",
+      "business_scenario_zh": "数据主体有权要求控制者及时更正不准确个人数据。",
+      "common_context_id": "ctx_6324484dc088",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Refusal to act must be explained within one month with remedies.",
+      "business_scenario_zh": "不处理请求时，须在一个月内告知理由和救济途径。",
+      "common_context_id": "ctx_66a9bc654d14",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "The data subject shall have the right to object, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions.",
+      "business_scenario_en": "Objection requires the controller to stop processing unless compelling grounds exist.",
+      "business_scenario_zh": "数据主体基于自身情况反对处理时，控制者原则须停止处理。",
+      "common_context_id": "ctx_6ea5a10bb167",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Child consent for information society services depends on age and parental authorisation.",
+      "business_scenario_zh": "向儿童提供信息社会服务时，须根据年龄取得本人或监护人同意。",
+      "common_context_id": "ctx_74415d329801",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must notify the supervisory authority of a breach within 72 hours where feasible.",
+      "business_scenario_zh": "发生个人数据泄露时，控制者须在知悉后及时且不迟于72小时通知监管机构。",
+      "common_context_id": "ctx_7b8c8fbe1d4d",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Prior consultation is required when high residual risk remains.",
+      "business_scenario_zh": "评估显示无缓解措施时仍有高风险，控制者须事先咨询监管机构。",
+      "common_context_id": "ctx_80902415d476",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Further processing of directly collected personal data requires prior notice.",
+      "business_scenario_zh": "直接收集后拟进一步处理，须在进一步处理前告知新目的。",
+      "common_context_id": "ctx_86b53dec3184",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must seek DPO advice when carrying out a DPIA.",
+      "business_scenario_zh": "开展数据保护影响评估时，控制者须征求数据保护官意见。",
+      "common_context_id": "ctx_8fcb45912317",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
+      "business_scenario_en": "Indirect collection requires information within one month.",
+      "business_scenario_zh": "间接收集个人数据时，须在合理期限内且最迟一个月内告知数据主体。",
+      "common_context_id": "ctx_99acfbde58ed",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must erase personal data without undue delay when a ground applies.",
+      "business_scenario_zh": "存在法定事由时，控制者须及时删除个人数据。",
+      "common_context_id": "ctx_9b8e17aaf9e9",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Special-category processing requires explicit consent unless law prohibits it.",
+      "business_scenario_zh": "处理特殊类别数据须取得数据主体明确同意。",
+      "common_context_id": "ctx_b25297a0124d",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Further transparency information must also be provided at the time of direct collection.",
+      "business_scenario_zh": "直接收集时，还须在收集时提供进一步公平透明处理信息。",
+      "common_context_id": "ctx_b3084662e71d",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must inform the data subject before lifting a processing restriction.",
+      "business_scenario_zh": "解除处理限制前，控制者须告知数据主体。",
+      "common_context_id": "ctx_b9bbf1761703",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Employment-law processing of special-category data requires a lawful basis and safeguards.",
+      "business_scenario_zh": "基于雇佣或社会保障法处理特殊类别数据须有法定依据和保障。",
+      "common_context_id": "ctx_bfcf3406da11",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must be able to demonstrate consent.",
+      "business_scenario_zh": "基于同意处理时，控制者须能够证明数据主体已同意。",
+      "common_context_id": "ctx_c28a7db2134d",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
+      "business_scenario_en": "Further transparency information from indirect sources is also time-bound.",
+      "business_scenario_zh": "间接收集时，还须在法定期限内提供进一步公平透明处理信息。",
+      "common_context_id": "ctx_c5e4080015e8",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller should seek data-subject views on intended processing where appropriate.",
+      "business_scenario_zh": "适当情况下，控制者应就预期处理征求数据主体意见。",
+      "common_context_id": "ctx_d5cf6b2de831",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller and processor must implement risk-appropriate security measures.",
+      "business_scenario_zh": "控制者和处理者须实施与风险相适应的安全措施。",
+      "common_context_id": "ctx_d94017a8867a",
+      "roles": {
+        "actor_required": "Controller and Processor"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must review the DPIA when risk changes.",
+      "business_scenario_zh": "风险变化时，控制者须审查处理是否符合数据保护影响评估。",
+      "common_context_id": "ctx_da06004e31d4",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Direct collection requires specified information at the time of collection.",
+      "business_scenario_zh": "直接从数据主体收集个人数据时，须在收集时提供规定告知信息。",
+      "common_context_id": "ctx_ea1ba9807ceb",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must notify recipients of rectification, erasure, or restriction.",
+      "business_scenario_zh": "更正、删除或限制处理后，控制者须通知接收方。",
+      "common_context_id": "ctx_ecdba913daa1",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Freely given consent assessment must consider conditional service provision.",
+      "business_scenario_zh": "评估同意是否自由作出时，须考虑服务附条件于非必要处理的情形。",
+      "common_context_id": "ctx_f3a77e54d0d1",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "The controller must make reasonable efforts to verify parental authorisation.",
+      "business_scenario_zh": "儿童同意场景下，控制者须尽合理努力核验监护人同意。",
+      "common_context_id": "ctx_f41bd5ec999c",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "Data protection by design must be implemented at design time and during processing.",
+      "business_scenario_zh": "控制者须在确定处理方式时及处理过程中落实数据保护设计。",
+      "common_context_id": "ctx_f5b8fa2dd4db",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    },
+    {
+      "applicability_scope": "source requirement applies to the modelled business scenario",
+      "business_scenario_en": "High-risk processing requires a prior DPIA.",
+      "business_scenario_zh": "高风险处理前，控制者须开展数据保护影响评估。",
+      "common_context_id": "ctx_f7fdf7562c1d",
+      "roles": {
+        "actor_required": "Controller"
+      }
+    }
+  ],
+  "schema_version": "stage3_table3_r5_inference_common_context@2.0.0"
+}

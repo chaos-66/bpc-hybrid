@@ -1,0 +1,2238 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "cross_article_merge_review": {
+    "default_rule": "same Article -> same source_family_id",
+    "evaluated_pairs": [
+      {
+        "decision": "keep separate",
+        "pair": [
+          "gdpr_art13",
+          "gdpr_art14"
+        ],
+        "reason": "direct vs indirect collection are distinct duties with distinct exceptions (13(4) vs 14(5)); cross-reference does not merge families"
+      },
+      {
+        "decision": "keep separate",
+        "pair": [
+          "gdpr_art35",
+          "gdpr_art36"
+        ],
+        "reason": "36(1) references a 35 DPIA but creates a distinct consultation duty"
+      },
+      {
+        "decision": "keep separate",
+        "pair": [
+          "gdpr_art33",
+          "gdpr_art34"
+        ],
+        "reason": "supervisory-authority notification vs data-subject communication are distinct duties"
+      }
+    ],
+    "ordinary_cross_references_do_not_merge_all_gdpr": true
+  },
+  "document_version": "Regulation (EU) 2016/679 (GDPR), English OJ text snapshot stored under references/winter_2020_model_check/model_check/input/regulations/gdpr",
+  "eligibility_model": {
+    "candidate_requirements": "requirements with no eligible core type are kept as semantic/candidate assets, not scored in the frozen three-class F1",
+    "description": "Per-type eligibility replaces the all-or-nothing has_variants flag. A variant may only be generated when the type has an explicit legal/semantic basis in the current source.",
+    "types": [
+      "missing_action",
+      "incorrect_actor",
+      "out_of_order"
+    ]
+  },
+  "exposed_source_family_ids": [
+    "gdpr_art13",
+    "gdpr_art14",
+    "gdpr_art15",
+    "gdpr_art16",
+    "gdpr_art17",
+    "gdpr_art18",
+    "gdpr_art20",
+    "gdpr_art33",
+    "gdpr_art34",
+    "gdpr_art35",
+    "gdpr_art36",
+    "gdpr_art7"
+  ],
+  "gdpr7_stage2_input": "data/input/gdpr7_stage2_input_v1.json",
+  "independent_test_source_family_ids": [
+    "gdpr_art12",
+    "gdpr_art19",
+    "gdpr_art21",
+    "gdpr_art24",
+    "gdpr_art25",
+    "gdpr_art28",
+    "gdpr_art32",
+    "gdpr_art8",
+    "gdpr_art9"
+  ],
+  "inference_isolation": {
+    "forbidden_inference_fields": [
+      "variant",
+      "mutation_type",
+      "reference_states",
+      "target_node",
+      "family_id",
+      "requirement_id",
+      "case_family",
+      "answer"
+    ],
+    "inference_dir": "inference",
+    "reference_dir": "reference"
+  },
+  "methods_contract": {
+    "ours": "Direct-LLM Stage2 + shared Stage3",
+    "sun": "Rules-Only Stage2 baseline + shared Stage3",
+    "winter": "native full pipeline; not sharing Stage1/Stage3"
+  },
+  "preserved_from": {
+    "benchmark_id": "stage3_table3_r5_benchmark_v1",
+    "config_path": "configs/stage3_table3_r5_benchmark_v1.json"
+  },
+  "r4_construction_reference": "data/development/stage3_reconstruction_v4/construction_reference.json",
+  "release_gate": {
+    "formal_gold_created": false,
+    "formal_release_approved": false,
+    "human_adjudicated": false,
+    "new_api_authorized": false
+  },
+  "requirements": [
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 13,
+      "business_scenario_en": "Further processing of directly collected personal data requires prior notice.",
+      "business_scenario_zh": "直接收集后拟进一步处理，须在进一步处理前告知新目的。",
+      "citation": "GDPR Article 13(3)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "the controller intends to further process for a purpose other than that for which the data were collected",
+      "constraint_present": true,
+      "constraint_text": "prior to that further processing",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller; the data subject is not the actor.",
+        "missing_action": "13(3) imposes a positive duty to provide the other-purpose information.",
+        "out_of_order": "Explicit strict order: provide information 'prior to that further processing'."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": true,
+      "exception_text": "the data subject already has the information under Article 13(4)",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": true,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must provide the data subject with the other purpose and relevant information before further processing.",
+      "order_evidence": "prior to that further processing",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "3",
+      "r4_rule_id": "article13p3",
+      "requirement_id": "R5-D-01",
+      "review_fixes": [
+        "condition_present corrected to True (intends further processing for another purpose)."
+      ],
+      "review_issues": [],
+      "sample_id": null,
+      "scenario_id": "S1",
+      "scenario_zh": "数据收集与告知",
+      "source_family_id": "gdpr_art13",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "r4_reference",
+      "source_locator": "Where the controller intends to further process",
+      "split": "development",
+      "tasks": [
+        "Complete direct collection and identify a new processing purpose",
+        "Provide information on the other purpose prior to further processing",
+        "Carry out further processing for the other purpose"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 14,
+      "business_scenario_en": "Further processing of indirectly obtained personal data requires prior notice.",
+      "business_scenario_zh": "间接收集后拟进一步处理，须在进一步处理前告知新目的。",
+      "citation": "GDPR Article 14(4)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "the controller intends to further process for a purpose other than that for which the data were obtained",
+      "constraint_present": true,
+      "constraint_text": "prior to that further processing",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "14(4) imposes a positive duty to provide the other-purpose information.",
+        "out_of_order": "Explicit strict order: provide information 'prior to that further processing'."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": true,
+      "exception_text": "the data subject already has the information or Article 14(5) applies",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": true,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must provide the data subject with the other purpose and relevant further information before further processing.",
+      "order_evidence": "prior to that further processing",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "4",
+      "r4_rule_id": "article14p4",
+      "requirement_id": "R5-D-02",
+      "review_fixes": [
+        "condition_present corrected to True (intends further processing for another purpose)."
+      ],
+      "review_issues": [],
+      "sample_id": null,
+      "scenario_id": "S1",
+      "scenario_zh": "数据收集与告知",
+      "source_family_id": "gdpr_art14",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "r4_reference",
+      "source_locator": "Where the controller intends to further process",
+      "split": "development",
+      "tasks": [
+        "Complete indirect collection and identify a new processing purpose",
+        "Provide information on the other purpose prior to further processing",
+        "Carry out further processing for the other purpose"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 18,
+      "business_scenario_en": "The controller must inform the data subject before lifting a processing restriction.",
+      "business_scenario_zh": "解除处理限制前，控制者须告知数据主体。",
+      "citation": "GDPR Article 18(3)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "the data subject has obtained restriction of processing pursuant to Article 18(1)",
+      "constraint_present": true,
+      "constraint_text": "before the restriction of processing is lifted",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "18(3) imposes a positive duty to inform before lifting a restriction.",
+        "out_of_order": "Explicit strict order: inform 'before the restriction of processing is lifted'."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": true,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The controller must inform the data subject before the restriction of processing is lifted.",
+      "order_evidence": "before the restriction of processing is lifted",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "3",
+      "r4_rule_id": "article18p3",
+      "requirement_id": "R5-D-03",
+      "review_fixes": [
+        "condition_present corrected to True (restriction obtained under paragraph 1)."
+      ],
+      "review_issues": [],
+      "sample_id": null,
+      "scenario_id": "S3",
+      "scenario_zh": "数据主体请求处理",
+      "source_family_id": "gdpr_art18",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "r4_reference",
+      "source_locator": "A data subject who has obtained restriction",
+      "split": "development",
+      "tasks": [
+        "Confirm that the grounds for lifting the restriction are met",
+        "Inform the data subject that the restriction will be lifted",
+        "Lift the restriction of processing"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 35,
+      "business_scenario_en": "High-risk processing requires a prior DPIA.",
+      "business_scenario_zh": "高风险处理前，控制者须开展数据保护影响评估。",
+      "citation": "GDPR Article 35(1), first sentence",
+      "condition_present": true,
+      "condition_text": "processing likely to result in high risk to rights and freedoms",
+      "constraint_present": true,
+      "constraint_text": "prior to the processing",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "35(1) imposes a positive duty to carry out a DPIA.",
+        "out_of_order": "Explicit strict order: carry out the assessment 'prior to the processing'."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": true,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The controller shall carry out a DPIA prior to high-risk processing.",
+      "order_evidence": "prior to the processing",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "1",
+      "r4_rule_id": "article35p1",
+      "requirement_id": "R5-D-04",
+      "review_fixes": [],
+      "review_issues": [],
+      "sample_id": null,
+      "scenario_id": "S5",
+      "scenario_zh": "风险评估与事先咨询",
+      "source_family_id": "gdpr_art35",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "r4_reference",
+      "source_locator": "Where a type of processing in particular using new technologies",
+      "split": "development",
+      "tasks": [
+        "Describe the envisaged high-risk processing",
+        "Carry out the data protection impact assessment",
+        "Begin the assessed processing operations"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 36,
+      "business_scenario_en": "Prior consultation is required when high residual risk remains.",
+      "business_scenario_zh": "评估显示无缓解措施时仍有高风险，控制者须事先咨询监管机构。",
+      "citation": "GDPR Article 36(1)",
+      "condition_present": true,
+      "condition_text": "DPIA indicates high risk in the absence of mitigating measures",
+      "constraint_present": true,
+      "constraint_text": "prior to processing",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "36(1) imposes a positive duty to consult the supervisory authority.",
+        "out_of_order": "Explicit strict order: consult 'prior to processing'."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": true,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The controller shall consult the supervisory authority prior to processing when the DPIA indicates high risk without mitigation.",
+      "order_evidence": "prior to processing",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "1",
+      "r4_rule_id": "article36p1",
+      "requirement_id": "R5-D-05",
+      "review_fixes": [],
+      "review_issues": [],
+      "sample_id": null,
+      "scenario_id": "S5",
+      "scenario_zh": "风险评估与事先咨询",
+      "source_family_id": "gdpr_art36",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "r4_reference",
+      "source_locator": "The controller shall consult the supervisory authority prior to processing",
+      "split": "development",
+      "tasks": [
+        "Review the DPIA indicating high residual risk",
+        "Consult the supervisory authority about the proposed processing",
+        "Start the proposed processing"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 7,
+      "business_scenario_en": "The controller must be able to demonstrate consent.",
+      "business_scenario_zh": "基于同意处理时，控制者须能够证明数据主体已同意。",
+      "citation": "GDPR Article 7(1)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "processing is based on consent",
+      "constraint_present": true,
+      "constraint_text": "shall be able to demonstrate that the data subject has consented",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "7(1) imposes a positive duty to be able to demonstrate consent.",
+        "out_of_order": "No explicit order between two required activities; 'demonstrate that ... has consented' is an evidentiary state, not a strict order rule."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must keep evidence that the data subject consented.",
+      "order_evidence": "shall be able to demonstrate that the data subject has consented",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-D-06",
+      "review_fixes": [
+        "out_of_order marked ineligible",
+        "condition_present corrected to True (processing based on consent)."
+      ],
+      "review_issues": [
+        "order_evidence_text_is_not_order_rule"
+      ],
+      "sample_id": "gdpr_article7_s001",
+      "scenario_id": "S2",
+      "scenario_zh": "同意获取与撤回",
+      "source_family_id": "gdpr_art7",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "gdpr7_input",
+      "source_locator": "Where processing is based on consent, the controller shall be able to demonstrate",
+      "split": "development",
+      "tasks": [
+        "Receive and record the data subject consent",
+        "Demonstrate that consent was given",
+        "Store the consent evidence"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 7,
+      "business_scenario_en": "Freely given consent assessment must consider conditional service provision.",
+      "business_scenario_zh": "评估同意是否自由作出时，须考虑服务附条件于非必要处理的情形。",
+      "citation": "GDPR Article 7(4)",
+      "condition_present": true,
+      "condition_text": "performance of a contract or service is conditional on unnecessary processing",
+      "constraint_present": true,
+      "constraint_text": "When assessing whether consent is freely given",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "7(4) requires utmost account to be taken when assessing free consent.",
+        "out_of_order": "'When assessing whether consent is freely given' is a simultaneity/condition, not an order between two required activities."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must assess whether consent is freely given, including conditional-service situations.",
+      "order_evidence": "When assessing whether consent is freely given",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "4",
+      "r4_rule_id": null,
+      "requirement_id": "R5-D-07",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "simultaneity_not_order"
+      ],
+      "sample_id": "gdpr_article7_s008",
+      "scenario_id": "S2",
+      "scenario_zh": "同意获取与撤回",
+      "source_family_id": "gdpr_art7",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "gdpr7_input",
+      "source_locator": "When assessing whether consent is freely given",
+      "split": "development",
+      "tasks": [
+        "Identify whether performance of a contract or service is conditional on consent",
+        "Assess whether the consent is freely given",
+        "Record the assessment of free consent"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 15,
+      "business_scenario_en": "The data subject has a right of access and confirmation.",
+      "business_scenario_zh": "数据主体有权获得是否处理其个人数据的确认及访问。",
+      "citation": "GDPR Article 15(1)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "personal data concerning the data subject are being processed",
+      "constraint_present": true,
+      "constraint_text": "The data subject shall have the right to obtain from the controller confirmation",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "15(1) right to obtain confirmation and access implies a positive controller duty to provide it.",
+        "out_of_order": "The recital is a right to obtain, not an explicit two-activity strict-order rule."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must provide confirmation and access to the personal data.",
+      "order_evidence": "The data subject shall have the right to obtain from the controller confirmation",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-D-08",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "right_not_order_rule"
+      ],
+      "sample_id": "gdpr_article15_s001",
+      "scenario_id": "S3",
+      "scenario_zh": "数据主体请求处理",
+      "source_family_id": "gdpr_art15",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "gdpr7_input",
+      "source_locator": "The data subject shall have the right to obtain from the controller confirmation",
+      "split": "development",
+      "tasks": [
+        "Receive the access request",
+        "Provide confirmation and access to the personal data",
+        "Provide the required access information"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 16,
+      "business_scenario_en": "The data subject has a right to rectification without undue delay.",
+      "business_scenario_zh": "数据主体有权要求控制者及时更正不准确个人数据。",
+      "citation": "GDPR Article 16",
+      "condition_present": false,
+      "condition_text": "",
+      "constraint_present": true,
+      "constraint_text": "without undue delay",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "16 right to rectification implies a positive controller duty to rectify.",
+        "out_of_order": "'without undue delay' is a deadline with no explicit trigger phrase; this round does not assert deadline satisfaction or an invented trigger order."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must rectify inaccurate personal data without undue delay.",
+      "order_evidence": "without undue delay",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-D-09",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "deadline_without_explicit_trigger"
+      ],
+      "sample_id": "gdpr_article16_s001",
+      "scenario_id": "S3",
+      "scenario_zh": "数据主体请求处理",
+      "source_family_id": "gdpr_art16",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "gdpr7_input",
+      "source_locator": "The data subject shall have the right to obtain from the controller without undue delay",
+      "split": "development",
+      "tasks": [
+        "Receive the rectification request",
+        "Rectify inaccurate personal data without undue delay",
+        "Confirm the rectification to the data subject"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 17,
+      "business_scenario_en": "The controller must erase personal data without undue delay when a ground applies.",
+      "business_scenario_zh": "存在法定事由时，控制者须及时删除个人数据。",
+      "citation": "GDPR Article 17(1)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "one of the Article 17(1) erasure grounds applies",
+      "constraint_present": true,
+      "constraint_text": "without undue delay",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "17(1) imposes a positive duty to erase where a ground applies.",
+        "out_of_order": "'without undue delay' is a deadline with no explicit trigger phrase; no strict order asserted."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "Article 17(3) exceptions may apply",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must erase personal data without undue delay where one of the Article 17(1) grounds applies.",
+      "order_evidence": "without undue delay",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-D-10",
+      "review_fixes": [
+        "out_of_order marked ineligible",
+        "condition_present corrected to True (one of the 17(1) grounds applies)."
+      ],
+      "review_issues": [
+        "deadline_without_explicit_trigger"
+      ],
+      "sample_id": "gdpr_article17_s001",
+      "scenario_id": "S3",
+      "scenario_zh": "数据主体请求处理",
+      "source_family_id": "gdpr_art17",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "gdpr7_input",
+      "source_locator": "The data subject shall have the right to obtain from the controller the erasure",
+      "split": "development",
+      "tasks": [
+        "Receive the erasure request and assess an applicable ground",
+        "Erase personal data without undue delay",
+        "Record the erasure decision"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 20,
+      "business_scenario_en": "Data portability requires a machine-readable format when conditions are met.",
+      "business_scenario_zh": "符合条件时，控制者须以结构化、通用、机器可读格式提供个人数据。",
+      "citation": "GDPR Article 20(1)",
+      "condition_present": true,
+      "condition_text": "processing based on consent or contract and carried out by automated means",
+      "constraint_present": true,
+      "constraint_text": "The data subject shall have the right to receive the personal data",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "20(1) right to receive/transmit implies a positive controller duty to provide portability.",
+        "out_of_order": "The excerpt lists two rights; it does not state a strict order between two required activities."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "Article 20(4) public-interest or official-authority exception",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must provide portable data in a structured, commonly used and machine-readable format.",
+      "order_evidence": "The data subject shall have the right to receive the personal data",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-D-11",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "right_not_order_rule"
+      ],
+      "sample_id": "gdpr_article20_s001",
+      "scenario_id": "S3",
+      "scenario_zh": "数据主体请求处理",
+      "source_family_id": "gdpr_art20",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "gdpr7_input",
+      "source_locator": "The data subject shall have the right to receive the personal data",
+      "split": "development",
+      "tasks": [
+        "Receive the portability request",
+        "Provide the personal data in a structured, commonly used and machine-readable format",
+        "Transmit the data to another controller without hindrance"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 33,
+      "business_scenario_en": "The controller must notify the supervisory authority of a breach within 72 hours where feasible.",
+      "business_scenario_zh": "发生个人数据泄露时，控制者须在知悉后及时且不迟于72小时通知监管机构。",
+      "citation": "GDPR Article 33(1)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "a personal data breach occurs",
+      "constraint_present": true,
+      "constraint_text": "without undue delay and, where feasible, not later than 72 hours after having become aware",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "33(1) imposes a positive duty to notify the supervisory authority.",
+        "out_of_order": "Explicit trigger + subsequent act: notify 'after having become aware' (deadline is not asserted as satisfied, only trigger order)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": true,
+      "exception_text": "breach unlikely to result in a risk to rights and freedoms",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": false,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must notify the competent supervisory authority without undue delay and, where feasible, not later than 72 hours after becoming aware of a personal data breach, unless the breach is unlikely to result in a risk.",
+      "order_evidence": "without undue delay and, where feasible, not later than 72 hours after having become aware",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-D-12",
+      "review_fixes": [
+        "condition_text corrected to 'a personal data breach occurs' (exception kept separate in 33(1) 'unless ... unlikely to result in a risk')."
+      ],
+      "review_issues": [
+        "condition_text_confused_with_exception"
+      ],
+      "sample_id": "gdpr_article33_s001",
+      "scenario_id": "S6",
+      "scenario_zh": "安全事件和泄露响应",
+      "source_family_id": "gdpr_art33",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "gdpr7_input",
+      "source_locator": "In the case of a personal data breach, the controller shall without undue delay",
+      "split": "development",
+      "tasks": [
+        "Become aware of the personal data breach",
+        "Notify the competent supervisory authority",
+        "Document the notification or reasons for delay"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 13,
+      "business_scenario_en": "Direct collection requires specified information at the time of collection.",
+      "business_scenario_zh": "直接从数据主体收集个人数据时，须在收集时提供规定告知信息。",
+      "citation": "GDPR Article 13(1)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "personal data relating to a data subject are collected from the data subject",
+      "constraint_present": true,
+      "constraint_text": "at the time when personal data are obtained",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "13(1) imposes a positive duty to provide the listed information.",
+        "out_of_order": "'at the time when personal data are obtained' is simultaneity, not a strict collect-then-inform order (A1)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "Article 13(4) already-has-information exception",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must provide the Article 13(1) information at the time personal data are obtained from the data subject.",
+      "order_evidence": "at the time when personal data are obtained",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S1-T1",
+      "review_fixes": [
+        "out_of_order marked ineligible (A1)",
+        "condition_present corrected to True (direct collection from the data subject)."
+      ],
+      "review_issues": [
+        "simultaneity_misread_as_order",
+        "missing_condition_flag"
+      ],
+      "sample_id": null,
+      "scenario_id": "S1",
+      "scenario_zh": "数据收集与告知",
+      "source_family_id": "gdpr_art13",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "new_article",
+      "source_locator": "Where personal data relating to a data subject are collected from the data subject",
+      "split": "development",
+      "tasks": [
+        "Collect personal data from the data subject",
+        "Provide required transparency information to the data subject",
+        "Record completion of the transparency notice"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 13,
+      "business_scenario_en": "Further transparency information must also be provided at the time of direct collection.",
+      "business_scenario_zh": "直接收集时，还须在收集时提供进一步公平透明处理信息。",
+      "citation": "GDPR Article 13(2)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "the paragraph 1 information obligation applies to the direct collection",
+      "constraint_present": true,
+      "constraint_text": "at the time when personal data are obtained",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "13(2) imposes a positive duty to provide the further fairness/transparency information.",
+        "out_of_order": "'at the time when personal data are obtained' is simultaneity, not a strict order (A1)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "Article 13(4) already-has-information exception",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must provide the Article 13(2) further information at the time personal data are obtained.",
+      "order_evidence": "at the time when personal data are obtained",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "2",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S1-T2",
+      "review_fixes": [
+        "out_of_order marked ineligible (A1)",
+        "condition_present corrected to True (paragraph 1 information obligation applies)."
+      ],
+      "review_issues": [
+        "simultaneity_misread_as_order",
+        "missing_condition_flag"
+      ],
+      "sample_id": null,
+      "scenario_id": "S1",
+      "scenario_zh": "数据收集与告知",
+      "source_family_id": "gdpr_art13",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "new_article",
+      "source_locator": "In addition to the information referred to in paragraph 1, the controller shall, at the time",
+      "split": "development",
+      "tasks": [
+        "Collect personal data from the data subject",
+        "Provide further fairness and transparency information to the data subject",
+        "Record completion of the further information notice"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 14,
+      "business_scenario_en": "Indirect collection requires information within one month.",
+      "business_scenario_zh": "间接收集个人数据时，须在合理期限内且最迟一个月内告知数据主体。",
+      "citation": "GDPR Article 14(1)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "personal data have not been obtained from the data subject",
+      "constraint_present": true,
+      "constraint_text": "within a reasonable period after obtaining the personal data, but at the latest within one month",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "14(1) imposes a positive duty to provide the listed information.",
+        "out_of_order": "Explicit trigger + subsequent act: provide 'within a reasonable period after obtaining' (only trigger order evaluated)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": true,
+      "exception_text": "Article 14(5) exceptions may apply",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must provide Article 14(1) information within a reasonable period and at the latest within one month after obtaining personal data.",
+      "order_evidence": "within a reasonable period after obtaining the personal data, but at the latest within one month",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S1-T3",
+      "review_fixes": [
+        "condition_present corrected to True (personal data not obtained from the data subject)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "sample_id": null,
+      "scenario_id": "S1",
+      "scenario_zh": "数据收集与告知",
+      "source_family_id": "gdpr_art14",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "new_article",
+      "source_locator": "Where personal data have not been obtained from the data subject, the controller shall provide",
+      "split": "development",
+      "tasks": [
+        "Obtain personal data from a source other than the data subject",
+        "Provide required indirect-collection information to the data subject",
+        "Record the one-month response deadline"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 14,
+      "business_scenario_en": "Further transparency information from indirect sources is also time-bound.",
+      "business_scenario_zh": "间接收集时，还须在法定期限内提供进一步公平透明处理信息。",
+      "citation": "GDPR Article 14(2)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "the paragraph 1 information obligation applies to the indirect collection",
+      "constraint_present": true,
+      "constraint_text": "within a reasonable period after obtaining the personal data, but at the latest within one month",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "14(2) imposes a positive duty to provide the further information.",
+        "out_of_order": "Explicit trigger + subsequent act: provide after obtaining under 14(3) timing (only trigger order evaluated)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": true,
+      "exception_text": "Article 14(5) exceptions may apply",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must provide Article 14(2) further information within the Article 14(3) timing framework.",
+      "order_evidence": "within a reasonable period after obtaining the personal data, but at the latest within one month",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "2",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S1-T4",
+      "review_fixes": [
+        "condition_present corrected to True (paragraph 1 indirect-collection obligation applies)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "sample_id": null,
+      "scenario_id": "S1",
+      "scenario_zh": "数据收集与告知",
+      "source_family_id": "gdpr_art14",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "new_article",
+      "source_locator": "In addition to the information referred to in paragraph 1, the controller shall provide",
+      "split": "development",
+      "tasks": [
+        "Obtain personal data from a third-party source",
+        "Provide further indirect-collection information to the data subject",
+        "Log the information delivery"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 8,
+      "business_scenario_en": "Child consent for information society services depends on age and parental authorisation.",
+      "business_scenario_zh": "向儿童提供信息社会服务时，须根据年龄取得本人或监护人同意。",
+      "citation": "GDPR Article 8(1)",
+      "condition_present": true,
+      "condition_text": "child is below 16 years old",
+      "constraint_present": true,
+      "constraint_text": "shall be lawful only if and to the extent that consent is given or authorised",
+      "core_eligible": false,
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "The provision conditions lawfulness on consent/authorisation rather than assigning the duty to a fallible actor-surface obligation.",
+        "missing_action": "8(1) states a lawfulness/permission condition, not a positive duty; absence of a named activity is not itself a violation (permission template rule).",
+        "out_of_order": "No explicit strict order between two required activities."
+      },
+      "eligible_incorrect_actor": false,
+      "eligible_missing_action": false,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "child is at least 16 years old; Member State may provide a lower age not below 13",
+      "excerpt_mode": "paragraph",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "permission",
+      "normative_content": "Processing of a child personal data for information society services is lawful only with age-appropriate consent or parental authorisation.",
+      "order_evidence": "shall be lawful only if and to the extent that consent is given or authorised",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S2-T1",
+      "review_fixes": [
+        "moved out of the frozen three-class core scoring; kept as semantic/candidate asset (no permission decision formula added)."
+      ],
+      "review_issues": [
+        "permission_modelled_as_positive_duty"
+      ],
+      "sample_id": null,
+      "scenario_id": "S2",
+      "scenario_zh": "同意获取与撤回",
+      "source_family_id": "gdpr_art8",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "Where point (a) of Article 6(1) applies",
+      "split": "test",
+      "tasks": [
+        "Assess the child age and applicable consent route",
+        "Verify that parental authorisation has been obtained where required",
+        "Process the child personal data for the information society service"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 8,
+      "business_scenario_en": "The controller must make reasonable efforts to verify parental authorisation.",
+      "business_scenario_zh": "儿童同意场景下，控制者须尽合理努力核验监护人同意。",
+      "citation": "GDPR Article 8(2)",
+      "condition_present": true,
+      "condition_text": "consent was given or authorised by the holder of parental responsibility",
+      "constraint_present": true,
+      "constraint_text": "verify in such cases that consent is given or authorised",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "8(2) imposes a positive duty to make reasonable efforts to verify parental authorisation.",
+        "out_of_order": "'in such cases' is a condition, not an order between activities."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must make reasonable efforts to verify that consent was given or authorised by the holder of parental responsibility.",
+      "order_evidence": "verify in such cases that consent is given or authorised",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "2",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S2-T2",
+      "review_fixes": [],
+      "review_issues": [],
+      "sample_id": null,
+      "scenario_id": "S2",
+      "scenario_zh": "同意获取与撤回",
+      "source_family_id": "gdpr_art8",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "The controller shall make reasonable efforts to verify",
+      "split": "test",
+      "tasks": [
+        "Log available technology and verification context",
+        "Make reasonable efforts to verify parental authorisation",
+        "Process the child personal data"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 9,
+      "business_scenario_en": "Special-category processing requires explicit consent unless law prohibits it.",
+      "business_scenario_zh": "处理特殊类别数据须取得数据主体明确同意。",
+      "citation": "GDPR Article 9(2)(a)",
+      "condition_present": true,
+      "condition_text": "special-category data are processed",
+      "constraint_present": true,
+      "constraint_text": "has given explicit consent to the processing of those personal data",
+      "core_eligible": false,
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "The provision conditions lawfulness on explicit consent; it is not a per-actor positive duty.",
+        "missing_action": "9(2)(a) is a permission (derogation from the 9(1) prohibition); absence of a named activity is not itself a violation.",
+        "out_of_order": "No explicit strict order between two required activities."
+      },
+      "eligible_incorrect_actor": false,
+      "eligible_missing_action": false,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "Union or Member State law may prohibit lifting the prohibition by consent",
+      "excerpt_mode": "item",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "permission",
+      "normative_content": "The Article 9(1) prohibition may be lifted by explicit consent for specified purposes, subject to law.",
+      "order_evidence": "has given explicit consent to the processing of those personal data",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "2(a)",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S2-T3",
+      "review_fixes": [
+        "moved out of core scoring (A4); kept as semantic/candidate asset; condition and legal basis documented."
+      ],
+      "review_issues": [
+        "permission_modelled_as_positive_duty",
+        "condition_and_negated_condition_confused_with_exception"
+      ],
+      "sample_id": null,
+      "scenario_id": "S2",
+      "scenario_zh": "同意获取与撤回",
+      "source_family_id": "gdpr_art9",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "The data subject has given explicit consent to the processing of those personal data",
+      "split": "test",
+      "tasks": [
+        "Identify special-category personal data in scope",
+        "Obtain explicit consent from the data subject",
+        "Process the special-category personal data"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 9,
+      "business_scenario_en": "Employment-law processing of special-category data requires a lawful basis and safeguards.",
+      "business_scenario_zh": "基于雇佣或社会保障法处理特殊类别数据须有法定依据和保障。",
+      "citation": "GDPR Article 9(2)(b)",
+      "condition_present": true,
+      "condition_text": "processing necessary for employment, social security or social protection law",
+      "constraint_present": true,
+      "constraint_text": "in so far as it is authorised by Union or Member State law or a collective agreement",
+      "core_eligible": false,
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "The provision conditions lawfulness on a legal basis/safeguards; it is not a per-actor positive duty.",
+        "missing_action": "9(2)(b) is a permission (derogation); absence of a named activity is not itself a violation.",
+        "out_of_order": "No explicit strict order between two required activities."
+      },
+      "eligible_incorrect_actor": false,
+      "eligible_missing_action": false,
+      "eligible_out_of_order": false,
+      "exception_fix_basis": "v1 exception was the mere negation of the condition; removed as an independent exception.",
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "item",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "permission",
+      "normative_content": "Processing is permitted where necessary for employment/social-security obligations and authorised by law or collective agreement with safeguards.",
+      "order_evidence": "in so far as it is authorised by Union or Member State law or a collective agreement",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "2(b)",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S2-T4",
+      "review_fixes": [
+        "moved out of core scoring (A4); kept as semantic/candidate asset."
+      ],
+      "review_issues": [
+        "permission_modelled_as_positive_duty",
+        "negated_condition_misstated_as_exception"
+      ],
+      "sample_id": null,
+      "scenario_id": "S2",
+      "scenario_zh": "同意获取与撤回",
+      "source_family_id": "gdpr_art9",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "Processing is necessary for the purposes of carrying out the obligations",
+      "split": "test",
+      "tasks": [
+        "Identify the employment or social-protection processing purpose",
+        "Confirm the Union or Member State law or collective agreement basis",
+        "Process the special-category personal data"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 12,
+      "business_scenario_en": "The controller must respond to data subject requests within one month.",
+      "business_scenario_zh": "控制者须在收到请求后一个月内告知所采取的行动。",
+      "citation": "GDPR Article 12(3)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "a request under Articles 15 to 22 is received",
+      "constraint_present": true,
+      "constraint_text": "without undue delay and in any event within one month of receipt of the request",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "12(3) imposes a positive duty to provide information on action taken.",
+        "out_of_order": "Explicit trigger + subsequent act: provide 'within one month of receipt of the request' (only trigger order evaluated)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": true,
+      "exception_text": "extension by two further months is possible with reasons",
+      "excerpt_mode": "sentence",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must provide information on action taken without undue delay and in any event within one month of receipt.",
+      "order_evidence": "without undue delay and in any event within one month of receipt of the request",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "3",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S3-T1",
+      "review_fixes": [
+        "condition_present corrected to True (a request under Articles 15-22 is received)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "sample_id": null,
+      "scenario_id": "S3",
+      "scenario_zh": "数据主体请求处理",
+      "source_family_id": "gdpr_art12",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "The controller shall provide information on action taken on a request",
+      "split": "test",
+      "tasks": [
+        "Receive the data subject request",
+        "Provide the response on action taken",
+        "Archive the request response record"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 12,
+      "business_scenario_en": "Refusal to act must be explained within one month with remedies.",
+      "business_scenario_zh": "不处理请求时，须在一个月内告知理由和救济途径。",
+      "citation": "GDPR Article 12(4)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "the controller does not take action on the request of the data subject",
+      "constraint_present": true,
+      "constraint_text": "without delay and at the latest within one month of receipt of the request",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "12(4) imposes a positive duty to inform about reasons for not taking action.",
+        "out_of_order": "Explicit trigger + subsequent act: inform 'within one month of receipt of the request' (only trigger order evaluated)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must inform the data subject of reasons and remedies without delay and at the latest within one month when no action is taken.",
+      "order_evidence": "without delay and at the latest within one month of receipt of the request",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "4",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S3-T2",
+      "review_fixes": [
+        "condition_present corrected to True (controller does not take action on the request)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "sample_id": null,
+      "scenario_id": "S3",
+      "scenario_zh": "数据主体请求处理",
+      "source_family_id": "gdpr_art12",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "If the controller does not take action on the request of the data subject",
+      "split": "test",
+      "tasks": [
+        "Receive the data subject request",
+        "Inform the data subject of the reasons for not taking action",
+        "Record the complaint and judicial remedy information"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 21,
+      "business_scenario_en": "Objection requires the controller to stop processing unless compelling grounds exist.",
+      "business_scenario_zh": "数据主体基于自身情况反对处理时，控制者原则须停止处理。",
+      "citation": "GDPR Article 21(1)",
+      "condition_present": true,
+      "condition_text": "processing based on Article 6(1)(e) or (f)",
+      "constraint_present": true,
+      "constraint_text": "shall no longer process the personal data unless",
+      "core_eligible": false,
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "No per-actor positive duty; the provision constrains continued processing.",
+        "missing_action": "21(1) is a cessation/prohibition of further processing, not a positive duty; a 'Stop' task cannot prove that prohibited processing happened.",
+        "out_of_order": "'shall no longer process unless' is a prohibition/condition, not an order between two required activities."
+      },
+      "eligible_incorrect_actor": false,
+      "eligible_missing_action": false,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "compelling legitimate grounds override the data subject interests or legal claims require processing",
+      "excerpt_mode": "sentence",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must no longer process personal data after an objection unless it demonstrates compelling legitimate grounds or a legal-claims need.",
+      "order_evidence": "shall no longer process the personal data unless",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S3-T3",
+      "review_fixes": [
+        "moved out of core scoring (A5); Stop task removed from core; kept as semantic/candidate asset with source."
+      ],
+      "review_issues": [
+        "prohibition_cessation_modelled_as_missing_action",
+        "invented_stop_task"
+      ],
+      "sample_id": null,
+      "scenario_id": "S3",
+      "scenario_zh": "数据主体请求处理",
+      "source_family_id": "gdpr_art21",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "The controller shall no longer process the personal data unless",
+      "split": "test",
+      "tasks": [
+        "Receive the data subject objection and particular grounds",
+        "Stop processing unless compelling legitimate grounds are demonstrated",
+        "Document the assessment of compelling grounds"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 21,
+      "business_scenario_en": "An objection to direct marketing requires cessation of that processing.",
+      "business_scenario_zh": "数据主体反对直接营销时，须停止为直接营销处理个人数据。",
+      "citation": "GDPR Article 21(3)",
+      "condition_present": true,
+      "condition_text": "data are processed for direct marketing",
+      "constraint_present": true,
+      "constraint_text": "the personal data shall no longer be processed for such purposes",
+      "core_eligible": false,
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "No per-actor positive duty.",
+        "missing_action": "21(3) is a cessation/prohibition, not a positive duty; a 'Cease' task cannot prove prohibited processing.",
+        "out_of_order": "'shall no longer be processed' is a prohibition, not an order between two required activities."
+      },
+      "eligible_incorrect_actor": false,
+      "eligible_missing_action": false,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Where the data subject objects to direct-marketing processing, the personal data shall no longer be processed for such purposes.",
+      "order_evidence": "the personal data shall no longer be processed for such purposes",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "3",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S3-T4",
+      "review_fixes": [
+        "moved out of core scoring (A5); Cease task removed from core; kept as semantic/candidate asset with source."
+      ],
+      "review_issues": [
+        "prohibition_cessation_modelled_as_missing_action",
+        "invented_cease_task"
+      ],
+      "sample_id": null,
+      "scenario_id": "S3",
+      "scenario_zh": "数据主体请求处理",
+      "source_family_id": "gdpr_art21",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "Where the data subject objects to processing for direct marketing purposes",
+      "split": "test",
+      "tasks": [
+        "Receive the direct-marketing objection",
+        "Cease processing for direct-marketing purposes",
+        "Record the marketing suppression"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 24,
+      "business_scenario_en": "The controller must implement and review compliance measures.",
+      "business_scenario_zh": "控制者须实施适当技术组织措施并定期审查更新。",
+      "citation": "GDPR Article 24(1)",
+      "condition_present": true,
+      "condition_text": "taking into account the risks of varying likelihood and severity",
+      "constraint_present": true,
+      "constraint_text": "Those measures shall be reviewed and updated where necessary",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "24(1) imposes a positive duty to implement appropriate measures.",
+        "out_of_order": "'Those measures shall be reviewed and updated where necessary' describes a lifecycle, not an explicit strict order between two required activities."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "paragraph",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must implement appropriate technical and organisational measures and review/update them where necessary.",
+      "order_evidence": "Those measures shall be reviewed and updated where necessary",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S4-T1",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "lifecycle_not_strict_order"
+      ],
+      "sample_id": null,
+      "scenario_id": "S4",
+      "scenario_zh": "控制者、处理者及第三方职责或通知",
+      "source_family_id": "gdpr_art24",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "the controller shall implement appropriate technical and organisational measures",
+      "split": "test",
+      "tasks": [
+        "Assess processing risks and compliance context",
+        "Implement appropriate technical and organisational measures",
+        "Review and update the implemented measures where necessary"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 25,
+      "business_scenario_en": "Data protection by design must be implemented at design time and during processing.",
+      "business_scenario_zh": "控制者须在确定处理方式时及处理过程中落实数据保护设计。",
+      "citation": "GDPR Article 25(1)",
+      "condition_present": true,
+      "condition_text": "taking into account state of the art, cost, nature, scope, context, purposes and risks",
+      "constraint_present": true,
+      "constraint_text": "both at the time of the determination of the means for processing and at the time of the processing itself",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "25(1) imposes a positive duty to implement data-protection-by-design measures.",
+        "out_of_order": "'both at the time of the determination ... and at the time of the processing itself' is simultaneity, not an order."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must implement appropriate measures and safeguards by design at the determination of means and during processing.",
+      "order_evidence": "both at the time of the determination of the means for processing and at the time of the processing itself",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S4-T2",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "simultaneity_not_order"
+      ],
+      "sample_id": null,
+      "scenario_id": "S4",
+      "scenario_zh": "控制者、处理者及第三方职责或通知",
+      "source_family_id": "gdpr_art25",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "the controller shall, both at the time of the determination of the means for processing",
+      "split": "test",
+      "tasks": [
+        "Determine the means and purposes of processing",
+        "Implement data-protection-by-design safeguards",
+        "Carry out the processing operations"
+      ]
+    },
+    {
+      "actor_required": "Processor",
+      "actor_wrong": "Controller",
+      "article": 28,
+      "business_scenario_en": "The processor must process personal data only on documented controller instructions.",
+      "business_scenario_zh": "处理者须仅按控制者书面指示处理个人数据。",
+      "citation": "GDPR Article 28(3)(a)",
+      "condition_present": true,
+      "condition_text": "unless required to do so by Union or Member State law",
+      "constraint_present": true,
+      "constraint_text": "only on documented instructions from the controller",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the processor.",
+        "missing_action": "28(3)(a) stipulates a positive duty: process only on documented instructions.",
+        "out_of_order": "'only on documented instructions' is a condition/precondition, not a strict order between two required activities; 'before processing' belongs to the legal-requirement exception, not the main duty."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "processor must inform controller of a legal requirement before processing unless prohibited by important public-interest grounds",
+      "excerpt_char_span_text": "the processor processes the personal data only on documented instructions from the controller, including with regard to transfers of personal data to a third country or an international organisation, unless required to do so by Union or Member State law to which the processor is subject; in such a case, the processor shall inform the controller of that legal requirement before processing, unless that law prohibits such information on important grounds of public interest",
+      "excerpt_mode": "char_span",
+      "excerpt_source_status": "processed_local_winter_snapshot_not_official_verbatim: references/winter_2020_model_check/.../article28.txt has been whitespace-normalised and split into separate enumerated items; the excerpt is a contiguous substring of that processed file, not a claim of official OJ byte identity.",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Processor must process personal data only on documented instructions from the controller, subject to limited legal exceptions.",
+      "order_evidence": "only on documented instructions from the controller",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "3(a)",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S4-T3",
+      "review_fixes": [
+        "excerpt narrowed to the 28(3)(a) sentence only (A6); precise char span recorded; processed-source status flagged; out_of_order marked ineligible."
+      ],
+      "review_issues": [
+        "excerpt_includes_subsequent_subparagraphs",
+        "condition_precondition_misread_as_order",
+        "processed_source_not_flagged"
+      ],
+      "sample_id": null,
+      "scenario_id": "S4",
+      "scenario_zh": "控制者、处理者及第三方职责或通知",
+      "source_family_id": "gdpr_art28",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "the processor processes the personal data only on documented instructions from the controller",
+      "split": "test",
+      "tasks": [
+        "Receive documented processing instructions from the controller",
+        "Process personal data only on those documented instructions",
+        "Report any instruction that appears to infringe data-protection law"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 19,
+      "business_scenario_en": "The controller must notify recipients of rectification, erasure, or restriction.",
+      "business_scenario_zh": "更正、删除或限制处理后，控制者须通知接收方。",
+      "citation": "GDPR Article 19",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "a rectification, erasure or restriction of processing has been carried out under Articles 16, 17(1) or 18",
+      "constraint_present": true,
+      "constraint_text": "The controller shall communicate any rectification or erasure of personal data or restriction",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "19 imposes a positive duty to communicate changes to recipients.",
+        "out_of_order": "Communicating a change already carried out is not a strict order between two required activities."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "communication proves impossible or involves disproportionate effort",
+      "excerpt_mode": "sentence",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Controller must communicate rectification, erasure, or restriction to each recipient unless impossible or disproportionate.",
+      "order_evidence": "The controller shall communicate any rectification or erasure of personal data or restriction",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S4-T4",
+      "review_fixes": [
+        "condition_present corrected to True (a rectification/erasure/restriction was carried out)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "sample_id": null,
+      "scenario_id": "S4",
+      "scenario_zh": "控制者、处理者及第三方职责或通知",
+      "source_family_id": "gdpr_art19",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "The controller shall communicate any rectification or erasure of personal data or restriction",
+      "split": "test",
+      "tasks": [
+        "Carry out rectification, erasure, or restriction",
+        "Communicate the change to each recipient of the personal data",
+        "Inform the data subject about those recipients on request"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 35,
+      "business_scenario_en": "The controller must seek DPO advice when carrying out a DPIA.",
+      "business_scenario_zh": "开展数据保护影响评估时，控制者须征求数据保护官意见。",
+      "citation": "GDPR Article 35(2)",
+      "condition_present": true,
+      "condition_text": "a DPO is designated",
+      "constraint_present": true,
+      "constraint_text": "when carrying out a data protection impact assessment",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "35(2) imposes a positive duty to seek the DPO advice.",
+        "out_of_order": "'when carrying out a DPIA' is simultaneity/condition, not an order."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The controller shall seek the advice of the data protection officer, where designated, when carrying out a DPIA.",
+      "order_evidence": "when carrying out a data protection impact assessment",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "2",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S5-T1",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "simultaneity_not_order"
+      ],
+      "sample_id": null,
+      "scenario_id": "S5",
+      "scenario_zh": "风险评估与事先咨询",
+      "source_family_id": "gdpr_art35",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "new_article",
+      "source_locator": "The controller shall seek the advice of the data protection officer",
+      "split": "development",
+      "tasks": [
+        "Identify that a DPIA is required",
+        "Seek the advice of the data protection officer",
+        "Finalise the data protection impact assessment"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 35,
+      "business_scenario_en": "The controller should seek data-subject views on intended processing where appropriate.",
+      "business_scenario_zh": "适当情况下，控制者应就预期处理征求数据主体意见。",
+      "citation": "GDPR Article 35(9)",
+      "condition_present": true,
+      "condition_text": "where appropriate, without prejudice to commercial/public interests or security",
+      "constraint_present": true,
+      "constraint_text": "seek the views of data subjects or their representatives on the intended processing",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "35(9) imposes a positive duty to seek the views of data subjects.",
+        "out_of_order": "'on the intended processing' implies a preference, not an explicit strict order between two required activities."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "protection of commercial or public interests or security of processing operations",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "Where appropriate, the controller shall seek the views of data subjects or their representatives on the intended processing.",
+      "order_evidence": "seek the views of data subjects or their representatives on the intended processing",
+      "order_pair": [
+        1,
+        2
+      ],
+      "paragraph": "9",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S5-T2",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "implicit_preference_not_strict_order"
+      ],
+      "sample_id": null,
+      "scenario_id": "S5",
+      "scenario_zh": "风险评估与事先咨询",
+      "source_family_id": "gdpr_art35",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "new_article",
+      "source_locator": "Where appropriate, the controller shall seek the views of data subjects",
+      "split": "development",
+      "tasks": [
+        "Identify affected data subjects or representatives",
+        "Seek the views of data subjects or their representatives",
+        "Carry out the intended processing"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 35,
+      "business_scenario_en": "The controller must review the DPIA when risk changes.",
+      "business_scenario_zh": "风险变化时，控制者须审查处理是否符合数据保护影响评估。",
+      "citation": "GDPR Article 35(11)",
+      "condition_present": true,
+      "condition_text": "risk represented by processing operations changes",
+      "constraint_present": true,
+      "constraint_text": "at least when there is a change of the risk represented by processing operations",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "35(11) imposes a positive duty to carry out a review.",
+        "out_of_order": "'at least when there is a change of the risk' is a trigger/condition, not an order between two required activities."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The controller shall carry out a review to assess whether processing complies with the DPIA at least when the risk changes.",
+      "order_evidence": "at least when there is a change of the risk represented by processing operations",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "11",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S5-T3",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "condition_not_order"
+      ],
+      "sample_id": null,
+      "scenario_id": "S5",
+      "scenario_zh": "风险评估与事先咨询",
+      "source_family_id": "gdpr_art35",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "new_article",
+      "source_locator": "Where necessary, the controller shall carry out a review",
+      "split": "development",
+      "tasks": [
+        "Detect a change in the risk represented by processing",
+        "Carry out a review of the DPIA",
+        "Update safeguards based on the review"
+      ]
+    },
+    {
+      "actor_required": "Supervisory Authority",
+      "actor_wrong": "Controller",
+      "article": 36,
+      "business_scenario_en": "The supervisory authority must provide written advice within up to eight weeks of a consultation request.",
+      "business_scenario_zh": "监管机构收到事先咨询请求后，应在最长八周内提供书面意见。",
+      "citation": "GDPR Article 36(2)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "the supervisory authority is of the opinion that the intended processing would infringe the Regulation or the risk is insufficiently mitigated",
+      "constraint_present": true,
+      "constraint_text": "within period of up to eight weeks of receipt of the request",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the supervisory authority; the controller is not the actor.",
+        "missing_action": "36(2) imposes a positive duty on the supervisory authority to provide written advice.",
+        "out_of_order": "Explicit trigger + subsequent act: advice 'within period of up to eight weeks of receipt of the request' (only trigger order evaluated)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": true,
+      "exception_text": "period may be extended by six weeks; periods may be suspended pending requested information",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The supervisory authority shall provide written advice to the controller within up to eight weeks of receipt of the consultation request, subject to extensions.",
+      "order_evidence": "within period of up to eight weeks of receipt of the request",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "2",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S5-T4",
+      "review_fixes": [
+        "condition_present corrected to True (supervisory authority is of the opinion that the intended processing would infringe)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "sample_id": null,
+      "scenario_id": "S5",
+      "scenario_zh": "风险评估与事先咨询",
+      "source_family_id": "gdpr_art36",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "new_article",
+      "source_locator": "the supervisory authority shall, within period of up to eight weeks of receipt of the request",
+      "split": "development",
+      "tasks": [
+        "Receive the controller consultation request",
+        "Provide written advice to the controller",
+        "Record any extension and reasons"
+      ]
+    },
+    {
+      "actor_required": "Controller and Processor",
+      "actor_wrong": "Data subject",
+      "article": 32,
+      "business_scenario_en": "The controller and processor must implement risk-appropriate security measures.",
+      "business_scenario_zh": "控制者和处理者须实施与风险相适应的安全措施。",
+      "citation": "GDPR Article 32(1)",
+      "condition_present": true,
+      "condition_text": "risk of varying likelihood and severity for rights and freedoms",
+      "constraint_present": true,
+      "constraint_text": "to ensure a level of security appropriate to the risk",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller and processor.",
+        "missing_action": "32(1) imposes a positive duty to implement appropriate security measures.",
+        "out_of_order": "'to ensure a level of security appropriate to the risk' is a risk-appropriateness standard, not a strict order between two activities (A2)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The controller and processor shall implement appropriate technical and organisational measures to ensure a level of security appropriate to the risk.",
+      "order_evidence": "to ensure a level of security appropriate to the risk",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S6-T1",
+      "review_fixes": [
+        "out_of_order marked ineligible (A2)"
+      ],
+      "review_issues": [
+        "risk_appropriateness_misread_as_order"
+      ],
+      "sample_id": null,
+      "scenario_id": "S6",
+      "scenario_zh": "安全事件和泄露响应",
+      "source_family_id": "gdpr_art32",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "including the pseudonymisation and encryption of personal data",
+      "split": "test",
+      "tasks": [
+        "Assess the security risk and implementation context",
+        "Implement appropriate technical and organisational security measures",
+        "Review the effectiveness of the security measures"
+      ]
+    },
+    {
+      "actor_required": "Controller and Processor",
+      "actor_wrong": "Data subject",
+      "article": 32,
+      "business_scenario_en": "Authorised personnel must process personal data only on controller instructions.",
+      "business_scenario_zh": "控制者和处理者须确保授权人员仅按指示处理个人数据。",
+      "citation": "GDPR Article 32(4)",
+      "condition_present": true,
+      "condition_text": "person has access to personal data under controller or processor authority",
+      "constraint_present": true,
+      "constraint_text": "does not process them except on instructions from the controller",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller and processor.",
+        "missing_action": "32(4) imposes a positive duty to take steps ensuring instruction-only processing.",
+        "out_of_order": "'does not process them except on instructions' is a prohibition/condition, not an order."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "required to do so by Union or Member State law",
+      "excerpt_mode": "sentence",
+      "exposure_status": "no_prior_exposure_found",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The controller and processor shall ensure that authorised persons process personal data only on controller instructions unless required by law.",
+      "order_evidence": "does not process them except on instructions from the controller",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "4",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S6-T2",
+      "review_fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "review_issues": [
+        "prohibition_not_order"
+      ],
+      "sample_id": null,
+      "scenario_id": "S6",
+      "scenario_zh": "安全事件和泄露响应",
+      "source_family_id": "gdpr_art32",
+      "source_family_split_basis": "same-Article family has no prior exposure and is held out as independent test",
+      "source_kind": "new_article",
+      "source_locator": "The controller and processor shall take steps to ensure that any natural person",
+      "split": "test",
+      "tasks": [
+        "Provide documented instructions to authorised personnel",
+        "Ensure personnel process personal data only on those instructions",
+        "Review access and processing compliance"
+      ]
+    },
+    {
+      "actor_required": "Processor",
+      "actor_wrong": "Controller",
+      "article": 33,
+      "business_scenario_en": "The processor must notify the controller of a breach without undue delay.",
+      "business_scenario_zh": "处理者知悉个人数据泄露后，须及时通知控制者。",
+      "citation": "GDPR Article 33(2)",
+      "condition_fix_basis": "v1 condition_present was false although the excerpt contains an applicability clause; corrected in v2.",
+      "condition_present": true,
+      "condition_text": "the processor becomes aware of a personal data breach",
+      "constraint_present": true,
+      "constraint_text": "without undue delay after becoming aware of a personal data breach",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the processor; the data subject is not the actor.",
+        "missing_action": "33(2) imposes a positive duty on the processor to notify the controller.",
+        "out_of_order": "Explicit trigger + subsequent act: notify 'after becoming aware of a personal data breach' (only trigger order evaluated)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": true,
+      "exception_present": false,
+      "exception_text": "",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+      "order_evidence": "without undue delay after becoming aware of a personal data breach",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "2",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S6-T3",
+      "review_fixes": [
+        "condition_present corrected to True (becomes aware of a personal data breach)."
+      ],
+      "review_issues": [
+        "missing_condition_flag"
+      ],
+      "sample_id": "gdpr_article33_s003",
+      "scenario_id": "S6",
+      "scenario_zh": "安全事件和泄露响应",
+      "source_family_id": "gdpr_art33",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "gdpr7_input",
+      "source_locator": "The processor shall notify the controller without undue delay after becoming aware",
+      "split": "development",
+      "tasks": [
+        "Become aware of a personal data breach",
+        "Notify the controller of the personal data breach",
+        "Record the processor notification"
+      ]
+    },
+    {
+      "actor_required": "Controller",
+      "actor_wrong": "Data subject",
+      "article": 34,
+      "business_scenario_en": "High-risk breaches must be communicated to data subjects without undue delay.",
+      "business_scenario_zh": "泄露可能对数据主体权利自由造成高风险时，控制者须及时告知数据主体。",
+      "citation": "GDPR Article 34(1)",
+      "condition_present": true,
+      "condition_text": "breach likely to result in high risk to rights and freedoms",
+      "constraint_present": true,
+      "constraint_text": "without undue delay",
+      "core_eligible": true,
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "34(1) imposes a positive duty to communicate a high-risk breach to the data subject.",
+        "out_of_order": "'without undue delay' has no explicit trigger phrase and the added 'assess high risk' task is not a source activity; no order asserted (A3)."
+      },
+      "eligible_incorrect_actor": true,
+      "eligible_missing_action": true,
+      "eligible_out_of_order": false,
+      "exception_present": true,
+      "exception_text": "Article 34(3) exceptions may apply",
+      "excerpt_mode": "sentence",
+      "exposure_status": "exposed_family_forced_development",
+      "has_variants_v1_legacy": true,
+      "historical_development": false,
+      "mandatory_index": 1,
+      "modality": "obligation",
+      "normative_content": "The controller shall communicate a high-risk personal data breach to the data subject without undue delay.",
+      "order_evidence": "without undue delay",
+      "order_pair": [
+        0,
+        1
+      ],
+      "paragraph": "1",
+      "r4_rule_id": null,
+      "requirement_id": "R5-S6-T4",
+      "review_fixes": [
+        "out_of_order marked ineligible (A3)"
+      ],
+      "review_issues": [
+        "undue_delay_misread_as_assessment_order",
+        "invented_assessment_task"
+      ],
+      "sample_id": "gdpr_article34_s001",
+      "scenario_id": "S6",
+      "scenario_zh": "安全事件和泄露响应",
+      "source_family_id": "gdpr_art34",
+      "source_family_split_basis": "same-Article family forced to development because the family is exposed (R1-R4 rule or existing Stage2 prediction)",
+      "source_kind": "gdpr7_input",
+      "source_locator": "When the personal data breach is likely to result in a high risk",
+      "split": "development",
+      "tasks": [
+        "Assess that the breach is likely to result in high risk",
+        "Communicate the personal data breach to the data subject",
+        "Record the communication"
+      ]
+    }
+  ],
+  "schema_version": "stage3_table3_r5_benchmark_config@2.0.0",
+  "source_directory": "references/winter_2020_model_check/model_check/input/regulations/gdpr",
+  "source_family_ids": [
+    "gdpr_art12",
+    "gdpr_art13",
+    "gdpr_art14",
+    "gdpr_art15",
+    "gdpr_art16",
+    "gdpr_art17",
+    "gdpr_art18",
+    "gdpr_art19",
+    "gdpr_art20",
+    "gdpr_art21",
+    "gdpr_art24",
+    "gdpr_art25",
+    "gdpr_art28",
+    "gdpr_art32",
+    "gdpr_art33",
+    "gdpr_art34",
+    "gdpr_art35",
+    "gdpr_art36",
+    "gdpr_art7",
+    "gdpr_art8",
+    "gdpr_art9"
+  ],
+  "source_url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+  "split_algorithm": "source_family (same Article) -> single split; R1-R4 five historical rules and any exposed family stay development; no family crosses split; seed used only for deterministic ordering",
+  "split_seed": 20260925,
+  "status": "construction_reference_not_formal_gold_v2",
+  "supersedes": "stage3_table3_r5_benchmark_v1",
+  "target_counts": {
+    "independent_requirements_v1": 36,
+    "note": "targets are informational only; real counts are reported and gaps stated (no forced 12/24 or 108)"
+  },
+  "task_id": "S3-TABLE3-R5.1-TARGETED-BENCHMARK-CORRECTION"
+}

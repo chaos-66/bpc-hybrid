@@ -1,0 +1,40 @@
+{
+  "processed_source_note": "local Winter snapshot text is whitespace-normalised and split; excerpts are contiguous substrings of that processed text, not a claim of official OJ byte identity",
+  "role_mapping": {
+    "dictionary_available_to_all_methods": true,
+    "forbidden": [
+      "derive_mapping_from_reference_labels",
+      "reverse_map_from_mutated_wrong_actor",
+      "method_specific_favourable_dictionary",
+      "merge_genuinely_distinct_roles"
+    ],
+    "this_round": "per-type eligibility and split/family correction only; R4 actor formula is not changed",
+    "unified_frozen_dictionary_required_before_prediction": true
+  },
+  "schema_version": "stage3_table3_r5_fairness_contract@2.0.0",
+  "semantic_vs_format_error": {
+    "do_not_repair_ours_answers_from_reference": true,
+    "do_not_treat_ours_format_errors_as_a_complete_denial_of_semantic_content": true,
+    "report_semantic_prediction_errors_separately_from_coordinate_or_format_loss": true
+  },
+  "status": "frozen_before_method_run",
+  "sun_and_ours": {
+    "information_loss_must_be_reported_separately": true,
+    "only_difference": "the respective Stage2 method and inherent output handling",
+    "same_bpmn_and_public_context": true,
+    "same_evaluation_scope_reference_labels_unknown_and_na_rules": true,
+    "same_process_side_parsing": true,
+    "same_raw_regulation": true,
+    "same_rule_applicability_handling": true,
+    "same_stage2_to_stage3_interface": true,
+    "same_stage3_implementation_parameters_and_candidate_rules": true
+  },
+  "supersedes": "stage3_table3_r5_fairness_contract@1.0.0 (retained in v1)",
+  "winter": {
+    "not_replaced_by_sun_detector": true,
+    "not_same_stage1_stage3_as_sun_ours": true,
+    "preserves_native_method_required_processing": true,
+    "same_raw_input_public_business_information_and_evaluation_standard": true,
+    "unsupported_capabilities_reported_as_unsupported_or_unknown": true
+  }
+}

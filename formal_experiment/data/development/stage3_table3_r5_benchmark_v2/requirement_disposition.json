@@ -1,0 +1,2243 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "columns": [
+    "requirement_id",
+    "excerpt_and_context",
+    "current_tasks",
+    "current_order",
+    "supported_violation_types",
+    "eligibility_basis",
+    "problem_category",
+    "disposition",
+    "fixes",
+    "evidence_location",
+    "source_family_id",
+    "split",
+    "exposure_status"
+  ],
+  "count": 36,
+  "rows": [
+    {
+      "current_order": {
+        "order_evidence": "prior to that further processing",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Complete direct collection and identify a new processing purpose",
+        "Provide information on the other purpose prior to further processing",
+        "Carry out further processing for the other purpose"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller; the data subject is not the actor.",
+        "missing_action": "13(3) imposes a positive duty to provide the other-purpose information.",
+        "out_of_order": "Explicit strict order: provide information 'prior to that further processing'."
+      },
+      "evidence_location": {
+        "article": 13,
+        "candidate_asset_reason": null,
+        "char_span": [
+          2676,
+          3006
+        ],
+        "citation": "GDPR Article 13(3)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+        "locator": "Where the controller intends to further process",
+        "paragraph": "3",
+        "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
+        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+        "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          2676,
+          3006
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "excerpt_text_sha256": "3d437c14818da102a6a199178f4cdc5e4cf770a6a05f81cd110683a2ee795bfa",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "condition_present corrected to True (intends further processing for another purpose)."
+      ],
+      "problem_category": [
+        "none_found"
+      ],
+      "requirement_id": "R5-D-01",
+      "source_family_id": "gdpr_art13",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "prior to that further processing",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Complete indirect collection and identify a new processing purpose",
+        "Provide information on the other purpose prior to further processing",
+        "Carry out further processing for the other purpose"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "14(4) imposes a positive duty to provide the other-purpose information.",
+        "out_of_order": "Explicit strict order: provide information 'prior to that further processing'."
+      },
+      "evidence_location": {
+        "article": 14,
+        "candidate_asset_reason": null,
+        "char_span": [
+          3155,
+          3484
+        ],
+        "citation": "GDPR Article 14(4)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+        "locator": "Where the controller intends to further process",
+        "paragraph": "4",
+        "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
+        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          3155,
+          3484
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+        "excerpt_text_sha256": "12bd5997087b344a6e88c6eb06253caeb4b06015f06194097cdbef2c7419c3b5",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "condition_present corrected to True (intends further processing for another purpose)."
+      ],
+      "problem_category": [
+        "none_found"
+      ],
+      "requirement_id": "R5-D-02",
+      "source_family_id": "gdpr_art14",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "before the restriction of processing is lifted",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Confirm that the grounds for lifting the restriction are met",
+        "Inform the data subject that the restriction will be lifted",
+        "Lift the restriction of processing"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "18(3) imposes a positive duty to inform before lifting a restriction.",
+        "out_of_order": "Explicit strict order: inform 'before the restriction of processing is lifted'."
+      },
+      "evidence_location": {
+        "article": 18,
+        "candidate_asset_reason": null,
+        "char_span": [
+          1172,
+          1337
+        ],
+        "citation": "GDPR Article 18(3)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+        "locator": "A data subject who has obtained restriction",
+        "paragraph": "3",
+        "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
+        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article18.txt",
+        "source_file_sha256": "7b1015297c6f023e39ce2cb8d74ef942a2d72dbbe804cfac73c6295dcb0693b9",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          1172,
+          1337
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+        "excerpt_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "condition_present corrected to True (restriction obtained under paragraph 1)."
+      ],
+      "problem_category": [
+        "none_found"
+      ],
+      "requirement_id": "R5-D-03",
+      "source_family_id": "gdpr_art18",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "prior to the processing",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Describe the envisaged high-risk processing",
+        "Carry out the data protection impact assessment",
+        "Begin the assessed processing operations"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "35(1) imposes a positive duty to carry out a DPIA.",
+        "out_of_order": "Explicit strict order: carry out the assessment 'prior to the processing'."
+      },
+      "evidence_location": {
+        "article": 35,
+        "candidate_asset_reason": null,
+        "char_span": [
+          0,
+          389
+        ],
+        "citation": "GDPR Article 35(1), first sentence",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+        "locator": "Where a type of processing in particular using new technologies",
+        "paragraph": "1",
+        "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
+        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          0,
+          389
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+        "excerpt_text_sha256": "598b6a255dbb9761396e380ad3bd8d214fbe596368fb1aef8a29bbc04f2e337e",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [],
+      "problem_category": [
+        "none_found"
+      ],
+      "requirement_id": "R5-D-04",
+      "source_family_id": "gdpr_art35",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "prior to processing",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Review the DPIA indicating high residual risk",
+        "Consult the supervisory authority about the proposed processing",
+        "Start the proposed processing"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "36(1) imposes a positive duty to consult the supervisory authority.",
+        "out_of_order": "Explicit strict order: consult 'prior to processing'."
+      },
+      "evidence_location": {
+        "article": 36,
+        "candidate_asset_reason": null,
+        "char_span": [
+          0,
+          264
+        ],
+        "citation": "GDPR Article 36(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+        "locator": "The controller shall consult the supervisory authority prior to processing",
+        "paragraph": "1",
+        "source_dataset": "data/development/stage3_reconstruction_v4/construction_reference.json",
+        "source_dataset_sha256": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
+        "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          0,
+          264
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.",
+        "excerpt_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+        "source_status": "derived_via_r4_construction_reference_from_processed_local_snapshot"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [],
+      "problem_category": [
+        "none_found"
+      ],
+      "requirement_id": "R5-D-05",
+      "source_family_id": "gdpr_art36",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "shall be able to demonstrate that the data subject has consented",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive and record the data subject consent",
+        "Demonstrate that consent was given",
+        "Store the consent evidence"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "7(1) imposes a positive duty to be able to demonstrate consent.",
+        "out_of_order": "No explicit order between two required activities; 'demonstrate that ... has consented' is an evidentiary state, not a strict order rule."
+      },
+      "evidence_location": {
+        "article": 7,
+        "candidate_asset_reason": null,
+        "char_span": [
+          0,
+          161
+        ],
+        "citation": "GDPR Article 7(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "e00763881eb6ffcb71cd7f3dfda726448d24731fa06d9b217e2dce6dd00bce87",
+        "locator": "Where processing is based on consent, the controller shall be able to demonstrate",
+        "paragraph": "1",
+        "source_dataset": "data/input/gdpr7_stage2_input_v1.json",
+        "source_dataset_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "source_file_path": null,
+        "source_file_sha256": null,
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          0,
+          161
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where processing is based on consent, the controller shall be able to demonstrate that the data subject has consented to processing of his or her personal data.",
+        "excerpt_text_sha256": "e00763881eb6ffcb71cd7f3dfda726448d24731fa06d9b217e2dce6dd00bce87",
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible",
+        "condition_present corrected to True (processing based on consent)."
+      ],
+      "problem_category": [
+        "order_evidence_text_is_not_order_rule"
+      ],
+      "requirement_id": "R5-D-06",
+      "source_family_id": "gdpr_art7",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "When assessing whether consent is freely given",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Identify whether performance of a contract or service is conditional on consent",
+        "Assess whether the consent is freely given",
+        "Record the assessment of free consent"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "7(4) requires utmost account to be taken when assessing free consent.",
+        "out_of_order": "'When assessing whether consent is freely given' is a simultaneity/condition, not an order between two required activities."
+      },
+      "evidence_location": {
+        "article": 7,
+        "candidate_asset_reason": null,
+        "char_span": [
+          887,
+          1178
+        ],
+        "citation": "GDPR Article 7(4)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "7a5c82e05e06aed5e174c23dbbcea4a8e7b9916f0cae5695f6f5f43daad20619",
+        "locator": "When assessing whether consent is freely given",
+        "paragraph": "4",
+        "source_dataset": "data/input/gdpr7_stage2_input_v1.json",
+        "source_dataset_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "source_file_path": null,
+        "source_file_sha256": null,
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          887,
+          1178
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "When assessing whether consent is freely given, utmost account shall be taken of whether, inter alia, the performance of a contract, including the provision of a service, is conditional on consent to the processing of personal data that is not necessary for the performance of that contract.",
+        "excerpt_text_sha256": "7a5c82e05e06aed5e174c23dbbcea4a8e7b9916f0cae5695f6f5f43daad20619",
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "simultaneity_not_order"
+      ],
+      "requirement_id": "R5-D-07",
+      "source_family_id": "gdpr_art7",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "The data subject shall have the right to obtain from the controller confirmation",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive the access request",
+        "Provide confirmation and access to the personal data",
+        "Provide the required access information"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "15(1) right to obtain confirmation and access implies a positive controller duty to provide it.",
+        "out_of_order": "The recital is a right to obtain, not an explicit two-activity strict-order rule."
+      },
+      "evidence_location": {
+        "article": 15,
+        "candidate_asset_reason": null,
+        "char_span": [
+          0,
+          278
+        ],
+        "citation": "GDPR Article 15(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "4d55a1fb6743e546ba673fe377a388638f99a50ac240d482a0d2c394ce3256ac",
+        "locator": "The data subject shall have the right to obtain from the controller confirmation",
+        "paragraph": "1",
+        "source_dataset": "data/input/gdpr7_stage2_input_v1.json",
+        "source_dataset_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "source_file_path": null,
+        "source_file_sha256": null,
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          0,
+          278
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information the purposes of the processing.",
+        "excerpt_text_sha256": "4d55a1fb6743e546ba673fe377a388638f99a50ac240d482a0d2c394ce3256ac",
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "right_not_order_rule"
+      ],
+      "requirement_id": "R5-D-08",
+      "source_family_id": "gdpr_art15",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "without undue delay",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive the rectification request",
+        "Rectify inaccurate personal data without undue delay",
+        "Confirm the rectification to the data subject"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "16 right to rectification implies a positive controller duty to rectify.",
+        "out_of_order": "'without undue delay' is a deadline with no explicit trigger phrase; this round does not assert deadline satisfaction or an invented trigger order."
+      },
+      "evidence_location": {
+        "article": 16,
+        "candidate_asset_reason": null,
+        "char_span": [
+          0,
+          156
+        ],
+        "citation": "GDPR Article 16",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "1ae6c72eb70eb6b75ce1c88d6d50adbfd098ce38eab56c892f31d07b353adbe1",
+        "locator": "The data subject shall have the right to obtain from the controller without undue delay",
+        "paragraph": "1",
+        "source_dataset": "data/input/gdpr7_stage2_input_v1.json",
+        "source_dataset_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "source_file_path": null,
+        "source_file_sha256": null,
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          0,
+          156
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The data subject shall have the right to obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her.",
+        "excerpt_text_sha256": "1ae6c72eb70eb6b75ce1c88d6d50adbfd098ce38eab56c892f31d07b353adbe1",
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "deadline_without_explicit_trigger"
+      ],
+      "requirement_id": "R5-D-09",
+      "source_family_id": "gdpr_art16",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "without undue delay",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive the erasure request and assess an applicable ground",
+        "Erase personal data without undue delay",
+        "Record the erasure decision"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "17(1) imposes a positive duty to erase where a ground applies.",
+        "out_of_order": "'without undue delay' is a deadline with no explicit trigger phrase; no strict order asserted."
+      },
+      "evidence_location": {
+        "article": 17,
+        "candidate_asset_reason": null,
+        "char_span": [
+          0,
+          271
+        ],
+        "citation": "GDPR Article 17(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "ffce4b993017dcb956e232f8d9afc93daa5f6ab08ecd4c72f06b4427796f8be2",
+        "locator": "The data subject shall have the right to obtain from the controller the erasure",
+        "paragraph": "1",
+        "source_dataset": "data/input/gdpr7_stage2_input_v1.json",
+        "source_dataset_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "source_file_path": null,
+        "source_file_sha256": null,
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          0,
+          271
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies.",
+        "excerpt_text_sha256": "ffce4b993017dcb956e232f8d9afc93daa5f6ab08ecd4c72f06b4427796f8be2",
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible",
+        "condition_present corrected to True (one of the 17(1) grounds applies)."
+      ],
+      "problem_category": [
+        "deadline_without_explicit_trigger"
+      ],
+      "requirement_id": "R5-D-10",
+      "source_family_id": "gdpr_art17",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "The data subject shall have the right to receive the personal data",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive the portability request",
+        "Provide the personal data in a structured, commonly used and machine-readable format",
+        "Transmit the data to another controller without hindrance"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "20(1) right to receive/transmit implies a positive controller duty to provide portability.",
+        "out_of_order": "The excerpt lists two rights; it does not state a strict order between two required activities."
+      },
+      "evidence_location": {
+        "article": 20,
+        "candidate_asset_reason": null,
+        "char_span": [
+          0,
+          562
+        ],
+        "citation": "GDPR Article 20(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "5b63ec29d24bd77cbe3cc19136ae1b0c30f5378d28a25aebc101260d2e0023ca",
+        "locator": "The data subject shall have the right to receive the personal data",
+        "paragraph": "1",
+        "source_dataset": "data/input/gdpr7_stage2_input_v1.json",
+        "source_dataset_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "source_file_path": null,
+        "source_file_sha256": null,
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          0,
+          562
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means.",
+        "excerpt_text_sha256": "5b63ec29d24bd77cbe3cc19136ae1b0c30f5378d28a25aebc101260d2e0023ca",
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "right_not_order_rule"
+      ],
+      "requirement_id": "R5-D-11",
+      "source_family_id": "gdpr_art20",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "without undue delay and, where feasible, not later than 72 hours after having become aware",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Become aware of the personal data breach",
+        "Notify the competent supervisory authority",
+        "Document the notification or reasons for delay"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "33(1) imposes a positive duty to notify the supervisory authority.",
+        "out_of_order": "Explicit trigger + subsequent act: notify 'after having become aware' (deadline is not asserted as satisfied, only trigger order)."
+      },
+      "evidence_location": {
+        "article": 33,
+        "candidate_asset_reason": null,
+        "char_span": [
+          0,
+          370
+        ],
+        "citation": "GDPR Article 33(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "d3327ce470720a494bfb05a72841a073e0c7bac1673f11545833dcce72ef0a65",
+        "locator": "In the case of a personal data breach, the controller shall without undue delay",
+        "paragraph": "1",
+        "source_dataset": "data/input/gdpr7_stage2_input_v1.json",
+        "source_dataset_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "source_file_path": null,
+        "source_file_sha256": null,
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          0,
+          370
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons.",
+        "excerpt_text_sha256": "d3327ce470720a494bfb05a72841a073e0c7bac1673f11545833dcce72ef0a65",
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "condition_text corrected to 'a personal data breach occurs' (exception kept separate in 33(1) 'unless ... unlikely to result in a risk')."
+      ],
+      "problem_category": [
+        "condition_text_confused_with_exception"
+      ],
+      "requirement_id": "R5-D-12",
+      "source_family_id": "gdpr_art33",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "at the time when personal data are obtained",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Collect personal data from the data subject",
+        "Provide required transparency information to the data subject",
+        "Record completion of the transparency notice"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "13(1) imposes a positive duty to provide the listed information.",
+        "out_of_order": "'at the time when personal data are obtained' is simultaneity, not a strict collect-then-inform order (A1)."
+      },
+      "evidence_location": {
+        "article": 13,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 13(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "16a2a3b5ceb63999f1758de7f91a407c52e36eeef8d0627516e41bbb43aa5c1d",
+        "locator": "Where personal data relating to a data subject are collected from the data subject",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+        "source_dataset_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+        "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where personal data relating to a data subject are collected from the data subject, the controller shall, at the time when personal data are obtained, provide the data subject with all of the following information.",
+        "excerpt_text_sha256": "16a2a3b5ceb63999f1758de7f91a407c52e36eeef8d0627516e41bbb43aa5c1d",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible (A1)",
+        "condition_present corrected to True (direct collection from the data subject)."
+      ],
+      "problem_category": [
+        "simultaneity_misread_as_order",
+        "missing_condition_flag"
+      ],
+      "requirement_id": "R5-S1-T1",
+      "source_family_id": "gdpr_art13",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "at the time when personal data are obtained",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Collect personal data from the data subject",
+        "Provide further fairness and transparency information to the data subject",
+        "Record completion of the further information notice"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "13(2) imposes a positive duty to provide the further fairness/transparency information.",
+        "out_of_order": "'at the time when personal data are obtained' is simultaneity, not a strict order (A1)."
+      },
+      "evidence_location": {
+        "article": 13,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 13(2)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "c857f4424b6e5e8532d1241d4fb6745148aa56069518c1d9fe9dfc853a454491",
+        "locator": "In addition to the information referred to in paragraph 1, the controller shall, at the time",
+        "paragraph": "2",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+        "source_dataset_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article13.txt",
+        "source_file_sha256": "e8b47dd7634bf4e1cb37882baaacc8d1d654809673c01cf54e9d360767d702ee",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "In addition to the information referred to in paragraph 1, the controller shall, at the time when personal data are obtained, provide the data subject with the following further information necessary to ensure fair and transparent processing: The period for which the personal data will be stored, or if that is not possible, the criteria used to determine that period.",
+        "excerpt_text_sha256": "c857f4424b6e5e8532d1241d4fb6745148aa56069518c1d9fe9dfc853a454491",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible (A1)",
+        "condition_present corrected to True (paragraph 1 information obligation applies)."
+      ],
+      "problem_category": [
+        "simultaneity_misread_as_order",
+        "missing_condition_flag"
+      ],
+      "requirement_id": "R5-S1-T2",
+      "source_family_id": "gdpr_art13",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "within a reasonable period after obtaining the personal data, but at the latest within one month",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Obtain personal data from a source other than the data subject",
+        "Provide required indirect-collection information to the data subject",
+        "Record the one-month response deadline"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "14(1) imposes a positive duty to provide the listed information.",
+        "out_of_order": "Explicit trigger + subsequent act: provide 'within a reasonable period after obtaining' (only trigger order evaluated)."
+      },
+      "evidence_location": {
+        "article": 14,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 14(1)",
+        "context_text_sha256": "bf9cb5977a41103664d4bce95f889ac6c5decc316f63af95826591e4134b4764",
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f",
+        "locator": "Where personal data have not been obtained from the data subject, the controller shall provide",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_dataset_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
+        "context_text_sha256": "bf9cb5977a41103664d4bce95f889ac6c5decc316f63af95826591e4134b4764",
+        "excerpt_text": "Where personal data have not been obtained from the data subject, the controller shall provide the data subject with the following information.",
+        "excerpt_text_sha256": "a0f592432d9fa34faeb2b819ff30f830c3e9dcc41fc8bc82faab58d5ab3cfd2f",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "condition_present corrected to True (personal data not obtained from the data subject)."
+      ],
+      "problem_category": [
+        "missing_condition_flag"
+      ],
+      "requirement_id": "R5-S1-T3",
+      "source_family_id": "gdpr_art14",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "within a reasonable period after obtaining the personal data, but at the latest within one month",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Obtain personal data from a third-party source",
+        "Provide further indirect-collection information to the data subject",
+        "Log the information delivery"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "14(2) imposes a positive duty to provide the further information.",
+        "out_of_order": "Explicit trigger + subsequent act: provide after obtaining under 14(3) timing (only trigger order evaluated)."
+      },
+      "evidence_location": {
+        "article": 14,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 14(2)",
+        "context_text_sha256": "bf9cb5977a41103664d4bce95f889ac6c5decc316f63af95826591e4134b4764",
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e",
+        "locator": "In addition to the information referred to in paragraph 1, the controller shall provide",
+        "paragraph": "2",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_dataset_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+        "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
+        "context_text_sha256": "bf9cb5977a41103664d4bce95f889ac6c5decc316f63af95826591e4134b4764",
+        "excerpt_text": "In addition to the information referred to in paragraph 1, the controller shall provide the data subject with the following information necessary to ensure fair and transparent processing in respect of the data subject.",
+        "excerpt_text_sha256": "483e0d76cf9b0f5e8794e62857fa6f7711052376ba77ad04bae320cb0652ec9e",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "condition_present corrected to True (paragraph 1 indirect-collection obligation applies)."
+      ],
+      "problem_category": [
+        "missing_condition_flag"
+      ],
+      "requirement_id": "R5-S1-T4",
+      "source_family_id": "gdpr_art14",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "shall be lawful only if and to the extent that consent is given or authorised",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Assess the child age and applicable consent route",
+        "Verify that parental authorisation has been obtained where required",
+        "Process the child personal data for the information society service"
+      ],
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "The provision conditions lawfulness on consent/authorisation rather than assigning the duty to a fallible actor-surface obligation.",
+        "missing_action": "8(1) states a lawfulness/permission condition, not a positive duty; absence of a named activity is not itself a violation (permission template rule).",
+        "out_of_order": "No explicit strict order between two required activities."
+      },
+      "evidence_location": {
+        "article": 8,
+        "candidate_asset_reason": "no eligible core violation type: permission_modelled_as_positive_duty",
+        "char_span": null,
+        "citation": "GDPR Article 8(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "paragraph",
+        "excerpt_text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68",
+        "locator": "Where point (a) of Article 6(1) applies",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article8.txt",
+        "source_dataset_sha256": "84708b3b33bbd7b498257cea4042415fe359a8f655ce325ecbbf44c13381172e",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article8.txt",
+        "source_file_sha256": "84708b3b33bbd7b498257cea4042415fe359a8f655ce325ecbbf44c13381172e",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where point (a) of Article 6(1) applies, in relation to the offer of information society services directly to a child, the processing of the personal data of a child shall be lawful where the child is at least 16 years old. Where the child is below the age of 16 years, such processing shall be lawful only if and to the extent that consent is given or authorised by the holder of parental responsibility over the child.",
+        "excerpt_text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "moved out of the frozen three-class core scoring; kept as semantic/candidate asset (no permission decision formula added)."
+      ],
+      "problem_category": [
+        "permission_modelled_as_positive_duty"
+      ],
+      "requirement_id": "R5-S2-T1",
+      "source_family_id": "gdpr_art8",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "verify in such cases that consent is given or authorised",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Log available technology and verification context",
+        "Make reasonable efforts to verify parental authorisation",
+        "Process the child personal data"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "8(2) imposes a positive duty to make reasonable efforts to verify parental authorisation.",
+        "out_of_order": "'in such cases' is a condition, not an order between activities."
+      },
+      "evidence_location": {
+        "article": 8,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 8(2)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "4a572b9fde1b8fd97666c3cb5925d2edd2527b4969b67ab65fb7fcf84124e267",
+        "locator": "The controller shall make reasonable efforts to verify",
+        "paragraph": "2",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article8.txt",
+        "source_dataset_sha256": "84708b3b33bbd7b498257cea4042415fe359a8f655ce325ecbbf44c13381172e",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article8.txt",
+        "source_file_sha256": "84708b3b33bbd7b498257cea4042415fe359a8f655ce325ecbbf44c13381172e",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The controller shall make reasonable efforts to verify in such cases that consent is given or authorised by the holder of parental responsibility over the child, taking into consideration available technology.",
+        "excerpt_text_sha256": "4a572b9fde1b8fd97666c3cb5925d2edd2527b4969b67ab65fb7fcf84124e267",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [],
+      "problem_category": [
+        "none_found"
+      ],
+      "requirement_id": "R5-S2-T2",
+      "source_family_id": "gdpr_art8",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "has given explicit consent to the processing of those personal data",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Identify special-category personal data in scope",
+        "Obtain explicit consent from the data subject",
+        "Process the special-category personal data"
+      ],
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "The provision conditions lawfulness on explicit consent; it is not a per-actor positive duty.",
+        "missing_action": "9(2)(a) is a permission (derogation from the 9(1) prohibition); absence of a named activity is not itself a violation.",
+        "out_of_order": "No explicit strict order between two required activities."
+      },
+      "evidence_location": {
+        "article": 9,
+        "candidate_asset_reason": "no eligible core violation type: permission_modelled_as_positive_duty; condition_and_negated_condition_confused_with_exception",
+        "char_span": null,
+        "citation": "GDPR Article 9(2)(a)",
+        "context_text_sha256": null,
+        "excerpt_mode": "item",
+        "excerpt_text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f",
+        "locator": "The data subject has given explicit consent to the processing of those personal data",
+        "paragraph": "2(a)",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article9.txt",
+        "source_dataset_sha256": "2c29cbcb78a2864563e4f620018b6804f9b47911e59dce98fe30401745897fd2",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article9.txt",
+        "source_file_sha256": "2c29cbcb78a2864563e4f620018b6804f9b47911e59dce98fe30401745897fd2",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
+        "excerpt_text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "moved out of core scoring (A4); kept as semantic/candidate asset; condition and legal basis documented."
+      ],
+      "problem_category": [
+        "permission_modelled_as_positive_duty",
+        "condition_and_negated_condition_confused_with_exception"
+      ],
+      "requirement_id": "R5-S2-T3",
+      "source_family_id": "gdpr_art9",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "in so far as it is authorised by Union or Member State law or a collective agreement",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Identify the employment or social-protection processing purpose",
+        "Confirm the Union or Member State law or collective agreement basis",
+        "Process the special-category personal data"
+      ],
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "The provision conditions lawfulness on a legal basis/safeguards; it is not a per-actor positive duty.",
+        "missing_action": "9(2)(b) is a permission (derogation); absence of a named activity is not itself a violation.",
+        "out_of_order": "No explicit strict order between two required activities."
+      },
+      "evidence_location": {
+        "article": 9,
+        "candidate_asset_reason": "no eligible core violation type: permission_modelled_as_positive_duty; negated_condition_misstated_as_exception",
+        "char_span": null,
+        "citation": "GDPR Article 9(2)(b)",
+        "context_text_sha256": null,
+        "excerpt_mode": "item",
+        "excerpt_text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b",
+        "locator": "Processing is necessary for the purposes of carrying out the obligations",
+        "paragraph": "2(b)",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article9.txt",
+        "source_dataset_sha256": "2c29cbcb78a2864563e4f620018b6804f9b47911e59dce98fe30401745897fd2",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article9.txt",
+        "source_file_sha256": "2c29cbcb78a2864563e4f620018b6804f9b47911e59dce98fe30401745897fd2",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Processing is necessary for the purposes of carrying out the obligations and exercising specific rights of the controller or of the data subject in the field of employment and social security and social protection law in so far as it is authorised by Union or Member State law or a collective agreement pursuant to Member State law providing for appropriate safeguards for the fundamental rights and the interests of the data subject",
+        "excerpt_text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "moved out of core scoring (A4); kept as semantic/candidate asset."
+      ],
+      "problem_category": [
+        "permission_modelled_as_positive_duty",
+        "negated_condition_misstated_as_exception"
+      ],
+      "requirement_id": "R5-S2-T4",
+      "source_family_id": "gdpr_art9",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "without undue delay and in any event within one month of receipt of the request",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive the data subject request",
+        "Provide the response on action taken",
+        "Archive the request response record"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "12(3) imposes a positive duty to provide information on action taken.",
+        "out_of_order": "Explicit trigger + subsequent act: provide 'within one month of receipt of the request' (only trigger order evaluated)."
+      },
+      "evidence_location": {
+        "article": 12,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 12(3)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb",
+        "locator": "The controller shall provide information on action taken on a request",
+        "paragraph": "3",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article12.txt",
+        "source_dataset_sha256": "8d25d42b7558cfa4e4bc16b72866ecc18ecb74af633151060ab37b133f6b6094",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article12.txt",
+        "source_file_sha256": "8d25d42b7558cfa4e4bc16b72866ecc18ecb74af633151060ab37b133f6b6094",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The controller shall provide information on action taken on a request under Articles 15 to 22 to the data subject without undue delay and in any event within one month of receipt of the request.",
+        "excerpt_text_sha256": "34af79e05cce4587e3d3008b2471632e4282bcf238912cfa07a55cfa985ed9cb",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "condition_present corrected to True (a request under Articles 15-22 is received)."
+      ],
+      "problem_category": [
+        "missing_condition_flag"
+      ],
+      "requirement_id": "R5-S3-T1",
+      "source_family_id": "gdpr_art12",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "without delay and at the latest within one month of receipt of the request",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive the data subject request",
+        "Inform the data subject of the reasons for not taking action",
+        "Record the complaint and judicial remedy information"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "12(4) imposes a positive duty to inform about reasons for not taking action.",
+        "out_of_order": "Explicit trigger + subsequent act: inform 'within one month of receipt of the request' (only trigger order evaluated)."
+      },
+      "evidence_location": {
+        "article": 12,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 12(4)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb",
+        "locator": "If the controller does not take action on the request of the data subject",
+        "paragraph": "4",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article12.txt",
+        "source_dataset_sha256": "8d25d42b7558cfa4e4bc16b72866ecc18ecb74af633151060ab37b133f6b6094",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article12.txt",
+        "source_file_sha256": "8d25d42b7558cfa4e4bc16b72866ecc18ecb74af633151060ab37b133f6b6094",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "If the controller does not take action on the request of the data subject, the controller shall inform the data subject without delay and at the latest within one month of receipt of the request of the reasons for not taking action and on the possibility of lodging a complaint with a supervisory authority and seeking a judicial remedy.",
+        "excerpt_text_sha256": "3fbc125c7c2de3c37ca8c4c4a6535c848ac412bd01598ff38d9e19058fa6eaeb",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "condition_present corrected to True (controller does not take action on the request)."
+      ],
+      "problem_category": [
+        "missing_condition_flag"
+      ],
+      "requirement_id": "R5-S3-T2",
+      "source_family_id": "gdpr_art12",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "shall no longer process the personal data unless",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive the data subject objection and particular grounds",
+        "Stop processing unless compelling legitimate grounds are demonstrated",
+        "Document the assessment of compelling grounds"
+      ],
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "No per-actor positive duty; the provision constrains continued processing.",
+        "missing_action": "21(1) is a cessation/prohibition of further processing, not a positive duty; a 'Stop' task cannot prove that prohibited processing happened.",
+        "out_of_order": "'shall no longer process unless' is a prohibition/condition, not an order between two required activities."
+      },
+      "evidence_location": {
+        "article": 21,
+        "candidate_asset_reason": "no eligible core violation type: prohibition_cessation_modelled_as_missing_action; invented_stop_task",
+        "char_span": null,
+        "citation": "GDPR Article 21(1)",
+        "context_text_sha256": "f880b915a8e86e3b390911a022c13906cf993e8482b2968dd85dc2bd020dd95e",
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d",
+        "locator": "The controller shall no longer process the personal data unless",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article21.txt",
+        "source_dataset_sha256": "dd4a48a3724b565b26cde841c2953ddad5815116922237d8b099aa9bb50ac126",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article21.txt",
+        "source_file_sha256": "dd4a48a3724b565b26cde841c2953ddad5815116922237d8b099aa9bb50ac126",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "The data subject shall have the right to object, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions.",
+        "context_text_sha256": "f880b915a8e86e3b390911a022c13906cf993e8482b2968dd85dc2bd020dd95e",
+        "excerpt_text": "The controller shall no longer process the personal data unless the controller demonstrates compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims.",
+        "excerpt_text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "moved out of core scoring (A5); Stop task removed from core; kept as semantic/candidate asset with source."
+      ],
+      "problem_category": [
+        "prohibition_cessation_modelled_as_missing_action",
+        "invented_stop_task"
+      ],
+      "requirement_id": "R5-S3-T3",
+      "source_family_id": "gdpr_art21",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "the personal data shall no longer be processed for such purposes",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive the direct-marketing objection",
+        "Cease processing for direct-marketing purposes",
+        "Record the marketing suppression"
+      ],
+      "disposition": "candidate_semantic",
+      "eligibility_basis": {
+        "incorrect_actor": "No per-actor positive duty.",
+        "missing_action": "21(3) is a cessation/prohibition, not a positive duty; a 'Cease' task cannot prove prohibited processing.",
+        "out_of_order": "'shall no longer be processed' is a prohibition, not an order between two required activities."
+      },
+      "evidence_location": {
+        "article": 21,
+        "candidate_asset_reason": "no eligible core violation type: prohibition_cessation_modelled_as_missing_action; invented_cease_task",
+        "char_span": null,
+        "citation": "GDPR Article 21(3)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e",
+        "locator": "Where the data subject objects to processing for direct marketing purposes",
+        "paragraph": "3",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article21.txt",
+        "source_dataset_sha256": "dd4a48a3724b565b26cde841c2953ddad5815116922237d8b099aa9bb50ac126",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article21.txt",
+        "source_file_sha256": "dd4a48a3724b565b26cde841c2953ddad5815116922237d8b099aa9bb50ac126",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where the data subject objects to processing for direct marketing purposes, the personal data shall no longer be processed for such purposes.",
+        "excerpt_text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "moved out of core scoring (A5); Cease task removed from core; kept as semantic/candidate asset with source."
+      ],
+      "problem_category": [
+        "prohibition_cessation_modelled_as_missing_action",
+        "invented_cease_task"
+      ],
+      "requirement_id": "R5-S3-T4",
+      "source_family_id": "gdpr_art21",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": false,
+        "missing_action": false,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "Those measures shall be reviewed and updated where necessary",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Assess processing risks and compliance context",
+        "Implement appropriate technical and organisational measures",
+        "Review and update the implemented measures where necessary"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "24(1) imposes a positive duty to implement appropriate measures.",
+        "out_of_order": "'Those measures shall be reviewed and updated where necessary' describes a lifecycle, not an explicit strict order between two required activities."
+      },
+      "evidence_location": {
+        "article": 24,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 24(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "paragraph",
+        "excerpt_text_sha256": "4ab0b5c456120cbbc85a045342d7eb9d850db264e4e747af4f882b8fa7513c9d",
+        "locator": "the controller shall implement appropriate technical and organisational measures",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article24.txt",
+        "source_dataset_sha256": "8720ce77c0d1fecec890f3283f844a8f44f1865a1a3e18bbeed9ca02127013d3",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article24.txt",
+        "source_file_sha256": "8720ce77c0d1fecec890f3283f844a8f44f1865a1a3e18bbeed9ca02127013d3",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Taking into account the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for the rights and freedoms of natural persons, the controller shall implement appropriate technical and organisational measures to ensure and to be able to demonstrate that processing is performed in accordance with this Regulation. Those measures shall be reviewed and updated where necessary.",
+        "excerpt_text_sha256": "4ab0b5c456120cbbc85a045342d7eb9d850db264e4e747af4f882b8fa7513c9d",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "lifecycle_not_strict_order"
+      ],
+      "requirement_id": "R5-S4-T1",
+      "source_family_id": "gdpr_art24",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "both at the time of the determination of the means for processing and at the time of the processing itself",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Determine the means and purposes of processing",
+        "Implement data-protection-by-design safeguards",
+        "Carry out the processing operations"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "25(1) imposes a positive duty to implement data-protection-by-design measures.",
+        "out_of_order": "'both at the time of the determination ... and at the time of the processing itself' is simultaneity, not an order."
+      },
+      "evidence_location": {
+        "article": 25,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 25(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "e6fa8bd9e008b448d4904925e75fb86d9aa6ebecc87394c917f6967d2d03979f",
+        "locator": "the controller shall, both at the time of the determination of the means for processing",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article25.txt",
+        "source_dataset_sha256": "55f6803ab4236402d95e8912ea9ed32b29335832380c7b5c53bc2d9674574a05",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article25.txt",
+        "source_file_sha256": "55f6803ab4236402d95e8912ea9ed32b29335832380c7b5c53bc2d9674574a05",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Taking into account the state of the art, the cost of implementation and the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for rights and freedoms of natural persons posed by the processing, the controller shall, both at the time of the determination of the means for processing and at the time of the processing itself, implement appropriate technical and organisational measures, such as pseudonymisation, which are designed to implement data-protection principles, such as data minimisation, in an effective manner and to integrate the necessary safeguards into the processing in order to meet the requirements of this Regulation and protect the rights of data subjects.",
+        "excerpt_text_sha256": "e6fa8bd9e008b448d4904925e75fb86d9aa6ebecc87394c917f6967d2d03979f",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "simultaneity_not_order"
+      ],
+      "requirement_id": "R5-S4-T2",
+      "source_family_id": "gdpr_art25",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "only on documented instructions from the controller",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive documented processing instructions from the controller",
+        "Process personal data only on those documented instructions",
+        "Report any instruction that appears to infringe data-protection law"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the processor.",
+        "missing_action": "28(3)(a) stipulates a positive duty: process only on documented instructions.",
+        "out_of_order": "'only on documented instructions' is a condition/precondition, not a strict order between two required activities; 'before processing' belongs to the legal-requirement exception, not the main duty."
+      },
+      "evidence_location": {
+        "article": 28,
+        "candidate_asset_reason": null,
+        "char_span": [
+          1172,
+          1646
+        ],
+        "citation": "GDPR Article 28(3)(a)",
+        "context_text_sha256": null,
+        "excerpt_mode": "char_span",
+        "excerpt_text_sha256": "21f3c3086326373c00a525d53178744bd185a1f6babe5e24dfef0753e4d07a10",
+        "locator": "the processor processes the personal data only on documented instructions from the controller",
+        "paragraph": "3(a)",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article28.txt",
+        "source_dataset_sha256": "f4f7f44d04dd4497299a6bd7a739bafe1bd9b9cd38bc266629142e840ffc704d",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article28.txt",
+        "source_file_sha256": "f4f7f44d04dd4497299a6bd7a739bafe1bd9b9cd38bc266629142e840ffc704d",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim: references/winter_2020_model_check/.../article28.txt has been whitespace-normalised and split into separate enumerated items; the excerpt is a contiguous substring of that processed file, not a claim of official OJ byte identity."
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          1172,
+          1646
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "the processor processes the personal data only on documented instructions from the controller, including with regard to transfers of personal data to a third country or an international organisation, unless required to do so by Union or Member State law to which the processor is subject; in such a case, the processor shall inform the controller of that legal requirement before processing, unless that law prohibits such information on important grounds of public interest",
+        "excerpt_text_sha256": "21f3c3086326373c00a525d53178744bd185a1f6babe5e24dfef0753e4d07a10",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim: references/winter_2020_model_check/.../article28.txt has been whitespace-normalised and split into separate enumerated items; the excerpt is a contiguous substring of that processed file, not a claim of official OJ byte identity."
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "excerpt narrowed to the 28(3)(a) sentence only (A6); precise char span recorded; processed-source status flagged; out_of_order marked ineligible."
+      ],
+      "problem_category": [
+        "excerpt_includes_subsequent_subparagraphs",
+        "condition_precondition_misread_as_order",
+        "processed_source_not_flagged"
+      ],
+      "requirement_id": "R5-S4-T3",
+      "source_family_id": "gdpr_art28",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "The controller shall communicate any rectification or erasure of personal data or restriction",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Carry out rectification, erasure, or restriction",
+        "Communicate the change to each recipient of the personal data",
+        "Inform the data subject about those recipients on request"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "19 imposes a positive duty to communicate changes to recipients.",
+        "out_of_order": "Communicating a change already carried out is not a strict order between two required activities."
+      },
+      "evidence_location": {
+        "article": 19,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 19",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "6d16dedab3b12954ac7972d1c6b18ce394ccd00428c3cf7f49d9832e0c2098fc",
+        "locator": "The controller shall communicate any rectification or erasure of personal data or restriction",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article19.txt",
+        "source_dataset_sha256": "8a45e6e1035e11a9e39063202657edeead257497d0af5ff9a1e7bcdb313cc098",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article19.txt",
+        "source_file_sha256": "8a45e6e1035e11a9e39063202657edeead257497d0af5ff9a1e7bcdb313cc098",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The controller shall communicate any rectification or erasure of personal data or restriction of processing carried out in accordance with Article 16, Article 17(1) and Article 18 to each recipient to whom the personal data have been disclosed, unless this proves impossible or involves disproportionate effort.",
+        "excerpt_text_sha256": "6d16dedab3b12954ac7972d1c6b18ce394ccd00428c3cf7f49d9832e0c2098fc",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "condition_present corrected to True (a rectification/erasure/restriction was carried out)."
+      ],
+      "problem_category": [
+        "missing_condition_flag"
+      ],
+      "requirement_id": "R5-S4-T4",
+      "source_family_id": "gdpr_art19",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "when carrying out a data protection impact assessment",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Identify that a DPIA is required",
+        "Seek the advice of the data protection officer",
+        "Finalise the data protection impact assessment"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "35(2) imposes a positive duty to seek the DPO advice.",
+        "out_of_order": "'when carrying out a DPIA' is simultaneity/condition, not an order."
+      },
+      "evidence_location": {
+        "article": 35,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 35(2)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "d65f391cfe4f4159883a211594774f386c105d08deac35b43f2e0b777fddc47b",
+        "locator": "The controller shall seek the advice of the data protection officer",
+        "paragraph": "2",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_dataset_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The controller shall seek the advice of the data protection officer, where designated, when carrying out a data protection impact assessment.",
+        "excerpt_text_sha256": "d65f391cfe4f4159883a211594774f386c105d08deac35b43f2e0b777fddc47b",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "simultaneity_not_order"
+      ],
+      "requirement_id": "R5-S5-T1",
+      "source_family_id": "gdpr_art35",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "seek the views of data subjects or their representatives on the intended processing",
+        "order_pair": [
+          1,
+          2
+        ]
+      },
+      "current_tasks": [
+        "Identify affected data subjects or representatives",
+        "Seek the views of data subjects or their representatives",
+        "Carry out the intended processing"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "35(9) imposes a positive duty to seek the views of data subjects.",
+        "out_of_order": "'on the intended processing' implies a preference, not an explicit strict order between two required activities."
+      },
+      "evidence_location": {
+        "article": 35,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 35(9)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "dfbc48c5f0729dc31ce006f0a8b8d958ba1df825b086851435c703e2e67a86ea",
+        "locator": "Where appropriate, the controller shall seek the views of data subjects",
+        "paragraph": "9",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_dataset_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where appropriate, the controller shall seek the views of data subjects or their representatives on the intended processing, without prejudice to the protection of commercial or public interests or the security of processing operations.",
+        "excerpt_text_sha256": "dfbc48c5f0729dc31ce006f0a8b8d958ba1df825b086851435c703e2e67a86ea",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "implicit_preference_not_strict_order"
+      ],
+      "requirement_id": "R5-S5-T2",
+      "source_family_id": "gdpr_art35",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "at least when there is a change of the risk represented by processing operations",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Detect a change in the risk represented by processing",
+        "Carry out a review of the DPIA",
+        "Update safeguards based on the review"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "35(11) imposes a positive duty to carry out a review.",
+        "out_of_order": "'at least when there is a change of the risk' is a trigger/condition, not an order between two required activities."
+      },
+      "evidence_location": {
+        "article": 35,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 35(11)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "cf1e4c40ef5083d35242f540be5c68b5565145d1ea970540d76a684c3657850c",
+        "locator": "Where necessary, the controller shall carry out a review",
+        "paragraph": "11",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_dataset_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article35.txt",
+        "source_file_sha256": "0a1be29d6735a03b1b0a64b24246d2f2ebc5ff959aa881e6098b93058440ba99",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where necessary, the controller shall carry out a review to assess if processing is performed in accordance with the data protection impact assessment at least when there is a change of the risk represented by processing operations.",
+        "excerpt_text_sha256": "cf1e4c40ef5083d35242f540be5c68b5565145d1ea970540d76a684c3657850c",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "condition_not_order"
+      ],
+      "requirement_id": "R5-S5-T3",
+      "source_family_id": "gdpr_art35",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "within period of up to eight weeks of receipt of the request",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Receive the controller consultation request",
+        "Provide written advice to the controller",
+        "Record any extension and reasons"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the supervisory authority; the controller is not the actor.",
+        "missing_action": "36(2) imposes a positive duty on the supervisory authority to provide written advice.",
+        "out_of_order": "Explicit trigger + subsequent act: advice 'within period of up to eight weeks of receipt of the request' (only trigger order evaluated)."
+      },
+      "evidence_location": {
+        "article": 36,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 36(2)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9",
+        "locator": "the supervisory authority shall, within period of up to eight weeks of receipt of the request",
+        "paragraph": "2",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
+        "source_dataset_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article36.txt",
+        "source_file_sha256": "065ba8a2880a5891cf4df7f7096ff60cd253822ede0f109e4639bf1a39552490",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Where the supervisory authority is of the opinion that the intended processing referred to in paragraph 1 would infringe this Regulation, in particular where the controller has insufficiently identified or mitigated the risk, the supervisory authority shall, within period of up to eight weeks of receipt of the request for consultation, provide written advice to the controller and, where applicable to the processor, and may use any of its powers referred to in Article 58.",
+        "excerpt_text_sha256": "f6cd10751a3b054e2e95ecb7ac92d2c77e2e4edbf4b634bdb3489a9eb4e310a9",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "condition_present corrected to True (supervisory authority is of the opinion that the intended processing would infringe)."
+      ],
+      "problem_category": [
+        "missing_condition_flag"
+      ],
+      "requirement_id": "R5-S5-T4",
+      "source_family_id": "gdpr_art36",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "to ensure a level of security appropriate to the risk",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Assess the security risk and implementation context",
+        "Implement appropriate technical and organisational security measures",
+        "Review the effectiveness of the security measures"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller and processor.",
+        "missing_action": "32(1) imposes a positive duty to implement appropriate security measures.",
+        "out_of_order": "'to ensure a level of security appropriate to the risk' is a risk-appropriateness standard, not a strict order between two activities (A2)."
+      },
+      "evidence_location": {
+        "article": 32,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 32(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "7a611aab8130f0bacc05b99d03ba542cfc0c00f0af5966bc95e448c4dbfee0fd",
+        "locator": "including the pseudonymisation and encryption of personal data",
+        "paragraph": "1",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article32.txt",
+        "source_dataset_sha256": "8e2087e268a27aa5e6b1e2b6290b1b273de624e98570b28c1900288df04b282f",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article32.txt",
+        "source_file_sha256": "8e2087e268a27aa5e6b1e2b6290b1b273de624e98570b28c1900288df04b282f",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, the controller and the processor shall implement appropriate technical and organisational measures to ensure a level of security appropriate to the risk, including the pseudonymisation and encryption of personal data.",
+        "excerpt_text_sha256": "7a611aab8130f0bacc05b99d03ba542cfc0c00f0af5966bc95e448c4dbfee0fd",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "out_of_order marked ineligible (A2)"
+      ],
+      "problem_category": [
+        "risk_appropriateness_misread_as_order"
+      ],
+      "requirement_id": "R5-S6-T1",
+      "source_family_id": "gdpr_art32",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "does not process them except on instructions from the controller",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Provide documented instructions to authorised personnel",
+        "Ensure personnel process personal data only on those instructions",
+        "Review access and processing compliance"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller and processor.",
+        "missing_action": "32(4) imposes a positive duty to take steps ensuring instruction-only processing.",
+        "out_of_order": "'does not process them except on instructions' is a prohibition/condition, not an order."
+      },
+      "evidence_location": {
+        "article": 32,
+        "candidate_asset_reason": null,
+        "char_span": null,
+        "citation": "GDPR Article 32(4)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "b4eb199a1981e55f124df9ce2620678f7d2bdec0c7fef3550f101091ed55b2be",
+        "locator": "The controller and processor shall take steps to ensure that any natural person",
+        "paragraph": "4",
+        "source_dataset": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article32.txt",
+        "source_dataset_sha256": "8e2087e268a27aa5e6b1e2b6290b1b273de624e98570b28c1900288df04b282f",
+        "source_file_path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article32.txt",
+        "source_file_sha256": "8e2087e268a27aa5e6b1e2b6290b1b273de624e98570b28c1900288df04b282f",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "excerpt_and_context": {
+        "char_span": null,
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The controller and processor shall take steps to ensure that any natural person acting under the authority of the controller or the processor who has access to personal data does not process them except on instructions from the controller, unless he or she is required to do so by Union or Member State law.",
+        "excerpt_text_sha256": "b4eb199a1981e55f124df9ce2620678f7d2bdec0c7fef3550f101091ed55b2be",
+        "source_status": "processed_local_winter_snapshot_not_official_verbatim"
+      },
+      "exposure_status": "no_prior_exposure_found",
+      "fixes": [
+        "out_of_order marked ineligible"
+      ],
+      "problem_category": [
+        "prohibition_not_order"
+      ],
+      "requirement_id": "R5-S6-T2",
+      "source_family_id": "gdpr_art32",
+      "split": "test",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "without undue delay after becoming aware of a personal data breach",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Become aware of a personal data breach",
+        "Notify the controller of the personal data breach",
+        "Record the processor notification"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the processor; the data subject is not the actor.",
+        "missing_action": "33(2) imposes a positive duty on the processor to notify the controller.",
+        "out_of_order": "Explicit trigger + subsequent act: notify 'after becoming aware of a personal data breach' (only trigger order evaluated)."
+      },
+      "evidence_location": {
+        "article": 33,
+        "candidate_asset_reason": null,
+        "char_span": [
+          502,
+          612
+        ],
+        "citation": "GDPR Article 33(2)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+        "locator": "The processor shall notify the controller without undue delay after becoming aware",
+        "paragraph": "2",
+        "source_dataset": "data/input/gdpr7_stage2_input_v1.json",
+        "source_dataset_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "source_file_path": null,
+        "source_file_sha256": null,
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          502,
+          612
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+        "excerpt_text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2",
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "condition_present corrected to True (becomes aware of a personal data breach)."
+      ],
+      "problem_category": [
+        "missing_condition_flag"
+      ],
+      "requirement_id": "R5-S6-T3",
+      "source_family_id": "gdpr_art33",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": true
+      }
+    },
+    {
+      "current_order": {
+        "order_evidence": "without undue delay",
+        "order_pair": [
+          0,
+          1
+        ]
+      },
+      "current_tasks": [
+        "Assess that the breach is likely to result in high risk",
+        "Communicate the personal data breach to the data subject",
+        "Record the communication"
+      ],
+      "disposition": "core",
+      "eligibility_basis": {
+        "incorrect_actor": "The duty is on the controller.",
+        "missing_action": "34(1) imposes a positive duty to communicate a high-risk breach to the data subject.",
+        "out_of_order": "'without undue delay' has no explicit trigger phrase and the added 'assess high risk' task is not a source activity; no order asserted (A3)."
+      },
+      "evidence_location": {
+        "article": 34,
+        "candidate_asset_reason": null,
+        "char_span": [
+          0,
+          211
+        ],
+        "citation": "GDPR Article 34(1)",
+        "context_text_sha256": null,
+        "excerpt_mode": "sentence",
+        "excerpt_text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5",
+        "locator": "When the personal data breach is likely to result in a high risk",
+        "paragraph": "1",
+        "source_dataset": "data/input/gdpr7_stage2_input_v1.json",
+        "source_dataset_sha256": "558b80131394c8ac349db42cc323ffcf7264b7ae7da796522d55bf5ff89eb109",
+        "source_file_path": null,
+        "source_file_sha256": null,
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "excerpt_and_context": {
+        "char_span": [
+          0,
+          211
+        ],
+        "context_text": "",
+        "context_text_sha256": null,
+        "excerpt_text": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the personal data breach to the data subject without undue delay.",
+        "excerpt_text_sha256": "15fe84681e44264818adbcb9f11162c02d9696a581f77b0e8dff56b3eb09e5a5",
+        "source_status": "gdpr7_frozen_stage2_input_sentence"
+      },
+      "exposure_status": "exposed_family_forced_development",
+      "fixes": [
+        "out_of_order marked ineligible (A3)"
+      ],
+      "problem_category": [
+        "undue_delay_misread_as_assessment_order",
+        "invented_assessment_task"
+      ],
+      "requirement_id": "R5-S6-T4",
+      "source_family_id": "gdpr_art34",
+      "split": "development",
+      "supported_violation_types": {
+        "incorrect_actor": true,
+        "missing_action": true,
+        "out_of_order": false
+      }
+    }
+  ],
+  "schema_version": "stage3_table3_r5_requirement_disposition@2.0.0"
+}

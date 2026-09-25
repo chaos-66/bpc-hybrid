@@ -1,0 +1,299 @@
+{
+  "algorithm": "source_family (same Article) -> single split; R1-R4 five historical rules and any exposed family stay development; no family crosses split; seed used only for deterministic ordering",
+  "candidate_requirement_ids": [
+    "R5-S2-T1",
+    "R5-S2-T3",
+    "R5-S2-T4",
+    "R5-S3-T3",
+    "R5-S3-T4"
+  ],
+  "core_requirement_ids": [
+    "R5-D-01",
+    "R5-D-02",
+    "R5-D-03",
+    "R5-D-04",
+    "R5-D-05",
+    "R5-D-06",
+    "R5-D-07",
+    "R5-D-08",
+    "R5-D-09",
+    "R5-D-10",
+    "R5-D-11",
+    "R5-D-12",
+    "R5-S1-T1",
+    "R5-S1-T2",
+    "R5-S1-T3",
+    "R5-S1-T4",
+    "R5-S2-T2",
+    "R5-S3-T1",
+    "R5-S3-T2",
+    "R5-S4-T1",
+    "R5-S4-T2",
+    "R5-S4-T3",
+    "R5-S4-T4",
+    "R5-S5-T1",
+    "R5-S5-T2",
+    "R5-S5-T3",
+    "R5-S5-T4",
+    "R5-S6-T1",
+    "R5-S6-T2",
+    "R5-S6-T3",
+    "R5-S6-T4"
+  ],
+  "cross_split_families": [],
+  "development_requirement_ids": [
+    "R5-D-01",
+    "R5-D-02",
+    "R5-D-03",
+    "R5-D-04",
+    "R5-D-05",
+    "R5-D-06",
+    "R5-D-07",
+    "R5-D-08",
+    "R5-D-09",
+    "R5-D-10",
+    "R5-D-11",
+    "R5-D-12",
+    "R5-S1-T1",
+    "R5-S1-T2",
+    "R5-S1-T3",
+    "R5-S1-T4",
+    "R5-S5-T1",
+    "R5-S5-T2",
+    "R5-S5-T3",
+    "R5-S5-T4",
+    "R5-S6-T3",
+    "R5-S6-T4"
+  ],
+  "exact_input_without_prediction_does_not_prove_family_independence": true,
+  "exposed_source_family_ids": [
+    "gdpr_art13",
+    "gdpr_art14",
+    "gdpr_art15",
+    "gdpr_art16",
+    "gdpr_art17",
+    "gdpr_art18",
+    "gdpr_art20",
+    "gdpr_art33",
+    "gdpr_art34",
+    "gdpr_art35",
+    "gdpr_art36",
+    "gdpr_art7"
+  ],
+  "family_id_equals_requirement_id": false,
+  "groups": [
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S3-T1",
+        "R5-S3-T2"
+      ],
+      "source_family_id": "gdpr_art12",
+      "split": "test"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-01",
+        "R5-S1-T1",
+        "R5-S1-T2"
+      ],
+      "source_family_id": "gdpr_art13",
+      "split": "development"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-02",
+        "R5-S1-T3",
+        "R5-S1-T4"
+      ],
+      "source_family_id": "gdpr_art14",
+      "split": "development"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-08"
+      ],
+      "source_family_id": "gdpr_art15",
+      "split": "development"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-09"
+      ],
+      "source_family_id": "gdpr_art16",
+      "split": "development"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-10"
+      ],
+      "source_family_id": "gdpr_art17",
+      "split": "development"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-03"
+      ],
+      "source_family_id": "gdpr_art18",
+      "split": "development"
+    },
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S4-T4"
+      ],
+      "source_family_id": "gdpr_art19",
+      "split": "test"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-11"
+      ],
+      "source_family_id": "gdpr_art20",
+      "split": "development"
+    },
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S3-T3",
+        "R5-S3-T4"
+      ],
+      "source_family_id": "gdpr_art21",
+      "split": "test"
+    },
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S4-T1"
+      ],
+      "source_family_id": "gdpr_art24",
+      "split": "test"
+    },
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S4-T2"
+      ],
+      "source_family_id": "gdpr_art25",
+      "split": "test"
+    },
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S4-T3"
+      ],
+      "source_family_id": "gdpr_art28",
+      "split": "test"
+    },
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S6-T1",
+        "R5-S6-T2"
+      ],
+      "source_family_id": "gdpr_art32",
+      "split": "test"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-12",
+        "R5-S6-T3"
+      ],
+      "source_family_id": "gdpr_art33",
+      "split": "development"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-S6-T4"
+      ],
+      "source_family_id": "gdpr_art34",
+      "split": "development"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-04",
+        "R5-S5-T1",
+        "R5-S5-T2",
+        "R5-S5-T3"
+      ],
+      "source_family_id": "gdpr_art35",
+      "split": "development"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-05",
+        "R5-S5-T4"
+      ],
+      "source_family_id": "gdpr_art36",
+      "split": "development"
+    },
+    {
+      "exposed": true,
+      "requirement_ids": [
+        "R5-D-06",
+        "R5-D-07"
+      ],
+      "source_family_id": "gdpr_art7",
+      "split": "development"
+    },
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S2-T1",
+        "R5-S2-T2"
+      ],
+      "source_family_id": "gdpr_art8",
+      "split": "test"
+    },
+    {
+      "exposed": false,
+      "requirement_ids": [
+        "R5-S2-T3",
+        "R5-S2-T4"
+      ],
+      "source_family_id": "gdpr_art9",
+      "split": "test"
+    }
+  ],
+  "independent_test_source_family_ids": [
+    "gdpr_art12",
+    "gdpr_art19",
+    "gdpr_art21",
+    "gdpr_art24",
+    "gdpr_art25",
+    "gdpr_art28",
+    "gdpr_art32",
+    "gdpr_art8",
+    "gdpr_art9"
+  ],
+  "schema_version": "stage3_table3_r5_split_manifest@2.0.0",
+  "seed": 20260925,
+  "seed_actually_used_for": "deterministic ordering only; the split itself is a documented manual/evidence rule, not an emergent seed product",
+  "test_requirement_ids": [
+    "R5-S2-T1",
+    "R5-S2-T2",
+    "R5-S2-T3",
+    "R5-S2-T4",
+    "R5-S3-T1",
+    "R5-S3-T2",
+    "R5-S3-T3",
+    "R5-S3-T4",
+    "R5-S4-T1",
+    "R5-S4-T2",
+    "R5-S4-T3",
+    "R5-S4-T4",
+    "R5-S6-T1",
+    "R5-S6-T2"
+  ]
+}

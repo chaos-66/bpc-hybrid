@@ -1,0 +1,71 @@
+{
+  "assets": [
+    {
+      "applicability_condition": "data are processed for direct marketing",
+      "bpmn_path": "bpmn/candidate/candidate_4464b4814fa1.bpmn",
+      "case_id": "candidate_4464b4814fa1",
+      "citation": "GDPR Article 21(3)",
+      "disposition": "candidate_semantic_asset_not_scored",
+      "human_or_formal_gold": false,
+      "legal_basis": "21(3) is a cessation/prohibition, not a positive duty; a 'Cease' task cannot prove prohibited processing.",
+      "reason": "prohibition_cessation_modelled_as_missing_action; invented_cease_task",
+      "requirement_id": "R5-S3-T4",
+      "source_text_id": "src_18b9e231ad49",
+      "source_text_sha256": "89591b0e074531906f674016ed2181d53f961ef271deea55aa449dab0031187e"
+    },
+    {
+      "applicability_condition": "processing based on Article 6(1)(e) or (f)",
+      "bpmn_path": "bpmn/candidate/candidate_6ea5a10bb167.bpmn",
+      "case_id": "candidate_6ea5a10bb167",
+      "citation": "GDPR Article 21(1)",
+      "disposition": "candidate_semantic_asset_not_scored",
+      "human_or_formal_gold": false,
+      "legal_basis": "21(1) is a cessation/prohibition of further processing, not a positive duty; a 'Stop' task cannot prove that prohibited processing happened.",
+      "reason": "prohibition_cessation_modelled_as_missing_action; invented_stop_task",
+      "requirement_id": "R5-S3-T3",
+      "source_text_id": "src_3bac61c28a8b",
+      "source_text_sha256": "40e40f6f890afc8edb061f1e1869b0c779e105d6a27f7561b92d50658d6dd30d"
+    },
+    {
+      "applicability_condition": "child is below 16 years old",
+      "bpmn_path": "bpmn/candidate/candidate_74415d329801.bpmn",
+      "case_id": "candidate_74415d329801",
+      "citation": "GDPR Article 8(1)",
+      "disposition": "candidate_semantic_asset_not_scored",
+      "human_or_formal_gold": false,
+      "legal_basis": "8(1) states a lawfulness/permission condition, not a positive duty; absence of a named activity is not itself a violation (permission template rule).",
+      "reason": "permission_modelled_as_positive_duty",
+      "requirement_id": "R5-S2-T1",
+      "source_text_id": "src_2e0949d019d6",
+      "source_text_sha256": "d05b48685177f8e606f9fb079e02605baeb690f5ad87b1e619e36b7032fbfb68"
+    },
+    {
+      "applicability_condition": "special-category data are processed",
+      "bpmn_path": "bpmn/candidate/candidate_b25297a0124d.bpmn",
+      "case_id": "candidate_b25297a0124d",
+      "citation": "GDPR Article 9(2)(a)",
+      "disposition": "candidate_semantic_asset_not_scored",
+      "human_or_formal_gold": false,
+      "legal_basis": "9(2)(a) is a permission (derogation from the 9(1) prohibition); absence of a named activity is not itself a violation.",
+      "reason": "permission_modelled_as_positive_duty; condition_and_negated_condition_confused_with_exception",
+      "requirement_id": "R5-S2-T3",
+      "source_text_id": "src_a474f8cf2425",
+      "source_text_sha256": "a4d71b37090cc8a147a290b9dcb60461e2817531f5a304d359c9c4337f08be6f"
+    },
+    {
+      "applicability_condition": "processing necessary for employment, social security or social protection law",
+      "bpmn_path": "bpmn/candidate/candidate_bfcf3406da11.bpmn",
+      "case_id": "candidate_bfcf3406da11",
+      "citation": "GDPR Article 9(2)(b)",
+      "disposition": "candidate_semantic_asset_not_scored",
+      "human_or_formal_gold": false,
+      "legal_basis": "9(2)(b) is a permission (derogation); absence of a named activity is not itself a violation.",
+      "reason": "permission_modelled_as_positive_duty; negated_condition_misstated_as_exception",
+      "requirement_id": "R5-S2-T4",
+      "source_text_id": "src_dd7392445350",
+      "source_text_sha256": "6e99b3ec2b00b0f6007e804afd2a46dcebebf6aab8126bb923ebb18bbab16e5b"
+    }
+  ],
+  "not_scored_in_core_f1": true,
+  "schema_version": "stage3_table3_r5_candidate_assets@2.0.0"
+}
