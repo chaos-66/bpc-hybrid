@@ -444,6 +444,14 @@ def run(*, config_path: Path, out_dir: Path, sidecar_index: Path = DEFAULT_SIDEC
         "inputs": {
             "execution_config": {"path": config_path.relative_to(ROOT).as_posix(),
                                  "sha256": _sha_file(config_path)},
+            "inference_view": {
+                "path": "data/development/stage3_reconstruction_v4/inference_view.json",
+                "sha256": _sha_file(ROOT / "data/development/stage3_reconstruction_v4/inference_view.json"),
+            },
+            "stage2_input": {
+                "path": "data/development/stage3_reconstruction_v4/stage2_input.json",
+                "sha256": _sha_file(ROOT / "data/development/stage3_reconstruction_v4/stage2_input.json"),
+            },
             "p2_sidecar_index": {"path": sidecar_index.relative_to(ROOT).as_posix(),
                                   "sha256": _sha_file(sidecar_index)},
             "r2_reused_predictions": (r2_manifest.get("outputs") or {}).get("predictions"),
