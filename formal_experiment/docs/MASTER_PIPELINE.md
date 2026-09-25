@@ -1,15 +1,24 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.27
+**文档版本**：3.7.28
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
-**最后更新**：2026-09-24
+**最后更新**：2026-09-25
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
-**当前实施优先级**：2026-09-24 用户最新要求先澄清表二 000、独立请求和模块必要性，并补传正式实验文件；随后统一 Stage2 方法身份并完成表三。单模块 100 尚为候选，未替换正式 Ours。只完成实验与数据，不写论文；Codex 负责设计与验收，DeepSeek 按静态任务卡实施 S3-TABLE3-V4-R1。下方历史安排不构成扩大实验、写论文或新增 API 的指令。
+**当前实施优先级**：2026-09-25 的 S3-TABLE3-V4-R2 已完成 R1 协议偏差的机械纠正与原因定位：strict 顺序投影、失败原因分类、精确 ID/输出绑定检查、零新增 API。但表三仍未验收，因为 Sun/Ours/Winter 的 order 分母仍全为 0；下一步须由 Codex 决定是否以明确的 after/temporal 扩展协议解决映射与原生覆盖问题，不得自行改算法、改样本或追分。下方历史安排不构成扩大实验、写论文或新增 API 的指令。
 
 > 所有 Agent 在修改实验代码、配置、数据协议或研究设计前必须完整阅读本文。
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-25 修订 3.7.28：S3-TABLE3-V4-R2 strict 投影与原因定位
+
+- 用户要求修正 R1 协议偏差：严格恢复 marker.dep==mark 且 post-marker span 内 VERB/AUX head，或 marker.dep==prep 时仅检查直接 pcomp 子节点（恰好一个合法）；禁止扫描其他 advcl/ccomp/xcomp/acl/relcl 谓词；nominal chunk/of-chain 必须完整落在 selected span 内，不完整 of-chain 显式拒绝。
+- 新增 `temporal_projection_v3`，保留 v1/v2；Sun/Ours 共用同一版本。新增非评分 `order_failure_diagnostics_v1`，区分 no_rule_order_relation、projection_rejected_range/ambiguity/syntax、endpoint_unmapped、endpoint_similarity_below_gamma、reachability_satisfied/violated、stage2_rule_record_failed；不再把所有 denominator=0 写成 no_rule_order_endpoints。
+- R2 复用 `stage3_v4_d1_frozen_v1`，真实 API 新调用 0；R2 矩阵和独立评价已 checkpoint/push。R2 结果与 R1 汇总相同：Sun/Ours overall F1=0.3429、coverage=0.4600；Winter F1=0.5000、coverage=0.7000；三方法 order F1=0.0000，order 可评分母全 0。
+- R2 原因：Sun 40 个 projection_rejected_range + 60 个 endpoint_similarity_below_gamma；Ours 40 个 projection_rejected_syntax + 60 个 endpoint_similarity_below_gamma；Winter 100 个 no_rule_order_relation。article18p3 从 R1 的额外扫描 `is lifted` 改为限定 nominal `the restriction of processing`；article13/14 仍无关系但原因可定位；article35/36 有关系但端点未同时超过 gamma。
+- 输出：`outputs/development/stage3_table3_v4_r2/`、`outputs/reports/stage3_table3_v4_r2.{json,md,manifest.json}`、`outputs/reports/stage3_table3_v4_r2_cause_analysis.{json,md}`、`outputs/reports/stage3_temporal_scope_candidates_r2.{json,md}`。
+- 验收状态：`needs_method_review`，表三未完成。三项 after/temporal 候选仅做来源/offset/SHA/限制修正，保持 `candidate_not_benchmark`，不加入本轮评价，不建新 benchmark，不新增调用额度。
 
 ## 2026-09-24 修订 3.7.26：S3-TABLE3-V4-R1 实现纠错与真实 D1 补齐
 
@@ -2642,6 +2651,17 @@ eferences/winter_2020_model_check/model_check/lib，代码独立重写不 import
 | 3.1.1 | 2026-07-14 | P0 完成：全量检查通过并记录 Event 27；主线转入 P1/S2.1 | `record_change.py` 的已验证结果 |
 | 3.1.0 | 2026-07-14 | 固定各阶段最低 baseline 覆盖；增加前人数据/结果的 C1-C4 比较证据等级，禁止跨数据和跨阶段误比 | 用户要求多 baseline、复用公开数据并澄清第二/三阶段比较 |
 | 3.0.0 | 2026-07-14 | 扩展为完整三阶段重建；Stage 2 优先，多 baseline 与复杂数据；Stage 3 后续扩展；建立 WBS、依赖、DoD 与 Agent 协议 | 用户根据导师要求明确指示 |
+# S3-TABLE3-V4-R2 status (2026-09-25)
+
+Subtask `S3-TABLE3-V4-R2` corrects the confirmed R1 protocol deviations without changing the frozen five rules, 20 BPMN cases, reference, thresholds, Stage-2 prompt, or canonical predictions.
+
+- Strict common projection: `src/bpc_hybrid/sun_stage3/temporal_projection_v3.py`, `sun_stage3_temporal_projection_v3@1.0.0`.
+- Failure-record separation: no order relation vs projection range/ambiguity/syntax vs endpoint unmapped vs endpoint similarity below gamma vs reachability satisfied/violated.
+- Offline R2 output: `outputs/development/stage3_table3_v4_r2/`; independent report: `outputs/reports/stage3_table3_v4_r2.{json,md,manifest.json}`.
+- Cause localization: `outputs/reports/stage3_table3_v4_r2_cause_analysis.{json,md}`; corrected candidates: `outputs/reports/stage3_temporal_scope_candidates_r2.{json,md}`.
+- New real API calls: 0 (reused `stage3_v4_d1_frozen_v1`).
+- Acceptance: `needs_method_review`; the three-method order class remains unobservable (all denominators zero). This is a corrected diagnostic, not final Table 3 completion.
+
 # S3-TABLE3-V4-R1 status (2026-09-24)
 
 Subtask `S3-TABLE3-V4-R1` is implemented and executed on the frozen scoped GDPR construction benchmark.

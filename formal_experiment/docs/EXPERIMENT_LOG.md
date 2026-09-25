@@ -5451,3 +5451,35 @@
 - 仍存在 blocker：无
 - 备注：Table 3 R1 real matrix; order class unknown for all methods; natural-after candidates inventoried only; no full suite run.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T03:48:39.652021+00:00 - S3-TABLE3-V4-R2 strict temporal projection and order failure diagnostics
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：16 passed in 3.08s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`8454e5935199bf573bec22596108efc3265665f4`；相关未提交路径：22 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：R2 code/config/tests only; real API new calls 0; v1/v2 preserved.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T03:49:07.457848+00:00 - S3-TABLE3-V4-R2 offline matrix and independent evaluation
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_table3_v4_r2；阶段=stage3_table3_v4_r2；方法=sun;ours;winter；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_stage3_table3_v4_r2.py; python formal_experiment/scripts/evaluate_stage3_table3_v4_r2.py`
+- manifest：outputs/reports/stage3_table3_v4_r2.manifest.json, outputs/development/stage3_table3_v4_r2/run_manifest.json
+- 结果摘要：R2 strict projection + diagnostics; Sun/Ours overall F1=0.3429, Winter=0.5000; all order denominators 0; needs_method_review; new API calls 0.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：16 passed in 3.21s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`8454e5935199bf573bec22596108efc3265665f4`；相关未提交路径：24 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：Reused stage3_v4_d1_frozen_v1; no API; table 3 still not accepted.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

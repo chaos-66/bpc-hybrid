@@ -1,0 +1,3062 @@
+{
+  "action_representation_contract": {
+    "actor_existential_policy": "The candidate set for Definition 6 is actors plus business_objects. The implementation keeps the paper existential/min condition; it must not replace min with max or delete business objects to reduce errors.",
+    "paper_line_ranges": {
+      "Definition4": "approx. 523-548",
+      "Definition5": "approx. 550-560",
+      "Definition6": "approx. 562-585",
+      "Definition7": "approx. 587-615"
+    },
+    "paper_source": "references/papers/extracted/sun_2024_full_text.txt",
+    "process_side": {
+      "action_match": "SunScorer._best_action_match compares rule action text to each full activity/event label using lemmatized spaCy text_pair.",
+      "actions": "SunProcessModel.actions = full activity label and event name from the BPMN Process Record.",
+      "actors": "SunProcessModel.actors = non-empty pool names plus non-empty lane names.",
+      "business_objects": "SunProcessModel.business_objects = deterministic head noun extracted from each activity label.",
+      "reachability": "Fm from BPMN control_flow.reachable_pairs; is_reachable checks membership."
+    },
+    "project_reconstruction": [
+      "The exact action text used by SunScorer is the full activity/event label; no separate action decomposition is applied to the process label.",
+      "Business objects are extracted from activity labels by a deterministic spaCy dobj/pobj rule; this is a project approximation to the paper business-object set.",
+      "The temporal marker projection v3 is a shared Sun/Ours reconstruction supplement, not a Sun paper algorithm; derived endpoints may come from predicted constraints.",
+      "Conditions, times, and exception text are not independent scored dimensions."
+    ],
+    "rule_side": {
+      "actions": "canonical Stage-2 predicted action spans become rule-side actions.",
+      "actors": "canonical Stage-2 predicted actor spans become rule-side actor candidates.",
+      "conditions_time_objects": "conditions/constraints/exceptions are not separate scorers; they bound/reject projected endpoints and are included only when inside an endpoint text.",
+      "order_relations": "native record.order_relations are preferred; derived supplements use temporal_projection_v3 under predicted condition/constraint spans."
+    },
+    "specified_by_sun": [
+      "Definition 4: matching uses rule actions Dr,m and rule actors/business objects Or,m against process actions and process actors/business objects.",
+      "Definition 5: denominator is |Ar| (rule actions); missing action uses sim < gamma.",
+      "Definition 6: existential/min condition over Rr,m,gamma and Cr,m,gamma; it is not a process-wide max and business objects remain candidates.",
+      "Definition 7: denominator is Ur,m,gamma where both endpoints map with sim > gamma; satisfied requires forward reachability and not backward reachability."
+    ]
+  },
+  "actor_candidate_sets": [
+    {
+      "action_labels": [
+        "Describe the envisaged high-risk processing",
+        "Carry out the data protection impact assessment of the envisaged processing",
+        "Begin the assessed processing operations",
+        "Store the assessment reference",
+        "",
+        "High-risk processing proposed; data protection impact assessment required"
+      ],
+      "actors": [
+        "Data subject"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_06bacb820524.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the envisaged high - risk processing"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data protection impact assessment of the envisaged processing"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the assessed processing operations"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the assessment reference"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Data subject",
+        "the envisaged high - risk processing",
+        "the data protection impact assessment of the envisaged processing",
+        "the assessed processing operations",
+        "the assessment reference"
+      ],
+      "case_id": "case_06bacb820524",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Review the impact assessment requiring consultation",
+        "Start the proposed processing",
+        "Retain the consultation record",
+        "",
+        "Impact assessment completed; high risk without mitigation requires prior consultation"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_0adc59ea1a26.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the impact assessment requiring consultation"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the proposed processing"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the consultation record"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the impact assessment requiring consultation",
+        "the proposed processing",
+        "the consultation record"
+      ],
+      "case_id": "case_0adc59ea1a26",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Review the proposed secondary use of third-party data",
+        "Further process the personal data for the other purpose",
+        "Log the completed secondary use",
+        "",
+        "Indirect collection completed; new purpose proposed; no transparency exemption applies"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_0f7180438501.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the proposed secondary use of third - party data"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the personal data for the other purpose"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the completed secondary use"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the proposed secondary use of third - party data",
+        "the personal data for the other purpose",
+        "the completed secondary use"
+      ],
+      "case_id": "case_0f7180438501",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Review the proposed secondary use of third-party data",
+        "Provide the data subject with the other purpose and relevant additional information",
+        "Further process the personal data for the other purpose",
+        "Log the completed secondary use",
+        "",
+        "Indirect collection completed; new purpose proposed; no transparency exemption applies"
+      ],
+      "actors": [
+        "Data subject"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_3d2aaae29b37.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the proposed secondary use of third - party data"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data subject with the other purpose and"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the personal data for the other purpose"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the completed secondary use"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Data subject",
+        "the proposed secondary use of third - party data",
+        "the data subject with the other purpose and",
+        "the personal data for the other purpose",
+        "the completed secondary use"
+      ],
+      "case_id": "case_3d2aaae29b37",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Review the proposed secondary use of third-party data",
+        "Provide the data subject with the other purpose and relevant additional information",
+        "Further process the personal data for the other purpose",
+        "Log the completed secondary use",
+        "",
+        "Indirect collection completed; new purpose proposed; no transparency exemption applies"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_44fc51ad7da0.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the proposed secondary use of third - party data"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data subject with the other purpose and"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the personal data for the other purpose"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the completed secondary use"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the proposed secondary use of third - party data",
+        "the data subject with the other purpose and",
+        "the personal data for the other purpose",
+        "the completed secondary use"
+      ],
+      "case_id": "case_44fc51ad7da0",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Document the new processing purpose",
+        "Inform the data subject of the new purpose and relevant transparency information",
+        "Process personal data for the new purpose",
+        "Record completion of the processing",
+        "",
+        "Direct collection completed; new processing purpose proposed; notice not yet given"
+      ],
+      "actors": [
+        "Data subject"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_5c2cca2ca4cf.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the new processing purpose"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data subject of the new purpose and"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "personal data for the new purpose"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the processing"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Data subject",
+        "the new processing purpose",
+        "the data subject of the new purpose and",
+        "personal data for the new purpose",
+        "the processing"
+      ],
+      "case_id": "case_5c2cca2ca4cf",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Review the impact assessment requiring consultation",
+        "Consult the supervisory authority about the proposed processing",
+        "Start the proposed processing",
+        "Retain the consultation record",
+        "",
+        "Impact assessment completed; high risk without mitigation requires prior consultation"
+      ],
+      "actors": [
+        "Data subject"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_7dc164f81677.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the impact assessment requiring consultation"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the supervisory authority about the proposed processing"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the proposed processing"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the consultation record"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Data subject",
+        "the impact assessment requiring consultation",
+        "the supervisory authority about the proposed processing",
+        "the proposed processing",
+        "the consultation record"
+      ],
+      "case_id": "case_7dc164f81677",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Record the decision to lift the restriction",
+        "Inform the data subject that the processing restriction will be lifted",
+        "Lift the restriction of processing",
+        "Archive the restriction handling record",
+        "",
+        "Processing restricted under Article 18(1); grounds for lifting restriction confirmed"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_89c44a45c04d.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the decision to lift the restriction"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the restriction of processing"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the restriction handling record"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the decision to lift the restriction",
+        "the data",
+        "the restriction of processing",
+        "the restriction handling record"
+      ],
+      "case_id": "case_89c44a45c04d",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Record the decision to lift the restriction",
+        "Inform the data subject that the processing restriction will be lifted",
+        "Lift the restriction of processing",
+        "Archive the restriction handling record",
+        "",
+        "Processing restricted under Article 18(1); grounds for lifting restriction confirmed"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_8cbb7ad90a6d.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the decision to lift the restriction"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the restriction of processing"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the restriction handling record"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the decision to lift the restriction",
+        "the data",
+        "the restriction of processing",
+        "the restriction handling record"
+      ],
+      "case_id": "case_8cbb7ad90a6d",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Review the impact assessment requiring consultation",
+        "Consult the supervisory authority about the proposed processing",
+        "Start the proposed processing",
+        "Retain the consultation record",
+        "",
+        "Impact assessment completed; high risk without mitigation requires prior consultation"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_92fe183843b7.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the impact assessment requiring consultation"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the supervisory authority about the proposed processing"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the proposed processing"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the consultation record"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the impact assessment requiring consultation",
+        "the supervisory authority about the proposed processing",
+        "the proposed processing",
+        "the consultation record"
+      ],
+      "case_id": "case_92fe183843b7",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Document the new processing purpose",
+        "Inform the data subject of the new purpose and relevant transparency information",
+        "Process personal data for the new purpose",
+        "Record completion of the processing",
+        "",
+        "Direct collection completed; new processing purpose proposed; notice not yet given"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_9a62a7fd9853.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the new processing purpose"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data subject of the new purpose and"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "personal data for the new purpose"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the processing"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the new processing purpose",
+        "the data subject of the new purpose and",
+        "personal data for the new purpose",
+        "the processing"
+      ],
+      "case_id": "case_9a62a7fd9853",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Describe the envisaged high-risk processing",
+        "Carry out the data protection impact assessment of the envisaged processing",
+        "Begin the assessed processing operations",
+        "Store the assessment reference",
+        "",
+        "High-risk processing proposed; data protection impact assessment required"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_aa37540e7989.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the envisaged high - risk processing"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data protection impact assessment of the envisaged processing"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the assessed processing operations"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the assessment reference"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the envisaged high - risk processing",
+        "the data protection impact assessment of the envisaged processing",
+        "the assessed processing operations",
+        "the assessment reference"
+      ],
+      "case_id": "case_aa37540e7989",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Describe the envisaged high-risk processing",
+        "Carry out the data protection impact assessment of the envisaged processing",
+        "Begin the assessed processing operations",
+        "Store the assessment reference",
+        "",
+        "High-risk processing proposed; data protection impact assessment required"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_bbe530084075.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the envisaged high - risk processing"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data protection impact assessment of the envisaged processing"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the assessed processing operations"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the assessment reference"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the envisaged high - risk processing",
+        "the data protection impact assessment of the envisaged processing",
+        "the assessed processing operations",
+        "the assessment reference"
+      ],
+      "case_id": "case_bbe530084075",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Document the new processing purpose",
+        "Process personal data for the new purpose",
+        "Record completion of the processing",
+        "",
+        "Direct collection completed; new processing purpose proposed; notice not yet given"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_c4d9054721a1.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the new processing purpose"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "personal data for the new purpose"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the processing"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the new processing purpose",
+        "personal data for the new purpose",
+        "the processing"
+      ],
+      "case_id": "case_c4d9054721a1",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Record the decision to lift the restriction",
+        "Inform the data subject that the processing restriction will be lifted",
+        "Lift the restriction of processing",
+        "Archive the restriction handling record",
+        "",
+        "Processing restricted under Article 18(1); grounds for lifting restriction confirmed"
+      ],
+      "actors": [
+        "Data subject"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_d038f52f8cf3.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the decision to lift the restriction"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the restriction of processing"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the restriction handling record"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Data subject",
+        "the decision to lift the restriction",
+        "the data",
+        "the restriction of processing",
+        "the restriction handling record"
+      ],
+      "case_id": "case_d038f52f8cf3",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Describe the envisaged high-risk processing",
+        "Begin the assessed processing operations",
+        "Store the assessment reference",
+        "",
+        "High-risk processing proposed; data protection impact assessment required"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_d8a82d59687d.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the envisaged high - risk processing"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the assessed processing operations"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the assessment reference"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the envisaged high - risk processing",
+        "the assessed processing operations",
+        "the assessment reference"
+      ],
+      "case_id": "case_d8a82d59687d",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Review the impact assessment requiring consultation",
+        "Consult the supervisory authority about the proposed processing",
+        "Start the proposed processing",
+        "Retain the consultation record",
+        "",
+        "Impact assessment completed; high risk without mitigation requires prior consultation"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_f65436fd6574.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the impact assessment requiring consultation"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the supervisory authority about the proposed processing"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the proposed processing"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the consultation record"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the impact assessment requiring consultation",
+        "the supervisory authority about the proposed processing",
+        "the proposed processing",
+        "the consultation record"
+      ],
+      "case_id": "case_f65436fd6574",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Review the proposed secondary use of third-party data",
+        "Provide the data subject with the other purpose and relevant additional information",
+        "Further process the personal data for the other purpose",
+        "Log the completed secondary use",
+        "",
+        "Indirect collection completed; new purpose proposed; no transparency exemption applies"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_f8aaa652c17b.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the proposed secondary use of third - party data"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data subject with the other purpose and"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the personal data for the other purpose"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the completed secondary use"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the proposed secondary use of third - party data",
+        "the data subject with the other purpose and",
+        "the personal data for the other purpose",
+        "the completed secondary use"
+      ],
+      "case_id": "case_f8aaa652c17b",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Record the decision to lift the restriction",
+        "Lift the restriction of processing",
+        "Archive the restriction handling record",
+        "",
+        "Processing restricted under Article 18(1); grounds for lifting restriction confirmed"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_fb254253b6dd.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the decision to lift the restriction"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "the restriction of processing"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the restriction handling record"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the decision to lift the restriction",
+        "the restriction of processing",
+        "the restriction handling record"
+      ],
+      "case_id": "case_fb254253b6dd",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    },
+    {
+      "action_labels": [
+        "Document the new processing purpose",
+        "Inform the data subject of the new purpose and relevant transparency information",
+        "Process personal data for the new purpose",
+        "Record completion of the processing",
+        "",
+        "Direct collection completed; new processing purpose proposed; notice not yet given"
+      ],
+      "actors": [
+        "Controller"
+      ],
+      "bpmn_path": "data/development/stage3_reconstruction_v4/bpmn/case_fd4b197b953b.bpmn",
+      "business_objects": [
+        {
+          "activity_id": "Activity_0",
+          "object": "the new processing purpose"
+        },
+        {
+          "activity_id": "Activity_1",
+          "object": "the data subject of the new purpose and"
+        },
+        {
+          "activity_id": "Activity_2",
+          "object": "personal data for the new purpose"
+        },
+        {
+          "activity_id": "Activity_3",
+          "object": "the processing"
+        }
+      ],
+      "candidate_set_for_def6": [
+        "Controller",
+        "the new processing purpose",
+        "the data subject of the new purpose and",
+        "personal data for the new purpose",
+        "the processing"
+      ],
+      "case_id": "case_fd4b197b953b",
+      "existential_policy": "actors + business_objects retained; no max substitution and no business-object deletion",
+      "process_id": "Process"
+    }
+  ],
+  "actor_loss_evidence": {
+    "article13p3": {
+      "canonical_actions": [
+        {
+          "end": 257,
+          "id": "p01",
+          "start": 161,
+          "text": "provide the data subject prior to that further processing with information on that other purpose"
+        },
+        {
+          "end": 329,
+          "id": "p02",
+          "start": 262,
+          "text": "with any relevant further information as referred to in paragraph 2"
+        }
+      ],
+      "canonical_actor_action_map": [],
+      "canonical_actors": [],
+      "canonicalizer_audit": {
+        "attempted": true,
+        "clause_span_count": 1,
+        "dropped_clauses": [],
+        "dropped_edges": [
+          "clauses[0].actor_action_map[0]",
+          "clauses[0].actor_action_map[1]"
+        ],
+        "dropped_spans": [
+          "clauses[0].actors[0]"
+        ],
+        "failed_reasons": [],
+        "field_span_count": 7,
+        "reanchored_count": 7,
+        "status": "degraded"
+      },
+      "explanation": "Raw actor text occurs twice in the source and the raw offsets do not match it. The canonicalizer refuses the ambiguous occurrence, drops the actor span, and then drops actor_action_map edges that reference it. No actor was hand-added.",
+      "raw_actions": [
+        {
+          "end": 252,
+          "id": "p01",
+          "start": 157,
+          "text": "provide the data subject prior to that further processing with information on that other purpose"
+        },
+        {
+          "end": 291,
+          "id": "p02",
+          "start": 257,
+          "text": "with any relevant further information as referred to in paragraph 2"
+        }
+      ],
+      "raw_actor": {
+        "id": "a01",
+        "normalized": "controller",
+        "raw_end": 151,
+        "raw_start": 137,
+        "reanchor_outcome": "ambiguous_occurrence",
+        "source_at_raw_offsets": "d, the control",
+        "source_occurrences": [
+          6,
+          140
+        ],
+        "text": "the controller"
+      },
+      "raw_actor_action_map": [
+        {
+          "action_id": "p01",
+          "actor_id": "a01"
+        },
+        {
+          "action_id": "p02",
+          "actor_id": "a01"
+        }
+      ],
+      "rule_id": "article13p3",
+      "sample_id": "gdpr_article13p3_s001",
+      "source_text_length": 330
+    },
+    "article14p4": {
+      "canonical_actions": [
+        {
+          "end": 328,
+          "id": "p01",
+          "start": 160,
+          "text": "provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2"
+        }
+      ],
+      "canonical_actor_action_map": [],
+      "canonical_actors": [],
+      "canonicalizer_audit": {
+        "attempted": true,
+        "clause_span_count": 1,
+        "dropped_clauses": [],
+        "dropped_edges": [
+          "clauses[0].actor_action_map[0]"
+        ],
+        "dropped_spans": [
+          "clauses[0].actors[0]"
+        ],
+        "failed_reasons": [],
+        "field_span_count": 6,
+        "reanchored_count": 6,
+        "status": "degraded"
+      },
+      "explanation": "Raw actor text occurs twice in the source and the raw offsets do not match it. The canonicalizer refuses the ambiguous occurrence, drops the actor span, and then drops actor_action_map edges that reference it. No actor was hand-added.",
+      "raw_actions": [
+        {
+          "end": 291,
+          "id": "p01",
+          "start": 145,
+          "text": "provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2"
+        }
+      ],
+      "raw_actor": {
+        "id": "a01",
+        "normalized": "controller",
+        "raw_end": 139,
+        "raw_start": 125,
+        "reanchor_outcome": "ambiguous_occurrence",
+        "source_at_raw_offsets": "ere obtained, ",
+        "source_occurrences": [
+          6,
+          139
+        ],
+        "text": "the controller"
+      },
+      "raw_actor_action_map": [
+        {
+          "action_id": "p01",
+          "actor_id": "a01"
+        }
+      ],
+      "rule_id": "article14p4",
+      "sample_id": "gdpr_article14p4_s001",
+      "source_text_length": 329
+    }
+  },
+  "candidate_correction_r2": {
+    "candidates": [
+      {
+        "applicability_and_exceptions": {
+          "applicability": "Transparency duty for data not obtained from the data subject; Article 14(3)(a) time condition.",
+          "current_scope_difference": "Not among the five current v4 rules; current BPMN cases do not encode a separate obtained event and the current source set is before/prior-to only.",
+          "exceptions": [
+            "Article 14(5)(a)-(c) exceptions would need separate applicability handling."
+          ]
+        },
+        "candidate_id": "article14_3_a",
+        "conditions_time_limits": {
+          "conditions": [
+            "personal data not obtained from the data subject",
+            "information referred to in paragraphs 1 and 2"
+          ],
+          "exception_boundary_preserved": true,
+          "exceptions": [
+            "Article 14(5)(a)-(c) limits paragraphs 1-4, including (3)(a); this is an external applicability boundary."
+          ],
+          "time_limits": [
+            "within a reasonable period after obtaining the personal data",
+            "at the latest within one month",
+            "having regard to the specific circumstances"
+          ]
+        },
+        "governance": {
+          "added_to_current_benchmark": false,
+          "requires_new_input_design": true,
+          "used_for_api": false,
+          "used_for_f1": false
+        },
+        "natural_order": {
+          "marker": {
+            "span_in_excerpt": [
+              106,
+              111
+            ],
+            "text": "after"
+          },
+          "notes": "Candidate only; not extracted and not added to any benchmark.",
+          "obligation_event": {
+            "actor": "controller",
+            "role": "required later event",
+            "span_in_excerpt": [
+              21,
+              78
+            ],
+            "text": "provide the information referred to in paragraphs 1 and 2"
+          },
+          "relation_candidate": "trigger_event -> obligation_event (natural after reading)",
+          "trigger_event": {
+            "actor": "controller",
+            "role": "precondition/earlier event",
+            "span_in_excerpt": [
+              112,
+              139
+            ],
+            "text": "obtaining the personal data"
+          }
+        },
+        "provision": "Article14(3)(a)",
+        "source": {
+          "char_span": [
+            2469,
+            2731
+          ],
+          "offset_convention": "UTF-8 decoded; CRLF/CR normalized to LF",
+          "path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article14.txt",
+          "source_file_sha256": "752378baf3d1ff80c9845d9388bb87719980d0428b7ddb82efc7087490379efc",
+          "text": "The controller shall provide the information referred to in paragraphs 1 and 2 within a reasonable period after obtaining the personal data, but at the latest within one month, having regard to the specific circumstances in which the personal data are processed.",
+          "text_sha256": "bf9cb5977a41103664d4bce95f889ac6c5decc316f63af95826591e4134b4764"
+        },
+        "source_extraction": {
+          "kind": "single_exact_source_substring",
+          "not_concatenated": true,
+          "notes": "Exact source[2469:2731); it is the Article 14(3) lead-in and point (a) as written in the source file, not a project-assembled sentence.",
+          "source_is_article14_3_lead_in_plus_point_a_as_formatted_in_source": true
+        },
+        "status": "candidate_not_benchmark"
+      },
+      {
+        "applicability_and_exceptions": {
+          "applicability": "Processor-to-controller breach notification; paragraph 1 separately governs controller-to-authority notification.",
+          "current_scope_difference": "Not among the five current v4 rules; requires a new processor-awareness/notification BPMN family.",
+          "exceptions": [
+            "No explicit exception in Article 33(2); paragraph 1 72-hour context and Article 34 boundary remain."
+          ]
+        },
+        "candidate_id": "article33_2",
+        "conditions_time_limits": {
+          "conditions": [
+            "processor has become aware of a personal data breach"
+          ],
+          "exceptions": [
+            "No explicit exception in Article 33(2); paragraph 1 72-hour context and Article 34 boundary remain separate."
+          ],
+          "limitation_preserved": true,
+          "time_limits": [
+            "without undue delay"
+          ]
+        },
+        "governance": {
+          "added_to_current_benchmark": false,
+          "requires_new_input_design": true,
+          "used_for_api": false,
+          "used_for_f1": false
+        },
+        "natural_order": {
+          "marker": {
+            "span_in_excerpt": [
+              62,
+              67
+            ],
+            "text": "after"
+          },
+          "notes": "Candidate only; not extracted and not added to any benchmark.",
+          "obligation_event": {
+            "actor": "processor",
+            "role": "required later event",
+            "span_in_excerpt": [
+              20,
+              41
+            ],
+            "text": "notify the controller"
+          },
+          "relation_candidate": "trigger_event -> obligation_event (natural after reading)",
+          "trigger_event": {
+            "actor": "processor",
+            "role": "precondition/earlier event",
+            "span_in_excerpt": [
+              68,
+              108
+            ],
+            "text": "becoming aware of a personal data breach"
+          }
+        },
+        "provision": "Article33(2)",
+        "source": {
+          "char_span": [
+            503,
+            612
+          ],
+          "offset_convention": "UTF-8 decoded; CRLF/CR normalized to LF",
+          "path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article33.txt",
+          "source_file_sha256": "e1175946861db87f898615fc49e9b4182c3c76320468ed42cbc92e25538bfa3d",
+          "text": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+          "text_sha256": "cdafa0c9267f2078a7fc65bf8093c7f6a7f5717ae244b55f5088fff98daaa7f2"
+        },
+        "source_extraction": {
+          "kind": "single_exact_source_substring",
+          "not_concatenated": true,
+          "notes": "Exact source[503:612); the without-undue-delay limitation is retained."
+        },
+        "status": "candidate_not_benchmark"
+      },
+      {
+        "applicability_and_exceptions": {
+          "applicability": "Certification-body duty and procedural precondition; first sentence of Article 43(1).",
+          "current_scope_difference": "Not among the five current v4 rules; requires a new certification-body process family.",
+          "exceptions": [
+            "The Without prejudice clause and where necessary condition are part of the source; later paragraphs impose accreditation conditions."
+          ]
+        },
+        "candidate_id": "article43_1",
+        "conditions_time_limits": {
+          "conditions": [
+            "after informing the supervisory authority where necessary"
+          ],
+          "exceptions": [
+            "Without prejudice to Articles 57 and 58 competences; later paragraphs impose accreditation requirements."
+          ],
+          "time_limits": []
+        },
+        "governance": {
+          "added_to_current_benchmark": false,
+          "requires_new_input_design": true,
+          "used_for_api": false,
+          "used_for_f1": false
+        },
+        "natural_order": {
+          "marker": {
+            "span_in_excerpt": [
+              211,
+              216
+            ],
+            "text": "after"
+          },
+          "notes": "Candidate only; not extracted and not added to any benchmark.",
+          "obligation_event": {
+            "actor": "certification body",
+            "role": "required later event",
+            "span_in_excerpt": [
+              353,
+              382
+            ],
+            "text": "issue and renew certification"
+          },
+          "relation_candidate": "trigger_event -> obligation_event (natural after reading)",
+          "trigger_event": {
+            "actor": "certification body",
+            "role": "precondition/earlier event",
+            "span_in_excerpt": [
+              217,
+              351
+            ],
+            "text": "informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary"
+          }
+        },
+        "provision": "Article43(1) first sentence",
+        "source": {
+          "char_span": [
+            0,
+            383
+          ],
+          "notes": "R2 correction: first sentence only; [0,869) included following Member States accreditation obligations.",
+          "offset_convention": "UTF-8 decoded; CRLF/CR normalized to LF",
+          "path": "references/winter_2020_model_check/model_check/input/regulations/gdpr/article43.txt",
+          "source_file_sha256": "f71799eca33eb2a1755b926e79b4df19aa6159204cded7b6d51406a9eb8ae6d4",
+          "text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification.",
+          "text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30"
+        },
+        "source_extraction": {
+          "correction_reason": "The task requires the first sentence; [0,869) incorrectly carried Member States obligations.",
+          "kind": "single_exact_source_substring",
+          "member_states_obligation_excluded": true,
+          "not_concatenated": true,
+          "previous_r1_char_span": [
+            0,
+            869
+          ]
+        },
+        "status": "candidate_not_benchmark"
+      }
+    ],
+    "governance": {
+      "added_to_current_benchmark": false,
+      "requires_new_input_design": true,
+      "used_for_api": false,
+      "used_for_f1": false
+    },
+    "purpose": "R2 correction of existing after/temporal candidates only; no benchmark addition, no extraction, no API, no F1 selection.",
+    "schema_version": "stage3_temporal_scope_candidates_r2@1.0.0",
+    "status": "candidate_not_benchmark"
+  },
+  "cause_categories": {
+    "mapping_failure": [
+      "article18p3",
+      "article35p1",
+      "article36p1 (endpoint mapping/similarity below gamma)"
+    ],
+    "native_method_coverage_deficit": [
+      "Winter: no native before/prior-to rule-side flow in this five-clause scope"
+    ],
+    "postprocessing_loss": [
+      "article13p3",
+      "article14p4 (Ours actor_action_map dropped with the dropped actor)"
+    ],
+    "reference_scope_limitation": [
+      "Five-rule scoped reference; not full GDPR F1; reference is AI-constructed"
+    ],
+    "representation_or_interface": [
+      "article13p3",
+      "article14p4 (main-action/exception boundary differs between Sun and Ours records)"
+    ],
+    "upstream_extraction_error": [
+      "article13p3",
+      "article14p4 (Ours actor text/offsets; action/exception boundary in Sun)"
+    ]
+  },
+  "endpoint_failure_summary": {
+    "ours": {
+      "article13p3": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "projection_rejected_syntax",
+          "relation_evidence": []
+        },
+        "r1_relation": [],
+        "r2_failure_categories": {
+          "projection_rejected_syntax": 20
+        },
+        "r2_relation": [],
+        "relation_generated": false
+      },
+      "article14p4": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "projection_rejected_syntax",
+          "relation_evidence": []
+        },
+        "r1_relation": [],
+        "r2_failure_categories": {
+          "projection_rejected_syntax": 20
+        },
+        "r2_relation": [],
+        "relation_generated": false
+      },
+      "article18p3": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "endpoint_similarity_below_gamma",
+          "relation_evidence": [
+            {
+              "after": {
+                "candidate_task_id": "Activity_1",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "carry out the data protection impact assessment of the envisage processing",
+                "candidate_task_text": "Carry out the data protection impact assessment of the envisaged processing",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "the restriction of processing",
+                "rule_endpoint_text": "the restriction of processing",
+                "similarity": 0.523798942565918,
+                "similarity_above_gamma": false
+              },
+              "before": {
+                "candidate_task_id": "Activity_3",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "store the assessment reference",
+                "candidate_task_text": "Store the assessment reference",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "be inform",
+                "rule_endpoint_text": "be informed",
+                "similarity": 0.3346869647502899,
+                "similarity_above_gamma": false
+              },
+              "both_endpoints_mapped": false,
+              "constraint": [
+                "be informed",
+                "the restriction of processing"
+              ],
+              "failure_category": "endpoint_similarity_below_gamma",
+              "reachability": null
+            }
+          ]
+        },
+        "r1_relation": [
+          [
+            "be informed",
+            "is lifted"
+          ]
+        ],
+        "r2_failure_categories": {
+          "endpoint_similarity_below_gamma": 20
+        },
+        "r2_relation": [
+          [
+            "be informed",
+            "the restriction of processing"
+          ]
+        ],
+        "relation_generated": true
+      },
+      "article35p1": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "endpoint_similarity_below_gamma",
+          "relation_evidence": [
+            {
+              "after": {
+                "candidate_task_id": "Activity_2",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "begin the assess processing operation",
+                "candidate_task_text": "Begin the assessed processing operations",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "the processing",
+                "rule_endpoint_text": "the processing",
+                "similarity": 0.4740861654281616,
+                "similarity_above_gamma": false
+              },
+              "before": {
+                "candidate_task_id": "Activity_1",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "carry out the data protection impact assessment of the envisage processing",
+                "candidate_task_text": "Carry out the data protection impact assessment of the envisaged processing",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "carry out an assessment of the impact of the envisage processing operation on the protection of personal datum",
+                "rule_endpoint_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                "similarity": 0.7839398384094238,
+                "similarity_above_gamma": false
+              },
+              "both_endpoints_mapped": false,
+              "constraint": [
+                "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                "the processing"
+              ],
+              "failure_category": "endpoint_similarity_below_gamma",
+              "reachability": null
+            }
+          ]
+        },
+        "r1_relation": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+            "the processing"
+          ]
+        ],
+        "r2_failure_categories": {
+          "endpoint_similarity_below_gamma": 20
+        },
+        "r2_relation": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+            "the processing"
+          ]
+        ],
+        "relation_generated": true
+      },
+      "article36p1": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "endpoint_similarity_below_gamma",
+          "relation_evidence": [
+            {
+              "after": {
+                "candidate_task_id": "Start",
+                "candidate_task_kind": "event",
+                "candidate_task_lemma": "high risk processing propose datum protection impact assessment require",
+                "candidate_task_text": "High-risk processing proposed; data protection impact assessment required",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "process",
+                "rule_endpoint_text": "processing",
+                "similarity": 0.4266117215156555,
+                "similarity_above_gamma": false
+              },
+              "before": {
+                "candidate_task_id": "Activity_3",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "store the assessment reference",
+                "candidate_task_text": "Store the assessment reference",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "consult the supervisory authority",
+                "rule_endpoint_text": "consult the supervisory authority",
+                "similarity": 0.6033692359924316,
+                "similarity_above_gamma": false
+              },
+              "both_endpoints_mapped": false,
+              "constraint": [
+                "consult the supervisory authority",
+                "processing"
+              ],
+              "failure_category": "endpoint_similarity_below_gamma",
+              "reachability": null
+            }
+          ]
+        },
+        "r1_relation": [
+          [
+            "consult the supervisory authority",
+            "processing"
+          ]
+        ],
+        "r2_failure_categories": {
+          "endpoint_similarity_below_gamma": 20
+        },
+        "r2_relation": [
+          [
+            "consult the supervisory authority",
+            "processing"
+          ]
+        ],
+        "relation_generated": true
+      }
+    },
+    "sun": {
+      "article13p3": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "projection_rejected_range",
+          "relation_evidence": []
+        },
+        "r1_relation": [],
+        "r2_failure_categories": {
+          "projection_rejected_range": 20
+        },
+        "r2_relation": [],
+        "relation_generated": false
+      },
+      "article14p4": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "projection_rejected_range",
+          "relation_evidence": []
+        },
+        "r1_relation": [],
+        "r2_failure_categories": {
+          "projection_rejected_range": 20
+        },
+        "r2_relation": [],
+        "relation_generated": false
+      },
+      "article18p3": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "endpoint_similarity_below_gamma",
+          "relation_evidence": [
+            {
+              "after": {
+                "candidate_task_id": "Activity_1",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "carry out the data protection impact assessment of the envisage processing",
+                "candidate_task_text": "Carry out the data protection impact assessment of the envisaged processing",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "the restriction of processing",
+                "rule_endpoint_text": "the restriction of processing",
+                "similarity": 0.523798942565918,
+                "similarity_above_gamma": false
+              },
+              "before": {
+                "candidate_task_id": "Activity_3",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "store the assessment reference",
+                "candidate_task_text": "Store the assessment reference",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "be inform by the controller",
+                "rule_endpoint_text": "be informed by the controller",
+                "similarity": 0.45514464378356934,
+                "similarity_above_gamma": false
+              },
+              "both_endpoints_mapped": false,
+              "constraint": [
+                "be informed by the controller",
+                "the restriction of processing"
+              ],
+              "failure_category": "endpoint_similarity_below_gamma",
+              "reachability": null
+            }
+          ]
+        },
+        "r1_relation": [
+          [
+            "be informed by the controller",
+            "is lifted"
+          ]
+        ],
+        "r2_failure_categories": {
+          "endpoint_similarity_below_gamma": 20
+        },
+        "r2_relation": [
+          [
+            "be informed by the controller",
+            "the restriction of processing"
+          ]
+        ],
+        "relation_generated": true
+      },
+      "article35p1": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "endpoint_similarity_below_gamma",
+          "relation_evidence": [
+            {
+              "after": {
+                "candidate_task_id": "Activity_2",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "begin the assess processing operation",
+                "candidate_task_text": "Begin the assessed processing operations",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "the processing",
+                "rule_endpoint_text": "the processing",
+                "similarity": 0.4740861654281616,
+                "similarity_above_gamma": false
+              },
+              "before": {
+                "candidate_task_id": "Activity_1",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "carry out the data protection impact assessment of the envisage processing",
+                "candidate_task_text": "Carry out the data protection impact assessment of the envisaged processing",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "carry out an assessment of the impact of the envisage processing operation on",
+                "rule_endpoint_text": "carry out an assessment of the impact of the envisaged processing operations on",
+                "similarity": 0.8091588020324707,
+                "similarity_above_gamma": true
+              },
+              "both_endpoints_mapped": false,
+              "constraint": [
+                "carry out an assessment of the impact of the envisaged processing operations on",
+                "the processing"
+              ],
+              "failure_category": "endpoint_similarity_below_gamma",
+              "reachability": null
+            }
+          ]
+        },
+        "r1_relation": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on",
+            "the processing"
+          ]
+        ],
+        "r2_failure_categories": {
+          "endpoint_similarity_below_gamma": 20
+        },
+        "r2_relation": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on",
+            "the processing"
+          ]
+        ],
+        "relation_generated": true
+      },
+      "article36p1": {
+        "example": {
+          "case_id": "case_06bacb820524",
+          "denominator": 0,
+          "failure_category": "endpoint_similarity_below_gamma",
+          "relation_evidence": [
+            {
+              "after": {
+                "candidate_task_id": "Start",
+                "candidate_task_kind": "event",
+                "candidate_task_lemma": "high risk processing propose datum protection impact assessment require",
+                "candidate_task_text": "High-risk processing proposed; data protection impact assessment required",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "process",
+                "rule_endpoint_text": "processing",
+                "similarity": 0.4266117215156555,
+                "similarity_above_gamma": false
+              },
+              "before": {
+                "candidate_task_id": "Activity_3",
+                "candidate_task_kind": "activity",
+                "candidate_task_lemma": "store the assessment reference",
+                "candidate_task_text": "Store the assessment reference",
+                "gamma": 0.8,
+                "mapped": true,
+                "rule_endpoint_lemma": "consult the supervisory authority",
+                "rule_endpoint_text": "consult the supervisory authority",
+                "similarity": 0.6033692359924316,
+                "similarity_above_gamma": false
+              },
+              "both_endpoints_mapped": false,
+              "constraint": [
+                "consult the supervisory authority",
+                "processing"
+              ],
+              "failure_category": "endpoint_similarity_below_gamma",
+              "reachability": null
+            }
+          ]
+        },
+        "r1_relation": [
+          [
+            "consult the supervisory authority",
+            "processing"
+          ]
+        ],
+        "r2_failure_categories": {
+          "endpoint_similarity_below_gamma": 20
+        },
+        "r2_relation": [
+          [
+            "consult the supervisory authority",
+            "processing"
+          ]
+        ],
+        "relation_generated": true
+      }
+    }
+  },
+  "known_similarity_evidence": [
+    {
+      "after": {
+        "candidate_task_id": "Activity_2",
+        "candidate_task_kind": "activity",
+        "candidate_task_lemma": "begin the assess processing operation",
+        "candidate_task_text": "Begin the assessed processing operations",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "the processing",
+        "rule_endpoint_text": "the processing",
+        "similarity": 0.4740861654281616,
+        "similarity_above_gamma": false
+      },
+      "before": {
+        "candidate_task_id": "Activity_1",
+        "candidate_task_kind": "activity",
+        "candidate_task_lemma": "carry out the data protection impact assessment of the envisage processing",
+        "candidate_task_text": "Carry out the data protection impact assessment of the envisaged processing",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "carry out an assessment of the impact of the envisage processing operation on",
+        "rule_endpoint_text": "carry out an assessment of the impact of the envisaged processing operations on",
+        "similarity": 0.8091588020324707,
+        "similarity_above_gamma": true
+      },
+      "both_endpoints_above_gamma": false,
+      "case_id": "case_06bacb820524",
+      "constraint": [
+        "carry out an assessment of the impact of the envisaged processing operations on",
+        "the processing"
+      ],
+      "denominator": 0,
+      "failure_category": "endpoint_similarity_below_gamma",
+      "method": "sun",
+      "rule_id": "article35p1"
+    },
+    {
+      "after": {
+        "candidate_task_id": "Start",
+        "candidate_task_kind": "event",
+        "candidate_task_lemma": "impact assessment complete high risk without mitigation require prior consultation",
+        "candidate_task_text": "Impact assessment completed; high risk without mitigation requires prior consultation",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "process",
+        "rule_endpoint_text": "processing",
+        "similarity": 0.4349479675292969,
+        "similarity_above_gamma": false
+      },
+      "before": {
+        "candidate_task_id": "Activity_1",
+        "candidate_task_kind": "activity",
+        "candidate_task_lemma": "consult the supervisory authority about the propose processing",
+        "candidate_task_text": "Consult the supervisory authority about the proposed processing",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "consult the supervisory authority",
+        "rule_endpoint_text": "consult the supervisory authority",
+        "similarity": 0.8329389691352844,
+        "similarity_above_gamma": true
+      },
+      "both_endpoints_above_gamma": false,
+      "case_id": "case_7dc164f81677",
+      "constraint": [
+        "consult the supervisory authority",
+        "processing"
+      ],
+      "denominator": 0,
+      "failure_category": "endpoint_similarity_below_gamma",
+      "method": "sun",
+      "rule_id": "article36p1"
+    },
+    {
+      "after": {
+        "candidate_task_id": "Start",
+        "candidate_task_kind": "event",
+        "candidate_task_lemma": "high risk processing propose datum protection impact assessment require",
+        "candidate_task_text": "High-risk processing proposed; data protection impact assessment required",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "process",
+        "rule_endpoint_text": "processing",
+        "similarity": 0.4266117215156555,
+        "similarity_above_gamma": false
+      },
+      "before": {
+        "candidate_task_id": "Activity_3",
+        "candidate_task_kind": "activity",
+        "candidate_task_lemma": "store the assessment reference",
+        "candidate_task_text": "Store the assessment reference",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "consult the supervisory authority",
+        "rule_endpoint_text": "consult the supervisory authority",
+        "similarity": 0.6033692359924316,
+        "similarity_above_gamma": false
+      },
+      "both_endpoints_above_gamma": false,
+      "case_id": "case_06bacb820524",
+      "constraint": [
+        "consult the supervisory authority",
+        "processing"
+      ],
+      "denominator": 0,
+      "failure_category": "endpoint_similarity_below_gamma",
+      "method": "sun",
+      "rule_id": "article36p1"
+    },
+    {
+      "after": {
+        "candidate_task_id": "Activity_2",
+        "candidate_task_kind": "activity",
+        "candidate_task_lemma": "begin the assess processing operation",
+        "candidate_task_text": "Begin the assessed processing operations",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "the processing",
+        "rule_endpoint_text": "the processing",
+        "similarity": 0.4740861654281616,
+        "similarity_above_gamma": false
+      },
+      "before": {
+        "candidate_task_id": "Activity_1",
+        "candidate_task_kind": "activity",
+        "candidate_task_lemma": "carry out the data protection impact assessment of the envisage processing",
+        "candidate_task_text": "Carry out the data protection impact assessment of the envisaged processing",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "carry out an assessment of the impact of the envisage processing operation on the protection of personal datum",
+        "rule_endpoint_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+        "similarity": 0.7839398384094238,
+        "similarity_above_gamma": false
+      },
+      "both_endpoints_above_gamma": false,
+      "case_id": "case_06bacb820524",
+      "constraint": [
+        "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+        "the processing"
+      ],
+      "denominator": 0,
+      "failure_category": "endpoint_similarity_below_gamma",
+      "method": "ours",
+      "rule_id": "article35p1"
+    },
+    {
+      "after": {
+        "candidate_task_id": "Start",
+        "candidate_task_kind": "event",
+        "candidate_task_lemma": "impact assessment complete high risk without mitigation require prior consultation",
+        "candidate_task_text": "Impact assessment completed; high risk without mitigation requires prior consultation",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "process",
+        "rule_endpoint_text": "processing",
+        "similarity": 0.4349479675292969,
+        "similarity_above_gamma": false
+      },
+      "before": {
+        "candidate_task_id": "Activity_1",
+        "candidate_task_kind": "activity",
+        "candidate_task_lemma": "consult the supervisory authority about the propose processing",
+        "candidate_task_text": "Consult the supervisory authority about the proposed processing",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "consult the supervisory authority",
+        "rule_endpoint_text": "consult the supervisory authority",
+        "similarity": 0.8329389691352844,
+        "similarity_above_gamma": true
+      },
+      "both_endpoints_above_gamma": false,
+      "case_id": "case_7dc164f81677",
+      "constraint": [
+        "consult the supervisory authority",
+        "processing"
+      ],
+      "denominator": 0,
+      "failure_category": "endpoint_similarity_below_gamma",
+      "method": "ours",
+      "rule_id": "article36p1"
+    },
+    {
+      "after": {
+        "candidate_task_id": "Start",
+        "candidate_task_kind": "event",
+        "candidate_task_lemma": "high risk processing propose datum protection impact assessment require",
+        "candidate_task_text": "High-risk processing proposed; data protection impact assessment required",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "process",
+        "rule_endpoint_text": "processing",
+        "similarity": 0.4266117215156555,
+        "similarity_above_gamma": false
+      },
+      "before": {
+        "candidate_task_id": "Activity_3",
+        "candidate_task_kind": "activity",
+        "candidate_task_lemma": "store the assessment reference",
+        "candidate_task_text": "Store the assessment reference",
+        "gamma": 0.8,
+        "mapped": true,
+        "rule_endpoint_lemma": "consult the supervisory authority",
+        "rule_endpoint_text": "consult the supervisory authority",
+        "similarity": 0.6033692359924316,
+        "similarity_above_gamma": false
+      },
+      "both_endpoints_above_gamma": false,
+      "case_id": "case_06bacb820524",
+      "constraint": [
+        "consult the supervisory authority",
+        "processing"
+      ],
+      "denominator": 0,
+      "failure_category": "endpoint_similarity_below_gamma",
+      "method": "ours",
+      "rule_id": "article36p1"
+    }
+  ],
+  "order_relation_chain": {
+    "ours": {
+      "article13p3": {
+        "r1_order_relations": [],
+        "r2_order_relations": [],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article13p3_s001_c01",
+              "derived_edges": [],
+              "markers": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [
+                    {
+                      "candidate_count": 2,
+                      "candidates": [
+                        {
+                          "end": 257,
+                          "id": "p01",
+                          "start": 161,
+                          "text": "provide the data subject prior to that further processing with information on that other purpose"
+                        },
+                        {
+                          "end": 329,
+                          "id": "p02",
+                          "start": 262,
+                          "text": "with any relevant further information as referred to in paragraph 2"
+                        }
+                      ],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 194,
+                  "marker_start": 186,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 218,
+                  "span_id": "c02",
+                  "span_length": 32,
+                  "span_start": 186
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [
+                    {
+                      "candidate_count": 2,
+                      "candidates": [
+                        {
+                          "end": 257,
+                          "id": "p01",
+                          "start": 161,
+                          "text": "provide the data subject prior to that further processing with information on that other purpose"
+                        },
+                        {
+                          "end": 329,
+                          "id": "p02",
+                          "start": 262,
+                          "text": "with any relevant further information as referred to in paragraph 2"
+                        }
+                      ],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 194,
+                  "marker_start": 186,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 218,
+                  "span_id": "c02",
+                  "span_length": 32,
+                  "span_start": 186
+                }
+              ],
+              "status": "no_edge"
+            }
+          ],
+          "derived_edge_count": 0,
+          "edge_count": 0,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      },
+      "article14p4": {
+        "r1_order_relations": [],
+        "r2_order_relations": [],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article14p4_s001_c01",
+              "derived_edges": [],
+              "markers": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [
+                    {
+                      "fragment_count": 2,
+                      "fragments": [
+                        {
+                          "end": 184,
+                          "start": 160,
+                          "text": "provide the data subject",
+                          "verb_count": 1
+                        },
+                        {
+                          "end": 328,
+                          "start": 218,
+                          "text": "with information on that other purpose and with any relevant further information as referred to in paragraph 2",
+                          "verb_count": 1
+                        }
+                      ],
+                      "reason": "main_action_remaining_fragments_with_verb_not_exactly_one"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 193,
+                  "marker_start": 185,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 217,
+                  "span_id": "c02",
+                  "span_length": 32,
+                  "span_start": 185
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [
+                {
+                  "field": "constraints",
+                  "main_action_rejections": [
+                    {
+                      "fragment_count": 2,
+                      "fragments": [
+                        {
+                          "end": 184,
+                          "start": 160,
+                          "text": "provide the data subject",
+                          "verb_count": 1
+                        },
+                        {
+                          "end": 328,
+                          "start": 218,
+                          "text": "with information on that other purpose and with any relevant further information as referred to in paragraph 2",
+                          "verb_count": 1
+                        }
+                      ],
+                      "reason": "main_action_remaining_fragments_with_verb_not_exactly_one"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 193,
+                  "marker_start": 185,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 217,
+                  "span_id": "c02",
+                  "span_length": 32,
+                  "span_start": 185
+                }
+              ],
+              "status": "no_edge"
+            }
+          ],
+          "derived_edge_count": 0,
+          "edge_count": 0,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      },
+      "article18p3": {
+        "r1_order_relations": [
+          [
+            "be informed",
+            "is lifted"
+          ]
+        ],
+        "r2_order_relations": [
+          [
+            "be informed",
+            "the restriction of processing"
+          ]
+        ],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article18p3_s001_c01",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    125,
+                    154
+                  ],
+                  "after_text": "the restriction of processing",
+                  "before_offsets": [
+                    88,
+                    99
+                  ],
+                  "before_text": "be informed",
+                  "marker": "before",
+                  "marker_offsets": [
+                    118,
+                    124
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      125,
+                      154
+                    ],
+                    "after_text": "the restriction of processing",
+                    "before_offsets": [
+                      88,
+                      99
+                    ],
+                    "before_text": "be informed",
+                    "marker": "before",
+                    "marker_offsets": [
+                      118,
+                      124
+                    ],
+                    "second_endpoint_branch": "nominal",
+                    "second_endpoint_kind": "nominal",
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "before",
+                  "marker_end": 124,
+                  "marker_start": 118,
+                  "second_endpoint_audit": {
+                    "after_marker": 124,
+                    "branch": "nominal",
+                    "chunks": [
+                      {
+                        "end": 140,
+                        "root": "restriction",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 125,
+                        "text": "the restriction"
+                      },
+                      {
+                        "end": 154,
+                        "root": "processing",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 144,
+                        "text": "processing"
+                      }
+                    ],
+                    "of_chain_complete": true,
+                    "of_chain_started": true,
+                    "selected_span": {
+                      "end": 164,
+                      "start": 118
+                    },
+                    "source_substring_identity": true,
+                    "value": "the restriction of processing"
+                  },
+                  "span_end": 164,
+                  "span_id": "c01",
+                  "span_length": 46,
+                  "span_start": 118
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      },
+      "article35p1": {
+        "r1_order_relations": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+            "the processing"
+          ]
+        ],
+        "r2_order_relations": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+            "the processing"
+          ]
+        ],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article35p1_s001_c01",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    261,
+                    275
+                  ],
+                  "after_text": "the processing",
+                  "before_offsets": [
+                    277,
+                    388
+                  ],
+                  "before_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    252,
+                    260
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      261,
+                      275
+                    ],
+                    "after_text": "the processing",
+                    "before_offsets": [
+                      277,
+                      388
+                    ],
+                    "before_text": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                    "marker": "prior to",
+                    "marker_offsets": [
+                      252,
+                      260
+                    ],
+                    "second_endpoint_branch": "nominal",
+                    "second_endpoint_kind": "nominal",
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "prior to",
+                  "marker_end": 260,
+                  "marker_start": 252,
+                  "second_endpoint_audit": {
+                    "after_marker": 260,
+                    "branch": "nominal",
+                    "chunks": [
+                      {
+                        "end": 275,
+                        "root": "processing",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 261,
+                        "text": "the processing"
+                      }
+                    ],
+                    "of_chain_complete": true,
+                    "of_chain_started": false,
+                    "selected_span": {
+                      "end": 275,
+                      "start": 252
+                    },
+                    "source_substring_identity": true,
+                    "value": "the processing"
+                  },
+                  "span_end": 275,
+                  "span_id": "c02",
+                  "span_length": 23,
+                  "span_start": 252
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      },
+      "article36p1": {
+        "r1_order_relations": [
+          [
+            "consult the supervisory authority",
+            "processing"
+          ]
+        ],
+        "r2_order_relations": [
+          [
+            "consult the supervisory authority",
+            "processing"
+          ]
+        ],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article36p1_s001_c01",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    64,
+                    74
+                  ],
+                  "after_text": "processing",
+                  "before_offsets": [
+                    21,
+                    54
+                  ],
+                  "before_text": "consult the supervisory authority",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    55,
+                    63
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      64,
+                      74
+                    ],
+                    "after_text": "processing",
+                    "before_offsets": [
+                      21,
+                      54
+                    ],
+                    "before_text": "consult the supervisory authority",
+                    "marker": "prior to",
+                    "marker_offsets": [
+                      55,
+                      63
+                    ],
+                    "second_endpoint_branch": "nominal",
+                    "second_endpoint_kind": "nominal",
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "prior to",
+                  "marker_end": 63,
+                  "marker_start": 55,
+                  "second_endpoint_audit": {
+                    "after_marker": 63,
+                    "branch": "nominal",
+                    "chunks": [
+                      {
+                        "end": 74,
+                        "root": "processing",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 64,
+                        "text": "processing"
+                      }
+                    ],
+                    "of_chain_complete": true,
+                    "of_chain_started": false,
+                    "selected_span": {
+                      "end": 74,
+                      "start": 55
+                    },
+                    "source_substring_identity": true,
+                    "value": "processing"
+                  },
+                  "span_end": 74,
+                  "span_id": "c01",
+                  "span_length": 19,
+                  "span_start": 55
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      }
+    },
+    "sun": {
+      "article13p3": {
+        "r1_order_relations": [],
+        "r2_order_relations": [],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article13p3_s001.c1",
+              "derived_edges": [],
+              "markers": [
+                {
+                  "field": "conditions",
+                  "main_action_rejections": [
+                    {
+                      "end": 99,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article13p3_s001.c1.action.1",
+                      "start": 21,
+                      "text": "intends to further process the personal data for a purpose other than that for"
+                    },
+                    {
+                      "end": 168,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article13p3_s001.c1.action.2",
+                      "start": 161,
+                      "text": "provide"
+                    },
+                    {
+                      "candidate_count": 0,
+                      "candidates": [],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 194,
+                  "marker_start": 186,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 299,
+                  "span_id": "gdpr_article13p3_s001.c1.condition.2",
+                  "span_length": 113,
+                  "span_start": 186
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [
+                {
+                  "field": "conditions",
+                  "main_action_rejections": [
+                    {
+                      "end": 99,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article13p3_s001.c1.action.1",
+                      "start": 21,
+                      "text": "intends to further process the personal data for a purpose other than that for"
+                    },
+                    {
+                      "end": 168,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article13p3_s001.c1.action.2",
+                      "start": 161,
+                      "text": "provide"
+                    },
+                    {
+                      "candidate_count": 0,
+                      "candidates": [],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 194,
+                  "marker_start": 186,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 299,
+                  "span_id": "gdpr_article13p3_s001.c1.condition.2",
+                  "span_length": 113,
+                  "span_start": 186
+                }
+              ],
+              "status": "no_edge"
+            }
+          ],
+          "derived_edge_count": 0,
+          "edge_count": 0,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      },
+      "article14p4": {
+        "r1_order_relations": [],
+        "r2_order_relations": [],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article14p4_s001.c1",
+              "derived_edges": [],
+              "markers": [
+                {
+                  "field": "conditions",
+                  "main_action_rejections": [
+                    {
+                      "end": 99,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article14p4_s001.c1.action.1",
+                      "start": 21,
+                      "text": "intends to further process the personal data for a purpose other than that for"
+                    },
+                    {
+                      "end": 167,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article14p4_s001.c1.action.2",
+                      "start": 160,
+                      "text": "provide"
+                    },
+                    {
+                      "candidate_count": 0,
+                      "candidates": [],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 193,
+                  "marker_start": 185,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 298,
+                  "span_id": "gdpr_article14p4_s001.c1.condition.2",
+                  "span_length": 113,
+                  "span_start": 185
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [
+                {
+                  "field": "conditions",
+                  "main_action_rejections": [
+                    {
+                      "end": 99,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article14p4_s001.c1.action.1",
+                      "start": 21,
+                      "text": "intends to further process the personal data for a purpose other than that for"
+                    },
+                    {
+                      "end": 167,
+                      "reason": "action_fully_inside_condition_constraint_or_exception",
+                      "span_id": "gdpr_article14p4_s001.c1.action.2",
+                      "start": 160,
+                      "text": "provide"
+                    },
+                    {
+                      "candidate_count": 0,
+                      "candidates": [],
+                      "reason": "expected_exactly_one_main_action_candidate"
+                    }
+                  ],
+                  "marker": "prior to",
+                  "marker_end": 193,
+                  "marker_start": 185,
+                  "reason": "no_single_main_action_endpoint",
+                  "span_end": 298,
+                  "span_id": "gdpr_article14p4_s001.c1.condition.2",
+                  "span_length": 113,
+                  "span_start": 185
+                }
+              ],
+              "status": "no_edge"
+            }
+          ],
+          "derived_edge_count": 0,
+          "edge_count": 0,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      },
+      "article18p3": {
+        "r1_order_relations": [
+          [
+            "be informed by the controller",
+            "is lifted"
+          ]
+        ],
+        "r2_order_relations": [
+          [
+            "be informed by the controller",
+            "the restriction of processing"
+          ]
+        ],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article18p3_s001.c1",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    125,
+                    154
+                  ],
+                  "after_text": "the restriction of processing",
+                  "before_offsets": [
+                    88,
+                    117
+                  ],
+                  "before_text": "be informed by the controller",
+                  "marker": "before",
+                  "marker_offsets": [
+                    118,
+                    124
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      125,
+                      154
+                    ],
+                    "after_text": "the restriction of processing",
+                    "before_offsets": [
+                      88,
+                      117
+                    ],
+                    "before_text": "be informed by the controller",
+                    "marker": "before",
+                    "marker_offsets": [
+                      118,
+                      124
+                    ],
+                    "second_endpoint_branch": "nominal",
+                    "second_endpoint_kind": "nominal",
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "before",
+                  "marker_end": 124,
+                  "marker_start": 118,
+                  "second_endpoint_audit": {
+                    "after_marker": 124,
+                    "branch": "nominal",
+                    "chunks": [
+                      {
+                        "end": 140,
+                        "root": "restriction",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 125,
+                        "text": "the restriction"
+                      },
+                      {
+                        "end": 154,
+                        "root": "processing",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 144,
+                        "text": "processing"
+                      }
+                    ],
+                    "of_chain_complete": true,
+                    "of_chain_started": true,
+                    "selected_span": {
+                      "end": 164,
+                      "start": 118
+                    },
+                    "source_substring_identity": true,
+                    "value": "the restriction of processing"
+                  },
+                  "span_end": 164,
+                  "span_id": "gdpr_article18p3_s001.c1.constraint.2",
+                  "span_length": 46,
+                  "span_start": 118
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      },
+      "article35p1": {
+        "r1_order_relations": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on",
+            "the processing"
+          ]
+        ],
+        "r2_order_relations": [
+          [
+            "carry out an assessment of the impact of the envisaged processing operations on",
+            "the processing"
+          ]
+        ],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article35p1_s001.c1",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    261,
+                    275
+                  ],
+                  "after_text": "the processing",
+                  "before_offsets": [
+                    277,
+                    356
+                  ],
+                  "before_text": "carry out an assessment of the impact of the envisaged processing operations on",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    252,
+                    260
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      261,
+                      275
+                    ],
+                    "after_text": "the processing",
+                    "before_offsets": [
+                      277,
+                      356
+                    ],
+                    "before_text": "carry out an assessment of the impact of the envisaged processing operations on",
+                    "marker": "prior to",
+                    "marker_offsets": [
+                      252,
+                      260
+                    ],
+                    "second_endpoint_branch": "nominal",
+                    "second_endpoint_kind": "nominal",
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "prior to",
+                  "marker_end": 260,
+                  "marker_start": 252,
+                  "second_endpoint_audit": {
+                    "after_marker": 260,
+                    "branch": "nominal",
+                    "chunks": [
+                      {
+                        "end": 275,
+                        "root": "processing",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 261,
+                        "text": "the processing"
+                      }
+                    ],
+                    "of_chain_complete": true,
+                    "of_chain_started": false,
+                    "selected_span": {
+                      "end": 275,
+                      "start": 252
+                    },
+                    "source_substring_identity": true,
+                    "value": "the processing"
+                  },
+                  "span_end": 275,
+                  "span_id": "gdpr_article35p1_s001.c1.constraint.3",
+                  "span_length": 23,
+                  "span_start": 252
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      },
+      "article36p1": {
+        "r1_order_relations": [
+          [
+            "consult the supervisory authority",
+            "processing"
+          ]
+        ],
+        "r2_order_relations": [
+          [
+            "consult the supervisory authority",
+            "processing"
+          ]
+        ],
+        "r2_projection": {
+          "clause_audits": [
+            {
+              "clause_id": "gdpr_article36p1_s001.c1",
+              "derived_edges": [
+                {
+                  "after_offsets": [
+                    64,
+                    74
+                  ],
+                  "after_text": "processing",
+                  "before_offsets": [
+                    21,
+                    54
+                  ],
+                  "before_text": "consult the supervisory authority",
+                  "marker": "prior to",
+                  "marker_offsets": [
+                    55,
+                    63
+                  ],
+                  "second_endpoint_branch": "nominal",
+                  "second_endpoint_kind": "nominal",
+                  "source": "derived"
+                }
+              ],
+              "markers": [
+                {
+                  "edge": {
+                    "after_offsets": [
+                      64,
+                      74
+                    ],
+                    "after_text": "processing",
+                    "before_offsets": [
+                      21,
+                      54
+                    ],
+                    "before_text": "consult the supervisory authority",
+                    "marker": "prior to",
+                    "marker_offsets": [
+                      55,
+                      63
+                    ],
+                    "second_endpoint_branch": "nominal",
+                    "second_endpoint_kind": "nominal",
+                    "source": "derived"
+                  },
+                  "field": "constraints",
+                  "main_action_rejections": [],
+                  "marker": "prior to",
+                  "marker_end": 63,
+                  "marker_start": 55,
+                  "second_endpoint_audit": {
+                    "after_marker": 63,
+                    "branch": "nominal",
+                    "chunks": [
+                      {
+                        "end": 74,
+                        "root": "processing",
+                        "root_ent_type": "",
+                        "root_pos": "NOUN",
+                        "start": 64,
+                        "text": "processing"
+                      }
+                    ],
+                    "of_chain_complete": true,
+                    "of_chain_started": false,
+                    "selected_span": {
+                      "end": 152,
+                      "start": 55
+                    },
+                    "source_substring_identity": true,
+                    "value": "processing"
+                  },
+                  "span_end": 152,
+                  "span_id": "gdpr_article36p1_s001.c1.constraint.1",
+                  "span_length": 97,
+                  "span_start": 55
+                }
+              ],
+              "modality": "obligation",
+              "native": {
+                "edges": [],
+                "rejected": []
+              },
+              "projection": "sun_stage3_temporal_projection_v3@1.0.0",
+              "rejections": [],
+              "status": "derived"
+            }
+          ],
+          "derived_edge_count": 1,
+          "edge_count": 1,
+          "native_edge_count": 0,
+          "projection": "sun_stage3_temporal_projection_v3@1.0.0"
+        },
+        "r2_projection_status": null
+      }
+    }
+  },
+  "r1_r2_change_evidence": {
+    "article13p3_article14p4": {
+      "r1_reason": "no_rule_order_endpoints",
+      "r2_reason_ours": "projection_rejected_syntax",
+      "r2_reason_sun": "projection_rejected_range",
+      "reason": "The relation is not generated in either version; R2 separates the rejection causes instead of returning a denominator-zero generic reason."
+    },
+    "article18p3": {
+      "ours_r1_relation": [
+        [
+          "be informed",
+          "is lifted"
+        ]
+      ],
+      "ours_r2_relation": [
+        [
+          "be informed",
+          "the restriction of processing"
+        ]
+      ],
+      "reason": "R1 v2 scanned an extra advcl/ccomp predicate and selected lifted; R2 v3 finds no legal verbal complement and uses the bounded nominal branch, yielding the restriction of processing. The relation is still generated.",
+      "sun_r1_relation": [
+        [
+          "be informed by the controller",
+          "is lifted"
+        ]
+      ],
+      "sun_r2_relation": [
+        [
+          "be informed by the controller",
+          "the restriction of processing"
+        ]
+      ]
+    },
+    "article35p1_article36p1": {
+      "reason": "Both versions generate the derived relation, but R2 records endpoint_similarity_below_gamma instead of grouping all denominator-zero cells under no_rule_order_endpoints.",
+      "relation_generated_r1": true,
+      "relation_generated_r2": true
+    }
+  },
+  "r2_failure_categories_by_method_rule": {
+    "ours/article13p3": {
+      "projection_rejected_syntax": 20
+    },
+    "ours/article14p4": {
+      "projection_rejected_syntax": 20
+    },
+    "ours/article18p3": {
+      "endpoint_similarity_below_gamma": 20
+    },
+    "ours/article35p1": {
+      "endpoint_similarity_below_gamma": 20
+    },
+    "ours/article36p1": {
+      "endpoint_similarity_below_gamma": 20
+    },
+    "sun/article13p3": {
+      "projection_rejected_range": 20
+    },
+    "sun/article14p4": {
+      "projection_rejected_range": 20
+    },
+    "sun/article18p3": {
+      "endpoint_similarity_below_gamma": 20
+    },
+    "sun/article35p1": {
+      "endpoint_similarity_below_gamma": 20
+    },
+    "sun/article36p1": {
+      "endpoint_similarity_below_gamma": 20
+    },
+    "winter/article13p3": {
+      "no_rule_order_relation": 20
+    },
+    "winter/article14p4": {
+      "no_rule_order_relation": 20
+    },
+    "winter/article18p3": {
+      "no_rule_order_relation": 20
+    },
+    "winter/article35p1": {
+      "no_rule_order_relation": 20
+    },
+    "winter/article36p1": {
+      "no_rule_order_relation": 20
+    }
+  },
+  "r2_metrics_summary": {
+    "ours": {
+      "coverage": 0.46,
+      "incorrect_actor_f1": 0.25,
+      "missing_action_f1": 0.45454545454545453,
+      "out_of_order_f1": 0.0,
+      "overall_f1": 0.34285714285714286,
+      "overall_precision": 0.3,
+      "overall_recall": 0.4,
+      "run_status": "available"
+    },
+    "sun": {
+      "coverage": 0.46,
+      "incorrect_actor_f1": 0.25,
+      "missing_action_f1": 0.45454545454545453,
+      "out_of_order_f1": 0.0,
+      "overall_f1": 0.34285714285714286,
+      "overall_precision": 0.3,
+      "overall_recall": 0.4,
+      "run_status": "available"
+    },
+    "winter": {
+      "coverage": 0.7,
+      "incorrect_actor_f1": 0.8888888888888888,
+      "missing_action_f1": 0.42857142857142855,
+      "out_of_order_f1": 0.0,
+      "overall_f1": 0.5,
+      "overall_precision": 0.5384615384615384,
+      "overall_recall": 0.4666666666666667,
+      "run_status": "available_native"
+    }
+  },
+  "reference_boundary": "Reference is AI-constructed construction_reference, is_gold=false, human_adjudicated=false; metrics are given applicable-scope checking only.",
+  "schema_version": "stage3_table3_v4_r2_cause_analysis@1.0.0",
+  "status": "diagnostic_only_not_acceptance",
+  "unresolved_gaps": [
+    "No order relation reaches denominator > 0 for Sun/Ours/Winter on the five frozen rules; all scored out_of_order cells are unknown.",
+    "The five-rule reference remains applicable-scope checking, not full GDPR F1.",
+    "Article13p3/article14p4 Ours actor loss is not repaired by hand; a future upstream extraction fix would be a new authorized experiment.",
+    "The three after/temporal candidates are corrections only and are not benchmark inputs."
+  ]
+}

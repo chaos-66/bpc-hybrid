@@ -1,0 +1,547 @@
+{
+  "api_execution": {
+    "actual_attempts": 5,
+    "authorized_calls": 5,
+    "cost_usd": 0.04240236,
+    "documented_release": "DeepSeek-V4-Pro-0813",
+    "env_file_read": false,
+    "failure": 0,
+    "live_contract_check": {
+      "path": "outputs/reports/stage3_d1_v4_r1_live_contract_check.json",
+      "sha256": "23d82220d97dc4bedd7e807b0a3d56b01409ca8038d8cdd88052a1fd6d0b706a"
+    },
+    "model": "deepseek-v4-pro",
+    "network_calls": 5,
+    "response_models": [
+      "deepseek-v4-pro"
+    ],
+    "retries": 0,
+    "retry_cap": 0,
+    "safe_raw_responses": {
+      "path": "outputs/reports/stage3_d1_v4_r1_raw_responses_safe.json",
+      "sha256": "c7211abe633bdd5ae2af1713d03fde85dc762e11c26594152aea7e8ad77e1e11"
+    },
+    "success": 5,
+    "usage": {
+      "completion_tokens": 3419,
+      "prompt_tokens": 21866,
+      "total_tokens": 25285
+    }
+  },
+  "generated_from": "Authoritative Table 1/2 reports reused; Table 3 R2 correction/offline matrix/independent evaluation; no Table 1/2 rerun.",
+  "not_run_full_suite": "No full pytest/audit_project --with-tests; R2 focused tests only.",
+  "r2_new_api_calls": 0,
+  "r2_new_network_calls": 0,
+  "schema_version": "experiment_tables_delivery@3.0.0",
+  "tables": {
+    "table1_stage2_six_semantic_fields": {
+      "arms": {
+        "Ours": {
+          "modality_macro_f1": 0.7694506979014613,
+          "overall_pooled_five_span_fields_f1": 0.8377685388362014,
+          "span_fields": {
+            "action": 0.9437163978494625,
+            "actor": 0.7578947368421053,
+            "condition": 0.8380185491408441,
+            "constraint": 0.7426621160409557,
+            "exception": 0.761904761904762
+          }
+        },
+        "Sun": {
+          "modality_macro_f1": 0.712845542257307,
+          "overall_pooled_five_span_fields_f1": 0.7630963921754044,
+          "span_fields": {
+            "action": 0.8926856128973049,
+            "actor": 0.8203299152920196,
+            "condition": 0.7738369415016121,
+            "constraint": 0.6181622204257612,
+            "exception": 0.88
+          }
+        }
+      },
+      "expectation_check": "Ours overall > Sun supported; field-level expectation not uniformly supported (Actor and Exception favor Sun).",
+      "fields_won_by_baseline": 2,
+      "fields_won_by_ours": 3,
+      "metric_definition": "five span fields pooled micro-F1 plus Modality four-class macro-F1 separately; not a joint six-field micro-F1",
+      "overall_pooled_delta_pp": 7.467214666079702,
+      "sample_count": 150,
+      "sources": [
+        {
+          "path": "outputs/reports/stage2_table1_paper_final_v1.json",
+          "role": "metrics",
+          "sha256": "05a601d16034db6bc6981122651ba4549aa686be74da6a9e0b32d8dc076bd941"
+        },
+        {
+          "path": "outputs/reports/stage2_table1_paper_final_v1.md",
+          "role": "paper_table",
+          "sha256": "113796c3f5c6c67545e73a2e28e82ebc72eafa2e7b58812aa2affe85a599ff75"
+        }
+      ],
+      "status": "reused_authoritative"
+    },
+    "table2_prompt_ablation": {
+      "arms": {
+        "000": {
+          "coarse_five_field_mean_f1": 0.6919601713098904,
+          "coarse_five_field_micro_f1": 0.7380064922435935,
+          "modality_label_macro_f1": 0.833823450922019,
+          "path": "outputs/development/v6_factorial_ablation_v1/000/repeat-01/canonical_predictions.jsonl",
+          "sha256": "83e56603ab72f16e8c7d9677d388b63bbdeb0abef6ecc4dd88fc66bc4bdd8164"
+        },
+        "001": {
+          "coarse_five_field_mean_f1": 0.6949720455443998,
+          "coarse_five_field_micro_f1": 0.7260518308676949,
+          "modality_label_macro_f1": 0.8095756925733121,
+          "path": "outputs/development/v6_factorial_ablation_v1/001/repeat-01/canonical_predictions.jsonl",
+          "sha256": "081da6f4f3ca4980903ac250d7320fe56777e0a07e0394dee4ccf50f026a2a73"
+        },
+        "010": {
+          "coarse_five_field_mean_f1": 0.7527697307853786,
+          "coarse_five_field_micro_f1": 0.8107468260809508,
+          "modality_label_macro_f1": 0.8005870433279695,
+          "path": "outputs/development/v6_factorial_ablation_v1/010/repeat-01/canonical_predictions.jsonl",
+          "sha256": "602031ec551900bee12e02c9833cc00602a544c357b7a77a38f098064e0d2f43"
+        },
+        "011": {
+          "coarse_five_field_mean_f1": 0.7691431819221756,
+          "coarse_five_field_micro_f1": 0.8141890664022139,
+          "modality_label_macro_f1": 0.7627379774274876,
+          "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-examples-0813/repeat-01/canonical_predictions.jsonl",
+          "sha256": "ba642d6a8377720b71a9d2c4a5ae3a4b7417c9783bfa7c8efd4aa2aa1a77d121"
+        },
+        "100": {
+          "coarse_five_field_mean_f1": 0.8006075767935055,
+          "coarse_five_field_micro_f1": 0.8353992235371158,
+          "modality_label_macro_f1": 0.7369687005236877,
+          "path": "outputs/development/v6_factorial_ablation_v1/100/repeat-01/canonical_predictions.jsonl",
+          "sha256": "d7bc985f395576260af7972107290cb467fa9a2ee4aebb03416c7381251288a7"
+        },
+        "101": {
+          "coarse_five_field_mean_f1": 0.8033023301084121,
+          "coarse_five_field_micro_f1": 0.8298805705524039,
+          "modality_label_macro_f1": 0.7083290074750831,
+          "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-semantic-guidance-0813/repeat-01/canonical_predictions.jsonl",
+          "sha256": "a32e60c7982765f1ab453eddde45c37ae82f474ae8f8173d2e81ab36e798bd6e"
+        },
+        "110": {
+          "coarse_five_field_mean_f1": 0.8075805346570435,
+          "coarse_five_field_micro_f1": 0.8267530216647663,
+          "modality_label_macro_f1": 0.752003831913289,
+          "path": "outputs/development/d1_prompt_factorial_ablation_v2/D-no-explicit-json-contract-0813/repeat-01/canonical_predictions.jsonl",
+          "sha256": "a240a11a2bba3a0e6196d36dd62ea6a036b83ba4be476efaac0723a44ccef5ed"
+        },
+        "111": {
+          "coarse_five_field_mean_f1": 0.7850304424814778,
+          "coarse_five_field_micro_f1": 0.8224493117168078,
+          "modality_label_macro_f1": 0.7537201079506458,
+          "path": "outputs/development/barrientos_ablation_suite_v2/D-full-0813/repeat-01/canonical_predictions.jsonl",
+          "sha256": "2dc036c3c72f54e194ad9882aac5b78f2fd0e0a7f9fbdf44dc73baa31ce23195"
+        }
+      },
+      "expectation_check": "E/S average main effect positive and J negative; all-modules-necessary claim not supported by these existing results.",
+      "main_effects": {
+        "E_main_effect": 0.05637197796916027,
+        "J_main_effect": -0.004583695996826509,
+        "S_main_effect": 0.036200027165982696,
+        "three_way_ESJ": -0.014181958660408278,
+        "two_way_EJ": -0.0006549709390174518,
+        "two_way_ES": -0.08847751503991097,
+        "two_way_SJ": 0.008305922366957486
+      },
+      "primary_metric_definition": "pooled five-span-field micro-F1; identical family to the paper's Table 1 Overall (pooled 5) metric",
+      "sources": [
+        {
+          "path": "outputs/reports/stage2_table2_prompt_ablation_paper_final_v2.json",
+          "role": "metrics",
+          "sha256": "3725eb574747fc871e5f2f78978c30a2f19252563262e44e34614343b44311b5"
+        },
+        {
+          "path": "outputs/reports/stage2_table2_prompt_ablation_paper_final_v2.md",
+          "role": "paper_table",
+          "sha256": "e3c5da480c77c18bc124f56b2bbea8184441d2f9d8229ff6e9bcf585b6f114f0"
+        }
+      ],
+      "status": "reused_authoritative",
+      "status_raw": "complete",
+      "suite_id": "V6-ESJ-FACTORIAL-001"
+    },
+    "table3_stage3_three_method_checking": {
+      "acceptance": "needs_method_review",
+      "candidate_corrections": {
+        "path": "outputs/reports/stage3_temporal_scope_candidates_r2.json",
+        "sha256": "acfc36b4ab766f8618bbeef16d1bbf06245d2bdd7044d1cdacb5183190f5b1e5"
+      },
+      "cause_analysis": {
+        "path": "outputs/reports/stage3_table3_v4_r2_cause_analysis.json",
+        "sha256": "e7a9897212828e19fbd49c1a0f898966e52b871f90733893fd9bdd3a9f3505c7"
+      },
+      "coverage_formula": "(cells - unknown_positive - unknown_negative) / cells",
+      "d1_calls": {
+        "attempted": 5,
+        "completed": 5,
+        "cost_usd": 0.04240236,
+        "failed": 0,
+        "raw_responses": [
+          "raw_responses/01_gdpr_article13p3_s001.json",
+          "raw_responses/02_gdpr_article14p4_s001.json",
+          "raw_responses/03_gdpr_article18p3_s001.json",
+          "raw_responses/04_gdpr_article35p1_s001.json",
+          "raw_responses/05_gdpr_article36p1_s001.json"
+        ],
+        "retry": 0,
+        "safe_raw_responses": {
+          "path": "outputs/reports/stage3_d1_v4_r1_raw_responses_safe.json",
+          "sha256": "c7211abe633bdd5ae2af1713d03fde85dc762e11c26594152aea7e8ad77e1e11"
+        },
+        "usage": {
+          "completion_tokens": 3419,
+          "prompt_tokens": 21866,
+          "total_tokens": 25285
+        }
+      },
+      "generated_from": "R2 strict temporal projection v3 and independent R2 evaluation; D1 responses reused from stage3_v4_d1_frozen_v1; new API calls 0.",
+      "interpretation_boundary": "Same Sun/Ours aggregate counts are not a claim that predictions are identical. R2 keeps distinct per-item rule records, projection reasons, endpoint mapping evidence, and failure categories. Table 3 remains needs_method_review; all order denominators are zero.",
+      "methods": {
+        "ours": {
+          "coverage": 0.46,
+          "fn": 9,
+          "fp": 14,
+          "incorrect_actor_f1": 0.25,
+          "missing_action_f1": 0.45454545454545453,
+          "not_applicable_cells": 10,
+          "out_of_order_f1": 0.0,
+          "overall_f1": 0.34285714285714286,
+          "overall_precision": 0.3,
+          "overall_recall": 0.4,
+          "per_type": {
+            "incorrect_actor": {
+              "f1": 0.25,
+              "fn": 4,
+              "fp": 2,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.2,
+              "precision": 0.3333333333333333,
+              "recall": 0.2,
+              "tn": 0,
+              "tp": 1,
+              "unknown_negative": 8,
+              "unknown_positive": 4
+            },
+            "missing_action": {
+              "f1": 0.45454545454545453,
+              "fn": 0,
+              "fp": 12,
+              "not_applicable_cells": 0,
+              "observable_coverage": 1.0,
+              "precision": 0.29411764705882354,
+              "recall": 1.0,
+              "tn": 3,
+              "tp": 5,
+              "unknown_negative": 0,
+              "unknown_positive": 0
+            },
+            "out_of_order": {
+              "f1": 0.0,
+              "fn": 5,
+              "fp": 0,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.0,
+              "precision": null,
+              "recall": 0.0,
+              "tn": 0,
+              "tp": 0,
+              "unknown_negative": 10,
+              "unknown_positive": 5
+            }
+          },
+          "run_status": "available",
+          "tn": 3,
+          "tp": 6,
+          "unknown_negative": 18,
+          "unknown_positive": 9,
+          "unknown_rate": 0.54
+        },
+        "sun": {
+          "coverage": 0.46,
+          "fn": 9,
+          "fp": 14,
+          "incorrect_actor_f1": 0.25,
+          "missing_action_f1": 0.45454545454545453,
+          "not_applicable_cells": 10,
+          "out_of_order_f1": 0.0,
+          "overall_f1": 0.34285714285714286,
+          "overall_precision": 0.3,
+          "overall_recall": 0.4,
+          "per_type": {
+            "incorrect_actor": {
+              "f1": 0.25,
+              "fn": 4,
+              "fp": 2,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.2,
+              "precision": 0.3333333333333333,
+              "recall": 0.2,
+              "tn": 0,
+              "tp": 1,
+              "unknown_negative": 8,
+              "unknown_positive": 4
+            },
+            "missing_action": {
+              "f1": 0.45454545454545453,
+              "fn": 0,
+              "fp": 12,
+              "not_applicable_cells": 0,
+              "observable_coverage": 1.0,
+              "precision": 0.29411764705882354,
+              "recall": 1.0,
+              "tn": 3,
+              "tp": 5,
+              "unknown_negative": 0,
+              "unknown_positive": 0
+            },
+            "out_of_order": {
+              "f1": 0.0,
+              "fn": 5,
+              "fp": 0,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.0,
+              "precision": null,
+              "recall": 0.0,
+              "tn": 0,
+              "tp": 0,
+              "unknown_negative": 10,
+              "unknown_positive": 5
+            }
+          },
+          "run_status": "available",
+          "tn": 3,
+          "tp": 6,
+          "unknown_negative": 18,
+          "unknown_positive": 9,
+          "unknown_rate": 0.54
+        },
+        "winter": {
+          "coverage": 0.7,
+          "fn": 8,
+          "fp": 6,
+          "incorrect_actor_f1": 0.8888888888888888,
+          "missing_action_f1": 0.42857142857142855,
+          "not_applicable_cells": 10,
+          "out_of_order_f1": 0.0,
+          "overall_f1": 0.5,
+          "overall_precision": 0.5384615384615384,
+          "overall_recall": 0.4666666666666667,
+          "per_type": {
+            "incorrect_actor": {
+              "f1": 0.8888888888888888,
+              "fn": 1,
+              "fp": 0,
+              "not_applicable_cells": 5,
+              "observable_coverage": 1.0,
+              "precision": 1.0,
+              "recall": 0.8,
+              "tn": 10,
+              "tp": 4,
+              "unknown_negative": 0,
+              "unknown_positive": 0
+            },
+            "missing_action": {
+              "f1": 0.42857142857142855,
+              "fn": 2,
+              "fp": 6,
+              "not_applicable_cells": 0,
+              "observable_coverage": 1.0,
+              "precision": 0.3333333333333333,
+              "recall": 0.6,
+              "tn": 9,
+              "tp": 3,
+              "unknown_negative": 0,
+              "unknown_positive": 0
+            },
+            "out_of_order": {
+              "f1": 0.0,
+              "fn": 5,
+              "fp": 0,
+              "not_applicable_cells": 5,
+              "observable_coverage": 0.0,
+              "precision": null,
+              "recall": 0.0,
+              "tn": 0,
+              "tp": 0,
+              "unknown_negative": 10,
+              "unknown_positive": 5
+            }
+          },
+          "run_status": "available_native",
+          "tn": 19,
+          "tp": 7,
+          "unknown_negative": 10,
+          "unknown_positive": 5,
+          "unknown_rate": 0.3
+        }
+      },
+      "order_failure_category_summary": {
+        "ours": {
+          "endpoint_similarity_below_gamma": 60,
+          "projection_rejected_syntax": 40
+        },
+        "sun": {
+          "endpoint_similarity_below_gamma": 60,
+          "projection_rejected_range": 40
+        },
+        "winter": {
+          "no_rule_order_relation": 100
+        }
+      },
+      "predictions": {
+        "path": "outputs/development/stage3_table3_v4_r2/predictions.json",
+        "sha256": "969c5f8ae573fb9f0792b62ede1d449204a1318c9d3389315348dc2bdc3dce8b"
+      },
+      "r1_r2_defects_corrected": [
+        "temporal_projection_v3 strict marker.dep mark/prep direct pcomp rule; no extra advcl/ccomp/xcomp/acl/relcl scan",
+        "bounded nominal chunk/of-chain with explicit incomplete of-chain rejection",
+        "failure reasons separated from generic no_rule_order_endpoints",
+        "exact case-id/rule-id set checks and output hash binding retained"
+      ],
+      "reference_identity": {
+        "claim": "Given applicable-scope checking only; not full GDPR end-to-end F1 and not MAP.",
+        "human_adjudicated": false,
+        "name": "AI construction reference",
+        "reference_is_gold": false
+      },
+      "remaining_capability_gaps": [
+        "All three methods have out_of_order F1=0 with 100% unknown coverage in that class; the five current source excerpts provide before/prior-to evidence, while Winter native sequence markers cover different forms. Wiring fixes alone do not solve this.",
+        "Sun/Ours incorrect_actor coverage is 0.2 (3/15); Winter is 1.0 after the global role-candidate fix. The difference is method capability/input semantics, not an Ours-vs-baseline LLM claim.",
+        "Article14(3)(a), Article33(2), and Article43(1) natural-after candidates are inventoried separately and are NOT part of the current 50-cell benchmark. A future independently authorised benchmark must add sources, BPMN processes, and reference work before order results are trustworthy.",
+        "Reference is AI-constructed (`is_gold=false`, `human_adjudicated=false`); no formal GDPR end-to-end or MAP claim is made."
+      ],
+      "report_json": {
+        "path": "outputs/reports/stage3_table3_v4_r2.json",
+        "sha256": "947667e858b2db1bd35560ea9232590ce0a57661ef1d6fec1a4ca0131a72bdac"
+      },
+      "report_manifest": {
+        "path": "outputs/reports/stage3_table3_v4_r2.manifest.json",
+        "sha256": "4b8e97d415bab44c67f7bedff18f38d6137a224852a550f6f4939af2eff6db59"
+      },
+      "report_markdown": {
+        "path": "outputs/reports/stage3_table3_v4_r2.md",
+        "sha256": "a2e74524e25a9965200a99770a2609e765e6b3a8412b4314043a43f5b0b56a25"
+      },
+      "rule_records": {
+        "path": "outputs/development/stage3_table3_v4_r2/rule_records.json",
+        "sha256": "6c11bcd45eebb4e2f0b7b7779e64e64e419f6f130b077282c29fce095f9a1298"
+      },
+      "run_dir": "outputs/development/stage3_table3_v4_r2",
+      "run_manifest": {
+        "path": "outputs/development/stage3_table3_v4_r2/run_manifest.json",
+        "sha256": "eaff286c1608128e207972da8bf5de0f72ad0a70bf69a8c473db08f17312afa8"
+      },
+      "scope": {
+        "bpmn_count": 20,
+        "case_count": 20,
+        "claim_boundary": "checking on independently specified applicable regulation-process pairs; not end-to-end rule selection or complete GDPR F1",
+        "dataset_id": "stage3_scoped_gdpr_v4",
+        "family_count": 5,
+        "human_adjudicated": false,
+        "negative_cells_per_method": 35,
+        "not_applicable_cells_per_method": 10,
+        "positive_cells_per_method": 15,
+        "reference_is_gold": false,
+        "rule_ids": [
+          "article13p3",
+          "article14p4",
+          "article18p3",
+          "article35p1",
+          "article36p1"
+        ],
+        "scored_cells_per_method": 50,
+        "signals_per_method": 300,
+        "signals_total": 900
+      },
+      "signals_matrix": {
+        "path": "outputs/development/stage3_table3_v4_r2/signals_matrix.json",
+        "sha256": "49cd5c04de8e4c7a47bb39b4dcd8bab42daa1160418fab5865fb6942193125f8"
+      },
+      "sources": [
+        {
+          "path": "outputs/reports/stage3_table3_v4_r1.json",
+          "role": "full metrics/evidence",
+          "sha256": "c7b85be1d33e91edc2ec04ad9345d9797ee104b1f3fbf026a003da8ab27a96d3"
+        },
+        {
+          "path": "outputs/reports/stage3_table3_v4_r1.md",
+          "role": "paper-facing table",
+          "sha256": "3eb5496ca88319eac07df6e0987ee58b46e64a209a05874d29d471312425c68c"
+        },
+        {
+          "path": "outputs/reports/stage3_table3_v4_r1.manifest.json",
+          "role": "evaluation manifest",
+          "sha256": "ca6dd701602743b2f17d57b433fc3d06bdf6e219d46600fba14373e74d516345"
+        },
+        {
+          "path": "outputs/development/stage3_table3_v4_r1/run_manifest.json",
+          "role": "inference manifest",
+          "sha256": "a8ad62227d7fb2e2cd38e4c957aa28b2a56af66b0ad1ae39d1cdc70ff2941b65"
+        },
+        {
+          "path": "outputs/development/stage3_table3_v4_r1/predictions.json",
+          "role": "per-item predictions",
+          "sha256": "4104ceba62549b2fe79100f66e4dcab83e37caf4203e067c368ef8d40c1da23a"
+        },
+        {
+          "path": "outputs/development/stage3_table3_v4_r1/signals_matrix.json",
+          "role": "900 flattened signals",
+          "sha256": "02eb24f36617d5a9ef0b6e9b2c47c01e8ae834c4eb9e8862570afbcaa6fdac06"
+        },
+        {
+          "path": "outputs/development/stage3_table3_v4_r1/global_role_candidates.json",
+          "role": "Winter global role input",
+          "sha256": "08212bbf5118e53ca20c7e292e2a97b081cb95dc4c58f22a3ef398e1986dfcca"
+        },
+        {
+          "path": "data/predictions/stage3_v4_d1_frozen_v1/predictions.json",
+          "role": "Ours real D1 extraction",
+          "sha256": "be83c1c02e96037dca948450a835dd01f46c4cd9a34b8ab557e498a427d44821"
+        },
+        {
+          "path": "data/predictions/stage3_v4_d1_frozen_v1/manifest.json",
+          "role": "Ours D1 run manifest",
+          "sha256": "dcdba18d7a6bd4ec80a1d1d3b8e474babee892800fc02040024a287a9405ae5b"
+        },
+        {
+          "path": "outputs/reports/stage3_temporal_scope_candidates_r1.json",
+          "role": "future natural-after candidate inventory, not benchmark",
+          "sha256": "716fed33a91c82c84fb0f64da5d7a00e8055ece8c5d8b0f5afc57cdb89ee7a1b"
+        },
+        {
+          "path": "outputs/reports/stage3_d1_v4_r1_live_contract_check.json",
+          "role": "live official model/price verification",
+          "sha256": "23d82220d97dc4bedd7e807b0a3d56b01409ca8038d8cdd88052a1fd6d0b706a"
+        },
+        {
+          "path": "outputs/reports/stage3_d1_v4_r1_raw_responses_safe.json",
+          "role": "safe raw response archive (base64 SHA-bound)",
+          "sha256": "c7211abe633bdd5ae2af1713d03fde85dc762e11c26594152aea7e8ad77e1e11"
+        }
+      ],
+      "status": "needs_method_review"
+    }
+  },
+  "unsupported_expected_results": [
+    "Table 3 Ours > Sun cannot be tested because D1 predictions are absent (blocker, not a negative score chosen by the agent).",
+    "Sun out_of_order and Winter out_of_order are unobservable on this scoped construction (all denominators zero).",
+    "Winter incorrect_actor is constant satisfied here and yields F1=0 against the five actor violations.",
+    "The scoped reference is is_gold=false / human_adjudicated=false; no complete GDPR end-to-end or MAP claim is supported."
+  ],
+  "watch_items": {
+    "candidate_sources_not_added": [
+      "Article14(3)(a)",
+      "Article33(2)",
+      "Article43(1)"
+    ],
+    "d1_calls_used": 5,
+    "d1_no_retries": true,
+    "out_of_order_all_unknown": true,
+    "table3_status": "needs_method_review"
+  }
+}

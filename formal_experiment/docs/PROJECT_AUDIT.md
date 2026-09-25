@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-24
+**更新时间**：2026-09-25
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -9,7 +9,17 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
-## 当前优先级：表二解释与正式实验文件备份（2026-09-24）
+## 当前优先级：S3-TABLE3-V4-R2 纠错与原因定位（2026-09-25）
+
+- R2 已完成：在保留 v4/R1 字节证据的前提下，新增 strict `temporal_projection_v3`、非评分失败原因诊断、精确 case/rule ID 集合校验和独立 R2 评价器；真实 API 新调用为 0，复用 `stage3_v4_d1_frozen_v1`。
+- R2 结果仍为 `needs_method_review`：Sun/Ours/Winter 的 `out_of_order` 15 个可评单元全部 unknown，F1=0.0000；Sun/Ours overall P/R/F1 为 0.3000/0.4000/0.3429、coverage 0.4600；Winter 为 0.5385/0.4667/0.5000、coverage 0.7000。结果与 R1 相同，说明本轮纠正了实现偏差但没有把顺序能力从不可观察变为可观察。
+- R2 顺序失败原因已分开：Sun 40 个 `projection_rejected_range`、60 个 `endpoint_similarity_below_gamma`；Ours 40 个 `projection_rejected_syntax`、60 个 `endpoint_similarity_below_gamma`；Winter 100 个 `no_rule_order_relation`（均按 20 case×5 rule 的 out_of_order 信号计）。
+- 关键 R2 差异：article18p3 不再由额外 advcl/ccomp 扫描选出 `is lifted`，改由限定 nominal 分支得到 `the restriction of processing`；article13p3/14p4 仍无关系，但原因分别落到 Sun range 与 Ours syntax；article35p1/36p1 仍有关系但两端映射没过 gamma。
+- 交付：`outputs/development/stage3_table3_v4_r2/`、`outputs/reports/stage3_table3_v4_r2.{json,md,manifest.json}`、`outputs/reports/stage3_table3_v4_r2_cause_analysis.{json,md}`、`outputs/reports/stage3_temporal_scope_candidates_r2.{json,md}`。
+- 本轮只纠正确定的实现偏差并定位卡点，**不代表最终表三完成**；三项 after/temporal 候选仍为 `candidate_not_benchmark`，未进入 50 单元，也未申请新增 API 额度。
+- 旧 R1/表二判断保留在下方历史段落，不重写旧 manifest、旧期望 SHA 或旧事件。
+
+## 历史优先级：表二解释与正式实验文件备份（2026-09-24）
 
 - 用户最新要求先弄清 000、每条法规独立请求和模块必要性，再统一 Stage2 方法身份。
   只做实验与数据，不写论文；单模块方案仍在考虑，未将 100 替换为正式 Ours。
@@ -32,7 +42,7 @@ Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见�
 - Stage3 仍按下一节 R1 待纠错，Ours 五条新输入的预测仍缺失，表三未验收。
   既有五次授权保留；若最终 Stage2 prompt 改变，先对齐方法/请求绑定，不挪用旧授权。
 
-## Stage3 待执行：S3-TABLE3-V4-R1，Codex 复核后退回纠错（2026-09-24）
+## 历史 Stage3 状态：S3-TABLE3-V4-R1，Codex 复核后退回纠错（2026-09-24）
 
 - 复核对象 2f9dd9f 已推送；保留其诊断证据，**表三未验收**。本轮 Codex 只读
   检查源代码/既有产物、重算 coverage 算术、核对请求序列化及来源，未改实验代码、
@@ -1664,6 +1674,28 @@ development 准备可受控并行；Stage 3 LLM/Hybrid、正式 Oracle、端到�
 - 验收判断：实验已真实完成且旧泄漏 F1=1 口径已修复；正向 Ours 主张不满足。下一项若要
   继续，只能单独预注册额外 grounding 实验臂并说明新增变量，或补齐有原文依据的 order
   标注产生合法 order 分母，不得围绕本轮分数调参。
+# S3-TABLE3-V4-R2 status (2026-09-25)
+
+Status: `needs_method_review` (R2 fixes the confirmed R1 projection/failure-record defects; Table 3 is still not accepted because all three methods have no observable order denominator).
+
+R2 deliverables:
+- Strict shared projection: `src/bpc_hybrid/sun_stage3/temporal_projection_v3.py` (`sun_stage3_temporal_projection_v3@1.0.0`).
+- Non-scoring failure diagnostics: `src/bpc_hybrid/sun_stage3/order_failure_diagnostics_v1.py`.
+- Offline matrix: `outputs/development/stage3_table3_v4_r2/`.
+- Independent report: `outputs/reports/stage3_table3_v4_r2.{json,md,manifest.json}`.
+- Cause localization and corrected candidates: `outputs/reports/stage3_table3_v4_r2_cause_analysis.{json,md}`, `outputs/reports/stage3_temporal_scope_candidates_r2.{json,md}`.
+- Actual new API calls: 0. D1 real predictions reused from `data/predictions/stage3_v4_d1_frozen_v1/`.
+
+R2 metrics (same arithmetic as R1):
+
+| Method | Missing F1 | Actor F1 | Order F1 | Overall P | Overall R | Overall F1 | Coverage | Status |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| Sun | 0.4545 | 0.2500 | 0.0000 | 0.3000 | 0.4000 | 0.3429 | 0.4600 | available |
+| Ours | 0.4545 | 0.2500 | 0.0000 | 0.3000 | 0.4000 | 0.3429 | 0.4600 | available |
+| Winter | 0.4286 | 0.8889 | 0.0000 | 0.5385 | 0.4667 | 0.5000 | 0.7000 | available_native |
+
+R2 order-failure categories (20 case×5 rule signals per method): Sun 40 projection_rejected_range + 60 endpoint_similarity_below_gamma; Ours 40 projection_rejected_syntax + 60 endpoint_similarity_below_gamma; Winter 100 no_rule_order_relation. R2 still does not turn these into satisfied/violated; the remaining blocker is endpoint mapping/threshold plus native after/then coverage.
+
 # S3-TABLE3-V4-R1 status (2026-09-24)
 
 Status: `needs_method_review` (all three methods have real Table 3 data; order class is still unobservable for all three).
