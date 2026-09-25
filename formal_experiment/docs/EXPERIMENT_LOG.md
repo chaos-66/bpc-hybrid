@@ -5529,3 +5529,21 @@
 - 仍存在 blocker：无
 - 备注：M2 had not yet been scored. Fixed spaCy 3.8 Vocab lookup (vocab[key], not vocab.get), derived vector dimension from vocab.vectors_length (300), and bound official en_core_web_lg 3.8.0 wheel/model SHA in the M2 config. M1 frozen config/outputs are unchanged.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-25T06:33:19.157666+00:00 - S3-TABLE3-R3 M2 complete diagnostic matrix, independent evaluation, and final delivery
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=stage3_table3_r3_m2；阶段=S3-TABLE3-R3-INTEGRATION；方法=M2_P2_v4_lg；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_stage3_table3_r3.py --config formal_experiment/configs/stage3_table3_r3_m2.json --out-dir formal_experiment/outputs/development/stage3_table3_r3_m2 --lg-model-path <official en_core_web_lg 3.8.0 external cache> --overwrite`
+- manifest：formal_experiment/outputs/development/stage3_table3_r3_m2/run_manifest.json
+- 结果摘要：M2 complete: 900 signals, Winter reused; overall F1 Sun 0.4000, Ours 0.3333, Winter 0.5000; M2 not better than M1.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：是；正式实验就绪：是
+- 测试：8 passed in 4.25s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`1655278ab860a08685aa024a33469e611dd848c3`；相关未提交路径：26 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：无
+- 备注：M2 required two pre-scoring software fixes: spaCy 3.8 Vocab lookup/dimension reporting and backend-key normalization. The first M2 output was overwritten after the explicit software failure; the successful complete M2 matrix is bound in the run manifest. M1 outputs were not rerun. Development/retrospective only.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

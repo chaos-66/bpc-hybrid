@@ -8,22 +8,22 @@ Coverage = `(cells - unknown_positive - unknown_negative) / cells`; positive unk
 
 | Method | Missing-F1 | Actor-F1 | Order-F1 | Overall-P | Overall-R | Overall-F1 | Coverage | Status |
 |---|---:|---:|---:|---:|---:|---:|---:|---|
-| sun | 0.5333 | 0.4706 | 0.0000 | 0.3636 | 0.5333 | 0.4324 | 0.6400 | available |
-| ours | 0.5263 | 0.3636 | 0.0000 | 0.3500 | 0.4667 | 0.4000 | 0.5200 | available |
+| sun | 0.4444 | 0.4706 | 0.0000 | 0.3200 | 0.5333 | 0.4000 | 0.6400 | available |
+| ours | 0.4286 | 0.3636 | 0.0000 | 0.3333 | 0.3333 | 0.3333 | 0.5200 | available |
 | winter | 0.4286 | 0.8889 | 0.0000 | 0.5385 | 0.4667 | 0.5000 | 0.7000 | available_native |
 
 ## Per-type counts and unknown
 
 | Method | Type | TP | FP | FN | TN | Unknown-positive | Unknown-negative | N/A | P | R | F1 | Coverage |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| sun | missing_action | 4 | 6 | 1 | 9 | 0 | 0 | 0 | 0.4000 | 0.8000 | 0.5333 | 1.0000 |
+| sun | missing_action | 4 | 9 | 1 | 6 | 0 | 0 | 0 | 0.3077 | 0.8000 | 0.4444 | 1.0000 |
 | sun | incorrect_actor | 4 | 8 | 1 | 0 | 1 | 2 | 5 | 0.3333 | 0.8000 | 0.4706 | 0.8000 |
 | sun | out_of_order | 0 | 0 | 5 | 0 | 5 | 10 | 5 | null | 0.0000 | 0.0000 | 0.0000 |
-| sun | OVERALL | 8 | 14 | 7 | 9 | 6 | 12 | 10 | 0.3636 | 0.5333 | 0.4324 | 0.6400 |
-| ours | missing_action | 5 | 9 | 0 | 6 | 0 | 0 | 0 | 0.3571 | 1.0000 | 0.5263 | 1.0000 |
+| sun | OVERALL | 8 | 17 | 7 | 6 | 6 | 12 | 10 | 0.3200 | 0.5333 | 0.4000 | 0.6400 |
+| ours | missing_action | 3 | 6 | 2 | 9 | 0 | 0 | 0 | 0.3333 | 0.6000 | 0.4286 | 1.0000 |
 | ours | incorrect_actor | 2 | 4 | 3 | 0 | 3 | 6 | 5 | 0.3333 | 0.4000 | 0.3636 | 0.4000 |
 | ours | out_of_order | 0 | 0 | 5 | 0 | 5 | 10 | 5 | null | 0.0000 | 0.0000 | 0.0000 |
-| ours | OVERALL | 7 | 13 | 8 | 6 | 8 | 16 | 10 | 0.3500 | 0.4667 | 0.4000 | 0.5200 |
+| ours | OVERALL | 5 | 10 | 10 | 9 | 8 | 16 | 10 | 0.3333 | 0.3333 | 0.3333 | 0.5200 |
 | winter | missing_action | 3 | 6 | 2 | 9 | 0 | 0 | 0 | 0.3333 | 0.6000 | 0.4286 | 1.0000 |
 | winter | incorrect_actor | 4 | 0 | 1 | 10 | 0 | 0 | 5 | 1.0000 | 0.8000 | 0.8889 | 1.0000 |
 | winter | out_of_order | 0 | 0 | 5 | 0 | 5 | 10 | 5 | null | 0.0000 | 0.0000 | 0.0000 |
@@ -31,8 +31,8 @@ Coverage = `(cells - unknown_positive - unknown_negative) / cells`; positive unk
 
 ## Method status
 
-- sun: available; overall F1=0.4324
-- ours: available; overall F1=0.4000
+- sun: available; overall F1=0.4000
+- ours: available; overall F1=0.3333
 - winter: available_native; overall F1=0.5000
 
 ## Diagnostics

@@ -1,0 +1,38 @@
+{
+  "forbidden_inputs": [
+    "construction_reference.json",
+    "error/mutation type",
+    "pair/control/family metadata",
+    "role-to-case/activity mapping"
+  ],
+  "model_sources": {
+    "data/development/stage3_reconstruction_v4/bpmn/case_06bacb820524.bpmn": "418a72776c16b1276e63d38905199abd93cd767dcebd1ea54786b377708ac2f9",
+    "data/development/stage3_reconstruction_v4/bpmn/case_0adc59ea1a26.bpmn": "3df5d08e87685c5d0eb3b1e476f0c6701482323389890694ec9f72645b50be2a",
+    "data/development/stage3_reconstruction_v4/bpmn/case_0f7180438501.bpmn": "728e58c044dbf8131efa6edb516f7cfcd01bade4dc25419b30960a7be8617df7",
+    "data/development/stage3_reconstruction_v4/bpmn/case_3d2aaae29b37.bpmn": "120ddf96681d12f2ff2db162b60def2dac2c262f63685e37c62373b86fb92121",
+    "data/development/stage3_reconstruction_v4/bpmn/case_44fc51ad7da0.bpmn": "937d91e1bc2d5357726fed806954307d26c94c15d1ef7b00bd88c3c8cbc40141",
+    "data/development/stage3_reconstruction_v4/bpmn/case_5c2cca2ca4cf.bpmn": "dfde62b01f1496b2441b623ce1994bd10694b46c9c3f7b21b419ba88227cea4c",
+    "data/development/stage3_reconstruction_v4/bpmn/case_7dc164f81677.bpmn": "897b0a71a63d51d15636e859a3804f22835072fab5eb4d1ac8f7b779cda5118a",
+    "data/development/stage3_reconstruction_v4/bpmn/case_89c44a45c04d.bpmn": "d9be05ecd43e09788740341c2d44eef7b2c63a1de7f95c5475aad73e1bc90959",
+    "data/development/stage3_reconstruction_v4/bpmn/case_8cbb7ad90a6d.bpmn": "685b8ebdd8bec14098aea6267fdc0d44820aa691daaaf6b4c0967165c2b02adc",
+    "data/development/stage3_reconstruction_v4/bpmn/case_92fe183843b7.bpmn": "b9d84bc7fb6104cc1a4ae7b3d000594d95c1161300cae1c72d904a70447f6a1c",
+    "data/development/stage3_reconstruction_v4/bpmn/case_9a62a7fd9853.bpmn": "4ed770ae14e70b05ca502c81e1c3b338dff00de2dd0ca4ff49547dcb010efec9",
+    "data/development/stage3_reconstruction_v4/bpmn/case_aa37540e7989.bpmn": "2e393e62c81e00ee71da41bd28f7774c2619dd158c72d657a3726d5239b37dfc",
+    "data/development/stage3_reconstruction_v4/bpmn/case_bbe530084075.bpmn": "f3086d0a2d38c1faaaa0f43d0624c391a63349cbbab4935e692d489450d43a28",
+    "data/development/stage3_reconstruction_v4/bpmn/case_c4d9054721a1.bpmn": "86dbed009c3838a5180cb56f2884626cb82a8386b6f18d0159d2184afdaacf55",
+    "data/development/stage3_reconstruction_v4/bpmn/case_d038f52f8cf3.bpmn": "573695002d52136b882a3080048d5402a7ab29361a19b90b7cc529299985dc48",
+    "data/development/stage3_reconstruction_v4/bpmn/case_d8a82d59687d.bpmn": "6e29d0af4e7236b598f9e4653712f83ea0c4acd63659be55eb23001098a69347",
+    "data/development/stage3_reconstruction_v4/bpmn/case_f65436fd6574.bpmn": "91bebfa08ea88b27d4903b72a8cbcea14adb594c173019c45ccd4ba309238c4d",
+    "data/development/stage3_reconstruction_v4/bpmn/case_f8aaa652c17b.bpmn": "e861b5bef9a4df9411a30a27232724782acc730c6fdc54e64582b50ffa2e33c0",
+    "data/development/stage3_reconstruction_v4/bpmn/case_fb254253b6dd.bpmn": "07910d29e14a2cabc32205fe0f492b561ef2cac61993d2362167e0ce6aed0834",
+    "data/development/stage3_reconstruction_v4/bpmn/case_fd4b197b953b.bpmn": "89ec7909827c11b1b5adf89b546f9a95af03f727d028b26ceb5f7ea42b7184a2"
+  },
+  "normalization": "lower/strip unique",
+  "role_count": 2,
+  "roles": [
+    "controller",
+    "data subject"
+  ],
+  "schema_version": "stage3_winter_global_role_candidates@1.0.0",
+  "source": "inference_view items only"
+}

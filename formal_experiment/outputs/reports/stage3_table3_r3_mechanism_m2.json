@@ -1,0 +1,1060 @@
+{
+  "backend": "m2",
+  "backend_info": {
+    "backend": "m2_en_core_web_lg_static_vectors",
+    "dimension": 300,
+    "parser": "en_core_web_sm",
+    "vector_model": "en_core_web_lg",
+    "version": "3.8.0"
+  },
+  "matching_cases": [
+    {
+      "actual_selected": "N1",
+      "backend_info": {
+        "backend": "m2_en_core_web_lg_static_vectors",
+        "dimension": 300,
+        "parser": "en_core_web_sm",
+        "vector_model": "en_core_web_lg",
+        "version": "3.8.0"
+      },
+      "best_similarity": 1.0,
+      "candidates": [
+        {
+          "match_source_text": "Approve the invoice",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Approve the invoice",
+          "reason": null,
+          "selected": true,
+          "similarity": 1.0,
+          "tied": true
+        },
+        {
+          "match_source_text": "Archive the invoice",
+          "node_id": "N2",
+          "node_type": "activity",
+          "original_label": "Archive the invoice",
+          "reason": null,
+          "selected": false,
+          "similarity": 0.7816746830940247,
+          "tied": false
+        }
+      ],
+      "case_id": "same_object_different_action",
+      "domain": "invoice",
+      "expected_behavior_met": true,
+      "expected_selected": "N1",
+      "kind": "action",
+      "known_limitation": null,
+      "limitation_observed": null,
+      "meets_gamma": true,
+      "passed": true,
+      "rule_action": "approve the invoice",
+      "tied": [
+        "N1"
+      ]
+    },
+    {
+      "actual_selected": "N2",
+      "backend_info": {
+        "backend": "m2_en_core_web_lg_static_vectors",
+        "dimension": 300,
+        "parser": "en_core_web_sm",
+        "vector_model": "en_core_web_lg",
+        "version": "3.8.0"
+      },
+      "best_similarity": 1.0,
+      "candidates": [
+        {
+          "match_source_text": "Archive the parcel",
+          "node_id": "N2",
+          "node_type": "activity",
+          "original_label": "Archive the parcel",
+          "reason": null,
+          "selected": true,
+          "similarity": 1.0,
+          "tied": true
+        },
+        {
+          "match_source_text": "Archive the invoice",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Archive the invoice",
+          "reason": null,
+          "selected": false,
+          "similarity": 0.8109912872314453,
+          "tied": false
+        }
+      ],
+      "case_id": "same_action_different_object",
+      "domain": "logistics",
+      "expected_behavior_met": true,
+      "expected_selected": "N2",
+      "kind": "action",
+      "known_limitation": null,
+      "limitation_observed": null,
+      "meets_gamma": true,
+      "passed": true,
+      "rule_action": "archive the parcel",
+      "tied": [
+        "N2"
+      ]
+    },
+    {
+      "actual_selected": "N1",
+      "backend_info": {
+        "backend": "m2_en_core_web_lg_static_vectors",
+        "dimension": 300,
+        "parser": "en_core_web_sm",
+        "vector_model": "en_core_web_lg",
+        "version": "3.8.0"
+      },
+      "best_similarity": 1.0,
+      "candidates": [
+        {
+          "match_source_text": "Approve the invoice",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Approve the invoice",
+          "reason": null,
+          "selected": true,
+          "similarity": 1.0,
+          "tied": true
+        },
+        {
+          "match_source_text": "Approve the invoice",
+          "node_id": "N2",
+          "node_type": "activity",
+          "original_label": "Approve the invoice",
+          "reason": null,
+          "selected": false,
+          "similarity": 1.0,
+          "tied": true
+        }
+      ],
+      "case_id": "duplicate_node_names_stable_id",
+      "domain": "invoice",
+      "expected_behavior_met": true,
+      "expected_selected": "N1",
+      "kind": "action",
+      "known_limitation": null,
+      "limitation_observed": null,
+      "meets_gamma": true,
+      "passed": true,
+      "rule_action": "approve the invoice",
+      "tied": [
+        "N1",
+        "N2"
+      ]
+    },
+    {
+      "actual_status": "satisfied",
+      "backend_info": {
+        "backend": "m2_en_core_web_lg_static_vectors",
+        "dimension": 300,
+        "parser": "en_core_web_sm",
+        "vector_model": "en_core_web_lg",
+        "version": "3.8.0"
+      },
+      "case_id": "normal_order_satisfied",
+      "domain": "logistics",
+      "expected": "satisfied",
+      "kind": "order",
+      "passed": true,
+      "raw": {
+        "denominator": 1,
+        "details": [
+          {
+            "after_activity": "N2",
+            "backward_reachable": false,
+            "before_activity": "N1",
+            "constraint": [
+              "approve the invoice",
+              "archive the invoice"
+            ],
+            "forward_reachable": true,
+            "mapped": true,
+            "satisfied": true
+          }
+        ],
+        "satisfied": 1,
+        "score": 0.0,
+        "violations": 0
+      }
+    },
+    {
+      "actual_status": "violated",
+      "backend_info": {
+        "backend": "m2_en_core_web_lg_static_vectors",
+        "dimension": 300,
+        "parser": "en_core_web_sm",
+        "vector_model": "en_core_web_lg",
+        "version": "3.8.0"
+      },
+      "case_id": "reverse_order_violated",
+      "domain": "logistics",
+      "expected": "violated",
+      "kind": "order",
+      "passed": true,
+      "raw": {
+        "denominator": 1,
+        "details": [
+          {
+            "after_activity": "N1",
+            "backward_reachable": true,
+            "before_activity": "N2",
+            "constraint": [
+              "archive the invoice",
+              "approve the invoice"
+            ],
+            "forward_reachable": false,
+            "mapped": true,
+            "satisfied": false
+          }
+        ],
+        "satisfied": 0,
+        "score": 1.0,
+        "violations": 1
+      }
+    },
+    {
+      "actual_selected": "N1",
+      "backend_info": {
+        "backend": "m2_en_core_web_lg_static_vectors",
+        "dimension": 300,
+        "parser": "en_core_web_sm",
+        "vector_model": "en_core_web_lg",
+        "version": "3.8.0"
+      },
+      "best_similarity": 0.7340556383132935,
+      "candidates": [
+        {
+          "match_source_text": "Scan",
+          "node_id": "N1",
+          "node_type": "activity",
+          "original_label": "Scan the parcel",
+          "reason": null,
+          "selected": true,
+          "similarity": 0.7340556383132935,
+          "tied": true
+        }
+      ],
+      "case_id": "p2_imperative_vocab_limitation_scan",
+      "domain": "logistics",
+      "expected_behavior_met": false,
+      "expected_selected": "N1",
+      "kind": "action",
+      "known_limitation": "Frozen P2 imperative handling does not recognise capitalized 'Scan' as a verb root, so the model-side business object is lost. This is a P2 vocabulary limitation, not a scorer or projection bug; the observed non-match is retained.",
+      "limitation_observed": true,
+      "meets_gamma": false,
+      "passed": true,
+      "rule_action": "scan the parcel",
+      "tied": [
+        "N1"
+      ]
+    }
+  ],
+  "projection_cases": [
+    {
+      "actual_edges": [
+        [
+          "the parcel arrives at the dock",
+          "scans the parcel"
+        ]
+      ],
+      "audit": {
+        "clause_id": "fixture_logi_active_after",
+        "derived_edges": [
+          {
+            "after_offsets": [
+              14,
+              30
+            ],
+            "after_text": "scans the parcel",
+            "before_offsets": [
+              37,
+              67
+            ],
+            "before_text": "the parcel arrives at the dock",
+            "marker": "after",
+            "marker_offsets": [
+              31,
+              36
+            ],
+            "second_endpoint_branch": "local_verbal_predicate",
+            "second_endpoint_kind": "verbal",
+            "second_endpoint_predicate": "arrives",
+            "source": "derived"
+          }
+        ],
+        "markers": [
+          {
+            "edge": {
+              "after_offsets": [
+                14,
+                30
+              ],
+              "after_text": "scans the parcel",
+              "before_offsets": [
+                37,
+                67
+              ],
+              "before_text": "the parcel arrives at the dock",
+              "marker": "after",
+              "marker_offsets": [
+                31,
+                36
+              ],
+              "second_endpoint_branch": "local_verbal_predicate",
+              "second_endpoint_kind": "verbal",
+              "second_endpoint_predicate": "arrives",
+              "source": "derived"
+            },
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "after",
+            "marker_end": 36,
+            "marker_start": 31,
+            "second_endpoint_audit": {
+              "branch": "local_verbal_predicate",
+              "global_span": [
+                37,
+                67
+              ],
+              "head_subtree_included": false,
+              "local_predicate_count": 1,
+              "local_predicates": [
+                {
+                  "dep": "ROOT",
+                  "head": "arrives",
+                  "head_pos": "VERB",
+                  "index": 3,
+                  "pos": "VERB",
+                  "text": "arrives"
+                }
+              ],
+              "local_span": [
+                1,
+                31,
+                "the parcel arrives at the dock"
+              ],
+              "marker_end": 36,
+              "predicate": {
+                "dep": "ROOT",
+                "head": "arrives",
+                "head_pos": "VERB",
+                "index": 3,
+                "pos": "VERB",
+                "text": "arrives"
+              },
+              "predicate_global_span": [
+                48,
+                55
+              ],
+              "segment": " the parcel arrives at the dock.",
+              "segment_global_start": 36,
+              "selected_span": {
+                "end": 68,
+                "start": 31
+              },
+              "subtree_token_count": 8
+            },
+            "span_end": 68,
+            "span_id": "c1",
+            "span_length": 37,
+            "span_start": 31
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [],
+        "status": "derived"
+      },
+      "case_id": "logi_active_after",
+      "domain": "logistics",
+      "expect_predicate": "arrives",
+      "expected_edges": [
+        [
+          "the parcel arrives at the dock",
+          "scans the parcel"
+        ]
+      ],
+      "passed": true,
+      "rejection_reason": null
+    },
+    {
+      "actual_edges": [
+        [
+          "be approved",
+          "the payment is dispatched"
+        ]
+      ],
+      "audit": {
+        "clause_id": "fixture_invoice_before_passive",
+        "derived_edges": [
+          {
+            "after_offsets": [
+              36,
+              61
+            ],
+            "after_text": "the payment is dispatched",
+            "before_offsets": [
+              17,
+              28
+            ],
+            "before_text": "be approved",
+            "marker": "before",
+            "marker_offsets": [
+              29,
+              35
+            ],
+            "second_endpoint_branch": "local_verbal_predicate",
+            "second_endpoint_kind": "verbal",
+            "second_endpoint_predicate": "dispatched",
+            "source": "derived"
+          }
+        ],
+        "markers": [
+          {
+            "edge": {
+              "after_offsets": [
+                36,
+                61
+              ],
+              "after_text": "the payment is dispatched",
+              "before_offsets": [
+                17,
+                28
+              ],
+              "before_text": "be approved",
+              "marker": "before",
+              "marker_offsets": [
+                29,
+                35
+              ],
+              "second_endpoint_branch": "local_verbal_predicate",
+              "second_endpoint_kind": "verbal",
+              "second_endpoint_predicate": "dispatched",
+              "source": "derived"
+            },
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 35,
+            "marker_start": 29,
+            "second_endpoint_audit": {
+              "branch": "local_verbal_predicate",
+              "global_span": [
+                36,
+                61
+              ],
+              "head_subtree_included": false,
+              "local_predicate_count": 1,
+              "local_predicates": [
+                {
+                  "dep": "ROOT",
+                  "head": "dispatched",
+                  "head_pos": "VERB",
+                  "index": 4,
+                  "pos": "VERB",
+                  "text": "dispatched"
+                }
+              ],
+              "local_span": [
+                1,
+                26,
+                "the payment is dispatched"
+              ],
+              "marker_end": 35,
+              "predicate": {
+                "dep": "ROOT",
+                "head": "dispatched",
+                "head_pos": "VERB",
+                "index": 4,
+                "pos": "VERB",
+                "text": "dispatched"
+              },
+              "predicate_global_span": [
+                51,
+                61
+              ],
+              "segment": " the payment is dispatched.",
+              "segment_global_start": 35,
+              "selected_span": {
+                "end": 62,
+                "start": 29
+              },
+              "subtree_token_count": 6
+            },
+            "span_end": 62,
+            "span_id": "c1",
+            "span_length": 33,
+            "span_start": 29
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [],
+        "status": "derived"
+      },
+      "case_id": "invoice_before_passive",
+      "domain": "invoice",
+      "expect_predicate": "dispatched",
+      "expected_edges": [
+        [
+          "be approved",
+          "the payment is dispatched"
+        ]
+      ],
+      "passed": true,
+      "rejection_reason": null
+    },
+    {
+      "actual_edges": [
+        [
+          "act",
+          "the restriction of processing being lifted"
+        ]
+      ],
+      "audit": {
+        "clause_id": "fixture_invoice_prior_to_passive",
+        "derived_edges": [
+          {
+            "after_offsets": [
+              33,
+              75
+            ],
+            "after_text": "the restriction of processing being lifted",
+            "before_offsets": [
+              20,
+              23
+            ],
+            "before_text": "act",
+            "marker": "prior to",
+            "marker_offsets": [
+              24,
+              32
+            ],
+            "second_endpoint_branch": "local_verbal_predicate",
+            "second_endpoint_kind": "verbal",
+            "second_endpoint_predicate": "lifted",
+            "source": "derived"
+          }
+        ],
+        "markers": [
+          {
+            "edge": {
+              "after_offsets": [
+                33,
+                75
+              ],
+              "after_text": "the restriction of processing being lifted",
+              "before_offsets": [
+                20,
+                23
+              ],
+              "before_text": "act",
+              "marker": "prior to",
+              "marker_offsets": [
+                24,
+                32
+              ],
+              "second_endpoint_branch": "local_verbal_predicate",
+              "second_endpoint_kind": "verbal",
+              "second_endpoint_predicate": "lifted",
+              "source": "derived"
+            },
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "prior to",
+            "marker_end": 32,
+            "marker_start": 24,
+            "second_endpoint_audit": {
+              "branch": "local_verbal_predicate",
+              "global_span": [
+                33,
+                75
+              ],
+              "head_subtree_included": true,
+              "local_predicate_count": 1,
+              "local_predicates": [
+                {
+                  "dep": "acl",
+                  "head": "restriction",
+                  "head_pos": "NOUN",
+                  "index": 6,
+                  "pos": "VERB",
+                  "text": "lifted"
+                }
+              ],
+              "local_span": [
+                1,
+                43,
+                "the restriction of processing being lifted"
+              ],
+              "marker_end": 32,
+              "predicate": {
+                "dep": "acl",
+                "head": "restriction",
+                "head_pos": "NOUN",
+                "index": 6,
+                "pos": "VERB",
+                "text": "lifted"
+              },
+              "predicate_global_span": [
+                69,
+                75
+              ],
+              "segment": " the restriction of processing being lifted.",
+              "segment_global_start": 32,
+              "selected_span": {
+                "end": 76,
+                "start": 24
+              },
+              "subtree_token_count": 10
+            },
+            "span_end": 76,
+            "span_id": "c1",
+            "span_length": 52,
+            "span_start": 24
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [],
+        "status": "derived"
+      },
+      "case_id": "invoice_prior_to_passive",
+      "domain": "invoice",
+      "expect_predicate": "lifted",
+      "expected_edges": [
+        [
+          "act",
+          "the restriction of processing being lifted"
+        ]
+      ],
+      "passed": true,
+      "rejection_reason": null
+    },
+    {
+      "actual_edges": [
+        [
+          "consult the authority",
+          "processing"
+        ]
+      ],
+      "audit": {
+        "clause_id": "fixture_logi_nominal_processing",
+        "derived_edges": [
+          {
+            "after_offsets": [
+              50,
+              60
+            ],
+            "after_text": "processing",
+            "before_offsets": [
+              21,
+              42
+            ],
+            "before_text": "consult the authority",
+            "marker": "before",
+            "marker_offsets": [
+              43,
+              49
+            ],
+            "second_endpoint_branch": "nominal",
+            "second_endpoint_kind": "nominal",
+            "second_endpoint_predicate": null,
+            "source": "derived"
+          }
+        ],
+        "markers": [
+          {
+            "edge": {
+              "after_offsets": [
+                50,
+                60
+              ],
+              "after_text": "processing",
+              "before_offsets": [
+                21,
+                42
+              ],
+              "before_text": "consult the authority",
+              "marker": "before",
+              "marker_offsets": [
+                43,
+                49
+              ],
+              "second_endpoint_branch": "nominal",
+              "second_endpoint_kind": "nominal",
+              "second_endpoint_predicate": null,
+              "source": "derived"
+            },
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 49,
+            "marker_start": 43,
+            "second_endpoint_audit": {
+              "after_marker": 49,
+              "branch": "nominal",
+              "chunks": [
+                {
+                  "end": 60,
+                  "root": "processing",
+                  "root_ent_type": "",
+                  "root_pos": "NOUN",
+                  "start": 50,
+                  "text": "processing"
+                }
+              ],
+              "local_predicate_count": 0,
+              "local_predicates": [],
+              "of_chain_complete": true,
+              "of_chain_started": false,
+              "segment": " processing.",
+              "segment_global_start": 49,
+              "selected_span": {
+                "end": 61,
+                "start": 43
+              },
+              "source_substring_identity": true,
+              "value": "processing"
+            },
+            "span_end": 61,
+            "span_id": "c1",
+            "span_length": 18,
+            "span_start": 43
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [],
+        "status": "derived"
+      },
+      "case_id": "logi_nominal_processing",
+      "domain": "logistics",
+      "expect_predicate": null,
+      "expected_edges": [
+        [
+          "consult the authority",
+          "processing"
+        ]
+      ],
+      "passed": true,
+      "rejection_reason": null
+    },
+    {
+      "actual_edges": [],
+      "audit": {
+        "clause_id": "fixture_invoice_date_duration_rejected",
+        "derived_edges": [],
+        "markers": [
+          {
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 45,
+            "marker_start": 39,
+            "reason": "nominal_endpoint_date_time_quantity_root",
+            "second_endpoint_audit": {
+              "after_marker": 45,
+              "branch": "nominal",
+              "local_predicate_count": 0,
+              "local_predicates": [],
+              "of_chain_started": false,
+              "reason": "nominal_endpoint_date_time_quantity_root",
+              "root_ent_type": "DATE",
+              "root_text": "days",
+              "segment": " 30 days.",
+              "segment_global_start": 45,
+              "selected_span": {
+                "end": 54,
+                "start": 39
+              }
+            },
+            "span_end": 54,
+            "span_id": "c1",
+            "span_length": 15,
+            "span_start": 39
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [
+          {
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 45,
+            "marker_start": 39,
+            "reason": "nominal_endpoint_date_time_quantity_root",
+            "second_endpoint_audit": {
+              "after_marker": 45,
+              "branch": "nominal",
+              "local_predicate_count": 0,
+              "local_predicates": [],
+              "of_chain_started": false,
+              "reason": "nominal_endpoint_date_time_quantity_root",
+              "root_ent_type": "DATE",
+              "root_text": "days",
+              "segment": " 30 days.",
+              "segment_global_start": 45,
+              "selected_span": {
+                "end": 54,
+                "start": 39
+              }
+            },
+            "span_end": 54,
+            "span_id": "c1",
+            "span_length": 15,
+            "span_start": 39
+          }
+        ],
+        "status": "no_edge"
+      },
+      "case_id": "invoice_date_duration_rejected",
+      "domain": "invoice",
+      "expect_predicate": null,
+      "expected_edges": [],
+      "passed": true,
+      "rejection_reason": "nominal_endpoint_date_time_quantity_root"
+    },
+    {
+      "actual_edges": [],
+      "audit": {
+        "clause_id": "fixture_logi_truncated_span_rejected",
+        "derived_edges": [],
+        "markers": [
+          {
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 31,
+            "marker_start": 25,
+            "reason": "truncated_selected_span",
+            "second_endpoint_audit": {
+              "branch": "local_rejected",
+              "reason": "truncated_selected_span",
+              "segment": " the parcel and",
+              "truncation": "trailing_incomplete_token:and"
+            },
+            "span_end": 46,
+            "span_id": "c1",
+            "span_length": 21,
+            "span_start": 25
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [
+          {
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 31,
+            "marker_start": 25,
+            "reason": "truncated_selected_span",
+            "second_endpoint_audit": {
+              "branch": "local_rejected",
+              "reason": "truncated_selected_span",
+              "segment": " the parcel and",
+              "truncation": "trailing_incomplete_token:and"
+            },
+            "span_end": 46,
+            "span_id": "c1",
+            "span_length": 21,
+            "span_start": 25
+          }
+        ],
+        "status": "no_edge"
+      },
+      "case_id": "logi_truncated_span_rejected",
+      "domain": "logistics",
+      "expect_predicate": null,
+      "expected_edges": [],
+      "passed": true,
+      "rejection_reason": "truncated_selected_span"
+    },
+    {
+      "actual_edges": [],
+      "audit": {
+        "clause_id": "fixture_logi_multiple_events_rejected",
+        "derived_edges": [],
+        "markers": [
+          {
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 31,
+            "marker_start": 25,
+            "reason": "multiple_top_level_event_predicates",
+            "second_endpoint_audit": {
+              "branch": "local_rejected",
+              "local_predicate_count": 2,
+              "local_predicates": [
+                {
+                  "dep": "ROOT",
+                  "head": "dispatched",
+                  "head_pos": "VERB",
+                  "index": 4,
+                  "pos": "VERB",
+                  "text": "dispatched"
+                },
+                {
+                  "dep": "conj",
+                  "head": "dispatched",
+                  "head_pos": "VERB",
+                  "index": 9,
+                  "pos": "VERB",
+                  "text": "archived"
+                }
+              ],
+              "reason": "multiple_top_level_event_predicates",
+              "segment": " the parcel is dispatched and the invoice is archived.",
+              "segment_global_start": 31
+            },
+            "span_end": 85,
+            "span_id": "c1",
+            "span_length": 60,
+            "span_start": 25
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [
+          {
+            "field": "constraints",
+            "main_action_rejections": [],
+            "marker": "before",
+            "marker_end": 31,
+            "marker_start": 25,
+            "reason": "multiple_top_level_event_predicates",
+            "second_endpoint_audit": {
+              "branch": "local_rejected",
+              "local_predicate_count": 2,
+              "local_predicates": [
+                {
+                  "dep": "ROOT",
+                  "head": "dispatched",
+                  "head_pos": "VERB",
+                  "index": 4,
+                  "pos": "VERB",
+                  "text": "dispatched"
+                },
+                {
+                  "dep": "conj",
+                  "head": "dispatched",
+                  "head_pos": "VERB",
+                  "index": 9,
+                  "pos": "VERB",
+                  "text": "archived"
+                }
+              ],
+              "reason": "multiple_top_level_event_predicates",
+              "segment": " the parcel is dispatched and the invoice is archived.",
+              "segment_global_start": 31
+            },
+            "span_end": 85,
+            "span_id": "c1",
+            "span_length": 60,
+            "span_start": 25
+          }
+        ],
+        "status": "no_edge"
+      },
+      "case_id": "logi_multiple_events_rejected",
+      "domain": "logistics",
+      "expect_predicate": null,
+      "expected_edges": [],
+      "passed": true,
+      "rejection_reason": "multiple_top_level_event_predicates"
+    },
+    {
+      "actual_edges": [],
+      "audit": {
+        "clause_id": "fixture_invoice_negated_marker_rejected",
+        "derived_edges": [],
+        "markers": [
+          {
+            "field": "constraints",
+            "marker": "before",
+            "marker_end": 35,
+            "marker_start": 29,
+            "reason": "dependency_neg_ancestor",
+            "span_end": 62,
+            "span_id": "c1",
+            "span_length": 33,
+            "span_start": 29
+          }
+        ],
+        "modality": "obligation",
+        "native": {
+          "edges": [],
+          "rejected": []
+        },
+        "projection": "sun_stage3_temporal_projection_v4_r3@1.0.0",
+        "rejections": [
+          {
+            "field": "constraints",
+            "marker": "before",
+            "marker_end": 35,
+            "marker_start": 29,
+            "reason": "dependency_neg_ancestor",
+            "span_end": 62,
+            "span_id": "c1",
+            "span_length": 33,
+            "span_start": 29
+          }
+        ],
+        "status": "no_edge"
+      },
+      "case_id": "invoice_negated_marker_rejected",
+      "domain": "invoice",
+      "expect_predicate": null,
+      "expected_edges": [],
+      "passed": true,
+      "rejection_reason": "dependency_neg_ancestor"
+    }
+  ],
+  "schema_version": "stage3_r3_mechanism_check@1.0.0",
+  "status": "pass",
+  "summary": {
+    "limitations_observed": 1,
+    "matching_cases": 6,
+    "matching_passed": 6,
+    "projection_cases": 8,
+    "projection_passed": 8,
+    "total_cases": 14,
+    "total_passed": 14
+  }
+}

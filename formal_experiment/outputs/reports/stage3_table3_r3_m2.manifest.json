@@ -1,0 +1,59 @@
+{
+  "acceptance": "needs_method_review",
+  "backend": "en_core_web_lg_static_vector_mean_cosine",
+  "counts": {
+    "ours": {
+      "fn": 10,
+      "fp": 10,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 9,
+      "tp": 5,
+      "unknown_negative": 16,
+      "unknown_positive": 8
+    },
+    "sun": {
+      "fn": 7,
+      "fp": 17,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 6,
+      "tp": 8,
+      "unknown_negative": 12,
+      "unknown_positive": 6
+    },
+    "winter": {
+      "fn": 8,
+      "fp": 6,
+      "not_applicable_cells": 10,
+      "overall_cells": 50,
+      "tn": 19,
+      "tp": 7,
+      "unknown_negative": 10,
+      "unknown_positive": 5
+    }
+  },
+  "gold_read": false,
+  "inputs": {
+    "construction_reference": "3c992f98e0f5109fd5d726a923f19d895c22962ee71a16130b692bfc0f125915",
+    "execution_config": "605cd6bfa8efdf255bed21f45feb6dda10ba4f4df81345201da52b6545033dca",
+    "global_role_candidates": "08212bbf5118e53ca20c7e292e2a97b081cb95dc4c58f22a3ef398e1986dfcca",
+    "predictions": "cb8d80e4a88b894326ef12db1f2649e1bb43edef4dbc50ee61ce91e461941ecc",
+    "rule_records": "0a5391d6f547ce8e715f6c9e566078214df20a2a5b83b7a43ae27b4209348c29",
+    "run_manifest": "a251e8f73637db4ac8808985d1c3322f056139eb86d20134824c37f01542c53c",
+    "signals_matrix": "bbc232ef3781c69ab3a4dcc66287162d0ee2be343f033925e695626a6d72e61e"
+  },
+  "no_prediction_modification": true,
+  "outputs": {
+    "json": {
+      "path": "outputs/reports/stage3_table3_r3_m2.json",
+      "sha256": "7ca9415386e19eb6f4cfadb9f32aec4d668a5e0c295327f46417a65ef3a89ead"
+    },
+    "markdown": {
+      "path": "outputs/reports/stage3_table3_r3_m2.md",
+      "sha256": "47bc2900a1fc0a1c38cc6976e1dd2d7471f4624400f888d4a614ade5428e1e43"
+    }
+  },
+  "schema_version": "stage3_table3_r3_report_manifest@1.0.0",
+  "status": "needs_method_review"
+}

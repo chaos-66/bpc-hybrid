@@ -9,6 +9,29 @@
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
 
+## 当前优先级：S3-TABLE3-R3-INTEGRATION 接线/表示/后端诊断（2026-09-25）
+
+- 状态：M1、M2 均已完成预先冻结的一轮完整诊断矩阵与独立评价；M0 只读取已保存 R2 结果，不重跑。全部标记 development/retrospective，不是独立测试验证。
+
+- 接线修复：新增 R3 P2 adapter，Sun/Ours 共享同一份模型侧 sidecar；活动使用冻结 P2，命名事件使用同一冻结标签逻辑的 R3 扩展并单独注明。原 Stage3 直接读取完整 activity/event label 的调用链作为历史保留，不被改写。
+
+- 事件投影：新增 `temporal_projection_v4_r3`。article18p3 的 `before` 端点由 R2 的 `the restriction of processing` 修复为 `the restriction of processing is lifted`，保留谓词 `lifted`；v1/v2/v3 及 R2 输出未改。
+
+- M0/M1/M2 overall F1：Sun 0.3429/0.4324/0.4000；Ours 0.3429/0.4000/0.3333；Winter 0.5000/0.5000/0.5000（M1/M2 复用 R2）。
+
+- Coverage：Sun 0.4600/0.6400/0.6400；Ours 0.4600/0.5200/0.5200；Winter 0.7000 不变。
+
+- 后端对照：M1 保持原 sm 相似度；M2 仅将 Sun/Ours 相似度换为 en_core_web_lg 3.8.0 静态词向量均值+cosine，解析、P2、lemma、候选、公式、阈值完全一致。lg 未安装，允许离线下载官方 wheel。
+
+- 资源记录：官方 wheel bytes=400658291，SHA256 `293e9547a655b25499198ab15a525b05b9407a75f10255e405e8c3854329ab63`；解压模型目录 SHA256 `cdfe8653ce0102fdd6bc7df6c8cfe87ee142ff0d10c2ab0ea94f0815f4f97883`；版本 3.8.0，license MIT；未升级/覆盖现有环境，权重/缓存不入 Git，下载耗时约 3051 秒。
+
+- 验证：quick integrity 通过；具名 `tests/test_stage3_r3_integration.py` 8 passed；独立开发样例覆盖主动/被动、before/after/prior to、名词性事件与日期/时长、截断、否定、多个谓词、同对象不同动作、同动作不同对象、重名节点和正反顺序，并保留 1 个 P2 词表限制失败样例。
+
+- 交付：`configs/stage3_table3_r3_m1.json`、`configs/stage3_table3_r3_m2.json`、input contract、P2 sidecars、`outputs/development/stage3_table3_r3_m1/`、`..._m2/`、`outputs/reports/stage3_table3_r3_m1.*`、`..._m2.*`、delivery/wiring/projection/backend-diff/mechanism/resource records。
+
+- 边界：R3 是接线、表示和后端机制诊断，不是最终表三验证；M2 优越性未被预设也未成立。本轮 LLM/API 调用 0，未恢复 Rules+LLM，未改旧 Gold/阈值/分母。
+
+
 ## 当前优先级：S3-TABLE3-V4-R2 纠错与原因定位（2026-09-25）
 
 - R2 已完成：在保留 v4/R1 字节证据的前提下，新增 strict `temporal_projection_v3`、非评分失败原因诊断、精确 case/rule ID 集合校验和独立 R2 评价器；真实 API 新调用为 0，复用 `stage3_v4_d1_frozen_v1`。

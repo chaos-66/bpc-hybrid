@@ -12,9 +12,9 @@ Development/retrospective result. Reference is AI-constructed and is not formal 
 | M1_P2_v4_sm | sun | 0.36363636363636365 | 0.5333333333333333 | 0.43243243243243246 | 0.64 | 6 | 12 | 10 |
 | M1_P2_v4_sm | ours | 0.35 | 0.4666666666666667 | 0.4 | 0.52 | 8 | 16 | 10 |
 | M1_P2_v4_sm | winter | 0.5384615384615384 | 0.4666666666666667 | 0.5 | 0.7 | 5 | 10 | 10 |
-| M2_P2_v4_lg | sun | None | None | None | None | None | None | None |
-| M2_P2_v4_lg | ours | None | None | None | None | None | None | None |
-| M2_P2_v4_lg | winter | None | None | None | None | None | None | None |
+| M2_P2_v4_lg | sun | 0.32 | 0.5333333333333333 | 0.4 | 0.64 | 6 | 12 | 10 |
+| M2_P2_v4_lg | ours | 0.3333333333333333 | 0.3333333333333333 | 0.3333333333333333 | 0.52 | 8 | 16 | 10 |
+| M2_P2_v4_lg | winter | 0.5384615384615384 | 0.4666666666666667 | 0.5 | 0.7 | 5 | 10 | 10 |
 
 ## Event-projection fix
 
@@ -25,12 +25,19 @@ Development/retrospective result. Reference is AI-constructed and is not formal 
 
 ## M1/M2 backend contrast
 
-- status: `m2_not_run`; `{'m1_rows': 460, 'm2_rows': 0, 'changed_rows': 0}`
+- status: `compared`; `{'m1_rows': 460, 'm2_rows': 460, 'changed_rows': 432}`
 
 ## Mechanism/development samples
 
 - M1: `{'limitations_observed': 1, 'matching_cases': 6, 'matching_passed': 6, 'projection_cases': 8, 'projection_passed': 8, 'total_cases': 14, 'total_passed': 14}`
-- M2: `None`
+- M2: `{'limitations_observed': 1, 'matching_cases': 6, 'matching_passed': 6, 'projection_cases': 8, 'projection_passed': 8, 'total_cases': 14, 'total_passed': 14}`
+
+## Order-signal categories
+
+- M1_P2_v4_sm/ours: `{'no_rule_order_relation_or_endpoint_rejected': 40, 'endpoint_similarity_below_gamma': 60}`
+- M1_P2_v4_sm/sun: `{'no_rule_order_relation_or_endpoint_rejected': 60, 'endpoint_similarity_below_gamma': 40}`
+- M2_P2_v4_lg/ours: `{'no_rule_order_relation_or_endpoint_rejected': 40, 'endpoint_similarity_below_gamma': 60}`
+- M2_P2_v4_lg/sun: `{'no_rule_order_relation_or_endpoint_rejected': 60, 'endpoint_similarity_below_gamma': 40}`
 
 ## Resolved
 
