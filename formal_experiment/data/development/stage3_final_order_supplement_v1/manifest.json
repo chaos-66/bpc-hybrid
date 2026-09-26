@@ -1,0 +1,105 @@
+{
+  "schema_version": "stage3_final_order_supplement@1.0.0",
+  "status": "DEVELOPMENT_ONLY_ORDER_SUPPLEMENT",
+  "dev_only": true,
+  "seen_during_method_development": true,
+  "final_table3_eligible": false,
+  "source_requirement_id": "R5-S4-T3",
+  "source_requirement_text_sha256": "21f3c3086326373c00a525d53178744bd185a1f6babe5e24dfef0753e4d07a10",
+  "source_only_eligibility": {
+    "order_type": "TYPE_A_explicit_action_precedence",
+    "relation": "inform before processing",
+    "before_action": "inform the controller of the legal requirement",
+    "after_action": "process personal data only on documented instructions",
+    "rationale": "Two explicit lexical actions with the temporal marker before; no deadline arithmetic and no event-trigger-only relation."
+  },
+  "mutation_protocol": "swap the two relevant action tasks only; labels, actors, resources and other tasks unchanged",
+  "cases": [
+    {
+      "case_id": "case_devsupp_s4t3_baseline",
+      "requirement_id": "R5-S4-T3",
+      "variant": "baseline",
+      "split": "development",
+      "source_family_id": "gdpr_art28_dev_order_supplement",
+      "source_text_sha256": "21f3c3086326373c00a525d53178744bd185a1f6babe5e24dfef0753e4d07a10",
+      "citation": "GDPR Article 28(3)(a)",
+      "reference_states": {
+        "missing_action": "not_applicable",
+        "incorrect_actor": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "scored_types": [
+        "out_of_order"
+      ],
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "bpmn_path": "bpmn/case_devsupp_s4t3_baseline.bpmn",
+      "process_id": "Process",
+      "dev_only": true,
+      "seen_during_method_development": true,
+      "final_table3_eligible": false,
+      "mutation_observed": {
+        "sequence": [
+          "Activity_0",
+          "Activity_1"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "target_node": null
+    },
+    {
+      "case_id": "case_devsupp_s4t3_out_of_order",
+      "requirement_id": "R5-S4-T3",
+      "variant": "out_of_order",
+      "split": "development",
+      "source_family_id": "gdpr_art28_dev_order_supplement",
+      "source_text_sha256": "21f3c3086326373c00a525d53178744bd185a1f6babe5e24dfef0753e4d07a10",
+      "citation": "GDPR Article 28(3)(a)",
+      "reference_states": {
+        "missing_action": "not_applicable",
+        "incorrect_actor": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "scored_types": [
+        "out_of_order"
+      ],
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "bpmn_path": "bpmn/case_devsupp_s4t3_out_of_order.bpmn",
+      "process_id": "Process",
+      "dev_only": true,
+      "seen_during_method_development": true,
+      "final_table3_eligible": false,
+      "mutation_observed": {
+        "sequence": [
+          "Activity_1",
+          "Activity_0"
+        ]
+      },
+      "order_pair": [
+        "Activity_0",
+        "Activity_1"
+      ],
+      "target_node": null
+    }
+  ],
+  "items": [
+    {
+      "case_id": "case_devsupp_s4t3_baseline",
+      "bpmn_path": "bpmn/case_devsupp_s4t3_baseline.bpmn",
+      "process_id": "Process"
+    },
+    {
+      "case_id": "case_devsupp_s4t3_out_of_order",
+      "bpmn_path": "bpmn/case_devsupp_s4t3_out_of_order.bpmn",
+      "process_id": "Process"
+    }
+  ]
+}
