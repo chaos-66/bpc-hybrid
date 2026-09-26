@@ -5575,3 +5575,17 @@
 - 仍存在 blocker：无
 - 备注：focused tests only; R5 v1 preserved
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-26T07:13:39.938256+00:00 - Stage 3-v2 shared semantic matcher, dev calibration, TYPE-A order projection, and diagnostic replay
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：11 passed, 1 warning in 5.09s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`e464998cffe538aa8d8619de36636f186e0ff094`；相关未提交路径：0 个
+- Gold：仅完整性检查读取（`audit_read_only`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：stage1_structural_process_record_not_verified、stage1_label_semantics_p0_p1_not_verified、stage1_annotation_protocol_not_verified、stage1_formal_bpmn_membership_not_promoted、stage1_evaluator_contract_not_verified、final_experiment_not_ready
+- 备注：DEV-only calibration; legacy test replay labelled LEGACY_SEEN_TEST_DIAGNOSTIC; no API or network calls.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
