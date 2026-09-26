@@ -1999,6 +1999,21 @@
   },
   "report_a_git": {
     "branch": "paper-final-repair",
+    "checkpoint_commits": [
+      {
+        "hash": "1ded5d6",
+        "message": "S3-FINAL: downgrade all seen cases to development pool and freeze order eligibility"
+      },
+      {
+        "hash": "7b1f81b",
+        "message": "S3-FINAL: add local MPNet lookup and shared RuleRecord U_r adapter"
+      },
+      {
+        "hash": "a88caf9",
+        "message": "S3-FINAL: run MPNet convergence and prepare API authorization gate"
+      }
+    ],
+    "ending_code_head_before_handoff_ledger": "a88caf9",
     "force_push_allowed": false,
     "head_at_report_generation": "5b2e1ffaf7189992a5f7c779aa41dffcb8a6787c",
     "note": "The post-report checkpoint commit hash is recorded in the handoff, not predicted inside this report.",

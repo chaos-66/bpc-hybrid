@@ -11,6 +11,11 @@
 - branch: `paper-final-repair`
 - starting HEAD: `5b2e1ffaf7189992a5f7c779aa41dffcb8a6787c`
 - HEAD at report generation: `5b2e1ffaf7189992a5f7c779aa41dffcb8a6787c`
+- ending code HEAD before handoff ledger: `a88caf9`
+- checkpoint commits:
+  - `1ded5d6` S3-FINAL: downgrade all seen cases to development pool and freeze order eligibility
+  - `7b1f81b` S3-FINAL: add local MPNet lookup and shared RuleRecord U_r adapter
+  - `a88caf9` S3-FINAL: run MPNet convergence and prepare API authorization gate
 - force push allowed: `False`
 
 ## B. Root Causes
