@@ -1,0 +1,45 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "copy_operation": "byte-identical copy; source files were not modified",
+  "evidence_directory": "outputs/evidence/stage3_table3_r5_formal_v1",
+  "files": [
+    {
+      "bytes": 23750335,
+      "evidence_path": "outputs/evidence/stage3_table3_r5_formal_v1/predictions.json",
+      "name": "predictions.json",
+      "sha256": "1d2f710e0d5dbb48b3b4179a138dc564d33d332314f832dd80bb96779f90329c",
+      "source_path": "outputs/development/stage3_table3_r5_methods_v1/predictions.json"
+    },
+    {
+      "bytes": 7889971,
+      "evidence_path": "outputs/evidence/stage3_table3_r5_formal_v1/signals_matrix.json",
+      "name": "signals_matrix.json",
+      "sha256": "6b3e62bab25a2c7f94da712fadf19d43abc31af98297a21bc9e8fdfe1d87a03c",
+      "source_path": "outputs/development/stage3_table3_r5_methods_v1/signals_matrix.json"
+    },
+    {
+      "bytes": 135020,
+      "evidence_path": "outputs/evidence/stage3_table3_r5_formal_v1/rule_records.json",
+      "name": "rule_records.json",
+      "sha256": "60c01e5864826667bcf6d0a472025fa19735056e315a2aa6dd084fda9cc6fc45",
+      "source_path": "outputs/development/stage3_table3_r5_methods_v1/rule_records.json"
+    },
+    {
+      "bytes": 47212,
+      "evidence_path": "outputs/evidence/stage3_table3_r5_formal_v1/stage1_process_records.json",
+      "name": "stage1_process_records.json",
+      "sha256": "af4be0c5b60c4b83cb15f596d32dbc0b748b5fafd9b0fbaf4688ba42c2abdc8e",
+      "source_path": "outputs/development/stage3_table3_r5_methods_v1/stage1_process_records.json"
+    },
+    {
+      "bytes": 12169,
+      "evidence_path": "outputs/evidence/stage3_table3_r5_formal_v1/global_role_candidates.json",
+      "name": "global_role_candidates.json",
+      "sha256": "d5f5faa68569288b000d861cf16ad85d1df066b40930662378603a5ebcb778d0",
+      "source_path": "outputs/development/stage3_table3_r5_methods_v1/global_role_candidates.json"
+    }
+  ],
+  "schema_version": "stage3_table3_r5_formal_evidence_export@1.0.0",
+  "source_directory": "outputs/development/stage3_table3_r5_methods_v1",
+  "status": "committed_export_of_frozen_method_outputs"
+}

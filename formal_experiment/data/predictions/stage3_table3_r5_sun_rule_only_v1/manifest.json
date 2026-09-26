@@ -1,0 +1,157 @@
+{
+  "api_calls": 0,
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "counts": {
+    "empty": 0,
+    "failed": 0,
+    "ok": 33,
+    "records": 33
+  },
+  "device": "cpu",
+  "failures": [],
+  "gold_read": false,
+  "historical_sun_outputs_used": false,
+  "input": {
+    "config": {
+      "path": "configs/stage3_table3_r5_benchmark_v2.json",
+      "sha256": "7d000659e0dfbc4f531aeb63cbe36dc4b2c8d71887d732e953aef8bc712cc83b"
+    },
+    "core_record_count": 33,
+    "source_requirements": {
+      "path": "data/development/stage3_table3_r5_benchmark_v2/source_requirements.json",
+      "sha256": "b434f84014f12e50f3cddaab1344804b5ced325543d34d3a15a5815f569ffa48"
+    }
+  },
+  "method_bindings": {
+    "checkpoint": {
+      "path": "outputs/development/s24_candidate_B_invsqrt_weighted_seed20260717_v1/best_model.pt",
+      "sha256": "c78cd18baaeaabf5414a44785140b02f6e6bb8fb291ef4c0021179bbfab4c9d1"
+    },
+    "config_s26": {
+      "path": "configs/models/sun_b0_s26_candidate_B_v1.json",
+      "sha256": "34ae74f8ef2cabde6404ce6cdd6e0498cb3b2d7603651e67ade18d9af3d5f126"
+    },
+    "config_stage2": {
+      "path": "configs/models/estg150_b0_enhanced_s27_v10a.json",
+      "sha256": "9d1c7e97f1ddbec0efac384a1cd1bd9b35df4756089be457a31142b209f90e81"
+    },
+    "corenlp_runtime_config": {
+      "path": "configs/sun_corenlp_runtime.json",
+      "sha256": "30bddb43bdb6f5ec477d9445b413f5e0891675c3855226a5b04747178336e74c"
+    },
+    "implementation": {
+      "path": "src/bpc_hybrid/estg150_b0_development_v10.py",
+      "sha256": "e00aadc80a2caf75fb24a6b2b31c436f753afbfd7fcac17f3a8ee6919217df43"
+    }
+  },
+  "method_id": "sun_rule_only",
+  "method_variant": "b0_enhanced_v10a",
+  "network_calls": 0,
+  "outputs": {
+    "attempts": {
+      "path": "data/predictions/stage3_table3_r5_sun_rule_only_v1/attempts.json",
+      "sha256": "c79cd7116873bad42b21cd8a74cf8ed1486ee6a4a89b56ae162921d57a3d58fa"
+    },
+    "predictions": {
+      "path": "data/predictions/stage3_table3_r5_sun_rule_only_v1/predictions.json",
+      "record_count": 33,
+      "sha256": "21c6ed296368175a1e719374616821e96bd0de007749ea14228514ee07f2918b"
+    }
+  },
+  "runtime_home": "D:\\environment\\stanford-corenlp-4.5.10",
+  "runtime_summary": {
+    "alignment_summary": {
+      "by_status": {
+        "equal_count_candidate": 28,
+        "unsupported": 6,
+        "validated_anchor_alignment": 3
+      },
+      "heuristic_supported": 31,
+      "note": "heuristic_supported is not verified alignment",
+      "total": 37,
+      "unsupported": 6,
+      "validated": 3
+    },
+    "bridge_class": "SunPhraseRuleBatchBridgeMulti",
+    "bridge_seconds": 0.5396303000161424,
+    "bridge_source": "tools/corenlp/SunPhraseRuleBatchBridgeMulti.java",
+    "classifier_mean_confidence": 0.6054054054054057,
+    "classifier_seconds": 20.990591800014954,
+    "compose_seconds": 0.12373069999739528,
+    "corenlp_seconds": 180.679813499999,
+    "device": "cpu",
+    "edge_stats": {
+      "edges": 26
+    },
+    "final_hybrid_label_counts_by_clause": {
+      "definition": 2,
+      "obligation": 34,
+      "permission": 1
+    },
+    "lexicon_v2": {
+      "active_counts": {
+        "actor": 50,
+        "condition": 34,
+        "constraint": 45,
+        "exception": 16,
+        "modality": 29
+      },
+      "category_file_sha256": {
+        "actor": "43e404d2a69c091e6b07ee2a474ab4f8bb3021403fc481ca2500952a6a6d8378",
+        "condition": "588fe22f7e9d4e22f742447ebbc8756d784d102c3d62e7d2c46bd22687379e2a",
+        "constraint": "764a4b801fc950bd3e5f382767fc733c6d8c95503ab07dd9dfa4ddfdba3c00e1",
+        "exception": "ba6de9a1701e368566ee46d58678ef73bd7730d93ec342620d34469cc9ce3d6e",
+        "modality": "cb6fae1292e3601b0bf10ca21459e37f63957a1e34f58d8155bc7bee74b69095"
+      },
+      "final_affected_spans": 125,
+      "legacy_broken_only_label_ignored": 36,
+      "lexicon_id": "public_marker_lexicon_en_v2",
+      "loaded_active_total": 174,
+      "manifest_sha256": "f89775fb228b8803274250fbcfe11b7f15b777b0dbc0931238b4dcc47e51833f",
+      "modality_patterns_compiled": 29,
+      "scope_accepted": 103,
+      "scope_invocations": 111,
+      "scope_raw_matches": 104,
+      "scope_rejected": 1,
+      "tregex_accepted": 103,
+      "tregex_candidates": 131,
+      "tregex_final_affected": 103
+    },
+    "match_count": 272,
+    "method_id": "sun_rule_only",
+    "method_variant": "b0_enhanced_v10a",
+    "modality_route_counts": {
+      "definition_structure": 2,
+      "marker_obligation": 34,
+      "marker_permission": 1
+    },
+    "paper_faithful_b0": false,
+    "pattern_count": 29,
+    "patterns_path": "resources/corenlp/sun_phrase_patterns_v3_enhanced.json",
+    "placeholder_classifier_count": 0,
+    "predicted_clause_count": 37,
+    "profile_id": "v10-A_scope_tregex_recall_recovery",
+    "record_count": 33,
+    "runtime_identity": {
+      "code_jar": {
+        "bytes": 9118725,
+        "name": "stanford-corenlp-4.5.10.jar",
+        "sha256": "f813ce4ed7319d79225f2a520d40733075c6b3500dd0b81ee069229e461aab43"
+      },
+      "models_jar": {
+        "bytes": 474409531,
+        "name": "stanford-corenlp-4.5.10-models.jar",
+        "sha256": "a5da9f6feb35a0fd2ea2cbe8909bede3952965b238a68c833ae3e031ed9026a0"
+      }
+    },
+    "s26_config_rel": "configs/models/sun_b0_s26_candidate_B_v1.json",
+    "sentence_count": 34,
+    "surgery_count": 0,
+    "terminal_tree_removal_count": 0,
+    "total_seconds": 202.3337663000275,
+    "tsurgeon_enabled": false
+  },
+  "schema_version": "stage3_table3_r5_sun_stage2_manifest@1.0.0",
+  "status": "fresh_sun_stage2_completed",
+  "timestamp_utc": "2026-09-26T04:54:17.288249+00:00"
+}

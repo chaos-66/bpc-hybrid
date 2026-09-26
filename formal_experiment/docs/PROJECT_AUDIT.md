@@ -1,9 +1,15 @@
-﻿## 当前优先级：S3-TABLE3-R5.4 Formal Gold Release + API Execution（2026-09-26）
+﻿## 当前优先级：S3-TABLE3-R5.5 Formal Table 3 completed and result frozen（2026-09-26）
 
-- 状态：`FORMAL_GOLD_RELEASED=true / API_AUTHORIZATION_PENDING=false / API_AUTHORIZED=true / API_EXECUTED=false / FORMAL_TABLE3_RUN=false`。
-- Formal Gold release marker：`outputs/reports/stage3_table3_r5_formal_gold_release_v1.json`；冻结 Gold packet JSON SHA-256 `1e6de56fb3a934646816fe361873966acae1b0022e80c65f9eadf45d591c5884`，MD SHA-256 `35ebcca62c5348f0720cf3f5d4a9e5df173d26cc622af2c243691c8f4c23791d`；33 core requirements / 113 core cases。
-- API authorization event：`configs/authorization/stage3_table3_r5_user_authorization_v1.json`；19 calls maximum、retry 0、cap USD 0.91；payload manifest SHA `bd029e42ff6db8752e138827ad9861c660f1eda1b4b6dbaac8ee7715b30d3707`；prompt SHA `3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895`。
-- 本段状态是当前正式执行入口；旧 preflight/readiness 报告保留为历史 provenance，不覆盖、不重算。
+- 状态：`DATA_READY=true / EVIDENCE_INTEGRITY_READY=true / METHODS_READY=true`；`FORMAL_GOLD_RELEASED=true / API_AUTHORIZED=true / API_EXECUTED=true / FORMAL_TABLE3_RUN=true / FORMAL_TABLE3_RESULT_FROZEN=true`。
+- API：19/19 completed，retry 0，`AMBIGUOUS_SEND_STATE=false`；provider-reported usage prompt `83,233` / completion `14,358` tokens，按冻结 peak 价格估算成本约 `USD 0.16672524`，授权上限 `USD 0.91`。19 条 raw responses、ledger、request↔response binding 均已保存。
+- Ours Stage2：`STRONG_REUSE=5`、`HISTORICAL_CHAIN_REUSE=9`、`NEW_AUTHORIZED_RUN=19`，共 33 条已冻结 canonical predictions。19 条新结果全部 valid，0 degraded/malformed/empty；coordinate-reanchored=19（raw-offset unique re-anchor，非语义修复）。
+- Sun Stage2：33/33 fresh local Rules-Only B0 v10a，0 failures；Winter native：113 cases × 33 core rules，保留 unsupported/unknown，不强制转 negative；Stage1：113 BPMN parsed。
+- Formal Table 3 overall P/R/F1（actual，保留负向结果，无预期排名控制）：
+  - Sun `0.3168 / 0.4000 / 0.3536`
+  - Winter `0.4713 / 0.5125 / 0.4910`
+  - Ours `0.3504 / 0.5125 / 0.4162`
+- 结果与冻结：`outputs/reports/stage3_table3_formal_results_v1.{json,md}`、`outputs/reports/stage3_table3_formal_result_freeze_v1.json`、`outputs/reports/stage3_table3_r5_completion_state_v1.json`。
+- Semantic challenges、condition/exception truth、permission/prohibition candidates、deadline arithmetic 继续单独报告，未混入 core F1。正式结果之后不修方法、不换样本、不重跑 API；后续只能作为独立 revision。
 
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 

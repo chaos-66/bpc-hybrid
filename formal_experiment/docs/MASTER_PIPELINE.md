@@ -1,8 +1,10 @@
-﻿## 2026-09-26 修订 3.7.33：S3-TABLE3-R5.4 Formal Gold release 与 API 授权
+﻿## 2026-09-26 修订 3.7.34：S3-TABLE3-R5.5 Formal Table 3 执行并冻结
 
-- 用户明确批准冻结 Formal Gold：33 core requirements / 113 core cases；Gold packet 不修改、不重算。
-- API 授权：DeepSeek、19 calls maximum、retry 0、USD 0.91 cap；prompt/payload SHA 已绑定。
-- 本修订只记录 release/authorization；真实 API 是否执行、Table 3 是否完成以 `docs/PROJECT_AUDIT.md` 为唯一实时状态。
+- 用户批准的 19 次 DeepSeek 调用全部完成，0 retry；raw responses/ledger/usage/cost binding 已提交；估算成本 `USD 0.16672524 <= 0.91`。
+- Ours 33 条 Stage2 canonical predictions 在 Stage 3 指标前冻结；Sun 用冻结 B0 v10a 对 33 条 core requirements 本地重新运行；Winter 保持 native pipeline；Stage1 解析 113 BPMN。
+- Formal Table 3 core overall P/R/F1：Sun `0.3168/0.4000/0.3536`，Winter `0.4713/0.5125/0.4910`，Ours `0.3504/0.5125/0.4162`。结果为真实值，不设预期排名门禁。
+- 结果文件与 freeze manifest 见 `outputs/reports/stage3_table3_formal_results_v1.{json,md}` 和 `outputs/reports/stage3_table3_formal_result_freeze_v1.json`；实时状态仍以 `docs/PROJECT_AUDIT.md` 为准。
+- 冻结后禁止 post-result tuning、重跑失败样本、修改 Gold/阈值/分母或选择性删样本。
 
 # BPC-Hybrid 完整实验主 Pipeline
 

@@ -1,0 +1,108 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "configuration": {
+    "one_sun_checker_for_sun_and_ours": true,
+    "outer_matching_gate_applied": false,
+    "sun_thresholds": {
+      "gamma": 0.8,
+      "tau": 0.8,
+      "theta": 0.8
+    },
+    "temporal_projection": "sun_stage3_temporal_projection_v3@1.0.0",
+    "winter_delta": 0.8,
+    "winter_gamma": 0.4
+  },
+  "counts": {
+    "cases": 113,
+    "core_requirements": 33,
+    "methods": 3,
+    "signals": 33561
+  },
+  "dependency_versions": {
+    "python": "3.14.6",
+    "spacy": "3.8.13",
+    "spacy_model": "en_core_web_sm"
+  },
+  "elapsed_seconds": 109.16,
+  "git": {
+    "commit": "d65e3b1315852d35eddf6335ad950f311c36c4f4",
+    "dirty_paths": [
+      "?? formal_experiment/data/predictions/stage3_table3_r5_sun_rule_only_v1/",
+      "?? formal_experiment/outputs/reports/stage1_table3_r5_formal_manifest_v1.json",
+      "?? formal_experiment/outputs/reports/stage3_table3_r5_winter_native_manifest_v1.json",
+      "?? formal_experiment/scripts/run_stage3_table3_r5_methods_v1.py",
+      "?? formal_experiment/scripts/run_stage3_table3_r5_sun_stage2_v1.py"
+    ]
+  },
+  "gold_read_by_methods": false,
+  "inference_reference_forbidden": true,
+  "inputs": {
+    "config": {
+      "path": "configs/stage3_table3_r5_benchmark_v2.json",
+      "sha256": "7d000659e0dfbc4f531aeb63cbe36dc4b2c8d71887d732e953aef8bc712cc83b"
+    },
+    "inference_view": {
+      "path": "data/development/stage3_table3_r5_benchmark_v2/inference/inference_view.json",
+      "sha256": "dfb136b0d33420d64508ec077344a981e381f9c9157fb3f419814ee84f14b09d"
+    },
+    "ours_freeze": {
+      "path": "outputs/reports/stage3_table3_r5_ours_prediction_freeze_v1.json",
+      "sha256": "700b6ff3dab6ca44446d3975b66d67866a68309c91d7d7da801f6284721656a9"
+    },
+    "ours_predictions": {
+      "path": "data/predictions/stage3_table3_r5_ours_stage2_formal_v1/predictions.json",
+      "sha256": "2204f25e69fb5cd9dc2ff4cf82573d0b50df12fbd1ff1be47fa04494065cec0b"
+    },
+    "source_requirements": {
+      "path": "data/development/stage3_table3_r5_benchmark_v2/source_requirements.json",
+      "sha256": "b434f84014f12e50f3cddaab1344804b5ced325543d34d3a15a5815f569ffa48"
+    },
+    "source_texts": {
+      "path": "data/development/stage3_table3_r5_benchmark_v2/inference/source_texts.json",
+      "sha256": "308395d24284d8c73499133f0cbe959bb1e4a5329c5c5cac23df620a6abb62b1"
+    },
+    "sun_manifest": {
+      "path": "data/predictions/stage3_table3_r5_sun_rule_only_v1/manifest.json",
+      "sha256": "c75c03b2d4b46681788b8b47a1bc9492c811ca186f838ca773fe2ac34e83f54f"
+    },
+    "sun_predictions": {
+      "path": "data/predictions/stage3_table3_r5_sun_rule_only_v1/predictions.json",
+      "sha256": "21c6ed296368175a1e719374616821e96bd0de007749ea14228514ee07f2918b"
+    }
+  },
+  "llm_api_calls": 0,
+  "network_calls": 0,
+  "outputs": {
+    "global_role_candidates": {
+      "path": "outputs/development/stage3_table3_r5_methods_v1/global_role_candidates.json",
+      "sha256": "d5f5faa68569288b000d861cf16ad85d1df066b40930662378603a5ebcb778d0"
+    },
+    "predictions": {
+      "path": "outputs/development/stage3_table3_r5_methods_v1/predictions.json",
+      "sha256": "1d2f710e0d5dbb48b3b4179a138dc564d33d332314f832dd80bb96779f90329c"
+    },
+    "rule_records": {
+      "path": "outputs/development/stage3_table3_r5_methods_v1/rule_records.json",
+      "sha256": "60c01e5864826667bcf6d0a472025fa19735056e315a2aa6dd084fda9cc6fc45"
+    },
+    "signals_matrix": {
+      "path": "outputs/development/stage3_table3_r5_methods_v1/signals_matrix.json",
+      "sha256": "6b3e62bab25a2c7f94da712fadf19d43abc31af98297a21bc9e8fdfe1d87a03c"
+    },
+    "stage1_manifest": {
+      "path": "outputs/reports/stage1_table3_r5_formal_manifest_v1.json",
+      "sha256": "6db83bef1c619fb818097d3e0759349185a9b159abdf40b3fb0bcb82d051265c"
+    },
+    "stage1_process_records": {
+      "path": "outputs/development/stage3_table3_r5_methods_v1/stage1_process_records.json",
+      "sha256": "af4be0c5b60c4b83cb15f596d32dbc0b748b5fafd9b0fbaf4688ba42c2abdc8e"
+    },
+    "winter_manifest": {
+      "path": "outputs/reports/stage3_table3_r5_winter_native_manifest_v1.json",
+      "sha256": "1307a934caad1cdcaae09726fdf7c673670fdd6f26bcb37a66757185648354df"
+    }
+  },
+  "schema_version": "stage3_table3_r5_methods_run_manifest@1.0.0",
+  "status": "completed",
+  "timestamp_utc": "2026-09-26T05:01:46.045271+00:00"
+}

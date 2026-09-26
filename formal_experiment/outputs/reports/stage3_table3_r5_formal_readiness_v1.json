@@ -5,16 +5,17 @@
   "flags": {
     "API_AUTHORIZATION_PENDING": false,
     "API_AUTHORIZED": true,
-    "API_EXECUTED": false,
+    "API_EXECUTED": true,
     "FORMAL_GOLD_RELEASED": true,
-    "FORMAL_TABLE3_RESULT_FROZEN": false,
-    "FORMAL_TABLE3_RUN": false
+    "FORMAL_TABLE3_RESULT_FROZEN": true,
+    "FORMAL_TABLE3_RUN": true
   },
+  "formal_result_freeze_manifest": "outputs/reports/stage3_table3_formal_result_freeze_v1.json",
   "gold_packet_sha256": "1e6de56fb3a934646816fe361873966acae1b0022e80c65f9eadf45d591c5884",
   "gold_release_path": "outputs/reports/stage3_table3_r5_formal_gold_release_v1.json",
   "payload_manifest_sha256": "bd029e42ff6db8752e138827ad9861c660f1eda1b4b6dbaac8ee7715b30d3707",
   "prompt_sha256": "3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895",
-  "real_api_calls_made": 0,
+  "real_api_calls_made": 19,
   "request_count": 19,
   "retry_cap": 0,
   "schema_version": "stage3_table3_r5_formal_readiness@1.0.0"
