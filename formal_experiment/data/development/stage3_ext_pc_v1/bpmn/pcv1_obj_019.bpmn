@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="pcv1_process_019" isExecutable="true">
+    <bpmn:startEvent id="start" name="Start" />
+    <bpmn:exclusiveGateway id="g0" name="Consent routes" default="f_default" />
+    <bpmn:task id="disclose" name="disclose personal data" />
+    <bpmn:task id="deny" name="deny request" />
+    <bpmn:endEvent id="end" name="End" />
+    <bpmn:sequenceFlow id="f_start_g0" sourceRef="start" targetRef="g0" />
+    <bpmn:sequenceFlow id="f_guard_a" sourceRef="g0" targetRef="disclose">
+      <bpmn:conditionExpression>valid consent exists</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_guard_b" sourceRef="g0" targetRef="disclose">
+      <bpmn:conditionExpression>valid consent exists</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f_default" sourceRef="g0" targetRef="deny" />
+    <bpmn:sequenceFlow id="f_disclose_end" sourceRef="disclose" targetRef="end" />
+    <bpmn:sequenceFlow id="f_deny_end" sourceRef="deny" targetRef="end" />
+  </bpmn:process>
+</bpmn:definitions>

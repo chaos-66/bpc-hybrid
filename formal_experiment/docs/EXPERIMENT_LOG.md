@@ -5589,3 +5589,17 @@
 - 仍存在 blocker：stage1_structural_process_record_not_verified、stage1_label_semantics_p0_p1_not_verified、stage1_annotation_protocol_not_verified、stage1_formal_bpmn_membership_not_promoted、stage1_evaluator_contract_not_verified、final_experiment_not_ready
 - 备注：DEV-only calibration; legacy test replay labelled LEGACY_SEEN_TEST_DIAGNOSTIC; no API or network calls.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-26T13:35:44.204618+00:00 - S3.9-EXT-PC-V1 semantic/data freeze: legacy 20-case disposition and frozen 10-pair mechanism set
+
+- 事件类型：变更（`change`）
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：3 passed in 0.58s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`7f4c963f50e86b245fab615af863148531bd3886`；相关未提交路径：60 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：stage1_structural_process_record_not_verified、stage1_label_semantics_p0_p1_not_verified、stage1_annotation_protocol_not_verified、stage1_formal_bpmn_membership_not_promoted、stage1_evaluator_contract_not_verified、final_experiment_not_ready
+- 备注：Phase A legacy semantic audit (read-only over old panel); Phase B 20 mechanism objects + 6 counterexamples frozen before any detector result; zero API/network; no historical labels/results modified.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

@@ -1,0 +1,4474 @@
+{
+  "objects": [
+    {
+      "bpmn_path": "bpmn/pcv1_obj_001.bpmn",
+      "bpmn_sha256": "699dcd7162fc91c5f9c0b5e96129b2e64780e934e460085596cc9a9ddd476382",
+      "object_id": "pcv1_obj_001",
+      "process_record": {
+        "activities": [
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_001",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_review_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "review"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 579,
+          "input_id": "pcv1_obj_001",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_001.bpmn",
+          "sha256": "699dcd7162fc91c5f9c0b5e96129b2e64780e934e460085596cc9a9ddd476382"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Linear reachable task: variant inserts exact-canonical prohibited task.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_001_rulespec",
+        "source_clause_ref": "gdpr_article22_s001",
+        "source_clause_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_002.bpmn",
+      "bpmn_sha256": "23be76cc7ae59c80d823ce0f06d55b11c1c788df415d4578b9546746afb240a2",
+      "object_id": "pcv1_obj_002",
+      "process_record": {
+        "activities": [
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          },
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [
+            {
+              "after_activity_id": "disclose",
+              "before_activity_id": "review",
+              "relation": "reachable_before"
+            }
+          ],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_002",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_review_disclose",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "review"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 734,
+          "input_id": "pcv1_obj_002",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_002.bpmn",
+          "sha256": "23be76cc7ae59c80d823ce0f06d55b11c1c788df415d4578b9546746afb240a2"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Linear reachable task: variant inserts exact-canonical prohibited task.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_002_rulespec",
+        "source_clause_ref": "gdpr_article22_s001",
+        "source_clause_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_003.bpmn",
+      "bpmn_sha256": "37c36324114e84a2e8b794c7ad77b9b822a86b0fd8bbeab7ade60b9158defe85",
+      "object_id": "pcv1_obj_003",
+      "process_record": {
+        "activities": [
+          {
+            "id": "archive",
+            "lane_ids": [],
+            "name": "archive record",
+            "type": "task"
+          },
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g1"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "archive",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "archive"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "review"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "archive",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "archive"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "review"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "archive"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "Choose branch",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_003",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_archive_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "archive",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_g1_archive",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "archive"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_g1_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "review"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_review_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 920,
+          "input_id": "pcv1_obj_003",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_003.bpmn",
+          "sha256": "37c36324114e84a2e8b794c7ad77b9b822a86b0fd8bbeab7ade60b9158defe85"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "archive record",
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "XOR branch: one structurally reachable branch carries the prohibited task.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_003_rulespec",
+        "source_clause_ref": "gdpr_article22_s001",
+        "source_clause_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_004.bpmn",
+      "bpmn_sha256": "56b6d0208688a10d9ddc2bd7cfef81094a2901a8ba51cf4cc89572fb472e639c",
+      "object_id": "pcv1_obj_004",
+      "process_record": {
+        "activities": [
+          {
+            "id": "archive",
+            "lane_ids": [],
+            "name": "archive record",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g1"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "archive",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "archive"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "archive",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "archive"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "archive"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "Choose branch",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_004",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_archive_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "archive",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_g1_archive",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "archive"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_g1_disclose",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 938,
+          "input_id": "pcv1_obj_004",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_004.bpmn",
+          "sha256": "56b6d0208688a10d9ddc2bd7cfef81094a2901a8ba51cf4cc89572fb472e639c"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "archive record",
+          "disclose personal data"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "XOR branch: one structurally reachable branch carries the prohibited task.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_004_rulespec",
+        "source_clause_ref": "gdpr_article22_s001",
+        "source_clause_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_005.bpmn",
+      "bpmn_sha256": "3580af62fc3e59f182a1dd85eee4b27e11f18f162571d666b5905954777e1089",
+      "object_id": "pcv1_obj_005",
+      "process_record": {
+        "activities": [
+          {
+            "id": "decoy",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          },
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": [
+            "decoy"
+          ]
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_005",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_review_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "review"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 638,
+          "input_id": "pcv1_obj_005",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_005.bpmn",
+          "sha256": "3580af62fc3e59f182a1dd85eee4b27e11f18f162571d666b5905954777e1089"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Unreachable decoy: node existence is not process permission.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_005_rulespec",
+        "source_clause_ref": "gdpr_article22_s001",
+        "source_clause_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_006.bpmn",
+      "bpmn_sha256": "738c359512fd3da9152c0d215eb537f748e203f0960cfd355e11c3e081f912ae",
+      "object_id": "pcv1_obj_006",
+      "process_record": {
+        "activities": [
+          {
+            "id": "decoy",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          },
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [
+            {
+              "after_activity_id": "decoy",
+              "before_activity_id": "review",
+              "relation": "reachable_before"
+            }
+          ],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "decoy",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "decoy"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "decoy",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "decoy"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "decoy"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_006",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_decoy_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "decoy",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_review_decoy",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "decoy"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "review"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 719,
+          "input_id": "pcv1_obj_006",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_006.bpmn",
+          "sha256": "738c359512fd3da9152c0d215eb537f748e203f0960cfd355e11c3e081f912ae"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Unreachable decoy: node existence is not process permission.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_006_rulespec",
+        "source_clause_ref": "gdpr_article22_s001",
+        "source_clause_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_007.bpmn",
+      "bpmn_sha256": "0a3c09449d3d3745697e70d9a61a858eca3084b19446aa04061be58fd3484be5",
+      "object_id": "pcv1_obj_007",
+      "process_record": {
+        "activities": [
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "g1",
+              "target_ref": "review"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "review"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_007",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_g1_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "review"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_review_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 716,
+          "input_id": "pcv1_obj_007",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_007.bpmn",
+          "sha256": "0a3c09449d3d3745697e70d9a61a858eca3084b19446aa04061be58fd3484be5"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Non-action text decoy: gateway label is not an executable activity.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_007_rulespec",
+        "source_clause_ref": "gdpr_article22_s001",
+        "source_clause_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_008.bpmn",
+      "bpmn_sha256": "5832cb76ee3e184756f9675288d78d9ca596b20b61d76f774378e9a7ae4644b6",
+      "object_id": "pcv1_obj_008",
+      "process_record": {
+        "activities": [
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          },
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [
+            {
+              "after_activity_id": "disclose",
+              "before_activity_id": "review",
+              "relation": "reachable_before"
+            }
+          ],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "review"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "review"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_008",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_g1_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "review"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_review_disclose",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 871,
+          "input_id": "pcv1_obj_008",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_008.bpmn",
+          "sha256": "5832cb76ee3e184756f9675288d78d9ca596b20b61d76f774378e9a7ae4644b6"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Non-action text decoy: gateway label is not an executable activity.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_008_rulespec",
+        "source_clause_ref": "gdpr_article22_s001",
+        "source_clause_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_009.bpmn",
+      "bpmn_sha256": "f6939262651af763e6303d42d79b7cd9eda236a738011c775828671118d47996",
+      "object_id": "pcv1_obj_009",
+      "process_record": {
+        "activities": [
+          {
+            "id": "metadata",
+            "lane_ids": [],
+            "name": "disclose metadata",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "metadata",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "metadata"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "metadata",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "metadata"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_009",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_metadata_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "metadata",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_metadata",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "metadata"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 592,
+          "input_id": "pcv1_obj_009",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_009.bpmn",
+          "sha256": "f6939262651af763e6303d42d79b7cd9eda236a738011c775828671118d47996"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose metadata",
+          "disclose personal data"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Same verb / different object; exact canonical action is required.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_009_rulespec",
+        "source_clause_ref": "AI_constructed",
+        "source_clause_text": "AI-constructed mechanism rule"
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_010.bpmn",
+      "bpmn_sha256": "8c3df6b22ae7fe6dd0addd70db04e39230db8966313c0044feff88b38a4fa060",
+      "object_id": "pcv1_obj_010",
+      "process_record": {
+        "activities": [
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          },
+          {
+            "id": "metadata",
+            "lane_ids": [],
+            "name": "disclose metadata",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [
+            {
+              "after_activity_id": "disclose",
+              "before_activity_id": "metadata",
+              "relation": "reachable_before"
+            }
+          ],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "metadata",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "metadata"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "metadata",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "metadata",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "metadata"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_010",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_metadata_disclose",
+            "is_default": false,
+            "name": "",
+            "source_ref": "metadata",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_metadata",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "metadata"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 747,
+          "input_id": "pcv1_obj_010",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_010.bpmn",
+          "sha256": "8c3df6b22ae7fe6dd0addd70db04e39230db8966313c0044feff88b38a4fa060"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose metadata",
+          "disclose personal data"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Same verb / different object; exact canonical action is required.",
+        "modality": "prohibition",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_010_rulespec",
+        "source_clause_ref": "AI_constructed",
+        "source_clause_text": "AI-constructed mechanism rule"
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_011.bpmn",
+      "bpmn_sha256": "37f2153c07f7ace8ce8f8519cbad6cf0f6f3a3fd8ca23d7316503b594855461b",
+      "object_id": "pcv1_obj_011",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g1"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "Consent check",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_011",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "deny"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_deny_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "deny",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 1038,
+          "input_id": "pcv1_obj_011",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_011.bpmn",
+          "sha256": "37f2153c07f7ace8ce8f8519cbad6cf0f6f3a3fd8ca23d7316503b594855461b"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Single guarded route; variant adds an unconditional bypass flow.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_011_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_012.bpmn",
+      "bpmn_sha256": "9c8de819d70b4f8f8c9ac086bd1ac69df3d3ccb76fe33c83053ed60850de677a",
+      "object_id": "pcv1_obj_012",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g1"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "Consent check",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_012",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_bypass",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "deny"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_deny_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "deny",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 1114,
+          "input_id": "pcv1_obj_012",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_012.bpmn",
+          "sha256": "9c8de819d70b4f8f8c9ac086bd1ac69df3d3ccb76fe33c83053ed60850de677a"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Single guarded route; variant adds an unconditional bypass flow.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_012_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_013.bpmn",
+      "bpmn_sha256": "8018ad2fea3cff6c489fdf57009a16d5e74307cf8013569b948405cde4df4059",
+      "object_id": "pcv1_obj_013",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g1"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "Consent check",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_013",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "deny"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_deny_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "deny",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 1038,
+          "input_id": "pcv1_obj_013",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_013.bpmn",
+          "sha256": "8018ad2fea3cff6c489fdf57009a16d5e74307cf8013569b948405cde4df4059"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Default-flow bypass: the XOR default branch reaches the target action.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_013_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_014.bpmn",
+      "bpmn_sha256": "73bc4b69c6e1437d2bfa4a13ec937f6578f849e8bfcd6a252dc3e363d91fd92d",
+      "object_id": "pcv1_obj_014",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": [
+            "deny"
+          ]
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "Consent check",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_014",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 967,
+          "input_id": "pcv1_obj_014",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_014.bpmn",
+          "sha256": "73bc4b69c6e1437d2bfa4a13ec937f6578f849e8bfcd6a252dc3e363d91fd92d"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Default-flow bypass: the XOR default branch reaches the target action.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_014_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_015.bpmn",
+      "bpmn_sha256": "0412e26fc2b7f726560af1c125ed5d1f8ba4ee04f6f614d2fe2cc2382aef9f3b",
+      "object_id": "pcv1_obj_015",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g1"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "Consent check",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_015",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "deny"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_deny_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "deny",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 1038,
+          "input_id": "pcv1_obj_015",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_015.bpmn",
+          "sha256": "0412e26fc2b7f726560af1c125ed5d1f8ba4ee04f6f614d2fe2cc2382aef9f3b"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Condition text remains on the gateway, but no sequence flow enforces it.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_015_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_016.bpmn",
+      "bpmn_sha256": "c7ed00904d6dec01918e60bf4adec1dfb6c8cafb63d78220c76958abc8cb9afb",
+      "object_id": "pcv1_obj_016",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g1"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "valid consent exists",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_016",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "deny"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_deny_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "deny",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_guard",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 942,
+          "input_id": "pcv1_obj_016",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_016.bpmn",
+          "sha256": "c7ed00904d6dec01918e60bf4adec1dfb6c8cafb63d78220c76958abc8cb9afb"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Condition text remains on the gateway, but no sequence flow enforces it.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_016_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_017.bpmn",
+      "bpmn_sha256": "1ae4b838909b6c816fe93d3717935b4af8d97274f5265acf9d5f9dbe24be8f7a",
+      "object_id": "pcv1_obj_017",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g1"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "Consent check",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_017",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "deny"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_deny_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "deny",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 1038,
+          "input_id": "pcv1_obj_017",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_017.bpmn",
+          "sha256": "1ae4b838909b6c816fe93d3717935b4af8d97274f5265acf9d5f9dbe24be8f7a"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Unrelated condition: C text is non-controlling; the actual guard is C2.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_017_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_018.bpmn",
+      "bpmn_sha256": "7a8d565d9f7df85f5a2d4445cd76f1b5e514eb0590714815d6c8ba1f18f34192",
+      "object_id": "pcv1_obj_018",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g1"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g1",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g1"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g1",
+            "lane_ids": [],
+            "name": "valid consent exists",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_018",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "deny"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_deny_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "deny",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": "request is authenticated",
+            "id": "f_guard",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g1",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g1",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g1"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 1049,
+          "input_id": "pcv1_obj_018",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_018.bpmn",
+          "sha256": "7a8d565d9f7df85f5a2d4445cd76f1b5e514eb0590714815d6c8ba1f18f34192"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Unrelated condition: C text is non-controlling; the actual guard is C2.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_018_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_019.bpmn",
+      "bpmn_sha256": "6d65829b98cf0116ef32680689ecfc541244ad93f1619c43664929d2429d3409",
+      "object_id": "pcv1_obj_019",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g0"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g0"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g0"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g0",
+            "lane_ids": [],
+            "name": "Consent routes",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_019",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g0",
+            "target_ref": "deny"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_deny_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "deny",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard_a",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g0",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard_b",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g0",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g0",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g0"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 1221,
+          "input_id": "pcv1_obj_019",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_019.bpmn",
+          "sha256": "6d65829b98cf0116ef32680689ecfc541244ad93f1619c43664929d2429d3409"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Multiple C-guarded routes; variant adds one unconditional route.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_019_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_020.bpmn",
+      "bpmn_sha256": "aed228ecfe9d703f7bf91e658da834452cf897d3afa0fdd9a155a64f52016652",
+      "object_id": "pcv1_obj_020",
+      "process_record": {
+        "activities": [
+          {
+            "id": "deny",
+            "lane_ids": [],
+            "name": "deny request",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g0"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g0"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "deny",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g0",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "deny"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g0"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g0",
+            "lane_ids": [],
+            "name": "Consent routes",
+            "type": "exclusiveGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_020",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_default",
+            "is_default": true,
+            "name": "",
+            "source_ref": "g0",
+            "target_ref": "deny"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_deny_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "deny",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard_a",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g0",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": "valid consent exists",
+            "id": "f_guard_b",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g0",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_multiple_bypass",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g0",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_g0",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g0"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 1306,
+          "input_id": "pcv1_obj_020",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_020.bpmn",
+          "sha256": "aed228ecfe9d703f7bf91e658da834452cf897d3afa0fdd9a155a64f52016652"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "deny request",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Multiple C-guarded routes; variant adds one unconditional route.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_020_rulespec",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_021.bpmn",
+      "bpmn_sha256": "199e7aba088570278f65174a71ba99c8044ffac367ac60b8da2818c68341181e",
+      "object_id": "pcv1_obj_021",
+      "process_record": {
+        "activities": [
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_021",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_review_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "review"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 579,
+          "input_id": "pcv1_obj_021",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_021.bpmn",
+          "sha256": "199e7aba088570278f65174a71ba99c8044ffac367ac60b8da2818c68341181e"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "The controller is not required to A: absence of obligation.",
+        "modality": "prohibition",
+        "relation_type": "absence_of_obligation",
+        "rule_spec_id": "pcv1_obj_021_rulespec",
+        "source_clause_ref": "AI_constructed_CE1",
+        "source_clause_text": "AI-constructed mechanism rule"
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_022.bpmn",
+      "bpmn_sha256": "e793c62cbbc36a9d4a024771c2b5aacd19729935872ce996ed724219aa7fde2f",
+      "object_id": "pcv1_obj_022",
+      "process_record": {
+        "activities": [
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_022",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_review_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "review"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 579,
+          "input_id": "pcv1_obj_022",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_022.bpmn",
+          "sha256": "e793c62cbbc36a9d4a024771c2b5aacd19729935872ce996ed724219aa7fde2f"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "The controller may A: permission is not prohibition.",
+        "modality": "prohibition",
+        "relation_type": "permission",
+        "rule_spec_id": "pcv1_obj_022_rulespec",
+        "source_clause_ref": "AI_constructed_CE2",
+        "source_clause_text": "AI-constructed mechanism rule"
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_023.bpmn",
+      "bpmn_sha256": "e00fcae6735f6550aea623c9e24b222ff4a3275ee1169ee46f5e167905760603",
+      "object_id": "pcv1_obj_023",
+      "process_record": {
+        "activities": [
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_023",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_review_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "review"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 579,
+          "input_id": "pcv1_obj_023",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_023.bpmn",
+          "sha256": "e00fcae6735f6550aea623c9e24b222ff4a3275ee1169ee46f5e167905760603"
+        }
+      },
+      "rule_spec": {
+        "action": "apply",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "apply",
+          "review request"
+        ],
+        "condition": null,
+        "condition_binding_contract": null,
+        "condition_canonical_surface": null,
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "Paragraph 1 shall not apply if C: rule applicability, not process action.",
+        "modality": "prohibition",
+        "relation_type": "rule_applicability",
+        "rule_spec_id": "pcv1_obj_023_rulespec",
+        "source_clause_ref": "gdpr_article22_s002",
+        "source_clause_text": "Paragraph 1 shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_024.bpmn",
+      "bpmn_sha256": "fc17ce0dfd7fbd512bfce766604887e881bebecea52abc1b6a6235946ea5248c",
+      "object_id": "pcv1_obj_024",
+      "process_record": {
+        "activities": [
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_024",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_review_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "review"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 579,
+          "input_id": "pcv1_obj_024",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_024.bpmn",
+          "sha256": "fc17ce0dfd7fbd512bfce766604887e881bebecea52abc1b6a6235946ea5248c"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": "personal data breach occurs",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "personal data breach occurs",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "If C then must A: trigger obligation, not A only if C.",
+        "modality": "obligation",
+        "relation_type": "trigger_obligation_C_implies_OA",
+        "rule_spec_id": "pcv1_obj_024_rulespec",
+        "source_clause_ref": "gdpr_article33_s001",
+        "source_clause_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons."
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_025.bpmn",
+      "bpmn_sha256": "c8057b311d74d560866dc05c3c103f7c885d760c97ce5796c2dc36a4371c85fe",
+      "object_id": "pcv1_obj_025",
+      "process_record": {
+        "activities": [
+          {
+            "id": "review",
+            "lane_ids": [],
+            "name": "review request",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [],
+          "parallel_join_gateway_ids": [],
+          "parallel_split_gateway_ids": [],
+          "reachable_pairs": [
+            {
+              "source_ref": "review",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "review"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_025",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_review_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "review",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_review",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "review"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 579,
+          "input_id": "pcv1_obj_025",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_025.bpmn",
+          "sha256": "c8057b311d74d560866dc05c3c103f7c885d760c97ce5796c2dc36a4371c85fe"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "disclose personal data",
+          "review request"
+        ],
+        "condition": "a specific circumstance holds",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "a specific circumstance holds",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "If C, the controller must not A: conditional prohibition outside v1.",
+        "modality": "prohibition",
+        "relation_type": "conditional_action_prohibition",
+        "rule_spec_id": "pcv1_obj_025_rulespec",
+        "source_clause_ref": "AI_constructed_CE5",
+        "source_clause_text": "AI-constructed mechanism rule"
+      }
+    },
+    {
+      "bpmn_path": "bpmn/pcv1_obj_026.bpmn",
+      "bpmn_sha256": "0951b411536478ac47ad6a56c6f4f1ef8efde32952bdfe61f9c4e82553c88c8b",
+      "object_id": "pcv1_obj_026",
+      "process_record": {
+        "activities": [
+          {
+            "id": "archive",
+            "lane_ids": [],
+            "name": "archive record",
+            "type": "task"
+          },
+          {
+            "id": "disclose",
+            "lane_ids": [],
+            "name": "disclose personal data",
+            "type": "task"
+          }
+        ],
+        "control_flow": {
+          "activity_order_relations": [],
+          "branching_gateway_ids": [
+            "g_split"
+          ],
+          "cycle_detected": false,
+          "cyclic_node_ids": [],
+          "direct_edges": [
+            {
+              "source_ref": "archive",
+              "target_ref": "g_join"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "g_join"
+            },
+            {
+              "source_ref": "g_join",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g_split",
+              "target_ref": "archive"
+            },
+            {
+              "source_ref": "g_split",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g_split"
+            }
+          ],
+          "end_event_ids": [
+            "end"
+          ],
+          "parallel_gateway_ids": [
+            "g_join",
+            "g_split"
+          ],
+          "parallel_join_gateway_ids": [
+            "g_join"
+          ],
+          "parallel_split_gateway_ids": [
+            "g_split"
+          ],
+          "reachable_pairs": [
+            {
+              "source_ref": "archive",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "archive",
+              "target_ref": "g_join"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "disclose",
+              "target_ref": "g_join"
+            },
+            {
+              "source_ref": "g_join",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g_split",
+              "target_ref": "archive"
+            },
+            {
+              "source_ref": "g_split",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "g_split",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "g_split",
+              "target_ref": "g_join"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "archive"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "disclose"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "end"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g_join"
+            },
+            {
+              "source_ref": "start",
+              "target_ref": "g_split"
+            }
+          ],
+          "start_event_ids": [
+            "start"
+          ],
+          "unreachable_node_ids": []
+        },
+        "events": [
+          {
+            "id": "end",
+            "lane_ids": [],
+            "name": "End",
+            "type": "endEvent"
+          },
+          {
+            "id": "start",
+            "lane_ids": [],
+            "name": "Start",
+            "type": "startEvent"
+          }
+        ],
+        "gateways": [
+          {
+            "id": "g_join",
+            "lane_ids": [],
+            "name": "AND join",
+            "type": "parallelGateway"
+          },
+          {
+            "id": "g_split",
+            "lane_ids": [],
+            "name": "AND split",
+            "type": "parallelGateway"
+          }
+        ],
+        "lanes": [],
+        "method": {
+          "label_semantics": "preserve_original_labels_only",
+          "name": "stage1_bpmn_xml_structural",
+          "parser_version": "stage1_bpmn_parser@1.0.0"
+        },
+        "pools": [],
+        "process_id": "pcv1_process_026",
+        "schema_version": "process_record@1.0.0",
+        "sequence_flows": [
+          {
+            "condition_expression": null,
+            "id": "f_archive_join",
+            "is_default": false,
+            "name": "",
+            "source_ref": "archive",
+            "target_ref": "g_join"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_disclose_join",
+            "is_default": false,
+            "name": "",
+            "source_ref": "disclose",
+            "target_ref": "g_join"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_join_end",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g_join",
+            "target_ref": "end"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_split_archive",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g_split",
+            "target_ref": "archive"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_split_disclose",
+            "is_default": false,
+            "name": "",
+            "source_ref": "g_split",
+            "target_ref": "disclose"
+          },
+          {
+            "condition_expression": null,
+            "id": "f_start_split",
+            "is_default": false,
+            "name": "",
+            "source_ref": "start",
+            "target_ref": "g_split"
+          }
+        ],
+        "source": {
+          "bpmn_namespace": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+          "byte_size": 1104,
+          "input_id": "pcv1_obj_026",
+          "path": "data/development/stage3_ext_pc_v1/bpmn/pcv1_obj_026.bpmn",
+          "sha256": "0951b411536478ac47ad6a56c6f4f1ef8efde32952bdfe61f9c4e82553c88c8b"
+        }
+      },
+      "rule_spec": {
+        "action": "disclose personal data",
+        "action_binding_contract": "exact_normalized_complete_enumeration",
+        "actor": "The controller",
+        "canonical_action_vocabulary": [
+          "archive record",
+          "disclose personal data"
+        ],
+        "condition": "valid consent exists",
+        "condition_binding_contract": "exact_canonical_condition_surface_complete",
+        "condition_canonical_surface": "valid consent exists",
+        "constraint": null,
+        "exception": null,
+        "mechanism_note": "A only if C, but the relevant BPMN slice uses an AND gateway.",
+        "modality": "obligation",
+        "relation_type": "necessary_precondition",
+        "rule_spec_id": "pcv1_obj_026_rulespec",
+        "source_clause_ref": "AI_constructed_CE6",
+        "source_clause_text": "AI-constructed mechanism rule"
+      }
+    }
+  ],
+  "revision": "s3_ext_pc_v1",
+  "schema_version": "s3_ext_pc_v1_inference_view@1.0.0",
+  "status": "frozen_before_predictions"
+}

@@ -1,0 +1,206 @@
+{
+  "case_composition": {
+    "counterexample_count": 6,
+    "counterexamples": [
+      {
+        "case_id": "CE1",
+        "expected_applicability": "not_applicable",
+        "expected_check_family": "prohibition",
+        "expected_decision": "not_applicable",
+        "note": "The controller is not required to A: absence of obligation.",
+        "object_id": "pcv1_obj_021",
+        "relation_type": "absence_of_obligation"
+      },
+      {
+        "case_id": "CE2",
+        "expected_applicability": "not_applicable",
+        "expected_check_family": "prohibition",
+        "expected_decision": "not_applicable",
+        "note": "The controller may A: permission is not prohibition.",
+        "object_id": "pcv1_obj_022",
+        "relation_type": "permission"
+      },
+      {
+        "case_id": "CE3",
+        "expected_applicability": "not_applicable",
+        "expected_check_family": "prohibition",
+        "expected_decision": "not_applicable",
+        "note": "Paragraph 1 shall not apply if C: rule applicability, not process action.",
+        "object_id": "pcv1_obj_023",
+        "relation_type": "rule_applicability"
+      },
+      {
+        "case_id": "CE4",
+        "expected_applicability": "not_applicable",
+        "expected_check_family": "necessary_precondition",
+        "expected_decision": "not_applicable",
+        "note": "If C then must A: trigger obligation, not A only if C.",
+        "object_id": "pcv1_obj_024",
+        "relation_type": "trigger_obligation_C_implies_OA"
+      },
+      {
+        "case_id": "CE5",
+        "expected_applicability": "unsupported",
+        "expected_check_family": "prohibition",
+        "expected_decision": "unsupported",
+        "note": "If C, the controller must not A: conditional prohibition outside v1.",
+        "object_id": "pcv1_obj_025",
+        "relation_type": "conditional_action_prohibition"
+      },
+      {
+        "case_id": "CE6",
+        "expected_applicability": "unsupported",
+        "expected_check_family": "necessary_precondition",
+        "expected_decision": "unsupported",
+        "note": "A only if C, but the relevant BPMN slice uses an AND gateway.",
+        "object_id": "pcv1_obj_026",
+        "relation_type": "necessary_precondition"
+      }
+    ],
+    "object_count": 26,
+    "pair_count": 10,
+    "pairs": [
+      {
+        "condition": null,
+        "control_object_id": "pcv1_obj_001",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "prohibition",
+        "pair_id": "P1",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "variant_object_id": "pcv1_obj_002"
+      },
+      {
+        "condition": null,
+        "control_object_id": "pcv1_obj_003",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "prohibition",
+        "pair_id": "P2",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "variant_object_id": "pcv1_obj_004"
+      },
+      {
+        "condition": null,
+        "control_object_id": "pcv1_obj_005",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "prohibition",
+        "pair_id": "P3",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "variant_object_id": "pcv1_obj_006"
+      },
+      {
+        "condition": null,
+        "control_object_id": "pcv1_obj_007",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "prohibition",
+        "pair_id": "P4",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "variant_object_id": "pcv1_obj_008"
+      },
+      {
+        "condition": null,
+        "control_object_id": "pcv1_obj_009",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "prohibition",
+        "pair_id": "P5",
+        "relation_type": "direct_unconditional_action_prohibition",
+        "variant_object_id": "pcv1_obj_010"
+      },
+      {
+        "condition": "valid consent exists",
+        "control_object_id": "pcv1_obj_011",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "necessary_precondition",
+        "pair_id": "C1",
+        "relation_type": "necessary_precondition",
+        "variant_object_id": "pcv1_obj_012"
+      },
+      {
+        "condition": "valid consent exists",
+        "control_object_id": "pcv1_obj_013",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "necessary_precondition",
+        "pair_id": "C2",
+        "relation_type": "necessary_precondition",
+        "variant_object_id": "pcv1_obj_014"
+      },
+      {
+        "condition": "valid consent exists",
+        "control_object_id": "pcv1_obj_015",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "necessary_precondition",
+        "pair_id": "C3",
+        "relation_type": "necessary_precondition",
+        "variant_object_id": "pcv1_obj_016"
+      },
+      {
+        "condition": "valid consent exists",
+        "control_object_id": "pcv1_obj_017",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "necessary_precondition",
+        "pair_id": "C4",
+        "relation_type": "necessary_precondition",
+        "variant_object_id": "pcv1_obj_018"
+      },
+      {
+        "condition": "valid consent exists",
+        "control_object_id": "pcv1_obj_019",
+        "expected_control": "satisfied",
+        "expected_variant": "violation",
+        "family": "necessary_precondition",
+        "pair_id": "C5",
+        "relation_type": "necessary_precondition",
+        "variant_object_id": "pcv1_obj_020"
+      }
+    ]
+  },
+  "development_only": true,
+  "not_human_gold": true,
+  "revision": "s3_ext_pc_v1",
+  "schema_version": "s3_ext_pc_v1_mechanism_plan@1.0.0",
+  "semantic_definitions": {
+    "direct_unconditional_action_prohibition_v1": {
+      "action_node": "executable activity/task only; gateway labels, annotations, event names and condition texts are not action nodes",
+      "binding": "exact canonical normalized action enumeration in the AI-constructed mechanism contract",
+      "formula": "V_proh(r,G)=1 iff eligible_prohibition(r) and exists a in B_A(r,G): Reach_G(S,a)"
+    },
+    "necessary_precondition_bypass_v1": {
+      "E_C": "sequence-flow conditionExpression or explicit guarded flow label only",
+      "formula": "A only if C; G_without_C=(V,E\\E_C); violation iff A reachable in G_without_C",
+      "legacy_target_type": "required_condition_not_enforced"
+    }
+  },
+  "status": "frozen_before_predictions",
+  "supported_bpmn_fragment": {
+    "allowed": [
+      "flat process",
+      "startEvent",
+      "endEvent",
+      "task/activity",
+      "sequenceFlow",
+      "exclusiveGateway",
+      "DAG/acyclic",
+      "explicit flow conditionExpression or guarded flow name"
+    ],
+    "default_flow": "allowed; default flow is not automatically C",
+    "unsupported": [
+      "parallelGateway",
+      "inclusiveGateway",
+      "eventBasedGateway",
+      "complexGateway",
+      "loops/cycles",
+      "subProcess",
+      "callActivity",
+      "boundary/intermediate event condition semantics",
+      "dynamic data-state evaluation"
+    ]
+  }
+}

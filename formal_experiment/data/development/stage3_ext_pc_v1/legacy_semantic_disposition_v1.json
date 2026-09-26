@@ -1,0 +1,2279 @@
+{
+  "assessment_value_vocabulary": [
+    "direct_unconditional_action_prohibition",
+    "conditional_action_prohibition",
+    "permission",
+    "absence_of_obligation",
+    "rule_applicability",
+    "legal_effect_or_state",
+    "trigger_obligation_C_implies_OA",
+    "necessary_precondition_A_implies_C",
+    "ambiguous",
+    "other"
+  ],
+  "historical_v5_predictions_read_only": {
+    "path": "outputs/development/s3_semantic_grounding_v5/predictions.jsonl",
+    "sha256": "4f6d43c8bbd23db7156f4dc07f76365bd25a701674f8c28cbe2fb6cafee8573b"
+  },
+  "items": [
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 24,
+          "activity_labels": [
+            "Add \"existence of the right to access personal data\"",
+            "Add \"existence of the right to data portability\"",
+            "Add \"existence of the right to erase personal data\"",
+            "Add \"existence of the right to lodge a complaint to a supervisory authority\"",
+            "Add \"existence of the right to rectify of personal data\"",
+            "Add \"existence of the right to withdraw\"",
+            "Add \"personal data will be transferred internationally\"",
+            "Add \"profiling about logic involved, significance and envisaged consequences of processing\"",
+            "Ask DPO details",
+            "Ask consent",
+            "Check if data has been obtained from Data Subject",
+            "Check if it is possible to determine the period for which personal data will be stored",
+            "Check if legitimate interests are presents",
+            "Check if personal data can be transferred internationally",
+            "Check if recipients are present",
+            "Collect consent information",
+            "Retrieve identity and contact details",
+            "Retrieve legitimate interests",
+            "Retrieve processing legal basis",
+            "Retrieve processing purposses",
+            "Retrieve recipients",
+            "Retrieve the criteria used to determine the period",
+            "Retrieve the period",
+            "Retrieve the source from which personal data are originated"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-27A240EB-AA42-4ECD-BFD9-85655F500308",
+            "sid-5245CCF9-3D53-4D52-9966-0E8839E71D5A"
+          ],
+          "event_count": 6,
+          "gateway_count": 15,
+          "gateway_types": [
+            "eventBasedGateway",
+            "exclusiveGateway",
+            "parallelGateway"
+          ],
+          "named_flow_count": 10,
+          "parallel_gateway_ids": [
+            "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+            "sid-AB0B4F0A-B4F9-4379-9225-B4F27DFD6BC6",
+            "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+          ],
+          "sequence_flow_count": 64,
+          "source_sha256": "b41c7338c8cd62e9654ba927614b0b8770f959d05b76d2629da55caf087846f7",
+          "start_event_ids": [
+            "sid-970DB3C0-5D4D-4382-B430-182F2184ACF7"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 25,
+          "activity_labels": [
+            "Add \"existence of the right to access personal data\"",
+            "Add \"existence of the right to data portability\"",
+            "Add \"existence of the right to erase personal data\"",
+            "Add \"existence of the right to lodge a complaint to a supervisory authority\"",
+            "Add \"existence of the right to rectify of personal data\"",
+            "Add \"existence of the right to withdraw\"",
+            "Add \"personal data will be transferred internationally\"",
+            "Add \"profiling about logic involved, significance and envisaged consequences of processing\"",
+            "Ask DPO details",
+            "Ask consent",
+            "Check if data has been obtained from Data Subject",
+            "Check if it is possible to determine the period for which personal data will be stored",
+            "Check if legitimate interests are presents",
+            "Check if personal data can be transferred internationally",
+            "Check if recipients are present",
+            "Collect consent information",
+            "Retrieve identity and contact details",
+            "Retrieve legitimate interests",
+            "Retrieve processing legal basis",
+            "Retrieve processing purposses",
+            "Retrieve recipients",
+            "Retrieve the criteria used to determine the period",
+            "Retrieve the period",
+            "Retrieve the source from which personal data are originated",
+            "affects similarly significantly him or her"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-27A240EB-AA42-4ECD-BFD9-85655F500308",
+            "sid-5245CCF9-3D53-4D52-9966-0E8839E71D5A"
+          ],
+          "event_count": 6,
+          "gateway_count": 15,
+          "gateway_types": [
+            "eventBasedGateway",
+            "exclusiveGateway",
+            "parallelGateway"
+          ],
+          "named_flow_count": 10,
+          "parallel_gateway_ids": [
+            "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+            "sid-AB0B4F0A-B4F9-4379-9225-B4F27DFD6BC6",
+            "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+          ],
+          "sequence_flow_count": 66,
+          "source_sha256": "9162e917ccb1d140c456de89ce63de7475b7c0ec9427470d95c18ea284618ec6",
+          "start_event_ids": [
+            "sid-970DB3C0-5D4D-4382-B430-182F2184ACF7"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "affects similarly significantly him or her",
+        "condition": null,
+        "constraint": null,
+        "exception": null,
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_01",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": false,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "action_grounding_unresolved",
+          "score": null,
+          "status": "unknown",
+          "violation": null
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The source expresses a direct prohibition of subjecting the data subject to an automated decision.  The historical extracted action 'affects similarly significantly him or her' is a relative-clause fragment, not the executable prohibited act; the clause would need canonical action rebinding before it could be reused by the new checker.",
+      "new_v1_eligibility": "eligible_for_new_v1_semantics",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "direct_unconditional_action_prohibition",
+      "source_sentence": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 24,
+          "activity_labels": [
+            "Add \"existence of the right to access personal data\"",
+            "Add \"existence of the right to data portability\"",
+            "Add \"existence of the right to erase personal data\"",
+            "Add \"existence of the right to lodge a complaint to a supervisory authority\"",
+            "Add \"existence of the right to rectify of personal data\"",
+            "Add \"existence of the right to withdraw\"",
+            "Add \"personal data will be transferred internationally\"",
+            "Add \"profiling about logic involved, significance and envisaged consequences of processing\"",
+            "Ask DPO details",
+            "Ask consent",
+            "Check if data has been obtained from Data Subject",
+            "Check if it is possible to determine the period for which personal data will be stored",
+            "Check if legitimate interests are presents",
+            "Check if personal data can be transferred internationally",
+            "Check if recipients are present",
+            "Collect consent information",
+            "Retrieve identity and contact details",
+            "Retrieve legitimate interests",
+            "Retrieve processing legal basis",
+            "Retrieve processing purposses",
+            "Retrieve recipients",
+            "Retrieve the criteria used to determine the period",
+            "Retrieve the period",
+            "Retrieve the source from which personal data are originated"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-27A240EB-AA42-4ECD-BFD9-85655F500308",
+            "sid-5245CCF9-3D53-4D52-9966-0E8839E71D5A"
+          ],
+          "event_count": 6,
+          "gateway_count": 15,
+          "gateway_types": [
+            "eventBasedGateway",
+            "exclusiveGateway",
+            "parallelGateway"
+          ],
+          "named_flow_count": 10,
+          "parallel_gateway_ids": [
+            "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+            "sid-AB0B4F0A-B4F9-4379-9225-B4F27DFD6BC6",
+            "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+          ],
+          "sequence_flow_count": 64,
+          "source_sha256": "b41c7338c8cd62e9654ba927614b0b8770f959d05b76d2629da55caf087846f7",
+          "start_event_ids": [
+            "sid-970DB3C0-5D4D-4382-B430-182F2184ACF7"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 25,
+          "activity_labels": [
+            "Add \"existence of the right to access personal data\"",
+            "Add \"existence of the right to data portability\"",
+            "Add \"existence of the right to erase personal data\"",
+            "Add \"existence of the right to lodge a complaint to a supervisory authority\"",
+            "Add \"existence of the right to rectify of personal data\"",
+            "Add \"existence of the right to withdraw\"",
+            "Add \"personal data will be transferred internationally\"",
+            "Add \"profiling about logic involved, significance and envisaged consequences of processing\"",
+            "Ask DPO details",
+            "Ask consent",
+            "Check if data has been obtained from Data Subject",
+            "Check if it is possible to determine the period for which personal data will be stored",
+            "Check if legitimate interests are presents",
+            "Check if personal data can be transferred internationally",
+            "Check if recipients are present",
+            "Collect consent information",
+            "Retrieve identity and contact details",
+            "Retrieve legitimate interests",
+            "Retrieve processing legal basis",
+            "Retrieve processing purposses",
+            "Retrieve recipients",
+            "Retrieve the criteria used to determine the period",
+            "Retrieve the period",
+            "Retrieve the source from which personal data are originated",
+            "affects similarly significantly him or her"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-27A240EB-AA42-4ECD-BFD9-85655F500308",
+            "sid-5245CCF9-3D53-4D52-9966-0E8839E71D5A"
+          ],
+          "event_count": 6,
+          "gateway_count": 15,
+          "gateway_types": [
+            "eventBasedGateway",
+            "exclusiveGateway",
+            "parallelGateway"
+          ],
+          "named_flow_count": 10,
+          "parallel_gateway_ids": [
+            "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+            "sid-AB0B4F0A-B4F9-4379-9225-B4F27DFD6BC6",
+            "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+          ],
+          "sequence_flow_count": 66,
+          "source_sha256": "118456251ecf078a2e529c7935eb4ce224f90522abecb0544795bfcad536a8cc",
+          "start_event_ids": [
+            "sid-970DB3C0-5D4D-4382-B430-182F2184ACF7"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "affects similarly significantly him or her",
+        "condition": null,
+        "constraint": null,
+        "exception": null,
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_02",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": false,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "action_grounding_unresolved",
+          "score": null,
+          "status": "unknown",
+          "violation": null
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "Same source semantics as 01.  Historical action extraction is not the executable prohibited action and must not be treated as a valid binding under the new exact-canonical mechanism contract.",
+      "new_v1_eligibility": "eligible_for_new_v1_semantics",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "direct_unconditional_action_prohibition",
+      "source_sentence": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 24,
+          "activity_labels": [
+            "Add \"existence of the right to access personal data\"",
+            "Add \"existence of the right to data portability\"",
+            "Add \"existence of the right to erase personal data\"",
+            "Add \"existence of the right to lodge a complaint to a supervisory authority\"",
+            "Add \"existence of the right to rectify of personal data\"",
+            "Add \"existence of the right to withdraw\"",
+            "Add \"personal data will be transferred internationally\"",
+            "Add \"profiling about logic involved, significance and envisaged consequences of processing\"",
+            "Ask DPO details",
+            "Ask consent",
+            "Check if data has been obtained from Data Subject",
+            "Check if it is possible to determine the period for which personal data will be stored",
+            "Check if legitimate interests are presents",
+            "Check if personal data can be transferred internationally",
+            "Check if recipients are present",
+            "Collect consent information",
+            "Retrieve identity and contact details",
+            "Retrieve legitimate interests",
+            "Retrieve processing legal basis",
+            "Retrieve processing purposses",
+            "Retrieve recipients",
+            "Retrieve the criteria used to determine the period",
+            "Retrieve the period",
+            "Retrieve the source from which personal data are originated"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-27A240EB-AA42-4ECD-BFD9-85655F500308",
+            "sid-5245CCF9-3D53-4D52-9966-0E8839E71D5A"
+          ],
+          "event_count": 6,
+          "gateway_count": 15,
+          "gateway_types": [
+            "eventBasedGateway",
+            "exclusiveGateway",
+            "parallelGateway"
+          ],
+          "named_flow_count": 10,
+          "parallel_gateway_ids": [
+            "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+            "sid-AB0B4F0A-B4F9-4379-9225-B4F27DFD6BC6",
+            "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+          ],
+          "sequence_flow_count": 64,
+          "source_sha256": "b41c7338c8cd62e9654ba927614b0b8770f959d05b76d2629da55caf087846f7",
+          "start_event_ids": [
+            "sid-970DB3C0-5D4D-4382-B430-182F2184ACF7"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 25,
+          "activity_labels": [
+            "Add \"existence of the right to access personal data\"",
+            "Add \"existence of the right to data portability\"",
+            "Add \"existence of the right to erase personal data\"",
+            "Add \"existence of the right to lodge a complaint to a supervisory authority\"",
+            "Add \"existence of the right to rectify of personal data\"",
+            "Add \"existence of the right to withdraw\"",
+            "Add \"personal data will be transferred internationally\"",
+            "Add \"profiling about logic involved, significance and envisaged consequences of processing\"",
+            "Ask DPO details",
+            "Ask consent",
+            "Check if data has been obtained from Data Subject",
+            "Check if it is possible to determine the period for which personal data will be stored",
+            "Check if legitimate interests are presents",
+            "Check if personal data can be transferred internationally",
+            "Check if recipients are present",
+            "Collect consent information",
+            "Retrieve identity and contact details",
+            "Retrieve legitimate interests",
+            "Retrieve processing legal basis",
+            "Retrieve processing purposses",
+            "Retrieve recipients",
+            "Retrieve the criteria used to determine the period",
+            "Retrieve the period",
+            "Retrieve the source from which personal data are originated",
+            "apply"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-27A240EB-AA42-4ECD-BFD9-85655F500308",
+            "sid-5245CCF9-3D53-4D52-9966-0E8839E71D5A"
+          ],
+          "event_count": 6,
+          "gateway_count": 15,
+          "gateway_types": [
+            "eventBasedGateway",
+            "exclusiveGateway",
+            "parallelGateway"
+          ],
+          "named_flow_count": 10,
+          "parallel_gateway_ids": [
+            "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+            "sid-AB0B4F0A-B4F9-4379-9225-B4F27DFD6BC6",
+            "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+          ],
+          "sequence_flow_count": 66,
+          "source_sha256": "d3ffef3f9b27174e7fbc69f55883d67f4a99e908671d1afc93728c0dce55bd2d",
+          "start_event_ids": [
+            "sid-970DB3C0-5D4D-4382-B430-182F2184ACF7"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "apply",
+        "condition": "if the decision is necessary for entering into",
+        "constraint": null,
+        "exception": "shall not apply if the decision is necessary for entering into",
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_03",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "no_explicit_prohibited_action_activity",
+          "score": 0.0,
+          "status": "absent",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "Paragraph 1 shall not apply if ... is rule applicability, not a process-action prohibition.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "rule_applicability",
+      "source_sentence": "Paragraph 1 shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 24,
+          "activity_labels": [
+            "Add \"existence of the right to access personal data\"",
+            "Add \"existence of the right to data portability\"",
+            "Add \"existence of the right to erase personal data\"",
+            "Add \"existence of the right to lodge a complaint to a supervisory authority\"",
+            "Add \"existence of the right to rectify of personal data\"",
+            "Add \"existence of the right to withdraw\"",
+            "Add \"personal data will be transferred internationally\"",
+            "Add \"profiling about logic involved, significance and envisaged consequences of processing\"",
+            "Ask DPO details",
+            "Ask consent",
+            "Check if data has been obtained from Data Subject",
+            "Check if it is possible to determine the period for which personal data will be stored",
+            "Check if legitimate interests are presents",
+            "Check if personal data can be transferred internationally",
+            "Check if recipients are present",
+            "Collect consent information",
+            "Retrieve identity and contact details",
+            "Retrieve legitimate interests",
+            "Retrieve processing legal basis",
+            "Retrieve processing purposses",
+            "Retrieve recipients",
+            "Retrieve the criteria used to determine the period",
+            "Retrieve the period",
+            "Retrieve the source from which personal data are originated"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-27A240EB-AA42-4ECD-BFD9-85655F500308",
+            "sid-5245CCF9-3D53-4D52-9966-0E8839E71D5A"
+          ],
+          "event_count": 6,
+          "gateway_count": 15,
+          "gateway_types": [
+            "eventBasedGateway",
+            "exclusiveGateway",
+            "parallelGateway"
+          ],
+          "named_flow_count": 10,
+          "parallel_gateway_ids": [
+            "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+            "sid-AB0B4F0A-B4F9-4379-9225-B4F27DFD6BC6",
+            "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+          ],
+          "sequence_flow_count": 64,
+          "source_sha256": "b41c7338c8cd62e9654ba927614b0b8770f959d05b76d2629da55caf087846f7",
+          "start_event_ids": [
+            "sid-970DB3C0-5D4D-4382-B430-182F2184ACF7"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 25,
+          "activity_labels": [
+            "Add \"existence of the right to access personal data\"",
+            "Add \"existence of the right to data portability\"",
+            "Add \"existence of the right to erase personal data\"",
+            "Add \"existence of the right to lodge a complaint to a supervisory authority\"",
+            "Add \"existence of the right to rectify of personal data\"",
+            "Add \"existence of the right to withdraw\"",
+            "Add \"personal data will be transferred internationally\"",
+            "Add \"profiling about logic involved, significance and envisaged consequences of processing\"",
+            "Ask DPO details",
+            "Ask consent",
+            "Check if data has been obtained from Data Subject",
+            "Check if it is possible to determine the period for which personal data will be stored",
+            "Check if legitimate interests are presents",
+            "Check if personal data can be transferred internationally",
+            "Check if recipients are present",
+            "Collect consent information",
+            "Retrieve identity and contact details",
+            "Retrieve legitimate interests",
+            "Retrieve processing legal basis",
+            "Retrieve processing purposses",
+            "Retrieve recipients",
+            "Retrieve the criteria used to determine the period",
+            "Retrieve the period",
+            "Retrieve the source from which personal data are originated",
+            "apply"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-27A240EB-AA42-4ECD-BFD9-85655F500308",
+            "sid-5245CCF9-3D53-4D52-9966-0E8839E71D5A"
+          ],
+          "event_count": 6,
+          "gateway_count": 15,
+          "gateway_types": [
+            "eventBasedGateway",
+            "exclusiveGateway",
+            "parallelGateway"
+          ],
+          "named_flow_count": 10,
+          "parallel_gateway_ids": [
+            "sid-1C0EC338-56FF-4F27-9494-BC470B1BC93B",
+            "sid-AB0B4F0A-B4F9-4379-9225-B4F27DFD6BC6",
+            "sid-BB1531A1-D98A-4DB2-92CB-0DEE27831568",
+            "sid-D1E0BBFB-61FD-47DD-9A24-F8DF230B5FC5"
+          ],
+          "sequence_flow_count": 66,
+          "source_sha256": "b2c81635ac29672b109b07816a3d2ac3eedb291b0b3cd579230a5f89483f9bd0",
+          "start_event_ids": [
+            "sid-970DB3C0-5D4D-4382-B430-182F2184ACF7"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "apply",
+        "condition": "if the decision is necessary for entering into",
+        "constraint": null,
+        "exception": "shall not apply if the decision is necessary for entering into",
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_04",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "no_explicit_prohibited_action_activity",
+          "score": 0.0,
+          "status": "absent",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "Same rule-applicability construction as 03; 'apply' is not an executable process action here.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "rule_applicability",
+      "source_sentence": "Paragraph 1 shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 5,
+          "activity_labels": [
+            "Check if withdrawn data are relevant",
+            "Communicate the withdraw",
+            "Inform the user that the withdraw will stop all running BPs",
+            "Stop running BPs using withdrawn data",
+            "Stop using withdrawn data"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-7DF33B5E-FB19-4292-8060-378C473B2747",
+            "sid-BBE4AD40-63CE-49C4-84D5-180971257813"
+          ],
+          "event_count": 4,
+          "gateway_count": 3,
+          "gateway_types": [
+            "exclusiveGateway"
+          ],
+          "named_flow_count": 4,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 12,
+          "source_sha256": "4a89b3ef01a527b909f2a0b161fe02e3820607be11b4ea76dcb2c8b4ddda4f34",
+          "start_event_ids": [
+            "sid-C8822EE6-038D-4B46-B701-088DCA525E81"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Check if withdrawn data are relevant",
+            "Communicate the withdraw",
+            "Inform the user that the withdraw will stop all running BPs",
+            "Stop running BPs using withdrawn data",
+            "Stop using withdrawn data",
+            "binding"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-7DF33B5E-FB19-4292-8060-378C473B2747",
+            "sid-BBE4AD40-63CE-49C4-84D5-180971257813"
+          ],
+          "event_count": 4,
+          "gateway_count": 3,
+          "gateway_types": [
+            "exclusiveGateway"
+          ],
+          "named_flow_count": 4,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 14,
+          "source_sha256": "ca2a49f7e58fe67f841da4337f8d492aa87b55787fc6910ab7d3370c9f082000",
+          "start_event_ids": [
+            "sid-C8822EE6-038D-4B46-B701-088DCA525E81"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "binding",
+        "condition": null,
+        "constraint": null,
+        "exception": null,
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_05",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "compliant",
+          "overall_predicted": "none",
+          "reason": "no_explicit_prohibited_action_activity",
+          "score": 0.0,
+          "status": "absent",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "'shall not be binding' is a legal effect/state, not an executable process-action prohibition.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "legal_effect_or_state",
+      "source_sentence": "Any part of such a declaration which constitutes an infringement of this Regulation shall not be binding."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 5,
+          "activity_labels": [
+            "Check if withdrawn data are relevant",
+            "Communicate the withdraw",
+            "Inform the user that the withdraw will stop all running BPs",
+            "Stop running BPs using withdrawn data",
+            "Stop using withdrawn data"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-7DF33B5E-FB19-4292-8060-378C473B2747",
+            "sid-BBE4AD40-63CE-49C4-84D5-180971257813"
+          ],
+          "event_count": 4,
+          "gateway_count": 3,
+          "gateway_types": [
+            "exclusiveGateway"
+          ],
+          "named_flow_count": 4,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 12,
+          "source_sha256": "4a89b3ef01a527b909f2a0b161fe02e3820607be11b4ea76dcb2c8b4ddda4f34",
+          "start_event_ids": [
+            "sid-C8822EE6-038D-4B46-B701-088DCA525E81"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Check if withdrawn data are relevant",
+            "Communicate the withdraw",
+            "Inform the user that the withdraw will stop all running BPs",
+            "Stop running BPs using withdrawn data",
+            "Stop using withdrawn data",
+            "binding"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-7DF33B5E-FB19-4292-8060-378C473B2747",
+            "sid-BBE4AD40-63CE-49C4-84D5-180971257813"
+          ],
+          "event_count": 4,
+          "gateway_count": 3,
+          "gateway_types": [
+            "exclusiveGateway"
+          ],
+          "named_flow_count": 4,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 14,
+          "source_sha256": "fe0407fb29ab551c750fd7834a5a47ce2353c7fed9b1dda7155f23435e55f821",
+          "start_event_ids": [
+            "sid-C8822EE6-038D-4B46-B701-088DCA525E81"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "binding",
+        "condition": null,
+        "constraint": null,
+        "exception": null,
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_06",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "compliant",
+          "overall_predicted": "none",
+          "reason": "no_explicit_prohibited_action_activity",
+          "score": 0.0,
+          "status": "absent",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "Same legal-effect/state construction as 05.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "legal_effect_or_state",
+      "source_sentence": "Any part of such a declaration which constitutes an infringement of this Regulation shall not be binding."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 3,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 7,
+          "source_sha256": "091035b3cce39268f4dfb09436f70c3032504978bfc35a669542b55748d55eb1",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 4,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations",
+            "affect the lawfulness of processing"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "dbb5faf190f54575d96d1070e01ffd52d7387c6bd273000e3e7f471bdb3fe824",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "affect the lawfulness of processing",
+        "condition": "before its withdrawal",
+        "constraint": null,
+        "exception": null,
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_07",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "no_explicit_prohibited_action_activity",
+          "score": 0.0,
+          "status": "absent",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The sentence concerns the legal effect of withdrawal on prior lawfulness, not an executable action prohibition.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "legal_effect_or_state",
+      "source_sentence": "The withdrawal of consent shall not affect the lawfulness of processing based on consent before its withdrawal."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "c5d95087217977ade3c9db431556a54573e4ef5c38787b16b82d40b56e202160",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        },
+        "variant": {
+          "activity_count": 7,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects",
+            "affect adversely the rights and freedoms of others"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 11,
+          "source_sha256": "f0d2b7a6aef2a32dd8a4251e604e9785c664edb6a85ed7f1d74b63d5bec4247b",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "affect adversely the rights and freedoms of others",
+        "condition": null,
+        "constraint": null,
+        "exception": null,
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_08",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "compliant",
+          "overall_predicted": "none",
+          "reason": "no_explicit_prohibited_action_activity",
+          "score": 0.0,
+          "status": "absent",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The sentence concerns the legal effect of the right to obtain a copy on the rights of others.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "legal_effect_or_state",
+      "source_sentence": "The right to obtain a copy referred to in paragraph 3 shall not adversely affect the rights and freedoms of others."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 3,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 7,
+          "source_sha256": "4d408552df86cdf6a91f5d0426259429464326419f151b43c89a566639ec10db",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 4,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations",
+            "apply to processing necessary"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "040313ff6db126a7c774227e373de4166be8fd0c0c708ae945bcf7fd49e26969",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "apply to processing necessary",
+        "condition": null,
+        "constraint": null,
+        "exception": "shall not apply to processing necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller",
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_09",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "exception_not_handled",
+          "reason": "no_explicit_prohibited_action_activity",
+          "score": 0.0,
+          "status": "absent",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "That right shall not apply ... is legal rule applicability, not an executable process action.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "rule_applicability",
+      "source_sentence": "That right shall not apply to processing necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 2,
+          "activity_labels": [
+            "Communication with data subject",
+            "Retrieve data"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+          ],
+          "event_count": 2,
+          "gateway_count": 0,
+          "gateway_types": [],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 3,
+          "source_sha256": "c8079feccbb248c1ab3a67e3b3a162a0df6821b2ca4f4c8f9bf591b937ae272c",
+          "start_event_ids": [
+            "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 3,
+          "activity_labels": [
+            "Communication with data subject",
+            "Retrieve data",
+            "apply to the extent that processing is necessary for exercising the right of freedom of expression and information"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+          ],
+          "event_count": 2,
+          "gateway_count": 0,
+          "gateway_types": [],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 5,
+          "source_sha256": "f6350dcb9e9caf1815f2e92c12ad1bbbda96ced4ef2d709c71a53b4025bda87c",
+          "start_event_ids": [
+            "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "apply to the extent that processing is necessary for exercising the right of freedom of expression and information",
+        "condition": "to the extent that processing is necessary for exercising the right of freedom of expression and information",
+        "constraint": null,
+        "exception": "shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information",
+        "modality": "prohibition"
+      },
+      "historical_item_id": "syn_v2_prohibited_action_10",
+      "historical_target_type": "prohibited_action_present",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "exception_not_handled",
+          "reason": "no_explicit_prohibited_action_activity",
+          "score": 0.0,
+          "status": "absent",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "prohibited_action_present",
+          "reason": "prohibited_action_explicitly_present",
+          "score": 1.0,
+          "status": "present",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "Paragraphs 1 and 2 shall not apply ... is legal rule applicability, not an executable process action.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "rule_applicability",
+      "source_sentence": "Paragraphs 1 and 2 shall not apply to the extent that processing is necessary for exercising the right of freedom of expression and information."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "639ccde1322c11e06ba129aa87a8ee1cc1ac39034416fdad6699efe497829bb5",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        },
+        "variant": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "c5d95087217977ade3c9db431556a54573e4ef5c38787b16b82d40b56e202160",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "notify the personal data breach",
+        "condition": "In the case of a personal data breach",
+        "constraint": "not later than 72 hours",
+        "exception": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_01",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "exception_not_handled",
+          "reason": "condition_evidence_found_on_action_anchored_surface",
+          "score": 0.0,
+          "status": "enforced",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "exception_not_handled",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "f5b3cdd6c60be8fb3b9d41167c090c1e94a7de7fa795c8c9cee0700f4b5d11e7",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        },
+        "variant": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "c5d95087217977ade3c9db431556a54573e4ef5c38787b16b82d40b56e202160",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "accompanied by reasons for the delay",
+        "condition": "Where the notification to the supervisory authority is not made within 72 hours",
+        "constraint": "within 72 hours",
+        "exception": null,
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_02",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "Where the notification to the supervisory authority is not made within 72 hours, it shall be accompanied by reasons for the delay."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "a343cc9e2ba271ab7ca53cfceef96c3762e2ea248a42a229c5b6cd001be3475e",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        },
+        "variant": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "c5d95087217977ade3c9db431556a54573e4ef5c38787b16b82d40b56e202160",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "notify the controller",
+        "condition": "after becoming aware of a personal data breach",
+        "constraint": "without undue delay",
+        "exception": null,
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_03",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "condition_evidence_found_on_action_anchored_surface",
+          "score": 0.0,
+          "status": "enforced",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "cfc8cbd598470a8c5a0bc11ecf9fa269ed552367de52de988c89afd646cfdf18",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        },
+        "variant": {
+          "activity_count": 6,
+          "activity_labels": [
+            "Communication with data subject",
+            "Data loss limitation",
+            "Handle delay",
+            "Notify national authority",
+            "Retrieve breached data",
+            "Retrieve breached subjects"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-CC421101-EEDB-4967-B2BC-84169BBBD404"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-2A55ADCB-C1A7-4681-AA3D-67EB3F324197",
+            "sid-9FECC45C-033C-4750-9436-4DA0648C4B43"
+          ],
+          "sequence_flow_count": 9,
+          "source_sha256": "c5d95087217977ade3c9db431556a54573e4ef5c38787b16b82d40b56e202160",
+          "start_event_ids": [
+            "sid-337FA953-A28B-42B0-92AE-AAA0FC87B690"
+          ],
+          "unreachable_node_ids": [
+            "sid-28448355-C13E-462C-8D66-8CEB2F6B557C"
+          ]
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "communicate the personal data breach",
+        "condition": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons",
+        "constraint": "without undue delay",
+        "exception": null,
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_04",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "condition_evidence_found_on_action_anchored_surface",
+          "score": 0.0,
+          "status": "enforced",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the personal data breach to the data subject without undue delay."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 2,
+          "activity_labels": [
+            "Communication with data subject",
+            "Retrieve data"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+          ],
+          "event_count": 2,
+          "gateway_count": 0,
+          "gateway_types": [],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 3,
+          "source_sha256": "59094a9e9884f1e89915f8beb490eb225a5a5cb6a301fe1e74be6fb1cd6238ac",
+          "start_event_ids": [
+            "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 2,
+          "activity_labels": [
+            "Communication with data subject",
+            "Retrieve data"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-43BDDB78-6406-40D7-8B8C-1BF453D83597"
+          ],
+          "event_count": 2,
+          "gateway_count": 0,
+          "gateway_types": [],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 3,
+          "source_sha256": "c8079feccbb248c1ab3a67e3b3a162a0df6821b2ca4f4c8f9bf591b937ae272c",
+          "start_event_ids": [
+            "sid-58CE7868-BEAA-49CC-9A90-7C82DFE96E5C"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+        "condition": "where one of the following grounds applies",
+        "constraint": "without undue delay",
+        "exception": null,
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_05",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "condition_evidence_found_on_action_anchored_surface",
+          "score": 0.0,
+          "status": "enforced",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 3,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 7,
+          "source_sha256": "9e44e7391f78cb652b05e57a0332ed027880d189f6be6a40c29e30688ca05106",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 3,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 7,
+          "source_sha256": "4d408552df86cdf6a91f5d0426259429464326419f151b43c89a566639ec10db",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided , where the processing is based on consent pursuant to point ( a ) of Article 6(1 ) or point ( a ) of Article 9(2 ) or",
+        "condition": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+        "constraint": "without hindrance",
+        "exception": null,
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_06",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "condition_evidence_found_on_action_anchored_surface",
+          "score": 0.0,
+          "status": "enforced",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 3,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 7,
+          "source_sha256": "da9fd2c7f98bcc01dfe5eefca109ce70f26da47b63f6831da0e61f282dd6d978",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 3,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 7,
+          "source_sha256": "091035b3cce39268f4dfb09436f70c3032504978bfc35a669542b55748d55eb1",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided , where the processing is based on consent pursuant to point ( a ) of Article 6(1 ) or point ( a ) of Article 9(2 ) or",
+        "condition": "where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1)",
+        "constraint": "without hindrance",
+        "exception": null,
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_07",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "condition_evidence_found_on_action_anchored_surface",
+          "score": 0.0,
+          "status": "enforced",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 5,
+          "activity_labels": [
+            "Check if withdrawn data are relevant",
+            "Communicate the withdraw",
+            "Inform the user that the withdraw will stop all running BPs",
+            "Stop running BPs using withdrawn data",
+            "Stop using withdrawn data"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-7DF33B5E-FB19-4292-8060-378C473B2747",
+            "sid-BBE4AD40-63CE-49C4-84D5-180971257813"
+          ],
+          "event_count": 4,
+          "gateway_count": 3,
+          "gateway_types": [
+            "exclusiveGateway"
+          ],
+          "named_flow_count": 4,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 12,
+          "source_sha256": "0fe355346086be481d73add267e548af601a390c4fbb2cc9702fa80840bf5f96",
+          "start_event_ids": [
+            "sid-C8822EE6-038D-4B46-B701-088DCA525E81"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 5,
+          "activity_labels": [
+            "Check if withdrawn data are relevant",
+            "Communicate the withdraw",
+            "Inform the user that the withdraw will stop all running BPs",
+            "Stop running BPs using withdrawn data",
+            "Stop using withdrawn data"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-7DF33B5E-FB19-4292-8060-378C473B2747",
+            "sid-BBE4AD40-63CE-49C4-84D5-180971257813"
+          ],
+          "event_count": 4,
+          "gateway_count": 3,
+          "gateway_types": [
+            "exclusiveGateway"
+          ],
+          "named_flow_count": 4,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 12,
+          "source_sha256": "4a89b3ef01a527b909f2a0b161fe02e3820607be11b4ea76dcb2c8b4ddda4f34",
+          "start_event_ids": [
+            "sid-C8822EE6-038D-4B46-B701-088DCA525E81"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "have the obligation to erase personal data without undue delay where one of the following grounds applies",
+        "condition": "where one of the following grounds applies",
+        "constraint": "without undue delay",
+        "exception": null,
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_08",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "condition_evidence_found_on_action_anchored_surface",
+          "score": 0.0,
+          "status": "enforced",
+          "violation": false
+        },
+        "variant": {
+          "observable": false,
+          "overall_decision": "abstention",
+          "overall_predicted": null,
+          "reason": "condition_surface_ambiguous_or_incomplete",
+          "score": null,
+          "status": "unknown",
+          "violation": null
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 3,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 7,
+          "source_sha256": "448dd3ca18ce9b5eba2d66d258cac446767b86ad1a6cac06ec2be12ceaeac652",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 3,
+          "activity_labels": [
+            "Communicate data and elaborations",
+            "Retrieve available data of the data subject",
+            "Retrieve elaborations"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-8CDC510A-396C-41A5-B5F0-EFD74BAE4C0D"
+          ],
+          "event_count": 2,
+          "gateway_count": 2,
+          "gateway_types": [
+            "parallelGateway"
+          ],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [
+            "sid-1FE17422-E502-4D46-B8C9-0BB2FFADCA39",
+            "sid-A98B48ED-872F-48D6-BA09-BDEA8568525A"
+          ],
+          "sequence_flow_count": 7,
+          "source_sha256": "091035b3cce39268f4dfb09436f70c3032504978bfc35a669542b55748d55eb1",
+          "start_event_ids": [
+            "sid-7115CC27-5018-4F75-869A-091C080CC0FA"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed access to the personal data and the following information the purposes of the processing",
+        "condition": "where that is the case",
+        "constraint": null,
+        "exception": null,
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_09",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "compliant",
+          "overall_predicted": "none",
+          "reason": "condition_evidence_found_on_action_anchored_surface",
+          "score": 0.0,
+          "status": "enforced",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information the purposes of the processing."
+    },
+    {
+      "bpmn_relevant_structure_summary": {
+        "control": {
+          "activity_count": 2,
+          "activity_labels": [
+            "Communicate the rectification\n",
+            "Rectify data"
+          ],
+          "condition_expression_flow_count": 1,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28"
+          ],
+          "event_count": 2,
+          "gateway_count": 0,
+          "gateway_types": [],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 3,
+          "source_sha256": "20dbb2275a8127adec30c7f2e90b6d53f6373ea5fb5a74cea40cfc276b00f9f0",
+          "start_event_ids": [
+            "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0"
+          ],
+          "unreachable_node_ids": []
+        },
+        "variant": {
+          "activity_count": 2,
+          "activity_labels": [
+            "Communicate the rectification\n",
+            "Rectify data"
+          ],
+          "condition_expression_flow_count": 0,
+          "cycle_detected": false,
+          "default_flow_count": 0,
+          "end_event_ids": [
+            "sid-F79BAA93-9FEF-40EC-BBC6-2F9A11AB0F28"
+          ],
+          "event_count": 2,
+          "gateway_count": 0,
+          "gateway_types": [],
+          "named_flow_count": 0,
+          "parallel_gateway_ids": [],
+          "sequence_flow_count": 3,
+          "source_sha256": "fa9f744586aaca6cc7de66be9ecd9b8cef13f7bc883594491fbae7f3dd74f49a",
+          "start_event_ids": [
+            "sid-EC693640-2075-44F6-8609-7C4FDCB2A7C0"
+          ],
+          "unreachable_node_ids": []
+        }
+      },
+      "historical_extracted_modality_action_condition": {
+        "action": "have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed access to the personal data and the following information the purposes of the processing",
+        "condition": "where that is the case",
+        "constraint": null,
+        "exception": null,
+        "modality": "obligation"
+      },
+      "historical_item_id": "syn_v2_required_condition_10",
+      "historical_target_type": "required_condition_not_enforced",
+      "historical_v5_decision": {
+        "control": {
+          "observable": true,
+          "overall_decision": "compliant",
+          "overall_predicted": "none",
+          "reason": "condition_evidence_found_on_action_anchored_surface",
+          "score": 0.0,
+          "status": "enforced",
+          "violation": false
+        },
+        "variant": {
+          "observable": true,
+          "overall_decision": "violation",
+          "overall_predicted": "required_condition_not_enforced",
+          "reason": "condition_absent_from_fully_enumerated_action_anchored_surface",
+          "score": 1.0,
+          "status": "not_enforced",
+          "violation": true
+        }
+      },
+      "ineligible_or_unsupported_reason": "The condition triggers or qualifies an obligation/right; it is not the necessary-precondition relation A only if C.",
+      "new_v1_eligibility": "not_applicable",
+      "not_human_gold": true,
+      "reviewer_identity": "AI_research_semantic_audit",
+      "semantic_relation_assessment": "trigger_obligation_C_implies_OA",
+      "source_sentence": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information the purposes of the processing."
+    }
+  ],
+  "new_v1_eligibility_value_vocabulary": [
+    "eligible_for_new_v1_semantics",
+    "not_applicable",
+    "unsupported"
+  ],
+  "review_boundary": {
+    "api_calls": 0,
+    "gold_created": false,
+    "historical_files_modified": false,
+    "historical_labels_rewritten": false,
+    "network_experiment_calls": 0,
+    "not_human_gold": true,
+    "note": "This file records a new AI semantic audit only.  It does not modify synthetic_controlled_error_extension_v2.json, does not re-label old expected labels, and does not establish new Gold.",
+    "reviewer_identity": "AI_research_semantic_audit"
+  },
+  "revision": "s3_ext_pc_v1",
+  "schema_version": "s3_ext_pc_v1_legacy_semantic_disposition@1.0.0",
+  "scope": "read_only_review_of_20_historical_pair_families",
+  "source_panel": {
+    "historical_item_count": 20,
+    "path": "data/development/stage3_synth/synthetic_controlled_error_extension_v2.json",
+    "sha256": "6a23adbdbc0d8930ff2a33411c52fed7fbbf581fdd101f830c29b2e3373e2e81",
+    "target_types": [
+      "prohibited_action_present",
+      "required_condition_not_enforced"
+    ]
+  },
+  "status": "development_only_semantic_audit",
+  "summary": {
+    "eligible_for_new_v1_semantics_but_requiring_canonical_action_rebinding": 2,
+    "historical_target_counts": {
+      "prohibited_action_present": 10,
+      "required_condition_not_enforced": 10
+    },
+    "new_v1_eligibility_counts": {
+      "eligible_for_new_v1_semantics": 2,
+      "not_applicable": 18
+    },
+    "old_required_condition_pairs_reused": 0,
+    "semantic_relation_assessment_counts": {
+      "direct_unconditional_action_prohibition": 2,
+      "legal_effect_or_state": 4,
+      "rule_applicability": 4,
+      "trigger_obligation_C_implies_OA": 10
+    },
+    "total": 20
+  }
+}

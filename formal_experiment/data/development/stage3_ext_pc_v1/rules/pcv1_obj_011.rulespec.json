@@ -1,0 +1,20 @@
+{
+  "action": "disclose personal data",
+  "action_binding_contract": "exact_normalized_complete_enumeration",
+  "actor": "The controller",
+  "canonical_action_vocabulary": [
+    "deny request",
+    "disclose personal data"
+  ],
+  "condition": "valid consent exists",
+  "condition_binding_contract": "exact_canonical_condition_surface_complete",
+  "condition_canonical_surface": "valid consent exists",
+  "constraint": null,
+  "exception": null,
+  "mechanism_note": "Single guarded route; variant adds an unconditional bypass flow.",
+  "modality": "obligation",
+  "relation_type": "necessary_precondition",
+  "rule_spec_id": "pcv1_obj_011_rulespec",
+  "source_clause_ref": "gdpr_article6_s001",
+  "source_clause_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+}

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="pcv1_process_026" isExecutable="true">
+    <bpmn:startEvent id="start" name="Start" />
+    <bpmn:parallelGateway id="g_split" name="AND split" />
+    <bpmn:task id="disclose" name="disclose personal data" />
+    <bpmn:task id="archive" name="archive record" />
+    <bpmn:parallelGateway id="g_join" name="AND join" />
+    <bpmn:endEvent id="end" name="End" />
+    <bpmn:sequenceFlow id="f_start_split" sourceRef="start" targetRef="g_split" />
+    <bpmn:sequenceFlow id="f_split_disclose" sourceRef="g_split" targetRef="disclose" />
+    <bpmn:sequenceFlow id="f_split_archive" sourceRef="g_split" targetRef="archive" />
+    <bpmn:sequenceFlow id="f_disclose_join" sourceRef="disclose" targetRef="g_join" />
+    <bpmn:sequenceFlow id="f_archive_join" sourceRef="archive" targetRef="g_join" />
+    <bpmn:sequenceFlow id="f_join_end" sourceRef="g_join" targetRef="end" />
+  </bpmn:process>
+</bpmn:definitions>

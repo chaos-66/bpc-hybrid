@@ -1,0 +1,20 @@
+{
+  "action": "disclose personal data",
+  "action_binding_contract": "exact_normalized_complete_enumeration",
+  "actor": "The controller",
+  "canonical_action_vocabulary": [
+    "disclose personal data",
+    "review request"
+  ],
+  "condition": "personal data breach occurs",
+  "condition_binding_contract": "exact_canonical_condition_surface_complete",
+  "condition_canonical_surface": "personal data breach occurs",
+  "constraint": null,
+  "exception": null,
+  "mechanism_note": "If C then must A: trigger obligation, not A only if C.",
+  "modality": "obligation",
+  "relation_type": "trigger_obligation_C_implies_OA",
+  "rule_spec_id": "pcv1_obj_024_rulespec",
+  "source_clause_ref": "gdpr_article33_s001",
+  "source_clause_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons."
+}

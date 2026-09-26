@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="pcv1_process_010" isExecutable="true">
+    <bpmn:startEvent id="start" name="Start" />
+    <bpmn:task id="metadata" name="disclose metadata" />
+    <bpmn:task id="disclose" name="disclose personal data" />
+    <bpmn:endEvent id="end" name="End" />
+    <bpmn:sequenceFlow id="f_start_metadata" sourceRef="start" targetRef="metadata" />
+    <bpmn:sequenceFlow id="f_metadata_disclose" sourceRef="metadata" targetRef="disclose" />
+    <bpmn:sequenceFlow id="f_disclose_end" sourceRef="disclose" targetRef="end" />
+  </bpmn:process>
+</bpmn:definitions>

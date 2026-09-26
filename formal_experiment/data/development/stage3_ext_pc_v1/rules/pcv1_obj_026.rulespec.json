@@ -1,0 +1,20 @@
+{
+  "action": "disclose personal data",
+  "action_binding_contract": "exact_normalized_complete_enumeration",
+  "actor": "The controller",
+  "canonical_action_vocabulary": [
+    "archive record",
+    "disclose personal data"
+  ],
+  "condition": "valid consent exists",
+  "condition_binding_contract": "exact_canonical_condition_surface_complete",
+  "condition_canonical_surface": "valid consent exists",
+  "constraint": null,
+  "exception": null,
+  "mechanism_note": "A only if C, but the relevant BPMN slice uses an AND gateway.",
+  "modality": "obligation",
+  "relation_type": "necessary_precondition",
+  "rule_spec_id": "pcv1_obj_026_rulespec",
+  "source_clause_ref": "AI_constructed_CE6",
+  "source_clause_text": "AI-constructed mechanism rule"
+}

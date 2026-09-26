@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="pcv1_process_006" isExecutable="true">
+    <bpmn:startEvent id="start" name="Start" />
+    <bpmn:task id="review" name="review request" />
+    <bpmn:task id="decoy" name="disclose personal data" />
+    <bpmn:endEvent id="end" name="End" />
+    <bpmn:sequenceFlow id="f_start_review" sourceRef="start" targetRef="review" />
+    <bpmn:sequenceFlow id="f_review_decoy" sourceRef="review" targetRef="decoy" />
+    <bpmn:sequenceFlow id="f_decoy_end" sourceRef="decoy" targetRef="end" />
+  </bpmn:process>
+</bpmn:definitions>

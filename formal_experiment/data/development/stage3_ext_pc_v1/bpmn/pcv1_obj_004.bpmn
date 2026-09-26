@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="pcv1_process_004" isExecutable="true">
+    <bpmn:startEvent id="start" name="Start" />
+    <bpmn:exclusiveGateway id="g1" name="Choose branch" />
+    <bpmn:task id="disclose" name="disclose personal data" />
+    <bpmn:task id="archive" name="archive record" />
+    <bpmn:endEvent id="end" name="End" />
+    <bpmn:sequenceFlow id="f_start_g1" sourceRef="start" targetRef="g1" />
+    <bpmn:sequenceFlow id="f_g1_disclose" sourceRef="g1" targetRef="disclose" />
+    <bpmn:sequenceFlow id="f_g1_archive" sourceRef="g1" targetRef="archive" />
+    <bpmn:sequenceFlow id="f_disclose_end" sourceRef="disclose" targetRef="end" />
+    <bpmn:sequenceFlow id="f_archive_end" sourceRef="archive" targetRef="end" />
+  </bpmn:process>
+</bpmn:definitions>
