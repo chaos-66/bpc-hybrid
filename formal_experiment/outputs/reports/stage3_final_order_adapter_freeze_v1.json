@@ -1,0 +1,337 @@
+{
+  "adapter": "SharedRuleOrderAdapterV3",
+  "development_order_rows": [
+    {
+      "case_id": "case_3b01b9c36d0f",
+      "citation": "GDPR Article 13(3)",
+      "gold_out_of_order": "violated",
+      "methods": {
+        "ours": {
+          "converted_order_relations": [],
+          "edge_generated": false,
+          "edges": [],
+          "projection_status": "no_edge",
+          "signal_denominator": 0,
+          "signal_observable": false,
+          "signal_raw_score": 0.0,
+          "signal_reason": "no_rule_order_endpoints",
+          "signal_status": "unknown"
+        },
+        "sun": {
+          "converted_order_relations": [
+            [
+              "provide",
+              "intends to further process the personal data for a purpose other than that for"
+            ]
+          ],
+          "edge_generated": true,
+          "edges": [
+            {
+              "after_best_similarity": 0.6886797547340393,
+              "after_text": "intends to further process the personal data for a purpose other than that for",
+              "before_best_similarity": 0.2764366865158081,
+              "before_text": "provide"
+            }
+          ],
+          "projection_status": "projected",
+          "signal_denominator": 0,
+          "signal_observable": false,
+          "signal_raw_score": 0.0,
+          "signal_reason": "no_rule_order_endpoints",
+          "signal_status": "unknown"
+        }
+      },
+      "requirement_id": "R5-D-01",
+      "source_relation": "provide information prior to further processing"
+    },
+    {
+      "case_id": "case_9c6fcd32f03c",
+      "citation": "GDPR Article 13(3)",
+      "gold_out_of_order": "satisfied",
+      "methods": {
+        "ours": {
+          "converted_order_relations": [],
+          "edge_generated": false,
+          "edges": [],
+          "projection_status": "no_edge",
+          "signal_denominator": 0,
+          "signal_observable": false,
+          "signal_raw_score": 0.0,
+          "signal_reason": "no_rule_order_endpoints",
+          "signal_status": "unknown"
+        },
+        "sun": {
+          "converted_order_relations": [
+            [
+              "provide",
+              "intends to further process the personal data for a purpose other than that for"
+            ]
+          ],
+          "edge_generated": true,
+          "edges": [
+            {
+              "after_best_similarity": 0.6886797547340393,
+              "after_text": "intends to further process the personal data for a purpose other than that for",
+              "before_best_similarity": 0.2764366865158081,
+              "before_text": "provide"
+            }
+          ],
+          "projection_status": "projected",
+          "signal_denominator": 0,
+          "signal_observable": false,
+          "signal_raw_score": 0.0,
+          "signal_reason": "no_rule_order_endpoints",
+          "signal_status": "unknown"
+        }
+      },
+      "requirement_id": "R5-D-01",
+      "source_relation": "provide information prior to further processing"
+    },
+    {
+      "case_id": "case_devsupp_s4t3_baseline",
+      "citation": "GDPR Article 28(3)(a)",
+      "gold_out_of_order": "satisfied",
+      "methods": {
+        "ours": {
+          "converted_order_relations": [
+            [
+              "inform the controller of that legal requirement",
+              "processes the personal data"
+            ]
+          ],
+          "edge_generated": true,
+          "edges": [
+            {
+              "after_best_similarity": 0.7578017115592957,
+              "after_text": "processes the personal data",
+              "before_best_similarity": 0.9706850647926331,
+              "before_text": "inform the controller of that legal requirement"
+            }
+          ],
+          "projection_status": "projected",
+          "signal_denominator": 1,
+          "signal_observable": true,
+          "signal_raw_score": 0.0,
+          "signal_reason": null,
+          "signal_status": "satisfied"
+        },
+        "sun": {
+          "converted_order_relations": [
+            [
+              "inform the controller of that legal requirement before processing, unless that",
+              "processes the personal data only on documented instructions from the controller,"
+            ]
+          ],
+          "edge_generated": true,
+          "edges": [
+            {
+              "after_best_similarity": 0.8850597143173218,
+              "after_text": "processes the personal data only on documented instructions from the controller,",
+              "before_best_similarity": 0.8985399007797241,
+              "before_text": "inform the controller of that legal requirement before processing, unless that"
+            }
+          ],
+          "projection_status": "projected",
+          "signal_denominator": 1,
+          "signal_observable": true,
+          "signal_raw_score": 0.0,
+          "signal_reason": null,
+          "signal_status": "satisfied"
+        }
+      },
+      "requirement_id": "R5-S4-T3",
+      "source_relation": "inform controller before processing"
+    },
+    {
+      "case_id": "case_devsupp_s4t3_out_of_order",
+      "citation": "GDPR Article 28(3)(a)",
+      "gold_out_of_order": "violated",
+      "methods": {
+        "ours": {
+          "converted_order_relations": [
+            [
+              "inform the controller of that legal requirement",
+              "processes the personal data"
+            ]
+          ],
+          "edge_generated": true,
+          "edges": [
+            {
+              "after_best_similarity": 0.7578017115592957,
+              "after_text": "processes the personal data",
+              "before_best_similarity": 0.9706850647926331,
+              "before_text": "inform the controller of that legal requirement"
+            }
+          ],
+          "projection_status": "projected",
+          "signal_denominator": 1,
+          "signal_observable": true,
+          "signal_raw_score": 1.0,
+          "signal_reason": null,
+          "signal_status": "violated"
+        },
+        "sun": {
+          "converted_order_relations": [
+            [
+              "inform the controller of that legal requirement before processing, unless that",
+              "processes the personal data only on documented instructions from the controller,"
+            ]
+          ],
+          "edge_generated": true,
+          "edges": [
+            {
+              "after_best_similarity": 0.8850597143173218,
+              "after_text": "processes the personal data only on documented instructions from the controller,",
+              "before_best_similarity": 0.8985399007797241,
+              "before_text": "inform the controller of that legal requirement before processing, unless that"
+            }
+          ],
+          "projection_status": "projected",
+          "signal_denominator": 1,
+          "signal_observable": true,
+          "signal_raw_score": 1.0,
+          "signal_reason": null,
+          "signal_status": "violated"
+        }
+      },
+      "requirement_id": "R5-S4-T3",
+      "source_relation": "inform controller before processing"
+    },
+    {
+      "case_id": "case_f7bb207445df",
+      "citation": "GDPR Article 14(4)",
+      "gold_out_of_order": "satisfied",
+      "methods": {
+        "ours": {
+          "converted_order_relations": [],
+          "edge_generated": false,
+          "edges": [],
+          "projection_status": "no_edge",
+          "signal_denominator": 0,
+          "signal_observable": false,
+          "signal_raw_score": 0.0,
+          "signal_reason": "no_rule_order_endpoints",
+          "signal_status": "unknown"
+        },
+        "sun": {
+          "converted_order_relations": [
+            [
+              "provide",
+              "intends to further process the personal data for a purpose other than that for"
+            ]
+          ],
+          "edge_generated": true,
+          "edges": [
+            {
+              "after_best_similarity": 0.6804907321929932,
+              "after_text": "intends to further process the personal data for a purpose other than that for",
+              "before_best_similarity": 0.2764366865158081,
+              "before_text": "provide"
+            }
+          ],
+          "projection_status": "projected",
+          "signal_denominator": 0,
+          "signal_observable": false,
+          "signal_raw_score": 0.0,
+          "signal_reason": "no_rule_order_endpoints",
+          "signal_status": "unknown"
+        }
+      },
+      "requirement_id": "R5-D-02",
+      "source_relation": "provide information prior to further processing"
+    },
+    {
+      "case_id": "case_ff937cc4c24e",
+      "citation": "GDPR Article 14(4)",
+      "gold_out_of_order": "violated",
+      "methods": {
+        "ours": {
+          "converted_order_relations": [],
+          "edge_generated": false,
+          "edges": [],
+          "projection_status": "no_edge",
+          "signal_denominator": 0,
+          "signal_observable": false,
+          "signal_raw_score": 0.0,
+          "signal_reason": "no_rule_order_endpoints",
+          "signal_status": "unknown"
+        },
+        "sun": {
+          "converted_order_relations": [
+            [
+              "provide",
+              "intends to further process the personal data for a purpose other than that for"
+            ]
+          ],
+          "edge_generated": true,
+          "edges": [
+            {
+              "after_best_similarity": 0.6804907321929932,
+              "after_text": "intends to further process the personal data for a purpose other than that for",
+              "before_best_similarity": 0.2764366865158081,
+              "before_text": "provide"
+            }
+          ],
+          "projection_status": "projected",
+          "signal_denominator": 0,
+          "signal_observable": false,
+          "signal_raw_score": 0.0,
+          "signal_reason": "no_rule_order_endpoints",
+          "signal_status": "unknown"
+        }
+      },
+      "requirement_id": "R5-D-02",
+      "source_relation": "provide information prior to further processing"
+    }
+  ],
+  "endpoint_policy": "existing_stage2_action_only_no_nominal_invention",
+  "gold_used": false,
+  "implementation_path": "src/bpc_hybrid/stage3_v2/rule_order_adapter_v3.py",
+  "implementation_sha256": "fe68740c77f7ab00967a7758f403ca35c8648e9686c283680ad903e3ae05dee3",
+  "marker_set": [
+    [
+      "prior to",
+      "left_before_right",
+      "\\bprior\\s+to\\b"
+    ],
+    [
+      "in advance of",
+      "left_before_right",
+      "\\bin\\s+advance\\s+of\\b"
+    ],
+    [
+      "before",
+      "left_before_right",
+      "\\bbefore\\b"
+    ],
+    [
+      "preceding",
+      "left_before_right",
+      "\\bpreceding\\b"
+    ],
+    [
+      "after",
+      "right_before_left",
+      "\\bafter\\b"
+    ],
+    [
+      "following",
+      "right_before_left",
+      "\\bfollowing\\b"
+    ],
+    [
+      "subsequent to",
+      "right_before_left",
+      "\\bsubsequent\\s+to\\b"
+    ]
+  ],
+  "mutation_metadata_used": false,
+  "native_stage2_precedence": true,
+  "order_scope_manifest_sha256": "cc0a93daabef04915b938544722b0d3b529838bf1e9818db546388ceb24659f7",
+  "reference_used": false,
+  "schema_version": "stage3_final_order_adapter_freeze@1.0.0",
+  "selected_backend": "sentence_transformers_all_mpnet_base_v2",
+  "shared_for_sun_and_ours": true,
+  "status": "SHARED_RULE_ORDER_ADAPTER_FROZEN",
+  "target_bpmn_used": false
+}

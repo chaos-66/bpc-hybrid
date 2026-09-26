@@ -1,0 +1,34 @@
+{
+  "action_scope_revision": {
+    "attributed_delta": null,
+    "implemented": false
+  },
+  "all_seen_development_pool": true,
+  "comparable_backend_comparison": {
+    "ours": {
+      "sm_to_mpnet_actor_f1_delta": -0.1145057766367138,
+      "sm_to_mpnet_macro_f1_delta": 0.08123553307424025,
+      "sm_to_mpnet_missing_f1_delta": 0.2582123758594347,
+      "sm_to_mpnet_order_f1_delta": 0.09999999999999998,
+      "sm_to_mpnet_overall_micro_f1_delta": 0.026844532279314826
+    },
+    "sun": {
+      "sm_to_mpnet_actor_f1_delta": -0.23002049180327871,
+      "sm_to_mpnet_macro_f1_delta": -0.009706800598092591,
+      "sm_to_mpnet_missing_f1_delta": 0.20090009000900094,
+      "sm_to_mpnet_order_f1_delta": 0.0,
+      "sm_to_mpnet_overall_micro_f1_delta": -0.02576158291703401
+    }
+  },
+  "order_representation": {
+    "components": [
+      "RC-ORDER-01 shared RuleRecord U_r adapter made order_relations non-empty where endpoints exist",
+      "RC-ORDER-02 capability-aligned eligibility moved endpoint-unbound requirements out of the main F1 and retained them as diagnostics",
+      "DEVELOPMENT-ONLY supplement supplied the missing R5-S4-T3 out_of_order control for an already-extracted action pair"
+    ],
+    "isolation_note": "The order change is a bundle of adapter + eligibility + supplement; it is not claimed as a single algorithmic F1 delta.",
+    "new_selected_order_f1": 0.5,
+    "old_frozen_r1_order_f1_on_previous_scope": 0.0
+  },
+  "schema_version": "stage3_final_improvement_attribution@1.0.0"
+}

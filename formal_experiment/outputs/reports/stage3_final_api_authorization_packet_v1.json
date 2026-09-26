@@ -1,0 +1,27 @@
+{
+  "API_AUTHORIZATION_PACKET_READY": true,
+  "FINAL_UNSEEN_BENCHMARK_PREPARED": false,
+  "STAGE3_METHOD_FROZEN": true,
+  "candidate_count": 5,
+  "candidate_unseen_requirement_ids": [
+    "R5-S2-T1",
+    "R5-S2-T3",
+    "R5-S2-T4",
+    "R5-S3-T3",
+    "R5-S3-T4"
+  ],
+  "do_not_execute_without_explicit_authorization": true,
+  "exact_blocker": "There is no authorized unseen Stage-2/Gold packet for a 12-16 requirement source-family-separated GDPR holdout. The five remaining benchmark-v2 candidate requirements are source-only candidates and have no BPMN mutation packet or Ours prediction.",
+  "frozen_predictions_exist_for_candidates": false,
+  "ours_api_calls_estimate_if_12_to_16": "12-16 Stage-2 requests plus retries bounded by the approved protocol",
+  "ours_api_calls_estimate_if_candidates_only": 5,
+  "recommended_final_requirement_count": "12-16",
+  "required_user_decisions": [
+    "Approve the unseen source-family split and the exact 12-16 GDPR requirements for the final holdout.",
+    "Approve construction/freeze of the final BPMN baselines, mutations, and prediction-blind Gold packet before any new Ours prediction.",
+    "Approve the Ours Stage2 model, prompt hash, exact call count, max tokens, and worst-case cost cap for those final requirements."
+  ],
+  "schema_version": "stage3_final_api_authorization_packet@1.0.0",
+  "status": "API_AUTHORIZATION_REQUIRED",
+  "sun_api_calls_required": 0
+}

@@ -1,0 +1,85 @@
+{
+  "open_root_cause_count": 2,
+  "rows": [
+    {
+      "dev_effect": "MPNet was selected against the current R1 SM backend by the pre-registered method-neutral objective.",
+      "evidence": "Existing R1 diagnostic reported Ours action mapping 61/93 with SM versus 82/93 with MD; the final run exposes the same action-mapping gap.",
+      "gold_independent": true,
+      "id": "RC-SEM-01",
+      "implemented": true,
+      "ours_affected": true,
+      "proposed_fix": "Promote a shared, local, Gold-blind MPNet backend using the model's declared mean-token pooling and L2 normalization.",
+      "root_cause": "The small spaCy model has no static word vectors and only weak context tensors; shared action matching lacked a sentence-level semantic encoder.",
+      "status": "FIXED_AND_FROZEN",
+      "sun_affected": true,
+      "symptom": "Frozen R1 spaCy SM semantic backend under-mapped action predicates and left a large missing-action bottleneck."
+    },
+    {
+      "dev_effect": "Not changed; kept frozen to avoid an unlicensed second refinement.",
+      "evidence": "The final selected run still has low missing-action precision for both methods; no obligation-scope revision was needed to remove the interface failure.",
+      "gold_independent": true,
+      "id": "RC-MISS-01",
+      "implemented": false,
+      "ours_affected": true,
+      "proposed_fix": "If a future authorized run shows the same systematic fragment pattern, apply at most one shared ObligationScopedActionProjection revision.",
+      "root_cause": "Stage-2 action spans sometimes contain subordinate fragments (e.g. prepositional continuations) and non-core clause actions; the denominator is not obligation-scoped.",
+      "status": "DEFERRED_SINGLE_ALLOWED_REVISION",
+      "sun_affected": true,
+      "symptom": "Missing-action precision remains low because extra/fragment Stage-2 actions are scored as mandatory obligations."
+    },
+    {
+      "dev_effect": "Actor method frozen as required.",
+      "evidence": "Selected run coverage and unknown rates are reported separately; actor formula was not changed.",
+      "gold_independent": true,
+      "id": "RC-ACTOR-01",
+      "implemented": false,
+      "ours_affected": true,
+      "proposed_fix": "No formula change. Preserve Definition 6 and report coverage.",
+      "root_cause": "Definition 6 is intentionally action-bound; Stage-2 actor-action maps are incomplete for some records, so the cell is legitimately unknown rather than guessed.",
+      "status": "FROZEN_NO_CHANGE",
+      "sun_affected": true,
+      "symptom": "Actor coverage and unknown rate remain uneven, especially for Sun."
+    },
+    {
+      "dev_effect": "Order F1 moved from interface-missing zero to 0.5 for both methods on the capability-aligned development scope.",
+      "evidence": "Frozen Sun/Ours order_relations were empty; new SharedRuleOrderAdapterV3 generated non-empty edges for R5-D-01/R5-D-02 Sun and for the R5-S4-T3 supplement for both methods.",
+      "gold_independent": true,
+      "id": "RC-ORDER-01",
+      "implemented": true,
+      "ours_affected": true,
+      "proposed_fix": "Implement one documented, Gold-blind, method-neutral SharedRuleOrderAdapterV3 using temporal markers, general syntax, existing Stage-2 actions, and the shared matcher.",
+      "root_cause": "Sun's paper requires U_r subset A_r x A_r but does not publish an automatic extraction algorithm; the project had no shared U_r adapter.",
+      "status": "FIXED_AND_FROZEN",
+      "sun_affected": true,
+      "symptom": "Sun/Ours frozen Stage-2 records had empty order_relations, so Definition 7 always had denominator zero."
+    },
+    {
+      "dev_effect": "Unknown order cells are reported instead of setting F1 to zero through spurious edges.",
+      "evidence": "Adapter audits show no unique existing action pair for those requirements; they are retained in the eligibility report as outside/diagnostic rather than deleted.",
+      "gold_independent": true,
+      "id": "RC-ORDER-02",
+      "implemented": true,
+      "ours_affected": true,
+      "proposed_fix": "Capability-aligned order eligibility; keep them as diagnostics. Do not invent nominal-to-action endpoints.",
+      "root_cause": "Frozen Stage-2 A_r does not contain the second endpoint (e.g. approving, informing, lifted) for R5-S7-T1/R5-S8-T1 and some nominalized cases.",
+      "status": "DOCUMENTED_FROZEN",
+      "sun_affected": true,
+      "symptom": "Several source temporal relations have a nominalized or absent second action and cannot satisfy U_r subset A_r x A_r."
+    },
+    {
+      "dev_effect": "Ours order recall remains limited on existing cases; supplement gives an observable order signal.",
+      "evidence": "Final order rows show Sun edges for D-01/D-02 but Ours denominator zero; this is the intended method comparison, not an adapter bug.",
+      "gold_independent": true,
+      "id": "RC-COV-01",
+      "implemented": false,
+      "ours_affected": true,
+      "proposed_fix": "Do not post-hoc repair Ours. A future authorized Stage-2 run may cover it; the final unseen run must not tune on this development result.",
+      "root_cause": "Ours extracts the `provide ... prior to further processing` predicate as one action and does not separately extract `process`; this is a Stage-2 representation coverage gap.",
+      "status": "REPRESENTATION_LIMITATION_FROZEN",
+      "sun_affected": false,
+      "symptom": "Ours has no order edge for R5-D-01/R5-D-02 because its Stage-2 A_r lacks a process endpoint."
+    }
+  ],
+  "schema_version": "stage3_final_convergence_root_causes@1.0.0",
+  "status": "ROOT_CAUSE_LEDGER_FROZEN_AFTER_SINGLE_CONVERGENCE_RUN"
+}
