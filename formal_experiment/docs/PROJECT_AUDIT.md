@@ -1,4 +1,17 @@
-﻿## 当前优先级：S3-TABLE3-R5.5 Formal Table 3 completed and result frozen（2026-09-26）
+﻿## 当前论文呈现 Table 3：PROVISIONAL_FINAL_PAPER_FACING_RESULT（2026-09-26）
+
+- 当前 paper-facing Table 3（Sun vs Ours，Winter 不纳入）：
+  - Sun: Precision `0.3814`, Recall `0.5362`, F1 `0.4458`
+  - Ours: Precision `0.4393`, Recall `0.6812`, F1 `0.5341`
+- 状态：`PROVISIONAL_FINAL_PAPER_FACING_RESULT`；`TABLE3_PROVISIONAL_FREEZE=true`；`STAGE3_DEVELOPMENT_PAUSED=true`（reason: `paper_and_presentation_priority`，不是 `method_exhausted`）。
+- Evaluation scope：`current evaluation benchmark` / `development benchmark`；`ALL_EXISTING_CASES_SEEN=true`。不是 unseen test、held-out final test 或 blind final evaluation；`FINAL_UNSEEN_EVALUATION_COMPLETED=false`，`CURRENT_RESULT_IS_UNSEEN_TEST=false`。
+- `REAL_API_CALLS=0`；`NETWORK_EXPERIMENT_CALLS=0`；`WINTER_MAINLINE_STATUS=ARCHIVED_EXTERNAL_BASELINE`。
+- Canonical pointer：`outputs/reports/stage3_table3_provisional_final_v1.{json,md,csv,tex}`；breakdown：`outputs/reports/stage3_table3_breakdown_provisional_v1.csv`；PPT summary：`outputs/reports/stage3_table3_ppt_summary_v1.md`。
+- 不删除历史数据；本状态只是当前 paper/PPT 的 canonical paper-facing pointer。
+
+## 历史正式运行记录：S3-TABLE3-R5.5 Formal Table 3 completed and result frozen（2026-09-26）
+
+> 以下为历史正式运行记录，保留 provenance；当前 paper-facing Table 3 以上方 provisional freeze 为准。
 
 - 状态：`DATA_READY=true / EVIDENCE_INTEGRITY_READY=true / METHODS_READY=true`；`FORMAL_GOLD_RELEASED=true / API_AUTHORIZED=true / API_EXECUTED=true / FORMAL_TABLE3_RUN=true / FORMAL_TABLE3_RESULT_FROZEN=true`。
 - API：19/19 completed，retry 0，`AMBIGUOUS_SEND_STATE=false`；provider-reported usage prompt `83,233` / completion `14,358` tokens，按冻结 peak 价格估算成本约 `USD 0.16672524`，授权上限 `USD 0.91`。19 条 raw responses、ledger、request↔response binding 均已保存。
