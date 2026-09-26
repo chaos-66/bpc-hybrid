@@ -1,4 +1,4 @@
-﻿## Stage 3 当前状态：PAUSED / PAPER-FACING RESULT FROZEN（2026-09-26，S3-CLOSE）
+## Stage 3 当前状态：PAUSED / PAPER-FACING RESULT FROZEN（2026-09-26，S3-CLOSE）
 
 - `STAGE3_EXPERIMENT_STATUS=PAUSED`；`CURRENT_PAPER_TABLE3_FROZEN=true`；当前优先级为 **PAPER WRITING + PPT PREPARATION**。
 - 固定 Table 3：Sun P/R/F1 **0.3814 / 0.5362 / 0.4458**；Ours **0.4393 / 0.6812 / 0.5341**。主要剩余瓶颈：regulation-to-BPMN semantic action alignment。
@@ -7,6 +7,17 @@
 - 收束与来源：[closure](../outputs/reports/stage3_experiment_closure_v1.md)、[full-precision JSON / SHA256](../outputs/reports/stage3_experiment_closure_v1.json)；写作引用：[Table 3 interpretation](../outputs/reports/stage3_table3_interpretation_v1.md)；[冻结快照](../outputs/reports/stage3_status_snapshot_v1.md)。
 - 本次仅文档归档，真实 LLM/API、新实验、新数据、阈值搜索均为 0；原结果、预测、Gold 与代码保留不变。
 
+## 2026-09-26 S3.9-EXT-PC-V1 bounded development subtask（user reopened; Table 3 remains frozen）
+
+- User explicitly reopened bounded S3.9-EXT-PC-V1 development subtask; main paper-facing Table 3 remains frozen. `STAGE3_EXPERIMENT_STATUS=PAUSED` and `CURRENT_PAPER_TABLE3_FROZEN=true` are unchanged.
+- 执行基线：`s3-ext-pc-v1` branch in independent worktree `D:\Paper\experiment\bpc-hybrid-s3-ext-pc-v1`, created from `paper-final-repair@7f4c963`; actor-refinement branch not merged/cherry-picked.
+- Phase A：旧 20 个 prohibited/condition pair 完成只读 semantic disposition；未修改旧 panel、旧标签或旧 v5 结果。旧 required-condition pair 复用 = 0；2 条 source-level direct prohibition 需 canonical action rebinding，其余 18 条 not_applicable。
+- Phase B：冻结 10 pair / 20 BPMN objects（prohibition 5 pair + necessary precondition 5 pair）与 6 个 counterexamples；inference view 不含 expected/pair/side/mutation/target-type 元数据。
+- Phase C：新增独立 checker/runner/evaluator 和 `tests/test_s3_ext_pc_v1.py`；focused tests 21 passed（非全量）。checker 只支持 flat/acyclic XOR 片段；AND/loop/subprocess 等明确 unsupported。
+- Phase D：只运行一次 mechanism diagnosis。结果：prohibition pair success 5/5、necessary-precondition pair success 5/5、10-pair total 10/10；coverage 1.0；positive unknown 0/10；negative unknown 0/10；6/6 counterexamples 匹配 expected（not_applicable 4、unsupported 2）。
+- Existing real extraction linkage（Table B）：`gdpr_article6_s001` 有 only-if 条件 span，但 Direct-LLM 与 Rules-Only 的 action binding 均 unresolved，checker decision = unknown；`gdpr_article22_s001` 实际抽为 obligation 且 action binding unresolved；`gdpr_article22_s002` = rule applicability；`gdpr_article33_s001` = trigger obligation。该表只作 representation/linkage 诊断，不建立新的方法排名。
+- 边界：development-only AI-constructed mechanism evidence；不是 formal benchmark、unseen test 或 human Gold；机制 RuleSpec 结果不能归因给 Direct-LLM；未实现 constraint/exception/conditional prohibition/full BPMN 扩展；real_api_calls=0、network_experiment_calls=0。
+- 产物：`data/development/stage3_ext_pc_v1/`、`outputs/development/s3_ext_pc_v1/predictions.jsonl`、`outputs/evidence/s3_ext_pc_v1/`、`outputs/reports/s3_ext_pc_v1.{json,md}`；checkpoint 1 `15d90f7` semantic/data freeze；checkpoint 2 `1645322` checker implementation；checkpoint 3 diagnostic outputs committed separately.
 ## 当前论文呈现 Table 3：PROVISIONAL_FINAL_PAPER_FACING_RESULT（2026-09-26）
 
 - 当前 paper-facing Table 3（Sun vs Ours，Winter 不纳入）：

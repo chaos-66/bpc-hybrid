@@ -1,4 +1,4 @@
-﻿## 2026-09-26 S3-CLOSE：实验收束完成，Stage 3 PAUSED / PAPER-FACING RESULT FROZEN
+## 2026-09-26 S3-CLOSE：实验收束完成，Stage 3 PAUSED / PAPER-FACING RESULT FROZEN
 
 - 当前 Table 3 固定为 Sun F1 **0.4458** / Ours F1 **0.5341**（`PROVISIONAL_PAPER_FACING_TABLE3`）；主要剩余瓶颈为 semantic action alignment。
 - Bonus 0.4667 / 0.5474 为 development diagnostic only；最终 unseen evaluation 未完成，不将当前结果称为 unseen / blind test。
@@ -6,6 +6,18 @@
 - 归档：[stage3_experiment_closure_v1](../outputs/reports/stage3_experiment_closure_v1.md)；论文/PPT解释：[stage3_table3_interpretation_v1](../outputs/reports/stage3_table3_interpretation_v1.md)。实时状态仍以 [PROJECT_AUDIT](PROJECT_AUDIT.md) 为准。
 - 本轮为纯文档闭环：核对既有数字、full precision、来源 SHA256 与变更范围；零新实验、零真实 API，历史记录不改。
 
+## 2026-09-26 S3.9-EXT-PC-V1：bounded prohibition / necessary-precondition semantic recheck（development-only，zero API）
+
+- User explicitly reopened bounded S3.9-EXT-PC-V1 development subtask; main paper-facing Table 3 remains frozen.
+- 独立 worktree 分支 `s3-ext-pc-v1` 从 `paper-final-repair@7f4c963` 建立，未合并 actor-refinement 分支。
+- Phase A 旧 20 pair 只读语义 disposition：`prohibited_action_present` 中 2 条被判定为 source-level direct unconditional prohibition 但历史 action 需 canonical rebinding，8 条 not_applicable；`required_condition_not_enforced` 10 条均判定为 `trigger_obligation_C_implies_OA`/not_applicable；旧 condition pair 复用 = 0。
+- Phase B 冻结 10 pair / 20 BPMN objects 的 AI-constructed mechanism set 与 6 个 non-scoring counterexamples；inference view 与 evaluation manifest 隔离，规则/流程/hash 在任何 detector 结果前冻结。
+- Phase C 新增 `src/bpc_hybrid/s3_ext_pc_v1.py`，只实现 direct unconditional action prohibition 与 necessary-precondition bypass；focused test `tests/test_s3_ext_pc_v1.py` 21 passed（非全量）。
+- Phase D 只执行一次 mechanism diagnosis：prohibition 5/5 pair success、necessary-precondition 5/5、10-pair total 10/10；coverage 1.0，positive unknown 0/10，negative unknown 0/10；6 个 counterexamples 全部匹配预期（not_applicable 4、unsupported 2）。
+- Existing real Stage2 linkage 与 mechanism 表分列：`gdpr_article6_s001` 的 only-if 文本允许保守投影为 necessary precondition，但 Direct-LLM 与 Rules-Only 的 action binding 均 unresolved，因此 checker decision = unknown；`gdpr_article22_s001` 既有预测实际抽为 obligation 且 action binding unresolved；`gdpr_article22_s002` 为 rule applicability；`gdpr_article33_s001` 为 trigger obligation；没有新的 Rules-Only vs Direct-LLM 总性能排名。
+- 边界：AI-constructed development material，不是 human Gold、不是 unseen test、不是 formal benchmark；理想 RuleSpec 结果不能归因给 Direct-LLM；不实现 constraint/exception/conditional prohibition/full BPMN 扩展。
+- 证据：`data/development/stage3_ext_pc_v1/`、`outputs/development/s3_ext_pc_v1/`、`outputs/evidence/s3_ext_pc_v1/`、`outputs/reports/s3_ext_pc_v1.{json,md}`；real_api_calls=0、network_experiment_calls=0。
+- Stage 3 主线仍为 `PAUSED / PAPER-FACING RESULT FROZEN`；本子任务不重写、不替换、不扩展当前 Table 3。
 ## 2026-09-26 修订 3.7.34：S3-TABLE3-R5.5 Formal Table 3 执行并冻结
 
 - 用户批准的 19 次 DeepSeek 调用全部完成，0 retry；raw responses/ledger/usage/cost binding 已提交；估算成本 `USD 0.16672524 <= 0.91`。

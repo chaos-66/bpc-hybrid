@@ -5617,3 +5617,21 @@
 - 仍存在 blocker：stage1_structural_process_record_not_verified、stage1_label_semantics_p0_p1_not_verified、stage1_annotation_protocol_not_verified、stage1_formal_bpmn_membership_not_promoted、stage1_evaluator_contract_not_verified、final_experiment_not_ready
 - 备注：Phase C implementation only; no one-shot mechanism diagnosis run yet; zero API/network; main paper-facing tables untouched.
 - 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`
+
+## 2026-09-26T13:42:20.408770+00:00 - Run the one-shot bounded S3.9-EXT-PC-V1 mechanism diagnosis and independent evaluation
+
+- 事件类型：实验运行（`experiment_run`）
+- 实验：run_id=s3_ext_pc_v1；阶段=S3.9-EXT-PC-V1；方法=bounded_checker；状态=成功（`succeeded`）
+- 实际运行命令：`python formal_experiment/scripts/run_s3_ext_pc_v1.py --overwrite; python formal_experiment/scripts/evaluate_s3_ext_pc_v1.py`
+- manifest：outputs/evidence/s3_ext_pc_v1/manifest.json
+- 结果摘要：Development-only AI-constructed mechanism diagnosis: 10/10 pair success, coverage 1.0, unknown 0/20; 6/6 counterexamples matched expected. No API/network/Gold.
+- 命令：`python formal_experiment/scripts/record_change.py`
+- 完整性通过：否；正式实验就绪：否
+- 测试：21 passed in 0.61s
+- 测试范围：相关测试（非全量）
+- 测试证据：本次新运行（`fresh_run`）
+- Git：`1645322895f0f5b15ed17fab5384e26ecc323f6a`；相关未提交路径：7 个
+- Gold：未读取或修改（`not_read_or_modified`）；LLM/API：未调用（`not_called`）；产物：新建且未覆盖（`created_no_overwrite`）
+- 仍存在 blocker：stage1_structural_process_record_not_verified、stage1_label_semantics_p0_p1_not_verified、stage1_annotation_protocol_not_verified、stage1_formal_bpmn_membership_not_promoted、stage1_evaluator_contract_not_verified、final_experiment_not_ready
+- 备注：Only one mechanism run. Predictions frozen before evaluator read targets. Mechanism and existing-real-linkage tables separated. Main paper-facing Table 3 unchanged.
+- 机器实验事件：`docs/EXPERIMENT_EVENTS.jsonl`

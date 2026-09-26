@@ -1,0 +1,649 @@
+{
+  "constraint_exception_boundary": {
+    "constraint_chain": {
+      "constraint_heterogeneity": [
+        "time",
+        "amount",
+        "quantity",
+        "purpose",
+        "legal_reference"
+      ],
+      "correct_interpretation": "mapping error plus decision-guard repair; not evidence that the LLM cannot perform temporal reasoning.",
+      "heterogeneity_statement": "These are different predicates; a single similarity formula is not claimed to solve all constraints.",
+      "historical_item": "syn_v2_exception_not_handled_06",
+      "side": "control",
+      "six_categories": {
+        "decision_semantics_error": "the old checker treated absence of a time bound on the wrongly anchored node as a violation; v5 guard demoted this to unknown",
+        "evaluation_limitation": "deadline compliance cannot be established from this process slice without start-event/time semantics",
+        "extraction_error": "not the primary cause in this chain; the rule fields contain an explicit 72-hour constraint",
+        "mapping_error": "verified: the action grounder bound 'notify the personal data breach' to the exception-handler node",
+        "process_information_missing": "ordinary BPMN task order/text does not prove whether the clock starts at breach occurrence, discovery, awareness, or internal case opening",
+        "representation_insufficiency": "the six-element Rule Record does not encode the temporal anchor/origin of the 72-hour clock"
+      }
+    },
+    "exception_chain": {
+      "conclusion": "This is a joint extraction/representation/mapping issue, not an 'LLM cannot reason' claim or a general unobservability excuse.",
+      "historical_item": "syn_v2_exception_not_handled_02",
+      "logical_warning": "E -> not O(A) does not entail E -> FORBID(A); voluntarily performing A while E holds is not automatically a violation.",
+      "requires": [
+        "whether E holds",
+        "which obligation E targets",
+        "its effect on the path",
+        "priority relations with other rules"
+      ],
+      "side": "variant",
+      "six_categories": {
+        "decision_semantics_error": "absence of a matched handler must not be promoted to a violation without actionable exception semantics",
+        "evaluation_limitation": "current process and schema cannot support a determinate exception verdict",
+        "extraction_error": "the historical action 'referred to' is not an executable activity label",
+        "mapping_error": "the matcher could not bind 'referred to' to the process activity 'Communication with data subject'",
+        "process_information_missing": "no dedicated handler structure was present in the frozen process",
+        "representation_insufficiency": "the Rule Record does not encode exception scope, priority, or obligation target"
+      }
+    },
+    "source": "outputs/evidence/s3_semantic_grounding_v5/constraint_exception_failure_chains.json"
+  },
+  "counterexamples": [
+    {
+      "actual_applicability": "not_applicable",
+      "actual_decision": null,
+      "actual_status": "not_applicable",
+      "case_id": "CE1",
+      "expected": "not_applicable",
+      "matched": true,
+      "object_id": "pcv1_obj_021",
+      "reason": "absence_of_obligation_not_prohibition",
+      "semantic_subtype": "absence_of_obligation"
+    },
+    {
+      "actual_applicability": "not_applicable",
+      "actual_decision": null,
+      "actual_status": "not_applicable",
+      "case_id": "CE2",
+      "expected": "not_applicable",
+      "matched": true,
+      "object_id": "pcv1_obj_022",
+      "reason": "permission_not_prohibition",
+      "semantic_subtype": "permission"
+    },
+    {
+      "actual_applicability": "not_applicable",
+      "actual_decision": null,
+      "actual_status": "not_applicable",
+      "case_id": "CE3",
+      "expected": "not_applicable",
+      "matched": true,
+      "object_id": "pcv1_obj_023",
+      "reason": "rule_applicability_not_process_action_prohibition",
+      "semantic_subtype": "rule_applicability"
+    },
+    {
+      "actual_applicability": "not_applicable",
+      "actual_decision": null,
+      "actual_status": "not_applicable",
+      "case_id": "CE4",
+      "expected": "not_applicable",
+      "matched": true,
+      "object_id": "pcv1_obj_024",
+      "reason": "trigger_obligation_not_necessary_precondition",
+      "semantic_subtype": "necessary_precondition_bypass_v1"
+    },
+    {
+      "actual_applicability": "unsupported",
+      "actual_decision": null,
+      "actual_status": "unsupported",
+      "case_id": "CE5",
+      "expected": "unsupported",
+      "matched": true,
+      "object_id": "pcv1_obj_025",
+      "reason": "conditional_prohibition_outside_v1",
+      "semantic_subtype": "conditional_action_prohibition"
+    },
+    {
+      "actual_applicability": "unsupported",
+      "actual_decision": null,
+      "actual_status": "unsupported",
+      "case_id": "CE6",
+      "expected": "unsupported",
+      "matched": true,
+      "object_id": "pcv1_obj_026",
+      "reason": "unsupported_bpmn_fragment:parallelGateway",
+      "semantic_subtype": "necessary_precondition_bypass_v1"
+    }
+  ],
+  "development_only": true,
+  "execution_binding": {
+    "case_manifest_sha256": "4a37224145c6960a64310ad7d6ccf9151dc581cf4250ef1b8dc37db7e4eb396d",
+    "inference_view_sha256": "91f23ac95f66ea5c990f2a7ae8747c0dc76488720b6ed5bf6c90dcb88df72dcb",
+    "prediction_freeze": {
+      "case_evidence_path": "outputs/evidence/s3_ext_pc_v1/per_case_evidence.jsonl",
+      "case_evidence_sha256": "103fa7d0f715054d393bb60f02053d5051c03587cf620433ab9f5d895ca223d2",
+      "code_bundle_sha256": "1641c73fe33fa4a16bc6214ada0ec0f790b6e66f158c436429ab7efb7e81760f",
+      "gold_status": "AI_constructed_development_not_gold",
+      "input_binding": {
+        "bpmn_sha256": {
+          "pcv1_obj_001": "699dcd7162fc91c5f9c0b5e96129b2e64780e934e460085596cc9a9ddd476382",
+          "pcv1_obj_002": "23be76cc7ae59c80d823ce0f06d55b11c1c788df415d4578b9546746afb240a2",
+          "pcv1_obj_003": "37c36324114e84a2e8b794c7ad77b9b822a86b0fd8bbeab7ade60b9158defe85",
+          "pcv1_obj_004": "56b6d0208688a10d9ddc2bd7cfef81094a2901a8ba51cf4cc89572fb472e639c",
+          "pcv1_obj_005": "3580af62fc3e59f182a1dd85eee4b27e11f18f162571d666b5905954777e1089",
+          "pcv1_obj_006": "738c359512fd3da9152c0d215eb537f748e203f0960cfd355e11c3e081f912ae",
+          "pcv1_obj_007": "0a3c09449d3d3745697e70d9a61a858eca3084b19446aa04061be58fd3484be5",
+          "pcv1_obj_008": "5832cb76ee3e184756f9675288d78d9ca596b20b61d76f774378e9a7ae4644b6",
+          "pcv1_obj_009": "f6939262651af763e6303d42d79b7cd9eda236a738011c775828671118d47996",
+          "pcv1_obj_010": "8c3df6b22ae7fe6dd0addd70db04e39230db8966313c0044feff88b38a4fa060",
+          "pcv1_obj_011": "37f2153c07f7ace8ce8f8519cbad6cf0f6f3a3fd8ca23d7316503b594855461b",
+          "pcv1_obj_012": "9c8de819d70b4f8f8c9ac086bd1ac69df3d3ccb76fe33c83053ed60850de677a",
+          "pcv1_obj_013": "8018ad2fea3cff6c489fdf57009a16d5e74307cf8013569b948405cde4df4059",
+          "pcv1_obj_014": "73bc4b69c6e1437d2bfa4a13ec937f6578f849e8bfcd6a252dc3e363d91fd92d",
+          "pcv1_obj_015": "0412e26fc2b7f726560af1c125ed5d1f8ba4ee04f6f614d2fe2cc2382aef9f3b",
+          "pcv1_obj_016": "c7ed00904d6dec01918e60bf4adec1dfb6c8cafb63d78220c76958abc8cb9afb",
+          "pcv1_obj_017": "1ae4b838909b6c816fe93d3717935b4af8d97274f5265acf9d5f9dbe24be8f7a",
+          "pcv1_obj_018": "7a8d565d9f7df85f5a2d4445cd76f1b5e514eb0590714815d6c8ba1f18f34192",
+          "pcv1_obj_019": "6d65829b98cf0116ef32680689ecfc541244ad93f1619c43664929d2429d3409",
+          "pcv1_obj_020": "aed228ecfe9d703f7bf91e658da834452cf897d3afa0fdd9a155a64f52016652",
+          "pcv1_obj_021": "199e7aba088570278f65174a71ba99c8044ffac367ac60b8da2818c68341181e",
+          "pcv1_obj_022": "e793c62cbbc36a9d4a024771c2b5aacd19729935872ce996ed724219aa7fde2f",
+          "pcv1_obj_023": "e00fcae6735f6550aea623c9e24b222ff4a3275ee1169ee46f5e167905760603",
+          "pcv1_obj_024": "fc17ce0dfd7fbd512bfce766604887e881bebecea52abc1b6a6235946ea5248c",
+          "pcv1_obj_025": "c8057b311d74d560866dc05c3c103f7c885d760c97ce5796c2dc36a4371c85fe",
+          "pcv1_obj_026": "0951b411536478ac47ad6a56c6f4f1ef8efde32952bdfe61f9c4e82553c88c8b"
+        },
+        "inference_view_sha256": "91f23ac95f66ea5c990f2a7ae8747c0dc76488720b6ed5bf6c90dcb88df72dcb",
+        "mechanism_freeze_sha256": "db7f2109df62ebbb8c040de41f1bf77e1f87e417b6152eab7d17a58554bffef3"
+      },
+      "network_experiment_calls": 0,
+      "object_count": 26,
+      "prediction_path": "outputs/development/s3_ext_pc_v1/predictions.jsonl",
+      "prediction_sha256": "103fa7d0f715054d393bb60f02053d5051c03587cf620433ab9f5d895ca223d2",
+      "python_implementation": "CPython",
+      "python_version": "3.14.6",
+      "real_api_calls": 0,
+      "revision": "s3_ext_pc_v1",
+      "run_command": "python formal_experiment/scripts/run_s3_ext_pc_v1.py --overwrite",
+      "schema_version": "s3_ext_pc_v1_prediction_freeze@1.0.0",
+      "status": "PREDICTIONS_FROZEN_BEFORE_EVALUATION"
+    }
+  },
+  "legacy_disposition_summary": {
+    "eligible_for_new_v1_semantics_but_requiring_canonical_action_rebinding": 2,
+    "historical_target_counts": {
+      "prohibited_action_present": 10,
+      "required_condition_not_enforced": 10
+    },
+    "new_v1_eligibility_counts": {
+      "eligible_for_new_v1_semantics": 2,
+      "not_applicable": 18
+    },
+    "old_required_condition_pairs_reused": 0,
+    "semantic_relation_assessment_counts": {
+      "direct_unconditional_action_prohibition": 2,
+      "legal_effect_or_state": 4,
+      "rule_applicability": 4,
+      "trigger_obligation_C_implies_OA": 10
+    },
+    "total": 20
+  },
+  "limitations": [
+    "AI-constructed development material; not human Gold and not an independent generalization benchmark.",
+    "Mechanism RuleSpecs are ideal structured inputs; results cannot be attributed to Direct-LLM extraction performance.",
+    "Real-extraction linkage is diagnostic only and preserves missing_existing_prediction where applicable.",
+    "No constraint or exception checker is implemented in this task.",
+    "No conditional prohibition, loop, subprocess, AND/inclusive gateway, event-state, or dynamic data-state semantics are supported."
+  ],
+  "mechanism_metrics": {
+    "by_family": {
+      "necessary_precondition": {
+        "all_denominators": {
+          "coverage_denominator_eligible_sides": 10,
+          "negative_total": 5,
+          "positive_total": 5,
+          "precision_denominator_tp_plus_fp": 5,
+          "recall_denominator_positive_total": 5
+        },
+        "coverage": 1.0,
+        "decided": 10,
+        "eligible": 10,
+        "f1": 1.0,
+        "negative": {
+          "fp": 0,
+          "negative_unknown": 0,
+          "tn": 5,
+          "total": 5
+        },
+        "negative_unknown_rate": 0.0,
+        "pair_success": 5,
+        "pair_total": 5,
+        "positive": {
+          "fn_observed_negative": 0,
+          "fn_unknown": 0,
+          "total": 5,
+          "tp": 5
+        },
+        "positive_unknown_rate": 0.0,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "prohibition": {
+        "all_denominators": {
+          "coverage_denominator_eligible_sides": 10,
+          "negative_total": 5,
+          "positive_total": 5,
+          "precision_denominator_tp_plus_fp": 5,
+          "recall_denominator_positive_total": 5
+        },
+        "coverage": 1.0,
+        "decided": 10,
+        "eligible": 10,
+        "f1": 1.0,
+        "negative": {
+          "fp": 0,
+          "negative_unknown": 0,
+          "tn": 5,
+          "total": 5
+        },
+        "negative_unknown_rate": 0.0,
+        "pair_success": 5,
+        "pair_total": 5,
+        "positive": {
+          "fn_observed_negative": 0,
+          "fn_unknown": 0,
+          "total": 5,
+          "tp": 5
+        },
+        "positive_unknown_rate": 0.0,
+        "precision": 1.0,
+        "recall": 1.0
+      }
+    },
+    "failed_or_nonideal_cases": [],
+    "overall": {
+      "coverage": 1.0,
+      "decided_sides": 20,
+      "eligible_sides": 20,
+      "negative_total": 10,
+      "negative_unknown_count": 0,
+      "pair_success": 10,
+      "pair_success_rate": 1.0,
+      "pair_total": 10,
+      "positive_total": 10,
+      "positive_unknown_count": 0
+    }
+  },
+  "not_formal_benchmark": true,
+  "not_human_gold": true,
+  "not_unseen_test": true,
+  "paper_method_material": {
+    "bounded_semantic_definition": "Direct unconditional prohibition over reachable executable BPMN activities; necessary precondition bypass by sequence-flow enforcement edges.",
+    "cannot_claim": [
+      "our method generalizes",
+      "formal benchmark proves",
+      "outperforms Sun",
+      "outperforms Winter",
+      "first to",
+      "new five-type Table 3"
+    ],
+    "failure_example": null,
+    "formula": "V_proh = exists a in B_A: Reach_G(S,a); bypass = Reach_G_without_E_C(S,a).",
+    "limitation_statement": "This is development evidence on AI-constructed mechanism cases; it does not establish generalization to unseen legal text or full BPMN semantics.",
+    "mechanism_result": {
+      "by_family": {
+        "necessary_precondition": {
+          "all_denominators": {
+            "coverage_denominator_eligible_sides": 10,
+            "negative_total": 5,
+            "positive_total": 5,
+            "precision_denominator_tp_plus_fp": 5,
+            "recall_denominator_positive_total": 5
+          },
+          "coverage": 1.0,
+          "decided": 10,
+          "eligible": 10,
+          "f1": 1.0,
+          "negative": {
+            "fp": 0,
+            "negative_unknown": 0,
+            "tn": 5,
+            "total": 5
+          },
+          "negative_unknown_rate": 0.0,
+          "pair_success": 5,
+          "pair_total": 5,
+          "positive": {
+            "fn_observed_negative": 0,
+            "fn_unknown": 0,
+            "total": 5,
+            "tp": 5
+          },
+          "positive_unknown_rate": 0.0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        "prohibition": {
+          "all_denominators": {
+            "coverage_denominator_eligible_sides": 10,
+            "negative_total": 5,
+            "positive_total": 5,
+            "precision_denominator_tp_plus_fp": 5,
+            "recall_denominator_positive_total": 5
+          },
+          "coverage": 1.0,
+          "decided": 10,
+          "eligible": 10,
+          "f1": 1.0,
+          "negative": {
+            "fp": 0,
+            "negative_unknown": 0,
+            "tn": 5,
+            "total": 5
+          },
+          "negative_unknown_rate": 0.0,
+          "pair_success": 5,
+          "pair_total": 5,
+          "positive": {
+            "fn_observed_negative": 0,
+            "fn_unknown": 0,
+            "total": 5,
+            "tp": 5
+          },
+          "positive_unknown_rate": 0.0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
+      },
+      "failed_or_nonideal_cases": [],
+      "overall": {
+        "coverage": 1.0,
+        "decided_sides": 20,
+        "eligible_sides": 20,
+        "negative_total": 10,
+        "negative_unknown_count": 0,
+        "pair_success": 10,
+        "pair_success_rate": 1.0,
+        "pair_total": 10,
+        "positive_total": 10,
+        "positive_unknown_count": 0
+      }
+    },
+    "supported_fragment": "flat, acyclic BPMN fragment with start/end events, executable activities, sequence flows, XOR gateways and explicit conditionExpression / guarded flow labels."
+  },
+  "real_extraction_linkage": {
+    "direct_llm_predictions_sha256": "5381b1807fb3d020deb51ebc8cee9f5ea21de50ea9c0a426a0a16cb42457e1c0",
+    "note": "No API, no LLM, no new prediction. Missing predictions are reported as missing_existing_prediction.",
+    "rows": [
+      {
+        "methods": [
+          {
+            "action_binding_status": "unresolved_no_exact_normalized_gdpr7_activity",
+            "action_spans": [
+              "have the right not to be subject to a decision"
+            ],
+            "checker_decision": "not_applicable",
+            "checker_reason": "right_or_prohibition_ambiguous_not_v1_direct",
+            "condition_binding_status": "condition_span_missing",
+            "condition_spans": [],
+            "constraint_spans": [
+              "based solely on automated processing, including profiling",
+              "which produces legal effects concerning him or her or similarly significantly affects him or her"
+            ],
+            "exception_spans": [],
+            "has_prohibition_modality": false,
+            "method": "direct_llm",
+            "modality_labels": [
+              "obligation"
+            ],
+            "prediction_available": true,
+            "relation_projection": "right_or_prohibition_ambiguous_not_v1_direct",
+            "request_status": "ok"
+          },
+          {
+            "action_binding_status": "unresolved_no_exact_normalized_gdpr7_activity",
+            "action_spans": [
+              "have the right not to be subject to a decision based solely on automated"
+            ],
+            "checker_decision": "not_applicable",
+            "checker_reason": "right_or_prohibition_ambiguous_not_v1_direct",
+            "condition_binding_status": "not_attempted_without_full_process_rule_linkage",
+            "condition_spans": [
+              "subject to a decision based solely on automated processing, including profiling, which produces"
+            ],
+            "constraint_spans": [],
+            "exception_spans": [],
+            "has_prohibition_modality": false,
+            "method": "sun_rule_only",
+            "modality_labels": [
+              "obligation"
+            ],
+            "prediction_available": true,
+            "relation_projection": "right_or_prohibition_ambiguous_not_v1_direct",
+            "request_status": "ok"
+          }
+        ],
+        "relation_projection": "right_or_prohibition_ambiguous_not_v1_direct",
+        "source_clause_ref": "gdpr_article22_s001",
+        "source_text": "The data subject shall have the right not to be subject to a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her."
+      },
+      {
+        "methods": [
+          {
+            "action_binding_status": "unresolved_no_exact_normalized_gdpr7_activity",
+            "action_spans": [
+              "apply"
+            ],
+            "checker_decision": "not_applicable",
+            "checker_reason": "rule_applicability_not_necessary_precondition",
+            "condition_binding_status": "not_attempted_without_full_process_rule_linkage",
+            "condition_spans": [
+              "if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller"
+            ],
+            "constraint_spans": [],
+            "exception_spans": [],
+            "has_prohibition_modality": true,
+            "method": "direct_llm",
+            "modality_labels": [
+              "prohibition"
+            ],
+            "prediction_available": true,
+            "relation_projection": "rule_applicability_not_necessary_precondition",
+            "request_status": "ok"
+          },
+          {
+            "action_binding_status": "unresolved_no_exact_normalized_gdpr7_activity",
+            "action_spans": [
+              "not apply"
+            ],
+            "checker_decision": "not_applicable",
+            "checker_reason": "rule_applicability_not_necessary_precondition",
+            "condition_binding_status": "not_attempted_without_full_process_rule_linkage",
+            "condition_spans": [
+              "if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller"
+            ],
+            "constraint_spans": [
+              "for entering into, or performance of, a contract between the data subject and a data controller"
+            ],
+            "exception_spans": [
+              "shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller"
+            ],
+            "has_prohibition_modality": true,
+            "method": "sun_rule_only",
+            "modality_labels": [
+              "prohibition"
+            ],
+            "prediction_available": true,
+            "relation_projection": "rule_applicability_not_necessary_precondition",
+            "request_status": "ok"
+          }
+        ],
+        "relation_projection": "rule_applicability_not_necessary_precondition",
+        "source_clause_ref": "gdpr_article22_s002",
+        "source_text": "Paragraph 1 shall not apply if the decision is necessary for entering into, or performance of, a contract between the data subject and a data controller."
+      },
+      {
+        "methods": [
+          {
+            "action_binding_status": "unresolved_no_exact_normalized_gdpr7_activity",
+            "action_spans": [
+              "notify the personal data breach to the supervisory authority competent in accordance with Article 55"
+            ],
+            "checker_decision": "not_applicable",
+            "checker_reason": "trigger_obligation_not_necessary_precondition",
+            "condition_binding_status": "not_attempted_without_full_process_rule_linkage",
+            "condition_spans": [
+              "In the case of a personal data breach"
+            ],
+            "constraint_spans": [
+              "not later than 72 hours after having become aware of it",
+              "where feasible",
+              "without undue delay"
+            ],
+            "exception_spans": [
+              "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons"
+            ],
+            "has_prohibition_modality": false,
+            "method": "direct_llm",
+            "modality_labels": [
+              "obligation"
+            ],
+            "prediction_available": true,
+            "relation_projection": "trigger_obligation_not_necessary_precondition",
+            "request_status": "ok"
+          },
+          {
+            "action_binding_status": "unresolved_no_exact_normalized_gdpr7_activity",
+            "action_spans": [
+              "notify the personal data breach to the supervisory authority competent in"
+            ],
+            "checker_decision": "not_applicable",
+            "checker_reason": "trigger_obligation_not_necessary_precondition",
+            "condition_binding_status": "not_attempted_without_full_process_rule_linkage",
+            "condition_spans": [
+              "In the case of a personal data breach",
+              "where"
+            ],
+            "constraint_spans": [
+              "not later than 72 hours after having become aware of it",
+              "to the rights and freedoms of natural persons",
+              "to the supervisory authority competent in accordance with Article 55",
+              "without undue delay and, where feasible"
+            ],
+            "exception_spans": [
+              "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons"
+            ],
+            "has_prohibition_modality": false,
+            "method": "sun_rule_only",
+            "modality_labels": [
+              "obligation"
+            ],
+            "prediction_available": true,
+            "relation_projection": "trigger_obligation_not_necessary_precondition",
+            "request_status": "ok"
+          }
+        ],
+        "relation_projection": "trigger_obligation_not_necessary_precondition",
+        "source_clause_ref": "gdpr_article33_s001",
+        "source_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons."
+      },
+      {
+        "methods": [
+          {
+            "action_binding_status": "unresolved_no_exact_normalized_gdpr7_activity",
+            "action_spans": [
+              "be lawful"
+            ],
+            "checker_decision": "unknown",
+            "checker_reason": "action_binding_unresolved_or_ambiguous",
+            "condition_binding_status": "not_attempted_without_full_process_rule_linkage",
+            "condition_spans": [
+              "if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes"
+            ],
+            "constraint_spans": [
+              "for one or more specific purposes",
+              "only"
+            ],
+            "exception_spans": [],
+            "has_prohibition_modality": false,
+            "method": "direct_llm",
+            "modality_labels": [
+              "obligation"
+            ],
+            "prediction_available": true,
+            "relation_projection": "necessary_precondition_conservative_projection",
+            "request_status": "ok"
+          },
+          {
+            "action_binding_status": "unresolved_no_exact_normalized_gdpr7_activity",
+            "action_spans": [
+              "lawful only if and to the extent that the data subject has given consent to the"
+            ],
+            "checker_decision": "unknown",
+            "checker_reason": "action_binding_unresolved_or_ambiguous",
+            "condition_binding_status": "not_attempted_without_full_process_rule_linkage",
+            "condition_spans": [
+              "that the data subject has given consent to the processing of his or her personal data for one or",
+              "to the extent"
+            ],
+            "constraint_spans": [
+              "to the extent",
+              "to the processing of his or her personal data for one or more specific purposes"
+            ],
+            "exception_spans": [],
+            "has_prohibition_modality": false,
+            "method": "sun_rule_only",
+            "modality_labels": [
+              "obligation"
+            ],
+            "prediction_available": true,
+            "relation_projection": "necessary_precondition_conservative_projection",
+            "request_status": "ok"
+          }
+        ],
+        "relation_projection": "necessary_precondition_conservative_projection",
+        "source_clause_ref": "gdpr_article6_s001",
+        "source_text": "Processing shall be lawful only if and to the extent that the data subject has given consent to the processing of his or her personal data for one or more specific purposes."
+      }
+    ],
+    "scope": "existing real Stage2 prediction linkage diagnosis; not a new method comparison",
+    "sun_rule_only_predictions_sha256": "6c75254b91fe2f32a29268e20755ffcee6acb2f7cca2eff7168b011ee74459a8"
+  },
+  "revision": "s3_ext_pc_v1",
+  "safety": {
+    "gold_status": "AI_constructed_development_not_gold",
+    "main_paper_facing_table3_unchanged": true,
+    "network_experiment_calls": 0,
+    "real_api_calls": 0,
+    "table1_unchanged": true,
+    "table2_unchanged": true
+  },
+  "schema_version": "s3_ext_pc_v1_report@1.0.0",
+  "semantic_definitions": {
+    "direct_unconditional_action_prohibition_v1": "FORBID(A); violation iff an executable action activity bound to A is reachable from a start node.",
+    "legacy_target_type": "required_condition_not_enforced",
+    "necessary_precondition_bypass_v1": "A only if C; remove all C-enforcing sequence-flow edges E_C and test reachability of A.",
+    "semantic_subtype": "necessary_precondition_bypass_v1"
+  },
+  "status": "DEVELOPMENT_MECHANISM_EVIDENCE",
+  "supported_bpmn_fragment": {
+    "allowed": [
+      "flat process",
+      "startEvent",
+      "endEvent",
+      "task/activity",
+      "sequenceFlow",
+      "exclusiveGateway",
+      "DAG/acyclic",
+      "explicit flow conditionExpression or guarded flow name"
+    ],
+    "default_flow": "allowed; default flow is not automatically C",
+    "unsupported": [
+      "parallelGateway",
+      "inclusiveGateway",
+      "eventBasedGateway",
+      "complexGateway",
+      "loops/cycles",
+      "subProcess",
+      "callActivity",
+      "boundary/intermediate event condition semantics",
+      "dynamic data-state evaluation"
+    ]
+  }
+}
