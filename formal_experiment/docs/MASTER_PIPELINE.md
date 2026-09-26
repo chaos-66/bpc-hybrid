@@ -1,4 +1,12 @@
-﻿## 2026-09-26 修订 3.7.34：S3-TABLE3-R5.5 Formal Table 3 执行并冻结
+﻿## 2026-09-26 S3-CLOSE：实验收束完成，Stage 3 PAUSED / PAPER-FACING RESULT FROZEN
+
+- 当前 Table 3 固定为 Sun F1 **0.4458** / Ours F1 **0.5341**（`PROVISIONAL_PAPER_FACING_TABLE3`）；主要剩余瓶颈为 semantic action alignment。
+- Bonus 0.4667 / 0.5474 为 development diagnostic only；最终 unseen evaluation 未完成，不将当前结果称为 unseen / blind test。
+- 当前优先级切换为 **PAPER WRITING + PPT PREPARATION**；不再自动推进 Stage 3 实验，只有用户明确要求才重新开启。以下历史实验状态、执行卡、待办和授权不覆盖本暂停决定。
+- 归档：[stage3_experiment_closure_v1](../outputs/reports/stage3_experiment_closure_v1.md)；论文/PPT解释：[stage3_table3_interpretation_v1](../outputs/reports/stage3_table3_interpretation_v1.md)。实时状态仍以 [PROJECT_AUDIT](PROJECT_AUDIT.md) 为准。
+- 本轮为纯文档闭环：核对既有数字、full precision、来源 SHA256 与变更范围；零新实验、零真实 API，历史记录不改。
+
+## 2026-09-26 修订 3.7.34：S3-TABLE3-R5.5 Formal Table 3 执行并冻结
 
 - 用户批准的 19 次 DeepSeek 调用全部完成，0 retry；raw responses/ledger/usage/cost binding 已提交；估算成本 `USD 0.16672524 <= 0.91`。
 - Ours 33 条 Stage2 canonical predictions 在 Stage 3 指标前冻结；Sun 用冻结 B0 v10a 对 33 条 core requirements 本地重新运行；Winter 保持 native pipeline；Stage1 解析 113 BPMN。

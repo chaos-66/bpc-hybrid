@@ -1,0 +1,989 @@
+{
+  "schema_version": "stage3_experiment_closure@1.0.0",
+  "generated_at_utc": "2026-09-26T11:34:36.841771+00:00",
+  "status": "STAGE3_EXPERIMENT_PAUSED",
+  "artifact_role": "CANONICAL_STATUS_POINTER",
+  "scope": "Documentation-only closure of existing evidence; no new evaluation or experiment.",
+  "priority": [
+    "PAPER_WRITING",
+    "PPT_PREPARATION"
+  ],
+  "paper_facing_result": {
+    "status": "PROVISIONAL_PAPER_FACING_TABLE3",
+    "source_status": "PROVISIONAL_FINAL_PAPER_FACING_RESULT",
+    "source_artifact": "formal_experiment/outputs/reports/stage3_table3_provisional_final_v1.json",
+    "metrics_source_artifact": "formal_experiment/outputs/reports/stage3_final_convergence_report_v1.json",
+    "methods": {
+      "Sun": {
+        "display_name": "Sun et al.",
+        "precision": 0.38144329896907214,
+        "recall": 0.5362318840579711,
+        "f1": 0.4457831325301205,
+        "support": {
+          "TP": 37,
+          "FP": 60,
+          "FN": 32,
+          "TN": 31,
+          "positive_support": 69,
+          "negative_support": 132,
+          "scored_cells": 201
+        }
+      },
+      "Ours": {
+        "display_name": "Ours",
+        "precision": 0.4392523364485981,
+        "recall": 0.6811594202898551,
+        "f1": 0.5340909090909091,
+        "support": {
+          "TP": 47,
+          "FP": 60,
+          "FN": 22,
+          "TN": 58,
+          "positive_support": 69,
+          "negative_support": 132,
+          "scored_cells": 201
+        }
+      }
+    },
+    "counts_and_observability": {
+      "Sun": {
+        "FN": 32,
+        "FP": 60,
+        "TN": 31,
+        "TP": 37,
+        "coverage": 0.6666666666666666,
+        "f1": 0.4457831325301205,
+        "negative_support": 132,
+        "not_applicable": 39,
+        "not_scored": 105,
+        "positive_support": 69,
+        "precision": 0.38144329896907214,
+        "recall": 0.5362318840579711,
+        "scored_cells": 201,
+        "unknown_negative": 41,
+        "unknown_positive": 26,
+        "unknown_rate": 0.3333333333333333
+      },
+      "Ours": {
+        "FN": 22,
+        "FP": 60,
+        "TN": 58,
+        "TP": 47,
+        "coverage": 0.8905472636815921,
+        "f1": 0.5340909090909091,
+        "negative_support": 132,
+        "not_applicable": 39,
+        "not_scored": 105,
+        "positive_support": 69,
+        "precision": 0.4392523364485981,
+        "recall": 0.6811594202898551,
+        "scored_cells": 201,
+        "unknown_negative": 14,
+        "unknown_positive": 8,
+        "unknown_rate": 0.10945273631840796
+      }
+    },
+    "canonical_latex": "formal_experiment/outputs/reports/stage3_table3_provisional_final_v1.tex",
+    "recommended_caption": "Performance comparison of downstream compliance checking.",
+    "submission_policy": "Use unchanged values for submission if no methodologically stronger unseen evaluation is completed and the advisor accepts the current design.",
+    "evaluation_scope": {
+      "name": "current evaluation benchmark",
+      "definition": "pooled TP/FP/FN over all scored development cells for the frozen selected backend",
+      "all_existing_cases_seen": true,
+      "development_case_count": 113,
+      "scored_cells_per_method": 201,
+      "final_test_eligible": false,
+      "final_unseen_evaluation_completed": false,
+      "current_result_is_unseen_test": false,
+      "allowed_descriptions": [
+        "evaluation benchmark",
+        "development benchmark",
+        "controlled downstream evaluation",
+        "experimental benchmark",
+        "current evaluation set"
+      ],
+      "prohibited_descriptions": [
+        "unseen test",
+        "held-out final test",
+        "blind final evaluation"
+      ],
+      "recommendation": "We evaluate downstream compliance checking on the constructed GDPR-based benchmark.",
+      "existing_requirements": 33,
+      "existing_development_cases": 113,
+      "existing_order_supplement_cases": 2,
+      "total_included_case_records": 115,
+      "scored_cells_by_type": {
+        "missing_action": 113,
+        "incorrect_actor": 80,
+        "out_of_order": 8
+      },
+      "supplement_policy": "Existing R5-S4-T3 development supplement uses actual frozen Stage2 endpoints; distinct from bonus synthetic endpoint stubs.",
+      "unknown_policy": "Positive unknowns are included in FN; negative unknowns are not converted to TN or FP. Coverage counts observable scored cells."
+    }
+  },
+  "per_type_metrics": {
+    "Sun": {
+      "missing_f1": 0.4554455445544555,
+      "actor_f1": 0.4262295081967213,
+      "order_f1": 0.5,
+      "macro_f1": 0.46055835091705893,
+      "coverage": 0.6666666666666666,
+      "unknown_rate": 0.3333333333333333,
+      "details": {
+        "incorrect_actor": {
+          "FN": 20,
+          "FP": 15,
+          "TN": 4,
+          "TP": 13,
+          "coverage": 0.4,
+          "f1": 0.4262295081967213,
+          "negative_support": 47,
+          "not_applicable": 35,
+          "not_scored": 0,
+          "positive_support": 33,
+          "precision": 0.4642857142857143,
+          "recall": 0.3939393939393939,
+          "scored_cells": 80,
+          "unknown_negative": 28,
+          "unknown_positive": 20,
+          "unknown_rate": 0.6
+        },
+        "missing_action": {
+          "FN": 10,
+          "FP": 45,
+          "TN": 26,
+          "TP": 23,
+          "coverage": 0.8849557522123894,
+          "f1": 0.4554455445544555,
+          "negative_support": 80,
+          "not_applicable": 2,
+          "not_scored": 0,
+          "positive_support": 33,
+          "precision": 0.3382352941176471,
+          "recall": 0.696969696969697,
+          "scored_cells": 113,
+          "unknown_negative": 9,
+          "unknown_positive": 4,
+          "unknown_rate": 0.11504424778761062
+        },
+        "out_of_order": {
+          "FN": 2,
+          "FP": 0,
+          "TN": 1,
+          "TP": 1,
+          "coverage": 0.25,
+          "f1": 0.5,
+          "negative_support": 5,
+          "not_applicable": 2,
+          "not_scored": 105,
+          "positive_support": 3,
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "scored_cells": 8,
+          "unknown_negative": 4,
+          "unknown_positive": 2,
+          "unknown_rate": 0.75
+        }
+      }
+    },
+    "Ours": {
+      "missing_f1": 0.49350649350649356,
+      "actor_f1": 0.5684210526315789,
+      "order_f1": 0.5,
+      "macro_f1": 0.5206425153793575,
+      "coverage": 0.8905472636815921,
+      "unknown_rate": 0.10945273631840796,
+      "details": {
+        "incorrect_actor": {
+          "FN": 6,
+          "FP": 35,
+          "TN": 2,
+          "TP": 27,
+          "coverage": 0.8,
+          "f1": 0.5684210526315789,
+          "negative_support": 47,
+          "not_applicable": 35,
+          "not_scored": 0,
+          "positive_support": 33,
+          "precision": 0.43548387096774194,
+          "recall": 0.8181818181818182,
+          "scored_cells": 80,
+          "unknown_negative": 10,
+          "unknown_positive": 6,
+          "unknown_rate": 0.2
+        },
+        "missing_action": {
+          "FN": 14,
+          "FP": 25,
+          "TN": 55,
+          "TP": 19,
+          "coverage": 1.0,
+          "f1": 0.49350649350649356,
+          "negative_support": 80,
+          "not_applicable": 2,
+          "not_scored": 0,
+          "positive_support": 33,
+          "precision": 0.4318181818181818,
+          "recall": 0.5757575757575758,
+          "scored_cells": 113,
+          "unknown_negative": 0,
+          "unknown_positive": 0,
+          "unknown_rate": 0.0
+        },
+        "out_of_order": {
+          "FN": 2,
+          "FP": 0,
+          "TN": 1,
+          "TP": 1,
+          "coverage": 0.25,
+          "f1": 0.5,
+          "negative_support": 5,
+          "not_applicable": 2,
+          "not_scored": 105,
+          "positive_support": 3,
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "scored_cells": 8,
+          "unknown_negative": 4,
+          "unknown_positive": 2,
+          "unknown_rate": 0.75
+        }
+      }
+    }
+  },
+  "improvement": {
+    "precision_absolute": 0.05780903747952598,
+    "recall_absolute": 0.14492753623188404,
+    "f1_absolute": 0.08830777656078859,
+    "f1_percentage_points": 8.830777656078858,
+    "f1_relative_percent": 19.809582309582304,
+    "calculation_policy": "Subtract full-precision source metrics; round only for display.",
+    "difference_of_displayed_four_decimal_values": {
+      "precision_absolute": "0.0579",
+      "recall_absolute": "0.1450",
+      "f1_absolute": "0.0883"
+    },
+    "largest_absolute_gain": "recall",
+    "overall_counts_delta": {
+      "TP": 10,
+      "FP": 0,
+      "FN": -10
+    },
+    "per_type_tp_delta": {
+      "missing_action": -4,
+      "incorrect_actor": 14,
+      "out_of_order": 0
+    },
+    "interpretation_limit": "Overall recall improves; Missing recall decreases. Not every type or metric improves."
+  },
+  "failure_analysis": {
+    "source_artifact": "formal_experiment/outputs/reports/stage3_bonus_missing_analysis_v1.json",
+    "evidence_scope": "Post-hoc analysis of frozen final-development Missing signals pooled across Sun and Ours; method-case cells, not unique regulations or all Stage3 errors.",
+    "missing_fp_total": 70,
+    "mapping_related_missing_fp": {
+      "count": 50,
+      "denominator": 70,
+      "ratio": 0.7142857142857143,
+      "Sun": 35,
+      "Ours": 15
+    },
+    "scope_related_missing_fp": {
+      "count": 20,
+      "denominator": 70,
+      "ratio": 0.2857142857142857,
+      "Sun": 10,
+      "Ours": 10,
+      "includes_extra_fragments": true
+    },
+    "strict_scope_fp": {
+      "count": 11,
+      "denominator": 70,
+      "ratio": 0.15714285714285714,
+      "Sun": 6,
+      "Ours": 5,
+      "subset_of_broad_scope": true
+    },
+    "stage2_extraction_fn": {
+      "count": 4,
+      "Sun": 4,
+      "Ours": 0,
+      "definition": "Stage-2 produced no action for the requirement",
+      "interpretation": "Narrow M10 no-action category; not all extraction-caused errors or a Stage2 score."
+    },
+    "mapping_related_missing_fn": 20,
+    "unit_policy": "Primary-cell classification; action-level categories can overlap and are not the 70-cell denominator.",
+    "multi_stage_chain": [
+      "regulatory text",
+      "Stage2 extraction",
+      "regulatory action representation",
+      "regulation-action to BPMN-activity semantic alignment",
+      "actor association / order relation construction",
+      "BPMN structural checking",
+      "violation prediction"
+    ],
+    "main_bottleneck": "REQUIRED-ACTION SEMANTIC MAPPING FAILURE / BPMN LABEL PARAPHRASE OR SEMANTIC MISMATCH",
+    "secondary_bottleneck": "STAGE2 ACTION SPAN FRAGMENTATION: condition, constraint, exception, temporal and subordinate expressions can resemble actions without being separate mandatory BPMN activities.",
+    "action_scope_gate": {
+      "broad_scope_fp_by_method": {
+        "ours": {
+          "broad_scope_related_fp": 10
+        },
+        "sun": {
+          "broad_scope_related_fp": 10
+        }
+      },
+      "broad_scope_fp_cells": 20,
+      "broad_scope_fp_ratio": 0.2857142857142857,
+      "decision": "REJECTED",
+      "gate_eligible_scope_fp_by_method": {
+        "ours": {
+          "scope_related_fp": 5
+        },
+        "sun": {
+          "scope_related_fp": 6
+        }
+      },
+      "gate_eligible_scope_fp_cells": 11,
+      "gate_eligible_scope_fp_ratio": 0.15714285714285714,
+      "reason": "Even under the broad fragment-inclusive count, the strict gate-listed scope categories are far below 30% of Missing FP; the dominant errors are required-action mapping and BPMN-label semantic mismatch.",
+      "threshold": 0.3
+    },
+    "action_scope_proposal": "REJECTED",
+    "additional_obligation_scope_projection_adopted": false,
+    "evidence_example": {
+      "case_id": "case_0164a880bf44",
+      "method": "sun",
+      "regulatory_action": "have the right to obtain from the controller confirmation as to whether or not",
+      "bpmn_label": "The data subject has a right of access and confirmation.",
+      "saved_similarity": 0.4923,
+      "gamma": 0.55,
+      "source": "Existing Missing FP ledger; similarity copied, not recomputed."
+    },
+    "attribution_limit": "Mapping dominance is quantified for Missing FP only, not as a percentage decomposition of total Stage3 F1 loss."
+  },
+  "order_analysis": {
+    "representation_requirement": "U_r subset of A_r x A_r",
+    "earlier_order_f1": 0.0,
+    "earlier_reason": "Frozen native order_relations were empty; downstream order lacked a usable denominator.",
+    "adapter": "SharedRuleOrderAdapterV3",
+    "inputs": [
+      "source text",
+      "existing method-specific Stage2 actions",
+      "general syntax",
+      "shared semantic matcher"
+    ],
+    "excluded_inputs": [
+      "Gold",
+      "mutation type",
+      "target BPMN",
+      "reference order pair"
+    ],
+    "main_requirement_ids": [
+      "R5-D-01",
+      "R5-D-02",
+      "R5-S4-T3"
+    ],
+    "generated_ur_requirements": {
+      "ours": [
+        "R5-S4-T3"
+      ],
+      "sun": [
+        "R5-D-01",
+        "R5-S4-T3",
+        "R5-D-02"
+      ]
+    },
+    "paper_facing_order_metrics": {
+      "Sun": {
+        "FN": 2,
+        "FP": 0,
+        "TN": 1,
+        "TP": 1,
+        "coverage": 0.25,
+        "f1": 0.5,
+        "negative_support": 5,
+        "not_applicable": 2,
+        "not_scored": 105,
+        "positive_support": 3,
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "scored_cells": 8,
+        "unknown_negative": 4,
+        "unknown_positive": 2,
+        "unknown_rate": 0.75
+      },
+      "Ours": {
+        "FN": 2,
+        "FP": 0,
+        "TN": 1,
+        "TP": 1,
+        "coverage": 0.25,
+        "f1": 0.5,
+        "negative_support": 5,
+        "not_applicable": 2,
+        "not_scored": 105,
+        "positive_support": 3,
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "scored_cells": 8,
+        "unknown_negative": 4,
+        "unknown_positive": 2,
+        "unknown_rate": 0.75
+      }
+    },
+    "attribution": {
+      "components": [
+        "RC-ORDER-01 shared RuleRecord U_r adapter made order_relations non-empty where endpoints exist",
+        "RC-ORDER-02 capability-aligned eligibility moved endpoint-unbound requirements out of the main F1 and retained them as diagnostics",
+        "DEVELOPMENT-ONLY supplement supplied the missing R5-S4-T3 out_of_order control for an already-extracted action pair"
+      ],
+      "isolation_note": "The order change is a bundle of adapter + eligibility + supplement; it is not claimed as a single algorithmic F1 delta.",
+      "new_selected_order_f1": 0.5,
+      "old_frozen_r1_order_f1_on_previous_scope": 0.0
+    },
+    "bonus_order_metrics": {
+      "ours": {
+        "FN": 6,
+        "FP": 0,
+        "TN": 6,
+        "TP": 6,
+        "coverage": 0.46153846153846156,
+        "f1": 0.6666666666666666,
+        "negative_support": 14,
+        "not_applicable": 2,
+        "not_scored": 105,
+        "positive_support": 12,
+        "precision": 1.0,
+        "recall": 0.5,
+        "scored_cells": 26,
+        "unknown_negative": 8,
+        "unknown_positive": 6,
+        "unknown_rate": 0.5384615384615384
+      },
+      "sun": {
+        "FN": 6,
+        "FP": 0,
+        "TN": 6,
+        "TP": 6,
+        "coverage": 0.46153846153846156,
+        "f1": 0.6666666666666666,
+        "negative_support": 14,
+        "not_applicable": 2,
+        "not_scored": 105,
+        "positive_support": 12,
+        "precision": 1.0,
+        "recall": 0.5,
+        "scored_cells": 26,
+        "unknown_negative": 8,
+        "unknown_positive": 6,
+        "unknown_rate": 0.5384615384615384
+      }
+    },
+    "bonus_requirement_count": 9,
+    "bonus_strict_requirement_count": 6,
+    "bonus_borderline_requirement_count": 3,
+    "bonus_successful_requirements": 5,
+    "bonus_failure_taxonomy": {
+      "NO_FAILURE": 5,
+      "OERR_SEMANTIC_ENDPOINT_BINDING_FAIL": 1,
+      "OERR_TEMPORAL_MARKER_UNRESOLVED": 3
+    },
+    "diagnostic_limit": "Order F1 0.6667 pools existing and bonus cells. Synthetic endpoints and equal endpoint-surface BPMN labels isolate adapter/checker behavior; not real Stage2 endpoint coverage or robust semantic mapping. Five of nine bonus requirements succeed; four fail.",
+    "remaining_chain": "natural-language temporal relation -> Stage2 action endpoints -> U_r -> BPMN actions",
+    "endpoint_gaps": [
+      "Ours lacks a distinct process endpoint for R5-D-01/R5-D-02",
+      "Both methods lack a second endpoint for R5-S7-T1/R5-S8-T1"
+    ]
+  },
+  "method_freeze": {
+    "semantic_backend": "sentence-transformers/all-mpnet-base-v2",
+    "backend_identity_sha256": "d4f960420ae7d45e910e85d91006b6289bc649383796cdf93ceed55cae27c4d3",
+    "gamma": 0.55,
+    "theta": 0.45,
+    "tau": 0.8,
+    "order_adapter": "SharedRuleOrderAdapterV3",
+    "order_adapter_implementation_sha256": "fe68740c77f7ab00967a7758f403ca35c8648e9686c283680ad903e3ae05dee3",
+    "actor_method": "frozen; Definition 6 unchanged",
+    "missing_action_scope": "no additional obligation-scope projection adopted",
+    "action_scope_proposal": "REJECTED",
+    "action_scope_reason": "Strict eligible contamination 11/70 is below the preregistered 0.30 gate; broad fragment-inclusive scope is 20/70.",
+    "freeze_flags": {
+      "ACTOR_METHOD_FROZEN": true,
+      "GAMMA_FINAL_FROZEN": true,
+      "MISSING_ACTION_METHOD_FROZEN": true,
+      "ORDER_ELIGIBILITY_FROZEN": true,
+      "ORDER_U_R_ADAPTER_FROZEN": true,
+      "SEMANTIC_BACKEND_FINAL_FROZEN": true,
+      "STAGE3_METHOD_FROZEN": true,
+      "THETA_FINAL_FROZEN": true
+    }
+  },
+  "bonus_development_status": {
+    "status": "DIAGNOSTIC_ONLY",
+    "label": "DEVELOPMENT-ONLY DIAGNOSTIC RESULT",
+    "source_artifact": "formal_experiment/outputs/reports/stage3_bonus_development_report_v1.json",
+    "methods": {
+      "ours": {
+        "actor_f1": 0.5684210526315789,
+        "coverage": 0.863013698630137,
+        "f1": 0.5473684210526316,
+        "macro_f1": 0.576198070934913,
+        "missing_f1": 0.49350649350649356,
+        "order_f1": 0.6666666666666666,
+        "overall_counts": {
+          "FN": 26,
+          "FP": 60,
+          "TN": 63,
+          "TP": 52,
+          "coverage": 0.863013698630137,
+          "f1": 0.5473684210526316,
+          "negative_support": 141,
+          "not_applicable": 75,
+          "not_scored": 105,
+          "positive_support": 78,
+          "precision": 0.4642857142857143,
+          "recall": 0.6666666666666666,
+          "scored_cells": 219,
+          "unknown_negative": 18,
+          "unknown_positive": 12,
+          "unknown_rate": 0.136986301369863
+        },
+        "per_type": {
+          "incorrect_actor": {
+            "FN": 6,
+            "FP": 35,
+            "TN": 2,
+            "TP": 27,
+            "coverage": 0.8,
+            "f1": 0.5684210526315789,
+            "negative_support": 47,
+            "not_applicable": 53,
+            "not_scored": 0,
+            "positive_support": 33,
+            "precision": 0.43548387096774194,
+            "recall": 0.8181818181818182,
+            "scored_cells": 80,
+            "unknown_negative": 10,
+            "unknown_positive": 6,
+            "unknown_rate": 0.2
+          },
+          "missing_action": {
+            "FN": 14,
+            "FP": 25,
+            "TN": 55,
+            "TP": 19,
+            "coverage": 1.0,
+            "f1": 0.49350649350649356,
+            "negative_support": 80,
+            "not_applicable": 20,
+            "not_scored": 0,
+            "positive_support": 33,
+            "precision": 0.4318181818181818,
+            "recall": 0.5757575757575758,
+            "scored_cells": 113,
+            "unknown_negative": 0,
+            "unknown_positive": 0,
+            "unknown_rate": 0.0
+          },
+          "out_of_order": {
+            "FN": 6,
+            "FP": 0,
+            "TN": 6,
+            "TP": 6,
+            "coverage": 0.46153846153846156,
+            "f1": 0.6666666666666666,
+            "negative_support": 14,
+            "not_applicable": 2,
+            "not_scored": 105,
+            "positive_support": 12,
+            "precision": 1.0,
+            "recall": 0.5,
+            "scored_cells": 26,
+            "unknown_negative": 8,
+            "unknown_positive": 6,
+            "unknown_rate": 0.5384615384615384
+          }
+        },
+        "precision": 0.4642857142857143,
+        "recall": 0.6666666666666666,
+        "unknown_rate": 0.136986301369863
+      },
+      "sun": {
+        "actor_f1": 0.4262295081967213,
+        "coverage": 0.6575342465753424,
+        "f1": 0.4666666666666667,
+        "macro_f1": 0.5161139064726145,
+        "missing_f1": 0.4554455445544555,
+        "order_f1": 0.6666666666666666,
+        "overall_counts": {
+          "FN": 36,
+          "FP": 60,
+          "TN": 36,
+          "TP": 42,
+          "coverage": 0.6575342465753424,
+          "f1": 0.4666666666666667,
+          "negative_support": 141,
+          "not_applicable": 75,
+          "not_scored": 105,
+          "positive_support": 78,
+          "precision": 0.4117647058823529,
+          "recall": 0.5384615384615384,
+          "scored_cells": 219,
+          "unknown_negative": 45,
+          "unknown_positive": 30,
+          "unknown_rate": 0.3424657534246575
+        },
+        "per_type": {
+          "incorrect_actor": {
+            "FN": 20,
+            "FP": 15,
+            "TN": 4,
+            "TP": 13,
+            "coverage": 0.4,
+            "f1": 0.4262295081967213,
+            "negative_support": 47,
+            "not_applicable": 53,
+            "not_scored": 0,
+            "positive_support": 33,
+            "precision": 0.4642857142857143,
+            "recall": 0.3939393939393939,
+            "scored_cells": 80,
+            "unknown_negative": 28,
+            "unknown_positive": 20,
+            "unknown_rate": 0.6
+          },
+          "missing_action": {
+            "FN": 10,
+            "FP": 45,
+            "TN": 26,
+            "TP": 23,
+            "coverage": 0.8849557522123894,
+            "f1": 0.4554455445544555,
+            "negative_support": 80,
+            "not_applicable": 20,
+            "not_scored": 0,
+            "positive_support": 33,
+            "precision": 0.3382352941176471,
+            "recall": 0.696969696969697,
+            "scored_cells": 113,
+            "unknown_negative": 9,
+            "unknown_positive": 4,
+            "unknown_rate": 0.11504424778761062
+          },
+          "out_of_order": {
+            "FN": 6,
+            "FP": 0,
+            "TN": 6,
+            "TP": 6,
+            "coverage": 0.46153846153846156,
+            "f1": 0.6666666666666666,
+            "negative_support": 14,
+            "not_applicable": 2,
+            "not_scored": 105,
+            "positive_support": 12,
+            "precision": 1.0,
+            "recall": 0.5,
+            "scored_cells": 26,
+            "unknown_negative": 8,
+            "unknown_positive": 6,
+            "unknown_rate": 0.5384615384615384
+          }
+        },
+        "precision": 0.4117647058823529,
+        "recall": 0.5384615384615384,
+        "unknown_rate": 0.3424657534246575
+      }
+    },
+    "DO_NOT_USE_AS_TABLE3": true,
+    "BONUS_RESULT_METHOD_VALID": false,
+    "CANDIDATE_FOR_FUTURE_TABLE3_METHOD": false,
+    "endpoint_policy": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_STAGE2_PREDICTION",
+    "reason": "Synthetic endpoint stubs replace real Sun/Ours Stage2 predictions; not a valid end-to-end method comparison.",
+    "missing_denominator_changed": false,
+    "actor_method_changed": false,
+    "order_adapter_changed": false
+  },
+  "paper_interpretation": {
+    "factual_conclusion": "Under the shared downstream compliance-checking pipeline, our LLM-based regulatory information extraction achieves higher precision, recall, and F1 than the locally reconstructed rule-based Sun baseline on the constructed evaluation benchmark.",
+    "main_observation": "Recall shows the largest overall gain, about 14.5 percentage points. TP increases from 37 to 47 out of 69 positives; aggregate FP remains 60.",
+    "mechanism_wording": "Consistent with improved downstream availability of regulatory information, especially actor-related coverage; not an isolated causal test of representation completeness.",
+    "discussion": "Multi-stage error propagation, semantic alignment, action fragmentation and temporal endpoint coverage limit downstream scores. Mapping dominates specifically the Missing FP analysis.",
+    "prohibited_claims": [
+      "unseen test",
+      "blind test",
+      "independently held-out final test",
+      "state-of-the-art",
+      "near-perfect",
+      "highly accurate",
+      "production-ready",
+      "statistically significant",
+      "significantly outperforms"
+    ],
+    "interpretation_artifact": "formal_experiment/outputs/reports/stage3_table3_interpretation_v1.md"
+  },
+  "limitations": [
+    "All current evaluation cases were used in development or analysis; no independently held-out final evaluation is complete.",
+    "Backend/threshold selection and evaluation share a development setting; scores do not estimate unseen generalization.",
+    "Constructed benchmark includes controlled BPMN mutations and an existing two-case order supplement; not Sun original-paper scores or a full exact reproduction.",
+    "Only Missing, Actor and eligible Order cells contribute; condition/exception truth and deadline arithmetic are not established.",
+    "Order has 3 eligible requirements, 8 scored cells, 3 positives and 0.25 coverage. Old-zero to 0.5 bundles adapter, eligibility and supplement changes.",
+    "Mapping dominance is a post-hoc Missing-cell analysis, not a causal attribution of all downstream errors.",
+    "Ours Missing recall and Actor precision are lower despite higher overall P/R/F1.",
+    "Bonus synthetic endpoints and exact endpoint-surface labels cannot replace real Stage2 downstream comparison.",
+    "No statistical significance evidence is provided.",
+    "Advisor acceptance of the constructed development benchmark is a submission condition, not completed approval."
+  ],
+  "future_reopen_conditions": {
+    "only_condition": "User explicitly requests Stage3 experimentation again.",
+    "examples": [
+      "继续Stage3",
+      "重新做Table3",
+      "做final unseen benchmark",
+      "老师要求提升Stage3结果"
+    ],
+    "automatic_experiment_todos_created": false,
+    "no_further_stage3_development_planned": true,
+    "historical_next_actions_are_active": false,
+    "note": "Historical API packets, candidate lists, deferred fixes and next actions remain provenance, not authorization or current tasks."
+  },
+  "status_flags": {
+    "STAGE3_EXPERIMENT_STATUS": "PAUSED",
+    "CURRENT_PAPER_TABLE3_FROZEN": true,
+    "BONUS_RESULT_IS_PAPER_FACING": false,
+    "FINAL_UNSEEN_EVALUATION_COMPLETED": false,
+    "NO_FURTHER_STAGE3_DEVELOPMENT_PLANNED": true
+  },
+  "historical_artifacts": [
+    {
+      "stage": "Table3-v1",
+      "path": "formal_experiment/outputs/reports/stage3_table3_v1.json",
+      "role": "historical result"
+    },
+    {
+      "stage": "Winter historical baseline",
+      "path": "formal_experiment/outputs/reports/stage3_v2_winter_archive_status_v1.json",
+      "role": "ARCHIVED_EXTERNAL_BASELINE"
+    },
+    {
+      "stage": "Stage3-v2",
+      "path": "formal_experiment/outputs/reports/stage3_v2_development_report_v1.json",
+      "role": "historical development"
+    },
+    {
+      "stage": "Stage3-v2 revision 2",
+      "path": "formal_experiment/outputs/reports/stage3_v2_revision2_development_report_v1.json",
+      "role": "historical development"
+    },
+    {
+      "stage": "R1",
+      "path": "formal_experiment/outputs/reports/stage3_table3_v4_r1.json",
+      "role": "historical diagnostic"
+    },
+    {
+      "stage": "R2",
+      "path": "formal_experiment/outputs/reports/stage3_table3_v4_r2.json",
+      "role": "historical diagnostic"
+    },
+    {
+      "stage": "Historical formal run",
+      "path": "formal_experiment/outputs/reports/stage3_table3_formal_results_v1.json",
+      "role": "historical run; not current Table 3"
+    },
+    {
+      "stage": "Final convergence",
+      "path": "formal_experiment/outputs/reports/stage3_final_convergence_report_v1.json",
+      "role": "source of current frozen development metrics"
+    },
+    {
+      "stage": "Bonus development",
+      "path": "formal_experiment/outputs/reports/stage3_bonus_development_report_v1.json",
+      "role": "DIAGNOSTIC_ONLY; not Table 3"
+    }
+  ],
+  "git_provenance": {
+    "repository": "https://github.com/chaos-66/bpc-hybrid",
+    "branch": "paper-final-repair",
+    "configured_upstream": "origin/paper-final-repair",
+    "current_head_at_generation": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43",
+    "starting_head": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43",
+    "remote_head_verified_before_edit": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43",
+    "worktree": "D:/Paper/experiment/bpc-hybrid/.tmp/s3_table3_preflight_worktree",
+    "starting_worktree_clean": true,
+    "source_commits": {
+      "paper_facing_freeze": "292edb2d9b5b2960779ab3723c6b2e693079aa2a",
+      "bonus_development": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43",
+      "convergence_report": "aef4aa2f78353731c26064ca905893d925932042",
+      "canonical_artifact_recorded_generation_head": "aef4aa2f78353731c26064ca905893d925932042"
+    },
+    "source_artifacts": [
+      {
+        "path": "formal_experiment/outputs/reports/stage3_table3_provisional_final_v1.json",
+        "sha256": "edb6fd189166beeae4c9b6908fde1aef5b92ff44d007227b78e8b2d40f5fee9c",
+        "last_change_commit": "292edb2d9b5b2960779ab3723c6b2e693079aa2a"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_table3_provisional_final_v1.md",
+        "sha256": "c2635540ee0d0339868a00906547d2cc1f214638a07cb1ac9985b51bb5674ddd",
+        "last_change_commit": "292edb2d9b5b2960779ab3723c6b2e693079aa2a"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_table3_provisional_final_v1.csv",
+        "sha256": "079976d96831314a5a6c3cb6ba5a350a78036c14969ac213177f75fa9f9aaaca",
+        "last_change_commit": "292edb2d9b5b2960779ab3723c6b2e693079aa2a"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_table3_provisional_final_v1.tex",
+        "sha256": "b8383b877967ac8e4bc5c015aebbf580bd461867d96210d4c51c1bf3f2555375",
+        "last_change_commit": "292edb2d9b5b2960779ab3723c6b2e693079aa2a"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_final_convergence_report_v1.json",
+        "sha256": "f3263dca9d76869dc8cbad27bc9ee331baeb72ee5d103685d4cd93e75d6e0dab",
+        "last_change_commit": "aef4aa2f78353731c26064ca905893d925932042"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_final_convergence_report_v1.md",
+        "sha256": "479599641e5716dd76972709df2e031ae95147f4b5bb4c2880e157c4317fa9e2",
+        "last_change_commit": "aef4aa2f78353731c26064ca905893d925932042"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_final_convergence_root_causes_v1.json",
+        "sha256": "14127ab07fb1bef2febc85ed86db955c59bce5c37ecad27e557b4a70d13da3fa",
+        "last_change_commit": "a88caf9aded80e0ad8d7d981e2abc8915d32de22"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_final_improvement_attribution_v1.json",
+        "sha256": "4d6f8dfe4693f06f3d81e42af1721b702c28ef8cae9a115523144f06f8c691d6",
+        "last_change_commit": "a88caf9aded80e0ad8d7d981e2abc8915d32de22"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_final_semantic_backend_freeze_v1.json",
+        "sha256": "4c4c0d219f9eac55741a1b8e37f6c1ace740930772d14e57566c497a9e113162",
+        "last_change_commit": "a88caf9aded80e0ad8d7d981e2abc8915d32de22"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_final_order_adapter_freeze_v1.json",
+        "sha256": "c5ad26f325a3799f0f4c1a371697b3861dd399f2b045a49202cd663f7aa2b45c",
+        "last_change_commit": "a88caf9aded80e0ad8d7d981e2abc8915d32de22"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_final_order_eligibility_v1.json",
+        "sha256": "cc0a93daabef04915b938544722b0d3b529838bf1e9818db546388ceb24659f7",
+        "last_change_commit": "1ded5d61abf8dabde54677307ccc10eea1fc5e77"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_bonus_missing_analysis_v1.json",
+        "sha256": "90f052b801410dc72979fd6264134e7fb754f73be66c566a542c43e62cbb236a",
+        "last_change_commit": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_bonus_missing_analysis_v1.md",
+        "sha256": "854f5f26ca707cf44da1f2bf0d48d66bec4692d1a1f851446b9dcae7a8390e28",
+        "last_change_commit": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_bonus_order_generalization_v1.json",
+        "sha256": "aabbe95f09296079839e33c9192dd62cad858f684bc0e808615a39fe703d17bd",
+        "last_change_commit": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_bonus_order_generalization_v1.md",
+        "sha256": "130625dde8be0f420a665ff624b9f89d17860eb94d1d1226fe4558473af3d7ca",
+        "last_change_commit": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_bonus_development_report_v1.json",
+        "sha256": "f78065a6e63d84bbf8c79337bb8adc9574eb5f4397c3d7df4fbab450270fb6d1",
+        "last_change_commit": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_bonus_development_report_v1.md",
+        "sha256": "86146ca16160ca74ce9b6f1a3f97ceeb280a76309ca7c0361fe426b256930424",
+        "last_change_commit": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_bonus_development_root_causes_v1.json",
+        "sha256": "35176e9bcfd128099ca807444836412073ad3e3047f9e5e4b04e5bcb1ac2539c",
+        "last_change_commit": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_table3_v1.json",
+        "sha256": "5d87bc228a300fc65f31143195f3203cadda046a376cce2b0740629698331c7d",
+        "last_change_commit": "6ce346e1ad5810954c75e8b447434444243ec1a1"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_v2_winter_archive_status_v1.json",
+        "sha256": "50e04abcc49542d5e38e3b449164d0d0581eab0a1c17c13240f86cdac2187168",
+        "last_change_commit": "e464998cffe538aa8d8619de36636f186e0ff094"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_v2_development_report_v1.json",
+        "sha256": "5a76863294393b909a28e454ccaa32fbedd7cbff1a8be57c52e777679aec20b2",
+        "last_change_commit": "e464998cffe538aa8d8619de36636f186e0ff094"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_v2_revision2_development_report_v1.json",
+        "sha256": "becf413002fc5c0362f6e95692a0449e61a11c564171d25a6a033714eabe9071",
+        "last_change_commit": "5b2e1ffaf7189992a5f7c779aa41dffcb8a6787c"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_table3_v4_r1.json",
+        "sha256": "e6ce7e0ade42f2cda5bc6a239bf4eddbd5c97d387b1346f04cfe7c0e158a8a79",
+        "last_change_commit": "976b78afd6a7dd85528c8ac7a5ec2c5e12920a9c"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_table3_v4_r2.json",
+        "sha256": "a3b7c5d6ec4417839f086052081809279af311d09368fa910a75e13799119d8d",
+        "last_change_commit": "8454e5935199bf573bec22596108efc3265665f4"
+      },
+      {
+        "path": "formal_experiment/outputs/reports/stage3_table3_formal_results_v1.json",
+        "sha256": "162ade2a23286e15460055c78ed1310d485eaf78d6a18b837a4dd8469f167313",
+        "last_change_commit": "a422364d660793f3a60ea64c6554f8a78cc47d89"
+      },
+      {
+        "path": "formal_experiment/data/development/stage3_final_development_pool_v1.json",
+        "sha256": "8e156128e688f58a97546f9ae0b42d29f74c64196bc4f402c9f32c4c6db9c782",
+        "last_change_commit": "1ded5d61abf8dabde54677307ccc10eea1fc5e77"
+      },
+      {
+        "path": "formal_experiment/data/development/stage3_final_order_supplement_v1/manifest.json",
+        "sha256": "4e38ed30f247d3e67d7b81220d0f653e54068dc0a8c84cf82eb02e204e8a9a3c",
+        "last_change_commit": "1ded5d61abf8dabde54677307ccc10eea1fc5e77"
+      },
+      {
+        "path": "formal_experiment/data/development/stage3_bonus_order_supplement_v1/manifest.json",
+        "sha256": "0e04ba34c50b7430b0de7db7f72f5d974be21531a98765c1be8ba6f30ddcd93b",
+        "last_change_commit": "6d22732d169abb17b03f0a9f1afb3bb5884dbf43"
+      }
+    ],
+    "hash_algorithm": "SHA-256 of existing worktree bytes",
+    "source_hash_bindings_verified": true,
+    "closure_commit_resolution": "Containing S3-CLOSE commit is reported in handoff; its hash cannot be embedded in itself. Resolve with git log -1 --format=%H -- formal_experiment/outputs/reports/stage3_experiment_closure_v1.json.",
+    "push_result_recording": "Recorded after normal push in handoff, not preclaimed in this precommit artifact."
+  },
+  "integrity": {
+    "validation_scope": "Artifact-only source cross-checks, saved-count arithmetic, SHA256, Markdown/link checks and explicit Git diff scope. No evaluator, audit_project.py or code suite.",
+    "change_record": "Single scoped S3-CLOSE commit; no experiment event because executable behavior is unchanged.",
+    "REAL_LLM_API_CALLS": 0,
+    "NEW_STAGE2_CALLS": 0,
+    "NEW_MODEL_DOWNLOADS": 0,
+    "NEW_THRESHOLD_SWEEPS": 0,
+    "NEW_BENCHMARK_CASES": 0,
+    "NEW_HOLDOUT_CASES": 0,
+    "new_experiment_runs": 0,
+    "new_mpnet_selection_runs": 0,
+    "code_modified": false,
+    "configuration_modified": false,
+    "prompt_modified": false,
+    "stage2_predictions_modified": false,
+    "gold_modified": false,
+    "benchmark_modified": false,
+    "historical_reports_modified": false,
+    "canonical_table3_modified": false,
+    "env_read": false,
+    "force_push": false,
+    "network_scope": "Git verification and normal push only; zero LLM/API experiment calls.",
+    "canonical_latex_verified_unchanged": true
+  }
+}

@@ -1,4 +1,13 @@
-﻿## 当前论文呈现 Table 3：PROVISIONAL_FINAL_PAPER_FACING_RESULT（2026-09-26）
+﻿## Stage 3 当前状态：PAUSED / PAPER-FACING RESULT FROZEN（2026-09-26，S3-CLOSE）
+
+- `STAGE3_EXPERIMENT_STATUS=PAUSED`；`CURRENT_PAPER_TABLE3_FROZEN=true`；当前优先级为 **PAPER WRITING + PPT PREPARATION**。
+- 固定 Table 3：Sun P/R/F1 **0.3814 / 0.5362 / 0.4458**；Ours **0.4393 / 0.6812 / 0.5341**。主要剩余瓶颈：regulation-to-BPMN semantic action alignment。
+- `BONUS_RESULT_IS_PAPER_FACING=false`：0.4667 / 0.5474 仅 synthetic-endpoint development diagnostic，不替换主表。`FINAL_UNSEEN_EVALUATION_COMPLETED=false`；现有数据均用于 development / analysis。
+- `NO_FURTHER_STAGE3_DEVELOPMENT_PLANNED=true`；仅用户明确要求才重开。下文旧“当前优先级”、API 授权、deferred fix 和“下一步”均保留作历史，不构成继续实验的指令。
+- 收束与来源：[closure](../outputs/reports/stage3_experiment_closure_v1.md)、[full-precision JSON / SHA256](../outputs/reports/stage3_experiment_closure_v1.json)；写作引用：[Table 3 interpretation](../outputs/reports/stage3_table3_interpretation_v1.md)；[冻结快照](../outputs/reports/stage3_status_snapshot_v1.md)。
+- 本次仅文档归档，真实 LLM/API、新实验、新数据、阈值搜索均为 0；原结果、预测、Gold 与代码保留不变。
+
+## 当前论文呈现 Table 3：PROVISIONAL_FINAL_PAPER_FACING_RESULT（2026-09-26）
 
 - 当前 paper-facing Table 3（Sun vs Ours，Winter 不纳入）：
   - Sun: Precision `0.3814`, Recall `0.5362`, F1 `0.4458`
