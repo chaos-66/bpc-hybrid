@@ -1,0 +1,46 @@
+{
+  "candidate": {
+    "cache_location": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\hf_cache",
+    "config_sha256": "d46a3e04ded82bba22528424480697d394eeda6a27484e08c5bb2bdf5906cfa0",
+    "core_pytorch_weight_bytes": 438011953,
+    "core_pytorch_weight_mb": 417.72,
+    "core_pytorch_weight_sha256": "a8fd120b1a0032e70ff3d4b8ab8e46a6d01c2cb08ffe7c007a021c1788928146",
+    "download_method": "huggingface_hub.snapshot_download",
+    "download_source": "https://huggingface.co/sentence-transformers/all-mpnet-base-v2",
+    "embedding_dimension_expected": 768,
+    "expected_download_mb_pre_registered": 420,
+    "isolated_environment": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\mpnet_venv (venv --system-site-packages)",
+    "license": "apache-2.0",
+    "model_name": "sentence-transformers/all-mpnet-base-v2",
+    "model_revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+    "package_import_status": "FAILED_WINDOWS_DLL_POLICY_FOR_SKLEARN_METRICS_EXTENSION; not used because the download-size stop condition triggered first",
+    "package_versions": {
+      "python": "3.14.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "sentence-transformers": "6.1.0",
+      "torch": "2.12.1+cpu",
+      "transformers": "5.12.1"
+    },
+    "pooling_expected": "mean pooling over token embeddings with attention mask, then L2 normalization",
+    "short_name": "sentence_transformers_all_mpnet_base_v2",
+    "snapshot_path": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\hf_cache\\hub\\models--sentence-transformers--all-mpnet-base-v2\\snapshots\\e8c3b32edf5434bc2275fc9bab85f82640a19130",
+    "snapshot_to_expected_ratio": 8.69,
+    "snapshot_total_bytes": 3824846935,
+    "snapshot_total_mb": 3647.66
+  },
+  "downloaded_models": [
+    "sentence-transformers/all-mpnet-base-v2@e8c3b32edf5434bc2275fc9bab85f82640a19130"
+  ],
+  "mpnet_dev_sweep_complete": false,
+  "mpnet_loaded": false,
+  "mpnet_promoted": false,
+  "next_required_user_decision": "Authorize a pattern-restricted re-download/pruning (core PyTorch weights only) or keep the v1 spacy backend frozen. No MPNet sweep was run.",
+  "phase_a_completed": true,
+  "schema_version": "stage3_v2_semantic_backend_revision@2.0.0",
+  "selected_backend_retained": "spacy_en_core_web_sm",
+  "status": "MPNET_REVISION_BLOCKED_DOWNLOAD_SIZE_ANOMALY",
+  "stop_condition_triggered": true,
+  "stop_reason": "Official snapshot download is 3647.66 MiB, 8.69x the pre-registered 420 MiB estimate.",
+  "v1_freeze_preserved": true
+}

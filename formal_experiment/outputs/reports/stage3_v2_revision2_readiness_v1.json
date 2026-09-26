@@ -1,0 +1,27 @@
+{
+  "DEVELOPMENT_REVISION2_COMPLETE": false,
+  "FINAL_TABLE3_RUN": false,
+  "FINAL_UNSEEN_HOLDOUT_CREATED": false,
+  "GAMMA_FINAL_FROZEN": false,
+  "LEGACY_TEST_RERUN": false,
+  "MPNET_DEV_SWEEP_COMPLETE": false,
+  "MPNET_DOWNLOADED": true,
+  "MPNET_PROMOTED": false,
+  "NOTES": "Phase A resolved U_r provenance and blocked order implementation on evidence. Phase B stopped at the official MPNet snapshot because the download was 3647.66 MiB versus the pre-registered 420 MiB estimate. The v1 spacy backend remains only the revision-1 reference; revision-2 semantic freeze is not complete.",
+  "ORDER_IMPLEMENTATION_BLOCKED": true,
+  "ORDER_METHOD_FINAL_FROZEN": false,
+  "ORDER_METHOD_STATUS": "BLOCKED_ON_EVIDENCE",
+  "REAL_LLM_API_CALLS": 0,
+  "SEMANTIC_BACKEND_FINAL_FROZEN": false,
+  "STAGE3_V2_R1_PRESERVED": true,
+  "SUN_U_R_PROVENANCE": [
+    "PAPER_NATIVE_EXPLICIT",
+    "PAPER_UNDERSPECIFIED",
+    "CURRENT_INTERFACE_MISSING"
+  ],
+  "SUN_U_R_PROVENANCE_RESOLVED": true,
+  "TABLE3_V1_PRESERVED": true,
+  "THETA_FINAL_FROZEN": false,
+  "WINTER_ARCHIVED": true,
+  "schema_version": "stage3_v2_revision2_readiness@1.0.0"
+}

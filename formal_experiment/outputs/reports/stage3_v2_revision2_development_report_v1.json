@@ -1,0 +1,306 @@
+{
+  "development_result": {
+    "gamma": 0.65,
+    "is_revision2_run": false,
+    "metric_source": "reused from stage3_v2_development_report_v1.json; no new Stage3-v2 development run was executed in revision2 because Phase B stopped before the MPNet sweep",
+    "ours": {
+      "macro_f1": 0.36519607843137253,
+      "overall": {
+        "FN": 22,
+        "FP": 28,
+        "TN": 48,
+        "TP": 27,
+        "coverage": 0.7862068965517242,
+        "f1": 0.5192307692307692,
+        "not_applicable": 27,
+        "not_scored": 56,
+        "precision": 0.4909090909090909,
+        "recall": 0.5510204081632653,
+        "scored_cells": 145,
+        "unknown_rate": 0.21379310344827587
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "FN": 7,
+          "FP": 11,
+          "TN": 11,
+          "TP": 15,
+          "coverage": 0.7037037037037037,
+          "f1": 0.6249999999999999,
+          "negative_support": 32,
+          "positive_support": 22,
+          "precision": 0.5769230769230769,
+          "recall": 0.6818181818181818,
+          "scored_cells": 54,
+          "unknown_rate": 0.2962962962962963
+        },
+        "missing_action": {
+          "FN": 10,
+          "FP": 17,
+          "TN": 37,
+          "TP": 12,
+          "coverage": 1.0,
+          "f1": 0.47058823529411764,
+          "negative_support": 54,
+          "positive_support": 22,
+          "precision": 0.41379310344827586,
+          "recall": 0.5454545454545454,
+          "scored_cells": 76,
+          "unknown_rate": 0.0
+        },
+        "out_of_order": {
+          "FN": 5,
+          "FP": 0,
+          "TN": 0,
+          "TP": 0,
+          "coverage": 0.0,
+          "f1": 0.0,
+          "negative_support": 10,
+          "positive_support": 5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "scored_cells": 15,
+          "unknown_rate": 1.0
+        }
+      }
+    },
+    "selected_backend": "spacy_en_core_web_sm",
+    "sun": {
+      "macro_f1": 0.3586744639376218,
+      "overall": {
+        "FN": 25,
+        "FP": 24,
+        "TN": 46,
+        "TP": 24,
+        "coverage": 0.7034482758620689,
+        "f1": 0.4948453608247423,
+        "not_applicable": 27,
+        "not_scored": 56,
+        "precision": 0.5,
+        "recall": 0.4897959183673469,
+        "scored_cells": 145,
+        "unknown_rate": 0.296551724137931
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "FN": 10,
+          "FP": 4,
+          "TN": 16,
+          "TP": 12,
+          "coverage": 0.5925925925925926,
+          "f1": 0.631578947368421,
+          "negative_support": 32,
+          "positive_support": 22,
+          "precision": 0.75,
+          "recall": 0.5454545454545454,
+          "scored_cells": 54,
+          "unknown_rate": 0.4074074074074074
+        },
+        "missing_action": {
+          "FN": 10,
+          "FP": 20,
+          "TN": 30,
+          "TP": 12,
+          "coverage": 0.9210526315789473,
+          "f1": 0.4444444444444444,
+          "negative_support": 54,
+          "positive_support": 22,
+          "precision": 0.375,
+          "recall": 0.5454545454545454,
+          "scored_cells": 76,
+          "unknown_rate": 0.07894736842105263
+        },
+        "out_of_order": {
+          "FN": 5,
+          "FP": 0,
+          "TN": 0,
+          "TP": 0,
+          "coverage": 0.0,
+          "f1": 0.0,
+          "negative_support": 10,
+          "positive_support": 5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "scored_cells": 15,
+          "unknown_rate": 1.0
+        }
+      }
+    },
+    "tau": 0.8,
+    "theta": 0.4
+  },
+  "integrity": {
+    "benchmark_modified": false,
+    "bpmn_modified": false,
+    "final_table3_run": false,
+    "final_unseen_holdout_created": false,
+    "gold_modified": false,
+    "legacy_test_read": false,
+    "legacy_test_rerun": false,
+    "llm_api_calls": 0,
+    "ours_stage2_predictions_modified": false,
+    "stage3_v2_revision1_overwritten": false,
+    "sun_stage2_predictions_modified": false
+  },
+  "mapping_diagnostics": {
+    "sentence_transformers_all_mpnet_base_v2": {
+      "action_mapping_success_above_gamma": null,
+      "action_mapping_success_rate": null,
+      "actor_observable_cells": null,
+      "missing_false_positive_cells": null,
+      "status": "NOT_RUN_BLOCKED_DOWNLOAD_SIZE_ANOMALY"
+    },
+    "spacy_en_core_web_md": {
+      "ours": {
+        "action_mapping_success_above_gamma": 82,
+        "action_mapping_success_rate": 0.8817204301075269,
+        "action_mapping_total_rule_actions": 93,
+        "actor_observability_rate": 0.7631578947368421,
+        "actor_observable_cells": 58,
+        "actor_scored_cells": 76,
+        "missing_false_positive_categories": {
+          "mandatory_primary_action_not_detected_below_gamma": 5
+        },
+        "missing_false_positive_cells": 5,
+        "missing_observable_cells": 76
+      },
+      "sun": {
+        "action_mapping_success_above_gamma": 74,
+        "action_mapping_success_rate": 0.8409090909090909,
+        "action_mapping_total_rule_actions": 88,
+        "actor_observability_rate": 0.6710526315789473,
+        "actor_observable_cells": 51,
+        "actor_scored_cells": 76,
+        "missing_false_positive_categories": {
+          "mandatory_action_detected_but_extra_rule_action_below_gamma": 10
+        },
+        "missing_false_positive_cells": 10,
+        "missing_observable_cells": 70
+      }
+    },
+    "spacy_en_core_web_sm": {
+      "ours": {
+        "action_mapping_success_above_gamma": 61,
+        "action_mapping_success_rate": 0.6559139784946236,
+        "action_mapping_total_rule_actions": 93,
+        "actor_observability_rate": 0.631578947368421,
+        "actor_observable_cells": 48,
+        "actor_scored_cells": 76,
+        "missing_false_positive_categories": {
+          "mandatory_action_detected_but_extra_rule_action_below_gamma": 7,
+          "mandatory_primary_action_not_detected_below_gamma": 10
+        },
+        "missing_false_positive_cells": 17,
+        "missing_observable_cells": 76
+      },
+      "sun": {
+        "action_mapping_success_above_gamma": 50,
+        "action_mapping_success_rate": 0.5681818181818182,
+        "action_mapping_total_rule_actions": 88,
+        "actor_observability_rate": 0.5,
+        "actor_observable_cells": 38,
+        "actor_scored_cells": 76,
+        "missing_false_positive_categories": {
+          "mandatory_action_detected_but_extra_rule_action_below_gamma": 11,
+          "mandatory_primary_action_not_detected_below_gamma": 9
+        },
+        "missing_false_positive_cells": 20,
+        "missing_observable_cells": 70
+      }
+    }
+  },
+  "order_type_a": {
+    "baseline_controls": 5,
+    "eligible_requirements": 5,
+    "other_satisfied_variant_controls_scored": 5,
+    "per_method": {
+      "ours": {
+        "coverage": 0.0,
+        "diagnostic_reporting_rows": 10,
+        "f1": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "order_relations_absent": 10,
+        "order_relations_generated": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "tn": 0,
+        "tp": 0,
+        "u_r_absent": 15,
+        "u_r_generated": 0
+      },
+      "sun": {
+        "coverage": 0.0,
+        "diagnostic_reporting_rows": 10,
+        "f1": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "order_relations_absent": 10,
+        "order_relations_generated": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "tn": 0,
+        "tp": 0,
+        "u_r_absent": 15,
+        "u_r_generated": 0
+      }
+    },
+    "positive_variants": 5,
+    "scored_cells_total": 15,
+    "scored_negative_cells": 10,
+    "scored_positive_cells": 5
+  },
+  "overall_table": {
+    "ours": {
+      "f1": 0.5192307692307692,
+      "precision": 0.4909090909090909,
+      "recall": 0.5510204081632653
+    },
+    "sun": {
+      "f1": 0.4948453608247423,
+      "precision": 0.5,
+      "recall": 0.4897959183673469
+    }
+  },
+  "phase_a": {
+    "artifact": "outputs/reports/stage3_v2_sun_order_relation_provenance_v1.json",
+    "complete": true,
+    "gate": {
+      "case": "CASE_3_PAPER_OR_DATA_INSUFFICIENT",
+      "not_a_benchmark_change": true,
+      "not_a_gold_change": true,
+      "order_implementation_blocked": true,
+      "order_method_status": "BLOCKED_ON_EVIDENCE",
+      "project_adaptation_proposal_created": false,
+      "reason": "U_r is explicit in Definition 3 but its construction algorithm is unspecified. Current Stage2 has zero order_relations. The five development TYPE-A cases require nominalized after-endpoints not demonstrably in A_r under the paper VP action rule."
+    }
+  },
+  "phase_b": {
+    "artifact": "outputs/reports/stage3_v2_semantic_backend_revision_v2.json",
+    "backend_candidate": "sentence-transformers/all-mpnet-base-v2",
+    "complete": false,
+    "mpnet_dev_sweep_complete": false,
+    "mpnet_promoted": false,
+    "selected_backend_for_reference_only": "spacy_en_core_web_sm",
+    "status": "BLOCKED_DOWNLOAD_SIZE_ANOMALY"
+  },
+  "phase_c": {
+    "attempted": false,
+    "reason": "Phase A order gate returned BLOCKED_ON_EVIDENCE; no order implementation was attempted."
+  },
+  "readiness": {
+    "DEVELOPMENT_REVISION2_COMPLETE": false,
+    "MPNET_DEV_SWEEP_COMPLETE": false,
+    "MPNET_DOWNLOADED": true,
+    "MPNET_PROMOTED": false,
+    "ORDER_METHOD_FINAL_FROZEN": false,
+    "ORDER_METHOD_STATUS": "BLOCKED_ON_EVIDENCE",
+    "SEMANTIC_BACKEND_FINAL_FROZEN": false,
+    "STAGE3_V2_R1_PRESERVED": true,
+    "SUN_U_R_PROVENANCE_RESOLVED": true,
+    "TABLE3_V1_PRESERVED": true,
+    "WINTER_ARCHIVED": true
+  },
+  "schema_version": "stage3_v2_revision2_development_report@1.0.0",
+  "status": "REVISION2_INCOMPLETE_PHASE_A_COMPLETE_PHASE_B_BLOCKED"
+}

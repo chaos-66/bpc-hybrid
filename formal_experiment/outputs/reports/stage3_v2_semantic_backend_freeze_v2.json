@@ -1,0 +1,22 @@
+{
+  "llm_api_calls": 0,
+  "mpnet_candidate": {
+    "model_name": "sentence-transformers/all-mpnet-base-v2",
+    "model_revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+    "mpnet_promoted": false,
+    "promotion_rule_applied": false,
+    "reason": "MPNet phase stopped at download-size anomaly; no development sweep and no tie-break comparison were run."
+  },
+  "network_calls": "official HuggingFace model snapshot download only; no remote inference",
+  "new_sweep": false,
+  "schema_version": "stage3_v2_semantic_backend_freeze@2.0.0",
+  "selected_backend": null,
+  "selected_backend_short_name": "spacy_en_core_web_sm",
+  "selected_gamma": 0.65,
+  "selected_theta": 0.4,
+  "status": "SEMANTIC_BACKEND_FREEZE_V2_NOT_COMPLETED",
+  "tau": 0.8,
+  "v1_backend_identity_sha256": "1624ac1fdfb368c7a72a67d2d6d3823f058e999791f04715cfc01ae9f6ca37b1",
+  "v1_freeze_path": "outputs/reports/stage3_v2_semantic_backend_freeze_v1.json",
+  "v1_freeze_preserved": true
+}
