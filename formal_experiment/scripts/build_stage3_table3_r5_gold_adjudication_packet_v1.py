@@ -71,6 +71,7 @@ HUMAN_REVIEW_REQUIRED = [
             "Winter file, but the two relevant sentences match the official EUR-Lex sentence SHA-256 exactly."
         ),
         "requested_action": "User/GPT confirms that the official EUR-Lex sentence is the experiment source identity before Gold freeze.",
+        "disposition": "APPROVED_FOR_GOLD",
     },
     {
         "item_id": "R5_S2_T1_SEMANTIC_SOURCE_MISMATCH",
@@ -85,6 +86,7 @@ HUMAN_REVIEW_REQUIRED = [
             "Confirm that R5-S2-T1 remains excluded, or provide explicit semantic disposition. Do not silently "
             "convert this row into a core missing-action label."
         ),
+        "disposition": "KEEP_EXCLUDED_CANDIDATE",
         "status": "SEMANTIC_SOURCE_MISMATCH_REQUIRES_REVIEW",
     },
     {
@@ -96,6 +98,7 @@ HUMAN_REVIEW_REQUIRED = [
             "wording is a project adaptation for candidate BPMN construction, not a scored positive-duty Gold label."
         ),
         "requested_action": "Confirm the five candidate exclusions remain out of formal core F1.",
+        "disposition": "KEEP_ALL_FIVE_EXCLUDED_FROM_CORE_F1",
     },
 ]
 
@@ -130,6 +133,30 @@ def task_name(spec: dict, activity_id: str | None) -> str:
     return tasks[index] if 0 <= index < len(tasks) else ""
 
 
+def mandatory_activity_binding(spec: dict[str, Any]) -> tuple[str, str]:
+    """Recover expected deleted target identity from the frozen construction spec.
+
+    Missing-action BPMNs delete the target node, so reference_cases.target_node is
+    null.  The expected target identity comes from mandatory_index/tasks only, never
+    from the mutated BPMN, a prediction, or a Gold score.
+    """
+    index = spec.get("mandatory_index")
+    tasks = spec.get("tasks") or []
+    if not isinstance(index, int) or isinstance(index, bool) or not 0 <= index < len(tasks):
+        raise RuntimeError(
+            "invalid frozen mandatory_index/tasks for missing_action: "
+            + repr(spec.get("requirement_id", "?"))
+        )
+    return f"Activity_{index}", tasks[index]
+
+
+def case_target_identity(case: dict, spec: dict) -> tuple[str | None, str]:
+    if case["variant"] == "missing_action":
+        return mandatory_activity_binding(spec)
+    target = case.get("target_node")
+    return target, task_name(spec, target)
+
+
 def bpmn_binding(manifest: dict, case_id: str) -> tuple[str, str]:
     suffix = f"/{case_id}.bpmn"
     matches = [key for key in manifest["artifacts"] if key.endswith(suffix)]
@@ -142,8 +169,7 @@ def bpmn_binding(manifest: dict, case_id: str) -> tuple[str, str]:
 def mutation_description(case: dict, spec: dict) -> str:
     variant = case["variant"]
     observed = case.get("mutation_observed") or {}
-    target = case.get("target_node")
-    target_name = task_name(spec, target)
+    target, target_name = case_target_identity(case, spec)
     if variant == "baseline":
         return "No mutation; controlled-compliant construction for every eligible type."
     if variant == "missing_action":
@@ -165,11 +191,11 @@ def mutation_description(case: dict, spec: dict) -> str:
 def target_relation(case: dict, spec: dict) -> dict[str, Any]:
     variant = case["variant"]
     observed = case.get("mutation_observed") or {}
-    target = case.get("target_node")
+    target, target_name = case_target_identity(case, spec)
     result: dict[str, Any] = {
         "variant": variant,
         "target_activity_id": target,
-        "target_activity_name": task_name(spec, target),
+        "target_activity_name": target_name,
     }
     if variant == "incorrect_actor":
         result["required_actor"] = spec.get("actor_required")
@@ -202,8 +228,7 @@ def unsupported_reasons(case: dict, spec: dict) -> dict[str, str]:
 
 def why_label(case: dict, spec: dict) -> str:
     variant = case["variant"]
-    target = case.get("target_node")
-    target_name = task_name(spec, target)
+    target, target_name = case_target_identity(case, spec)
     observed = case.get("mutation_observed") or {}
     if variant == "baseline":
         return (
@@ -472,6 +497,8 @@ def render_markdown(packet: dict[str, Any]) -> str:
         lines.append(f"- Requested action: {item['requested_action']}")
         if item.get("status"):
             lines.append(f"- Status: `{item['status']}`")
+        if item.get("disposition"):
+            lines.append(f"- Disposition: `{item['disposition']}`")
         lines.append("")
     lines.append("## Candidate exclusions")
     lines.append("")

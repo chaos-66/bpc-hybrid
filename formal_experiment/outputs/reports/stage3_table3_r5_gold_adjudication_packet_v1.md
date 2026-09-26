@@ -30,6 +30,7 @@
 - Severity: `review_before_gold_freeze`
 - Issue: R5-S7-T1 and R5-S8-T1 are new independent test rows. The local snapshot is a processed Winter file, but the two relevant sentences match the official EUR-Lex sentence SHA-256 exactly.
 - Requested action: User/GPT confirms that the official EUR-Lex sentence is the experiment source identity before Gold freeze.
+- Disposition: `APPROVED_FOR_GOLD`
 
 ### R5_S2_T1_SEMANTIC_SOURCE_MISMATCH
 
@@ -38,6 +39,7 @@
 - Issue: The task-model action 'Verify that parental authorisation has been obtained where required' is not literal in the Article 8(1) excerpt; the verification duty appears in Article 8(2). The row is an excluded candidate/permission asset and is not scored in the three-class core F1.
 - Requested action: Confirm that R5-S2-T1 remains excluded, or provide explicit semantic disposition. Do not silently convert this row into a core missing-action label.
 - Status: `SEMANTIC_SOURCE_MISMATCH_REQUIRES_REVIEW`
+- Disposition: `KEEP_EXCLUDED_CANDIDATE`
 
 ### CANDIDATE_PERMISSION_PROHIBITION_ASSETS
 
@@ -45,6 +47,7 @@
 - Severity: `candidate_assets_not_scored`
 - Issue: Five permission/prohibition/cessation rows are retained as candidate semantic assets. Their task wording is a project adaptation for candidate BPMN construction, not a scored positive-duty Gold label.
 - Requested action: Confirm the five candidate exclusions remain out of formal core F1.
+- Disposition: `KEEP_ALL_FIVE_EXCLUDED_FROM_CORE_F1`
 
 ## Candidate exclusions
 

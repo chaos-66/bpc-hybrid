@@ -348,6 +348,46 @@ def test_gold_adjudication_packet_integrity():
     assert variants == {"baseline": 33, "missing_action": 33, "incorrect_actor": 33, "out_of_order": 14}
 
 
+def test_gold_packet_missing_action_targets_are_bound_to_frozen_mandatory_activity():
+    packet = load_json(REPORTS / "stage3_table3_r5_gold_adjudication_packet_v1.json")
+    specs = config_by_id()
+    missing_action_cases = [
+        case for case in packet["cases"]
+        if case["baseline_or_mutation_type"] == "missing_action"
+    ]
+
+    blank_targets = 0
+    binding_mismatches = 0
+    description_misses = 0
+    why_label_misses = 0
+    for case in missing_action_cases:
+        spec = specs[case["requirement_id"]]
+        expected_id = f"Activity_{spec['mandatory_index']}"
+        expected_name = spec["tasks"][spec["mandatory_index"]]
+        relation = case["target_activity_role_or_order_relation"]
+        target_id = relation["target_activity_id"]
+        target_name = relation["target_activity_name"]
+
+        if target_id is None or target_name == "":
+            blank_targets += 1
+        if target_id != expected_id or target_name != expected_name:
+            binding_mismatches += 1
+        if expected_name not in case["mutation_description"]:
+            description_misses += 1
+        if expected_name not in case["why_this_label_follows_from_source_and_controlled_mutation"]:
+            why_label_misses += 1
+
+    print(f"missing_action_cases = {len(missing_action_cases)}")
+    print(f"missing_action_blank_target_names = {blank_targets}")
+    print(f"missing_action_target_binding_mismatches = {binding_mismatches}")
+
+    assert len(missing_action_cases) == 33
+    assert blank_targets == 0
+    assert binding_mismatches == 0
+    assert description_misses == 0
+    assert why_label_misses == 0
+
+
 def test_gold_adjudication_packet_is_prediction_blind():
     packet = load_json(REPORTS / "stage3_table3_r5_gold_adjudication_packet_v1.json")
     evidence = packet["prediction_blind_evidence"]

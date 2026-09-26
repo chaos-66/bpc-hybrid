@@ -8,7 +8,7 @@
 - Methods：`METHODS_READY=true`，implementation/protocol blockers 为空。actor-surface equivalence 与 D1 duplicate-span coordinate repair 已在 R5.2 修复；same verb/different object、action similarity false negative、below-gamma、Winter native unsupported order、no deadline arithmetic、condition/exception truth 均为 frozen method limitations，不再作为 method blocker。Definition 6 Sun `incorrect_actor` C candidate set 判定为 `VERIFIED_METHOD_FIDELITY`。
 - Gold packet：`outputs/reports/stage3_table3_r5_gold_adjudication_packet_v1.{json,md}`，33 core requirements / 113 core cases，prediction-blind，`GOLD_ADJUDICATION_STATUS = AWAITING_USER_GPT_APPROVAL`，`human_adjudicated=false`，`reference_is_gold=false`。
 - API payload：19 requests；manifest SHA `bd029e42ff6db8752e138827ad9861c660f1eda1b4b6dbaac8ee7715b30d3707` 未变；REAL API CALLS = 0。Sun 正式执行 policy 改为：Gold freeze 后对全部 final core requirements 用当前冻结 Sun Rules-Only 本地重新生成；weak historical Sun reuse 仅保留 regression/comparison，不冒充 formal source。
-- Focused tests：R5 v2 benchmark / R5.2 preflight closure / role normalization / D1 coordinate repair / Gold packet integrity 通过（53 passed）。旧 `test_stage3_table3_r5_benchmark.py` 仍因已批准 shared fixes 导致的历史 Stage1 schema binding 变化失败，未回写旧 manifest。
+- Focused tests：R5 v2 benchmark / R5.2 preflight closure / role normalization / D1 coordinate repair / Gold packet integrity 通过（53 passed）。Legacy R5 v1 validation/freeze test is not a current R5 v2 acceptance gate; it contains historical v1 assumptions and remains unchanged for provenance.
 
 ## 当前优先级：S3-TABLE3-R6 formal preflight closure（2026-09-26，零 API）
 
