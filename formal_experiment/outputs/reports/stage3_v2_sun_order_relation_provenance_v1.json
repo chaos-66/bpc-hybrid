@@ -1,0 +1,276 @@
+{
+  "benchmark_modified": false,
+  "conclusion": {
+    "can_order_implementation_proceed": false,
+    "is_out_of_order_zero_a_reproduction_gap": "It is both an interface gap and an evidence gap. The interface gap is real (Stage2 passes zero order_relations). It cannot be repaired paper-faithfully because the paper does not specify U_r construction and benchmark endpoints are not demonstrably A_r under the paper action rule.",
+    "order_implementation_blocked": true,
+    "required_next_evidence": "Author code/data, supplementary extraction rules, or explicit user approval for a documented project adaptation that does not use Gold/BPMN/mutation metadata."
+  },
+  "current_project_interface_audit": {
+    "canonical_schema": {
+      "order_relation_definition": "each clause requires order_relations; an orderRelation requires before_action_id, after_action_id, and evidence",
+      "path": "configs/schemas/stage2_prediction.schema.json",
+      "sha256": "7a89decba550b6993a5eb182f6e9d195ac76b3811e98b8282a78cfc850cc56f7"
+    },
+    "development_order_metrics": {
+      "baseline_controls": 5,
+      "baseline_variants_per_method": 5,
+      "eligible_requirements": 5,
+      "evaluation_negative_cells_per_method": 10,
+      "evaluation_positive_cells_per_method": 5,
+      "evaluation_scored_cells_per_method": 15,
+      "other_satisfied_variant_controls_per_method": 5,
+      "per_method": {
+        "ours": {
+          "coverage": 0.0,
+          "diagnostic_reporting_rows": 10,
+          "f1": 0.0,
+          "fn": 5,
+          "fp": 0,
+          "order_relations_absent": 15,
+          "order_relations_generated": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "signal_status_counts": {
+            "unknown": 10
+          },
+          "tn": 0,
+          "tp": 0
+        },
+        "sun": {
+          "coverage": 0.0,
+          "diagnostic_reporting_rows": 10,
+          "f1": 0.0,
+          "fn": 5,
+          "fp": 0,
+          "order_relations_absent": 15,
+          "order_relations_generated": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "signal_status_counts": {
+            "unknown": 10
+          },
+          "tn": 0,
+          "tp": 0
+        }
+      },
+      "positive_variants": 5,
+      "u_r_absent_per_method": 15,
+      "u_r_generated_per_method": 0
+    },
+    "order_scope_manifest": {
+      "development_type_a_cases": [
+        "case_18d0d72c49e8",
+        "case_1d6ccfc9b95c",
+        "case_2a918b013dbb",
+        "case_35ae84dddc65",
+        "case_3b01b9c36d0f",
+        "case_4aec33c00dc8",
+        "case_50f498770ae9",
+        "case_648835a58615",
+        "case_6fda0f20b097",
+        "case_9c6fcd32f03c",
+        "case_a1712c670943",
+        "case_a2f445c641d1",
+        "case_a9fd75331508",
+        "case_aae318ffa9f8",
+        "case_b15419d68b21",
+        "case_d8029187c213",
+        "case_ec2a9cc66fae",
+        "case_f6dc7b084b03",
+        "case_f7bb207445df",
+        "case_ff937cc4c24e"
+      ],
+      "development_type_a_requirements": [
+        "R5-D-01",
+        "R5-D-02",
+        "R5-D-03",
+        "R5-D-04",
+        "R5-D-05"
+      ],
+      "path": "outputs/reports/stage3_v2_order_scope_manifest_v1.json",
+      "sha256": "448a5a85a01602b84146d460d232506d089c141e36c10903be0e6c2f6d64af40"
+    },
+    "stage2_predictions": {
+      "ours": {
+        "clauses": 36,
+        "clauses_with_order_relations": 0,
+        "constraints_total": 46,
+        "order_relations_total": 0,
+        "path": "data/predictions/stage3_table3_r5_ours_stage2_formal_v1/predictions.json",
+        "sha256": "2204f25e69fb5cd9dc2ff4cf82573d0b50df12fbd1ff1be47fa04494065cec0b",
+        "temporal_constraints": 8
+      },
+      "sun": {
+        "clauses": 37,
+        "clauses_with_order_relations": 0,
+        "constraints_total": 68,
+        "order_relations_total": 0,
+        "path": "data/predictions/stage3_table3_r5_sun_rule_only_v1/predictions.json",
+        "sha256": "21c6ed296368175a1e719374616821e96bd0de007749ea14228514ee07f2918b",
+        "temporal_constraints": 13
+      }
+    }
+  },
+  "gold_modified": false,
+  "legacy_test_read": false,
+  "llm_api_calls": 0,
+  "nominalized_action_audit": {
+    "cases": [
+      {
+        "after_endpoint": "further processing",
+        "assessment": "after endpoint is nominal, not demonstrably A_r under the VP-only action rule",
+        "before_endpoint": "provide information",
+        "order_evidence": "provide information prior to further processing",
+        "requirement_id": "R5-D-01"
+      },
+      {
+        "after_endpoint": "further processing",
+        "assessment": "after endpoint is nominal, not demonstrably A_r under the VP-only action rule",
+        "before_endpoint": "provide information",
+        "order_evidence": "provide information prior to further processing",
+        "requirement_id": "R5-D-02"
+      },
+      {
+        "after_endpoint": "the restriction of processing is lifted",
+        "assessment": "after endpoint contains a VP (lifted) inside a temporal constraint phrase, which the action rule excludes from A_r; no U_r derivation rule is given",
+        "before_endpoint": "inform",
+        "order_evidence": "inform before the restriction of processing is lifted",
+        "requirement_id": "R5-D-03"
+      },
+      {
+        "after_endpoint": "the processing",
+        "assessment": "after endpoint is nominal, not demonstrably A_r under the VP-only action rule",
+        "before_endpoint": "carry out DPIA",
+        "order_evidence": "carry out DPIA prior to the processing",
+        "requirement_id": "R5-D-04"
+      },
+      {
+        "after_endpoint": "processing",
+        "assessment": "after endpoint is nominal, not demonstrably A_r under the VP-only action rule",
+        "before_endpoint": "consult supervisory authority",
+        "order_evidence": "consult supervisory authority prior to processing",
+        "requirement_id": "R5-D-05"
+      }
+    ],
+    "paper_decision": "PAPER_UNDERSPECIFIED",
+    "project_decision": "Do not promote nominal phrases to actions; no Gold/BPMN-informed rewriting and no sample-specific rewrites."
+  },
+  "order_implementation_gate": {
+    "case": "CASE_3_PAPER_OR_DATA_INSUFFICIENT",
+    "not_a_benchmark_change": true,
+    "not_a_gold_change": true,
+    "order_implementation_blocked": true,
+    "order_method_status": "BLOCKED_ON_EVIDENCE",
+    "project_adaptation_proposal_created": false,
+    "reason": "U_r is explicit in Definition 3 but its construction algorithm is unspecified. Current Stage2 has zero order_relations. The five development TYPE-A cases require nominalized after-endpoints not demonstrably in A_r under the paper VP action rule."
+  },
+  "out_of_order_experiment_audit": {
+    "current_benchmark_metadata": "configs/stage3_table3_r5_benchmark_v2.json contains order_pair/tasks for benchmark construction; these are frozen benchmark/Gold-side metadata and are not Stage3 inputs.",
+    "current_type_a_status": "REV1 TYPE-A ORDER F1 = 0.0000; all 15 scored cells per method are unknown with reason no_rule_order_endpoints; U_r generated = 0.",
+    "paper_mutation_source": "BPMN activity swaps (experiment construction), not U_r extraction.",
+    "paper_required_order_source": "The paper does not expose per-case rule-side order pairs."
+  },
+  "paper_evidence": [
+    {
+      "finding": "U_r is a native Rule Record member typed as a binary relation over actions. This is paper-native explicit representation.",
+      "id": "definition_3_rule_record",
+      "line_hint": 168,
+      "page": 5,
+      "quote": "where each r in R is denoted as r = (t_r, A_r, P_r, C_r, O_r, E_r, U_r, f_r) ... U_r in A_r x A_r indicates the sequential relationship between the actions and a partial function f_r : P_r -> A_r that specifies which actors must execute certain actions.",
+      "section": "3.1 Definition 3"
+    },
+    {
+      "finding": "The paper describes six semantic extraction concepts. U_r is not among them and no seventh order-relation extraction rule is provided.",
+      "id": "section_4_2_six_concepts",
+      "line_hint": 399,
+      "page": 11,
+      "quote": "we first design six specific semantic concepts from the rules, i.e., modality, actor, action, condition, constraint, exception",
+      "section": "4.2.2 Phrase-level: Semantic Classification"
+    },
+    {
+      "finding": "A_r is defined by VP extraction. Nominalizations such as processing are not VPs under this stated rule unless the parser admits them, and no nominalization allowance is stated.",
+      "id": "section_4_2_action_rule",
+      "line_hint": 458,
+      "page": 12,
+      "quote": "The single rule for action detects every verb phrase (VP) encountered, except those contained in modality, condition, constraint and exception.",
+      "section": "4.2.2 Action"
+    },
+    {
+      "finding": "Temporal markers before/after are treated as constraint markers. This is the only textual clue for order origin, but no rule turns a temporal Constraint plus A_r actions into U_r.",
+      "id": "section_4_2_constraint_rule",
+      "line_hint": 470,
+      "page": 12,
+      "quote": "Constraints usually exist in the form of phrases ... NP <(constraint marker); PP <(IN <(constraint marker)) $ NP. Table 4: before, after, at least, at most, equal to, greatest, smallest, last of, least of ...",
+      "section": "4.2.2 Constraint and Table 4"
+    },
+    {
+      "finding": "The paper says U_r is extracted from the Rule Record but does not specify the source field, algorithm, or endpoint-selection policy.",
+      "id": "definition_7_order_violation",
+      "line_hint": 560,
+      "page": 14,
+      "quote": "where (u_r, u'_r) in U_r is a sequential constraint extracted from the rule record ... U_{r,m,gamma} indicates that the similarity between the rule record and the operation in the process model is equivalent when the similarity is greater than the threshold gamma.",
+      "section": "4.3 Definition 7"
+    },
+    {
+      "finding": "The paper explains BPMN variant construction, not U_r construction. This is experiment-side mutation metadata and must not be fed into Stage 3 relation extraction.",
+      "id": "section_5_3_2_mutation_construction",
+      "line_hint": 845,
+      "page": 20,
+      "quote": "For the out-of-order execution violation, the positions between activities are swapped. Each checking contains only one violation.",
+      "section": "5.3.2 Evaluation of Checking"
+    },
+    {
+      "finding": "The only out-of-order case study involves an event-like trigger phrase and an action, consistent with TYPE B trigger precedence as much as TYPE A action-action precedence, reinforcing that U_r construction is underspecified.",
+      "id": "case_study_r2",
+      "line_hint": 947,
+      "page": 22,
+      "quote": "R2 ... After receiving the customer's personal information, it is necessary to verify the correctness of their personal information. ... For the rule with R2, we detected the out-of-order execution violation.",
+      "section": "5.3.2 case study Table 13"
+    },
+    {
+      "finding": "No code repository, extractor, rule file, or U_r artifact is released. Construction cannot be recovered from the paper alone.",
+      "id": "availability_no_code",
+      "line_hint": 1018,
+      "page": 26,
+      "quote": "The datasets generated during and/or analysed during the current study are available from the corresponding author on reasonable request.",
+      "section": "Availability of supporting data"
+    }
+  ],
+  "questions": {
+    "is_current_project_missing_it": "Yes. The schema has an order_relations placeholder but both frozen Stage2 predictions contain zero non-empty order relations, and the five development TYPE-A requirements have zero derivable existing-action endpoints for the temporal marker.",
+    "is_it_automatically_extracted": "PAPER_UNDERSPECIFIED. The paper says extracted but gives no extraction rule, algorithm, code, or released artifact.",
+    "is_it_experiment_metadata": "No. The paper separates U_r (rule-side sequential constraint) from out-of-order BPMN mutations (swapped activity positions). Current benchmark order_pair/tasks are experiment construction metadata and must not be used to build U_r.",
+    "is_it_part_of_stage2": "Formally yes, it is part of the Rule Record produced before Stage 3. In the current project, Stage 2 canonical records have an empty order_relations field in practice.",
+    "what_exactly_is_u_r": "U_r is a binary sequential relation over rule actions, U_r subseteq A_r x A_r, stored in the Rule Record and consumed by Definition 7.",
+    "where_does_it_come_from": "The paper says it is a sequential constraint extracted from the Rule Record. The exact source field and extraction algorithm are PAPER_UNDERSPECIFIED.",
+    "who_constructs_it": "The paper names no component. It is implicit in Regulatory Documents Parsing / Rule Base Construction (Stage 2), not Stage 3 and not experiment mutation construction."
+  },
+  "schema_version": "stage3_v2_sun_order_relation_provenance@1.0.0",
+  "source_paper": {
+    "authors": [
+      "Xiaoxiao Sun",
+      "Siqing Yang",
+      "Chenying Zhao",
+      "Dongjin Yu"
+    ],
+    "current_tree_note": "PDF/text are not in current working tree; reachable at historical commit 28c17f6b5bb62b0ff199b185d765582638904b71. Raw PDF redistribution rights unresolved.",
+    "historical_commit": "28c17f6b5bb62b0ff199b185d765582638904b71",
+    "historical_pdf_path": "data/formal/raw/sun_2024_design_time_bpc_multigranularity.pdf",
+    "historical_text_path": "data/formal/raw/sun_2024_full_text.txt",
+    "pdf_blob_sha256": "e4ec7500a8ef0d8611eb1682c0d05dc8f1922cdc",
+    "pdf_size_bytes": 2694008,
+    "text_blob_sha256": "2821b16056019b09863970c1feb188bccbf14d9a",
+    "text_extraction_method": "pdfplumber (historical R13.1 intake)",
+    "text_size_bytes": 64293,
+    "title": "Design-time business process compliance assessment based on multi-granularity semantic information",
+    "venue": "Springer Nature",
+    "year": 2024
+  },
+  "status": "SUN_U_R_PROVENANCE_RESOLVED",
+  "sun_u_r_provenance": [
+    "PAPER_NATIVE_EXPLICIT",
+    "PAPER_UNDERSPECIFIED",
+    "CURRENT_INTERFACE_MISSING"
+  ]
+}
