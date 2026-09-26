@@ -1,0 +1,2408 @@
+{
+  "schema_version": "stage3_method_fidelity_audit@1.0.0",
+  "status": "read_only_diagnosis_complete",
+  "api_calls": 0,
+  "git": {
+    "worktree": "D:\\Paper\\experiment\\bpc-hybrid\\.tmp\\s3_table3_preflight_worktree",
+    "branch": "paper-final-repair",
+    "head": "a422364d660793f3a60ea64c6554f8a78cc47d89",
+    "origin_paper_final_repair": "a422364d660793f3a60ea64c6554f8a78cc47d89",
+    "status_short": [
+      "## paper-final-repair...origin/paper-final-repair",
+      "?? formal_experiment/outputs/reports/stage3_method_fidelity_audit_v1.json",
+      "?? formal_experiment/outputs/reports/stage3_method_fidelity_audit_v1.md"
+    ]
+  },
+  "historical_formal_result_v1": {
+    "status": "historical_formal_run_frozen",
+    "result_json": "outputs/reports/stage3_table3_formal_results_v1.json",
+    "result_json_sha256": "162ade2a23286e15460055c78ed1310d485eaf78d6a18b837a4dd8469f167313",
+    "freeze_manifest_sha256": "7c7b424d5d1af6b83b6032b32d745508e02c33a45c50cdabc34aab5d5f2d42d8",
+    "benchmark_id": "stage3_table3_r5_benchmark_v2",
+    "overall": {
+      "sun": {
+        "TP": 32,
+        "FP": 69,
+        "FN": 48,
+        "TN": 7,
+        "precision": 0.31683168316831684,
+        "recall": 0.4,
+        "f1": 0.3535911602209945,
+        "coverage": 0.46382978723404256,
+        "positive_support": 80,
+        "negative_support": 155,
+        "not_applicable": 47,
+        "not_scored": 57,
+        "unknown_positive": 47,
+        "unknown_negative": 79,
+        "scored_cells": 235
+      },
+      "winter": {
+        "TP": 41,
+        "FP": 46,
+        "FN": 39,
+        "TN": 87,
+        "precision": 0.47126436781609193,
+        "recall": 0.5125,
+        "f1": 0.49101796407185627,
+        "coverage": 0.8595744680851064,
+        "positive_support": 80,
+        "negative_support": 155,
+        "not_applicable": 47,
+        "not_scored": 57,
+        "unknown_positive": 11,
+        "unknown_negative": 22,
+        "scored_cells": 235
+      },
+      "ours": {
+        "TP": 41,
+        "FP": 76,
+        "FN": 39,
+        "TN": 14,
+        "precision": 0.3504273504273504,
+        "recall": 0.5125,
+        "f1": 0.416243654822335,
+        "coverage": 0.5574468085106383,
+        "positive_support": 80,
+        "negative_support": 155,
+        "not_applicable": 47,
+        "not_scored": 57,
+        "unknown_positive": 39,
+        "unknown_negative": 65,
+        "scored_cells": 235
+      }
+    },
+    "per_type": {
+      "sun": {
+        "missing_action": {
+          "TP": 28,
+          "FP": 64,
+          "FN": 5,
+          "TN": 7,
+          "precision": 0.30434782608695654,
+          "recall": 0.8484848484848485,
+          "f1": 0.448,
+          "coverage": 0.8849557522123894,
+          "positive_support": 33,
+          "negative_support": 80,
+          "not_applicable": 0,
+          "not_scored": 0,
+          "unknown_positive": 4,
+          "unknown_negative": 9,
+          "scored_cells": 113
+        },
+        "incorrect_actor": {
+          "TP": 4,
+          "FP": 5,
+          "FN": 29,
+          "TN": 0,
+          "precision": 0.4444444444444444,
+          "recall": 0.12121212121212122,
+          "f1": 0.19047619047619047,
+          "coverage": 0.1125,
+          "positive_support": 33,
+          "negative_support": 47,
+          "not_applicable": 33,
+          "not_scored": 0,
+          "unknown_positive": 29,
+          "unknown_negative": 42,
+          "scored_cells": 80
+        },
+        "out_of_order": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 14,
+          "TN": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": null,
+          "coverage": 0.0,
+          "positive_support": 14,
+          "negative_support": 28,
+          "not_applicable": 14,
+          "not_scored": 57,
+          "unknown_positive": 14,
+          "unknown_negative": 28,
+          "scored_cells": 42
+        }
+      },
+      "winter": {
+        "missing_action": {
+          "TP": 14,
+          "FP": 33,
+          "FN": 19,
+          "TN": 47,
+          "precision": 0.2978723404255319,
+          "recall": 0.42424242424242425,
+          "f1": 0.35,
+          "coverage": 1.0,
+          "positive_support": 33,
+          "negative_support": 80,
+          "not_applicable": 0,
+          "not_scored": 0,
+          "unknown_positive": 0,
+          "unknown_negative": 0,
+          "scored_cells": 113
+        },
+        "incorrect_actor": {
+          "TP": 24,
+          "FP": 11,
+          "FN": 9,
+          "TN": 36,
+          "precision": 0.6857142857142857,
+          "recall": 0.7272727272727273,
+          "f1": 0.7058823529411764,
+          "coverage": 1.0,
+          "positive_support": 33,
+          "negative_support": 47,
+          "not_applicable": 33,
+          "not_scored": 0,
+          "unknown_positive": 0,
+          "unknown_negative": 0,
+          "scored_cells": 80
+        },
+        "out_of_order": {
+          "TP": 3,
+          "FP": 2,
+          "FN": 11,
+          "TN": 4,
+          "precision": 0.6,
+          "recall": 0.21428571428571427,
+          "f1": 0.3157894736842105,
+          "coverage": 0.21428571428571427,
+          "positive_support": 14,
+          "negative_support": 28,
+          "not_applicable": 14,
+          "not_scored": 57,
+          "unknown_positive": 11,
+          "unknown_negative": 22,
+          "scored_cells": 42
+        }
+      },
+      "ours": {
+        "missing_action": {
+          "TP": 33,
+          "FP": 66,
+          "FN": 0,
+          "TN": 14,
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "coverage": 1.0,
+          "positive_support": 33,
+          "negative_support": 80,
+          "not_applicable": 0,
+          "not_scored": 0,
+          "unknown_positive": 0,
+          "unknown_negative": 0,
+          "scored_cells": 113
+        },
+        "incorrect_actor": {
+          "TP": 8,
+          "FP": 10,
+          "FN": 25,
+          "TN": 0,
+          "precision": 0.4444444444444444,
+          "recall": 0.24242424242424243,
+          "f1": 0.3137254901960784,
+          "coverage": 0.225,
+          "positive_support": 33,
+          "negative_support": 47,
+          "not_applicable": 33,
+          "not_scored": 0,
+          "unknown_positive": 25,
+          "unknown_negative": 37,
+          "scored_cells": 80
+        },
+        "out_of_order": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 14,
+          "TN": 0,
+          "precision": null,
+          "recall": 0.0,
+          "f1": null,
+          "coverage": 0.0,
+          "positive_support": 14,
+          "negative_support": 28,
+          "not_applicable": 14,
+          "not_scored": 57,
+          "unknown_positive": 14,
+          "unknown_negative": 28,
+          "scored_cells": 42
+        }
+      }
+    },
+    "test": {
+      "sun": {
+        "precision": 0.3125,
+        "recall": 0.38461538461538464,
+        "f1": 0.3448275862068966
+      },
+      "winter": {
+        "precision": 0.4642857142857143,
+        "recall": 0.5,
+        "f1": 0.4814814814814815
+      },
+      "ours": {
+        "precision": 0.3333333333333333,
+        "recall": 0.5,
+        "f1": 0.4
+      }
+    }
+  },
+  "source_inventory": {
+    "winter_paper": {
+      "status": "UNVERIFIED_LOCAL_PAPER_NOT_PRESENT",
+      "note": "No Winter et al. (2020) full text found locally; prototype code and gdpr.config are the primary local evidence."
+    },
+    "winter_prototype": {
+      "prototype_root": "D:\\Paper\\experiment\\bpc-hybrid\\references\\winter_2020_model_check\\model_check\\lib",
+      "files": [
+        {
+          "path": "main.py",
+          "sha256": "affc889ec005bb5e0f73f67df3c2dcdb519f1869f15aabc730b96b9cc0112350",
+          "bytes": 4372
+        },
+        {
+          "path": "classes/Pair.py",
+          "sha256": "6659761c1c8a1d66f568f5a04e1d271852675a4a8ba204b615d6b66716a592f0",
+          "bytes": 7131
+        },
+        {
+          "path": "classes/Process.py",
+          "sha256": "348cea14f045269968d3306c89731d9b27c4630780e468aa5026fc0fe93bf779",
+          "bytes": 4422
+        },
+        {
+          "path": "classes/Paragraph.py",
+          "sha256": "88f62852c3cb9362e78290913efb005c2a753718175111f6c0d945d18c16c0b2",
+          "bytes": 2491
+        },
+        {
+          "path": "classes/Sentence.py",
+          "sha256": "889b0574282bbac9bb3a682204a1d1afa13cb88aaf9512a8f0e338aba47124b1",
+          "bytes": 2235
+        },
+        {
+          "path": "classes/Clause.py",
+          "sha256": "3e7ad9eaa9ab8998c695bd2a0a42309bd7ccd2f830d41cbd9b57ed281b8fd29e",
+          "bytes": 4141
+        },
+        {
+          "path": "classes/SimilarityComputer.py",
+          "sha256": "7507c9843feecb0c9be6c8fb2f1bac7ae7fb361828a7c865f7ee3414df0d9a72",
+          "bytes": 3129
+        },
+        {
+          "path": "classes/Flow.py",
+          "sha256": "ae2282d0dd65ac6f3a27eb6a5b118c6dd87e32c41fe28fb237091d8248b26c34",
+          "bytes": 1829
+        },
+        {
+          "path": "classes/BPMN.py",
+          "sha256": "adbf94784f5812dac44bef581718b7aff25c8157568281baaa5b6a0e7ada2b99",
+          "bytes": 852
+        },
+        {
+          "path": "classes/Document_Collection.py",
+          "sha256": "69708ed1aed4deae4b6e2ee4dbcef03cc9f3717a3eb8ae62fb5ce30890f85fdf",
+          "bytes": 1320
+        }
+      ],
+      "gdpr_config": {
+        "path": "D:\\Paper\\experiment\\bpc-hybrid\\references\\winter_2020_model_check\\model_check\\input\\files\\gdpr.config",
+        "sha256": "2b32f0b367de9b406f88148e695f35df64f750e1b52c15be343edf7bd4860611",
+        "gamma": 0.4,
+        "delta": 0.8
+      }
+    },
+    "sun_paper": {
+      "full_text": "D:\\Paper\\experiment\\bpc-hybrid\\references\\papers\\extracted\\sun_2024_full_text.txt",
+      "sha256": "947140c3b7e350b4d35b9b6848c275dd265dc060f517da7a1dcfce43a55eec47",
+      "anchors": [
+        "Section 4.3 Definitions 4-7",
+        "Section 5.3.1 matching",
+        "Section 5.3.2 checking/Table 12"
+      ]
+    }
+  },
+  "winter_fidelity": {
+    "components": [
+      {
+        "component": "regulation paragraph splitting",
+        "paper": "UNVERIFIED",
+        "prototype": "Document_Collection.get_paragraphs uses spaCy sentence boundaries and signalwords",
+        "current": "winter_clause.parse_regulation_paragraph mirrors it",
+        "judgment": "FAITHFUL_RECONSTRUCTION"
+      },
+      {
+        "component": "clause/subtree extraction",
+        "paper": "UNVERIFIED",
+        "prototype": "Sentence/Clause dependency subtrees, sort, subject propagation",
+        "current": "winter_clause WinterSentence/WinterClause mirrors it",
+        "judgment": "FAITHFUL_RECONSTRUCTION_WITH_MINOR_LEMMA_DEVIATION"
+      },
+      {
+        "component": "signal/sequence/stop words",
+        "paper": "UNVERIFIED",
+        "prototype": "gdpr.config and three text files",
+        "current": "same read-only files, SHA-bound by run manifest",
+        "judgment": "FAITHFUL_RECONSTRUCTION"
+      },
+      {
+        "component": "model obligation list",
+        "paper": "UNVERIFIED",
+        "prototype": "start/end events + tasks + intermediate events",
+        "current": "same",
+        "judgment": "FAITHFUL_RECONSTRUCTION"
+      },
+      {
+        "component": "resource_set",
+        "paper": "UNVERIFIED",
+        "prototype": "global all files, process@name, lower/strip",
+        "current": "global all inference BPMNs, process@name; empty names skipped",
+        "judgment": "PROTOTYPE_NATIVE_SCOPE_WITH_BENCHMARK_INTERACTION"
+      },
+      {
+        "component": "fitness / cost_obligation",
+        "paper": "UNVERIFIED",
+        "prototype": "max spaCy similarity per clause; fraction < gamma",
+        "current": "same formulas",
+        "judgment": "FAITHFUL_RECONSTRUCTION"
+      },
+      {
+        "component": "cost_resource",
+        "paper": "UNVERIFIED",
+        "prototype": "resource in clause, dissimilar to model participant, model participant not literal",
+        "current": "same formula with global vocabulary",
+        "judgment": "FAITHFUL_RECONSTRUCTION_BEHAVIOUR"
+      },
+      {
+        "component": "cost_so / reachability",
+        "paper": "UNVERIFIED",
+        "prototype": "is_reachable_from returns target in reachability[target] (always True), so cost_so is vacuous",
+        "current": "corrected target in reachability[source]",
+        "judgment": "BUG_FIX_RELATIVE_TO_PROTOTYPE_ALIGNED_WITH_PAPER_INTENT"
+      },
+      {
+        "component": "cost weights",
+        "paper": "UNVERIFIED",
+        "prototype": "1/3 each",
+        "current": "1/3 each",
+        "judgment": "FAITHFUL_RECONSTRUCTION"
+      },
+      {
+        "component": "gamma/delta",
+        "paper": "UNVERIFIED",
+        "prototype": "gdpr.config gamma=0.4 delta=0.8; main.py hardcodes same",
+        "current": "same",
+        "judgment": "PROTOTYPE_NATIVE"
+      },
+      {
+        "component": "evaluator conversion",
+        "paper": "UNVERIFIED",
+        "prototype": "CSV costs/ranking; no P/R/F1 threshold",
+        "current": "cost>0 -> binary violated for Table 3",
+        "judgment": "PROJECT_ADAPTATION"
+      }
+    ],
+    "resource_scope": {
+      "prototype_evidence": "references/winter_2020_model_check/model_check/lib/main.py lines 92-135: resource_set is accumulated across every file in modeldir before Pair construction.",
+      "prototype_semantics": "global across all loaded BPMN files; process@name / participant attribute; lower/strip; empty names would also be inserted by the prototype",
+      "current_semantics": "collect_global_role_candidates scans every inference_view BPMN and unions process@name values; empty names are ignored",
+      "roles": [
+        "board",
+        "certification body",
+        "controller",
+        "controller and processor",
+        "data subject",
+        "processor",
+        "supervisory authority"
+      ],
+      "role_count": 7,
+      "process_name_counts": {
+        "Board": 1,
+        "Certification body": 3,
+        "Controller": 65,
+        "Controller and Processor": 4,
+        "Data subject": 28,
+        "Processor": 5,
+        "Supervisory Authority": 3,
+        "Supervisory authority": 4
+      },
+      "current_data_empty_names": 0,
+      "judgment": "PROTOTYPE_NATIVE",
+      "benchmark_interaction": "CROSS_CASE_BENCHMARK_ADAPTATION",
+      "fairness": "No Gold/reference field is read. The prototype itself builds a global resource vocabulary across all loaded models, so restricting to the current process would be the deviation. However, this 113-case benchmark loads all mutants together, so the global vocabulary contains cross-case role names."
+    },
+    "actor_trace": [
+      {
+        "case_id": "case_a9fd75331508",
+        "requirement_id": "R5-D-01",
+        "citation": "GDPR Article 13(3)",
+        "gold_actor_state": "violated",
+        "gold_variant": "incorrect_actor",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.6413,
+        "cost_obligation": 0.3333,
+        "cost_resource": 0.3333,
+        "cost_so": 0.0,
+        "final_actor_status": "violated",
+        "mappings": [
+          {
+            "paragraph_obligation": "where controller intend to far process personal datum controller shall provide datum subject prior to that further processing with information on that other purpose with any relevant further information as refer to paragraph",
+            "model_obligation": "provide information on other purpose prior to further processing",
+            "mapping_similarity": 0.7947,
+            "task_clause_similarity": 0.7947,
+            "model_resource": "Data subject",
+            "resource_violation": true,
+            "triggers": [
+              {
+                "candidate_resource": "controller",
+                "candidate_similarity_to_model_resource": 0.3892
+              }
+            ]
+          },
+          {
+            "paragraph_obligation": "for a purpose other",
+            "model_obligation": "provide information on other purpose prior to further processing",
+            "mapping_similarity": 0.4879,
+            "task_clause_similarity": 0.4879,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "than that for which personal datum be collect",
+            "model_obligation": "provide information on other purpose prior to further processing",
+            "mapping_similarity": 0.2894,
+            "task_clause_similarity": 0.2894,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          }
+        ]
+      },
+      {
+        "case_id": "case_0164a880bf44",
+        "requirement_id": "R5-D-08",
+        "citation": "GDPR Article 15(1)",
+        "gold_actor_state": "violated",
+        "gold_variant": "incorrect_actor",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.7523,
+        "cost_obligation": 0.75,
+        "cost_resource": 0.25,
+        "cost_so": 0.0,
+        "final_actor_status": "violated",
+        "mappings": [
+          {
+            "paragraph_obligation": "the datum subject shall have right to obtain from controller confirmation access to personal datum follow information purpose of processing where that be case",
+            "model_obligation": "provide confirmation access to personal datum",
+            "mapping_similarity": 0.7523,
+            "task_clause_similarity": 0.7523,
+            "model_resource": "Data subject",
+            "resource_violation": true,
+            "triggers": [
+              {
+                "candidate_resource": "controller",
+                "candidate_similarity_to_model_resource": 0.3892
+              }
+            ]
+          },
+          {
+            "paragraph_obligation": "as",
+            "model_obligation": "the data subject have a right of access confirmation",
+            "mapping_similarity": 0.0701,
+            "task_clause_similarity": 0.0701,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "to whether not personal datum be be process",
+            "model_obligation": "provide confirmation access to personal datum",
+            "mapping_similarity": 0.3865,
+            "task_clause_similarity": 0.3865,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "concern he she",
+            "model_obligation": "the data subject have a right of access confirmation",
+            "mapping_similarity": 0.2097,
+            "task_clause_similarity": 0.2097,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          }
+        ]
+      },
+      {
+        "case_id": "case_026d89f057e8",
+        "requirement_id": "R5-D-11",
+        "citation": "GDPR Article 20(1)",
+        "gold_actor_state": "violated",
+        "gold_variant": "incorrect_actor",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.6077,
+        "cost_obligation": 0.0,
+        "cost_resource": 0.5,
+        "cost_so": 0.0,
+        "final_actor_status": "violated",
+        "mappings": [
+          {
+            "paragraph_obligation": "the datum subject shall have right to receive personal datum concern he she which he she have provide to a controller a structured commonly use machine readable format",
+            "model_obligation": "provide personal datum a structured commonly use machine readable format",
+            "mapping_similarity": 0.755,
+            "task_clause_similarity": 0.755,
+            "model_resource": "Data subject",
+            "resource_violation": true,
+            "triggers": [
+              {
+                "candidate_resource": "controller",
+                "candidate_similarity_to_model_resource": 0.3892
+              }
+            ]
+          },
+          {
+            "paragraph_obligation": "have right to transmit those datum to another controller",
+            "model_obligation": "transmit datum to another controller without hindrance",
+            "mapping_similarity": 0.7734,
+            "task_clause_similarity": 0.7734,
+            "model_resource": "Data subject",
+            "resource_violation": true,
+            "triggers": [
+              {
+                "candidate_resource": "controller",
+                "candidate_similarity_to_model_resource": 0.3892
+              }
+            ]
+          },
+          {
+            "paragraph_obligation": "without hindrance",
+            "model_obligation": "transmit datum to another controller without hindrance",
+            "mapping_similarity": 0.5716,
+            "task_clause_similarity": 0.5716,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "from controller to which personal datum have be provide where processing be base on consent pursuant to point a of article 6(1 point a of Article 9(2",
+            "model_obligation": "transmit datum to another controller without hindrance",
+            "mapping_similarity": 0.5907,
+            "task_clause_similarity": 0.5907,
+            "model_resource": "Data subject",
+            "resource_violation": true,
+            "triggers": [
+              {
+                "candidate_resource": "controller",
+                "candidate_similarity_to_model_resource": 0.3892
+              }
+            ]
+          },
+          {
+            "paragraph_obligation": "on a contract pursuant to point b of article 6(1",
+            "model_obligation": "transmit datum to another controller without hindrance",
+            "mapping_similarity": 0.4987,
+            "task_clause_similarity": 0.4987,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "processing be carry out by automated mean",
+            "model_obligation": "provide personal datum a structured commonly use machine readable format",
+            "mapping_similarity": 0.4569,
+            "task_clause_similarity": 0.4569,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          }
+        ]
+      },
+      {
+        "case_id": "case_9c6fcd32f03c",
+        "requirement_id": "R5-D-01",
+        "citation": "GDPR Article 13(3)",
+        "gold_actor_state": "satisfied",
+        "gold_variant": "baseline",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.6413,
+        "cost_obligation": 0.3333,
+        "cost_resource": 0.0,
+        "cost_so": 0.0,
+        "final_actor_status": "satisfied",
+        "mappings": [
+          {
+            "paragraph_obligation": "where controller intend to far process personal datum controller shall provide datum subject prior to that further processing with information on that other purpose with any relevant further information as refer to paragraph",
+            "model_obligation": "provide information on other purpose prior to further processing",
+            "mapping_similarity": 0.7947,
+            "task_clause_similarity": 0.7947,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "for a purpose other",
+            "model_obligation": "provide information on other purpose prior to further processing",
+            "mapping_similarity": 0.4879,
+            "task_clause_similarity": 0.4879,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "than that for which personal datum be collect",
+            "model_obligation": "provide information on other purpose prior to further processing",
+            "mapping_similarity": 0.2894,
+            "task_clause_similarity": 0.2894,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          }
+        ]
+      },
+      {
+        "case_id": "case_ff937cc4c24e",
+        "requirement_id": "R5-D-02",
+        "citation": "GDPR Article 14(4)",
+        "gold_actor_state": "satisfied",
+        "gold_variant": "out_of_order",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.6413,
+        "cost_obligation": 0.3333,
+        "cost_resource": 0.0,
+        "cost_so": 0.0,
+        "final_actor_status": "satisfied",
+        "mappings": [
+          {
+            "paragraph_obligation": "where controller intend to far process personal datum controller shall provide datum subject prior to that further processing with information on that other purpose with any relevant further information as refer to paragraph",
+            "model_obligation": "provide information on other purpose prior to further processing",
+            "mapping_similarity": 0.7947,
+            "task_clause_similarity": 0.7947,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "for a purpose other",
+            "model_obligation": "provide information on other purpose prior to further processing",
+            "mapping_similarity": 0.4879,
+            "task_clause_similarity": 0.4879,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "than that for which personal datum be obtain",
+            "model_obligation": "provide information on other purpose prior to further processing",
+            "mapping_similarity": 0.2868,
+            "task_clause_similarity": 0.2868,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          }
+        ]
+      },
+      {
+        "case_id": "case_f6dc7b084b03",
+        "requirement_id": "R5-D-03",
+        "citation": "GDPR Article 18(3)",
+        "gold_actor_state": "satisfied",
+        "gold_variant": "out_of_order",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.6179,
+        "cost_obligation": 0.0,
+        "cost_resource": 0.0,
+        "cost_so": 0.0,
+        "final_actor_status": "satisfied",
+        "mappings": [
+          {
+            "paragraph_obligation": "a data subject who have obtain restriction shall be inform by controller before restriction of processing be lift",
+            "model_obligation": "inform data subject that restriction will be lift",
+            "mapping_similarity": 0.7791,
+            "task_clause_similarity": 0.7791,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "of process pursuant to paragraph",
+            "model_obligation": "lift restriction of processing",
+            "mapping_similarity": 0.4567,
+            "task_clause_similarity": 0.4567,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          }
+        ]
+      },
+      {
+        "case_id": "case_1fd8d9be0c9d",
+        "requirement_id": "R5-D-12",
+        "citation": "GDPR Article 33(1)",
+        "gold_actor_state": "satisfied",
+        "gold_variant": "baseline",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.6734,
+        "cost_obligation": 0.3333,
+        "cost_resource": 0.3333,
+        "cost_so": 1.0,
+        "final_actor_status": "violated",
+        "mappings": [
+          {
+            "paragraph_obligation": "in case of a personal data breach controller shall without undue delay",
+            "model_obligation": "become aware of personal datum breach",
+            "mapping_similarity": 0.6049,
+            "task_clause_similarity": 0.6049,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "where feasible notify personal datum breach to supervisory authority competent accordance with Article unless personal data breach be unlikely to result a risk to right freedom of natural person",
+            "model_obligation": "the controller must notify supervisory authority of a breach within hour where feasible",
+            "mapping_similarity": 0.742,
+            "task_clause_similarity": 0.742,
+            "model_resource": "Controller",
+            "resource_violation": true,
+            "triggers": [
+              {
+                "candidate_resource": "supervisory authority",
+                "candidate_similarity_to_model_resource": 0.4186
+              }
+            ]
+          },
+          {
+            "paragraph_obligation": "not later than hour after having become aware of it",
+            "model_obligation": "become aware of personal datum breach",
+            "mapping_similarity": 0.3445,
+            "task_clause_similarity": 0.3445,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          }
+        ]
+      },
+      {
+        "case_id": "case_6209f221b20b",
+        "requirement_id": "R5-S1-T4",
+        "citation": "GDPR Article 14(2)",
+        "gold_actor_state": "satisfied",
+        "gold_variant": "baseline",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.6569,
+        "cost_obligation": 0.25,
+        "cost_resource": 0.25,
+        "cost_so": 0.0,
+        "final_actor_status": "violated",
+        "mappings": [
+          {
+            "paragraph_obligation": "in addition",
+            "model_obligation": "further transparency information from indirect source be also time bind",
+            "mapping_similarity": 0.3986,
+            "task_clause_similarity": 0.3986,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "to information refer to paragraph",
+            "model_obligation": "provide further indirect collection information to data subject",
+            "mapping_similarity": 0.5862,
+            "task_clause_similarity": 0.5862,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "controller shall provide datum subject",
+            "model_obligation": "further transparency information from indirect source be also time bind",
+            "mapping_similarity": 0.5677,
+            "task_clause_similarity": 0.5677,
+            "model_resource": "Controller",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "with follow information necessary to ensure fair transparent processing respect of data subject",
+            "model_obligation": "provide further indirect collection information to data subject",
+            "mapping_similarity": 0.8169,
+            "task_clause_similarity": 0.8169,
+            "model_resource": "Controller",
+            "resource_violation": true,
+            "triggers": [
+              {
+                "candidate_resource": "data subject",
+                "candidate_similarity_to_model_resource": 0.3892
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "case_id": "case_50f498770ae9",
+        "requirement_id": "R5-D-03",
+        "citation": "GDPR Article 18(3)",
+        "gold_actor_state": "violated",
+        "gold_variant": "incorrect_actor",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.6179,
+        "cost_obligation": 0.0,
+        "cost_resource": 0.0,
+        "cost_so": 0.0,
+        "final_actor_status": "satisfied",
+        "mappings": [
+          {
+            "paragraph_obligation": "a data subject who have obtain restriction shall be inform by controller before restriction of processing be lift",
+            "model_obligation": "inform data subject that restriction will be lift",
+            "mapping_similarity": 0.7791,
+            "task_clause_similarity": 0.7791,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          },
+          {
+            "paragraph_obligation": "of process pursuant to paragraph",
+            "model_obligation": "lift restriction of processing",
+            "mapping_similarity": 0.4567,
+            "task_clause_similarity": 0.4567,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          }
+        ]
+      },
+      {
+        "case_id": "case_89f6d9e7047b",
+        "requirement_id": "R5-D-06",
+        "citation": "GDPR Article 7(1)",
+        "gold_actor_state": "violated",
+        "gold_variant": "incorrect_actor",
+        "resource_set": [
+          "board",
+          "certification body",
+          "controller",
+          "controller and processor",
+          "data subject",
+          "processor",
+          "supervisory authority"
+        ],
+        "fitness": 0.6696,
+        "cost_obligation": 0.0,
+        "cost_resource": 0.0,
+        "cost_so": 0.0,
+        "final_actor_status": "satisfied",
+        "mappings": [
+          {
+            "paragraph_obligation": "where processing be base on consent controller shall be able to demonstrate that data subject have consent to processing of his her personal datum",
+            "model_obligation": "the controller must be able to demonstrate consent",
+            "mapping_similarity": 0.6696,
+            "task_clause_similarity": 0.6696,
+            "model_resource": "Data subject",
+            "resource_violation": false,
+            "triggers": []
+          }
+        ]
+      }
+    ],
+    "actor_summary": {
+      "scored_cells": 80,
+      "observable": 80,
+      "TP": 24,
+      "FP": 11,
+      "FN": 9,
+      "TN": 36,
+      "precision": 0.6857142857142857,
+      "recall": 0.7272727272727273,
+      "f1": 0.7058823529411764,
+      "resource_set_size": 7,
+      "main_explanation": "Global resource vocabulary plus process@name actor labels makes the incorrect_actor signal observable for all scored cells. TP arise when the clause mentions a known role different from the model participant and the model participant is not literally present; FP arise when a compliant clause mentions another known role (e.g. supervisory authority) and the model participant is absent from that fragment; FN arise when the model's wrong actor name literally appears in the clause."
+    },
+    "reachability_verdict": {
+      "literal_prototype": "targetid in reachability[targetid] => always True; cost_so always 0",
+      "corrected_paper_intent": "targetid in reachability[sourceid] => forward reachability usable",
+      "current_formal_run": "REACHABILITY_CORRECTED",
+      "classification": "BUG_FIX_RELATIVE_TO_PROTOTYPE",
+      "reporting_label": "Winter reproduction with corrected reachability; not native literal prototype"
+    },
+    "evaluator_conversion_audit": {
+      "cost_obligation": ">0 -> violated missing_action",
+      "cost_resource": ">0 -> violated incorrect_actor",
+      "cost_so": ">0 -> violated out_of_order",
+      "classification": "PROJECT_ADAPTATION",
+      "note": "Prototype outputs continuous costs/CSV; binary conversion is necessary for shared P/R/F1 and is declared in winter_stage3_development_v1.json prediction_rules."
+    }
+  },
+  "sun_ours_fidelity": {
+    "components": [
+      {
+        "component": "Definition 4 matching score",
+        "paper": "max(action fraction > tau, actor/object fraction > tau)",
+        "current": "SunScorer.matching_score",
+        "judgment": "VERIFIED_FAITHFUL"
+      },
+      {
+        "component": "Definition 5 missing action",
+        "paper": "fraction of A_r with sim < gamma",
+        "current": "SunScorer.missing_action",
+        "judgment": "VERIFIED_FAITHFUL"
+      },
+      {
+        "component": "Definition 6 incorrect actor",
+        "paper": "R = actors with matched action > gamma; C = business objects of actions/events union process actors; exists dissimilar member < theta",
+        "current": "SunScorer.incorrect_actor builds C from action-bound business objects; business_objects is populated only from record.activities, not record.events",
+        "judgment": "PROJECT_ADAPTATION_DECLARED_EVENT_OBJECTS_OMITTED"
+      },
+      {
+        "component": "Definition 7 out-of-order",
+        "paper": "U_r subset A_r x A_r; both endpoints map > gamma; forward reachable and not backward",
+        "current": "SunScorer.out_of_order",
+        "judgment": "FORMULA_FAITHFUL_BUT_DATA_PATH_DERIVED_AND_TYPE_B_UNSUPPORTED"
+      },
+      {
+        "component": "thresholds",
+        "paper": "tau/gamma=0.8; theta=0.8/0.7 depending on model",
+        "current": "all 0.8, fixed pre-registration",
+        "judgment": "VERIFIED_FAITHFUL / declared threshold choice"
+      },
+      {
+        "component": "similarity backend",
+        "paper": "unspecified 'existing semantic similarity'",
+        "current": "spaCy en_core_web_sm, no word vectors",
+        "judgment": "PROJECT_ADAPTATION"
+      },
+      {
+        "component": "outer matching gate",
+        "paper": "strongly associated rule records; automatic selection underspecified",
+        "current": "NoGateSunChecker applies Def 5-7 to all 33 rules; evaluator indexes target rule only",
+        "judgment": "PAPER_AMBIGUOUS + PROJECT_ADAPTATION"
+      },
+      {
+        "component": "actor role surface normalization",
+        "paper": "not specified in detail",
+        "current": "casefold/whitespace/leading-article only; controller and processor distinct",
+        "judgment": "PROJECT_ADAPTATION_DISCLOSED"
+      },
+      {
+        "component": "order relation source",
+        "paper": "U_r from rule record",
+        "current": "all frozen Stage2 native order_relations empty; temporal_projection_v3 derives from conditions/constraints",
+        "judgment": "PROJECT_ADAPTATION_DECLARED"
+      }
+    ],
+    "full_rule_base_protocol_verdict": {
+      "verdict": "PROTOCOL_AMBIGUOUS_TARGET_BOUND_PROJECT_ADAPTATION",
+      "what_is_scored": "signal for (case, target bound requirement_id, check_type)",
+      "unrelated_rule_fp_into_target_metrics": false,
+      "explanation": "NoGateSunChecker computes all rules, but the evaluator indexes the target requirement's signal only. Therefore the Ours missing_action FP=66 is not an unrelated-rule relevance artifact; it is the target rule's own Def 5 result.",
+      "sun_protocol_relation": "Sun 4.3 uses matching/association and 5.3.2 checks the resulting matched rule-process collection. The project cannot reproduce whole-model multi-label checking because the released Gold is target-bound."
+    },
+    "missing_action_fp_decomposition": {
+      "sun": {
+        "counts": {
+          "mandatory_primary_action_not_detected_below_gamma": 59,
+          "mandatory_action_detected_but_extra_rule_action_below_gamma": 5
+        },
+        "examples": [
+          {
+            "case_id": "case_9c6fcd32f03c",
+            "requirement_id": "R5-D-01",
+            "variant": "baseline",
+            "target_activity_name": "Provide information on the other purpose prior to further processing",
+            "details": [
+              {
+                "rule_action": "intends to further process the personal data for a purpose other than that for",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.701,
+                "missing": true
+              },
+              {
+                "rule_action": "provide",
+                "best_model_action": "Complete direct collection and identify a new processing purpose",
+                "similarity": 0.2753,
+                "missing": true
+              }
+            ],
+            "category": "mandatory_primary_action_not_detected_below_gamma"
+          },
+          {
+            "case_id": "case_a9fd75331508",
+            "requirement_id": "R5-D-01",
+            "variant": "incorrect_actor",
+            "target_activity_name": "Provide information on the other purpose prior to further processing",
+            "details": [
+              {
+                "rule_action": "intends to further process the personal data for a purpose other than that for",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.701,
+                "missing": true
+              },
+              {
+                "rule_action": "provide",
+                "best_model_action": "Complete direct collection and identify a new processing purpose",
+                "similarity": 0.2753,
+                "missing": true
+              }
+            ],
+            "category": "mandatory_primary_action_not_detected_below_gamma"
+          },
+          {
+            "case_id": "case_3b01b9c36d0f",
+            "requirement_id": "R5-D-01",
+            "variant": "out_of_order",
+            "target_activity_name": "Provide information on the other purpose prior to further processing",
+            "details": [
+              {
+                "rule_action": "intends to further process the personal data for a purpose other than that for",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.701,
+                "missing": true
+              },
+              {
+                "rule_action": "provide",
+                "best_model_action": "Complete direct collection and identify a new processing purpose",
+                "similarity": 0.2753,
+                "missing": true
+              }
+            ],
+            "category": "mandatory_primary_action_not_detected_below_gamma"
+          },
+          {
+            "case_id": "case_f7bb207445df",
+            "requirement_id": "R5-D-02",
+            "variant": "baseline",
+            "target_activity_name": "Provide information on the other purpose prior to further processing",
+            "details": [
+              {
+                "rule_action": "intends to further process the personal data for a purpose other than that for",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.701,
+                "missing": true
+              },
+              {
+                "rule_action": "provide",
+                "best_model_action": "Complete indirect collection and identify a new processing purpose",
+                "similarity": 0.2714,
+                "missing": true
+              }
+            ],
+            "category": "mandatory_primary_action_not_detected_below_gamma"
+          }
+        ]
+      },
+      "ours": {
+        "counts": {
+          "mandatory_action_detected_but_extra_rule_action_below_gamma": 8,
+          "mandatory_primary_action_not_detected_below_gamma": 58
+        },
+        "examples": [
+          {
+            "case_id": "case_9c6fcd32f03c",
+            "requirement_id": "R5-D-01",
+            "variant": "baseline",
+            "target_activity_name": "Provide information on the other purpose prior to further processing",
+            "details": [
+              {
+                "rule_action": "provide the data subject prior to that further processing with information on that other purpose",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.8851,
+                "missing": false
+              },
+              {
+                "rule_action": "with any relevant further information as referred to in paragraph 2",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.6809,
+                "missing": true
+              }
+            ],
+            "category": "mandatory_action_detected_but_extra_rule_action_below_gamma"
+          },
+          {
+            "case_id": "case_a9fd75331508",
+            "requirement_id": "R5-D-01",
+            "variant": "incorrect_actor",
+            "target_activity_name": "Provide information on the other purpose prior to further processing",
+            "details": [
+              {
+                "rule_action": "provide the data subject prior to that further processing with information on that other purpose",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.8851,
+                "missing": false
+              },
+              {
+                "rule_action": "with any relevant further information as referred to in paragraph 2",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.6809,
+                "missing": true
+              }
+            ],
+            "category": "mandatory_action_detected_but_extra_rule_action_below_gamma"
+          },
+          {
+            "case_id": "case_3b01b9c36d0f",
+            "requirement_id": "R5-D-01",
+            "variant": "out_of_order",
+            "target_activity_name": "Provide information on the other purpose prior to further processing",
+            "details": [
+              {
+                "rule_action": "provide the data subject prior to that further processing with information on that other purpose",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.8851,
+                "missing": false
+              },
+              {
+                "rule_action": "with any relevant further information as referred to in paragraph 2",
+                "best_model_action": "Provide information on the other purpose prior to further processing",
+                "similarity": 0.6809,
+                "missing": true
+              }
+            ],
+            "category": "mandatory_action_detected_but_extra_rule_action_below_gamma"
+          },
+          {
+            "case_id": "case_a1712c670943",
+            "requirement_id": "R5-D-03",
+            "variant": "baseline",
+            "target_activity_name": "Inform the data subject that the restriction will be lifted",
+            "details": [
+              {
+                "rule_action": "be informed",
+                "best_model_action": "Confirm that the grounds for lifting the restriction are met",
+                "similarity": 0.4473,
+                "missing": true
+              }
+            ],
+            "category": "mandatory_primary_action_not_detected_below_gamma"
+          }
+        ]
+      }
+    },
+    "actor_pipeline": {
+      "sun": {
+        "total_target_cells": 113,
+        "scored_cells": 80,
+        "not_applicable": 33,
+        "observable": 9,
+        "action_mapping_below_gamma": 44,
+        "empty_rule_actor_denominator": 24,
+        "incomplete_rule_actor_action_map": 3,
+        "actor_similarity_violation": 9,
+        "actor_similarity_satisfied": 0,
+        "unknown": 71,
+        "reason_counts": {
+          "action_mapping_below_gamma": 44,
+          "empty_rule_actor_denominator": 24,
+          "null": 9,
+          "incomplete_rule_actor_action_map": 3
+        },
+        "status_counts": {
+          "unknown": 71,
+          "violated": 9
+        }
+      },
+      "ours": {
+        "total_target_cells": 113,
+        "scored_cells": 80,
+        "not_applicable": 33,
+        "observable": 18,
+        "action_mapping_below_gamma": 54,
+        "empty_rule_actor_denominator": 8,
+        "incomplete_rule_actor_action_map": 0,
+        "actor_similarity_violation": 18,
+        "actor_similarity_satisfied": 0,
+        "unknown": 62,
+        "reason_counts": {
+          "empty_rule_actor_denominator": 8,
+          "action_mapping_below_gamma": 54,
+          "null": 18
+        },
+        "status_counts": {
+          "unknown": 62,
+          "violated": 18
+        }
+      }
+    },
+    "order_matrix": [
+      {
+        "case_id": "case_3b01b9c36d0f",
+        "requirement_id": "R5-D-01",
+        "citation": "GDPR Article 13(3)",
+        "order_type": "TYPE_A_explicit_action_precedence",
+        "source_order_evidence": "provide information prior to further processing",
+        "gold_required_order_pair": [
+          "Activity_1",
+          "Activity_2"
+        ],
+        "gold_target_activity_name": "Provide information on the other purpose prior to further processing",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [
+              "no_single_main_action_endpoint"
+            ],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [
+              "no_single_main_action_endpoint"
+            ],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_ff937cc4c24e",
+        "requirement_id": "R5-D-02",
+        "citation": "GDPR Article 14(4)",
+        "order_type": "TYPE_A_explicit_action_precedence",
+        "source_order_evidence": "provide information prior to further processing",
+        "gold_required_order_pair": [
+          "Activity_1",
+          "Activity_2"
+        ],
+        "gold_target_activity_name": "Provide information on the other purpose prior to further processing",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [
+              "no_single_main_action_endpoint"
+            ],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [
+              "no_single_main_action_endpoint"
+            ],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_f6dc7b084b03",
+        "requirement_id": "R5-D-03",
+        "citation": "GDPR Article 18(3)",
+        "order_type": "TYPE_A_explicit_action_precedence",
+        "source_order_evidence": "inform before the restriction of processing is lifted",
+        "gold_required_order_pair": [
+          "Activity_1",
+          "Activity_2"
+        ],
+        "gold_target_activity_name": "Inform the data subject that the restriction will be lifted",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "be informed by the controller",
+                "the restriction of processing"
+              ]
+            ],
+            "details": [
+              {
+                "before": "be informed by the controller",
+                "after": "the restriction of processing",
+                "before_best_action": "Confirm that the grounds for lifting the restriction are met",
+                "before_similarity": 0.5679,
+                "before_passes_gamma": false,
+                "after_best_action": "Lift the restriction of processing",
+                "after_similarity": 0.8517,
+                "after_passes_gamma": true,
+                "before_activity_id": "Activity_0",
+                "after_activity_id": "Activity_2",
+                "forward_reachable": true,
+                "backward_reachable": false,
+                "satisfied": true
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "be informed",
+                "the restriction of processing"
+              ]
+            ],
+            "details": [
+              {
+                "before": "be informed",
+                "after": "the restriction of processing",
+                "before_best_action": "Confirm that the grounds for lifting the restriction are met",
+                "before_similarity": 0.4473,
+                "before_passes_gamma": false,
+                "after_best_action": "Lift the restriction of processing",
+                "after_similarity": 0.8517,
+                "after_passes_gamma": true,
+                "before_activity_id": "Activity_0",
+                "after_activity_id": "Activity_2",
+                "forward_reachable": true,
+                "backward_reachable": false,
+                "satisfied": true
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_a2f445c641d1",
+        "requirement_id": "R5-D-04",
+        "citation": "GDPR Article 35(1), first sentence",
+        "order_type": "TYPE_A_explicit_action_precedence",
+        "source_order_evidence": "carry out DPIA prior to the processing",
+        "gold_required_order_pair": [
+          "Activity_1",
+          "Activity_2"
+        ],
+        "gold_target_activity_name": "Carry out the data protection impact assessment",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "carry out an assessment of the impact of the envisaged processing operations on",
+                "the processing"
+              ]
+            ],
+            "details": [
+              {
+                "before": "carry out an assessment of the impact of the envisaged processing operations on",
+                "after": "the processing",
+                "before_best_action": "Carry out the data protection impact assessment",
+                "before_similarity": 0.6223,
+                "before_passes_gamma": false,
+                "after_best_action": "High-risk processing requires a prior DPIA.",
+                "after_similarity": 0.4794,
+                "after_passes_gamma": false,
+                "before_activity_id": "Activity_1",
+                "after_activity_id": "Start",
+                "forward_reachable": false,
+                "backward_reachable": true,
+                "satisfied": false
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                "the processing"
+              ]
+            ],
+            "details": [
+              {
+                "before": "carry out an assessment of the impact of the envisaged processing operations on the protection of personal data",
+                "after": "the processing",
+                "before_best_action": "Begin the assessed processing operations",
+                "before_similarity": 0.5817,
+                "before_passes_gamma": false,
+                "after_best_action": "High-risk processing requires a prior DPIA.",
+                "after_similarity": 0.4794,
+                "after_passes_gamma": false,
+                "before_activity_id": "Activity_2",
+                "after_activity_id": "Start",
+                "forward_reachable": false,
+                "backward_reachable": true,
+                "satisfied": false
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_d8029187c213",
+        "requirement_id": "R5-D-05",
+        "citation": "GDPR Article 36(1)",
+        "order_type": "TYPE_A_explicit_action_precedence",
+        "source_order_evidence": "consult supervisory authority prior to processing",
+        "gold_required_order_pair": [
+          "Activity_1",
+          "Activity_2"
+        ],
+        "gold_target_activity_name": "Consult the supervisory authority about the proposed processing",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "consult the supervisory authority",
+                "processing"
+              ]
+            ],
+            "details": [
+              {
+                "before": "consult the supervisory authority",
+                "after": "processing",
+                "before_best_action": "Consult the supervisory authority about the proposed processing",
+                "before_similarity": 0.8329,
+                "before_passes_gamma": true,
+                "after_best_action": "Start the proposed processing",
+                "after_similarity": 0.4237,
+                "after_passes_gamma": false,
+                "before_activity_id": "Activity_1",
+                "after_activity_id": "Activity_2",
+                "forward_reachable": false,
+                "backward_reachable": true,
+                "satisfied": false
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "consult the supervisory authority",
+                "processing"
+              ]
+            ],
+            "details": [
+              {
+                "before": "consult the supervisory authority",
+                "after": "processing",
+                "before_best_action": "Consult the supervisory authority about the proposed processing",
+                "before_similarity": 0.8329,
+                "before_passes_gamma": true,
+                "after_best_action": "Start the proposed processing",
+                "after_similarity": 0.4237,
+                "after_passes_gamma": false,
+                "before_activity_id": "Activity_1",
+                "after_activity_id": "Activity_2",
+                "forward_reachable": false,
+                "backward_reachable": true,
+                "satisfied": false
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_27553ad672b2",
+        "requirement_id": "R5-D-12",
+        "citation": "GDPR Article 33(1)",
+        "order_type": "TYPE_B_trigger_precedence",
+        "source_order_evidence": "notify after becoming aware (72-hour deadline not evaluated)",
+        "gold_required_order_pair": [
+          "Activity_0",
+          "Activity_1"
+        ],
+        "gold_target_activity_name": "Notify the competent supervisory authority",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "having become aware of it",
+                "notify the personal data breach to the supervisory authority competent in"
+              ]
+            ],
+            "details": [
+              {
+                "before": "having become aware of it",
+                "after": "notify the personal data breach to the supervisory authority competent in",
+                "before_best_action": "Become aware of the personal data breach",
+                "before_similarity": 0.3372,
+                "before_passes_gamma": false,
+                "after_best_action": "Become aware of the personal data breach",
+                "after_similarity": 0.7934,
+                "after_passes_gamma": false,
+                "before_activity_id": "Activity_0",
+                "after_activity_id": "Activity_0",
+                "forward_reachable": false,
+                "backward_reachable": false,
+                "satisfied": false
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "having become aware of it",
+                "notify the personal data breach to the supervisory authority competent in accordance with Article 55"
+              ]
+            ],
+            "details": [
+              {
+                "before": "having become aware of it",
+                "after": "notify the personal data breach to the supervisory authority competent in accordance with Article 55",
+                "before_best_action": "Become aware of the personal data breach",
+                "before_similarity": 0.3372,
+                "before_passes_gamma": false,
+                "after_best_action": "Become aware of the personal data breach",
+                "after_similarity": 0.7276,
+                "after_passes_gamma": false,
+                "before_activity_id": "Activity_0",
+                "after_activity_id": "Activity_0",
+                "forward_reachable": false,
+                "backward_reachable": false,
+                "satisfied": false
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          }
+        },
+        "winter": {
+          "status": "violated",
+          "raw_score": 1.0,
+          "denominator": 1,
+          "reason": null
+        }
+      },
+      {
+        "case_id": "case_250418025567",
+        "requirement_id": "R5-S1-T3",
+        "citation": "GDPR Article 14(1)",
+        "order_type": "TYPE_B_trigger_precedence",
+        "source_order_evidence": "provide information after obtaining personal data (one-month deadline not evaluated)",
+        "gold_required_order_pair": [
+          "Activity_0",
+          "Activity_1"
+        ],
+        "gold_target_activity_name": "Provide required indirect-collection information to the data subject",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_2e0630dc5be5",
+        "requirement_id": "R5-S1-T4",
+        "citation": "GDPR Article 14(2)",
+        "order_type": "TYPE_B_trigger_precedence",
+        "source_order_evidence": "provide information after obtaining personal data (one-month deadline not evaluated)",
+        "gold_required_order_pair": [
+          "Activity_0",
+          "Activity_1"
+        ],
+        "gold_target_activity_name": "Provide further indirect-collection information to the data subject",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_d391f7745e2d",
+        "requirement_id": "R5-S3-T1",
+        "citation": "GDPR Article 12(3)",
+        "order_type": "TYPE_B_trigger_precedence",
+        "source_order_evidence": "provide response after receipt of request (one-month deadline not evaluated)",
+        "gold_required_order_pair": [
+          "Activity_0",
+          "Activity_1"
+        ],
+        "gold_target_activity_name": "Provide the response on action taken",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_ba895d210eaf",
+        "requirement_id": "R5-S3-T2",
+        "citation": "GDPR Article 12(4)",
+        "order_type": "TYPE_B_trigger_precedence",
+        "source_order_evidence": "inform after receipt of request (one-month deadline not evaluated)",
+        "gold_required_order_pair": [
+          "Activity_0",
+          "Activity_1"
+        ],
+        "gold_target_activity_name": "Inform the data subject of the reasons for not taking action",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_8c729ed572f4",
+        "requirement_id": "R5-S5-T4",
+        "citation": "GDPR Article 36(2)",
+        "order_type": "TYPE_C_deadline_arithmetic_only",
+        "source_order_evidence": "regulatory period after receipt of request (date arithmetic unsupported)",
+        "gold_required_order_pair": [
+          "Activity_0",
+          "Activity_1"
+        ],
+        "gold_target_activity_name": "Provide written advice to the controller",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_cecd14adb006",
+        "requirement_id": "R5-S6-T3",
+        "citation": "GDPR Article 33(2)",
+        "order_type": "TYPE_B_trigger_precedence",
+        "source_order_evidence": "notify controller after becoming aware (deadline not evaluated)",
+        "gold_required_order_pair": [
+          "Activity_0",
+          "Activity_1"
+        ],
+        "gold_target_activity_name": "Notify the controller of the personal data breach",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "becoming aware of a personal data breach",
+                "notify the controller without undue delay"
+              ]
+            ],
+            "details": [
+              {
+                "before": "becoming aware of a personal data breach",
+                "after": "notify the controller without undue delay",
+                "before_best_action": "Become aware of a personal data breach",
+                "before_similarity": 1.0,
+                "before_passes_gamma": true,
+                "after_best_action": "The processor must notify the controller of a breach without undue delay.",
+                "after_similarity": 0.7994,
+                "after_passes_gamma": false,
+                "before_activity_id": "Activity_0",
+                "after_activity_id": "Start",
+                "forward_reachable": false,
+                "backward_reachable": true,
+                "satisfied": false
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "becoming aware of a personal data breach",
+                "notify the controller"
+              ]
+            ],
+            "details": [
+              {
+                "before": "becoming aware of a personal data breach",
+                "after": "notify the controller",
+                "before_best_action": "Become aware of a personal data breach",
+                "before_similarity": 1.0,
+                "before_passes_gamma": true,
+                "after_best_action": "Record the processor notification",
+                "after_similarity": 0.6801,
+                "after_passes_gamma": false,
+                "before_activity_id": "Activity_0",
+                "after_activity_id": "Activity_2",
+                "forward_reachable": true,
+                "backward_reachable": false,
+                "satisfied": true
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          }
+        },
+        "winter": {
+          "status": "violated",
+          "raw_score": 1.0,
+          "denominator": 1,
+          "reason": null
+        }
+      },
+      {
+        "case_id": "case_7dcc88ac3cf1",
+        "requirement_id": "R5-S7-T1",
+        "citation": "GDPR Article 40(7)",
+        "order_type": "TYPE_A_explicit_action_precedence",
+        "source_order_evidence": "submit draft code before approving it",
+        "gold_required_order_pair": [
+          "Activity_1",
+          "Activity_2"
+        ],
+        "gold_target_activity_name": "Submit the draft code to the Board before approving it",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [
+              [
+                "relates to processing activities in several Member States, the supervisory",
+                "approving the draft code, amendment"
+              ]
+            ],
+            "details": [
+              {
+                "before": "relates to processing activities in several Member States, the supervisory",
+                "after": "approving the draft code, amendment",
+                "before_best_action": "Submit the draft code to the Board before approving it",
+                "before_similarity": 0.5676,
+                "before_passes_gamma": false,
+                "after_best_action": "Approve the draft code, amendment or extension",
+                "after_similarity": 0.8038,
+                "after_passes_gamma": true,
+                "before_activity_id": "Activity_1",
+                "after_activity_id": "Activity_2",
+                "forward_reachable": false,
+                "backward_reachable": true,
+                "satisfied": false
+              }
+            ],
+            "projection_reasons": [],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "endpoint_mapping_below_gamma"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [
+              "no_single_main_action_endpoint"
+            ],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          }
+        },
+        "winter": {
+          "status": "unknown",
+          "raw_score": null,
+          "denominator": 0,
+          "reason": "no_rule_side_flow_relations"
+        }
+      },
+      {
+        "case_id": "case_3af5fd62647b",
+        "requirement_id": "R5-S8-T1",
+        "citation": "GDPR Article 43(1)",
+        "order_type": "TYPE_A_explicit_action_precedence",
+        "source_order_evidence": "issue or renew certification after informing the supervisory authority",
+        "gold_required_order_pair": [
+          "Activity_0",
+          "Activity_1"
+        ],
+        "gold_target_activity_name": "Issue or renew the certification after informing",
+        "methods": {
+          "sun": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [
+              "no_single_main_action_endpoint"
+            ],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          },
+          "ours": {
+            "native_order_relation_count": 0,
+            "adapter_order_relations": [],
+            "details": [],
+            "projection_reasons": [
+              "no_single_main_action_endpoint"
+            ],
+            "final_status": "unknown",
+            "raw_score": 0.0,
+            "denominator": 0,
+            "failure_stage": "order_relation_absent"
+          }
+        },
+        "winter": {
+          "status": "violated",
+          "raw_score": 1.0,
+          "denominator": 1,
+          "reason": null
+        }
+      }
+    ],
+    "field_consumption": [
+      {
+        "stage2_field": "modality",
+        "direct_stage3_consumer": "converter obligation gate",
+        "indirect_consumer": "none",
+        "currently_used": "yes, obligation only",
+        "lost_at_adapter": "no, counted/excluded, but permission/prohibition/definition never enter Def 5-7"
+      },
+      {
+        "stage2_field": "action",
+        "direct_stage3_consumer": "SunScorer.matching_score / missing_action / incorrect_actor R",
+        "indirect_consumer": "temporal_projection_v3 main-action endpoint",
+        "currently_used": "yes",
+        "lost_at_adapter": "no, but span validity and source SHA are enforced"
+      },
+      {
+        "stage2_field": "actor",
+        "direct_stage3_consumer": "SunScorer.matching_score / incorrect_actor",
+        "indirect_consumer": "none",
+        "currently_used": "yes when present",
+        "lost_at_adapter": "no, but Stage2 empty actor lists remain empty by contract"
+      },
+      {
+        "stage2_field": "actor_action_pairs / actor_action_map",
+        "direct_stage3_consumer": "SunScorer.incorrect_actor f_r",
+        "indirect_consumer": "none",
+        "currently_used": "yes when present",
+        "lost_at_adapter": "no, but 10 Sun records and 2 Ours records have no pairs in frozen Stage2"
+      },
+      {
+        "stage2_field": "condition",
+        "direct_stage3_consumer": "none for scoring",
+        "indirect_consumer": "temporal_projection_v3 marker scope",
+        "currently_used": "only to bound order markers",
+        "lost_at_adapter": "condition truth is not evaluated; declared core exclusion"
+      },
+      {
+        "stage2_field": "constraint",
+        "direct_stage3_consumer": "none directly",
+        "indirect_consumer": "temporal_projection_v3 order-edge source",
+        "currently_used": "yes, as derived order source",
+        "lost_at_adapter": "no conversion loss, but Definition 3 U_r subset A_r x A_r is not claimed for derived endpoints"
+      },
+      {
+        "stage2_field": "exception",
+        "direct_stage3_consumer": "none for scoring",
+        "indirect_consumer": "temporal_projection_v3 marker-inside-exception rejection",
+        "currently_used": "only as marker rejection",
+        "lost_at_adapter": "exception truth is not evaluated; declared core exclusion"
+      },
+      {
+        "stage2_field": "native order_relations",
+        "direct_stage3_consumer": "temporal_projection_v3 native-priority path",
+        "indirect_consumer": "SunScorer.out_of_order when native edges exist",
+        "currently_used": "yes if non-empty",
+        "lost_at_adapter": "all 33 Sun and all 33 Ours frozen records have empty native order_relations; derived edges are used instead"
+      },
+      {
+        "stage2_field": "source_text / character offsets",
+        "direct_stage3_consumer": "canonical converter span slicing and source SHA validation",
+        "indirect_consumer": "temporal_projection_v3 audited spans",
+        "currently_used": "yes",
+        "lost_at_adapter": "no, provenance-carrying"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "AUDIT-W-01",
+      "severity": "P2",
+      "classification": "LABELING_DEVIATION",
+      "title": "Winter formal method id says native but uses corrected_reachability",
+      "evidence": "Prototype Process.py is_reachable_from returns targetid in self.reachability[targetid] (always True); current runner passes REACHABILITY_CORRECTED and the formal result freeze binds reachability_mode corrected_reachability.",
+      "affected_methods": [
+        "winter"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": false,
+      "note": "The running semantics are a prototype bug fix aligned with paper intent, but the label winter_2020_native_full_pipeline overclaims native. Rename for reporting; do not rerun only for a label."
+    },
+    {
+      "id": "AUDIT-W-02",
+      "severity": "P2",
+      "classification": "BENCHMARK_METHOD_INTERACTION",
+      "title": "Winter global role vocabulary is prototype-native but cross-case in this benchmark",
+      "evidence": "Prototype main.py accumulates resource_set across every file in modeldir. Current global_roles scans all 113 inference BPMNs and unions process@name; all actor mutations and required-role BPMNs are present, yielding 7 roles.",
+      "affected_methods": [
+        "winter"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": true,
+      "note": "Restricting to the current process would be less faithful to the prototype and would suppress actor detections. No Gold/reference is read; it is a benchmark-method interaction, not a Gold leak."
+    },
+    {
+      "id": "AUDIT-W-03",
+      "severity": "P2",
+      "classification": "PROJECT_ADAPTATION",
+      "title": "Winter cost > 0 is converted to binary violation for Table 3",
+      "evidence": "winter_signals maps cost_obligation/cost_resource/cost_so > 0 to violated. The prototype emits continuous costs and CSV ranks/scores, not a P/R/F1 threshold.",
+      "affected_methods": [
+        "winter"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": true,
+      "note": "Necessary for a shared three-state evaluator; must be disclosed as project adaptation, not original Winter evaluation protocol."
+    },
+    {
+      "id": "AUDIT-W-04",
+      "severity": "P3",
+      "classification": "DEVIATION_NO_EFFECT_ON_CURRENT_DATA",
+      "title": "Minor Winter transcription deviations",
+      "evidence": "Current global_roles ignores empty process@name; prototype adds ''. Current BPMN duplicate-participant handling extends rather than overwrites. All 113 benchmark process@names are nonempty and each file has one process.",
+      "affected_methods": [
+        "winter"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": false,
+      "note": "No observed metric effect on R5; record for fidelity completeness."
+    },
+    {
+      "id": "AUDIT-S-01",
+      "severity": "P1",
+      "classification": "PROTOCOL_MISMATCH",
+      "title": "Sun/Ours run full-rule-base Def 5-7 but evaluation is target-requirement-bound",
+      "evidence": "NoGateSunChecker applies Definitions 5-7 to every one of the 33 rule records, while evaluate_stage3_table3_r5_formal_v1.py indexes only (method, case, target requirement_id, type). Sun paper 4.3 says strongly associated rule records enter checking; 5.3.2 evaluates a checking collection, not a target-rule lookup.",
+      "affected_methods": [
+        "sun",
+        "ours"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": false,
+      "note": "Paper does not specify the exact automatic association threshold; current no-gate is a declared project adaptation. Fixing would require a complete multi-label Gold and a specified association protocol, so it is outside this task."
+    },
+    {
+      "id": "AUDIT-S-02",
+      "severity": "P1",
+      "classification": "PROJECT_ADAPTATION",
+      "title": "en_core_web_sm no-vector similarity drives low action and endpoint scores",
+      "evidence": "SunScorer uses WinterSimilarity -> spaCy en_core_web_sm. spaCy warns W007 that the model has no word vectors; Doc.similarity is tensor-based and not a calibrated semantic metric. Fixed tau/gamma/theta=0.8 are from Sun 2024.",
+      "affected_methods": [
+        "sun",
+        "ours"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": false,
+      "note": "The backend is shared by Sun and Ours and was selected for controlled comparison; changing it is a method/config redesign. Prior R3 M2 using en_core_web_lg did not improve order."
+    },
+    {
+      "id": "AUDIT-S-03",
+      "severity": "P2",
+      "classification": "PAPER_AMBIGUOUS",
+      "title": "Definition 6 C includes business objects, causing actor FP under the existential formula",
+      "evidence": "Sun Definition 6 defines C = bs_obj(Am union Em) union Rm and violation exists r' in C with sim(r,r')<theta. Current process_actor_candidates contains business objects in addition to process actors. Baseline cases such as R5-D-05 flag violation because an activity object is dissimilar to the rule actor.",
+      "affected_methods": [
+        "sun",
+        "ours"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": true,
+      "note": "Code matches the paper formula as written. Removing business objects to improve F1 would be paper-unfaithful and is explicitly forbidden."
+    },
+    {
+      "id": "AUDIT-S-10",
+      "severity": "P2",
+      "classification": "PROJECT_ADAPTATION",
+      "title": "Definition 6 C omits business objects extracted from event labels",
+      "evidence": "Paper Definition 1/4 states business objects are extracted from activity and event labels and C = bs_obj(Am union Em) union Rm. SunProcessModel.business_objects is populated only from record['activities']; the formal config declares activity-bound business objects. In the current 80 scored actor cells, observable actor predictions all match activity IDs, so this omitted term does not change Table 3 v1 target metrics, but it is an under-inclusive adaptation relative to the paper formula.",
+      "affected_methods": [
+        "sun",
+        "ours"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": true,
+      "note": "Keep activity-bound C for v1 and disclose the omission. Adding event-label business objects would be a method change and could introduce noisy objects; it is not required for the historical v1 comparison."
+    },
+    {
+      "id": "AUDIT-S-04",
+      "severity": "P1",
+      "classification": "METHOD_LIMITATION",
+      "title": "Order detection is structurally blocked by absent U_r and endpoint mapping",
+      "evidence": "All 33 Sun and all 33 Ours frozen Stage2 records have native order_relations=[]; temporal_projection_v3 derives edges from conditions/constraints. For the 14 order-positive cases, every target out_of_order denominator is 0, either because no edge was derived or because endpoint similarity <= gamma=0.8.",
+      "affected_methods": [
+        "sun",
+        "ours"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": false,
+      "note": "TYPE A projection/endpoint failure and TYPE B trigger precedence are mixed. Sun Definition 7 uses U_r subset A_r x A_r; trigger-to-action ordering is not fully representable. No Gold-derived relation may be invented."
+    },
+    {
+      "id": "AUDIT-S-05",
+      "severity": "P3",
+      "classification": "DIAGNOSTIC_LABELING",
+      "title": "no_rule_order_endpoints conflates absent U_r with endpoint mapping failure",
+      "evidence": "normalize_sun_signal sets reason no_rule_order_endpoints whenever denominator <= 0. SunScorer.out_of_order includes details for endpoints below gamma, so the reason string is not stage-specific.",
+      "affected_methods": [
+        "sun",
+        "ours"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": false,
+      "note": "Status/coverage are correct; only reason granularity is misleading. Keep frozen outputs and use this audit's stage matrix."
+    },
+    {
+      "id": "AUDIT-S-06",
+      "severity": "P1",
+      "classification": "METHOD_LIMITATION",
+      "title": "Missing-action FP are caused by Stage2 action fragmentation/under-specification, not unrelated-rule alarms",
+      "evidence": "Ours missing_action: TP=33, FP=66, FN=0. Of 66 FP, 58 primary mandatory action strings fail gamma and 8 have the target action mapped but an extra Stage2 action fragment below gamma. Sun: 64 FP, 59 and 5 respectively. The evaluator indexes only the target requirement, so unrelated rules contribute 0 FP.",
+      "affected_methods": [
+        "sun",
+        "ours"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": true,
+      "note": "Ours recall=1.0 because every missing mutant deletes the target activity; precision=1/3 because the same Stage2 record also contains non-mandatory fragments (or an under-specified mandatory action) that fail gamma on compliant/actor cases."
+    },
+    {
+      "id": "AUDIT-S-07",
+      "severity": "P1",
+      "classification": "METHOD_LIMITATION",
+      "title": "Actor observability is low because action mapping and actor-action links fail",
+      "evidence": "Sun actor target cells: 80 scored, only 9 observable (44 action_mapping_below_gamma, 24 empty_rule_actor_denominator, 3 incomplete_rule_actor_action_map). Ours: only 18 observable (54 action_mapping_below_gamma, 8 empty_rule_actor_denominator). Observable actor predictions are exactly the violated cells; no actor cell is observable and satisfied.",
+      "affected_methods": [
+        "sun",
+        "ours"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": true,
+      "note": "Stage2 actors/pairs are absent in 10 Sun and 2 Ours core records; where present, action similarity still blocks R_{r,m,gamma}. Stage2 Ours is frozen and no API is allowed."
+    },
+    {
+      "id": "AUDIT-S-08",
+      "severity": "P2",
+      "classification": "PROJECT_ADAPTATION",
+      "title": "Derived order endpoints are not guaranteed to satisfy U_r subset A_r x A_r",
+      "evidence": "temporal_projection_v3 accepts bounded nominal endpoints (e.g. the restriction of processing) and verbal endpoints; the v4 R2 execution contract declares difference_from_sun_definition_3 for derived endpoints.",
+      "affected_methods": [
+        "sun",
+        "ours"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": false,
+      "note": "Declared project adaptation. v4_r3 is an alternative projection that preserves local event predicates, but it is still derived and prior M2 showed no order improvement under fixed gamma."
+    },
+    {
+      "id": "AUDIT-S-09",
+      "severity": "P2",
+      "classification": "PROTOCOL_MISMATCH",
+      "title": "Gold is target-bound; complete multi-label compliance is not available",
+      "evidence": "reference_cases and the released packet label one bound requirement per case. The evaluator cannot distinguish unrelated-rule alarms from errors; Table 3 therefore evaluates target-rule signals, not whole-model checking.",
+      "affected_methods": [
+        "sun",
+        "ours",
+        "winter"
+      ],
+      "gold_independent": true,
+      "eligible_for_fix": false,
+      "metric_direction_known": false,
+      "note": "Creating complete multi-label Gold is outside this task's authority and would require new benchmark construction, not a fidelity repair."
+    }
+  ],
+  "fixes": [],
+  "corrected_run": {
+    "required": false,
+    "status": "NOT_RUN_NO_FIDELITY_ELIGIBLE_FIX",
+    "reason": "No P0/P1 finding met all FIDELITY_ELIGIBLE_FIX conditions with paper/prototype evidence, Gold-independent rule, no threshold change, no Stage2/API change, and no sample/Gold change."
+  },
+  "final_verdict": {
+    "TABLE3_V1_STATUS": "VALID_WITH_DISCLOSURES",
+    "WINTER_REPRODUCTION_LABEL": "Winter reproduction with corrected reachability (prototype-native global roles; adapted binary cost evaluation; not native literal prototype)",
+    "PRIMARY_COMPARISON_VALID": true,
+    "CORRECTED_RUN_REQUIRED": false,
+    "FIDELITY_ELIGIBLE_FIXES": [],
+    "interpretation": "Sun vs Ours remains a controlled Stage2 replacement over the same frozen Stage3 adaptation. Winter is an external adapted reproduction. The v1 P/R/F1 are meaningful only with the protocol, backend, benchmark-granularity, and order limitations disclosed."
+  },
+  "classification_counts": {
+    "LABELING_DEVIATION": 1,
+    "BENCHMARK_METHOD_INTERACTION": 1,
+    "PROJECT_ADAPTATION": 4,
+    "DEVIATION_NO_EFFECT_ON_CURRENT_DATA": 1,
+    "PROTOCOL_MISMATCH": 2,
+    "PAPER_AMBIGUOUS": 1,
+    "METHOD_LIMITATION": 3,
+    "DIAGNOSTIC_LABELING": 1
+  }
+}
