@@ -360,15 +360,21 @@ def _sentence_transformer_local_path(short_name: str) -> str | None:
     org_name = mapping.get(short_name)
     if not org_name:
         return None
-    # Standard Hugging Face cache layout: models--<org>--<model>
+    # Standard Hugging Face cache layout is either
+    # ``HF_HOME/models--...`` (direct cache root) or ``HF_HOME/hub/models--...``.
+    # Test both so a local cache mounted at ``HF_HOME`` or at the standard
+    # ``hub`` subdirectory is found without any network access.
     cache_root = Path(os.environ.get("HF_HOME", str(Path.home() / ".cache" / "huggingface" / "hub")))
-    snapshots = cache_root / f"models--{org_name[0].replace('/', '-') }--{org_name[1]}"
-    snapshots = cache_root / f"models--{org_name[0]}--{org_name[1]}"
-    if not snapshots.exists():
-        return None
-    for snapshot in sorted(snapshots.glob("snapshots/*")):
-        if (snapshot / "config.json").exists():
-            return str(snapshot)
+    candidate_roots = [cache_root]
+    if cache_root.name != "hub":
+        candidate_roots.append(cache_root / "hub")
+    for root in candidate_roots:
+        snapshots = root / f"models--{org_name[0]}--{org_name[1]}"
+        if not snapshots.exists():
+            continue
+        for snapshot in sorted(snapshots.glob("snapshots/*")):
+            if (snapshot / "config.json").exists():
+                return str(snapshot)
     return None
 
 

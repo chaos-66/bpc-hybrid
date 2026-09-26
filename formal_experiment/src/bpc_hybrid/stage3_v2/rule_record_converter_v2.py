@@ -30,7 +30,8 @@ def canonical_to_rule_record_v2(record: Mapping[str, Any] | None,
                                 rule_id: str,
                                 nlp: Any,
                                 *,
-                                projection: SharedActionOrderProjectionV2 | None = None
+                                projection: SharedActionOrderProjectionV2 | None = None,
+                                order_adapter: Any | None = None,
                                 ) -> dict[str, Any]:
     """Convert one frozen Stage-2 canonical record to a Sun-scorer record.
 
@@ -124,14 +125,24 @@ def canonical_to_rule_record_v2(record: Mapping[str, Any] | None,
 
     action_lookup = {item["action_id"]: item["text"] for item in action_elements}
     native_relations = normalize_native_order_relations(record, action_lookup)
-    projection_result = projection.project(
-        source_text,
-        record,
-        nlp=nlp,
-        rule_id=str(rule_id),
-        action_elements=action_elements,
-        native_relations=native_relations,
-    )
+    if order_adapter is not None:
+        projection_result = order_adapter.project(
+            source_text,
+            record,
+            nlp=nlp,
+            rule_id=str(rule_id),
+            action_elements=action_elements,
+            native_relations=native_relations,
+        )
+    else:
+        projection_result = projection.project(
+            source_text,
+            record,
+            nlp=nlp,
+            rule_id=str(rule_id),
+            action_elements=action_elements,
+            native_relations=native_relations,
+        )
     order_relations = [
         [edge["before_text"], edge["after_text"]]
         for edge in projection_result.get("edges") or []
