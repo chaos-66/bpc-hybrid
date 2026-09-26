@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions" targetNamespace="urn:bpc:stage3-bonus-order-supplement:v1">
+  <collaboration id="Collaboration">
+    <participant id="Participant" name="Process Actor" processRef="Process" />
+  </collaboration>
+  <process id="Process" name="BONUS-ORD-06" isExecutable="false">
+    <laneSet id="LaneSet">
+      <lane id="Lane_Actor" name="Process Actor">
+        <flowNodeRef>Start</flowNodeRef>
+        <flowNodeRef>Activity_Before</flowNodeRef>
+        <flowNodeRef>Activity_After</flowNodeRef>
+        <flowNodeRef>End</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="Start" name="Start" />
+    <task id="Activity_Before" name="assessing the adequacy of the level of protection" />
+    <task id="Activity_After" name="decide" />
+    <endEvent id="End" />
+    <sequenceFlow id="Flow_0" sourceRef="Start" targetRef="Activity_After" />
+    <sequenceFlow id="Flow_1" sourceRef="Activity_After" targetRef="Activity_Before" />
+    <sequenceFlow id="Flow_2" sourceRef="Activity_Before" targetRef="End" />
+  </process>
+</definitions>

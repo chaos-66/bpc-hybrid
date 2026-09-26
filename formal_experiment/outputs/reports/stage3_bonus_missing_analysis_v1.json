@@ -1,0 +1,3787 @@
+{
+  "action_scope_gate": {
+    "broad_scope_fp_by_method": {
+      "ours": {
+        "broad_scope_related_fp": 10
+      },
+      "sun": {
+        "broad_scope_related_fp": 10
+      }
+    },
+    "broad_scope_fp_cells": 20,
+    "broad_scope_fp_ratio": 0.2857142857142857,
+    "decision": "REJECTED",
+    "gate_eligible_scope_fp_by_method": {
+      "ours": {
+        "scope_related_fp": 5
+      },
+      "sun": {
+        "scope_related_fp": 6
+      }
+    },
+    "gate_eligible_scope_fp_cells": 11,
+    "gate_eligible_scope_fp_ratio": 0.15714285714285714,
+    "reason": "Even under the broad fragment-inclusive count, the strict gate-listed scope categories are far below 30% of Missing FP; the dominant errors are required-action mapping and BPMN-label semantic mismatch.",
+    "threshold": 0.3
+  },
+  "all_existing_cases_seen": true,
+  "failure_category_legend": {
+    "M10_STAGE2_MISSING_ACTION": "Stage-2 produced no action for the requirement",
+    "M11_OTHER": "other or unclassified",
+    "M1_REQUIRED_ACTION_MAPPING_FAILURE": "required mandatory action failed semantic mapping (similarity < gamma)",
+    "M2_EXTRA_FRAGMENT_ACTION": "extra or incomplete action fragment entered the denominator",
+    "M3_CONDITION_ACTION_IN_DENOMINATOR": "condition-clause action entered the denominator",
+    "M4_CONSTRAINT_ACTION_IN_DENOMINATOR": "constraint-clause action entered the denominator",
+    "M5_EXCEPTION_ACTION_IN_DENOMINATOR": "exception-clause action entered the denominator",
+    "M6_CONTEXT_ACTION_IN_DENOMINATOR": "context/background action entered the denominator",
+    "M7_SUBORDINATE_NON_OBLIGATION_ACTION": "subordinate or permission action entered the denominator",
+    "M8_MULTIPLE_TRUE_MANDATORY_ACTIONS": "multiple true mandatory actions with at least one semantic mapping miss",
+    "M9_BPMN_LABEL_SEMANTIC_MISMATCH": "BPMN label is semantically related but MPNet similarity is below gamma, so the violation is missed"
+  },
+  "final_test_eligible": false,
+  "fp_fn_rows": [
+    {
+      "actions_entering_definition5_denominator": [
+        "have the right to obtain from the controller confirmation as to whether or not"
+      ],
+      "best_bpmn_action_match": [
+        "The data subject has a right of access and confirmation."
+      ],
+      "case_id": "case_0164a880bf44",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The data subject has a right of access and confirmation.",
+          "missing": true,
+          "rule_action": "have the right to obtain from the controller confirmation as to whether or not",
+          "similarity": 0.4923
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "Right-to-obtain wording and BPMN right-of-access label are semantically equivalent to a human but MPNet gives 0.492."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-08",
+      "similarity": [
+        0.4923
+      ],
+      "source_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information the purposes of the processing.",
+      "stage2_actions": [
+        "have the right to obtain from the controller confirmation as to whether or not"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "notify the controller without undue delay after becoming aware of a personal data breach."
+      ],
+      "best_bpmn_action_match": [
+        "The processor must notify the controller of a breach without undue delay."
+      ],
+      "case_id": "case_0697d9b84b86",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "The processor must notify the controller of a breach without undue delay.",
+          "missing": false,
+          "rule_action": "notify the controller without undue delay after becoming aware of a personal data breach.",
+          "similarity": 0.6405
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "BPMN contains a semantically equivalent notification label; MPNet score 0.640 keeps the missing-action mutant predicted as satisfied."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S6-T3",
+      "similarity": [
+        0.6405
+      ],
+      "source_text": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+      "stage2_actions": [
+        "notify the controller without undue delay after becoming aware of a personal data breach."
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "take steps to ensure that any natural person acting under the authority of the"
+      ],
+      "best_bpmn_action_match": [
+        "Provide documented instructions to authorised personnel"
+      ],
+      "case_id": "case_0ca6ea35f87e",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide documented instructions to authorised personnel",
+          "missing": true,
+          "rule_action": "take steps to ensure that any natural person acting under the authority of the",
+          "similarity": 0.4313
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory instruction-compliance action is paraphrased in BPMN, similarity 0.431."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S6-T2",
+      "similarity": [
+        0.4313
+      ],
+      "source_text": "The controller and processor shall take steps to ensure that any natural person acting under the authority of the controller or the processor who has access to personal data does not process them except on instructions from the controller, unless he or she is required to do so by Union or Member State law.",
+      "stage2_actions": [
+        "take steps to ensure that any natural person acting under the authority of the"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "processes the personal data only on documented instructions from the controller,",
+        "inform the controller of that legal requirement before processing, unless that"
+      ],
+      "best_bpmn_action_match": [
+        "Receive documented processing instructions from the controller"
+      ],
+      "case_id": "case_0f67bfdd277b",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Receive documented processing instructions from the controller",
+          "missing": true,
+          "rule_action": "inform the controller of that legal requirement before processing, unless that",
+          "similarity": 0.4363
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory inform-controller action is embedded with a trailing subordinate clause; similarity 0.436."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S4-T3",
+      "similarity": [
+        0.4363
+      ],
+      "source_text": "the processor processes the personal data only on documented instructions from the controller, including with regard to transfers of personal data to a third country or an international organisation, unless required to do so by Union or Member State law to which the processor is subject; in such a case, the processor shall inform the controller of that legal requirement before processing, unless that law prohibits such information on important grounds of public interest",
+      "stage2_actions": [
+        "processes the personal data only on documented instructions from the controller,",
+        "inform the controller of that legal requirement before processing, unless that"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [],
+      "best_bpmn_action_match": [],
+      "case_id": "case_156f3d39867e",
+      "error_type": "FN",
+      "evidence": [],
+      "failure_categories": [
+        "M10_STAGE2_MISSING_ACTION"
+      ],
+      "failure_category_explanations": [
+        "Stage-2 produced no action for the requirement"
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "unknown",
+      "primary_failure_category": "M10_STAGE2_MISSING_ACTION",
+      "requirement_id": "R5-S4-T2",
+      "similarity": [],
+      "source_text": "Taking into account the state of the art, the cost of implementation and the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for rights and freedoms of natural persons posed by the processing, the controller shall, both at the time of the determination of the means for processing and at the time of the processing itself, implement appropriate technical and organisational measures, such as pseudonymisation, which are designed to implement data-protection principles, such as data minimisation, in an effective manner and to integrate the necessary safeguards into the processing in order to meet the requirements of this Regulation and protect the rights of data subjects.",
+      "stage2_actions": [],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "have the right to obtain from the controller confirmation as to whether or not"
+      ],
+      "best_bpmn_action_match": [
+        "The data subject has a right of access and confirmation."
+      ],
+      "case_id": "case_19b2d6f1bfb0",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The data subject has a right of access and confirmation.",
+          "missing": true,
+          "rule_action": "have the right to obtain from the controller confirmation as to whether or not",
+          "similarity": 0.4923
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "Right-to-obtain wording and BPMN right-of-access label are semantically equivalent to a human but MPNet gives 0.492."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-08",
+      "similarity": [
+        0.4923
+      ],
+      "source_text": "The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information the purposes of the processing.",
+      "stage2_actions": [
+        "have the right to obtain from the controller confirmation as to whether or not"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "infringe this Regulation, in particular where the controller has insufficiently",
+        "written advice to the controller"
+      ],
+      "best_bpmn_action_match": [
+        "Receive the controller consultation request"
+      ],
+      "case_id": "case_1a2d6abc026a",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Receive the controller consultation request",
+          "missing": true,
+          "rule_action": "infringe this Regulation, in particular where the controller has insufficiently",
+          "similarity": 0.3948
+        }
+      ],
+      "failure_categories": [
+        "M3_CONDITION_ACTION_IN_DENOMINATOR"
+      ],
+      "failure_category_explanations": [
+        "The span is the condition 'where ... would infringe this Regulation', not the mandatory advice action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M3_CONDITION_ACTION_IN_DENOMINATOR",
+      "requirement_id": "R5-S5-T4",
+      "similarity": [
+        0.3948
+      ],
+      "source_text": "Where the supervisory authority is of the opinion that the intended processing referred to in paragraph 1 would infringe this Regulation, in particular where the controller has insufficiently identified or mitigated the risk, the supervisory authority shall, within period of up to eight weeks of receipt of the request for consultation, provide written advice to the controller and, where applicable to the processor, and may use any of its powers referred to in Article 58.",
+      "stage2_actions": [
+        "infringe this Regulation, in particular where the controller has insufficiently",
+        "written advice to the controller"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "relates to processing activities in several Member States, the supervisory",
+        "pursuant to Article 55 shall, before approving the draft code, amendment",
+        "provide an opinion on whether the draft code, amendment or extension complies"
+      ],
+      "best_bpmn_action_match": [
+        "A multi-State draft code of conduct must be submitted to the Board before it is approved."
+      ],
+      "case_id": "case_1e5363aa87b5",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "A multi-State draft code of conduct must be submitted to the Board before it is approved.",
+          "missing": true,
+          "rule_action": "relates to processing activities in several Member States, the supervisory",
+          "similarity": 0.4136
+        }
+      ],
+      "failure_categories": [
+        "M3_CONDITION_ACTION_IN_DENOMINATOR"
+      ],
+      "failure_category_explanations": [
+        "The span is the condition 'where a draft code ... relates ...', not the mandatory submission action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M3_CONDITION_ACTION_IN_DENOMINATOR",
+      "requirement_id": "R5-S7-T1",
+      "similarity": [
+        0.4136
+      ],
+      "source_text": "Where a draft code of conduct relates to processing activities in several Member States, the supervisory authority which is competent pursuant to Article 55 shall, before approving the draft code, amendment or extension, submit it in the procedure referred to in Article 63 to the Board which shall provide an opinion on whether the draft code, amendment or extension complies with this Regulation or, in the situation referred to in paragraph 3 of this Article, provides appropriate safeguards.",
+      "stage2_actions": [
+        "relates to processing activities in several Member States, the supervisory",
+        "pursuant to Article 55 shall, before approving the draft code, amendment",
+        "provide an opinion on whether the draft code, amendment or extension complies"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "assessing whether consent is freely given, utmost account shall be taken of",
+        "be taken"
+      ],
+      "best_bpmn_action_match": [
+        "Assess whether the consent is freely given"
+      ],
+      "case_id": "case_1fafed22bfdd",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Assess whether the consent is freely given",
+          "missing": true,
+          "rule_action": "be taken",
+          "similarity": 0.1018
+        }
+      ],
+      "failure_categories": [
+        "M2_EXTRA_FRAGMENT_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The span 'be taken' is a fragment of the passive predicate 'account shall be taken'; it is not a standalone mandatory action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M2_EXTRA_FRAGMENT_ACTION",
+      "requirement_id": "R5-D-07",
+      "similarity": [
+        0.1018
+      ],
+      "source_text": "When assessing whether consent is freely given, utmost account shall be taken of whether, inter alia, the performance of a contract, including the provision of a service, is conditional on consent to the processing of personal data that is not necessary for the performance of that contract.",
+      "stage2_actions": [
+        "assessing whether consent is freely given, utmost account shall be taken of",
+        "be taken"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "carry out a review to assess if processing is performed in accordance with the"
+      ],
+      "best_bpmn_action_match": [
+        "Update safeguards based on the review"
+      ],
+      "case_id": "case_203f2134c0ec",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Update safeguards based on the review",
+          "missing": true,
+          "rule_action": "carry out a review to assess if processing is performed in accordance with the",
+          "similarity": 0.4652
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory review action maps to a different review/update label at 0.465."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S5-T3",
+      "similarity": [
+        0.4652
+      ],
+      "source_text": "Where necessary, the controller shall carry out a review to assess if processing is performed in accordance with the data protection impact assessment at least when there is a change of the risk represented by processing operations.",
+      "stage2_actions": [
+        "carry out a review to assess if processing is performed in accordance with the"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "implement appropriate technical and organisational measures to ensure and to be",
+        "be reviewed and updated where necessary."
+      ],
+      "best_bpmn_action_match": [
+        "Review and update the implemented measures where necessary",
+        "Review and update the implemented measures where necessary"
+      ],
+      "case_id": "case_221218bba2d3",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Review and update the implemented measures where necessary",
+          "missing": false,
+          "rule_action": "implement appropriate technical and organisational measures to ensure and to be",
+          "similarity": 0.6645
+        },
+        {
+          "best_model_action": "Review and update the implemented measures where necessary",
+          "missing": false,
+          "rule_action": "be reviewed and updated where necessary.",
+          "similarity": 0.6233
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "Mutant is missed because a related review/update activity remains highly similar (0.664).",
+        "The review/update endpoint maps to the remaining review/update label at 0.623, so the missing action is not detected."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S4-T1",
+      "similarity": [
+        0.6645,
+        0.6233
+      ],
+      "source_text": "Taking into account the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for the rights and freedoms of natural persons, the controller shall implement appropriate technical and organisational measures to ensure and to be able to demonstrate that processing is performed in accordance with this Regulation. Those measures shall be reviewed and updated where necessary.",
+      "stage2_actions": [
+        "implement appropriate technical and organisational measures to ensure and to be",
+        "be reviewed and updated where necessary."
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        ", the controller shall provide the data subject with the following information."
+      ],
+      "best_bpmn_action_match": [
+        "Provide required indirect-collection information to the data subject"
+      ],
+      "case_id": "case_250418025567",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide required indirect-collection information to the data subject",
+          "missing": true,
+          "rule_action": ", the controller shall provide the data subject with the following information.",
+          "similarity": 0.4623
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory action span contains a leading comma and the full clause; MPNet under-maps it to the BPMN label."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S1-T3",
+      "similarity": [
+        0.4623
+      ],
+      "source_text": "Where personal data have not been obtained from the data subject, the controller shall provide the data subject with the following information.",
+      "stage2_actions": [
+        ", the controller shall provide the data subject with the following information."
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "have the right to obtain from the controller the erasure of personal data",
+        "have"
+      ],
+      "best_bpmn_action_match": [
+        "Record the erasure decision"
+      ],
+      "case_id": "case_26761c804689",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Record the erasure decision",
+          "missing": true,
+          "rule_action": "have",
+          "similarity": 0.1132
+        }
+      ],
+      "failure_categories": [
+        "M2_EXTRA_FRAGMENT_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The action is the auxiliary fragment 'have' from 'shall have the obligation to erase'; it is not the complete action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M2_EXTRA_FRAGMENT_ACTION",
+      "requirement_id": "R5-D-10",
+      "similarity": [
+        0.1132
+      ],
+      "source_text": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies.",
+      "stage2_actions": [
+        "have the right to obtain from the controller the erasure of personal data",
+        "have"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        ", the controller shall provide the data subject with the following information."
+      ],
+      "best_bpmn_action_match": [
+        "Provide required indirect-collection information to the data subject"
+      ],
+      "case_id": "case_27a05191cde1",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide required indirect-collection information to the data subject",
+          "missing": true,
+          "rule_action": ", the controller shall provide the data subject with the following information.",
+          "similarity": 0.4623
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory action span contains a leading comma and the full clause; MPNet under-maps it to the BPMN label."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S1-T3",
+      "similarity": [
+        0.4623
+      ],
+      "source_text": "Where personal data have not been obtained from the data subject, the controller shall provide the data subject with the following information.",
+      "stage2_actions": [
+        ", the controller shall provide the data subject with the following information."
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide information on action taken on a request under Articles 15 to 22 to the"
+      ],
+      "best_bpmn_action_match": [
+        "The controller must respond to data subject requests within one month."
+      ],
+      "case_id": "case_293adf4880a6",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The controller must respond to data subject requests within one month.",
+          "missing": true,
+          "rule_action": "provide information on action taken on a request under Articles 15 to 22 to the",
+          "similarity": 0.3668
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory action is paraphrased differently from the BPMN activity, producing similarity 0.367."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S3-T1",
+      "similarity": [
+        0.3668
+      ],
+      "source_text": "The controller shall provide information on action taken on a request under Articles 15 to 22 to the data subject without undue delay and in any event within one month of receipt of the request.",
+      "stage2_actions": [
+        "provide information on action taken on a request under Articles 15 to 22 to the"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject with the following information necessary to ensure fair"
+      ],
+      "best_bpmn_action_match": [
+        "Provide further indirect-collection information to the data subject"
+      ],
+      "case_id": "case_2e0630dc5be5",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide further indirect-collection information to the data subject",
+          "missing": true,
+          "rule_action": "provide the data subject with the following information necessary to ensure fair",
+          "similarity": 0.461
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory action is a long clause truncated before its object; MPNet similarity 0.461."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S1-T4",
+      "similarity": [
+        0.461
+      ],
+      "source_text": "In addition to the information referred to in paragraph 1, the controller shall provide the data subject with the following information necessary to ensure fair and transparent processing in respect of the data subject.",
+      "stage2_actions": [
+        "provide the data subject with the following information necessary to ensure fair"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "communicate the personal data breach to the data subject without undue delay."
+      ],
+      "best_bpmn_action_match": [
+        "High-risk breaches must be communicated to data subjects without undue delay."
+      ],
+      "case_id": "case_36a5f51046f7",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "High-risk breaches must be communicated to data subjects without undue delay.",
+          "missing": false,
+          "rule_action": "communicate the personal data breach to the data subject without undue delay.",
+          "similarity": 0.7911
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "A related communication activity remains in the mutant and maps at 0.791, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S6-T4",
+      "similarity": [
+        0.7911
+      ],
+      "source_text": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the personal data breach to the data subject without undue delay.",
+      "stage2_actions": [
+        "communicate the personal data breach to the data subject without undue delay."
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "best_bpmn_action_match": [
+        "Provide information on the other purpose prior to further processing"
+      ],
+      "case_id": "case_3b01b9c36d0f",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide information on the other purpose prior to further processing",
+          "missing": true,
+          "rule_action": "provide",
+          "similarity": 0.2764
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory main predicate is a short verb fragment; MPNet maps it only 0.276 to the full BPMN activity."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-01",
+      "similarity": [
+        0.2764
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "make reasonable efforts to verify in such cases that consent is given or"
+      ],
+      "best_bpmn_action_match": [
+        "Make reasonable efforts to verify parental authorisation"
+      ],
+      "case_id": "case_47ac07c5ced4",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Make reasonable efforts to verify parental authorisation",
+          "missing": true,
+          "rule_action": "make reasonable efforts to verify in such cases that consent is given or",
+          "similarity": 0.514
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory verification action maps to a paraphrased BPMN label at 0.514."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S2-T2",
+      "similarity": [
+        0.514
+      ],
+      "source_text": "The controller shall make reasonable efforts to verify in such cases that consent is given or authorised by the holder of parental responsibility over the child, taking into consideration available technology.",
+      "stage2_actions": [
+        "make reasonable efforts to verify in such cases that consent is given or"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "carry out an assessment of the impact of the envisaged processing operations on"
+      ],
+      "best_bpmn_action_match": [
+        "Describe the envisaged high-risk processing"
+      ],
+      "case_id": "case_4aec33c00dc8",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Describe the envisaged high-risk processing",
+          "missing": true,
+          "rule_action": "carry out an assessment of the impact of the envisaged processing operations on",
+          "similarity": 0.5176
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory DPIA action maps to a label paraphrased as 'Describe the envisaged high-risk processing' with similarity 0.518."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-04",
+      "similarity": [
+        0.5176
+      ],
+      "source_text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+      "stage2_actions": [
+        "carry out an assessment of the impact of the envisaged processing operations on"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "collected from the data subject, the controller shall, at the time when personal"
+      ],
+      "best_bpmn_action_match": [
+        "Collect personal data from the data subject"
+      ],
+      "case_id": "case_4c59fee89687",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Collect personal data from the data subject",
+          "missing": true,
+          "rule_action": "collected from the data subject, the controller shall, at the time when personal",
+          "similarity": 0.5098
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Action span starts inside the collection condition and mixes it with the main clause; MPNet similarity 0.510."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S1-T1",
+      "similarity": [
+        0.5098
+      ],
+      "source_text": "Where personal data relating to a data subject are collected from the data subject, the controller shall, at the time when personal data are obtained, provide the data subject with all of the following information.",
+      "stage2_actions": [
+        "collected from the data subject, the controller shall, at the time when personal"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "take steps to ensure that any natural person acting under the authority of the"
+      ],
+      "best_bpmn_action_match": [
+        "Provide documented instructions to authorised personnel"
+      ],
+      "case_id": "case_5b5cc6e83173",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide documented instructions to authorised personnel",
+          "missing": true,
+          "rule_action": "take steps to ensure that any natural person acting under the authority of the",
+          "similarity": 0.4313
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory instruction-compliance action is paraphrased in BPMN, similarity 0.431."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S6-T2",
+      "similarity": [
+        0.4313
+      ],
+      "source_text": "The controller and processor shall take steps to ensure that any natural person acting under the authority of the controller or the processor who has access to personal data does not process them except on instructions from the controller, unless he or she is required to do so by Union or Member State law.",
+      "stage2_actions": [
+        "take steps to ensure that any natural person acting under the authority of the"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject with the following information necessary to ensure fair"
+      ],
+      "best_bpmn_action_match": [
+        "Provide further indirect-collection information to the data subject"
+      ],
+      "case_id": "case_6209f221b20b",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide further indirect-collection information to the data subject",
+          "missing": true,
+          "rule_action": "provide the data subject with the following information necessary to ensure fair",
+          "similarity": 0.461
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory action is a long clause truncated before its object; MPNet similarity 0.461."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S1-T4",
+      "similarity": [
+        0.461
+      ],
+      "source_text": "In addition to the information referred to in paragraph 1, the controller shall provide the data subject with the following information necessary to ensure fair and transparent processing in respect of the data subject.",
+      "stage2_actions": [
+        "provide the data subject with the following information necessary to ensure fair"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "best_bpmn_action_match": [
+        "Provide information on the other purpose prior to further processing"
+      ],
+      "case_id": "case_648835a58615",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide information on the other purpose prior to further processing",
+          "missing": true,
+          "rule_action": "provide",
+          "similarity": 0.2764
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory main predicate is a short verb fragment; MPNet maps it only 0.276 to the full BPMN activity."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-02",
+      "similarity": [
+        0.2764
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [],
+      "best_bpmn_action_match": [],
+      "case_id": "case_64985e535fd0",
+      "error_type": "FN",
+      "evidence": [],
+      "failure_categories": [
+        "M10_STAGE2_MISSING_ACTION"
+      ],
+      "failure_category_explanations": [
+        "Stage-2 produced no action for the requirement"
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "unknown",
+      "primary_failure_category": "M10_STAGE2_MISSING_ACTION",
+      "requirement_id": "R5-S1-T2",
+      "similarity": [],
+      "source_text": "In addition to the information referred to in paragraph 1, the controller shall, at the time when personal data are obtained, provide the data subject with the following further information necessary to ensure fair and transparent processing: The period for which the personal data will be stored, or if that is not possible, the criteria used to determine that period.",
+      "stage2_actions": [],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "be informed by the controller before the restriction of processing is lifted."
+      ],
+      "best_bpmn_action_match": [
+        "The controller must inform the data subject before lifting a processing restriction."
+      ],
+      "case_id": "case_6fda0f20b097",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "The controller must inform the data subject before lifting a processing restriction.",
+          "missing": false,
+          "rule_action": "be informed by the controller before the restriction of processing is lifted.",
+          "similarity": 0.7865
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "Inflected passive action maps to the BPMN 'controller must inform...' label at 0.786; the mutant is not detected."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-03",
+      "similarity": [
+        0.7865
+      ],
+      "source_text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+      "stage2_actions": [
+        "be informed by the controller before the restriction of processing is lifted."
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "have the right to obtain from the controller without undue delay the"
+      ],
+      "best_bpmn_action_match": [
+        "The data subject has a right to rectification without undue delay."
+      ],
+      "case_id": "case_72073c61be4c",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The data subject has a right to rectification without undue delay.",
+          "missing": true,
+          "rule_action": "have the right to obtain from the controller without undue delay the",
+          "similarity": 0.5181
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "The passive right wording and the BPMN rectification-right label are equivalent to a human but MPNet gives 0.518."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-09",
+      "similarity": [
+        0.5181
+      ],
+      "source_text": "The data subject shall have the right to obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her.",
+      "stage2_actions": [
+        "have the right to obtain from the controller without undue delay the"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "relates to processing activities in several Member States, the supervisory",
+        "pursuant to Article 55 shall, before approving the draft code, amendment",
+        "provide an opinion on whether the draft code, amendment or extension complies"
+      ],
+      "best_bpmn_action_match": [
+        "A multi-State draft code of conduct must be submitted to the Board before it is approved."
+      ],
+      "case_id": "case_7dcc88ac3cf1",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "A multi-State draft code of conduct must be submitted to the Board before it is approved.",
+          "missing": true,
+          "rule_action": "relates to processing activities in several Member States, the supervisory",
+          "similarity": 0.4136
+        }
+      ],
+      "failure_categories": [
+        "M3_CONDITION_ACTION_IN_DENOMINATOR"
+      ],
+      "failure_category_explanations": [
+        "The span is the condition 'where a draft code ... relates ...', not the mandatory submission action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M3_CONDITION_ACTION_IN_DENOMINATOR",
+      "requirement_id": "R5-S7-T1",
+      "similarity": [
+        0.4136
+      ],
+      "source_text": "Where a draft code of conduct relates to processing activities in several Member States, the supervisory authority which is competent pursuant to Article 55 shall, before approving the draft code, amendment or extension, submit it in the procedure referred to in Article 63 to the Board which shall provide an opinion on whether the draft code, amendment or extension complies with this Regulation or, in the situation referred to in paragraph 3 of this Article, provides appropriate safeguards.",
+      "stage2_actions": [
+        "relates to processing activities in several Member States, the supervisory",
+        "pursuant to Article 55 shall, before approving the draft code, amendment",
+        "provide an opinion on whether the draft code, amendment or extension complies"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "inform the data subject without delay and at the latest within one month of"
+      ],
+      "best_bpmn_action_match": [
+        "Inform the data subject of the reasons for not taking action"
+      ],
+      "case_id": "case_8447fd35edc7",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Inform the data subject of the reasons for not taking action",
+          "missing": true,
+          "rule_action": "inform the data subject without delay and at the latest within one month of",
+          "similarity": 0.4735
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory information action is truncated and maps to a different conditional notification label at 0.473."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S3-T2",
+      "similarity": [
+        0.4735
+      ],
+      "source_text": "If the controller does not take action on the request of the data subject, the controller shall inform the data subject without delay and at the latest within one month of receipt of the request of the reasons for not taking action and on the possibility of lodging a complaint with a supervisory authority and seeking a judicial remedy.",
+      "stage2_actions": [
+        "inform the data subject without delay and at the latest within one month of"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject with the following information necessary to ensure fair"
+      ],
+      "best_bpmn_action_match": [
+        "Provide further indirect-collection information to the data subject"
+      ],
+      "case_id": "case_8480429a9517",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide further indirect-collection information to the data subject",
+          "missing": true,
+          "rule_action": "provide the data subject with the following information necessary to ensure fair",
+          "similarity": 0.461
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory action is a long clause truncated before its object; MPNet similarity 0.461."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S1-T4",
+      "similarity": [
+        0.461
+      ],
+      "source_text": "In addition to the information referred to in paragraph 1, the controller shall provide the data subject with the following information necessary to ensure fair and transparent processing in respect of the data subject.",
+      "stage2_actions": [
+        "provide the data subject with the following information necessary to ensure fair"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "infringe this Regulation, in particular where the controller has insufficiently",
+        "written advice to the controller"
+      ],
+      "best_bpmn_action_match": [
+        "Receive the controller consultation request"
+      ],
+      "case_id": "case_8c729ed572f4",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Receive the controller consultation request",
+          "missing": true,
+          "rule_action": "infringe this Regulation, in particular where the controller has insufficiently",
+          "similarity": 0.3948
+        }
+      ],
+      "failure_categories": [
+        "M3_CONDITION_ACTION_IN_DENOMINATOR"
+      ],
+      "failure_category_explanations": [
+        "The span is the condition 'where ... would infringe this Regulation', not the mandatory advice action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M3_CONDITION_ACTION_IN_DENOMINATOR",
+      "requirement_id": "R5-S5-T4",
+      "similarity": [
+        0.3948
+      ],
+      "source_text": "Where the supervisory authority is of the opinion that the intended processing referred to in paragraph 1 would infringe this Regulation, in particular where the controller has insufficiently identified or mitigated the risk, the supervisory authority shall, within period of up to eight weeks of receipt of the request for consultation, provide written advice to the controller and, where applicable to the processor, and may use any of its powers referred to in Article 58.",
+      "stage2_actions": [
+        "infringe this Regulation, in particular where the controller has insufficiently",
+        "written advice to the controller"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "make reasonable efforts to verify in such cases that consent is given or"
+      ],
+      "best_bpmn_action_match": [
+        "Make reasonable efforts to verify parental authorisation"
+      ],
+      "case_id": "case_99b7bc6f1fc6",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Make reasonable efforts to verify parental authorisation",
+          "missing": true,
+          "rule_action": "make reasonable efforts to verify in such cases that consent is given or",
+          "similarity": 0.514
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory verification action maps to a paraphrased BPMN label at 0.514."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S2-T2",
+      "similarity": [
+        0.514
+      ],
+      "source_text": "The controller shall make reasonable efforts to verify in such cases that consent is given or authorised by the holder of parental responsibility over the child, taking into consideration available technology.",
+      "stage2_actions": [
+        "make reasonable efforts to verify in such cases that consent is given or"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "best_bpmn_action_match": [
+        "Provide information on the other purpose prior to further processing"
+      ],
+      "case_id": "case_9c6fcd32f03c",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide information on the other purpose prior to further processing",
+          "missing": true,
+          "rule_action": "provide",
+          "similarity": 0.2764
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory main predicate is a short verb fragment; MPNet maps it only 0.276 to the full BPMN activity."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-01",
+      "similarity": [
+        0.2764
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "carry out an assessment of the impact of the envisaged processing operations on"
+      ],
+      "best_bpmn_action_match": [
+        "Describe the envisaged high-risk processing"
+      ],
+      "case_id": "case_a2f445c641d1",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Describe the envisaged high-risk processing",
+          "missing": true,
+          "rule_action": "carry out an assessment of the impact of the envisaged processing operations on",
+          "similarity": 0.5176
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory DPIA action maps to a label paraphrased as 'Describe the envisaged high-risk processing' with similarity 0.518."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-04",
+      "similarity": [
+        0.5176
+      ],
+      "source_text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+      "stage2_actions": [
+        "carry out an assessment of the impact of the envisaged processing operations on"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "best_bpmn_action_match": [
+        "Provide information on the other purpose prior to further processing"
+      ],
+      "case_id": "case_a9fd75331508",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide information on the other purpose prior to further processing",
+          "missing": true,
+          "rule_action": "provide",
+          "similarity": 0.2764
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory main predicate is a short verb fragment; MPNet maps it only 0.276 to the full BPMN activity."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-01",
+      "similarity": [
+        0.2764
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "inform the data subject without delay and at the latest within one month of"
+      ],
+      "best_bpmn_action_match": [
+        "Inform the data subject of the reasons for not taking action"
+      ],
+      "case_id": "case_ba895d210eaf",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Inform the data subject of the reasons for not taking action",
+          "missing": true,
+          "rule_action": "inform the data subject without delay and at the latest within one month of",
+          "similarity": 0.4735
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory information action is truncated and maps to a different conditional notification label at 0.473."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S3-T2",
+      "similarity": [
+        0.4735
+      ],
+      "source_text": "If the controller does not take action on the request of the data subject, the controller shall inform the data subject without delay and at the latest within one month of receipt of the request of the reasons for not taking action and on the possibility of lodging a complaint with a supervisory authority and seeking a judicial remedy.",
+      "stage2_actions": [
+        "inform the data subject without delay and at the latest within one month of"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide information on action taken on a request under Articles 15 to 22 to the"
+      ],
+      "best_bpmn_action_match": [
+        "The controller must respond to data subject requests within one month."
+      ],
+      "case_id": "case_c20eeebe67dd",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The controller must respond to data subject requests within one month.",
+          "missing": true,
+          "rule_action": "provide information on action taken on a request under Articles 15 to 22 to the",
+          "similarity": 0.3668
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory action is paraphrased differently from the BPMN activity, producing similarity 0.367."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S3-T1",
+      "similarity": [
+        0.3668
+      ],
+      "source_text": "The controller shall provide information on action taken on a request under Articles 15 to 22 to the data subject without undue delay and in any event within one month of receipt of the request.",
+      "stage2_actions": [
+        "provide information on action taken on a request under Articles 15 to 22 to the"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "relates to processing activities in several Member States, the supervisory",
+        "pursuant to Article 55 shall, before approving the draft code, amendment",
+        "provide an opinion on whether the draft code, amendment or extension complies"
+      ],
+      "best_bpmn_action_match": [
+        "A multi-State draft code of conduct must be submitted to the Board before it is approved."
+      ],
+      "case_id": "case_c2c28cb239bc",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "A multi-State draft code of conduct must be submitted to the Board before it is approved.",
+          "missing": true,
+          "rule_action": "relates to processing activities in several Member States, the supervisory",
+          "similarity": 0.4136
+        }
+      ],
+      "failure_categories": [
+        "M3_CONDITION_ACTION_IN_DENOMINATOR"
+      ],
+      "failure_category_explanations": [
+        "The span is the condition 'where a draft code ... relates ...', not the mandatory submission action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M3_CONDITION_ACTION_IN_DENOMINATOR",
+      "requirement_id": "R5-S7-T1",
+      "similarity": [
+        0.4136
+      ],
+      "source_text": "Where a draft code of conduct relates to processing activities in several Member States, the supervisory authority which is competent pursuant to Article 55 shall, before approving the draft code, amendment or extension, submit it in the procedure referred to in Article 63 to the Board which shall provide an opinion on whether the draft code, amendment or extension complies with this Regulation or, in the situation referred to in paragraph 3 of this Article, provides appropriate safeguards.",
+      "stage2_actions": [
+        "relates to processing activities in several Member States, the supervisory",
+        "pursuant to Article 55 shall, before approving the draft code, amendment",
+        "provide an opinion on whether the draft code, amendment or extension complies"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "notify the personal data breach to the supervisory authority competent in"
+      ],
+      "best_bpmn_action_match": [
+        "Become aware of the personal data breach"
+      ],
+      "case_id": "case_c5b585c4439f",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Become aware of the personal data breach",
+          "missing": false,
+          "rule_action": "notify the personal data breach to the supervisory authority competent in",
+          "similarity": 0.7745
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "Notification action maps to the antecedent 'become aware' activity at 0.774; the mutant is not detected."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-12",
+      "similarity": [
+        0.7745
+      ],
+      "source_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons.",
+      "stage2_actions": [
+        "notify the personal data breach to the supervisory authority competent in"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "carry out a review to assess if processing is performed in accordance with the"
+      ],
+      "best_bpmn_action_match": [
+        "Update safeguards based on the review"
+      ],
+      "case_id": "case_c962e006a37d",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Update safeguards based on the review",
+          "missing": true,
+          "rule_action": "carry out a review to assess if processing is performed in accordance with the",
+          "similarity": 0.4652
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory review action maps to a different review/update label at 0.465."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S5-T3",
+      "similarity": [
+        0.4652
+      ],
+      "source_text": "Where necessary, the controller shall carry out a review to assess if processing is performed in accordance with the data protection impact assessment at least when there is a change of the risk represented by processing operations.",
+      "stage2_actions": [
+        "carry out a review to assess if processing is performed in accordance with the"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [],
+      "best_bpmn_action_match": [],
+      "case_id": "case_d1ab41696c03",
+      "error_type": "FN",
+      "evidence": [],
+      "failure_categories": [
+        "M10_STAGE2_MISSING_ACTION"
+      ],
+      "failure_category_explanations": [
+        "Stage-2 produced no action for the requirement"
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "unknown",
+      "primary_failure_category": "M10_STAGE2_MISSING_ACTION",
+      "requirement_id": "R5-S8-T1",
+      "similarity": [],
+      "source_text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification.",
+      "stage2_actions": [],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "have the right to obtain from the controller without undue delay the"
+      ],
+      "best_bpmn_action_match": [
+        "The data subject has a right to rectification without undue delay."
+      ],
+      "case_id": "case_d2f6fee80f4e",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The data subject has a right to rectification without undue delay.",
+          "missing": true,
+          "rule_action": "have the right to obtain from the controller without undue delay the",
+          "similarity": 0.5181
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "The passive right wording and the BPMN rectification-right label are equivalent to a human but MPNet gives 0.518."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-09",
+      "similarity": [
+        0.5181
+      ],
+      "source_text": "The data subject shall have the right to obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her.",
+      "stage2_actions": [
+        "have the right to obtain from the controller without undue delay the"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide information on action taken on a request under Articles 15 to 22 to the"
+      ],
+      "best_bpmn_action_match": [
+        "The controller must respond to data subject requests within one month."
+      ],
+      "case_id": "case_d391f7745e2d",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The controller must respond to data subject requests within one month.",
+          "missing": true,
+          "rule_action": "provide information on action taken on a request under Articles 15 to 22 to the",
+          "similarity": 0.3668
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory action is paraphrased differently from the BPMN activity, producing similarity 0.367."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S3-T1",
+      "similarity": [
+        0.3668
+      ],
+      "source_text": "The controller shall provide information on action taken on a request under Articles 15 to 22 to the data subject without undue delay and in any event within one month of receipt of the request.",
+      "stage2_actions": [
+        "provide information on action taken on a request under Articles 15 to 22 to the"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "infringe this Regulation, in particular where the controller has insufficiently",
+        "written advice to the controller"
+      ],
+      "best_bpmn_action_match": [
+        "Receive the controller consultation request"
+      ],
+      "case_id": "case_d46c4dbbf7b8",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Receive the controller consultation request",
+          "missing": true,
+          "rule_action": "infringe this Regulation, in particular where the controller has insufficiently",
+          "similarity": 0.3948
+        }
+      ],
+      "failure_categories": [
+        "M3_CONDITION_ACTION_IN_DENOMINATOR"
+      ],
+      "failure_category_explanations": [
+        "The span is the condition 'where ... would infringe this Regulation', not the mandatory advice action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M3_CONDITION_ACTION_IN_DENOMINATOR",
+      "requirement_id": "R5-S5-T4",
+      "similarity": [
+        0.3948
+      ],
+      "source_text": "Where the supervisory authority is of the opinion that the intended processing referred to in paragraph 1 would infringe this Regulation, in particular where the controller has insufficiently identified or mitigated the risk, the supervisory authority shall, within period of up to eight weeks of receipt of the request for consultation, provide written advice to the controller and, where applicable to the processor, and may use any of its powers referred to in Article 58.",
+      "stage2_actions": [
+        "infringe this Regulation, in particular where the controller has insufficiently",
+        "written advice to the controller"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        ", the controller shall provide the data subject with the following information."
+      ],
+      "best_bpmn_action_match": [
+        "Provide required indirect-collection information to the data subject"
+      ],
+      "case_id": "case_d7a85c641eb0",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide required indirect-collection information to the data subject",
+          "missing": true,
+          "rule_action": ", the controller shall provide the data subject with the following information.",
+          "similarity": 0.4623
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory action span contains a leading comma and the full clause; MPNet under-maps it to the BPMN label."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S1-T3",
+      "similarity": [
+        0.4623
+      ],
+      "source_text": "Where personal data have not been obtained from the data subject, the controller shall provide the data subject with the following information.",
+      "stage2_actions": [
+        ", the controller shall provide the data subject with the following information."
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "have the right to obtain from the controller the erasure of personal data",
+        "have"
+      ],
+      "best_bpmn_action_match": [
+        "Record the erasure decision"
+      ],
+      "case_id": "case_d824876f7bf8",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Record the erasure decision",
+          "missing": true,
+          "rule_action": "have",
+          "similarity": 0.1132
+        }
+      ],
+      "failure_categories": [
+        "M2_EXTRA_FRAGMENT_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The action is the auxiliary fragment 'have' from 'shall have the obligation to erase'; it is not the complete action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M2_EXTRA_FRAGMENT_ACTION",
+      "requirement_id": "R5-D-10",
+      "similarity": [
+        0.1132
+      ],
+      "source_text": "The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies.",
+      "stage2_actions": [
+        "have the right to obtain from the controller the erasure of personal data",
+        "have"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "assessing whether consent is freely given, utmost account shall be taken of",
+        "be taken"
+      ],
+      "best_bpmn_action_match": [
+        "Assess whether the consent is freely given"
+      ],
+      "case_id": "case_dbe5d0716353",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Assess whether the consent is freely given",
+          "missing": true,
+          "rule_action": "be taken",
+          "similarity": 0.1018
+        }
+      ],
+      "failure_categories": [
+        "M2_EXTRA_FRAGMENT_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The span 'be taken' is a fragment of the passive predicate 'account shall be taken'; it is not a standalone mandatory action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M2_EXTRA_FRAGMENT_ACTION",
+      "requirement_id": "R5-D-07",
+      "similarity": [
+        0.1018
+      ],
+      "source_text": "When assessing whether consent is freely given, utmost account shall be taken of whether, inter alia, the performance of a contract, including the provision of a service, is conditional on consent to the processing of personal data that is not necessary for the performance of that contract.",
+      "stage2_actions": [
+        "assessing whether consent is freely given, utmost account shall be taken of",
+        "be taken"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "able to demonstrate that the data subject has consented to processing of his or"
+      ],
+      "best_bpmn_action_match": [
+        "Receive and record the data subject consent"
+      ],
+      "case_id": "case_e382dcb7708b",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Receive and record the data subject consent",
+          "missing": false,
+          "rule_action": "able to demonstrate that the data subject has consented to processing of his or",
+          "similarity": 0.6762
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "Demonstrate-consent action maps to a consent-record activity at 0.676; the missing action is masked."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-06",
+      "similarity": [
+        0.6762
+      ],
+      "source_text": "Where processing is based on consent, the controller shall be able to demonstrate that the data subject has consented to processing of his or her personal data.",
+      "stage2_actions": [
+        "able to demonstrate that the data subject has consented to processing of his or"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "carry out an assessment of the impact of the envisaged processing operations on"
+      ],
+      "best_bpmn_action_match": [
+        "Describe the envisaged high-risk processing"
+      ],
+      "case_id": "case_ec2a9cc66fae",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Describe the envisaged high-risk processing",
+          "missing": true,
+          "rule_action": "carry out an assessment of the impact of the envisaged processing operations on",
+          "similarity": 0.5176
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory DPIA action maps to a label paraphrased as 'Describe the envisaged high-risk processing' with similarity 0.518."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-04",
+      "similarity": [
+        0.5176
+      ],
+      "source_text": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.",
+      "stage2_actions": [
+        "carry out an assessment of the impact of the envisaged processing operations on"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [],
+      "best_bpmn_action_match": [],
+      "case_id": "case_f2558cf5f53d",
+      "error_type": "FN",
+      "evidence": [],
+      "failure_categories": [
+        "M10_STAGE2_MISSING_ACTION"
+      ],
+      "failure_category_explanations": [
+        "Stage-2 produced no action for the requirement"
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "sun",
+      "predicted_status": "unknown",
+      "primary_failure_category": "M10_STAGE2_MISSING_ACTION",
+      "requirement_id": "R5-D-11",
+      "similarity": [],
+      "source_text": "The data subject shall have the right to receive the personal data concerning him or her, which he or she has provided to a controller, in a structured, commonly used and machine-readable format and have the right to transmit those data to another controller without hindrance from the controller to which the personal data have been provided, where the processing is based on consent pursuant to point (a) of Article 6(1) or point (a) of Article 9(2) or on a contract pursuant to point (b) of Article 6(1); and the processing is carried out by automated means.",
+      "stage2_actions": [],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "processes the personal data only on documented instructions from the controller,",
+        "inform the controller of that legal requirement before processing, unless that"
+      ],
+      "best_bpmn_action_match": [
+        "Receive documented processing instructions from the controller"
+      ],
+      "case_id": "case_f2e0ecd3abf8",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Receive documented processing instructions from the controller",
+          "missing": true,
+          "rule_action": "inform the controller of that legal requirement before processing, unless that",
+          "similarity": 0.4363
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory inform-controller action is embedded with a trailing subordinate clause; similarity 0.436."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S4-T3",
+      "similarity": [
+        0.4363
+      ],
+      "source_text": "the processor processes the personal data only on documented instructions from the controller, including with regard to transfers of personal data to a third country or an international organisation, unless required to do so by Union or Member State law to which the processor is subject; in such a case, the processor shall inform the controller of that legal requirement before processing, unless that law prohibits such information on important grounds of public interest",
+      "stage2_actions": [
+        "processes the personal data only on documented instructions from the controller,",
+        "inform the controller of that legal requirement before processing, unless that"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "best_bpmn_action_match": [
+        "Provide information on the other purpose prior to further processing"
+      ],
+      "case_id": "case_f7bb207445df",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide information on the other purpose prior to further processing",
+          "missing": true,
+          "rule_action": "provide",
+          "similarity": 0.2764
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory main predicate is a short verb fragment; MPNet maps it only 0.276 to the full BPMN activity."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-02",
+      "similarity": [
+        0.2764
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "inform the data subject without delay and at the latest within one month of"
+      ],
+      "best_bpmn_action_match": [
+        "Inform the data subject of the reasons for not taking action"
+      ],
+      "case_id": "case_f88b4ccdc713",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Inform the data subject of the reasons for not taking action",
+          "missing": true,
+          "rule_action": "inform the data subject without delay and at the latest within one month of",
+          "similarity": 0.4735
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory information action is truncated and maps to a different conditional notification label at 0.473."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S3-T2",
+      "similarity": [
+        0.4735
+      ],
+      "source_text": "If the controller does not take action on the request of the data subject, the controller shall inform the data subject without delay and at the latest within one month of receipt of the request of the reasons for not taking action and on the possibility of lodging a complaint with a supervisory authority and seeking a judicial remedy.",
+      "stage2_actions": [
+        "inform the data subject without delay and at the latest within one month of"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "collected from the data subject, the controller shall, at the time when personal"
+      ],
+      "best_bpmn_action_match": [
+        "Collect personal data from the data subject"
+      ],
+      "case_id": "case_fe8ab9bca28a",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Collect personal data from the data subject",
+          "missing": true,
+          "rule_action": "collected from the data subject, the controller shall, at the time when personal",
+          "similarity": 0.5098
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Action span starts inside the collection condition and mixes it with the main clause; MPNet similarity 0.510."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S1-T1",
+      "similarity": [
+        0.5098
+      ],
+      "source_text": "Where personal data relating to a data subject are collected from the data subject, the controller shall, at the time when personal data are obtained, provide the data subject with all of the following information.",
+      "stage2_actions": [
+        "collected from the data subject, the controller shall, at the time when personal"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "best_bpmn_action_match": [
+        "Provide information on the other purpose prior to further processing"
+      ],
+      "case_id": "case_ff937cc4c24e",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Provide information on the other purpose prior to further processing",
+          "missing": true,
+          "rule_action": "provide",
+          "similarity": 0.2764
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory main predicate is a short verb fragment; MPNet maps it only 0.276 to the full BPMN activity."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "sun",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-02",
+      "similarity": [
+        0.2764
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "intends to further process the personal data for a purpose other than that for",
+        "provide"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "processes the personal data",
+        "inform the controller of that legal requirement"
+      ],
+      "best_bpmn_action_match": [
+        "Report any instruction that appears to infringe data-protection law"
+      ],
+      "case_id": "case_0f67bfdd277b",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Report any instruction that appears to infringe data-protection law",
+          "missing": true,
+          "rule_action": "inform the controller of that legal requirement",
+          "similarity": 0.3652
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory inform action maps to the opposite instruction-receipt BPMN label at 0.365."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S4-T3",
+      "similarity": [
+        0.3652
+      ],
+      "source_text": "the processor processes the personal data only on documented instructions from the controller, including with regard to transfers of personal data to a third country or an international organisation, unless required to do so by Union or Member State law to which the processor is subject; in such a case, the processor shall inform the controller of that legal requirement before processing, unless that law prohibits such information on important grounds of public interest",
+      "stage2_actions": [
+        "processes the personal data",
+        "inform the controller of that legal requirement"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "implement appropriate technical and organisational measures",
+        "integrate the necessary safeguards into the processing"
+      ],
+      "best_bpmn_action_match": [
+        "Determine the means and purposes of processing"
+      ],
+      "case_id": "case_11233dd30223",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Determine the means and purposes of processing",
+          "missing": true,
+          "rule_action": "implement appropriate technical and organisational measures",
+          "similarity": 0.3891
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory measures action maps to a different BPMN activity at 0.389."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S4-T2",
+      "similarity": [
+        0.3891
+      ],
+      "source_text": "Taking into account the state of the art, the cost of implementation and the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for rights and freedoms of natural persons posed by the processing, the controller shall, both at the time of the determination of the means for processing and at the time of the processing itself, implement appropriate technical and organisational measures, such as pseudonymisation, which are designed to implement data-protection principles, such as data minimisation, in an effective manner and to integrate the necessary safeguards into the processing in order to meet the requirements of this Regulation and protect the rights of data subjects.",
+      "stage2_actions": [
+        "implement appropriate technical and organisational measures",
+        "integrate the necessary safeguards into the processing"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide written advice to the controller",
+        "use any of its powers referred to in Article 58"
+      ],
+      "best_bpmn_action_match": [
+        "The supervisory authority must provide written advice within up to eight weeks of a consultation request."
+      ],
+      "case_id": "case_1a2d6abc026a",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The supervisory authority must provide written advice within up to eight weeks of a consultation request.",
+          "missing": true,
+          "rule_action": "use any of its powers referred to in Article 58",
+          "similarity": 0.317
+        }
+      ],
+      "failure_categories": [
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The source says the authority 'may use any of its powers'; this is a permission, not a mandatory obligation action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M7_SUBORDINATE_NON_OBLIGATION_ACTION",
+      "requirement_id": "R5-S5-T4",
+      "similarity": [
+        0.317
+      ],
+      "source_text": "Where the supervisory authority is of the opinion that the intended processing referred to in paragraph 1 would infringe this Regulation, in particular where the controller has insufficiently identified or mitigated the risk, the supervisory authority shall, within period of up to eight weeks of receipt of the request for consultation, provide written advice to the controller and, where applicable to the processor, and may use any of its powers referred to in Article 58.",
+      "stage2_actions": [
+        "provide written advice to the controller",
+        "use any of its powers referred to in Article 58"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "taken"
+      ],
+      "best_bpmn_action_match": [
+        "Record the assessment of free consent"
+      ],
+      "case_id": "case_1fafed22bfdd",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Record the assessment of free consent",
+          "missing": true,
+          "rule_action": "taken",
+          "similarity": 0.0867
+        }
+      ],
+      "failure_categories": [
+        "M2_EXTRA_FRAGMENT_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The span 'taken' is a fragment of the passive predicate 'account shall be taken'; it is not a standalone action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M2_EXTRA_FRAGMENT_ACTION",
+      "requirement_id": "R5-D-07",
+      "similarity": [
+        0.0867
+      ],
+      "source_text": "When assessing whether consent is freely given, utmost account shall be taken of whether, inter alia, the performance of a contract, including the provision of a service, is conditional on consent to the processing of personal data that is not necessary for the performance of that contract.",
+      "stage2_actions": [
+        "taken"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "carry out a review"
+      ],
+      "best_bpmn_action_match": [
+        "Update safeguards based on the review"
+      ],
+      "case_id": "case_203f2134c0ec",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Update safeguards based on the review",
+          "missing": true,
+          "rule_action": "carry out a review",
+          "similarity": 0.4705
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory review action maps to a review/update label at 0.470."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S5-T3",
+      "similarity": [
+        0.4705
+      ],
+      "source_text": "Where necessary, the controller shall carry out a review to assess if processing is performed in accordance with the data protection impact assessment at least when there is a change of the risk represented by processing operations.",
+      "stage2_actions": [
+        "carry out a review"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "inform the data subject"
+      ],
+      "best_bpmn_action_match": [
+        "Receive the data subject request"
+      ],
+      "case_id": "case_220918995d29",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Receive the data subject request",
+          "missing": false,
+          "rule_action": "inform the data subject",
+          "similarity": 0.6026
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "The reduced action maps above gamma to a related request-handling activity, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S3-T2",
+      "similarity": [
+        0.6026
+      ],
+      "source_text": "If the controller does not take action on the request of the data subject, the controller shall inform the data subject without delay and at the latest within one month of receipt of the request of the reasons for not taking action and on the possibility of lodging a complaint with a supervisory authority and seeking a judicial remedy.",
+      "stage2_actions": [
+        "inform the data subject"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2"
+      ],
+      "best_bpmn_action_match": [
+        "Further processing of indirectly obtained personal data requires prior notice."
+      ],
+      "case_id": "case_2a918b013dbb",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Further processing of indirectly obtained personal data requires prior notice.",
+          "missing": false,
+          "rule_action": "provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2",
+          "similarity": 0.6129
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "The long action maps above gamma to a related prior-notice activity, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-02",
+      "similarity": [
+        0.6129
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were obtained, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "communicate the personal data breach to the data subject"
+      ],
+      "best_bpmn_action_match": [
+        "High-risk breaches must be communicated to data subjects without undue delay."
+      ],
+      "case_id": "case_36a5f51046f7",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "High-risk breaches must be communicated to data subjects without undue delay.",
+          "missing": false,
+          "rule_action": "communicate the personal data breach to the data subject",
+          "similarity": 0.7347
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "The action maps at 0.735 to a related communication activity that remains in the mutant."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S6-T4",
+      "similarity": [
+        0.7347
+      ],
+      "source_text": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall communicate the personal data breach to the data subject without undue delay.",
+      "stage2_actions": [
+        "communicate the personal data breach to the data subject"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "issue",
+        "renew certification"
+      ],
+      "best_bpmn_action_match": [
+        "Issue or renew the certification after informing"
+      ],
+      "case_id": "case_3af5fd62647b",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Issue or renew the certification after informing",
+          "missing": true,
+          "rule_action": "issue",
+          "similarity": 0.2283
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "The mandatory certification action was split into 'issue' and 'renew certification'; the isolated 'issue' maps at 0.228."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S8-T1",
+      "similarity": [
+        0.2283
+      ],
+      "source_text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification.",
+      "stage2_actions": [
+        "issue",
+        "renew certification"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject prior to that further processing with information on that other purpose",
+        "with any relevant further information as referred to in paragraph 2"
+      ],
+      "best_bpmn_action_match": [
+        "Carry out further processing for the other purpose"
+      ],
+      "case_id": "case_3b01b9c36d0f",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Carry out further processing for the other purpose",
+          "missing": true,
+          "rule_action": "with any relevant further information as referred to in paragraph 2",
+          "similarity": 0.308
+        }
+      ],
+      "failure_categories": [
+        "M2_EXTRA_FRAGMENT_ACTION"
+      ],
+      "failure_category_explanations": [
+        "This is a prepositional continuation of the information object, not a second mandatory action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M2_EXTRA_FRAGMENT_ACTION",
+      "requirement_id": "R5-D-01",
+      "similarity": [
+        0.308
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "provide the data subject prior to that further processing with information on that other purpose",
+        "with any relevant further information as referred to in paragraph 2"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "issue",
+        "renew certification"
+      ],
+      "best_bpmn_action_match": [
+        "Issue or renew the certification after informing"
+      ],
+      "case_id": "case_44ded3550ee5",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Issue or renew the certification after informing",
+          "missing": true,
+          "rule_action": "issue",
+          "similarity": 0.2283
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "The mandatory certification action was split into 'issue' and 'renew certification'; the isolated 'issue' maps at 0.228."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S8-T1",
+      "similarity": [
+        0.2283
+      ],
+      "source_text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification.",
+      "stage2_actions": [
+        "issue",
+        "renew certification"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "be informed"
+      ],
+      "best_bpmn_action_match": [
+        "Inform the data subject that the restriction will be lifted"
+      ],
+      "case_id": "case_50f498770ae9",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Inform the data subject that the restriction will be lifted",
+          "missing": true,
+          "rule_action": "be informed",
+          "similarity": 0.2335
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory passive action is reduced to 'be informed' and MPNet maps it at 0.234 to the BPMN notification label."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-03",
+      "similarity": [
+        0.2335
+      ],
+      "source_text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+      "stage2_actions": [
+        "be informed"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "implement appropriate technical and organisational measures",
+        "ensure",
+        "be able to demonstrate that processing is performed in accordance with this Regulation",
+        "reviewed",
+        "updated"
+      ],
+      "best_bpmn_action_match": [
+        "Review and update the implemented measures where necessary",
+        "The controller must implement and review compliance measures.",
+        "Review and update the implemented measures where necessary"
+      ],
+      "case_id": "case_5751d20f4ed7",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Review and update the implemented measures where necessary",
+          "missing": true,
+          "rule_action": "ensure",
+          "similarity": 0.2398
+        },
+        {
+          "best_model_action": "The controller must implement and review compliance measures.",
+          "missing": true,
+          "rule_action": "reviewed",
+          "similarity": 0.2842
+        },
+        {
+          "best_model_action": "Review and update the implemented measures where necessary",
+          "missing": true,
+          "rule_action": "updated",
+          "similarity": 0.2359
+        }
+      ],
+      "failure_categories": [
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION",
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION",
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The verb is a subordinate purpose-clause element, not an independent mandatory action.",
+        "The past participle is a reduced fragment of the 'shall be reviewed and updated' obligation.",
+        "The past participle is a reduced fragment of the 'shall be reviewed and updated' obligation."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M7_SUBORDINATE_NON_OBLIGATION_ACTION",
+      "requirement_id": "R5-S4-T1",
+      "similarity": [
+        0.2398,
+        0.2842,
+        0.2359
+      ],
+      "source_text": "Taking into account the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for the rights and freedoms of natural persons, the controller shall implement appropriate technical and organisational measures to ensure and to be able to demonstrate that processing is performed in accordance with this Regulation. Those measures shall be reviewed and updated where necessary.",
+      "stage2_actions": [
+        "implement appropriate technical and organisational measures",
+        "ensure",
+        "be able to demonstrate that processing is performed in accordance with this Regulation",
+        "reviewed",
+        "updated"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject with the following further information necessary to ensure fair and transparent processing"
+      ],
+      "best_bpmn_action_match": [
+        "Further transparency information must also be provided at the time of direct collection."
+      ],
+      "case_id": "case_64985e535fd0",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Further transparency information must also be provided at the time of direct collection.",
+          "missing": false,
+          "rule_action": "provide the data subject with the following further information necessary to ensure fair and transparent processing",
+          "similarity": 0.6489
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "A related transparency-information activity remains and maps at 0.649, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S1-T2",
+      "similarity": [
+        0.6489
+      ],
+      "source_text": "In addition to the information referred to in paragraph 1, the controller shall, at the time when personal data are obtained, provide the data subject with the following further information necessary to ensure fair and transparent processing: The period for which the personal data will be stored, or if that is not possible, the criteria used to determine that period.",
+      "stage2_actions": [
+        "provide the data subject with the following further information necessary to ensure fair and transparent processing"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "implement appropriate technical and organisational measures",
+        "integrate the necessary safeguards into the processing"
+      ],
+      "best_bpmn_action_match": [
+        "Determine the means and purposes of processing"
+      ],
+      "case_id": "case_66774ccb1348",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Determine the means and purposes of processing",
+          "missing": true,
+          "rule_action": "implement appropriate technical and organisational measures",
+          "similarity": 0.3891
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory measures action maps to a different BPMN activity at 0.389."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S4-T2",
+      "similarity": [
+        0.3891
+      ],
+      "source_text": "Taking into account the state of the art, the cost of implementation and the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for rights and freedoms of natural persons posed by the processing, the controller shall, both at the time of the determination of the means for processing and at the time of the processing itself, implement appropriate technical and organisational measures, such as pseudonymisation, which are designed to implement data-protection principles, such as data minimisation, in an effective manner and to integrate the necessary safeguards into the processing in order to meet the requirements of this Regulation and protect the rights of data subjects.",
+      "stage2_actions": [
+        "implement appropriate technical and organisational measures",
+        "integrate the necessary safeguards into the processing"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "notify the controller"
+      ],
+      "best_bpmn_action_match": [
+        "Notify the controller of the personal data breach"
+      ],
+      "case_id": "case_6cb0e57227f2",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Notify the controller of the personal data breach",
+          "missing": true,
+          "rule_action": "notify the controller",
+          "similarity": 0.4672
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory notification action is a reduced span and maps at 0.467."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S6-T3",
+      "similarity": [
+        0.4672
+      ],
+      "source_text": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+      "stage2_actions": [
+        "notify the controller"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "implement appropriate technical and organisational measures",
+        "ensure",
+        "be able to demonstrate that processing is performed in accordance with this Regulation",
+        "reviewed",
+        "updated"
+      ],
+      "best_bpmn_action_match": [
+        "Review and update the implemented measures where necessary",
+        "The controller must implement and review compliance measures.",
+        "Review and update the implemented measures where necessary"
+      ],
+      "case_id": "case_6d3b90db76ed",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Review and update the implemented measures where necessary",
+          "missing": true,
+          "rule_action": "ensure",
+          "similarity": 0.2398
+        },
+        {
+          "best_model_action": "The controller must implement and review compliance measures.",
+          "missing": true,
+          "rule_action": "reviewed",
+          "similarity": 0.2842
+        },
+        {
+          "best_model_action": "Review and update the implemented measures where necessary",
+          "missing": true,
+          "rule_action": "updated",
+          "similarity": 0.2359
+        }
+      ],
+      "failure_categories": [
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION",
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION",
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The verb is a subordinate purpose-clause element, not an independent mandatory action.",
+        "The past participle is a reduced fragment of the 'shall be reviewed and updated' obligation.",
+        "The past participle is a reduced fragment of the 'shall be reviewed and updated' obligation."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M7_SUBORDINATE_NON_OBLIGATION_ACTION",
+      "requirement_id": "R5-S4-T1",
+      "similarity": [
+        0.2398,
+        0.2842,
+        0.2359
+      ],
+      "source_text": "Taking into account the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for the rights and freedoms of natural persons, the controller shall implement appropriate technical and organisational measures to ensure and to be able to demonstrate that processing is performed in accordance with this Regulation. Those measures shall be reviewed and updated where necessary.",
+      "stage2_actions": [
+        "implement appropriate technical and organisational measures",
+        "ensure",
+        "be able to demonstrate that processing is performed in accordance with this Regulation",
+        "reviewed",
+        "updated"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide information on action taken on a request under Articles 15 to 22 to the data subject"
+      ],
+      "best_bpmn_action_match": [
+        "Receive the data subject request"
+      ],
+      "case_id": "case_706168fa759f",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Receive the data subject request",
+          "missing": false,
+          "rule_action": "provide information on action taken on a request under Articles 15 to 22 to the data subject",
+          "similarity": 0.5671
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "A related request-handling activity remains and maps at 0.567, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S3-T1",
+      "similarity": [
+        0.5671
+      ],
+      "source_text": "The controller shall provide information on action taken on a request under Articles 15 to 22 to the data subject without undue delay and in any event within one month of receipt of the request.",
+      "stage2_actions": [
+        "provide information on action taken on a request under Articles 15 to 22 to the data subject"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her"
+      ],
+      "best_bpmn_action_match": [
+        "The data subject has a right to rectification without undue delay."
+      ],
+      "case_id": "case_7396f1ecbaf2",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "The data subject has a right to rectification without undue delay.",
+          "missing": false,
+          "rule_action": "obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her",
+          "similarity": 0.5585
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "A related rectification-right activity remains and maps at 0.558, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-09",
+      "similarity": [
+        0.5585
+      ],
+      "source_text": "The data subject shall have the right to obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her.",
+      "stage2_actions": [
+        "obtain from the controller without undue delay the rectification of inaccurate personal data concerning him or her"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "make reasonable efforts to verify in such cases that consent is given or authorised by the holder of parental responsibility over the child"
+      ],
+      "best_bpmn_action_match": [
+        "The controller must make reasonable efforts to verify parental authorisation."
+      ],
+      "case_id": "case_7c047344bd97",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "The controller must make reasonable efforts to verify parental authorisation.",
+          "missing": false,
+          "rule_action": "make reasonable efforts to verify in such cases that consent is given or authorised by the holder of parental responsibility over the child",
+          "similarity": 0.5903
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "A related parental-authorisation verification activity remains and maps at 0.590."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S2-T2",
+      "similarity": [
+        0.5903
+      ],
+      "source_text": "The controller shall make reasonable efforts to verify in such cases that consent is given or authorised by the holder of parental responsibility over the child, taking into consideration available technology.",
+      "stage2_actions": [
+        "make reasonable efforts to verify in such cases that consent is given or authorised by the holder of parental responsibility over the child"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject with the following information"
+      ],
+      "best_bpmn_action_match": [
+        "Obtain personal data from a source other than the data subject"
+      ],
+      "case_id": "case_806f7830225a",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Obtain personal data from a source other than the data subject",
+          "missing": false,
+          "rule_action": "provide the data subject with the following information",
+          "similarity": 0.6368
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "A related BPMN activity remains and maps above gamma, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S1-T3",
+      "similarity": [
+        0.6368
+      ],
+      "source_text": "Where personal data have not been obtained from the data subject, the controller shall provide the data subject with the following information.",
+      "stage2_actions": [
+        "provide the data subject with the following information"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "issue",
+        "renew certification"
+      ],
+      "best_bpmn_action_match": [
+        "Issue or renew the certification after informing"
+      ],
+      "case_id": "case_83e2662c1457",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Issue or renew the certification after informing",
+          "missing": true,
+          "rule_action": "issue",
+          "similarity": 0.2283
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "The mandatory certification action was split into 'issue' and 'renew certification'; the isolated 'issue' maps at 0.228."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S8-T1",
+      "similarity": [
+        0.2283
+      ],
+      "source_text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification.",
+      "stage2_actions": [
+        "issue",
+        "renew certification"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide written advice to the controller",
+        "use any of its powers referred to in Article 58"
+      ],
+      "best_bpmn_action_match": [
+        "The supervisory authority must provide written advice within up to eight weeks of a consultation request."
+      ],
+      "case_id": "case_8c729ed572f4",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The supervisory authority must provide written advice within up to eight weeks of a consultation request.",
+          "missing": true,
+          "rule_action": "use any of its powers referred to in Article 58",
+          "similarity": 0.317
+        }
+      ],
+      "failure_categories": [
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The source says the authority 'may use any of its powers'; this is a permission, not a mandatory obligation action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M7_SUBORDINATE_NON_OBLIGATION_ACTION",
+      "requirement_id": "R5-S5-T4",
+      "similarity": [
+        0.317
+      ],
+      "source_text": "Where the supervisory authority is of the opinion that the intended processing referred to in paragraph 1 would infringe this Regulation, in particular where the controller has insufficiently identified or mitigated the risk, the supervisory authority shall, within period of up to eight weeks of receipt of the request for consultation, provide written advice to the controller and, where applicable to the processor, and may use any of its powers referred to in Article 58.",
+      "stage2_actions": [
+        "provide written advice to the controller",
+        "use any of its powers referred to in Article 58"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject with all of the following information"
+      ],
+      "best_bpmn_action_match": [
+        "Collect personal data from the data subject"
+      ],
+      "case_id": "case_9742238625a1",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Collect personal data from the data subject",
+          "missing": false,
+          "rule_action": "provide the data subject with all of the following information",
+          "similarity": 0.6928
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "A related collection activity remains and maps at 0.693, masking the missing information action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S1-T1",
+      "similarity": [
+        0.6928
+      ],
+      "source_text": "Where personal data relating to a data subject are collected from the data subject, the controller shall, at the time when personal data are obtained, provide the data subject with all of the following information.",
+      "stage2_actions": [
+        "provide the data subject with all of the following information"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject prior to that further processing with information on that other purpose",
+        "with any relevant further information as referred to in paragraph 2"
+      ],
+      "best_bpmn_action_match": [
+        "Carry out further processing for the other purpose"
+      ],
+      "case_id": "case_9c6fcd32f03c",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Carry out further processing for the other purpose",
+          "missing": true,
+          "rule_action": "with any relevant further information as referred to in paragraph 2",
+          "similarity": 0.308
+        }
+      ],
+      "failure_categories": [
+        "M2_EXTRA_FRAGMENT_ACTION"
+      ],
+      "failure_category_explanations": [
+        "This is a prepositional continuation of the information object, not a second mandatory action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M2_EXTRA_FRAGMENT_ACTION",
+      "requirement_id": "R5-D-01",
+      "similarity": [
+        0.308
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "provide the data subject prior to that further processing with information on that other purpose",
+        "with any relevant further information as referred to in paragraph 2"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "be informed"
+      ],
+      "best_bpmn_action_match": [
+        "Inform the data subject that the restriction will be lifted"
+      ],
+      "case_id": "case_a1712c670943",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Inform the data subject that the restriction will be lifted",
+          "missing": true,
+          "rule_action": "be informed",
+          "similarity": 0.2335
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory passive action is reduced to 'be informed' and MPNet maps it at 0.234 to the BPMN notification label."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-03",
+      "similarity": [
+        0.2335
+      ],
+      "source_text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+      "stage2_actions": [
+        "be informed"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject prior to that further processing with information on that other purpose",
+        "with any relevant further information as referred to in paragraph 2"
+      ],
+      "best_bpmn_action_match": [
+        "Carry out further processing for the other purpose"
+      ],
+      "case_id": "case_a9fd75331508",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Carry out further processing for the other purpose",
+          "missing": true,
+          "rule_action": "with any relevant further information as referred to in paragraph 2",
+          "similarity": 0.308
+        }
+      ],
+      "failure_categories": [
+        "M2_EXTRA_FRAGMENT_ACTION"
+      ],
+      "failure_category_explanations": [
+        "This is a prepositional continuation of the information object, not a second mandatory action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M2_EXTRA_FRAGMENT_ACTION",
+      "requirement_id": "R5-D-01",
+      "similarity": [
+        0.308
+      ],
+      "source_text": "Where the controller intends to further process the personal data for a purpose other than that for which the personal data were collected, the controller shall provide the data subject prior to that further processing with information on that other purpose and with any relevant further information as referred to in paragraph 2.",
+      "stage2_actions": [
+        "provide the data subject prior to that further processing with information on that other purpose",
+        "with any relevant further information as referred to in paragraph 2"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide the data subject with the following information"
+      ],
+      "best_bpmn_action_match": [
+        "Obtain personal data from a third-party source"
+      ],
+      "case_id": "case_b91fc088d4c5",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Obtain personal data from a third-party source",
+          "missing": false,
+          "rule_action": "provide the data subject with the following information",
+          "similarity": 0.5768
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "A related BPMN activity remains and maps above gamma, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S1-T4",
+      "similarity": [
+        0.5768
+      ],
+      "source_text": "In addition to the information referred to in paragraph 1, the controller shall provide the data subject with the following information necessary to ensure fair and transparent processing in respect of the data subject.",
+      "stage2_actions": [
+        "provide the data subject with the following information"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "notify the personal data breach to the supervisory authority competent in accordance with Article 55"
+      ],
+      "best_bpmn_action_match": [
+        "Become aware of the personal data breach"
+      ],
+      "case_id": "case_c5b585c4439f",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Become aware of the personal data breach",
+          "missing": false,
+          "rule_action": "notify the personal data breach to the supervisory authority competent in accordance with Article 55",
+          "similarity": 0.706
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "The notification action maps at 0.706 to the antecedent 'become aware' activity, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-12",
+      "similarity": [
+        0.706
+      ],
+      "source_text": "In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons.",
+      "stage2_actions": [
+        "notify the personal data breach to the supervisory authority competent in accordance with Article 55"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "carry out a review"
+      ],
+      "best_bpmn_action_match": [
+        "Update safeguards based on the review"
+      ],
+      "case_id": "case_c962e006a37d",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Update safeguards based on the review",
+          "missing": true,
+          "rule_action": "carry out a review",
+          "similarity": 0.4705
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory review action maps to a review/update label at 0.470."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S5-T3",
+      "similarity": [
+        0.4705
+      ],
+      "source_text": "Where necessary, the controller shall carry out a review to assess if processing is performed in accordance with the data protection impact assessment at least when there is a change of the risk represented by processing operations.",
+      "stage2_actions": [
+        "carry out a review"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "notify the controller"
+      ],
+      "best_bpmn_action_match": [
+        "Notify the controller of the personal data breach"
+      ],
+      "case_id": "case_cecd14adb006",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Notify the controller of the personal data breach",
+          "missing": true,
+          "rule_action": "notify the controller",
+          "similarity": 0.4672
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory notification action is a reduced span and maps at 0.467."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S6-T3",
+      "similarity": [
+        0.4672
+      ],
+      "source_text": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+      "stage2_actions": [
+        "notify the controller"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "provide written advice to the controller",
+        "use any of its powers referred to in Article 58"
+      ],
+      "best_bpmn_action_match": [
+        "The supervisory authority must provide written advice within up to eight weeks of a consultation request."
+      ],
+      "case_id": "case_d46c4dbbf7b8",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "The supervisory authority must provide written advice within up to eight weeks of a consultation request.",
+          "missing": true,
+          "rule_action": "use any of its powers referred to in Article 58",
+          "similarity": 0.317
+        }
+      ],
+      "failure_categories": [
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The source says the authority 'may use any of its powers'; this is a permission, not a mandatory obligation action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M7_SUBORDINATE_NON_OBLIGATION_ACTION",
+      "requirement_id": "R5-S5-T4",
+      "similarity": [
+        0.317
+      ],
+      "source_text": "Where the supervisory authority is of the opinion that the intended processing referred to in paragraph 1 would infringe this Regulation, in particular where the controller has insufficiently identified or mitigated the risk, the supervisory authority shall, within period of up to eight weeks of receipt of the request for consultation, provide written advice to the controller and, where applicable to the processor, and may use any of its powers referred to in Article 58.",
+      "stage2_actions": [
+        "provide written advice to the controller",
+        "use any of its powers referred to in Article 58"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "taken"
+      ],
+      "best_bpmn_action_match": [
+        "Record the assessment of free consent"
+      ],
+      "case_id": "case_dbe5d0716353",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Record the assessment of free consent",
+          "missing": true,
+          "rule_action": "taken",
+          "similarity": 0.0867
+        }
+      ],
+      "failure_categories": [
+        "M2_EXTRA_FRAGMENT_ACTION"
+      ],
+      "failure_category_explanations": [
+        "The span 'taken' is a fragment of the passive predicate 'account shall be taken'; it is not a standalone action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M2_EXTRA_FRAGMENT_ACTION",
+      "requirement_id": "R5-D-07",
+      "similarity": [
+        0.0867
+      ],
+      "source_text": "When assessing whether consent is freely given, utmost account shall be taken of whether, inter alia, the performance of a contract, including the provision of a service, is conditional on consent to the processing of personal data that is not necessary for the performance of that contract.",
+      "stage2_actions": [
+        "taken"
+      ],
+      "variant": "incorrect_actor"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "be able to demonstrate that the data subject has consented to processing of his or her personal data"
+      ],
+      "best_bpmn_action_match": [
+        "Receive and record the data subject consent"
+      ],
+      "case_id": "case_e382dcb7708b",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Receive and record the data subject consent",
+          "missing": false,
+          "rule_action": "be able to demonstrate that the data subject has consented to processing of his or her personal data",
+          "similarity": 0.6182
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "Demonstrate-consent action maps to a consent-record activity at 0.618, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-D-06",
+      "similarity": [
+        0.6182
+      ],
+      "source_text": "Where processing is based on consent, the controller shall be able to demonstrate that the data subject has consented to processing of his or her personal data.",
+      "stage2_actions": [
+        "be able to demonstrate that the data subject has consented to processing of his or her personal data"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "notify the controller"
+      ],
+      "best_bpmn_action_match": [
+        "Notify the controller of the personal data breach"
+      ],
+      "case_id": "case_e44cf42b30f7",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Notify the controller of the personal data breach",
+          "missing": true,
+          "rule_action": "notify the controller",
+          "similarity": 0.4672
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory notification action is a reduced span and maps at 0.467."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S6-T3",
+      "similarity": [
+        0.4672
+      ],
+      "source_text": "The processor shall notify the controller without undue delay after becoming aware of a personal data breach.",
+      "stage2_actions": [
+        "notify the controller"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "processes the personal data",
+        "inform the controller of that legal requirement"
+      ],
+      "best_bpmn_action_match": [
+        "Report any instruction that appears to infringe data-protection law"
+      ],
+      "case_id": "case_f2e0ecd3abf8",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Report any instruction that appears to infringe data-protection law",
+          "missing": true,
+          "rule_action": "inform the controller of that legal requirement",
+          "similarity": 0.3652
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory inform action maps to the opposite instruction-receipt BPMN label at 0.365."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-S4-T3",
+      "similarity": [
+        0.3652
+      ],
+      "source_text": "the processor processes the personal data only on documented instructions from the controller, including with regard to transfers of personal data to a third country or an international organisation, unless required to do so by Union or Member State law to which the processor is subject; in such a case, the processor shall inform the controller of that legal requirement before processing, unless that law prohibits such information on important grounds of public interest",
+      "stage2_actions": [
+        "processes the personal data",
+        "inform the controller of that legal requirement"
+      ],
+      "variant": "baseline"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "be informed"
+      ],
+      "best_bpmn_action_match": [
+        "Inform the data subject that the restriction will be lifted"
+      ],
+      "case_id": "case_f6dc7b084b03",
+      "error_type": "FP",
+      "evidence": [
+        {
+          "best_model_action": "Inform the data subject that the restriction will be lifted",
+          "missing": true,
+          "rule_action": "be informed",
+          "similarity": 0.2335
+        }
+      ],
+      "failure_categories": [
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE"
+      ],
+      "failure_category_explanations": [
+        "Mandatory passive action is reduced to 'be informed' and MPNet maps it at 0.234 to the BPMN notification label."
+      ],
+      "gamma": 0.55,
+      "gold_state": "satisfied",
+      "method": "ours",
+      "predicted_status": "violated",
+      "primary_failure_category": "M1_REQUIRED_ACTION_MAPPING_FAILURE",
+      "requirement_id": "R5-D-03",
+      "similarity": [
+        0.2335
+      ],
+      "source_text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+      "stage2_actions": [
+        "be informed"
+      ],
+      "variant": "out_of_order"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "take steps to ensure that any natural person acting under the authority of the controller or the processor who has access to personal data does not process them except on instructions from the controller"
+      ],
+      "best_bpmn_action_match": [
+        "Authorised personnel must process personal data only on controller instructions."
+      ],
+      "case_id": "case_f81de319913d",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Authorised personnel must process personal data only on controller instructions.",
+          "missing": false,
+          "rule_action": "take steps to ensure that any natural person acting under the authority of the controller or the processor who has access to personal data does not process them except on instructions from the controller",
+          "similarity": 0.6823
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "A related instruction-compliance activity remains and maps at 0.682."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S6-T2",
+      "similarity": [
+        0.6823
+      ],
+      "source_text": "The controller and processor shall take steps to ensure that any natural person acting under the authority of the controller or the processor who has access to personal data does not process them except on instructions from the controller, unless he or she is required to do so by Union or Member State law.",
+      "stage2_actions": [
+        "take steps to ensure that any natural person acting under the authority of the controller or the processor who has access to personal data does not process them except on instructions from the controller"
+      ],
+      "variant": "missing_action"
+    },
+    {
+      "actions_entering_definition5_denominator": [
+        "seek the views of data subjects or their representatives on the intended processing"
+      ],
+      "best_bpmn_action_match": [
+        "Carry out the intended processing"
+      ],
+      "case_id": "case_fb1fd0822200",
+      "error_type": "FN",
+      "evidence": [
+        {
+          "best_model_action": "Carry out the intended processing",
+          "missing": false,
+          "rule_action": "seek the views of data subjects or their representatives on the intended processing",
+          "similarity": 0.6648
+        }
+      ],
+      "failure_categories": [
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH"
+      ],
+      "failure_category_explanations": [
+        "Seek-views action maps at 0.665 to an 'carry out intended processing' activity, masking the missing action."
+      ],
+      "gamma": 0.55,
+      "gold_state": "violated",
+      "method": "ours",
+      "predicted_status": "satisfied",
+      "primary_failure_category": "M9_BPMN_LABEL_SEMANTIC_MISMATCH",
+      "requirement_id": "R5-S5-T2",
+      "similarity": [
+        0.6648
+      ],
+      "source_text": "Where appropriate, the controller shall seek the views of data subjects or their representatives on the intended processing, without prejudice to the protection of commercial or public interests or the security of processing operations.",
+      "stage2_actions": [
+        "seek the views of data subjects or their representatives on the intended processing"
+      ],
+      "variant": "missing_action"
+    }
+  ],
+  "gamma": 0.55,
+  "methods": {
+    "ours": {
+      "FN": 14,
+      "FP": 25,
+      "TN": 55,
+      "TP": 19,
+      "f1": 0.4935064935064935,
+      "failure_category_counts": {
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE": 15,
+        "M2_EXTRA_FRAGMENT_ACTION": 5,
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION": 9,
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH": 14
+      },
+      "failure_category_counts_action_level": {
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE": 15,
+        "M2_EXTRA_FRAGMENT_ACTION": 5,
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION": 9,
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH": 14
+      },
+      "failure_category_counts_primary_cell_level": {
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE": 15,
+        "M2_EXTRA_FRAGMENT_ACTION": 5,
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION": 5,
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH": 14
+      },
+      "precision": 0.4318181818181818,
+      "recall": 0.5757575757575758,
+      "unknown_negative": 0
+    },
+    "sun": {
+      "FN": 10,
+      "FP": 45,
+      "TN": 26,
+      "TP": 23,
+      "f1": 0.45544554455445546,
+      "failure_category_counts": {
+        "M10_STAGE2_MISSING_ACTION": 4,
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE": 31,
+        "M2_EXTRA_FRAGMENT_ACTION": 4,
+        "M3_CONDITION_ACTION_IN_DENOMINATOR": 6,
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH": 11
+      },
+      "failure_category_counts_action_level": {
+        "M10_STAGE2_MISSING_ACTION": 4,
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE": 31,
+        "M2_EXTRA_FRAGMENT_ACTION": 4,
+        "M3_CONDITION_ACTION_IN_DENOMINATOR": 6,
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH": 11
+      },
+      "failure_category_counts_primary_cell_level": {
+        "M10_STAGE2_MISSING_ACTION": 4,
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE": 31,
+        "M2_EXTRA_FRAGMENT_ACTION": 4,
+        "M3_CONDITION_ACTION_IN_DENOMINATOR": 6,
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH": 10
+      },
+      "precision": 0.3382352941176471,
+      "recall": 0.696969696969697,
+      "unknown_negative": 9
+    }
+  },
+  "real_llm_api_calls": 0,
+  "root_cause_quantification": {
+    "cell_level_failure_category_counts": {
+      "ours": {
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE": 15,
+        "M2_EXTRA_FRAGMENT_ACTION": 5,
+        "M7_SUBORDINATE_NON_OBLIGATION_ACTION": 9,
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH": 14
+      },
+      "sun": {
+        "M10_STAGE2_MISSING_ACTION": 4,
+        "M1_REQUIRED_ACTION_MAPPING_FAILURE": 31,
+        "M2_EXTRA_FRAGMENT_ACTION": 4,
+        "M3_CONDITION_ACTION_IN_DENOMINATOR": 6,
+        "M9_BPMN_LABEL_SEMANTIC_MISMATCH": 11
+      }
+    },
+    "fp_total": 70,
+    "key_question_answer": "Missing-action errors are dominated by action-mapping/label-semantic failures, not by a clean removable scope action. Strict gate-listed non-mandatory/condition/constraint/exception/context/subordinate FP evidence is below 30%.",
+    "mapping_related_fn_cells": 20,
+    "mapping_related_fp_cells": 50,
+    "mapping_related_total_cells": 70,
+    "other_fn_cells": 0,
+    "other_fp_cells": 0,
+    "other_total_cells": 0,
+    "scope_related_fp_cells_broad": 20,
+    "scope_related_total_cells": 20,
+    "stage2_extraction_related_fn_cells": 4,
+    "stage2_extraction_related_total_cells": 4
+  },
+  "schema_version": "stage3_bonus_missing_analysis@1.0.0",
+  "source_signal_artifact": "outputs/development/stage3_final_v1/selected_dev_signals_v1.json",
+  "status": "BONUS_DEVELOPMENT_ANALYSIS_NOT_PAPER_FACING"
+}

@@ -1,0 +1,61 @@
+{
+  "rows": [
+    {
+      "Gold_blind": true,
+      "affected_method": "shared",
+      "after_metric": {
+        "changed": false,
+        "ours_missing_f1": 0.49350649350649356,
+        "sun_missing_f1": 0.4554455445544555
+      },
+      "before_metric": {
+        "ours_missing_f1": 0.49350649350649356,
+        "sun_missing_f1": 0.4554455445544555
+      },
+      "decision": "ACTION_SCOPE_REFINEMENT_REJECTED",
+      "evidence": {
+        "broad_scope_fp_cells": 20,
+        "fp_total": 70,
+        "gate_eligible_scope_fp_cells": 11,
+        "mapping_related_fp_cells": 50,
+        "stage2_extraction_related_fn_cells": 4
+      },
+      "id": "BONUS-RC-MISS-01",
+      "implemented": false,
+      "proposed_fix": "No ObligationScopedActionProjectionV1: the gate fails and projection would not address the dominant mapping failures without reducing coverage.",
+      "root_cause": "Most remaining FP/FN cells are caused by required-action semantic mapping or BPMN-label paraphrase mismatch; only a minority are caused by clearly removable scope actions.",
+      "shared": true,
+      "symptom": "Missing-action F1 remains low for both methods (Sun 0.4554, Ours 0.4935)."
+    },
+    {
+      "Gold_blind": true,
+      "affected_method": "shared",
+      "after_metric": {
+        "ours_observable_cells": 12,
+        "ours_order_f1": 0.6666666666666666,
+        "sun_observable_cells": 12,
+        "sun_order_f1": 0.6666666666666666
+      },
+      "before_metric": {
+        "order_f1_ours": 0.5,
+        "order_f1_sun": 0.5
+      },
+      "decision": "DEV_ONLY_ORDER_SUPPLEMENT_CREATED",
+      "evidence": {
+        "adapter_projected_bonus_requirements": 5,
+        "bonus_supplement_requirements": 9,
+        "existing_main_requirements": 3,
+        "observable_existing_requirements": 1,
+        "strict_eligible_bonus_requirements": 6
+      },
+      "id": "BONUS-RC-ORDER-01",
+      "implemented": true,
+      "proposed_fix": "Add 6-10 development-only GDPR order requirements with endpoint availability recorded explicitly; do not modify SharedRuleOrderAdapterV3.",
+      "root_cause": "The frozen source pool contains few requirements with two independently extracted action endpoints and a unique temporal ordering relation.",
+      "shared": true,
+      "symptom": "Only one existing requirement supplies an observable action-action order control."
+    }
+  ],
+  "schema_version": "stage3_bonus_development_root_causes@1.0.0",
+  "status": "BONUS_DEVELOPMENT_ROOT_CAUSE_LEDGER"
+}

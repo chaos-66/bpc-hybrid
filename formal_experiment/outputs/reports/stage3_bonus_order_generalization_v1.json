@@ -1,0 +1,1416 @@
+{
+  "dev_only": true,
+  "eligible_requirement_count_diagnostic_borderline": 3,
+  "eligible_requirement_count_strict": 6,
+  "endpoint_policy": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_STAGE2_PREDICTION",
+  "failure_taxonomy_counts": {
+    "NO_FAILURE": 5,
+    "OERR_SEMANTIC_ENDPOINT_BINDING_FAIL": 1,
+    "OERR_TEMPORAL_MARKER_UNRESOLVED": 3
+  },
+  "final_table3_eligible": false,
+  "gamma": 0.55,
+  "main_metrics": {
+    "ours": {
+      "FN": 6,
+      "FP": 0,
+      "TN": 6,
+      "TP": 6,
+      "coverage": 0.46153846153846156,
+      "f1": 0.6666666666666666,
+      "negative_support": 14,
+      "not_applicable": 2,
+      "not_scored": 105,
+      "positive_support": 12,
+      "precision": 1.0,
+      "recall": 0.5,
+      "scored_cells": 26,
+      "unknown_negative": 8,
+      "unknown_positive": 6,
+      "unknown_rate": 0.5384615384615384
+    },
+    "sun": {
+      "FN": 6,
+      "FP": 0,
+      "TN": 6,
+      "TP": 6,
+      "coverage": 0.46153846153846156,
+      "f1": 0.6666666666666666,
+      "negative_support": 14,
+      "not_applicable": 2,
+      "not_scored": 105,
+      "positive_support": 12,
+      "precision": 1.0,
+      "recall": 0.5,
+      "scored_cells": 26,
+      "unknown_negative": 8,
+      "unknown_positive": 6,
+      "unknown_rate": 0.5384615384615384
+    }
+  },
+  "order_adapter_changed": false,
+  "order_delta_vs_current_baseline": {
+    "ours": {
+      "delta_FN": 4,
+      "delta_FP": 0,
+      "delta_TN": 5,
+      "delta_TP": 5,
+      "delta_unknown_negative": 4,
+      "delta_unknown_positive": 4,
+      "new_support_cells": 18
+    },
+    "sun": {
+      "delta_FN": 4,
+      "delta_FP": 0,
+      "delta_TN": 5,
+      "delta_TP": 5,
+      "delta_unknown_negative": 4,
+      "delta_unknown_positive": 4,
+      "new_support_cells": 18
+    }
+  },
+  "order_metrics_summary": {
+    "ours": {
+      "FN": 6,
+      "FP": 0,
+      "TN": 6,
+      "TP": 6,
+      "coverage": 0.46153846153846156,
+      "eligible_requirements_bonus_supplement": 9,
+      "eligible_requirements_existing_main": 3,
+      "eligible_requirements_total": 12,
+      "f1": 0.6666666666666666,
+      "generated_ur_requirement_count": 6,
+      "missing_ur_requirement_count": 6,
+      "observable_cells": 12,
+      "precision": 1.0,
+      "recall": 0.5,
+      "unknown_cells": 14,
+      "unknown_rate": 0.5384615384615384
+    },
+    "sun": {
+      "FN": 6,
+      "FP": 0,
+      "TN": 6,
+      "TP": 6,
+      "coverage": 0.46153846153846156,
+      "eligible_requirements_bonus_supplement": 9,
+      "eligible_requirements_existing_main": 3,
+      "eligible_requirements_total": 12,
+      "f1": 0.6666666666666666,
+      "generated_ur_requirement_count": 8,
+      "missing_ur_requirement_count": 4,
+      "observable_cells": 12,
+      "precision": 1.0,
+      "recall": 0.5,
+      "unknown_cells": 14,
+      "unknown_rate": 0.5384615384615384
+    }
+  },
+  "orders_adapter": "SharedRuleOrderAdapterV3",
+  "real_llm_api_calls": 0,
+  "requirements": [
+    {
+      "adapter_projection_reason": "at_least_one_marker_bound_existing_action_pair",
+      "adapter_projection_status": "projected",
+      "after_action": "giving consent",
+      "before_action": "informed",
+      "cases": {
+        "baseline": {
+          "case_id": "case_bonus_ord_01_baseline",
+          "gold_out_of_order": "satisfied",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "informed",
+                  "missing": false,
+                  "rule_action": "informed",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "giving consent",
+                  "missing": false,
+                  "rule_action": "giving consent",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "giving consent",
+                  "backward_reachable": false,
+                  "before_activity": "informed",
+                  "constraint": [
+                    "informed",
+                    "giving consent"
+                  ],
+                  "forward_reachable": true,
+                  "mapped": true,
+                  "satisfied": true
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          }
+        },
+        "out_of_order": {
+          "case_id": "case_bonus_ord_01_out_of_order",
+          "gold_out_of_order": "violated",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "informed",
+                  "missing": false,
+                  "rule_action": "informed",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "giving consent",
+                  "missing": false,
+                  "rule_action": "giving consent",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "giving consent",
+                  "backward_reachable": true,
+                  "before_activity": "informed",
+                  "constraint": [
+                    "informed",
+                    "giving consent"
+                  ],
+                  "forward_reachable": false,
+                  "mapped": true,
+                  "satisfied": false
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 1.0,
+            "reason": null,
+            "status": "violated"
+          }
+        }
+      },
+      "citation": "GDPR Article 7(4)",
+      "eligibility_class": "STRICT_ELIGIBLE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "failure_reason": null,
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "ours_ur": [
+        [
+          "informed",
+          "giving consent"
+        ]
+      ],
+      "requirement_id": "BONUS-ORD-01",
+      "source_text": "Prior to giving consent, the data subject shall be informed thereof.",
+      "sun_ur": [
+        [
+          "informed",
+          "giving consent"
+        ]
+      ]
+    },
+    {
+      "adapter_projection_reason": "at_least_one_marker_bound_existing_action_pair",
+      "adapter_projection_status": "projected",
+      "after_action": "adoption of the lists referred to in paragraphs 4 and 5",
+      "before_action": "apply the consistency mechanism referred to in Article 63",
+      "cases": {
+        "baseline": {
+          "case_id": "case_bonus_ord_02_baseline",
+          "gold_out_of_order": "satisfied",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "apply the consistency mechanism referred to in Article 63",
+                  "missing": false,
+                  "rule_action": "apply the consistency mechanism referred to in Article 63",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "adoption of the lists referred to in paragraphs 4 and 5",
+                  "missing": false,
+                  "rule_action": "adoption of the lists referred to in paragraphs 4 and 5",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "adoption of the lists referred to in paragraphs 4 and 5",
+                  "backward_reachable": false,
+                  "before_activity": "apply the consistency mechanism referred to in Article 63",
+                  "constraint": [
+                    "apply the consistency mechanism referred to in Article 63",
+                    "adoption of the lists referred to in paragraphs 4 and 5"
+                  ],
+                  "forward_reachable": true,
+                  "mapped": true,
+                  "satisfied": true
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          }
+        },
+        "out_of_order": {
+          "case_id": "case_bonus_ord_02_out_of_order",
+          "gold_out_of_order": "violated",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "apply the consistency mechanism referred to in Article 63",
+                  "missing": false,
+                  "rule_action": "apply the consistency mechanism referred to in Article 63",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "adoption of the lists referred to in paragraphs 4 and 5",
+                  "missing": false,
+                  "rule_action": "adoption of the lists referred to in paragraphs 4 and 5",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "adoption of the lists referred to in paragraphs 4 and 5",
+                  "backward_reachable": true,
+                  "before_activity": "apply the consistency mechanism referred to in Article 63",
+                  "constraint": [
+                    "apply the consistency mechanism referred to in Article 63",
+                    "adoption of the lists referred to in paragraphs 4 and 5"
+                  ],
+                  "forward_reachable": false,
+                  "mapped": true,
+                  "satisfied": false
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 1.0,
+            "reason": null,
+            "status": "violated"
+          }
+        }
+      },
+      "citation": "GDPR Article 35(3)",
+      "eligibility_class": "STRICT_ELIGIBLE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "failure_reason": null,
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "ours_ur": [
+        [
+          "apply the consistency mechanism referred to in Article 63",
+          "adoption of the lists referred to in paragraphs 4 and 5"
+        ]
+      ],
+      "requirement_id": "BONUS-ORD-02",
+      "source_text": "Prior to the adoption of the lists referred to in paragraphs 4 and 5, the competent supervisory authority shall apply the consistency mechanism referred to in Article 63 where such lists involve processing activities which are related to the offering of goods or services to data subjects or to the monitoring of their behaviour in several Member States, or may substantially affect the free movement of personal data within the Union.",
+      "sun_ur": [
+        [
+          "apply the consistency mechanism referred to in Article 63",
+          "adoption of the lists referred to in paragraphs 4 and 5"
+        ]
+      ]
+    },
+    {
+      "adapter_projection_reason": "no_marker_bound_a_unique_existing_action_pair",
+      "adapter_projection_status": "no_edge",
+      "after_action": "approving the draft code, amendment or extension",
+      "before_action": "submit it in the procedure referred to in Article 63 to the Board",
+      "cases": {
+        "baseline": {
+          "case_id": "case_bonus_ord_03_baseline",
+          "gold_out_of_order": "satisfied",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "submit it in the procedure referred to in Article 63 to the Board",
+                  "missing": false,
+                  "rule_action": "submit it in the procedure referred to in Article 63 to the Board",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "approving the draft code, amendment or extension",
+                  "missing": false,
+                  "rule_action": "approving the draft code, amendment or extension",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 0,
+            "evidence": {
+              "details": []
+            },
+            "observable": false,
+            "raw_score": 0.0,
+            "reason": "no_rule_order_endpoints",
+            "status": "unknown"
+          }
+        },
+        "out_of_order": {
+          "case_id": "case_bonus_ord_03_out_of_order",
+          "gold_out_of_order": "violated",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "submit it in the procedure referred to in Article 63 to the Board",
+                  "missing": false,
+                  "rule_action": "submit it in the procedure referred to in Article 63 to the Board",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "approving the draft code, amendment or extension",
+                  "missing": false,
+                  "rule_action": "approving the draft code, amendment or extension",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 0,
+            "evidence": {
+              "details": []
+            },
+            "observable": false,
+            "raw_score": 0.0,
+            "reason": "no_rule_order_endpoints",
+            "status": "unknown"
+          }
+        }
+      },
+      "citation": "GDPR Article 40(7)",
+      "eligibility_class": "STRICT_ELIGIBLE_ADAPTER_FAILURE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "failure_reason": "OERR_TEMPORAL_MARKER_UNRESOLVED",
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "ours_ur": [],
+      "requirement_id": "BONUS-ORD-03",
+      "source_text": "Where a draft code of conduct relates to processing activities in several Member States, the supervisory authority which is competent pursuant to Article 55 shall, before approving the draft code, amendment or extension, submit it in the procedure referred to in Article 63 to the Board which shall provide an opinion on whether the draft code, amendment or extension complies with this Regulation or, in the situation referred to in paragraph 3 of this Article, provides appropriate safeguards.",
+      "sun_ur": []
+    },
+    {
+      "adapter_projection_reason": "no_marker_bound_a_unique_existing_action_pair",
+      "adapter_projection_status": "no_edge",
+      "after_action": "issue and renew certification",
+      "before_action": "informing the supervisory authority",
+      "cases": {
+        "baseline": {
+          "case_id": "case_bonus_ord_04_baseline",
+          "gold_out_of_order": "satisfied",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "informing the supervisory authority",
+                  "missing": false,
+                  "rule_action": "informing the supervisory authority",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "issue and renew certification",
+                  "missing": false,
+                  "rule_action": "issue and renew certification",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 0,
+            "evidence": {
+              "details": []
+            },
+            "observable": false,
+            "raw_score": 0.0,
+            "reason": "no_rule_order_endpoints",
+            "status": "unknown"
+          }
+        },
+        "out_of_order": {
+          "case_id": "case_bonus_ord_04_out_of_order",
+          "gold_out_of_order": "violated",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "informing the supervisory authority",
+                  "missing": false,
+                  "rule_action": "informing the supervisory authority",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "issue and renew certification",
+                  "missing": false,
+                  "rule_action": "issue and renew certification",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 0,
+            "evidence": {
+              "details": []
+            },
+            "observable": false,
+            "raw_score": 0.0,
+            "reason": "no_rule_order_endpoints",
+            "status": "unknown"
+          }
+        }
+      },
+      "citation": "GDPR Article 43(1)",
+      "eligibility_class": "STRICT_ELIGIBLE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "failure_reason": "OERR_TEMPORAL_MARKER_UNRESOLVED",
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "ours_ur": [],
+      "requirement_id": "BONUS-ORD-04",
+      "source_text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification.",
+      "sun_ur": []
+    },
+    {
+      "adapter_projection_reason": "no_marker_bound_a_unique_existing_action_pair",
+      "adapter_projection_status": "no_edge",
+      "after_action": "consented to the proposed transfer",
+      "before_action": "informed of the possible risks",
+      "cases": {
+        "baseline": {
+          "case_id": "case_bonus_ord_05_baseline",
+          "gold_out_of_order": "satisfied",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "informed of the possible risks",
+                  "missing": false,
+                  "rule_action": "informed of the possible risks",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "consented to the proposed transfer",
+                  "missing": false,
+                  "rule_action": "consented to the proposed transfer",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 0,
+            "evidence": {
+              "details": []
+            },
+            "observable": false,
+            "raw_score": 0.0,
+            "reason": "no_rule_order_endpoints",
+            "status": "unknown"
+          }
+        },
+        "out_of_order": {
+          "case_id": "case_bonus_ord_05_out_of_order",
+          "gold_out_of_order": "violated",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "informed of the possible risks",
+                  "missing": false,
+                  "rule_action": "informed of the possible risks",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "consented to the proposed transfer",
+                  "missing": false,
+                  "rule_action": "consented to the proposed transfer",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 0,
+            "evidence": {
+              "details": []
+            },
+            "observable": false,
+            "raw_score": 0.0,
+            "reason": "no_rule_order_endpoints",
+            "status": "unknown"
+          }
+        }
+      },
+      "citation": "GDPR Article 49(1)(a)",
+      "eligibility_class": "STRICT_ELIGIBLE_ADAPTER_FAILURE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "failure_reason": "OERR_TEMPORAL_MARKER_UNRESOLVED",
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "ours_ur": [],
+      "requirement_id": "BONUS-ORD-05",
+      "source_text": "In the absence of an adequacy decision pursuant to Article 45(3), or of appropriate safeguards pursuant to Article 46, including binding corporate rules, a transfer or a set of transfers of personal data to a third country or an international organisation shall take place only if the data subject has explicitly consented to the proposed transfer, after having been informed of the possible risks of such transfers for the data subject due to the absence of an adequacy decision and appropriate safeguards.",
+      "sun_ur": []
+    },
+    {
+      "adapter_projection_reason": "at_least_one_marker_bound_existing_action_pair",
+      "adapter_projection_status": "projected",
+      "after_action": "decide",
+      "before_action": "assessing the adequacy of the level of protection",
+      "cases": {
+        "baseline": {
+          "case_id": "case_bonus_ord_06_baseline",
+          "gold_out_of_order": "satisfied",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "assessing the adequacy of the level of protection",
+                  "missing": false,
+                  "rule_action": "assessing the adequacy of the level of protection",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "decide",
+                  "missing": false,
+                  "rule_action": "decide",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "decide",
+                  "backward_reachable": false,
+                  "before_activity": "assessing the adequacy of the level of protection",
+                  "constraint": [
+                    "assessing the adequacy of the level of protection",
+                    "decide"
+                  ],
+                  "forward_reachable": true,
+                  "mapped": true,
+                  "satisfied": true
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          }
+        },
+        "out_of_order": {
+          "case_id": "case_bonus_ord_06_out_of_order",
+          "gold_out_of_order": "violated",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "assessing the adequacy of the level of protection",
+                  "missing": false,
+                  "rule_action": "assessing the adequacy of the level of protection",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "decide",
+                  "missing": false,
+                  "rule_action": "decide",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "decide",
+                  "backward_reachable": true,
+                  "before_activity": "assessing the adequacy of the level of protection",
+                  "constraint": [
+                    "assessing the adequacy of the level of protection",
+                    "decide"
+                  ],
+                  "forward_reachable": false,
+                  "mapped": true,
+                  "satisfied": false
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 1.0,
+            "reason": null,
+            "status": "violated"
+          }
+        }
+      },
+      "citation": "GDPR Article 45(1)",
+      "eligibility_class": "STRICT_ELIGIBLE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "failure_reason": null,
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "ours_ur": [
+        [
+          "assessing the adequacy of the level of protection",
+          "decide"
+        ]
+      ],
+      "requirement_id": "BONUS-ORD-06",
+      "source_text": "The Commission, after assessing the adequacy of the level of protection, may decide, by means of implementing act, that a third country, a territory or one or more specified sectors within a third country, or an international organisation ensures an adequate level of protection within the meaning of paragraph 2 of this Article.",
+      "sun_ur": [
+        [
+          "assessing the adequacy of the level of protection",
+          "decide"
+        ]
+      ]
+    },
+    {
+      "adapter_projection_reason": "at_least_one_marker_bound_existing_action_pair",
+      "adapter_projection_status": "projected",
+      "after_action": "entering into a contract",
+      "before_action": "take steps at the request of the data subject",
+      "cases": {
+        "baseline": {
+          "case_id": "case_bonus_ord_07_baseline",
+          "gold_out_of_order": "satisfied",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "take steps at the request of the data subject",
+                  "missing": false,
+                  "rule_action": "take steps at the request of the data subject",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "entering into a contract",
+                  "missing": false,
+                  "rule_action": "entering into a contract",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "entering into a contract",
+                  "backward_reachable": false,
+                  "before_activity": "take steps at the request of the data subject",
+                  "constraint": [
+                    "take steps at the request of the data subject",
+                    "entering into a contract"
+                  ],
+                  "forward_reachable": true,
+                  "mapped": true,
+                  "satisfied": true
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          }
+        },
+        "out_of_order": {
+          "case_id": "case_bonus_ord_07_out_of_order",
+          "gold_out_of_order": "violated",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "take steps at the request of the data subject",
+                  "missing": false,
+                  "rule_action": "take steps at the request of the data subject",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "entering into a contract",
+                  "missing": false,
+                  "rule_action": "entering into a contract",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "entering into a contract",
+                  "backward_reachable": true,
+                  "before_activity": "take steps at the request of the data subject",
+                  "constraint": [
+                    "take steps at the request of the data subject",
+                    "entering into a contract"
+                  ],
+                  "forward_reachable": false,
+                  "mapped": true,
+                  "satisfied": false
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 1.0,
+            "reason": null,
+            "status": "violated"
+          }
+        }
+      },
+      "citation": "GDPR Article 6(1)(b)",
+      "eligibility_class": "DIAGNOSTIC_BORDERLINE_NOT_OBLIGATION",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "failure_reason": null,
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "ours_ur": [
+        [
+          "take steps at the request of the data subject",
+          "entering into a contract"
+        ]
+      ],
+      "requirement_id": "BONUS-ORD-07",
+      "source_text": "Processing shall be lawful only if and to the extent that processing is necessary for the performance of a contract to which the data subject is party or in order to take steps at the request of the data subject prior to entering into a contract;",
+      "sun_ur": [
+        [
+          "take steps at the request of the data subject",
+          "entering into a contract"
+        ]
+      ]
+    },
+    {
+      "adapter_projection_reason": "no_marker_bound_a_unique_existing_action_pair",
+      "adapter_projection_status": "no_edge",
+      "after_action": "lifted",
+      "before_action": "informed by the controller",
+      "cases": {
+        "baseline": {
+          "case_id": "case_bonus_ord_08_baseline",
+          "gold_out_of_order": "satisfied",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "informed by the controller",
+                  "missing": false,
+                  "rule_action": "informed by the controller",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "lifted",
+                  "missing": false,
+                  "rule_action": "lifted",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 0,
+            "evidence": {
+              "details": []
+            },
+            "observable": false,
+            "raw_score": 0.0,
+            "reason": "no_rule_order_endpoints",
+            "status": "unknown"
+          }
+        },
+        "out_of_order": {
+          "case_id": "case_bonus_ord_08_out_of_order",
+          "gold_out_of_order": "violated",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "informed by the controller",
+                  "missing": false,
+                  "rule_action": "informed by the controller",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "lifted",
+                  "missing": false,
+                  "rule_action": "lifted",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 0,
+            "evidence": {
+              "details": []
+            },
+            "observable": false,
+            "raw_score": 0.0,
+            "reason": "no_rule_order_endpoints",
+            "status": "unknown"
+          }
+        }
+      },
+      "citation": "GDPR Article 18(3)",
+      "eligibility_class": "DIAGNOSTIC_BORDERLINE_PASSIVE_STATE_ENDPOINT",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "failure_reason": "OERR_SEMANTIC_ENDPOINT_BINDING_FAIL",
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "ours_ur": [],
+      "requirement_id": "BONUS-ORD-08",
+      "source_text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+      "sun_ur": []
+    },
+    {
+      "adapter_projection_reason": "at_least_one_marker_bound_existing_action_pair",
+      "adapter_projection_status": "projected",
+      "after_action": "processing",
+      "before_action": "consult the supervisory authority",
+      "cases": {
+        "baseline": {
+          "case_id": "case_bonus_ord_09_baseline",
+          "gold_out_of_order": "satisfied",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "consult the supervisory authority",
+                  "missing": false,
+                  "rule_action": "consult the supervisory authority",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "processing",
+                  "missing": false,
+                  "rule_action": "processing",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "processing",
+                  "backward_reachable": false,
+                  "before_activity": "consult the supervisory authority",
+                  "constraint": [
+                    "consult the supervisory authority",
+                    "processing"
+                  ],
+                  "forward_reachable": true,
+                  "mapped": true,
+                  "satisfied": true
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          }
+        },
+        "out_of_order": {
+          "case_id": "case_bonus_ord_09_out_of_order",
+          "gold_out_of_order": "violated",
+          "incorrect_actor": {
+            "denominator": 0,
+            "evidence": {
+              "details": [],
+              "unmapped_rule_actors": []
+            },
+            "observable": false,
+            "raw_score": null,
+            "reason": "empty_rule_actor_denominator",
+            "status": "unknown"
+          },
+          "missing_action": {
+            "denominator": 2,
+            "evidence": {
+              "details": [
+                {
+                  "best_model_action": "consult the supervisory authority",
+                  "missing": false,
+                  "rule_action": "consult the supervisory authority",
+                  "similarity": 1.0
+                },
+                {
+                  "best_model_action": "processing",
+                  "missing": false,
+                  "rule_action": "processing",
+                  "similarity": 1.0
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 0.0,
+            "reason": null,
+            "status": "satisfied"
+          },
+          "out_of_order": {
+            "denominator": 1,
+            "evidence": {
+              "details": [
+                {
+                  "after_activity": "processing",
+                  "backward_reachable": true,
+                  "before_activity": "consult the supervisory authority",
+                  "constraint": [
+                    "consult the supervisory authority",
+                    "processing"
+                  ],
+                  "forward_reachable": false,
+                  "mapped": true,
+                  "satisfied": false
+                }
+              ]
+            },
+            "observable": true,
+            "raw_score": 1.0,
+            "reason": null,
+            "status": "violated"
+          }
+        }
+      },
+      "citation": "GDPR Article 36(2)",
+      "eligibility_class": "DIAGNOSTIC_BORDERLINE_NOMINAL_ENDPOINT",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "failure_reason": null,
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "ours_ur": [
+        [
+          "consult the supervisory authority",
+          "processing"
+        ]
+      ],
+      "requirement_id": "BONUS-ORD-09",
+      "source_text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.",
+      "sun_ur": [
+        [
+          "consult the supervisory authority",
+          "processing"
+        ]
+      ]
+    }
+  ],
+  "schema_version": "stage3_bonus_order_generalization@1.0.0",
+  "seen_during_method_development": true,
+  "selected_backend": "sentence_transformers_all_mpnet_base_v2",
+  "status": "BONUS_DEV_ONLY_ORDER_GENERALIZATION_DIAGNOSTIC",
+  "tau": 0.8,
+  "theta": 0.45
+}

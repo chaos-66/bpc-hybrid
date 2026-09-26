@@ -1,0 +1,276 @@
+{
+  "actor_method_changed": false,
+  "all_existing_cases_seen": true,
+  "baseline": {
+    "ours": {
+      "actor_f1": 0.5684210526315789,
+      "coverage": 0.8905,
+      "f1": 0.5340909090909091,
+      "macro_f1": 0.5206425153793575,
+      "missing_f1": 0.49350649350649356,
+      "order_f1": 0.5,
+      "precision": 0.4392523364485981,
+      "recall": 0.6811594202898551,
+      "unknown_rate": 0.1095
+    },
+    "sun": {
+      "actor_f1": 0.4262295081967213,
+      "coverage": 0.6667,
+      "f1": 0.4457831325301205,
+      "macro_f1": 0.46055835091705893,
+      "missing_f1": 0.4554455445544555,
+      "order_f1": 0.5,
+      "precision": 0.38144329896907214,
+      "recall": 0.5362318840579711,
+      "unknown_rate": 0.3333
+    }
+  },
+  "bonus_dev": {
+    "ours": {
+      "actor_f1": 0.5684210526315789,
+      "coverage": 0.863013698630137,
+      "f1": 0.5473684210526316,
+      "macro_f1": 0.576198070934913,
+      "missing_f1": 0.49350649350649356,
+      "order_f1": 0.6666666666666666,
+      "overall_counts": {
+        "FN": 26,
+        "FP": 60,
+        "TN": 63,
+        "TP": 52,
+        "coverage": 0.863013698630137,
+        "f1": 0.5473684210526316,
+        "negative_support": 141,
+        "not_applicable": 75,
+        "not_scored": 105,
+        "positive_support": 78,
+        "precision": 0.4642857142857143,
+        "recall": 0.6666666666666666,
+        "scored_cells": 219,
+        "unknown_negative": 18,
+        "unknown_positive": 12,
+        "unknown_rate": 0.136986301369863
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "FN": 6,
+          "FP": 35,
+          "TN": 2,
+          "TP": 27,
+          "coverage": 0.8,
+          "f1": 0.5684210526315789,
+          "negative_support": 47,
+          "not_applicable": 53,
+          "not_scored": 0,
+          "positive_support": 33,
+          "precision": 0.43548387096774194,
+          "recall": 0.8181818181818182,
+          "scored_cells": 80,
+          "unknown_negative": 10,
+          "unknown_positive": 6,
+          "unknown_rate": 0.2
+        },
+        "missing_action": {
+          "FN": 14,
+          "FP": 25,
+          "TN": 55,
+          "TP": 19,
+          "coverage": 1.0,
+          "f1": 0.49350649350649356,
+          "negative_support": 80,
+          "not_applicable": 20,
+          "not_scored": 0,
+          "positive_support": 33,
+          "precision": 0.4318181818181818,
+          "recall": 0.5757575757575758,
+          "scored_cells": 113,
+          "unknown_negative": 0,
+          "unknown_positive": 0,
+          "unknown_rate": 0.0
+        },
+        "out_of_order": {
+          "FN": 6,
+          "FP": 0,
+          "TN": 6,
+          "TP": 6,
+          "coverage": 0.46153846153846156,
+          "f1": 0.6666666666666666,
+          "negative_support": 14,
+          "not_applicable": 2,
+          "not_scored": 105,
+          "positive_support": 12,
+          "precision": 1.0,
+          "recall": 0.5,
+          "scored_cells": 26,
+          "unknown_negative": 8,
+          "unknown_positive": 6,
+          "unknown_rate": 0.5384615384615384
+        }
+      },
+      "precision": 0.4642857142857143,
+      "recall": 0.6666666666666666,
+      "unknown_rate": 0.136986301369863
+    },
+    "sun": {
+      "actor_f1": 0.4262295081967213,
+      "coverage": 0.6575342465753424,
+      "f1": 0.4666666666666667,
+      "macro_f1": 0.5161139064726145,
+      "missing_f1": 0.4554455445544555,
+      "order_f1": 0.6666666666666666,
+      "overall_counts": {
+        "FN": 36,
+        "FP": 60,
+        "TN": 36,
+        "TP": 42,
+        "coverage": 0.6575342465753424,
+        "f1": 0.4666666666666667,
+        "negative_support": 141,
+        "not_applicable": 75,
+        "not_scored": 105,
+        "positive_support": 78,
+        "precision": 0.4117647058823529,
+        "recall": 0.5384615384615384,
+        "scored_cells": 219,
+        "unknown_negative": 45,
+        "unknown_positive": 30,
+        "unknown_rate": 0.3424657534246575
+      },
+      "per_type": {
+        "incorrect_actor": {
+          "FN": 20,
+          "FP": 15,
+          "TN": 4,
+          "TP": 13,
+          "coverage": 0.4,
+          "f1": 0.4262295081967213,
+          "negative_support": 47,
+          "not_applicable": 53,
+          "not_scored": 0,
+          "positive_support": 33,
+          "precision": 0.4642857142857143,
+          "recall": 0.3939393939393939,
+          "scored_cells": 80,
+          "unknown_negative": 28,
+          "unknown_positive": 20,
+          "unknown_rate": 0.6
+        },
+        "missing_action": {
+          "FN": 10,
+          "FP": 45,
+          "TN": 26,
+          "TP": 23,
+          "coverage": 0.8849557522123894,
+          "f1": 0.4554455445544555,
+          "negative_support": 80,
+          "not_applicable": 20,
+          "not_scored": 0,
+          "positive_support": 33,
+          "precision": 0.3382352941176471,
+          "recall": 0.696969696969697,
+          "scored_cells": 113,
+          "unknown_negative": 9,
+          "unknown_positive": 4,
+          "unknown_rate": 0.11504424778761062
+        },
+        "out_of_order": {
+          "FN": 6,
+          "FP": 0,
+          "TN": 6,
+          "TP": 6,
+          "coverage": 0.46153846153846156,
+          "f1": 0.6666666666666666,
+          "negative_support": 14,
+          "not_applicable": 2,
+          "not_scored": 105,
+          "positive_support": 12,
+          "precision": 1.0,
+          "recall": 0.5,
+          "scored_cells": 26,
+          "unknown_negative": 8,
+          "unknown_positive": 6,
+          "unknown_rate": 0.5384615384615384
+        }
+      },
+      "precision": 0.4117647058823529,
+      "recall": 0.5384615384615384,
+      "unknown_rate": 0.3424657534246575
+    }
+  },
+  "current_paper_baseline_preserved": true,
+  "current_paper_table3_replaced": false,
+  "decisions": {
+    "ACTION_SCOPE_REVISION_IMPLEMENTED": false,
+    "BONUS_DEV_REPLAY_COMPLETE": true,
+    "BONUS_RESULT_METHOD_VALID": false,
+    "BONUS_RESULT_NUMERICALLY_IMPROVED": true,
+    "CANDIDATE_FOR_FUTURE_TABLE3_METHOD": false,
+    "CURRENT_PAPER_BASELINE_PRESERVED": true,
+    "CURRENT_PAPER_TABLE3_REPLACED": false,
+    "FINAL_UNSEEN_BENCHMARK_CREATED": false,
+    "MISSING_ROOT_CAUSE_RESOLVED": "MAPPING_DOMINANT_NO_ALLOWED_FIX",
+    "ORDER_ADAPTER_CHANGED": false,
+    "ORDER_GENERALIZATION_COMPLETE": true,
+    "REAL_LLM_API_CALLS": 0
+  },
+  "delta_vs_baseline": {
+    "ours": {
+      "delta_actor_f1": 0.0,
+      "delta_f1": 0.013277511961722555,
+      "delta_macro_f1": 0.05555555555555558,
+      "delta_missing_f1": 0.0,
+      "delta_order_f1": 0.16666666666666663,
+      "delta_precision": 0.025033377837116177,
+      "delta_recall": -0.01449275362318847
+    },
+    "sun": {
+      "delta_actor_f1": 0.0,
+      "delta_f1": 0.0208835341365462,
+      "delta_macro_f1": 0.055555555555555525,
+      "delta_missing_f1": 0.0,
+      "delta_order_f1": 0.16666666666666663,
+      "delta_precision": 0.03032140691328078,
+      "delta_recall": 0.0022296544035673715
+    }
+  },
+  "final_test_eligible": false,
+  "final_unseen_benchmark_created": false,
+  "improvement_attribution": {
+    "actor": {
+      "changed": false,
+      "note": "Actor formula unchanged."
+    },
+    "missing_scope_change": {
+      "delta_FN": 0,
+      "delta_FP": 0,
+      "delta_TP": 0,
+      "note": "No action-scope revision was implemented; frozen Missing denominator reused."
+    },
+    "order_supplement": {
+      "ours": {
+        "delta_FN": 4,
+        "delta_FP": 0,
+        "delta_TN": 5,
+        "delta_TP": 5,
+        "delta_unknown_negative": 4,
+        "delta_unknown_positive": 4,
+        "new_support_cells": 18
+      },
+      "sun": {
+        "delta_FN": 4,
+        "delta_FP": 0,
+        "delta_TN": 5,
+        "delta_TP": 5,
+        "delta_unknown_negative": 4,
+        "delta_unknown_positive": 4,
+        "new_support_cells": 18
+      }
+    }
+  },
+  "missing_denominator_changed": false,
+  "order_adapter_changed": false,
+  "order_supplement_changed_benchmark": true,
+  "real_llm_api_calls": 0,
+  "schema_version": "stage3_bonus_development_report@1.0.0",
+  "status": "BONUS_DEV_REPLAY_NOT_PAPER_FACING"
+}

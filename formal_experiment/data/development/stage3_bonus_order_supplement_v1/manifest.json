@@ -1,0 +1,1132 @@
+{
+  "bpmn_label_policy": "task labels equal the endpoint action surface to isolate order projection/reachability from semantic BPMN-label mapping",
+  "cases": [
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_01_baseline.bpmn",
+      "case_id": "case_bonus_ord_01_baseline",
+      "citation": "GDPR Article 7(4)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_Before",
+          "Activity_After"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "BONUS-ORD-01",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_01",
+      "source_text_sha256": "ca8b57790686197fef386cdd5bae07923ec87d0bb0af17b40d7d6750e576f7e5",
+      "split": "development",
+      "target_node": null,
+      "variant": "baseline"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_01_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_01_out_of_order",
+      "citation": "GDPR Article 7(4)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_After",
+          "Activity_Before"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "BONUS-ORD-01",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_01",
+      "source_text_sha256": "ca8b57790686197fef386cdd5bae07923ec87d0bb0af17b40d7d6750e576f7e5",
+      "split": "development",
+      "target_node": null,
+      "variant": "out_of_order"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_02_baseline.bpmn",
+      "case_id": "case_bonus_ord_02_baseline",
+      "citation": "GDPR Article 35(3)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_Before",
+          "Activity_After"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "BONUS-ORD-02",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_02",
+      "source_text_sha256": "f951cf7627a81142ddd91ca7ad1c339585f89c4f7ad26113e3f2e9e80fa257cc",
+      "split": "development",
+      "target_node": null,
+      "variant": "baseline"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_02_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_02_out_of_order",
+      "citation": "GDPR Article 35(3)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_After",
+          "Activity_Before"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "BONUS-ORD-02",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_02",
+      "source_text_sha256": "f951cf7627a81142ddd91ca7ad1c339585f89c4f7ad26113e3f2e9e80fa257cc",
+      "split": "development",
+      "target_node": null,
+      "variant": "out_of_order"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_03_baseline.bpmn",
+      "case_id": "case_bonus_ord_03_baseline",
+      "citation": "GDPR Article 40(7)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_Before",
+          "Activity_After"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "BONUS-ORD-03",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_03",
+      "source_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+      "split": "development",
+      "target_node": null,
+      "variant": "baseline"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_03_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_03_out_of_order",
+      "citation": "GDPR Article 40(7)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_After",
+          "Activity_Before"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "BONUS-ORD-03",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_03",
+      "source_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6",
+      "split": "development",
+      "target_node": null,
+      "variant": "out_of_order"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_04_baseline.bpmn",
+      "case_id": "case_bonus_ord_04_baseline",
+      "citation": "GDPR Article 43(1)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_Before",
+          "Activity_After"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "BONUS-ORD-04",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_04",
+      "source_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+      "split": "development",
+      "target_node": null,
+      "variant": "baseline"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_04_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_04_out_of_order",
+      "citation": "GDPR Article 43(1)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_After",
+          "Activity_Before"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "BONUS-ORD-04",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_04",
+      "source_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30",
+      "split": "development",
+      "target_node": null,
+      "variant": "out_of_order"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_05_baseline.bpmn",
+      "case_id": "case_bonus_ord_05_baseline",
+      "citation": "GDPR Article 49(1)(a)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_Before",
+          "Activity_After"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "BONUS-ORD-05",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_05",
+      "source_text_sha256": "ea226993b6ff8241a23ab2747b81e07aaff15e3513cc0ed2c6a9a6c54213e446",
+      "split": "development",
+      "target_node": null,
+      "variant": "baseline"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_05_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_05_out_of_order",
+      "citation": "GDPR Article 49(1)(a)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_After",
+          "Activity_Before"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "BONUS-ORD-05",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_05",
+      "source_text_sha256": "ea226993b6ff8241a23ab2747b81e07aaff15e3513cc0ed2c6a9a6c54213e446",
+      "split": "development",
+      "target_node": null,
+      "variant": "out_of_order"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_06_baseline.bpmn",
+      "case_id": "case_bonus_ord_06_baseline",
+      "citation": "GDPR Article 45(1)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_Before",
+          "Activity_After"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "BONUS-ORD-06",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_06",
+      "source_text_sha256": "0972c0eba53962784d28012a7c5c031c5611dd9138c767cacecf217005b210c8",
+      "split": "development",
+      "target_node": null,
+      "variant": "baseline"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_06_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_06_out_of_order",
+      "citation": "GDPR Article 45(1)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_After",
+          "Activity_Before"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "BONUS-ORD-06",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_06",
+      "source_text_sha256": "0972c0eba53962784d28012a7c5c031c5611dd9138c767cacecf217005b210c8",
+      "split": "development",
+      "target_node": null,
+      "variant": "out_of_order"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_07_baseline.bpmn",
+      "case_id": "case_bonus_ord_07_baseline",
+      "citation": "GDPR Article 6(1)(b)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_Before",
+          "Activity_After"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "BONUS-ORD-07",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_07",
+      "source_text_sha256": "ef9c11775134a38e911f5be5b7678c97728b980eb3d0bbb1c61cc16fdefd3102",
+      "split": "development",
+      "target_node": null,
+      "variant": "baseline"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_07_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_07_out_of_order",
+      "citation": "GDPR Article 6(1)(b)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_After",
+          "Activity_Before"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "BONUS-ORD-07",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_07",
+      "source_text_sha256": "ef9c11775134a38e911f5be5b7678c97728b980eb3d0bbb1c61cc16fdefd3102",
+      "split": "development",
+      "target_node": null,
+      "variant": "out_of_order"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_08_baseline.bpmn",
+      "case_id": "case_bonus_ord_08_baseline",
+      "citation": "GDPR Article 18(3)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_Before",
+          "Activity_After"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "BONUS-ORD-08",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_08",
+      "source_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+      "split": "development",
+      "target_node": null,
+      "variant": "baseline"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_08_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_08_out_of_order",
+      "citation": "GDPR Article 18(3)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_After",
+          "Activity_Before"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "BONUS-ORD-08",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_08",
+      "source_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f",
+      "split": "development",
+      "target_node": null,
+      "variant": "out_of_order"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_09_baseline.bpmn",
+      "case_id": "case_bonus_ord_09_baseline",
+      "citation": "GDPR Article 36(2)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_Before",
+          "Activity_After"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "satisfied"
+      },
+      "requirement_id": "BONUS-ORD-09",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_09",
+      "source_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+      "split": "development",
+      "target_node": null,
+      "variant": "baseline"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_09_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_09_out_of_order",
+      "citation": "GDPR Article 36(2)",
+      "dev_only": true,
+      "final_table3_eligible": false,
+      "ineligible_types": [
+        "missing_action",
+        "incorrect_actor"
+      ],
+      "mutation_observed": {
+        "sequence": [
+          "Activity_After",
+          "Activity_Before"
+        ]
+      },
+      "order_pair": [
+        "Activity_Before",
+        "Activity_After"
+      ],
+      "process_id": "Process",
+      "reference_states": {
+        "incorrect_actor": "not_applicable",
+        "missing_action": "not_applicable",
+        "out_of_order": "violated"
+      },
+      "requirement_id": "BONUS-ORD-09",
+      "scored_types": [
+        "out_of_order"
+      ],
+      "seen_during_method_development": true,
+      "source_family_id": "gdpr_bonus_order_art_09",
+      "source_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52",
+      "split": "development",
+      "target_node": null,
+      "variant": "out_of_order"
+    }
+  ],
+  "dev_only": true,
+  "endpoint_policy": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_STAGE2_PREDICTION",
+  "final_table3_eligible": false,
+  "items": [
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_01_baseline.bpmn",
+      "case_id": "case_bonus_ord_01_baseline",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_01_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_01_out_of_order",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_02_baseline.bpmn",
+      "case_id": "case_bonus_ord_02_baseline",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_02_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_02_out_of_order",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_03_baseline.bpmn",
+      "case_id": "case_bonus_ord_03_baseline",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_03_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_03_out_of_order",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_04_baseline.bpmn",
+      "case_id": "case_bonus_ord_04_baseline",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_04_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_04_out_of_order",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_05_baseline.bpmn",
+      "case_id": "case_bonus_ord_05_baseline",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_05_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_05_out_of_order",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_06_baseline.bpmn",
+      "case_id": "case_bonus_ord_06_baseline",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_06_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_06_out_of_order",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_07_baseline.bpmn",
+      "case_id": "case_bonus_ord_07_baseline",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_07_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_07_out_of_order",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_08_baseline.bpmn",
+      "case_id": "case_bonus_ord_08_baseline",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_08_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_08_out_of_order",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_09_baseline.bpmn",
+      "case_id": "case_bonus_ord_09_baseline",
+      "process_id": "Process"
+    },
+    {
+      "bpmn_path": "bpmn/case_bonus_ord_09_out_of_order.bpmn",
+      "case_id": "case_bonus_ord_09_out_of_order",
+      "process_id": "Process"
+    }
+  ],
+  "real_llm_api_calls": 0,
+  "requirements": {
+    "BONUS-ORD-01": {
+      "after_action": "giving consent",
+      "before_action": "informed",
+      "citation": "GDPR Article 7(4)",
+      "eligibility_class": "STRICT_ELIGIBLE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "endpoint_stub": {
+        "actions": [
+          {
+            "end": 59,
+            "id": "BONUS-ORD-01.a1",
+            "start": 51,
+            "text": "informed"
+          },
+          {
+            "end": 23,
+            "id": "BONUS-ORD-01.a2",
+            "start": 9,
+            "text": "giving consent"
+          }
+        ],
+        "clause_id": "BONUS-ORD-01.c1",
+        "source_text": "Prior to giving consent, the data subject shall be informed thereof."
+      },
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "relation": "The data subject is informed before giving consent.",
+      "source_text": "Prior to giving consent, the data subject shall be informed thereof.",
+      "source_text_sha256": "ca8b57790686197fef386cdd5bae07923ec87d0bb0af17b40d7d6750e576f7e5"
+    },
+    "BONUS-ORD-02": {
+      "after_action": "adoption of the lists referred to in paragraphs 4 and 5",
+      "before_action": "apply the consistency mechanism referred to in Article 63",
+      "citation": "GDPR Article 35(3)",
+      "eligibility_class": "STRICT_ELIGIBLE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "endpoint_stub": {
+        "actions": [
+          {
+            "end": 169,
+            "id": "BONUS-ORD-02.a1",
+            "start": 112,
+            "text": "apply the consistency mechanism referred to in Article 63"
+          },
+          {
+            "end": 68,
+            "id": "BONUS-ORD-02.a2",
+            "start": 13,
+            "text": "adoption of the lists referred to in paragraphs 4 and 5"
+          }
+        ],
+        "clause_id": "BONUS-ORD-02.c1",
+        "source_text": "Prior to the adoption of the lists referred to in paragraphs 4 and 5, the competent supervisory authority shall apply the consistency mechanism referred to in Article 63 where such lists involve processing activities which are related to the offering of goods or services to data subjects or to the monitoring of their behaviour in several Member States, or may substantially affect the free movement of personal data within the Union."
+      },
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "relation": "The authority applies the consistency mechanism before adoption of the lists.",
+      "source_text": "Prior to the adoption of the lists referred to in paragraphs 4 and 5, the competent supervisory authority shall apply the consistency mechanism referred to in Article 63 where such lists involve processing activities which are related to the offering of goods or services to data subjects or to the monitoring of their behaviour in several Member States, or may substantially affect the free movement of personal data within the Union.",
+      "source_text_sha256": "f951cf7627a81142ddd91ca7ad1c339585f89c4f7ad26113e3f2e9e80fa257cc"
+    },
+    "BONUS-ORD-03": {
+      "after_action": "approving the draft code, amendment or extension",
+      "before_action": "submit it in the procedure referred to in Article 63 to the Board",
+      "citation": "GDPR Article 40(7)",
+      "eligibility_class": "STRICT_ELIGIBLE_ADAPTER_FAILURE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "endpoint_stub": {
+        "actions": [
+          {
+            "end": 286,
+            "id": "BONUS-ORD-03.a1",
+            "start": 221,
+            "text": "submit it in the procedure referred to in Article 63 to the Board"
+          },
+          {
+            "end": 219,
+            "id": "BONUS-ORD-03.a2",
+            "start": 171,
+            "text": "approving the draft code, amendment or extension"
+          }
+        ],
+        "clause_id": "BONUS-ORD-03.c1",
+        "source_text": "Where a draft code of conduct relates to processing activities in several Member States, the supervisory authority which is competent pursuant to Article 55 shall, before approving the draft code, amendment or extension, submit it in the procedure referred to in Article 63 to the Board which shall provide an opinion on whether the draft code, amendment or extension complies with this Regulation or, in the situation referred to in paragraph 3 of this Article, provides appropriate safeguards."
+      },
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "relation": "The supervisory authority submits the draft code before approving it.",
+      "source_text": "Where a draft code of conduct relates to processing activities in several Member States, the supervisory authority which is competent pursuant to Article 55 shall, before approving the draft code, amendment or extension, submit it in the procedure referred to in Article 63 to the Board which shall provide an opinion on whether the draft code, amendment or extension complies with this Regulation or, in the situation referred to in paragraph 3 of this Article, provides appropriate safeguards.",
+      "source_text_sha256": "91d1a82e534e9695c90d73d905e741f0e191d9251cb4532f7ab7cd66a5f8f0c6"
+    },
+    "BONUS-ORD-04": {
+      "after_action": "issue and renew certification",
+      "before_action": "informing the supervisory authority",
+      "citation": "GDPR Article 43(1)",
+      "eligibility_class": "STRICT_ELIGIBLE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "endpoint_stub": {
+        "actions": [
+          {
+            "end": 252,
+            "id": "BONUS-ORD-04.a1",
+            "start": 217,
+            "text": "informing the supervisory authority"
+          },
+          {
+            "end": 382,
+            "id": "BONUS-ORD-04.a2",
+            "start": 353,
+            "text": "issue and renew certification"
+          }
+        ],
+        "clause_id": "BONUS-ORD-04.c1",
+        "source_text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification."
+      },
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "relation": "Certification bodies issue/renew certification after informing the authority.",
+      "source_text": "Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification.",
+      "source_text_sha256": "367392f6e377363ce4164c015f075d716c2a1e23e71386161eeba4042f535e30"
+    },
+    "BONUS-ORD-05": {
+      "after_action": "consented to the proposed transfer",
+      "before_action": "informed of the possible risks",
+      "citation": "GDPR Article 49(1)(a)",
+      "eligibility_class": "STRICT_ELIGIBLE_ADAPTER_FAILURE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "endpoint_stub": {
+        "actions": [
+          {
+            "end": 397,
+            "id": "BONUS-ORD-05.a1",
+            "start": 367,
+            "text": "informed of the possible risks"
+          },
+          {
+            "end": 347,
+            "id": "BONUS-ORD-05.a2",
+            "start": 313,
+            "text": "consented to the proposed transfer"
+          }
+        ],
+        "clause_id": "BONUS-ORD-05.c1",
+        "source_text": "In the absence of an adequacy decision pursuant to Article 45(3), or of appropriate safeguards pursuant to Article 46, including binding corporate rules, a transfer or a set of transfers of personal data to a third country or an international organisation shall take place only if the data subject has explicitly consented to the proposed transfer, after having been informed of the possible risks of such transfers for the data subject due to the absence of an adequacy decision and appropriate safeguards."
+      },
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "relation": "The data subject consents after being informed of the risks.",
+      "source_text": "In the absence of an adequacy decision pursuant to Article 45(3), or of appropriate safeguards pursuant to Article 46, including binding corporate rules, a transfer or a set of transfers of personal data to a third country or an international organisation shall take place only if the data subject has explicitly consented to the proposed transfer, after having been informed of the possible risks of such transfers for the data subject due to the absence of an adequacy decision and appropriate safeguards.",
+      "source_text_sha256": "ea226993b6ff8241a23ab2747b81e07aaff15e3513cc0ed2c6a9a6c54213e446"
+    },
+    "BONUS-ORD-06": {
+      "after_action": "decide",
+      "before_action": "assessing the adequacy of the level of protection",
+      "citation": "GDPR Article 45(1)",
+      "eligibility_class": "STRICT_ELIGIBLE",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "endpoint_stub": {
+        "actions": [
+          {
+            "end": 71,
+            "id": "BONUS-ORD-06.a1",
+            "start": 22,
+            "text": "assessing the adequacy of the level of protection"
+          },
+          {
+            "end": 83,
+            "id": "BONUS-ORD-06.a2",
+            "start": 77,
+            "text": "decide"
+          }
+        ],
+        "clause_id": "BONUS-ORD-06.c1",
+        "source_text": "The Commission, after assessing the adequacy of the level of protection, may decide, by means of implementing act, that a third country, a territory or one or more specified sectors within a third country, or an international organisation ensures an adequate level of protection within the meaning of paragraph 2 of this Article."
+      },
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "relation": "The Commission decides after assessing adequacy.",
+      "source_text": "The Commission, after assessing the adequacy of the level of protection, may decide, by means of implementing act, that a third country, a territory or one or more specified sectors within a third country, or an international organisation ensures an adequate level of protection within the meaning of paragraph 2 of this Article.",
+      "source_text_sha256": "0972c0eba53962784d28012a7c5c031c5611dd9138c767cacecf217005b210c8"
+    },
+    "BONUS-ORD-07": {
+      "after_action": "entering into a contract",
+      "before_action": "take steps at the request of the data subject",
+      "citation": "GDPR Article 6(1)(b)",
+      "eligibility_class": "DIAGNOSTIC_BORDERLINE_NOT_OBLIGATION",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "endpoint_stub": {
+        "actions": [
+          {
+            "end": 211,
+            "id": "BONUS-ORD-07.a1",
+            "start": 166,
+            "text": "take steps at the request of the data subject"
+          },
+          {
+            "end": 245,
+            "id": "BONUS-ORD-07.a2",
+            "start": 221,
+            "text": "entering into a contract"
+          }
+        ],
+        "clause_id": "BONUS-ORD-07.c1",
+        "source_text": "Processing shall be lawful only if and to the extent that processing is necessary for the performance of a contract to which the data subject is party or in order to take steps at the request of the data subject prior to entering into a contract;"
+      },
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "relation": "Steps requested by the data subject precede entering into the contract.",
+      "source_text": "Processing shall be lawful only if and to the extent that processing is necessary for the performance of a contract to which the data subject is party or in order to take steps at the request of the data subject prior to entering into a contract;",
+      "source_text_sha256": "ef9c11775134a38e911f5be5b7678c97728b980eb3d0bbb1c61cc16fdefd3102"
+    },
+    "BONUS-ORD-08": {
+      "after_action": "lifted",
+      "before_action": "informed by the controller",
+      "citation": "GDPR Article 18(3)",
+      "eligibility_class": "DIAGNOSTIC_BORDERLINE_PASSIVE_STATE_ENDPOINT",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "endpoint_stub": {
+        "actions": [
+          {
+            "end": 117,
+            "id": "BONUS-ORD-08.a1",
+            "start": 91,
+            "text": "informed by the controller"
+          },
+          {
+            "end": 164,
+            "id": "BONUS-ORD-08.a2",
+            "start": 158,
+            "text": "lifted"
+          }
+        ],
+        "clause_id": "BONUS-ORD-08.c1",
+        "source_text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted."
+      },
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "relation": "The data subject is informed before the restriction is lifted.",
+      "source_text": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
+      "source_text_sha256": "09fc6a3288f022c371a1db3a6df1ffa00f31c4a5cc216fda78d6aa084745176f"
+    },
+    "BONUS-ORD-09": {
+      "after_action": "processing",
+      "before_action": "consult the supervisory authority",
+      "citation": "GDPR Article 36(2)",
+      "eligibility_class": "DIAGNOSTIC_BORDERLINE_NOMINAL_ENDPOINT",
+      "endpoint_availability": {
+        "ours": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION",
+        "sun": "DEV_ONLY_SYNTHETIC_ENDPOINT_STUB_NOT_A_REAL_STAGE2_PREDICTION"
+      },
+      "endpoint_stub": {
+        "actions": [
+          {
+            "end": 54,
+            "id": "BONUS-ORD-09.a1",
+            "start": 21,
+            "text": "consult the supervisory authority"
+          },
+          {
+            "end": 74,
+            "id": "BONUS-ORD-09.a2",
+            "start": 64,
+            "text": "processing"
+          }
+        ],
+        "clause_id": "BONUS-ORD-09.c1",
+        "source_text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk."
+      },
+      "o_flags": {
+        "O1": true,
+        "O2": true,
+        "O3": true,
+        "O4": true,
+        "O5": true,
+        "O6": true,
+        "O7": true
+      },
+      "relation": "The controller consults the authority before processing.",
+      "source_text": "The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.",
+      "source_text_sha256": "e172a9fcd184e4571d10061a5128e3522a6ac0298d71957ddfcdbf9c83e1fa52"
+    }
+  },
+  "schema_version": "stage3_bonus_order_supplement@1.0.0",
+  "seen_during_method_development": true,
+  "status": "BONUS_DEVELOPMENT_ONLY_ORDER_SUPPLEMENT"
+}
