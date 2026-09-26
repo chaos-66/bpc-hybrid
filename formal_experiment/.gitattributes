@@ -331,3 +331,16 @@ outputs/reports/stage2_table2_evidence_backup_v1.json text eol=lf
 outputs/reports/verify_b0_formal_arm_v1.py text eol=lf
 # S3-TABLE3-R5.4: Stage 1 contract binds the raw LF-byte SHA-256 of this schema.
 configs/schemas/process_record.schema.json text eol=lf
+# S3-TABLE3-R5.4: frozen B0/CoreNLP raw-SHA bindings use LF bytes.
+configs/models/sun_b0_s26_candidate_B_v1.json text eol=lf
+configs/models/estg150_b0_v10_preregistration_v2.json text eol=lf
+configs/models/estg150_b0_active_registry_v3.json text eol=lf
+configs/models/sun_bert_textcnn_s24.json text eol=lf
+configs/stage2_evaluator_s210_v3.json text eol=lf
+configs/sun_corenlp_runtime.json text eol=lf
+outputs/reports/s24_candidate_B_invsqrt_weighted_seed20260717_v1.adapter_s24_schema.manifest.json text eol=lf
+resources/corenlp/s25b_runtime_verification_manifest.json text eol=lf
+resources/corenlp/sun_phrase_patterns_v1.json text eol=lf
+# S3-TABLE3-R5.4: frozen B0/CoreNLP JSON hash bindings use LF bytes.
+resources/lexicon/*.json text eol=lf
+resources/corenlp/*.json text eol=lf
