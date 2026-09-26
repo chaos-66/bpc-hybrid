@@ -1026,11 +1026,17 @@ semantic-field 人工裁决标签。
   held_out_generalization_claim_allowed=false、target_labels_seen_during_
   development=true、developer_blind=false）。不再为 Stage 1 增加新方法或新门禁。
 
-[[TODO-RESULT:S2.10：Stage 2 六字段正式 manifest 回填（三方法比较见 §7.2）]]
+Stage 2 正式两方法主表及来源绑定见 §7.2；modality label 与五字段 span 指标分列。
 
-### 7.2 Stage 2 正式三方法比较（FORMAL，2026-08-11）
+### 7.2 Stage 2 正式两方法主比较（最终采用值于 2026-09-26 固定）
 
-来源：`outputs/reports/stage2_formal_three_method_comparison_v1.json`
+**最终论文采用值：Direct-LLM Overall F1 = 0.8378，Sun 方法本地重建
+Rules-Only = 0.7631，绝对差 +7.47 个百分点。** 采用既有
+`outputs/reports/stage2_table1_paper_final_v1.json` 的五字段 pooled 口径，绑定
+原 `direct_llm_formal_arm_v1`（v6/R3）与 `b0_formal_arm_v1`；用户已决定此表
+后续不再替换或重跑。数值、计数及来源哈希复核见主张矩阵 C54。
+
+历史字段级正式来源（2026-08-11）：`outputs/reports/stage2_formal_three_method_comparison_v1.json`
 （report SHA c9d76544…，manifest dc41eb4b…）；G0.4 授权口径：句子级粗 Gold
 五字段 span 主视图 + modality four-class label 分表；modality evidence-span
 结构性地 unavailable（不置零不纳入 aggregate）；细 Gold 为诊断/对照；
@@ -1041,9 +1047,8 @@ semantic-field 人工裁决标签。
 
 | 方法 | actor | action | condition | constraint | exception | **五字段 pooled F1（合同口径 Overall）** | 五字段 mean F1（次口径） | Modality label acc / macro-F1 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Rules-Only（旧代号 B0） | 0.8203 | 0.8927 | 0.7738 | 0.6182 | 0.8800 | 0.7631 | 0.7970 | 0.7400 / 0.7128 |
+| Sun 方法本地重建（Rules-Only，B0） | 0.8203 | 0.8927 | 0.7738 | 0.6182 | 0.8800 | 0.7631 | 0.7970 | 0.7400 / 0.7128 |
 | Direct-LLM（旧代号 D1） | 0.7579 | 0.9437 | 0.8380 | 0.7427 | 0.7619 | **0.8378** | 0.8088 | 0.8333 / 0.7695 |
-| Rules+LLM-Repair（旧代号 H1，对照） | 0.4296 | 0.8945 | 0.7774 | 0.6200 | 0.8800 | — | 0.7203 | 0.8200 / 0.8123 |
 
 **Overall 口径（2026-09-21 修正，PAPER-FINAL-REPAIR）。** G0.4 合同规定正式主报告为
 「粗粒度五个 span-bearing 字段 + 单独的四类 modality label 指标」，且 modality
@@ -1075,8 +1080,9 @@ pooled 的 +7.47 pp。两个口径由同一批预测算出，只因聚合方式�
 字段级结论（描述性，禁止显著性推断）：Direct-LLM 在 action（+0.051）、condition
 （+0.064）、constraint（+0.125）与 modality label accuracy（0.8333 vs 0.7400）
 领先 Rules-Only；Rules-Only 在 actor（+0.062）与 exception（+0.118）领先
-Direct-LLM；Rules+LLM-Repair 因 actor 过度抽取而 net-negative（actor F1 0.4296，
-vs Rules-Only 0.8203 / Direct-LLM 0.7579）。**无整体胜者声明**。
+Direct-LLM。历史 Rules+LLM-Repair 因 actor 过度抽取而 net-negative（actor F1 0.4296，
+vs Rules-Only 0.8203 / Direct-LLM 0.7579），保留为历史研究记录。
+**本表支持固定数据上总体 F1 更高的描述性结论，不支持全面或普遍优越的声明。**
 
 ### 7.3 复杂度分层与错误类型（S2.12，零 API arm）
 

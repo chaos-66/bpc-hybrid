@@ -2,6 +2,20 @@
 
 This directory is the only active experiment surface.
 
+## User final paper decision: Stage 2 Table 1 (2026-09-26)
+
+用户要求再次核对并固定第二阶段论文主表，后续不再改变。唯一数值来源为
+`outputs/reports/stage2_table1_paper_final_v1.json`：EStG-150、coarse sentence view、
+五字段 `pooled_five_span_fields` Overall F1，Direct-LLM **0.8378**，Sun 方法本地
+重建 Rules-Only **0.7631**，差 **+7.47 个百分点**。保留四位小数；两位舍入是
+0.84/0.76，不能截断成 0.83/0.76。modality label 单列，不并入 Overall。
+固定来源臂 `direct_llm_formal_arm_v1`（原 v6/R3 快照）与 `b0_formal_arm_v1`；
+不再为本表调参、改变评价口径、重跑或用后续消融/actor refinement/100 候选替换。
+0.7631 不是 Sun 原论文报告值；不能把 0.8378 移植到另一 prompt/模型版本。
+固定的是本表的已验证结果与来源，不把 Stage 3 或其他未完成任务标为完成。
+若以后发现客观证据错误，须如实报告并等待用户明确的新决定，不静默改数或隐瞒。
+详细来源、计数和写作范围见 `paper/CLAIM_EVIDENCE_MATRIX.md` C54。
+
 ## Current user experiment-only delegation (2026-09-24)
 
 本轮用户只要求实验和数据，不写论文、不改 PPT 或绘制论文图。该当前任务优先于

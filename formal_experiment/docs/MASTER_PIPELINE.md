@@ -1,8 +1,8 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
-**文档版本**：3.7.30
+**文档版本**：3.7.31
 **状态**：ACTIVE — 全项目研究与任务分解的唯一主线
-**最后更新**：2026-09-25
+**最后更新**：2026-09-26
 **方法学主干**：Sun et al. (2024)（三阶段方法主干）；Barrientos et al. (2026)（直接借鉴来源：LLM 结构化输出、验证、受控词汇、归一化与评估纪律）
 **当前实施优先级**：2026-09-25 的 S3-TABLE3-V4-R2 已完成 R1 协议偏差的机械纠正与原因定位：strict 顺序投影、失败原因分类、精确 ID/输出绑定检查、零新增 API。但表三仍未验收，因为 Sun/Ours/Winter 的 order 分母仍全为 0；下一步须由 Codex 决定是否以明确的 after/temporal 扩展协议解决映射与原生覆盖问题，不得自行改算法、改样本或追分。下方历史安排不构成扩大实验、写论文或新增 API 的指令。
 
@@ -10,6 +10,22 @@
 > 本文定义“要完成什么、先后依赖是什么、每一步怎样算完成”。
 > `docs/PROJECT_AUDIT.md` 只记录实时进度；不要再创建新的日期版
 > `STATUS_*`、`HANDOFF_*` 或平行路线文档。
+
+## 2026-09-26 修订 3.7.31：S2.10/PW7 第二阶段主表最终采用值固定
+
+- 用户要求复核“总体 F1 约 0.83 高于 Sun 约 0.76”并作为最终论文数据，不再改变。
+  已有 Table 1 的精确值为 0.8377685388362014/0.7630963921754044；论文固定
+  四位 **Direct-LLM 0.8378 / Sun 方法本地重建 Rules-Only 0.7631**，差 **+7.47 pp**。
+- 同一 EStG-150、粗句子视图、五字段 `pooled_five_span_fields`；modality label
+  单列。固定 `stage2_table1_paper_final_v1.json` 与其中 Gold/两臂预测 SHA 绑定；
+  五字段 mean F1 0.8088/0.7970 为次口径，字段差异与局限继续披露。
+- DoD 已达成：源报告计数算术、三项输入产物哈希、正式 arm manifests 与既有
+  2026-09-21 口径修正证据核对一致；论文 §7.2 与主张 C54、写作入口及 Agent
+  合同同步。仅固定既有结果的论文采用决定，不改历史产物，不新增实验或测试。
+- 原 v6/R3 的 Direct 正式臂与 B0 正式臂是本表唯一方法身份；后续消融、actor
+  refinement、100 候选或新模型结果不替换这张主表，也不再为本表调参、重跑或
+  改口径。若发现客观证据错误，先如实报告并等待用户明确的新决定。
+- 本项不宣称 Stage 3、整体投稿门禁或其他未完成实验已完成。
 
 ## 2026-09-25 修订 3.7.30：S3-TABLE3-R5.1 定向 benchmark 纠错（A/B/C/D/E）
 
@@ -1843,13 +1859,16 @@ label 另表。**迭代规则**：候选允许字段间 P/R trade-off；Agent �
 
 ### 8.7.2 论文 Table 1 / Table 2 最终口径（PAPER-FINAL-REPAIR，2026-09-21，零 API）
 
+**2026-09-26 用户最终采用决定**：下列 Table 1 的 0.8378/0.7631 已复核固定，
+后续不替换或重跑；方法名称中的 Sun 指本项目本地重建。详细来源见 C54。
+
 **Table 1（Stage 2 六要素抽取，EStG-150 coarse sentence view）**
 `formal_experiment/outputs/reports/stage2_table1_paper_final_v1.{json,md}`
 （生成器 `scripts/build_stage2_table1_paper_final_v1.py`，只读冻结 Gold + 冻结两臂预测）。
 
 | Method | Modality macro-F1 | Actor | Action | Condition | Constraint | Exception | **Overall (pooled 5)** |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Sun et al.（rules-only） | 0.713 | **0.820** | 0.893 | 0.774 | 0.618 | **0.880** | 0.7631 |
+| Sun 方法本地重建（Rules-Only） | 0.713 | **0.820** | 0.893 | 0.774 | 0.618 | **0.880** | 0.7631 |
 | Ours（Direct-LLM） | **0.769** | 0.758 | **0.944** | **0.838** | **0.743** | 0.762 | **0.8378** |
 
 Δ Overall = **+7.47 pp**（P 0.6984/R 0.8410 → P 0.8695/R 0.8083）。

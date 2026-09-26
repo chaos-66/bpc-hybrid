@@ -12,6 +12,12 @@
 **状态**：活动写作控制表  
 **当前正式实验结果**：三方法正式比较已发布（2026-08-11，`stage2_formal_three_method_comparison_v1` 与 `stage2_formal_conclusion_v1`）；性能结论仅限正式报告中字段级描述性结论，禁止显著性推断
 
+**2026-09-26 最终主表采用决定（C54）**：Stage 2 现行两方法 Table 1 固定为
+Direct-LLM pooled F1 **0.8378**、Sun 方法本地重建 Rules-Only **0.7631**，差
+**+7.47 个百分点**。C23–C25 是历史字段级结论来源；修正后的五字段总体以 C54
+及 `stage2_table1_paper_final_v1.json` 为准。不得用历史六字段 overall、后续消融
+或另一方法版本替换。允许描述本数据上总体 F1 更高，不推断显著性或普遍优越。
+
 状态只使用：`VERIFIED_PRIMARY_SOURCE`、`VERIFIED_PROJECT_FACT`、
 `PLANNED_METHOD`、`BLOCKED_RESULT`、`PROHIBITED_CLAIM`。
 
@@ -82,6 +88,43 @@
 | C52 | SEP-C3 当前版本身份与状态：正式默认仍是 v6 `prompts/sun_compat/direct_llm_sun_record_prompt_v6_d1r1_2026_08_05.md`（SHA-256 `3aa64877...`，registry 与 runner 指向）；B 只是本轮研究参照；五臂 v2 `BASE+RC1+T+G+TG` 750-call 计划 NO-GO/未执行；完整 E/S/J 八格已各执行一次（前批+增量批，commit 18f5cf9），但非同批、每格一次，不能作稳定主效应/交互；原始响应后处理归因仅本地分支 9b50729 覆盖旧 v6+111，其余 arms 未覆盖，adapter/canonicalizer/validator 子步骤贡献不可独立分离；重复运行仍未完成 | VERIFIED_PROJECT_FACT（当前状态记录；零 API） | `docs/PROJECT_AUDIT.md` 当前 SEP-C3 段；`docs/MASTER_PIPELINE.md` 修订 3.7.16；`outputs/reports/sep_c3_constraint_refinement_v2_go_no_go_review.md`；`configs/models/estg150_d1_active_registry_v1.json`；`scripts/run_direct_llm.py`；`paper/ABLATION_MATRIX.md` SEP-C3 targeted refinement 节 | 可写：B 未替换默认、v2 未执行、SEP-C3 尚未整体完成、下一步为既有 SEP-C2 剩余 Direct 批次而不是继续追加 prompt 候选。不得写：整个 SEP-C3 已完成、B 已正式发布、v2 已经运行、把 300/450 或 750 写成已授权、把八格单次结果写成稳定主效应/交互 | 下一步唯一推荐：SEP-C2 S2.12 Direct-36 按适用合同/账本/进程环境核验后执行；GDPR 74 分列不自动合并 |
 
 | C53 | Stage 3 binding/automatic grounding/Table 3 repair 当前边界：30 对绑定审计完成；human-approved 且绑定完整的 eligible denominator 为 missing_action 8 对、incorrect_actor 5 对、out_of_order 0 对（Rule Record 无明确规则侧顺序，不能由流程侧 mutation 反推）；Ours 在 eligible subset 上 macro-F1/micro-F1/specificity=1.0，Oracle/Grounded 上界分列；仍有 19 个 pair 的 action/actor/order 为 AI-only 或 ineligible，需 final human approval | VERIFIED_PROJECT_FACT（开发期产物；AI-only substance 不是 human Gold） | `data/development/stage3_synth/stage3_binding_audit_v1.json`；`stage3_binding_reference_v1.json`；`stage3_paired_benchmark_eligibility_v1.json`；`outputs/reports/stage3_table3_v1.{json,md}`；`outputs/reports/stage3_automatic_grounding_evaluation_v1.json`；`outputs/reports/stage3_binding_final_human_approval_packet_v1.md` | 可写：audit 分类、eligible denominator、Ours 链路与可复现命令、Oracle/上界与 Ours 分离。不得写：全部 30 对已成 human Gold、out_of_order F1=0 是方法结论、AI inference 当作 human-approved binding、或把 Oracle 行写成 Ours | 最终人工批准 19 个 unresolved pair 后更新 Binding Reference 并重跑 Table 3 |
+
+| ID | 论文主张 | 状态 | 当前证据 | 允许时态/表述 | 解锁任务或正式来源 |
+|---|---|---|---|---|---|
+| C54 | S2.10/PW7 第二阶段 Table 1 最终采用值：Direct-LLM Overall F1 0.8378、Sun 方法本地重建 Rules-Only 0.7631，绝对差 +7.47 pp；2026-09-26 用户决定固定，后续不替换 | VERIFIED_PROJECT_FACT（既有正式预测的合同口径汇总；本轮只读核对与纯文档固定） | `outputs/reports/stage2_table1_paper_final_v1.json`（原提交 `87b5280e7d6be3718270290a1b380180c432b289`）；`outputs/reports/direct_llm_formal_arm_v1.manifest.json` 与 `outputs/reports/b0_formal_arm_v1.manifest.json`；`docs/EXPERIMENT_LOG.md` 2026-09-21T07:24:25.647150+00:00 口径修正事件；来源绑定与算术见下方 C54 说明 | 可写：同 EStG-150、同 Gold、同五字段 coarse literal-overlap 口径下，Direct 的总体 F1 高 7.47 个百分点；modality label 单列，mean F1 0.8088/0.7970 为次口径，actor/exception 与 recall 的劣势保留。不得写：Sun 原论文报告值、全面/显著/普遍胜出，或把该数值归给后续 100 等候选方法 | 已完成复核与用户最终采用；保留原 v6/R3 正式预测和 B0 正式臂，不为本表重跑、调参或改变口径；Stage 3 等其他门禁独立 |
+
+### C54 来源绑定与只读核对（2026-09-26）
+
+- 唯一表一数值源的 SHA-256：工作区原始 CRLF 字节
+  `05a601d16034db6bc6981122651ba4549aa686be74da6a9e0b32d8dc076bd941`；
+  canonical-LF 字节 `0aacb711f02486701187028a4a05e3d821130c1c5d8068546ae1ef5fe8e1088d`。
+  两种值明确区分，未改写旧报告或旧哈希。
+- 原报告中的三项 SHA 与当前文件原始字节一致：Gold
+  `c31a514a6b58b640ed020c380c0b7bed136dc9574b2c98c98dedec1ecdb57100`；
+  Direct 预测 `bbadb6834572e58fb8321204b3bc975c887d23d9ae60bd804bf91137bb46072b`；
+  Rules 预测 `fa94991d246db9876b55d6a473644a4a1b93404bc35d3e314d3dba4768d9278d`。
+- 固定 150 条、459 个粗 Gold span。按独立 overlap 计数汇总：Direct
+  P=513/590、R=371/459，F1=0.8377685388362014；Rules P=623/892、R=386/459，
+  F1=0.7630963921754044；F1=2PR/(P+R)，绝对差为 7.467214666079702 pp。
+  此合同分别统计命中预测与命中 Gold，不冒充一对一 TP 匹配计数。
+- 口径为 `g04_evaluation_views_contract@1.0.0`、coarse sentence view、
+  `pooled_five_span_fields`，由 `formal_stage2_evaluation`、`stage2_sun_literal_overlap`
+  与 `g04_coarse_view` 组成；只聚合 actor/action/condition/constraint/exception。
+  既有口径修正事件记录 quick integrity/final readiness 通过及 14 项相关测试通过；
+  这只是既有状态证据，本轮没有重跑实验或代码测试。
+- Direct 来源快照 `s27_d1_v6_r3_clean_rerun_150_hist56d_v1`，历史真实调用 150、
+  有效 150、事故 0；模型登记 `deepseek-v4-pro`，v6 prompt SHA
+  `3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895`。
+  本轮新增调用 0。此身份不是后来的消融 Full=0.8224 或 100=0.8354。
+- 历史来源链：`docs/EXPERIMENT_EVENTS.jsonl` 2026-08-05T17:52:33.699052+00:00
+  的 D1-R3 `experiment_run` → `docs/EXPERIMENT_LOG.md`
+  2026-08-10T17:55:35.835627+00:00 的零 API 正式发布 `milestone` →
+  2026-09-21T07:24:25.647150+00:00 的五字段总体口径修正 `change`。
+  B0 身份为 `b0_enhanced_v10a`，正式运行事件为
+  2026-08-10T13:19:27.451643+00:00（另有 13:28:53.666748 的重复运行核验记录）。
+  正式发布里程碑不是新的 LLM 实验运行。
+- 论文统一四位小数 0.8378/0.7631（83.78%/76.31%）；若需两位小数，应舍入为
+  0.84/0.76，不能截断为 0.83。最终采用决定固定结果与来源，不删掉不利字段结果。
 
 新增任何结果性句子前，先在本表新增一行。正式回填必须记录 manifest 路径、事件
 时间、样本数、失败数、模型和 evaluator 版本；否则维持 `BLOCKED_RESULT`。

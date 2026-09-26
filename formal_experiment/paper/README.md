@@ -3,6 +3,22 @@
 这里保存论文工作稿，不保存实验结果源文件。事实和任务状态仍以
 `../docs/MASTER_PIPELINE.md`、`../docs/PROJECT_AUDIT.md` 和机器合同为准。
 
+## 第二阶段主表最终采用值（2026-09-26 用户决定）
+
+论文 Table 1 固定采用既有
+[`stage2_table1_paper_final_v1.json`](../outputs/reports/stage2_table1_paper_final_v1.json)：
+**Direct-LLM Overall F1 = 0.8378；Sun 方法本地重建 Rules-Only = 0.7631；
+绝对差 +7.47 个百分点**。数据为同一 EStG-150、同一 Gold、粗粒度句子视图；
+Overall 仅汇总 actor/action/condition/constraint/exception 五个 span 字段，
+modality 四类 label 指标单列。五字段 mean F1 0.8088/0.7970 保留为次口径。
+
+这次固定不产生新实验结果：原始精确值、预测、Gold 和 manifest 保持原样。
+正文统一保留四位小数（两位四舍五入为 0.84/0.76，不写截断的 0.83/0.76）。
+Sun 行明确标为本地重建，不能写成 Sun 原论文的报告值；结果只绑定原 v6/R3
+Direct 快照与正式 B0 臂。后续候选、消融或新模型结果不替换此主表，不再为本表
+重跑、调参或改口径。来源绑定及允许的描述性结论见
+[`CLAIM_EVIDENCE_MATRIX.md`](CLAIM_EVIDENCE_MATRIX.md) C54。
+
 ## CSCWD 2027 投稿准备（2026-09-17）
 
 用户明确以 CSCWD 为目标，希望把已做工作讲清楚，避免因文献重叠焦虑而不断增加新模块。

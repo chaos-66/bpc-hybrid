@@ -1,6 +1,6 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
-**更新时间**：2026-09-25
+**更新时间**：2026-09-26
 **唯一活动目录**：`formal_experiment/`  
 **完整路线**：`docs/MASTER_PIPELINE.md`  
 **机器事实源**：`python formal_experiment/scripts/audit_project.py`（自动完整性检查）  
@@ -8,6 +8,23 @@
 
 本文是唯一实时状态页，只记录“现在做到哪里、下一步做什么”。研究目标、完整
 Stage 1/2/3 工作分解、依赖和完成定义不在这里重复，统一见主 Pipeline。
+
+## 已完成：Stage 2 论文主表数值复核与最终采用（2026-09-26）
+
+- 用户决定：第二阶段 Table 1 固定采用 Direct-LLM **0.8378** 与 Sun 方法本地
+  重建 Rules-Only **0.7631**，Overall F1 差 **+7.47 个百分点**，后续不再替换。
+- 唯一数值源：`outputs/reports/stage2_table1_paper_final_v1.json`，来源提交
+  `87b5280e7d6be3718270290a1b380180c432b289`。同一 EStG-150、459 个粗 Gold span；
+  五字段 pooled 主口径，modality label 单列；mean F1 0.8088/0.7970 为次口径。
+- 本轮验证：既有报告计数的 P/R/F1 算术、Gold 与两臂预测的三项 SHA-256 绑定、
+  正式 arm manifests 和历史口径修正事件核对一致；两个方法均覆盖 150 条。
+  原始精确值 0.8377685388362014/0.7630963921754044，四位舍入无误。
+- 方法绑定原 `direct_llm_formal_arm_v1`（v6/R3）与 `b0_formal_arm_v1`。
+  后续消融、actor refinement 或 100 单模块候选不替换本表，不再为此表调参、
+  重跑或改变口径。0.7631 是本地基线评测值，不是 Sun 原论文报告值。
+- 完成本轮纯文档固定；未修改代码、配置、Gold、预测、评价报告或 manifest，
+  无新实验/API/代码测试。验证范围不等于新增全量测试或 Stage 3 正式放行。
+  写作证据入口为 `paper/CLAIM_EVIDENCE_MATRIX.md` C54、论文 §7.2。
 
 ## 当前优先级：S3-TABLE3-R5.1 定向纠错与 benchmark v2（2026-09-25）
 
