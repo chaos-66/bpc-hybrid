@@ -1,0 +1,27 @@
+{
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "combined_predictions": {
+    "path": "data/predictions/stage3_table3_r5_ours_stage2_formal_v1/predictions.json",
+    "record_count": 33,
+    "sha256": "2204f25e69fb5cd9dc2ff4cf82573d0b50df12fbd1ff1be47fa04494065cec0b"
+  },
+  "expected_counts": {
+    "core_predictions": 33,
+    "historical_chain_reuse": 9,
+    "historical_strong_reuse": 5,
+    "new_authorized_run": 19
+  },
+  "frozen_utc": "2026-09-26T04:44:05.964734+00:00",
+  "ours_prediction_manifest": {
+    "path": "outputs/reports/stage3_table3_r5_ours_prediction_manifest_v1.json",
+    "sha256": "255bc52746521f61f59c41bc4852f1e7fe18f2301b911e206b26fc0bad2e0960"
+  },
+  "post_freeze_repair_forbidden": true,
+  "reuse_strength_counts": {
+    "HISTORICAL_CHAIN_REUSE": 9,
+    "NEW_AUTHORIZED_RUN": 19,
+    "STRONG_REUSE": 5
+  },
+  "schema_version": "stage3_table3_r5_ours_prediction_freeze@1.0.0",
+  "status": "FROZEN_BEFORE_STAGE3_METRIC"
+}

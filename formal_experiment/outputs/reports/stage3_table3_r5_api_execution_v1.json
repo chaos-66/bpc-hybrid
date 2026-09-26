@@ -1,0 +1,32 @@
+{
+  "actual_usage_total": {
+    "completion_tokens": 14358,
+    "prompt_tokens": 83233,
+    "total_tokens": 97591
+  },
+  "ambiguous_send_state": false,
+  "attempted": 19,
+  "authorization_path": "configs/authorization/stage3_table3_r5_user_authorization_v1.json",
+  "authorized_calls_max": 19,
+  "authorized_cost_cap_usd": 0.91,
+  "base_url": "https://api.deepseek.com/v1",
+  "benchmark_id": "stage3_table3_r5_benchmark_v2",
+  "completed": 19,
+  "estimated_cost_usd": 0.16672524,
+  "failed": 0,
+  "frozen_worst_case_total_usd": 0.75006624,
+  "gold_release_path": "outputs/reports/stage3_table3_r5_formal_gold_release_v1.json",
+  "ledger_path": "data/predictions/stage3_table3_r5_ours_stage2_new19_v1/api_execution_ledger_v1.json",
+  "live_pricing_check": {
+    "path": "outputs/reports/stage3_table3_r5_live_pricing_check_v1.json",
+    "sha256": "dac4b0a557a9c26edddef53bbaa0f0cb7f18030155aeda70a451df2f75de6698"
+  },
+  "model": "deepseek-v4-pro",
+  "not_started": 0,
+  "provider": "DeepSeek",
+  "raw_response_dir": "data/predictions/stage3_table3_r5_ours_stage2_new19_v1/raw_responses",
+  "retries": 0,
+  "schema_version": "stage3_table3_r5_api_execution@1.0.0",
+  "status": "completed",
+  "timestamp_utc": "2026-09-26T04:44:05.677817+00:00"
+}
