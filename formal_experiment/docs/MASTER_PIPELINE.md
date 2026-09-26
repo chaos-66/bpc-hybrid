@@ -1,3 +1,9 @@
+﻿## 2026-09-26 修订 3.7.33：S3-TABLE3-R5.4 Formal Gold release 与 API 授权
+
+- 用户明确批准冻结 Formal Gold：33 core requirements / 113 core cases；Gold packet 不修改、不重算。
+- API 授权：DeepSeek、19 calls maximum、retry 0、USD 0.91 cap；prompt/payload SHA 已绑定。
+- 本修订只记录 release/authorization；真实 API 是否执行、Table 3 是否完成以 `docs/PROJECT_AUDIT.md` 为唯一实时状态。
+
 # BPC-Hybrid 完整实验主 Pipeline
 
 ## 2026-09-26 修订 3.7.32：S3-TABLE3-R5.3 final gate before API（零 API）

@@ -1,3 +1,10 @@
+﻿## 当前优先级：S3-TABLE3-R5.4 Formal Gold Release + API Execution（2026-09-26）
+
+- 状态：`FORMAL_GOLD_RELEASED=true / API_AUTHORIZATION_PENDING=false / API_AUTHORIZED=true / API_EXECUTED=false / FORMAL_TABLE3_RUN=false`。
+- Formal Gold release marker：`outputs/reports/stage3_table3_r5_formal_gold_release_v1.json`；冻结 Gold packet JSON SHA-256 `1e6de56fb3a934646816fe361873966acae1b0022e80c65f9eadf45d591c5884`，MD SHA-256 `35ebcca62c5348f0720cf3f5d4a9e5df173d26cc622af2c243691c8f4c23791d`；33 core requirements / 113 core cases。
+- API authorization event：`configs/authorization/stage3_table3_r5_user_authorization_v1.json`；19 calls maximum、retry 0、cap USD 0.91；payload manifest SHA `bd029e42ff6db8752e138827ad9861c660f1eda1b4b6dbaac8ee7715b30d3707`；prompt SHA `3aa64877cd4c4dae9f13cb40d102c3c9b04cc9bee5d478c34ad04621c0ede895`。
+- 本段状态是当前正式执行入口；旧 preflight/readiness 报告保留为历史 provenance，不覆盖、不重算。
+
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
 ## 当前优先级：S3-TABLE3-R5.3 final gate before API（2026-09-26，零 API）
