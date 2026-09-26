@@ -1,0 +1,262 @@
+{
+  "development_type_a_cases": [
+    "case_18d0d72c49e8",
+    "case_1d6ccfc9b95c",
+    "case_2a918b013dbb",
+    "case_35ae84dddc65",
+    "case_3b01b9c36d0f",
+    "case_4aec33c00dc8",
+    "case_50f498770ae9",
+    "case_648835a58615",
+    "case_6fda0f20b097",
+    "case_9c6fcd32f03c",
+    "case_a1712c670943",
+    "case_a2f445c641d1",
+    "case_a9fd75331508",
+    "case_aae318ffa9f8",
+    "case_b15419d68b21",
+    "case_d8029187c213",
+    "case_ec2a9cc66fae",
+    "case_f6dc7b084b03",
+    "case_f7bb207445df",
+    "case_ff937cc4c24e"
+  ],
+  "extended_diagnostic_type": "TYPE_B_trigger_precedence",
+  "main_metric_type": "TYPE_A_explicit_action_precedence",
+  "order_requirement_ids": [
+    "R5-D-01",
+    "R5-D-02",
+    "R5-D-03",
+    "R5-D-04",
+    "R5-D-05",
+    "R5-D-12",
+    "R5-S1-T3",
+    "R5-S1-T4",
+    "R5-S3-T1",
+    "R5-S3-T2",
+    "R5-S5-T4",
+    "R5-S6-T3",
+    "R5-S7-T1",
+    "R5-S8-T1"
+  ],
+  "requirements": {
+    "R5-D-01": {
+      "citation": "GDPR Article 13(3)",
+      "extended_diagnostic": false,
+      "main_metric_eligible": true,
+      "order_evidence": "provide information prior to further processing",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "source_family_id": "gdpr_art13",
+      "split": "development",
+      "unsupported_not_scored": false
+    },
+    "R5-D-02": {
+      "citation": "GDPR Article 14(4)",
+      "extended_diagnostic": false,
+      "main_metric_eligible": true,
+      "order_evidence": "provide information prior to further processing",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "source_family_id": "gdpr_art14",
+      "split": "development",
+      "unsupported_not_scored": false
+    },
+    "R5-D-03": {
+      "citation": "GDPR Article 18(3)",
+      "extended_diagnostic": false,
+      "main_metric_eligible": true,
+      "order_evidence": "inform before the restriction of processing is lifted",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "source_family_id": "gdpr_art18",
+      "split": "development",
+      "unsupported_not_scored": false
+    },
+    "R5-D-04": {
+      "citation": "GDPR Article 35(1), first sentence",
+      "extended_diagnostic": false,
+      "main_metric_eligible": true,
+      "order_evidence": "carry out DPIA prior to the processing",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "source_family_id": "gdpr_art35",
+      "split": "development",
+      "unsupported_not_scored": false
+    },
+    "R5-D-05": {
+      "citation": "GDPR Article 36(1)",
+      "extended_diagnostic": false,
+      "main_metric_eligible": true,
+      "order_evidence": "consult supervisory authority prior to processing",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "source_family_id": "gdpr_art36",
+      "split": "development",
+      "unsupported_not_scored": false
+    },
+    "R5-D-06": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-D-07": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-D-08": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-D-09": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-D-10": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-D-11": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-D-12": {
+      "citation": "GDPR Article 33(1)",
+      "extended_diagnostic": true,
+      "main_metric_eligible": false,
+      "order_evidence": "notify after becoming aware (72-hour deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "source_family_id": "gdpr_art33",
+      "split": "development",
+      "unsupported_not_scored": false
+    },
+    "R5-S1-T1": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-S1-T2": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-S1-T3": {
+      "citation": "GDPR Article 14(1)",
+      "extended_diagnostic": true,
+      "main_metric_eligible": false,
+      "order_evidence": "provide information after obtaining personal data (one-month deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "source_family_id": "gdpr_art14",
+      "split": "development",
+      "unsupported_not_scored": false
+    },
+    "R5-S1-T4": {
+      "citation": "GDPR Article 14(2)",
+      "extended_diagnostic": true,
+      "main_metric_eligible": false,
+      "order_evidence": "provide information after obtaining personal data (one-month deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "source_family_id": "gdpr_art14",
+      "split": "development",
+      "unsupported_not_scored": false
+    },
+    "R5-S3-T1": {
+      "citation": "GDPR Article 12(3)",
+      "extended_diagnostic": true,
+      "main_metric_eligible": false,
+      "order_evidence": "provide response after receipt of request (one-month deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "source_family_id": "gdpr_art12",
+      "split": "test",
+      "unsupported_not_scored": false
+    },
+    "R5-S3-T2": {
+      "citation": "GDPR Article 12(4)",
+      "extended_diagnostic": true,
+      "main_metric_eligible": false,
+      "order_evidence": "inform after receipt of request (one-month deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "source_family_id": "gdpr_art12",
+      "split": "test",
+      "unsupported_not_scored": false
+    },
+    "R5-S5-T1": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-S5-T2": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-S5-T3": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-S5-T4": {
+      "citation": "GDPR Article 36(2)",
+      "extended_diagnostic": false,
+      "main_metric_eligible": false,
+      "order_evidence": "regulatory period after receipt of request (date arithmetic unsupported)",
+      "order_type": "TYPE_C_deadline_arithmetic_only",
+      "source_family_id": "gdpr_art36",
+      "split": "development",
+      "unsupported_not_scored": true
+    },
+    "R5-S6-T3": {
+      "citation": "GDPR Article 33(2)",
+      "extended_diagnostic": true,
+      "main_metric_eligible": false,
+      "order_evidence": "notify controller after becoming aware (deadline not evaluated)",
+      "order_type": "TYPE_B_trigger_precedence",
+      "source_family_id": "gdpr_art33",
+      "split": "development",
+      "unsupported_not_scored": false
+    },
+    "R5-S6-T4": {
+      "main_metric_eligible": false,
+      "order_type": null,
+      "reason": "not_an_order_requirement",
+      "split": "development"
+    },
+    "R5-S7-T1": {
+      "citation": "GDPR Article 40(7)",
+      "extended_diagnostic": false,
+      "main_metric_eligible": true,
+      "order_evidence": "submit draft code before approving it",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "source_family_id": "gdpr_art40",
+      "split": "test",
+      "unsupported_not_scored": false
+    },
+    "R5-S8-T1": {
+      "citation": "GDPR Article 43(1)",
+      "extended_diagnostic": false,
+      "main_metric_eligible": true,
+      "order_evidence": "issue or renew certification after informing the supervisory authority",
+      "order_type": "TYPE_A_explicit_action_precedence",
+      "source_family_id": "gdpr_art43",
+      "split": "test",
+      "unsupported_not_scored": false
+    }
+  },
+  "schema_version": "stage3_v2_order_scope_manifest@1.0.0",
+  "scope_rule": "Main Table 3-v2 out_of_order is TYPE_A_explicit_action_precedence only. TYPE_B is preserved as an extended diagnostic and TYPE_C is unsupported/not-scored.",
+  "source_manifest_path": "outputs/reports/stage3_table3_r5_order_eligibility_v2.json",
+  "source_manifest_sha256": "c9aff3487431465a09202b38c1cbba2b85fa0f7e8521279785f69986553f922e",
+  "status": "ORDER_SCOPE_FROZEN_SOURCE_ONLY",
+  "unsupported_not_scored_type": "TYPE_C_deadline_arithmetic_only"
+}

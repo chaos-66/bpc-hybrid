@@ -1,0 +1,28 @@
+{
+  "ACTION_SCOPE_CHANGE_IMPLEMENTED": false,
+  "DEV_EVALUATION_COMPLETE": true,
+  "FINAL_TABLE3_V2_RUN": false,
+  "FINAL_UNSEEN_HOLDOUT_CREATED": false,
+  "LEGACY_TEST_DIAGNOSTIC_COMPLETE": true,
+  "LEGACY_TEST_DIAGNOSTIC_LABEL": "LEGACY_SEEN_TEST_DIAGNOSTIC",
+  "NOTES": "The preferred all-mpnet sentence-transformer backend is not cached and was not downloaded. The pre-registered method-neutral objective selected a locally available spacy fallback for this revision. Legacy seen test replay is diagnostic only.",
+  "PREFERRED_BACKEND_DOWNLOAD_REQUIRED": true,
+  "PREFERRED_SENTENCE_EMBEDDING_BACKEND": "sentence-transformers/all-mpnet-base-v2",
+  "REAL_API_CALLS": 0,
+  "SELECTED_BACKEND_IS_LOCAL_FALLBACK": true,
+  "STAGE3_V1_PRESERVED": true,
+  "STAGE3_V2_BACKEND_FROZEN": true,
+  "STAGE3_V2_BACKEND_SELECTED": "spacy_en_core_web_sm",
+  "STAGE3_V2_GAMMA_FROZEN": 0.65,
+  "STAGE3_V2_ORDER_PROJECTION_FROZEN": true,
+  "STAGE3_V2_THETA_FROZEN": 0.4,
+  "STAGE3_V2_TYPE_A_ORDER_SCOPE_FROZEN": true,
+  "WINTER_ARCHIVED": true,
+  "artifact_hashes": {
+    "development_report": "5a76863294393b909a28e454ccaa32fbedd7cbff1a8be57c52e777679aec20b2",
+    "legacy_test_diagnostic": "bb7bb05fdb8672f7cf7bdd978e6ddf0852c38f8e8859b9f6b2b44d77f4f27808",
+    "order_projection_freeze": "16a8d63f0dc6145ab863276ea13c4fac96a7ae6427e90f9c7527e5829ab262ba",
+    "semantic_backend_freeze": "2b80422cd4833e01a76d40d9d4b77e5d43475ddfa858752eeef61ab55aef00e0"
+  },
+  "schema_version": "stage3_v2_readiness@1.0.0"
+}

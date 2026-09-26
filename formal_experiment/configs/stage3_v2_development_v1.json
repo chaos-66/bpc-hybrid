@@ -1,0 +1,122 @@
+{
+  "calibration": {
+    "development_only": true,
+    "forbidden_objectives": [
+      "ours_minus_sun",
+      "maximize_ours_alone"
+    ],
+    "legacy_test_quarantine": true,
+    "macro_definition": "mean of missing_action, incorrect_actor, TYPE_A out_of_order F1 with standard zero_division=0",
+    "method_neutral": true,
+    "objective": "mean_of_sun_and_ours_development_macro_f1",
+    "objective_definition": "mean(Sun dev macro-F1, Ours dev macro-F1)",
+    "one_sweep_per_backend": true,
+    "test_access_forbidden": true,
+    "tie_breakers": [
+      "higher_combined_dev_objective",
+      "higher_min_method_macro_f1",
+      "lower_mean_unknown_rate",
+      "higher_mean_overall_precision",
+      "larger_gamma_plus_theta"
+    ]
+  },
+  "experiment_id": "stage3_v2_shared_semantic_and_type_a_order",
+  "integrity": {
+    "benchmark_modified": false,
+    "gold_modified": false,
+    "historical_v1_overwrite_allowed": false,
+    "network_calls": 0,
+    "ours_stage2_prediction_modified": false,
+    "real_api_calls": 0,
+    "sun_stage2_prediction_modified": false
+  },
+  "order_scope": {
+    "endpoint_must_bind_existing_stage2_action": true,
+    "extended_diagnostics": [
+      "TYPE_B_trigger_precedence"
+    ],
+    "main_metric": "TYPE_A_explicit_action_precedence",
+    "manifest_path": "outputs/reports/stage3_v2_order_scope_manifest_v1.json",
+    "native_relation_precedence": true,
+    "nominal_endpoint_forbidden": true,
+    "prediction_used_for_type_assignment": false,
+    "type_classification_source": "source_semantics_and_frozen_order_eligibility",
+    "unsupported_not_scored": [
+      "TYPE_C_deadline_arithmetic_only"
+    ]
+  },
+  "schema_version": "stage3_v2_development_config@1.0.0",
+  "scope": {
+    "methods": [
+      "sun",
+      "ours"
+    ],
+    "only_difference": "Stage2 regulatory representation",
+    "same_bpmn": true,
+    "same_evaluator": true,
+    "same_gold": true,
+    "same_matcher": true,
+    "same_order_projection": true,
+    "same_stage1": true,
+    "same_thresholds": true,
+    "shared_stage3": true
+  },
+  "semantic_backend": {
+    "allow_download_without_approval": false,
+    "batch_order_independent": true,
+    "cache_key_policy": "backend_identity_sha256 + normalized_text_a + normalized_text_b",
+    "download_policy": "MODEL_DOWNLOAD_REQUIRED if preferred local candidate absent",
+    "forbidden": [
+      "actor_synonyms",
+      "action_synonyms",
+      "gdpr_specific_dictionary",
+      "gold_specific_rewrites",
+      "verb_equivalence_table",
+      "business_object_lookup_table"
+    ],
+    "lightweight_candidate": "sentence-transformers/all-MiniLM-L6-v2",
+    "local_candidate_short_names": [
+      "spacy_en_core_web_md",
+      "spacy_en_core_web_sm"
+    ],
+    "max_backends": 2,
+    "normalization": {
+      "casefold": true,
+      "role_leading_article_normalization": "retained from approved shared role surface",
+      "strip": true,
+      "unicode": "NFKC",
+      "whitespace_collapse": true
+    },
+    "preferred_candidate": "sentence-transformers/all-mpnet-base-v2",
+    "similarity": "cosine_or_identified_spacy_text_similarity"
+  },
+  "status": "PREREGISTERED_BEFORE_DEV_METRICS",
+  "thresholds": {
+    "gamma_grid": [
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8
+    ],
+    "grid_frozen_before_metrics": true,
+    "tau": 0.8,
+    "tau_note": "Definition 4 matching_score is diagnostic only in no-gate protocol.",
+    "theta_grid": [
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8
+    ]
+  },
+  "winter_mainline_status": "ARCHIVED_EXTERNAL_BASELINE"
+}
