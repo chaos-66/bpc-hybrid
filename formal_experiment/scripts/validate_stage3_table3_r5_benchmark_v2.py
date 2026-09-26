@@ -175,10 +175,13 @@ def check_element_evidence(bundle: dict) -> dict:
             if scope == "not_provided":
                 bad.append((s["requirement_id"], name, "present_but_not_provided"))
             elif scope == "source_excerpt":
-                ev_tokens = set(norm_tokens(e.get("text") or ""))
-                src_tokens = set(norm_tokens(s["excerpt_text"]))
-                if not ev_tokens or not ev_tokens.issubset(src_tokens):
-                    bad.append((s["requirement_id"], name, "source_excerpt_evidence_not_in_excerpt"))
+                evidence_text = e.get("text") or ""
+                if not evidence_text:
+                    bad.append((s["requirement_id"], name, "source_excerpt_evidence_empty"))
+                if evidence_text not in s["excerpt_text"]:
+                    bad.append((s["requirement_id"], name, "source_excerpt_evidence_not_exact_substring"))
+                if e.get("sha256") != sha_text(evidence_text):
+                    bad.append((s["requirement_id"], name, "source_excerpt_sha_not_exact_text"))
                 if e.get("counts_as_stage2_input") is not True:
                     bad.append((s["requirement_id"], name, "source_excerpt_not_stage2_input"))
             elif scope == "cross_reference_text_outside_stage2_input":

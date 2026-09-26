@@ -1,5 +1,15 @@
 # 项目实时状态（兼容文件名 PROJECT_AUDIT.md）
 
+## 当前优先级：S3-TABLE3-R5.3 final gate before API（2026-09-26，零 API）
+
+- 状态：`DATA_READY_FOR_FROZEN_SCOPE / EVIDENCE_INTEGRITY_READY / METHODS_READY / API_AUTHORIZATION_PENDING / FORMAL_RELEASE_NOT_APPROVED`。真实 API 调用 0，正式 Table 3 未运行，Gold 未发布。
+- Evidence integrity：38 requirements 全扫描；所有 `source_excerpt` evidence 均为 exact case-sensitive substring 且 SHA 由 exact text 计算。发现并修复 14 个 exact-substring violations；`R5-S7-T1` action evidence 修复为包含 `submit ... Board` 的 exact source sentence，`R5-S8-T1` actor 修复为 `certification bodies`，action 修复为包含 `issue and renew certification` 的 exact source sentence。
+- Official provenance：`GDPR Article 40(7)` 与 `GDPR Article 43(1)` 的 exact official EUR-Lex sentence SHA 与 local processed Winter snapshot excerpt 完全一致；verified date 2026-09-26；同时标记 local snapshot 为 `local_processed_snapshot`。
+- Methods：`METHODS_READY=true`，implementation/protocol blockers 为空。actor-surface equivalence 与 D1 duplicate-span coordinate repair 已在 R5.2 修复；same verb/different object、action similarity false negative、below-gamma、Winter native unsupported order、no deadline arithmetic、condition/exception truth 均为 frozen method limitations，不再作为 method blocker。Definition 6 Sun `incorrect_actor` C candidate set 判定为 `VERIFIED_METHOD_FIDELITY`。
+- Gold packet：`outputs/reports/stage3_table3_r5_gold_adjudication_packet_v1.{json,md}`，33 core requirements / 113 core cases，prediction-blind，`GOLD_ADJUDICATION_STATUS = AWAITING_USER_GPT_APPROVAL`，`human_adjudicated=false`，`reference_is_gold=false`。
+- API payload：19 requests；manifest SHA `bd029e42ff6db8752e138827ad9861c660f1eda1b4b6dbaac8ee7715b30d3707` 未变；REAL API CALLS = 0。Sun 正式执行 policy 改为：Gold freeze 后对全部 final core requirements 用当前冻结 Sun Rules-Only 本地重新生成；weak historical Sun reuse 仅保留 regression/comparison，不冒充 formal source。
+- Focused tests：R5 v2 benchmark / R5.2 preflight closure / role normalization / D1 coordinate repair / Gold packet integrity 通过（53 passed）。旧 `test_stage3_table3_r5_benchmark.py` 仍因已批准 shared fixes 导致的历史 Stage1 schema binding 变化失败，未回写旧 manifest。
+
 ## 当前优先级：S3-TABLE3-R6 formal preflight closure（2026-09-26，零 API）
 
 - 状态：`DATA_READY_FOR_FROZEN_SCOPE / METHODS_NOT_READY / API_AUTHORIZATION_PENDING / FORMAL_RELEASE_NOT_APPROVED`。没有真实 API 调用，没有正式 Table 3 运行，没有 Gold 发布。

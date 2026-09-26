@@ -8,6 +8,7 @@ order eligibility, and frozen API payload reconstruction.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -268,3 +269,98 @@ def test_all_bpmn_artifacts_parse_and_match_manifest_sha256():
         assert len(raw) == binding["bytes"]
         assert hashlib.sha256(raw).hexdigest() == binding["sha256"]
         ET.fromstring(raw)
+
+def test_source_excerpt_evidence_is_exact_substring():
+    for row in source_by_id().values():
+        excerpt = row["excerpt_text"]
+        for element_name, payload in row["elements"].items():
+            evidence = payload["evidence"]
+            if evidence["scope"] == "source_excerpt":
+                assert evidence["text"], (row["requirement_id"], element_name, "empty")
+                assert evidence["text"] in excerpt, (
+                    row["requirement_id"], element_name, "not exact source substring"
+                )
+
+
+def test_source_excerpt_sha_matches_exact_text():
+    for row in source_by_id().values():
+        for element_name, payload in row["elements"].items():
+            evidence = payload["evidence"]
+            if evidence["scope"] == "source_excerpt":
+                assert evidence["sha256"] == hashlib.sha256(evidence["text"].encode("utf-8")).hexdigest(), (
+                    row["requirement_id"], element_name, "sha mismatch"
+                )
+
+
+def test_r5_s7_action_evidence_supports_submit():
+    action = source_by_id()["R5-S7-T1"]["elements"]["action"]["evidence"]
+    assert action["scope"] == "source_excerpt"
+    lowered = action["text"].lower()
+    assert "submit" in lowered
+    assert "board" in lowered
+    assert lowered != "approving"
+
+
+def test_r5_s8_actor_evidence_supports_certification_body():
+    actor = source_by_id()["R5-S8-T1"]["elements"]["actor"]["evidence"]
+    assert actor["scope"] == "source_excerpt"
+    lowered = actor["text"].lower()
+    assert "certification bodies" in lowered
+    assert lowered != "certification"
+
+
+def test_r5_s8_action_evidence_supports_issue_or_renew():
+    action = source_by_id()["R5-S8-T1"]["elements"]["action"]["evidence"]
+    assert action["scope"] == "source_excerpt"
+    lowered = action["text"].lower()
+    assert "issue" in lowered
+    assert "renew" in lowered
+    assert "certification" in lowered
+    assert lowered != "certification"
+
+def test_gold_adjudication_packet_integrity():
+    packet = load_json(REPORTS / "stage3_table3_r5_gold_adjudication_packet_v1.json")
+    sources = source_by_id()
+    manifest = load_json(DATA / "manifest.json")
+    assert packet["GOLD_ADJUDICATION_STATUS"] == "AWAITING_USER_GPT_APPROVAL"
+    assert packet["packet_status"] == "AWAITING_USER_GPT_APPROVAL"
+    assert packet["human_adjudicated"] is False
+    assert packet["reference_is_gold"] is False
+    assert packet["formal_gold_released"] is False
+    assert packet["prediction_blind"] is True
+    assert packet["summary"]["total_core_requirements"] == 33
+    assert packet["summary"]["total_cases"] == 113
+    variants = {}
+    case_ids = set()
+    for req in packet["requirements"]:
+        source = sources[req["requirement_id"]]
+        assert req["exact_regulation_excerpt"] == source["excerpt_text"]
+        assert req["source_sha256"] == source["text_sha256"]
+        for case in req["cases"]:
+            assert case["case_id"] not in case_ids
+            case_ids.add(case["case_id"])
+            variants[case["baseline_or_mutation_type"]] = variants.get(case["baseline_or_mutation_type"], 0) + 1
+            assert case["bpmn_sha256"] == manifest["artifacts"][case["bpmn_path"]]["sha256"]
+            assert set(case["expected_reference_state"]) == {"missing_action", "incorrect_actor", "out_of_order"}
+            assert case["why_this_label_follows_from_source_and_controlled_mutation"]
+            assert isinstance(case["unsupported_or_na_reason"], dict)
+    assert len(case_ids) == 113
+    assert variants == {"baseline": 33, "missing_action": 33, "incorrect_actor": 33, "out_of_order": 14}
+
+
+def test_gold_adjudication_packet_is_prediction_blind():
+    packet = load_json(REPORTS / "stage3_table3_r5_gold_adjudication_packet_v1.json")
+    evidence = packet["prediction_blind_evidence"]
+    assert evidence["method_predictions_read"] is False
+    assert evidence["method_scores_read"] is False
+    assert evidence["allowed_inputs_only"] is True
+    script = (ROOT / "scripts/build_stage3_table3_r5_gold_adjudication_packet_v1.py").read_text(encoding="utf-8")
+    for forbidden_path in (
+        "data/predictions",
+        "stage3_table3_r5_prediction_reuse",
+        "stage3_table3_r5_benchmark_v2_eval",
+        "Table 3 P/R/F1",
+    ):
+        # The explicit forbidden list may name outcomes; only executable input
+        # paths and import-like references are disallowed.
+        assert f'ROOT / "{forbidden_path}"' not in script

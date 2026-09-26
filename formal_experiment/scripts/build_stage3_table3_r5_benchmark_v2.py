@@ -205,30 +205,65 @@ def exception_crossref(config: dict, rid: str) -> dict | None:
 # ---------------------------------------------------------------------------
 # Six-element annotation with evidence binding
 # ---------------------------------------------------------------------------
+_TOKEN_RE = re.compile(r"[A-Za-z0-9]+")
+
+# Actor evidence that cannot be recovered as an exact case-insensitive span
+# by the frozen actor-surface token sequence.  Values are exact substrings of
+# the corresponding processed source excerpt; the builder asserts this.
+ACTOR_EVIDENCE_OVERRIDES = {
+    "R5-S6-T1": "the controller and the processor",
+    "R5-S6-T2": "the controller and the processor",
+    "R5-S7-T1": "the supervisory authority",
+    "R5-S8-T1": "certification bodies",
+}
+
+
 def _norm_tokens(value: str) -> list[str]:
     return [t for t in re.split(r"[^a-z0-9]+", normalized_ws(value).lower()) if t]
 
 
-def best_ngram_evidence(excerpt: str, phrase: str, min_n: int = 2) -> str:
-    """Longest shared token n-gram (normalised, punctuation-insensitive)."""
-    e = _norm_tokens(excerpt)
-    p = _norm_tokens(phrase)
-    n = min(len(p), len(e))
+def _token_offsets(value: str) -> list[tuple[str, int, int]]:
+    text = normalized_ws(value)
+    return [(m.group(0).lower(), m.start(), m.end()) for m in _TOKEN_RE.finditer(text)]
+
+
+def _exact_span_for_token_match(excerpt: str, phrase: str, min_n: int = 2) -> str:
+    """Return the exact source slice for the longest shared token n-gram.
+
+    The returned value is a case-, punctuation- and whitespace-exact substring
+    of ``excerpt``.  Matching is token-normalised only to locate the span; it
+    is never returned as source text.
+    """
+    source_tokens = _token_offsets(excerpt)
+    phrase_tokens = _norm_tokens(phrase)
+    if not source_tokens or not phrase_tokens:
+        return ""
+    n = min(len(phrase_tokens), len(source_tokens))
     while n >= min_n:
-        for i in range(len(p) - n + 1):
-            for j in range(len(e) - n + 1):
-                if e[j:j + n] == p[i:i + n]:
-                    return " ".join(p[i:i + n])
+        for i in range(len(phrase_tokens) - n + 1):
+            for j in range(len(source_tokens) - n + 1):
+                if [tok for tok, _start, _end in source_tokens[j:j + n]] == phrase_tokens[i:i + n]:
+                    start = source_tokens[j][1]
+                    end = source_tokens[j + n - 1][2]
+                    return excerpt[start:end]
         n -= 1
     return ""
 
 
+def best_ngram_evidence(excerpt: str, phrase: str, min_n: int = 2) -> str:
+    """Longest shared token n-gram returned as exact source substring."""
+    return _exact_span_for_token_match(excerpt, phrase, min_n=min_n)
+
+
 def _action_evidence(excerpt: str, action: str) -> str:
-    norm = normalized_ws(excerpt).lower()
-    for token in sorted(_norm_tokens(action), key=len, reverse=True):
-        if len(token) >= 5 and token in norm:
-            return token
-    return ""
+    """Bind the mandatory task-model action to its full exact source sentence.
+
+    Action values are frozen task-model paraphrases.  A single shared noun or
+    verb must not stand in for the whole action, so the evidence is the exact
+    source sentence that grounds the task.  This cannot alter the Stage2 input
+    or the semantic value; it changes evidence.text/SHA only.
+    """
+    return excerpt
 
 
 def annotate_elements(spec: dict, source: dict) -> dict:
@@ -275,23 +310,33 @@ def annotate_elements(spec: dict, source: dict) -> dict:
 
     # modality
     _etoks = _norm_tokens(excerpt)
-    modal_token = ""
+    modal_phrase = ""
     for _phrase in ("no longer", "right to", "shall not", "shall", "may"):
         _parts = _phrase.split()
         for _i in range(len(_etoks) - len(_parts) + 1):
             if _etoks[_i:_i + len(_parts)] == _parts:
-                modal_token = _phrase
+                modal_phrase = _phrase
                 break
-        if modal_token:
+        if modal_phrase:
             break
+    modal_token = _exact_span_for_token_match(excerpt, modal_phrase, min_n=1) if modal_phrase else ""
     modality = ev("source_excerpt", modal_token, "modal surface in excerpt") if modal_token else external(
         "modality taken from the provision type", spec["modality"])
     # actor
     actor_surface = spec["actor_required"]
-    actor_token = next((t for t in _norm_tokens(actor_surface) if len(t) >= 4 and t in normalized_ws(excerpt).lower()), "")
+    actor_override = ACTOR_EVIDENCE_OVERRIDES.get(spec["requirement_id"])
+    actor_token = actor_override if actor_override and actor_override in excerpt else ""
+    if not actor_token:
+        _surface_norm = normalized_ws(actor_surface)
+        _pos = normalized_ws(excerpt).lower().find(_surface_norm.lower())
+        if _pos >= 0:
+            actor_token = excerpt[_pos:_pos + len(_surface_norm)]
     if actor_token:
         actor = ev("source_excerpt", actor_token, "actor surface in excerpt")
     else:
+        # The actor is supplied by the declared role model/common task context,
+        # not by the frozen source sentence.  Keep the old external scope; do
+        # not turn a missing role surface into a Stage2-input evidence claim.
         actor = external("actor role from provision/role model", actor_surface)
     # action
     a_match = _action_evidence(excerpt, action)
@@ -330,7 +375,9 @@ def annotate_elements(spec: dict, source: dict) -> dict:
     if spec.get("exception_present"):
         full_match = bool(exc) and normalized_ws(exc).lower() in normalized_ws(excerpt).lower()
         if full_match:
-            exception = ev("source_excerpt", exc, "full exception semantic value present in excerpt")
+            _full_exc_span = _exact_span_for_token_match(excerpt, exc, min_n=1)
+            exception = ev("source_excerpt", _full_exc_span or excerpt,
+                           "full exception semantic value present in excerpt, exact source span")
         else:
             cross = exception_crossref_source_cached(spec["requirement_id"])
             if cross:

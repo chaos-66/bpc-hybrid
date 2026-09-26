@@ -1,5 +1,14 @@
 # BPC-Hybrid 完整实验主 Pipeline
 
+## 2026-09-26 修订 3.7.32：S3-TABLE3-R5.3 final gate before API（零 API）
+
+- 目标只包含三件事：修复 source-evidence integrity、修正 readiness（limitation 与 true blocker 分离）、生成 prediction-blind formal Gold adjudication packet；不新增方法、不扩 benchmark、不调参、不调用真实 API、不跑正式 Table3。
+- Evidence：38 requirements bounded scan；14 个 exact-substring violations 全部修复；`R5-S7-T1` action evidence 支持 `submit ... Board`，`R5-S8-T1` actor evidence 支持 `certification bodies`、action evidence 支持 `issue and renew certification`。
+- Provenance：Article 40(7) 与 Article 43(1) exact EUR-Lex sentence SHA 与 local processed snapshot 一致（verified 2026-09-26）。
+- Readiness：`METHODS_READY=true`；true implementation/protocol blockers 为空；actor-surface equivalence 与 D1 coordinate postprocessing 已在 R5.2 修复；remaining same-verb/different-object 等明确列为 frozen method limitation。Definition 6 fidelity=`VERIFIED_METHOD_FIDELITY`。
+- Gold gate：`stage3_table3_r5_gold_adjudication_packet_v1.{json,md}` 生成，33 core requirements、113 core cases、prediction-blind；`GOLD_ADJUDICATION_STATUS=AWAITING_USER_GPT_APPROVAL`；不自行批准 Gold。
+- API：19 requests，payload manifest SHA 不变，REAL API CALLS=0，AUTHORIZATION_PENDING。Sun final run 改为 Gold freeze 后本地重生成全部 final core Sun outputs。
+
 ## 2026-09-26 修订 3.7.31：S3-TABLE3-R6 formal preflight closure（零 API）
 
 - 完成 Stage 2 冻结前提下的 Table 3 入口封板，不是最终 Table 3 运行：真实 API 调用 0，正式矩阵未跑。

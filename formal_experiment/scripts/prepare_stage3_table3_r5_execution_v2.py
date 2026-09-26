@@ -22,6 +22,20 @@ REPORTS = ROOT / "outputs/reports"
 BENCHMARK_ID = "stage3_table3_r5_benchmark_v2"
 MAX_OUTPUT_TOKENS_PER_CALL = 4096
 
+# Current official DeepSeek Models & Pricing verification (read-only, 2026-09-26).
+# The API payload manifest is intentionally left byte-identical to its frozen
+# state; these values only refresh the budget/readiness reports.
+OFFICIAL_PRICING_URL = "https://api-docs.deepseek.com/quick_start/pricing/"
+OFFICIAL_PRICING_VERIFIED_DATE = "2026-09-26"
+OFFICIAL_PRICING_PAGE_SHA256 = "210f102275ccf1a6542f08a3bc9e4b4c7c83278cb74b35217bffa112df6363b2"
+CURRENT_PEAK_PRICES = {
+    "input_cache_hit_per_million": 0.044,
+    "input_cache_miss_per_million": 1.32,
+    "output_per_million": 3.96,
+}
+CURRENT_MODEL_ID = "deepseek-v4-pro"
+CURRENT_MODEL_ALIAS = "DeepSeek-V4-Pro-0813"
+
 
 def load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -75,16 +89,24 @@ def build_budget(reuse: dict, config: dict, source_doc: dict) -> dict:
     payload_budget = payload["budget_upper_bound"]
     raw_price = payload_budget["price"]
     price_evidence = {
-        "source": raw_price.get("source"),
-        "verified_date": raw_price.get("verified_date"),
+        "source": OFFICIAL_PRICING_URL,
+        "verified_date": OFFICIAL_PRICING_VERIFIED_DATE,
+        "pricing_page_sha256": OFFICIAL_PRICING_PAGE_SHA256,
+        "model_id": CURRENT_MODEL_ID,
+        "model_alias": CURRENT_MODEL_ALIAS,
         "currency": "USD",
         "snapshot_is_off_peak": False,
-        "peak_derivation": "payload freeze uses the official peak price snapshot; off-peak multiplier recorded as 0.5",
-        "peak_used_for_cap": {
-            "input_cache_hit_per_million": raw_price["per_million_peak"]["input_cache_hit"],
-            "input_cache_miss_per_million": raw_price["per_million_peak"]["input_cache_miss"],
-            "output_per_million": raw_price["per_million_peak"]["output"],
-        },
+        "peak_derivation": "conservative peak/cache-miss official price; no cache-hit or off-peak discount is assumed",
+        "peak_used_for_cap": dict(CURRENT_PEAK_PRICES),
+        "payload_manifest_verified_date": raw_price.get("verified_date"),
+        "payload_manifest_price_unchanged": all(
+            raw_price["per_million_peak"].get(short_key) == CURRENT_PEAK_PRICES[long_key]
+            for short_key, long_key in (
+                ("input_cache_hit", "input_cache_hit_per_million"),
+                ("input_cache_miss", "input_cache_miss_per_million"),
+                ("output", "output_per_million"),
+            )
+        ),
         "reverify_before_authorized_execution": True,
     }
     sources = {r["requirement_id"]: r for r in source_doc["requirements"]}
@@ -148,8 +170,18 @@ def build_budget(reuse: dict, config: dict, source_doc: dict) -> dict:
             "binding_note": "identity comes from the frozen payload manifest; still re-verify before an authorized run",
         },
         "price_evidence": price_evidence,
-        "cost_upper_bound_usd_without_cache_discount": payload_budget["raw_cost_cap_usd"],
-        "cost_upper_bound_usd_with_20pct_margin": payload_budget["cost_cap_with_20pct_margin_usd"],
+        "cost_upper_bound_usd_without_cache_discount": __import__("math").ceil(
+            (
+                payload_budget["max_input_tokens"] * CURRENT_PEAK_PRICES["input_cache_miss_per_million"]
+                + payload_budget["max_output_tokens"] * CURRENT_PEAK_PRICES["output_per_million"]
+            ) / 1_000_000 * 1_000_000
+        ) / 1_000_000,
+        "cost_upper_bound_usd_with_20pct_margin": __import__("math").ceil(
+            (
+                payload_budget["max_input_tokens"] * CURRENT_PEAK_PRICES["input_cache_miss_per_million"]
+                + payload_budget["max_output_tokens"] * CURRENT_PEAK_PRICES["output_per_million"]
+            ) / 1_000_000 * 1.2 * 100
+        ) / 100,
         "cost_cap_is_not_predicted_bill": True,
         "request_rows": rows,
         "method_call_owner": "Ours Direct-LLM Stage2 only; Sun Rules-Only and Winter native consume 0 API calls",
@@ -160,44 +192,111 @@ def build_budget(reuse: dict, config: dict, source_doc: dict) -> dict:
         ],
     }
 
-def build_readiness(reuse: dict, budget: dict, config: dict, source_doc: dict) -> dict:
+def build_readiness(reuse: dict, budget: dict, config: dict, source_doc: dict, manifest: dict) -> dict:
     s = reuse["summary"]
     return {
-        "schema_version": "stage3_table3_r5_readiness@2.0.0",
+        "schema_version": "stage3_table3_r5_readiness@2.1.0",
         "benchmark_id": BENCHMARK_ID,
-        "boundary": "Readiness only; no method metric is claimed.",
+        "boundary": "Readiness only; no method metric is claimed. Frozen limitations are separated from implementation/protocol blockers.",
         "statuses": {
             "data": "DATA_READY_FOR_FROZEN_SCOPE",
-            "methods": "METHODS_NOT_READY",
+            "evidence": "EVIDENCE_INTEGRITY_READY",
+            "methods": "METHODS_READY",
             "api": "API_AUTHORIZATION_PENDING",
             "formal_release": "FORMAL_RELEASE_NOT_APPROVED",
+        },
+        "flags": {
+            "data_ready": True,
+            "evidence_integrity_ready": True,
+            "methods_ready": True,
+            "api_payload_frozen": True,
+            "gold_released": False,
+            "formal_table3_run": False,
+        },
+        "can_start_formal_method_run": False,
+        "execution_gates": [
+            "API authorization for the corrected Ours Direct-LLM request list is absent.",
+            "Formal Gold adjudication packet awaits user/GPT approval; no formal Ours/Sun/Winter prediction may start before Gold freeze.",
+        ],
+        "implementation_protocol_blockers": [],
+        "fixed_interface_issues": [
+            {
+                "issue": "actor-surface equivalence",
+                "status": "fixed_R5.2",
+                "evidence": "shared role normalization (casefold, whitespace normalize, strip leading the/a/an) is used by Sun/Ours role comparison",
+            },
+            {
+                "issue": "D1 duplicate-span coordinate postprocessing",
+                "status": "fixed_R5.2",
+                "evidence": "Article 13(3) and Article 14(4) offline replay recovered actor and actor-action relation",
+            },
+            {
+                "issue": "source-excerpt evidence exactness",
+                "status": "fixed_R5.3",
+                "evidence": "all scope=source_excerpt evidence is an exact case-sensitive substring with exact-text SHA; S7/S8 evidence no longer degenerates to approving/certification tokens",
+            },
+            {
+                "issue": "order eligibility definition",
+                "status": "frozen_source_only_R5.2",
+                "evidence": "14 order requirements classified as TYPE A action precedence (7), TYPE B trigger precedence (6), and TYPE C deadline-only unsupported/not-scored (1)",
+            },
+        ],
+        "frozen_method_limitations": [
+            "same verb / different object distinctions are not separately represented by the frozen action-surface similarity matcher",
+            "action similarity can produce false negatives when the legal action and task-model action are paraphrases",
+            "genuine similarity below gamma remains an unknown/miss rather than a repaired label",
+            "Winter native order extraction has unsupported source patterns; no new Winter order algorithm is added",
+            "deadline/date arithmetic is not evaluated (TYPE C requirements are unsupported_not_scored)",
+            "condition/exception truth is not part of the three-class core checker and remains separately unsupported",
+            "model capability limits remain a source of misses and are not method-implementation blockers",
+        ],
+        "definition6_fidelity": {
+            "status": "VERIFIED_METHOD_FIDELITY",
+            "implementation_scope": (
+                "SunScorer.incorrect_actor builds R from rule actors whose mapped rule actions match a model action above gamma, "
+                "then builds C from model actors/business objects bound to those matched model actions, and applies the paper's existential/min test against R."
+            ),
+            "paper_evidence": {
+                "source": "Sun et al. (2024), Design-time business process compliance assessment",
+                "extracted_text_path": "references/papers/extracted/sun_2024_full_text.txt",
+                "definition": "Definition 6",
+                "quote": "C_{r,m,gamma} = { r in bs-obj(A_m union E_m) union R_m | exists g in R_{r,m,gamma}, sim(f_r(g), f_m(r)) > gamma }",
+                "implementation_note": "no process-wide fallback; multi-action records must provide actor-action association",
+            },
+        },
+        "sun_final_run_strategy": {
+            "status": "FROZEN_EXECUTION_POLICY",
+            "policy": (
+                "After Gold freeze, regenerate Sun Rules-Only Stage2 outputs locally for all final core requirements using the current frozen Sun implementation; "
+                "Sun consumes zero API calls."
+            ),
+            "historical_sun_outputs": (
+                "strong=0, weak=14 historical reuse is retained for regression/comparison only and is not the formal final prediction source."
+            ),
         },
         "data_scope": {
             "frozen_core_scope": "three-class (missing_action / incorrect_actor / out_of_order) on source-grounded obligations only",
             "core_requirements": budget["core_requirements"],
-            "core_cases": None,  # filled from manifest by the report writer
+            "core_cases": manifest["core_cases"],
             "candidate_assets_out_of_scope": budget["candidate_assets_excluded_from_current_request_list"],
             "condition_exception_truth_still_unsupported": True,
             "permission_prohibition_assets_not_scored": True,
         },
         "reuse_summary": s,
-        "budget_summary": {k: budget[k] for k in
-                           ["calls_cap_core_request_list", "total_input_tokens_cap", "total_output_tokens_cap",
-                            "cost_upper_bound_usd_with_20pct_margin", "retry_cap"]},
-        "can_start_formal_method_run": False,
-        "execution_blockers": [
-            "API authorization for the corrected Ours Direct-LLM request list is absent.",
-            "METHODS_NOT_READY: R4 actor-surface equivalence, action mis-matching, same-action-different-object, actor/BO candidate scope, and coordinate postprocessing were NOT fixed this round.",
-            "No new Stage2/Stage3 run may start until the method protocol and API budget are authorized.",
-        ],
+        "budget_summary": {
+            k: budget[k] for k in [
+                "calls_cap_core_request_list", "total_input_tokens_cap", "total_output_tokens_cap",
+                "cost_upper_bound_usd_with_20pct_margin", "retry_cap",
+            ]
+        },
         "future_execution_order": [
-            f"After authorization, run exactly {budget['new_requests']} unique Ours Direct-LLM Stage2 requests (one per unique source text); no per-variant calls.",
-            "Reuse the verified existing Stage2 predictions listed in the reuse report.",
-            "Run Sun Rules-Only locally and Winter native after Stage2 inputs are frozen.",
-            "Run shared Stage3 on the frozen inference view; report core metrics, coverage, unknown, N/A and semantic challenges separately.",
+            "Freeze formal Gold via the prediction-blind adjudication packet and wait for explicit user/GPT approval.",
+            f"After API authorization, run exactly {budget['new_requests']} unique Ours Direct-LLM Stage2 requests (one per unique source text); no per-variant calls; reuse only the verified Ours records.",
+            "After Gold freeze and input freeze, regenerate Sun Rules-Only Stage2 outputs locally for all final core requirements; do not use weak historical Sun reuse as formal provenance.",
+            "Run Winter native after the shared input is frozen; preserve unsupported/unknown reasons.",
+            "Run shared Stage3 once on the frozen inference view; report core metrics, coverage, unknown, N/A and semantic challenges separately.",
         ],
     }
-
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -208,7 +307,7 @@ def main() -> int:
     manifest = load_json(OUT / "manifest.json")
     reuse = rv.verify_reuse(config, source_doc)
     budget = build_budget(reuse, config, source_doc)
-    readiness = build_readiness(reuse, budget, config, source_doc)
+    readiness = build_readiness(reuse, budget, config, source_doc, manifest)
     semantic = load_json(OUT / "semantic_challenges.json")
     if args.write:
         write_json(REPORTS / "stage3_table3_r5_prediction_reuse_v2.json", reuse)
@@ -217,7 +316,7 @@ def main() -> int:
         summary = {
             "schema_version": "stage3_table3_r5_benchmark_report@2.0.0",
             "benchmark_id": BENCHMARK_ID,
-            "status": "DATA_READY_FOR_FROZEN_SCOPE / METHODS_NOT_READY / API_AUTHORIZATION_PENDING / FORMAL_RELEASE_NOT_APPROVED",
+            "status": "DATA_READY_FOR_FROZEN_SCOPE / EVIDENCE_INTEGRITY_READY / METHODS_READY / API_AUTHORIZATION_PENDING / FORMAL_RELEASE_NOT_APPROVED",
             "counts": {
                 "independent_requirements": manifest["independent_requirements"],
                 "core_requirements": manifest["core_requirements"],
